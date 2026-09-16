@@ -13,6 +13,7 @@
   --graphite-700: #262a2f;
   --graphite-600: #383d44;
   --graphite-500: #565c64;
+  --control-border: #72767e;
 
   --line: rgba(255,255,255,0.08);
   --line-strong: rgba(255,255,255,0.16);
@@ -54,6 +55,7 @@
   --graphite-700: #e3e3df;
   --graphite-600: #c7c7c1;
   --graphite-500: #8f918c;
+  --control-border: #85888d;
 
   --line: rgba(15,15,10,0.08);
   --line-strong: rgba(15,15,10,0.15);

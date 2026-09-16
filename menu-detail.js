@@ -60,9 +60,9 @@
   // with.
   var SIZE_SCALE = {
     "24": { pad: 8, font: 11 },
-    "28": { pad: 9, font: 12 },
+    "28": { pad: 10, font: 12 },
     "32": { pad: 10, font: 12 },
-    "36": { pad: 11, font: 13 },
+    "36": { pad: 12, font: 13 },
     "40": { pad: 12, font: 14 },
     "44": { pad: 14, font: 14 },
     "48": { pad: 16, font: 15 },
