@@ -1,0 +1,66 @@
+/* ---------------------------------------------------------
+   Agentic Design System - shared design tokens
+   Single source of truth consumed by every page's stylesheet.
+   (The platform's own UI is built from these, same as it will
+   ask designers' brand inputs to generate tokens for theirs.)
+--------------------------------------------------------- */
+
+:root{
+  --graphite-950: #0d0f11;
+  --graphite-900: #15171a;
+  --graphite-850: #191c20;
+  --graphite-800: #1c1f23;
+  --graphite-700: #262a2f;
+  --graphite-600: #383d44;
+  --graphite-500: #565c64;
+
+  --line: rgba(255,255,255,0.08);
+  --line-strong: rgba(255,255,255,0.16);
+
+  --text-hi: #f3f2ef;
+  --text-mid: #a7abb2;
+  --text-dim: #64686f;
+
+  /* Brand red */
+  --red-500: #ff031a;
+  --red-400: #ff3f4f;
+  --red-600: #d80016;
+  --red-glow: rgba(255,3,26,0.35);
+  --red-tint: rgba(255,3,26,0.1);
+
+  /* Status accents (semantic, separate from brand red) */
+  --green-500: #2fbf6e;
+  --amber-500: #e6a53a;
+  --danger-500: #ff031a;
+  --danger-400: #ff3f4f;
+  --danger-600: #d80016;
+  --blue-500: #4f8fe6;
+
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Inter", ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+/* Light theme - opt-in via data-theme="light" on <html>.
+   Dark theme above stays the saved default; only these tokens flip. */
+:root[data-theme="light"]{
+  --graphite-950: #f6f6f4;
+  --graphite-900: #ffffff;
+  --graphite-850: #fbfbfa;
+  --graphite-800: #f1f1ee;
+  --graphite-700: #e3e3df;
+  --graphite-600: #c7c7c1;
+  --graphite-500: #8f918c;
+
+  --line: rgba(15,15,10,0.08);
+  --line-strong: rgba(15,15,10,0.15);
+
+  --text-hi: #15171a;
+  --text-mid: #53565c;
+  --text-dim: #85888d;
+
+  --red-tint: rgba(255,3,26,0.07);
+}

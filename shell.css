@@ -1,0 +1,3999 @@
+@import url("theme.css");
+
+/* ---------------------------------------------------------
+   Agentic Design System - application shell
+   Topbar + left sidebar + content frame shared by every
+   workspace page (Overview, Foundations, Components, ...).
+
+   Grid rules: spacing is built on an 8px unit (4px allowed
+   only for hairline/micro accents inside small widgets);
+   type sizes are built on a 16px-anchored 4px scale -
+   12 / 16 / 24 / 32.
+--------------------------------------------------------- */
+
+*{ box-sizing: border-box; }
+
+html, body{ margin: 0; height: 100%; background: var(--graphite-950); }
+
+body{
+  font-family: var(--font-body);
+  color: var(--text-hi);
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  grid-template-rows: 64px 1fr;
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar main";
+  min-height: 100vh;
+}
+
+a{ color: inherit; text-decoration: none; }
+button{ font-family: inherit; }
+
+/* ---------- topbar ---------- */
+.app-topbar{
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  background: var(--graphite-900);
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+
+.brand{ display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.brand-mark{ font-family: var(--font-mono); font-weight: 600; font-size: 16px; letter-spacing: 0.1em; }
+.brand-sub{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
+
+.search-icon{ color: var(--text-dim); font-size: 16px; }
+#globalSearch{
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-hi);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+#globalSearch::placeholder{ color: var(--text-dim); }
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 1px 8px;
+}
+
+.topbar-right{ margin-left: auto; display: flex; align-items: center; gap: 16px; }
+
+/* Below this width the topbar's own min-content (brand + search + toggle +
+   version badge + settings) no longer fits even after min-width:0 lets it
+   shrink - drop the purely decorative pieces so the bar itself, and every
+   grid track it shares with .app-main, can actually fit the viewport
+   instead of forcing the whole page to scroll horizontally. */
+@media (max-width: 640px){
+  .app-topbar{ padding: 0 16px; gap: 8px; }
+  .version-badge{ display: none; }
+  .theme-toggle-label{ display: none; }
+  .kbd{ display: none; }
+}
+
+.brand-color-dot{
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--red-500);
+  border: 1px solid var(--line-strong);
+  flex: none;
+}
+
+.theme-toggle{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.theme-toggle:hover{ color: var(--text-hi); }
+.theme-toggle-track{
+  width: 32px; height: 16px;
+  border-radius: 999px;
+  background: var(--graphite-700);
+  border: 1px solid var(--line-strong);
+  position: relative;
+  transition: border-color 0.15s ease;
+}
+.theme-toggle-thumb{
+  position: absolute;
+  top: 1px; left: 1px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--text-hi);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.theme-toggle:hover .theme-toggle-track{ border-color: var(--red-500); }
+.theme-toggle[aria-pressed="true"] .theme-toggle-thumb{
+  transform: translateX(16px);
+  background: var(--red-500);
+}
+.version-badge{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-mid);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 4px 8px;
+}
+.icon-btn{
+  background: none;
+  border: 1px solid var(--line-strong);
+  color: var(--text-mid);
+  border-radius: var(--radius-md);
+  width: 32px; height: 32px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.icon-btn:hover{ border-color: var(--red-500); color: var(--text-hi); }
+
+/* ---------- sidebar ---------- */
+.app-sidebar{
+  grid-area: sidebar;
+  background: var(--graphite-900);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  padding: 16px 0 24px;
+}
+
+.sidebar-nav{ display: flex; flex-direction: column; gap: 4px; }
+
+/* Moved here from the topbar - same visual treatment (icon + input + kbd
+   hint), just laid out as a block instead of a flex:1 topbar child, since
+   the sidebar is a fixed 264px column rather than a flexible bar. */
+.sidebar-search{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 12px;
+  padding: 8px 12px;
+  background: var(--graphite-800);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
+}
+.sidebar-search:focus-within{ border-color: var(--red-500); }
+
+.nav-group{ padding: 8px 12px; }
+.nav-group + .nav-group{ border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
+
+.nav-group-label{
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  padding: 8px 12px;
+}
+
+.nav-group-label.as-toggle{
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.nav-group-label.as-toggle:hover{ color: var(--text-mid); }
+.chev{ font-family: var(--font-mono); font-size: 12px; transition: transform 0.15s ease; }
+.nav-group.is-collapsed .chev{ transform: rotate(-90deg); }
+.nav-group.is-collapsed .nav-group-items{ display: none; }
+
+.nav-subgroup-label{
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--graphite-500);
+  padding: 12px 12px 4px;
+}
+.nav-subgroup-label:first-child{ padding-top: 4px; }
+
+.nav-link{
+  display: block;
+  font-size: 16px;
+  color: var(--text-mid);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border-left: 2px solid transparent;
+}
+.nav-link:hover{ color: var(--text-hi); background: var(--graphite-800); }
+.nav-link.is-active{
+  color: var(--text-hi);
+  background: var(--red-tint);
+  border-left-color: var(--red-500);
+  font-weight: 500;
+}
+.nav-link.is-hidden{ display: none; }
+.nav-subgroup-label.is-hidden{ display: none; }
+
+/* ---------- main content frame ---------- */
+.app-main{
+  grid-area: main;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+  padding: 32px 40px 80px;
+}
+
+.page-eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.14em;
+  color: var(--red-400);
+  margin: 0 0 8px;
+}
+
+.page-title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+}
+
+.page-lede{
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-mid);
+  margin: 0 0 32px;
+}
+
+/* ---------- dashboard: stat tiles ---------- */
+.stat-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.stat-tile{
+  background: var(--graphite-900);
+  padding: 16px 24px;
+}
+
+.stat-label{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+
+.stat-value{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+}
+.stat-value.is-accent{ color: var(--red-400); }
+.stat-value.is-good{ color: var(--green-500); }
+
+/* ---------- get the library ---------- */
+.get-library{
+  background: var(--graphite-900);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.get-library-copy{
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-mid);
+  margin: 0 0 20px;
+}
+
+.copy-tabs{ display: flex; gap: 4px; margin-bottom: 12px; }
+.copy-tab{
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.copy-tab:hover{ color: var(--text-hi); }
+.copy-tab.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+
+.copy-panel{ display: none; }
+.copy-panel.is-active{ display: block; }
+
+.code-block{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+.code-block code{
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-hi);
+  overflow-x: auto;
+  white-space: pre;
+}
+.copy-btn{
+  flex: none;
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.copy-btn:hover{ color: var(--text-hi); border-color: var(--red-500); }
+.copy-btn.is-copied{ color: var(--green-500); border-color: var(--green-500); }
+
+.library-status{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-mid);
+  margin: 16px 0 0;
+}
+.library-status strong{ color: var(--text-hi); }
+.switch-project{
+  background: none;
+  border: none;
+  color: var(--red-400);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+}
+.switch-project:hover{ text-decoration: underline; }
+
+/* ---------- copy-gate modal ---------- */
+.modal-overlay[hidden]{ display: none; }
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 50;
+}
+.modal{
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  max-width: 440px;
+  width: 100%;
+}
+.modal-title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0 0 12px;
+}
+.modal-copy{
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-mid);
+  margin: 0 0 24px;
+}
+.copy-gate-form{ display: flex; flex-direction: column; gap: 16px; }
+.form-field[hidden]{ display: none; }
+.form-field{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.form-field input, .form-field select{
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  background: var(--graphite-950);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+/* Custom arrow, consistently spaced - the native one sits flush against
+   the edge on some browsers/OSes with no way to control its position. */
+.form-field select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+.form-field input:focus, .form-field select:focus{ outline: none; border-color: var(--red-500); }
+.modal-actions{ display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+.btn{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+.btn-primary{ background: var(--red-500); border: 1px solid var(--red-500); color: var(--graphite-950); }
+.btn-primary:hover{ background: var(--red-600); border-color: var(--red-600); }
+.btn-ghost{ background: none; border: 1px solid var(--line-strong); color: var(--text-mid); }
+.btn-ghost:hover{ color: var(--text-hi); border-color: var(--red-500); }
+
+/* ---------- project link history ---------- */
+.history-panel{ margin-bottom: 24px; }
+
+.history-list{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+
+.history-empty{
+  font-size: 16px;
+  color: var(--text-dim);
+  padding: 0;
+}
+
+.history-item{
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.history-item:first-child{ border-top: none; padding-top: 0; }
+
+.history-avatar{
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--red-tint);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red-400);
+}
+
+.history-main{ display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.history-project{ font-size: 16px; font-weight: 500; color: var(--text-hi); }
+.history-meta{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-time{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  text-align: right;
+}
+
+@media (max-width: 640px){
+  .history-item{ grid-template-columns: 32px 1fr; }
+  .history-time{ display: none; }
+}
+
+/* ---------- who's using this library ---------- */
+.used-by-panel{ margin-bottom: 40px; }
+
+.used-by-list{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+
+.used-by-item{
+  display: grid;
+  grid-template-columns: 32px 1fr 64px 80px 80px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+}
+.used-by-item:first-child{ border-top: none; padding-top: 0; }
+
+.used-by-avatar{
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--graphite-800);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+}
+
+.used-by-name{ color: var(--text-hi); font-weight: 500; }
+.used-by-version{ font-family: var(--font-mono); font-size: 12px; color: var(--text-mid); }
+
+.used-by-status{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  padding: 4px 12px;
+  text-align: center;
+  width: fit-content;
+}
+.used-by-status.is-synced{ color: var(--green-500); background: rgba(47,191,110,0.12); }
+.used-by-status.is-behind{ color: var(--amber-500); background: rgba(230,165,58,0.12); }
+
+.used-by-time{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); text-align: right; white-space: nowrap; }
+
+@media (max-width: 640px){
+  .used-by-item{ grid-template-columns: 32px 1fr auto; }
+  .used-by-version, .used-by-time{ display: none; }
+}
+
+/* ---------- generic panel ---------- */
+.panel{
+  background: var(--graphite-900);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.panel-title{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin: 0 0 16px;
+}
+
+.panel-title-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.panel-title-row .panel-title{ margin-bottom: 0; }
+.panel-title-actions{ display: flex; gap: 8px; flex: none; }
+
+/* ---------- color foundation (foundations.html) ---------- */
+.color-foundation{ margin-bottom: 24px; }
+.spacing-model-panel{ margin-bottom: 24px; }
+
+.color-field-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.color-field{ display: flex; flex-direction: column; gap: 12px; }
+
+.color-field-head{ display: flex; align-items: center; justify-content: space-between; }
+
+.color-field-label{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-mid);
+}
+
+.optional-toggle{ display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.optional-toggle input[type="checkbox"]{ width: 16px; height: 16px; accent-color: var(--red-500); cursor: pointer; }
+
+.badge{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.badge-required{ color: var(--red-400); background: var(--red-tint); }
+.badge-optional{ color: var(--text-dim); background: var(--graphite-800); border: 1px solid var(--line-strong); }
+
+.color-rgba{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* Label cell for the colors page's row-based listing (.usage-hierarchy) -
+   stacks the name above its Required/Optional badge (and, for the optional
+   rows, the enable checkbox) inside the row's fixed 160px label column. */
+.usage-label-cell{ display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+
+/* ---------- background / surface-elevation colors ---------- */
+.bg-theme-note{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 20px;
+}
+.bg-theme-note strong{ color: var(--text-hi); }
+
+/* Real stacked-surface preview - each layer actually nests inside the
+   one above using the chosen background, so elevation is legible at a
+   glance instead of reading three hexes off a swatch. */
+.elevation-demo{
+  margin-top: 20px;
+  padding: 24px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.elevation-demo-layer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.elevation-demo-layer.is-primary{ background: var(--graphite-950); }
+.elevation-demo-layer.is-secondary{ background: var(--graphite-900); }
+.elevation-demo-layer.is-tertiary{ background: var(--graphite-850); padding: 20px 28px; }
+
+/* ---------- typography: font family pickers ---------- */
+.font-family-panel{ margin-bottom: 24px; }
+.font-field-grid{ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+.font-panel{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.font-method-panel{ display: none; flex-direction: column; gap: 12px; }
+.font-method-panel.is-active{ display: flex; }
+
+.font-apply-btn{ align-self: flex-start; }
+
+.upload-dropzone{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  min-height: 64px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.upload-dropzone:hover{ border-color: var(--red-500); color: var(--text-mid); }
+
+.font-category-hint{
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0 0 4px;
+}
+
+.font-category-chips .chip,
+.platform-chips .chip{ background: none; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease; }
+.font-category-chips .chip.is-active,
+.platform-chips .chip.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+
+.platform-chips{ margin-bottom: 24px; }
+
+.font-option-list{ display: flex; flex-direction: column; gap: 4px; }
+.font-option{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  color: var(--text-mid);
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.font-option:hover{ color: var(--text-hi); border-color: var(--red-500); }
+.font-option.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+.font-option-meta{ font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+
+.font-preview{
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+.font-preview-heading{ font-size: 28px; font-weight: 700; color: var(--text-hi); margin: 0 0 8px; }
+.font-preview-body{ font-size: 16px; color: var(--text-mid); margin: 0 0 8px; }
+.font-preview-meta{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin: 0; }
+
+/* ---------- typography: type scale ---------- */
+.type-scale-list{ display: flex; flex-direction: column; margin-bottom: 24px; }
+
+.type-row{
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.type-row:first-child{ border-top: none; padding-top: 0; }
+
+.type-row-controls{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.type-control{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 56px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+.type-control-level{ flex: none; width: 104px; }
+.type-control-family{ flex: 1 1 130px; }
+.type-control-size{ flex: 2 1 190px; }
+.type-control-weight{ flex: 1 1 140px; }
+.type-control-color{ flex: 1 1 200px; }
+.type-level-name{
+  display: block;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-hi);
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 8px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.type-control-family select{ min-width: 110px; }
+.type-control-size select{ min-width: 190px; }
+
+.type-control-lh .opacity-input-wrap{ width: 76px; }
+.type-control-lh input[type="text"]{
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+.type-control-lh input[type="text"]:focus{ outline: none; border-color: var(--red-500); }
+
+.type-control select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  background-color: var(--graphite-900);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 34px 8px 12px;
+}
+.type-control select:focus{ outline: none; border-color: var(--red-500); }
+
+.type-control input[type="text"],
+.type-control input[type="number"]{
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  background-color: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+.type-control input[type="text"]:focus,
+.type-control input[type="number"]:focus{ outline: none; border-color: var(--red-500); }
+.type-control input[type="text"]::placeholder{ color: var(--text-dim); }
+
+.type-control-italic{
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 56px;
+  padding-bottom: 9px;
+}
+.type-control-italic input[type="checkbox"]{ width: 16px; height: 16px; accent-color: var(--red-500); cursor: pointer; }
+
+.hex-input-wrap input.type-color-swatch{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px; height: 32px;
+  flex: none;
+  margin-right: 12px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+.type-color-swatch::-webkit-color-swatch-wrapper{ padding: 0; }
+.type-color-swatch::-webkit-color-swatch{ border: none; border-radius: var(--radius-sm); }
+.type-color-wrap input[type="text"]{ flex: 1; min-width: 0; }
+
+/* ---------- spacing page ---------- */
+.spacing-product-panel, .spacing-system-panel{ margin-bottom: 24px; }
+
+/* Visual gap demos - actual rendered spacing, not just numbers, so the
+   scale is legible at a glance without reading the px list. */
+.gap-demo-row{ display: flex; align-items: center; margin-top: 12px; }
+.gap-demo-block{
+  width: 16px; height: 16px;
+  flex: none;
+  background: var(--red-500);
+  border-radius: var(--radius-sm);
+}
+
+/* Visual corner-radius demos - real rendered corners, not just numbers. */
+.radius-demo-row{ display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.radius-demo-box{
+  width: 32px; height: 32px;
+  flex: none;
+  background: var(--red-tint);
+  border: 1.5px solid var(--red-500);
+}
+
+.product-card-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.product-card{
+  text-align: left;
+  background: var(--graphite-950);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.product-card:hover{ border-color: var(--red-500); }
+.product-card.is-active{ border-color: var(--red-500); background: var(--red-tint); }
+.product-card-name{ font-size: 16px; font-weight: 500; color: var(--text-hi); }
+.product-card-rec{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+
+.recommendation-callout{
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: var(--red-tint);
+}
+.recommendation-text{ font-size: 16px; line-height: 1.5; color: var(--text-hi); margin: 0; }
+.recommendation-text strong{ color: var(--red-400); }
+
+/* Fixed column count (not auto-fit) so the row is capped at exactly 4
+   cards no matter how wide the viewport gets - auto-fit's column count
+   is driven by minmax()'s minimum, so it kept adding a 5th+ column once
+   there was room for one, even though each card's own max-width (below)
+   is 320px. The breakpoints step the count down as the viewport narrows,
+   since a fixed repeat(4, 1fr) alone doesn't shrink the column count on
+   its own the way auto-fit does - only the columns' own width. */
+.system-card-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1352px;
+}
+@media (max-width: 1440px){
+  .system-card-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+/* Add-on and Date Range each have a single, wider example card (their
+   fields need more horizontal room than most components' 180-220px
+   preview), so their listing row reserves 3 columns worth of width even
+   above the 1440px breakpoint, instead of the usual 4 - keeps the one
+   card from looking like a narrow orphan in a mostly-empty wide row. */
+[data-role="addon-system-grid"],
+[data-role="daterange-system-grid"]{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+[data-role="addon-system-grid"] .system-card,
+[data-role="daterange-system-grid"] .system-card{
+  max-width: none;
+}
+@media (max-width: 1100px){
+  .system-card-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px){
+  .system-card-grid{ grid-template-columns: 1fr; }
+}
+.system-card{
+  text-align: left;
+  background: var(--graphite-950);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.system-card:hover{ border-color: var(--red-500); }
+.system-card.is-active{ border-color: var(--red-500); background: var(--red-tint); }
+.system-card-head{ display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.system-card-unit{ font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text-hi); }
+.system-card-tagline{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+.system-card-desc{ font-size: 14px; line-height: 20px; color: var(--text-mid); margin: 0; }
+.system-card-scale{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin: 0; line-height: 1.5; }
+
+.usage-hierarchy{ display: flex; flex-direction: column; margin: 24px 0; }
+.usage-row{
+  display: grid;
+  grid-template-columns: 160px 1fr auto 190px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.usage-row:first-child{ border-top: none; padding-top: 0; }
+.usage-row .gap-demo-row, .usage-row .radius-demo-row{ overflow: hidden; }
+.usage-row .gap-demo-row, .usage-row .radius-demo-row{ margin-top: 0; }
+.usage-label{ font-size: 16px; font-weight: 500; color: var(--text-hi); }
+.usage-desc{ font-size: 14px; color: var(--text-mid); }
+.usage-values{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); white-space: nowrap; text-align: right; }
+
+@media (max-width: 640px){
+  .usage-row{ grid-template-columns: 1fr; gap: 4px; }
+  .usage-values{ text-align: left; }
+}
+
+/* ---------- shadow demos ---------- */
+/* Real rendered box-shadows on a light surface - shadows need a light
+   background to actually read (the same reason dark mode leans on
+   border/surface contrast instead of shadow alone, per the spec). */
+.shadow-demo-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 16px;
+  padding: 20px;
+  background: #f1f1ee;
+  border-radius: var(--radius-md);
+}
+.system-card .shadow-demo-row{ margin-top: 12px; padding: 12px; gap: 12px; }
+.system-card .shadow-demo-box{ width: 28px; height: 28px; }
+.shadow-demo-box{
+  width: 40px; height: 40px;
+  flex: none;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+}
+
+/* Rows can show up to 3 boxes in the usage-hierarchy's fixed-width demo
+   column - smaller box/padding/gap here so even 3-up rows (e.g. the FAB
+   row's SM/MD/LG) stay inside the column instead of spilling out of it. */
+.usage-row .shadow-demo-row{ padding: 16px; gap: 12px; margin-top: 0; }
+.usage-row .shadow-demo-box{ width: 32px; height: 32px; }
+
+.shadow-a11y-note{ margin: 24px 0; }
+
+/* ---------- border demos ---------- */
+/* Real rendered borders, same family as the gap/radius/shadow demos above -
+   a swatch with the actual width/style/color/opacity applied, not a number. */
+.border-demo-row{ display: flex; align-items: center; margin-top: 12px; }
+.border-demo-box{
+  width: 32px; height: 32px;
+  flex: none;
+  background: var(--graphite-900);
+  border-radius: var(--radius-sm);
+}
+.usage-row .border-demo-row{ overflow: hidden; margin-top: 0; }
+
+/* Per-state editable border color - the swatch's own border renders the
+   real width/style/opacity for that row, so picking a color still shows
+   the live example instead of replacing it with a plain input. */
+.state-color-wrap{ padding: 0 8px; }
+.state-color-wrap input.type-color-swatch{
+  width: 26px; height: 26px;
+  flex: none;
+  margin-right: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--graphite-800);
+  padding: 0;
+}
+.state-color-hex{
+  font-family: var(--font-mono);
+  font-size: 13px;
+  width: 64px;
+  text-transform: uppercase;
+}
+
+.border-config-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.border-preview-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 12px;
+  padding: 24px;
+  background: var(--graphite-950);
+  border-radius: var(--radius-md);
+}
+.border-preview-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px; height: 64px;
+  flex: none;
+  background: var(--graphite-900);
+  color: var(--text-mid);
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+.border-preview-button{
+  background: var(--graphite-850);
+  color: var(--text-hi);
+}
+.border-preview-input{ background: var(--graphite-950); }
+
+/* ---------- picker (square + hue/alpha sliders + hex/opacity fields) ---------- */
+.picker{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.picker.is-disabled{ opacity: 0.5; pointer-events: none; }
+
+.picker-header{ display: flex; align-items: center; gap: 8px; }
+.picker-swatch{
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  flex: none;
+}
+.picker-ratio{ font-family: var(--font-mono); font-size: 12px; color: var(--text-hi); font-weight: 600; }
+.picker-ratio-note{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-right: auto; }
+.picker-badge{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.picker-badge.is-pass{ color: var(--green-500); background: rgba(47,191,110,0.12); }
+.picker-badge.is-fail{ color: var(--text-dim); background: var(--graphite-800); border: 1px solid var(--line-strong); }
+
+.picker-square{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+  border: 1px solid var(--line-strong);
+}
+.picker-square-handle{
+  position: absolute;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.picker-range{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  outline: none;
+  margin: 0;
+}
+.picker-range:disabled{ cursor: not-allowed; }
+.picker-range::-webkit-slider-runnable-track{ height: 16px; border-radius: 999px; }
+.picker-range::-moz-range-track{ height: 16px; border-radius: 999px; }
+.picker-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  margin-top: -1px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--graphite-950);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.35);
+  cursor: pointer;
+}
+.picker-range::-moz-range-thumb{
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--graphite-950);
+  cursor: pointer;
+}
+.hue-range{
+  background: linear-gradient(to right,
+    #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+}
+
+.picker-fields{ display: flex; gap: 12px; }
+.picker-field{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  flex: 1;
+  min-width: 0;
+}
+.picker-field-narrow{ flex: 0 0 88px; min-width: 0; }
+.picker-field input{
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+.hex-input-wrap{
+  display: flex;
+  align-items: center;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+}
+.hex-input-wrap:focus-within{ border-color: var(--red-500); }
+.hex-prefix{
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-dim);
+  flex: none;
+}
+.hex-input-wrap input{
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  padding: 8px 0 8px 4px;
+}
+.hex-input-wrap input:disabled ~ .hex-prefix,
+.hex-prefix ~ input:disabled{ color: var(--text-dim); }
+
+.opacity-input-wrap{ position: relative; display: block; }
+.opacity-input-wrap input{ padding-right: 26px; }
+.opacity-suffix{
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.opacity-input-wrap input:disabled ~ .opacity-suffix{ color: var(--text-dim); opacity: 0.6; }
+.picker-field input:focus{ outline: none; border-color: var(--red-500); }
+.picker-field input:disabled{ cursor: not-allowed; }
+
+.panel-footer-row{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  margin-top: 8px;
+}
+.save-status{ font-family: var(--font-mono); font-size: 12px; color: var(--green-500); }
+
+/* ---------- empty-state (placeholder pages) ---------- */
+.empty-state{
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 56px 40px;
+  max-width: 640px;
+  position: relative;
+}
+.empty-state::before, .empty-state::after{
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border: 2px solid var(--red-500);
+  opacity: 0.85;
+}
+.empty-state::before{ top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.empty-state::after{ bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+.empty-eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--red-400);
+  margin: 0 0 16px;
+}
+.empty-title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0 0 12px;
+}
+.empty-copy{
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-mid);
+  margin: 0 0 24px;
+  max-width: 480px;
+}
+.chip-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+.chip{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--text-mid);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+@media (max-width: 900px){
+  body{ grid-template-columns: 1fr; grid-template-areas: "topbar" "main"; }
+  .app-sidebar{ display: none; }
+}
+
+/* ---------- icon foundations ---------- */
+.icon-demo-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  color: var(--red-500);
+}
+.icon-demo-row svg{ flex: none; overflow: visible; }
+
+.system-card-icon-row{ margin-top: 12px; gap: 12px; }
+
+.icon-live-preview{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 28px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--red-500);
+}
+.icon-live-preview svg{ flex: none; overflow: visible; }
+
+.icon-upload-row{ margin-bottom: 16px; }
+.icon-upload-drop{ min-height: 80px; }
+.icon-upload-drop.is-dragover{ border-color: var(--red-500); color: var(--text-hi); background: var(--red-tint); }
+
+.icon-upload-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+.icon-upload-thumb{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+.icon-upload-thumb img{ width: 32px; height: 32px; object-fit: contain; }
+.icon-upload-thumb span{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.icon-upload-thumb-remove{
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--graphite-800);
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+.icon-upload-thumb-remove:hover{ background: var(--red-tint); color: var(--red-400); }
+
+.icon-upload-panel{ margin-top: 16px; }
+
+.library-card-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+.library-card{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.library-card:hover{ border-color: var(--red-500); }
+.library-card:has(input:checked){ border-color: var(--red-500); background: var(--red-tint); }
+.library-card input{ position: absolute; opacity: 0; pointer-events: none; }
+.library-card-name{ font-size: 15px; font-weight: 500; color: var(--text-hi); }
+.library-card-meta{ font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+.library-card-link{ font-family: var(--font-mono); font-size: 11px; color: var(--text-mid); text-decoration: none; }
+.library-card-link:hover{ color: var(--red-400); text-decoration: underline; }
+
+.picker-field textarea{
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: normal;
+  color: var(--text-hi);
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  resize: vertical;
+}
+.picker-field textarea:focus{ outline: none; border-color: var(--red-500); }
+.picker-field textarea[readonly]{ color: var(--text-mid); background: var(--graphite-950); }
+
+/* ---------- grid & layout foundations ---------- */
+.grid-demo{
+  margin-top: 12px;
+  height: 64px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.grid-demo-columns{ display: flex; gap: 3px; padding: 6px; }
+.grid-demo-col{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+
+.grid-demo-rows{ display: flex; flex-direction: column; gap: 4px; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-row-line{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+
+.grid-demo-cellgrid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-cell{ background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+
+.grid-demo-baseline{ display: flex; flex-direction: column; justify-content: space-between; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-baseline-line{ height: 1px; background: var(--red-500); opacity: 0.6; }
+
+.grid-demo-custom{
+  display: flex; align-items: center; justify-content: center;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  border: 1px dashed var(--line-strong);
+  box-sizing: border-box;
+}
+
+.grid-canvas-caption{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+.grid-canvas{
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: padding 0.15s ease;
+}
+.grid-canvas-columns{
+  display: flex;
+  min-height: 140px;
+}
+.grid-canvas-col{
+  flex: 1;
+  min-width: 0;
+  background: var(--red-tint);
+  border: 1px dashed var(--red-500);
+  border-radius: var(--radius-sm);
+}
+.grid-canvas-columns.is-rows{ flex-direction: column; gap: 8px !important; }
+.grid-canvas-row{ flex: 1; background: var(--red-tint); border: 1px dashed var(--red-500); border-radius: var(--radius-sm); }
+.grid-canvas-columns.is-baseline{ flex-direction: column; justify-content: space-between; gap: 0 !important; }
+.grid-canvas-baseline{ height: 1px; background: var(--red-500); opacity: 0.5; }
+.grid-canvas-columns.is-cellgrid{ display: grid; }
+.grid-canvas-cell{ background: var(--red-tint); border: 1px dashed var(--red-500); border-radius: var(--radius-sm); min-height: 36px; }
+.grid-canvas-columns.is-custom{
+  display: flex; align-items: center; justify-content: center;
+  min-height: 140px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 20px;
+}
+
+.pattern-card-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+.pattern-card{
+  background: var(--graphite-950);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.pattern-card-name{ display: block; font-size: 15px; font-weight: 500; color: var(--text-hi); margin-bottom: 4px; }
+.pattern-card-desc{ font-size: 14px; line-height: 20px; color: var(--text-mid); margin: 0; }
+
+.pattern-diagram{
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  height: 84px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.pattern-block{
+  flex: 1;
+  min-width: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--red-tint);
+  border: 1px solid var(--red-500);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  overflow: hidden;
+}
+.pattern-full{ flex: 1; }
+.pattern-cols-2{ gap: 4px; }
+.pattern-narrow{ flex: 0 0 26%; }
+
+.pattern-sidebar{ }
+
+.pattern-dashboard{ display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 4px; }
+.pattern-span-full{ grid-column: 1 / -1; }
+
+.pattern-minicards{ display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 4px; }
+.pattern-minicard{ }
+
+.pattern-hero{ flex-direction: column; }
+.pattern-hero-block{ flex: 0 0 45%; background: var(--red-500); opacity: 0.85; color: var(--graphite-950); }
+
+.device-select-row{ display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+.device-select-field{ flex: 1; min-width: 260px; }
+.device-select-custom{ flex: 0 0 160px; }
+.device-select-custom[hidden]{ display: none; }
+
+/* ---------- border divider / separator demos ---------- */
+.divider-demo-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-top: 12px;
+  padding: 24px;
+  background: var(--graphite-950);
+  border-radius: var(--radius-md);
+}
+.divider-demo-col{ flex: 1; min-width: 200px; }
+.divider-demo-label{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+.divider-demo-stack{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.divider-demo-line-h{ width: 100%; height: 0; }
+.divider-demo-inline{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.divider-demo-line-v{ width: 0; align-self: stretch; }
+.divider-demo-text{
+  font-size: 14px;
+  color: var(--text-mid);
+}
+
+/* ---------- button component ---------- */
+.btn-demo{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  border: 1.5px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.btn-demo svg{ flex: none; }
+
+.btn-demo--h24{ height: 24px; padding: 0 10px; font-size: 11px; gap: 4px; }
+.btn-demo--h28{ height: 28px; padding: 0 12px; font-size: 12px; gap: 6px; }
+.btn-demo--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.btn-demo--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.btn-demo--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.btn-demo--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.btn-demo--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.btn-demo--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+.btn-demo.is-icon-only{ padding: 0; }
+.btn-demo.is-icon-only.btn-demo--h24{ width: 24px; }
+.btn-demo.is-icon-only.btn-demo--h28{ width: 28px; }
+.btn-demo.is-icon-only.btn-demo--h32{ width: 32px; }
+.btn-demo.is-icon-only.btn-demo--h36{ width: 36px; }
+.btn-demo.is-icon-only.btn-demo--h40{ width: 40px; }
+.btn-demo.is-icon-only.btn-demo--h44{ width: 44px; }
+.btn-demo.is-icon-only.btn-demo--h48{ width: 48px; }
+.btn-demo.is-icon-only.btn-demo--h56{ width: 56px; }
+
+.btn-demo--primary{ background: var(--red-500); color: #fff; }
+.btn-demo--primary:hover, .btn-demo--primary.is-hover{ background: var(--red-400); }
+.btn-demo--primary:active, .btn-demo--primary.is-pressed{ background: var(--red-600); }
+.btn-demo--primary:focus-visible, .btn-demo--primary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--primary:disabled, .btn-demo--primary.is-disabled{ opacity: 0.45; cursor: not-allowed; }
+
+.btn-demo--secondary{ background: var(--graphite-700); color: var(--text-hi); border-color: var(--line-strong); }
+.btn-demo--secondary:hover, .btn-demo--secondary.is-hover{ background: var(--graphite-600); }
+.btn-demo--secondary:active, .btn-demo--secondary.is-pressed{ background: var(--graphite-800); }
+.btn-demo--secondary:focus-visible, .btn-demo--secondary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--secondary:disabled, .btn-demo--secondary.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.btn-demo--tertiary{ background: transparent; color: var(--text-hi); border-color: var(--line-strong); }
+.btn-demo--tertiary:hover, .btn-demo--tertiary.is-hover{ background: var(--graphite-800); }
+.btn-demo--tertiary:active, .btn-demo--tertiary.is-pressed{ background: var(--graphite-700); }
+.btn-demo--tertiary:focus-visible, .btn-demo--tertiary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--tertiary:disabled, .btn-demo--tertiary.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.btn-demo--ghost{ background: transparent; color: var(--text-mid); border-color: transparent; }
+.btn-demo--ghost:hover, .btn-demo--ghost.is-hover{ background: var(--graphite-800); color: var(--text-hi); }
+.btn-demo--ghost:active, .btn-demo--ghost.is-pressed{ background: var(--graphite-700); }
+.btn-demo--ghost:focus-visible, .btn-demo--ghost.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--ghost:disabled, .btn-demo--ghost.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.btn-demo--link{ background: transparent; color: var(--red-400); border-color: transparent; padding-inline: 8px; }
+.btn-demo--link:hover, .btn-demo--link.is-hover{ text-decoration: underline; }
+.btn-demo--link:active, .btn-demo--link.is-pressed{ color: var(--red-600); }
+.btn-demo--link:focus-visible, .btn-demo--link.is-focus{ outline: 2px solid var(--red-400); outline-offset: 3px; border-radius: var(--radius-sm); }
+.btn-demo--link:disabled, .btn-demo--link.is-disabled{ opacity: 0.4; cursor: not-allowed; text-decoration: none; }
+
+/* Destructive uses the fixed --danger-* tokens, not the brand-customizable
+   --red-* tokens - a Delete button must always read as red, regardless of
+   whatever brand color is currently saved on the Colors page. */
+.btn-demo--destructive{ background: rgba(255,3,26,0.1); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
+.btn-demo--destructive:hover, .btn-demo--destructive.is-hover{ background: rgba(255,3,26,0.16); border-color: var(--danger-400); color: var(--danger-400); }
+.btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: rgba(255,3,26,0.26); border-color: var(--danger-600); color: var(--danger-600); }
+.btn-demo--destructive:focus-visible, .btn-demo--destructive.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
+.btn-demo--destructive:disabled, .btn-demo--destructive.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.btn-demo--neutral{ background: var(--graphite-800); color: var(--text-hi); border-color: var(--line-strong); }
+.btn-demo--neutral:hover, .btn-demo--neutral.is-hover{ background: var(--graphite-700); }
+.btn-demo--neutral:active, .btn-demo--neutral.is-pressed{ background: var(--graphite-850); }
+.btn-demo--neutral:focus-visible, .btn-demo--neutral.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--neutral:disabled, .btn-demo--neutral.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+/* Approve is a positive/success semantic action - it gets its own green
+   treatment rather than reusing Neutral's gray, matching Destructive's
+   red so the two semantic outcomes read as opposites at a glance. */
+.btn-demo--approve{ background: rgba(47,191,110,0.1); color: var(--green-500); border-width: 2px; border-color: var(--green-500); }
+.btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: rgba(47,191,110,0.16); }
+.btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: rgba(47,191,110,0.26); }
+.btn-demo--approve:focus-visible, .btn-demo--approve.is-focus{ outline: 2px solid var(--green-500); outline-offset: 2px; }
+.btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.button-type-demo{ margin-top: 12px; }
+
+.button-type-card,
+.group-type-card,
+.input-type-card,
+.select-type-card,
+.checkbox-type-card,
+.radio-type-card,
+.switch-type-card,
+.datepicker-type-card,
+.tabs-type-card,
+.anchor-type-card,
+.breadcrumb-type-card,
+.dropdown-type-card,
+.pagination-type-card,
+.menu-type-card,
+.steps-type-card,
+.password-type-card,
+.number-type-card,
+.search-type-card,
+.textarea-type-card,
+.addon-type-card,
+.autocomplete-type-card,
+.mention-type-card,
+.daterange-type-card,
+.time-type-card,
+.colorpicker-type-card,
+.slider-type-card,
+.rating-type-card,
+.alert-type-card,
+.toast-type-card,
+.modal-type-card,
+.tooltip-type-card{
+  min-height: 220px;
+  align-items: center;
+  text-align: center;
+}
+.button-type-card .button-type-demo,
+.group-type-card .button-type-demo,
+.input-type-card .button-type-demo,
+.select-type-card .button-type-demo,
+.checkbox-type-card .button-type-demo,
+.radio-type-card .button-type-demo,
+.switch-type-card .button-type-demo,
+.datepicker-type-card .button-type-demo,
+.tabs-type-card .button-type-demo,
+.anchor-type-card .button-type-demo,
+.breadcrumb-type-card .button-type-demo,
+.dropdown-type-card .button-type-demo,
+.pagination-type-card .button-type-demo,
+.menu-type-card .button-type-demo,
+.steps-type-card .button-type-demo,
+.password-type-card .button-type-demo,
+.number-type-card .button-type-demo,
+.search-type-card .button-type-demo,
+.textarea-type-card .button-type-demo,
+.addon-type-card .button-type-demo,
+.autocomplete-type-card .button-type-demo,
+.mention-type-card .button-type-demo,
+.daterange-type-card .button-type-demo,
+.time-type-card .button-type-demo,
+.colorpicker-type-card .button-type-demo,
+.slider-type-card .button-type-demo,
+.rating-type-card .button-type-demo,
+.alert-type-card .button-type-demo,
+.toast-type-card .button-type-demo,
+.modal-type-card .button-type-demo,
+.tooltip-type-card .button-type-demo{
+  flex: 1;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.button-type-card .card-copy-row,
+.group-type-card .card-copy-row,
+.input-type-card .card-copy-row,
+.select-type-card .card-copy-row,
+.checkbox-type-card .card-copy-row,
+.radio-type-card .card-copy-row,
+.switch-type-card .card-copy-row,
+.datepicker-type-card .card-copy-row,
+.tabs-type-card .card-copy-row,
+.anchor-type-card .card-copy-row,
+.breadcrumb-type-card .card-copy-row,
+.dropdown-type-card .card-copy-row,
+.pagination-type-card .card-copy-row,
+.menu-type-card .card-copy-row,
+.steps-type-card .card-copy-row,
+.password-type-card .card-copy-row,
+.number-type-card .card-copy-row,
+.search-type-card .card-copy-row,
+.textarea-type-card .card-copy-row,
+.addon-type-card .card-copy-row,
+.autocomplete-type-card .card-copy-row,
+.mention-type-card .card-copy-row,
+.daterange-type-card .card-copy-row,
+.time-type-card .card-copy-row,
+.colorpicker-type-card .card-copy-row,
+.slider-type-card .card-copy-row,
+.rating-type-card .card-copy-row,
+.alert-type-card .card-copy-row,
+.toast-type-card .card-copy-row,
+.modal-type-card .card-copy-row,
+.tooltip-type-card .card-copy-row{ width: 100%; margin-top: auto; }
+
+.dualicon-card-label{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-top: 12px;
+}
+
+.button-type-states-preview{
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.button-type-demo:hover .button-type-states-preview{ display: flex; }
+.button-type-state-item{ display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.button-type-state-label{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ---------- Primary Button 36px - Dual Icon (exact-spec component set) ---------- */
+.dualicon-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 122px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+.dualicon-btn-icon{ width: 20px; height: 20px; flex: none; display: flex; align-items: center; justify-content: center; }
+.dualicon-btn-icon svg{ width: 20px; height: 20px; display: block; }
+
+/* Real hover/pressed interactivity for every dualicon-btn (gallery card
+   preview + every matrix cell) is handled in JS (see button-dualicon-detail.js
+   wireRealInteraction()), NOT here as a generic CSS overlay - a flat black
+   overlay is only an accurate stand-in for the types whose real Hover/Pressed
+   spec literally is "same background with a black overlay" (Primary,
+   Secondary, Approve, Delete). Tertiary and Ghost's real Hover/Pressed swap
+   to a completely different flat color, and Transparent has no visible
+   change at all - a generic overlay rule made every type look like it was
+   just getting darker, which didn't match what that type's own Hover row
+   actually shows. JS swaps in each type's real state CSS instead. */
+
+/* Real keyboard-focus feedback (Tab between buttons) - matches the same
+   white-inner-border + dark-outer-ring treatment every type's own
+   "Focused" row already shows as its assigned static state. Without this,
+   tabbing between dualicon-btn/splitcta buttons only got the browser's
+   unstyled default outline (or none, depending on platform), unlike
+   .btn-demo which already has a real :focus-visible rule per type. */
+.dualicon-btn:focus-visible:not(:disabled){
+  box-shadow: inset 0 0 0 1px #FFFFFF !important;
+  outline: 2px solid #202124 !important;
+  outline-offset: 2px;
+}
+.splitcta-main:focus-visible:not(:disabled),
+.splitcta-trigger:focus-visible:not(:disabled){
+  outline: 2px solid #202124 !important;
+  outline-offset: -2px;
+}
+
+/* ---------- CTA With Dropdown (split button, exact-spec) ---------- */
+.splitcta{
+  display: inline-flex;
+  align-items: stretch;
+  width: 141px;
+  height: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.splitcta-main{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 105px;
+  flex: none;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+.splitcta-divider{ width: 1px; flex: none; }
+.splitcta-trigger{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  flex: none;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.splitcta-icon{ width: 20px; height: 20px; flex: none; display: flex; align-items: center; justify-content: center; }
+.splitcta-icon svg{ width: 20px; height: 20px; display: block; }
+
+/* Real hover/pressed for the split CTA is also JS-driven (see
+   wireRealInteraction() in button-dualicon-detail.js) - it swaps the
+   wrapper's actual Hover/Pressed spec (a genuine background/border/divider
+   color change per the component's own states), not a generic overlay. */
+
+.splitcta-state-row{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 4px;
+  border-top: 1px solid var(--line);
+}
+.splitcta-state-row:first-child{ border-top: none; padding-top: 4px; }
+.splitcta-state-label{
+  width: 96px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Per-state colors are supplied as inline style="" per type/state by
+   button-dualicon-detail.js's TYPE_SPEC data, not CSS classes - every
+   type (Primary/Secondary/Tertiary/Ghost/Transparent/...) defines its own
+   full five-state palette, so a data-driven single source of truth is
+   easier to extend than a growing pile of per-type CSS rules here. */
+
+.dualicon-state-row{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 4px;
+  border-top: 1px solid var(--line);
+}
+.dualicon-state-row:first-child{ border-top: none; padding-top: 4px; }
+.dualicon-state-label{
+  width: 96px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.type-control-checkbox-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  cursor: pointer;
+}
+.type-control-checkbox-row input[type="checkbox"]{ width: 16px; height: 16px; accent-color: var(--red-500); cursor: pointer; }
+.type-control-scope{ color: var(--text-dim); font-weight: 400; text-transform: none; letter-spacing: normal; font-family: var(--font-body); font-size: 14px; }
+
+.spec-table{ width: 100%; border-collapse: collapse; margin-top: 12px; }
+.spec-table th, .spec-table td{
+  text-align: left;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text-mid);
+}
+.spec-table th{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-top: none;
+}
+.spec-table td:first-child{ color: var(--text-hi); font-weight: 600; white-space: nowrap; }
+
+.button-live-preview{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 140px;
+  margin-top: 12px;
+  padding: 32px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.a11y-inline-note{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+.a11y-inline-note.is-pass{ color: var(--green-500); }
+.a11y-inline-note.is-fail{ color: var(--amber-500); }
+.a11y-inline-note[hidden]{ display: none; }
+[data-role="accessible-label-field"][hidden]{ display: none; }
+[data-role="group-field-label-field"][hidden]{ display: none; }
+[data-role="group-supporting-text-field"][hidden]{ display: none; }
+[data-role="addon-prefix-field"][hidden]{ display: none; }
+[data-role="addon-suffix-field"][hidden]{ display: none; }
+
+.button-matrix-wrap{ overflow-x: auto; margin-top: 12px; }
+.button-matrix{ border-collapse: collapse; width: 100%; min-width: 820px; }
+.button-matrix-rowhead{
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--graphite-900);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-hi);
+  padding: 16px 20px;
+  white-space: nowrap;
+}
+.button-matrix-colhead{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--graphite-900);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  padding: 0 16px 16px;
+  font-weight: 400;
+}
+.button-matrix-cell{
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 1px solid var(--line);
+}
+
+.button-matrix-combo{ margin-bottom: 32px; }
+.button-matrix-combo:last-child{ margin-bottom: 0; }
+.button-matrix-combo-label{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+
+/* ---------- Input Text Field demo (input-text-field.html) ----------
+   Outlined/Filled/Underlined share the same field/label/note structure -
+   only the control's background/border treatment differs per type. Real
+   :hover/:focus-within/:disabled are combined with the matching static
+   .is-hover/.is-focus/.is-disabled class on every rule (same dual pattern
+   already used by .btn-demo), so hovering or focusing any Live Preview
+   cell shows genuine feedback, not just a frozen row illustration. Filled
+   and Error have no natural pseudo-class equivalent (they describe value
+   content and validation state, not an interaction), so those two are
+   static-class only. */
+.input-demo-field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  text-align: left;
+}
+.input-demo-label{
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-hi);
+}
+.input-demo-control{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.input-demo-icon{ flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.input-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.input-demo-input{
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-body);
+  color: var(--text-hi);
+  padding: 0;
+}
+.input-demo-input::placeholder{ color: var(--text-dim); }
+.input-demo-input:disabled{ cursor: not-allowed; }
+.input-demo-note{
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+.input-demo-note.is-error{ color: var(--danger-500); }
+
+/* Size scale (height in px) - default is 40, same scale as the rest of the system */
+.input-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.input-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.input-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.input-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.input-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.input-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.input-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.input-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.input-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.input-demo-control--outlined:hover, .input-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.input-demo-control--outlined:focus-within, .input-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.input-demo-control--outlined:has(.input-demo-input:disabled), .input-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.input-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.input-demo-control--filled:hover, .input-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.input-demo-control--filled:focus-within, .input-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.input-demo-control--filled:has(.input-demo-input:disabled), .input-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.input-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.input-demo-control--underlined:hover, .input-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.input-demo-control--underlined:focus-within, .input-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.input-demo-control--underlined:has(.input-demo-input:disabled), .input-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+/* ---------- Password field demo (password-default.html) ----------
+   Structural mirror of .input-demo-* above - only the class prefix
+   changes to .password-demo-*, plus one new .password-demo-toggle
+   button style for the optional reveal-toggle icon button. */
+.password-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.password-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.password-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.password-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); padding: 0; }
+.password-demo-input::placeholder{ color: var(--text-dim); }
+.password-demo-input:disabled{ cursor: not-allowed; }
+.password-demo-toggle{ flex: none; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
+.password-demo-toggle:hover{ color: var(--text-hi); }
+.password-demo-toggle svg{ width: 100%; height: 100%; display: block; }
+.password-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.password-demo-note.is-error{ color: var(--danger-500); }
+
+.password-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.password-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.password-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.password-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.password-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.password-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.password-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.password-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.password-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.password-demo-control--outlined:hover, .password-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.password-demo-control--outlined:focus-within, .password-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.password-demo-control--outlined:has(.password-demo-input:disabled), .password-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.password-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.password-demo-control--filled:hover, .password-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.password-demo-control--filled:focus-within, .password-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.password-demo-control--filled:has(.password-demo-input:disabled), .password-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.password-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.password-demo-control--underlined:hover, .password-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.password-demo-control--underlined:focus-within, .password-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.password-demo-control--underlined:has(.password-demo-input:disabled), .password-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+/* ---------- Number field demo (number-default.html) ----------
+   Structural mirror of .input-demo-* above, renamed to .number-demo-*,
+   plus .number-demo-stepper / .number-demo-step for the trailing
+   increment/decrement buttons unique to Number. */
+.number-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.number-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.number-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.number-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); padding: 0; -moz-appearance: textfield; appearance: textfield; }
+.number-demo-input::-webkit-outer-spin-button,
+.number-demo-input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+.number-demo-input::placeholder{ color: var(--text-dim); }
+.number-demo-input:disabled{ cursor: not-allowed; }
+.number-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.number-demo-note.is-error{ color: var(--danger-500); }
+
+.number-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.number-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.number-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.number-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.number-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.number-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.number-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.number-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.number-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.number-demo-control--outlined:hover, .number-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.number-demo-control--outlined:focus-within, .number-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.number-demo-control--outlined:has(.number-demo-input:disabled), .number-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.number-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.number-demo-control--filled:hover, .number-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.number-demo-control--filled:focus-within, .number-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.number-demo-control--filled:has(.number-demo-input:disabled), .number-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.number-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.number-demo-control--underlined:hover, .number-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.number-demo-control--underlined:focus-within, .number-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.number-demo-control--underlined:has(.number-demo-input:disabled), .number-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+.number-demo-stepper{ flex: none; display: flex; flex-direction: column; align-items: stretch; justify-content: center; width: 16px; align-self: stretch; margin: 0 -2px 0 0; padding-left: 6px; border-left: 1px solid var(--line-strong); }
+.number-demo-step{ flex: 1 1 auto; display: flex; align-items: center; justify-content: center; height: 10px; min-height: 10px; padding: 0; border: none; background: none; color: var(--text-dim); font-size: 8px; line-height: 1; cursor: pointer; }
+.number-demo-step:hover{ color: var(--text-hi); }
+.number-demo-control--outlined:has(.number-demo-input:disabled) .number-demo-step,
+.number-demo-control--outlined.is-disabled .number-demo-step,
+.number-demo-control--filled:has(.number-demo-input:disabled) .number-demo-step,
+.number-demo-control--filled.is-disabled .number-demo-step,
+.number-demo-control--underlined:has(.number-demo-input:disabled) .number-demo-step,
+.number-demo-control--underlined.is-disabled .number-demo-step{ cursor: not-allowed; }
+
+/* ---------- Search field demo (search-default.html) ----------
+   Structural mirror of .input-demo-* above, renamed to .search-demo-*.
+   Search fields intentionally have no label element - the placeholder
+   and leading icon communicate purpose instead. */
+.search-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.search-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.search-demo-icon{ flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.search-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.search-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); padding: 0; }
+.search-demo-input::placeholder{ color: var(--text-dim); }
+.search-demo-input:disabled{ cursor: not-allowed; }
+.search-demo-input::-webkit-search-decoration,
+.search-demo-input::-webkit-search-cancel-button{ -webkit-appearance: none; appearance: none; }
+.search-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.search-demo-note.is-error{ color: var(--danger-500); }
+
+.search-demo-clear{ flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
+.search-demo-clear:hover{ color: var(--text-hi); }
+.search-demo-clear svg{ width: 100%; height: 100%; display: block; }
+
+.search-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.search-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.search-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.search-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.search-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.search-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.search-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.search-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.search-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.search-demo-control--outlined:hover, .search-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.search-demo-control--outlined:focus-within, .search-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.search-demo-control--outlined:has(.search-demo-input:disabled), .search-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.search-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.search-demo-control--filled:hover, .search-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.search-demo-control--filled:focus-within, .search-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.search-demo-control--filled:has(.search-demo-input:disabled), .search-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.search-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.search-demo-control--underlined:hover, .search-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.search-demo-control--underlined:focus-within, .search-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.search-demo-control--underlined:has(.search-demo-input:disabled), .search-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+/* ---------- Text Area demo (text-area-default.html) ----------
+   Structural mirror of .input-demo-* - class prefix changes to
+   .textarea-demo-*, the control renders a real <textarea> instead of
+   <input>. Size still controls font-size/padding only (never a fixed
+   height); padding applies equally on all sides since content wraps;
+   align-items is flex-start since content sits at the top of a
+   multi-line box. Visible height comes from the textarea's own `rows`
+   attribute, set by the driver script, not from any rule here. */
+.textarea-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.textarea-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.textarea-demo-control{ box-sizing: border-box; display: flex; align-items: flex-start; gap: 8px; width: 100%; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.textarea-demo-input{ flex: 1 1 auto; min-width: 0; width: 100%; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); padding: 0; line-height: 1.5; resize: none; }
+.textarea-demo-input::placeholder{ color: var(--text-dim); }
+.textarea-demo-input:disabled{ cursor: not-allowed; }
+.textarea-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.textarea-demo-note.is-error{ color: var(--danger-500); }
+
+.textarea-demo-control--h24{ padding: 10px; font-size: 11px; }
+.textarea-demo-control--h28{ padding: 12px; font-size: 12px; }
+.textarea-demo-control--h32{ padding: 12px; font-size: 12px; }
+.textarea-demo-control--h36{ padding: 14px; font-size: 13px; }
+.textarea-demo-control--h40{ padding: 16px; font-size: 14px; }
+.textarea-demo-control--h44{ padding: 18px; font-size: 15px; }
+.textarea-demo-control--h48{ padding: 20px; font-size: 16px; }
+.textarea-demo-control--h56{ padding: 24px; font-size: 17px; }
+
+.textarea-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.textarea-demo-control--outlined:hover, .textarea-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.textarea-demo-control--outlined:focus-within, .textarea-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.textarea-demo-control--outlined:has(.textarea-demo-input:disabled), .textarea-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.textarea-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.textarea-demo-control--filled:hover, .textarea-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.textarea-demo-control--filled:focus-within, .textarea-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.textarea-demo-control--filled:has(.textarea-demo-input:disabled), .textarea-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.textarea-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.textarea-demo-control--underlined:hover, .textarea-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.textarea-demo-control--underlined:focus-within, .textarea-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.textarea-demo-control--underlined:has(.textarea-demo-input:disabled), .textarea-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+/* ---------- Add-on demo (add-on-default.html) ----------
+   Unlike Input, the control itself has no side padding - padding lives
+   on the input text and on each segment individually, so the prefix/
+   suffix segments can carry their own background flush to the control's
+   own edges, reading as attached zones rather than icons floating inside
+   one shared field background. */
+.addon-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 280px; text-align: left; }
+.addon-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.addon-demo-control{ box-sizing: border-box; display: flex; align-items: center; width: 100%; overflow: hidden; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.addon-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); }
+.addon-demo-input::placeholder{ color: var(--text-dim); }
+.addon-demo-input:disabled{ cursor: not-allowed; }
+.addon-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.addon-demo-note.is-error{ color: var(--danger-500); }
+
+.addon-demo-segment{ flex: none; white-space: nowrap; background: transparent; color: var(--text-dim); display: flex; align-items: center; }
+.addon-demo-segment--prefix{ border-right: 1px solid var(--line-strong); }
+.addon-demo-segment--suffix{ border-left: 1px solid var(--line-strong); }
+
+.addon-demo-control--h24{ height: 24px; font-size: 11px; }
+.addon-demo-control--h24 .addon-demo-input{ padding: 0 10px; }
+.addon-demo-control--h24 .addon-demo-segment{ padding: 0 10px; font-size: 11px; }
+
+.addon-demo-control--h28{ height: 28px; font-size: 12px; }
+.addon-demo-control--h28 .addon-demo-input{ padding: 0 12px; }
+.addon-demo-control--h28 .addon-demo-segment{ padding: 0 12px; font-size: 12px; }
+
+.addon-demo-control--h32{ height: 32px; font-size: 12px; }
+.addon-demo-control--h32 .addon-demo-input{ padding: 0 12px; }
+.addon-demo-control--h32 .addon-demo-segment{ padding: 0 12px; font-size: 12px; }
+
+.addon-demo-control--h36{ height: 36px; font-size: 13px; }
+.addon-demo-control--h36 .addon-demo-input{ padding: 0 14px; }
+.addon-demo-control--h36 .addon-demo-segment{ padding: 0 14px; font-size: 13px; }
+
+.addon-demo-control--h40{ height: 40px; font-size: 14px; }
+.addon-demo-control--h40 .addon-demo-input{ padding: 0 16px; }
+.addon-demo-control--h40 .addon-demo-segment{ padding: 0 16px; font-size: 14px; }
+
+.addon-demo-control--h44{ height: 44px; font-size: 15px; }
+.addon-demo-control--h44 .addon-demo-input{ padding: 0 18px; }
+.addon-demo-control--h44 .addon-demo-segment{ padding: 0 18px; font-size: 15px; }
+
+.addon-demo-control--h48{ height: 48px; font-size: 16px; }
+.addon-demo-control--h48 .addon-demo-input{ padding: 0 20px; }
+.addon-demo-control--h48 .addon-demo-segment{ padding: 0 20px; font-size: 16px; }
+
+.addon-demo-control--h56{ height: 56px; font-size: 17px; }
+.addon-demo-control--h56 .addon-demo-input{ padding: 0 24px; }
+.addon-demo-control--h56 .addon-demo-segment{ padding: 0 24px; font-size: 17px; }
+
+.addon-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.addon-demo-control--outlined:hover, .addon-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.addon-demo-control--outlined:focus-within, .addon-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.addon-demo-control--outlined:has(.addon-demo-input:disabled), .addon-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.addon-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.addon-demo-control--filled:hover, .addon-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.addon-demo-control--filled:focus-within, .addon-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.addon-demo-control--filled:has(.addon-demo-input:disabled), .addon-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.addon-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
+.addon-demo-control--underlined:hover, .addon-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
+.addon-demo-control--underlined:focus-within, .addon-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
+.addon-demo-control--underlined:has(.addon-demo-input:disabled), .addon-demo-control--underlined.is-disabled{ opacity: 0.5; }
+
+/* ---------- Autocomplete demo (autocomplete-default.html) ----------
+   Outlined/Filled only (no Underlined - a suggestion panel reads better
+   anchored to a boxed field). .autocomplete-demo-field needs
+   position:relative so .autocomplete-demo-panel can anchor to it. */
+.autocomplete-demo-field{ position: relative; display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.autocomplete-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.autocomplete-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.autocomplete-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); padding: 0; }
+.autocomplete-demo-input::placeholder{ color: var(--text-dim); }
+.autocomplete-demo-input:disabled{ cursor: not-allowed; }
+
+.autocomplete-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.autocomplete-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.autocomplete-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.autocomplete-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.autocomplete-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.autocomplete-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.autocomplete-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.autocomplete-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.autocomplete-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.autocomplete-demo-control--outlined:hover, .autocomplete-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.autocomplete-demo-control--outlined:focus-within, .autocomplete-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--outlined:has(.autocomplete-demo-input:disabled), .autocomplete-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.autocomplete-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.autocomplete-demo-control--filled:hover, .autocomplete-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.autocomplete-demo-control--filled:focus-within, .autocomplete-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--filled:has(.autocomplete-demo-input:disabled), .autocomplete-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.autocomplete-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; background: var(--graphite-900); border: 1px solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 4px; }
+/* The panel is position:absolute so it doesn't naturally grow its
+   .autocomplete-demo-field parent - without this, the Open state's
+   panel would visually overlap the Live Preview matrix row beneath it
+   instead of reserving its own space. */
+.autocomplete-demo-field:has(.autocomplete-demo-panel){ margin-bottom: 128px; }
+.autocomplete-demo-option{ box-sizing: border-box; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
+.autocomplete-demo-option.is-active{ background: var(--graphite-800); }
+
+/* ---------- Mention demo (mention-default.html) ----------
+   Structural mirror of .textarea-demo-* (compact multi-line box, Size
+   controls font-size/padding only, never height) renamed to
+   .mention-demo-*. The editable surface is a non-editable decorative
+   div (not a real input/textarea) since it mixes plain text with one
+   inline .mention-demo-chip token. .mention-demo-field needs
+   position:relative so .mention-demo-panel can anchor to it. */
+.mention-demo-field{ position: relative; display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.mention-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.mention-demo-control{ box-sizing: border-box; display: flex; align-items: flex-start; gap: 8px; width: 100%; min-height: 84px; border-radius: var(--radius-md); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.mention-demo-input{ flex: 1 1 auto; min-width: 0; width: 100%; font-family: var(--font-body); color: var(--text-hi); line-height: 1.5; cursor: default; }
+.mention-demo-input--empty{ color: var(--text-dim); }
+
+.mention-demo-control--h24{ padding: 10px; font-size: 11px; }
+.mention-demo-control--h28{ padding: 12px; font-size: 12px; }
+.mention-demo-control--h32{ padding: 12px; font-size: 12px; }
+.mention-demo-control--h36{ padding: 14px; font-size: 13px; }
+.mention-demo-control--h40{ padding: 16px; font-size: 14px; }
+.mention-demo-control--h44{ padding: 18px; font-size: 15px; }
+.mention-demo-control--h48{ padding: 20px; font-size: 16px; }
+.mention-demo-control--h56{ padding: 24px; font-size: 17px; }
+
+.mention-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.mention-demo-control--outlined:hover, .mention-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.mention-demo-control--outlined:focus-within, .mention-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.mention-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.mention-demo-control--filled:hover, .mention-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.mention-demo-control--filled:focus-within, .mention-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+.mention-demo-chip{ display: inline-block; background: var(--red-tint); color: var(--red-400); border-radius: 4px; padding: 1px 4px; font-weight: 500; }
+
+.mention-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; background: var(--graphite-900); border: 1px solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 4px; }
+.mention-demo-person{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
+.mention-demo-person.is-active{ background: var(--graphite-800); }
+.mention-demo-avatar{ width: 22px; height: 22px; flex-shrink: 0; border-radius: 9999px; background: var(--graphite-700); color: var(--text-hi); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.mention-demo-field:has(.mention-demo-panel){ margin-bottom: 148px; }
+
+/* ---------- Date Range demo (date-range-default.html) ----------
+   Same pattern as Date Picker - a role="button" div control (not a real
+   input, since a range's value is set via its calendar panel, not
+   typed), showing two date segments separated by an arrow instead of a
+   single value. Field is 280px wide (vs Date Picker's 220px) since two
+   dates plus an arrow need the extra room so text doesn't truncate. */
+.daterange-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 280px; text-align: left; }
+.daterange-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.daterange-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.daterange-demo-value{ flex: 1 1 auto; min-width: 0; display: flex; align-items: center; font-family: var(--font-body); color: var(--text-hi); overflow: hidden; }
+.daterange-demo-segment{ display: inline; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-hi); }
+.daterange-demo-segment.is-placeholder{ color: var(--text-dim); }
+.daterange-demo-arrow{ flex: none; color: var(--text-dim); font-size: 13px; margin: 0 2px; }
+.daterange-demo-icon{ margin-left: auto; flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.daterange-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.daterange-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.daterange-demo-note.is-error{ color: var(--danger-500); }
+
+.daterange-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.daterange-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.daterange-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.daterange-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.daterange-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.daterange-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.daterange-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.daterange-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.daterange-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.daterange-demo-control--outlined:hover, .daterange-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.daterange-demo-control--outlined:focus-visible, .daterange-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.daterange-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.daterange-demo-control--outlined[aria-disabled="true"], .daterange-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.daterange-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.daterange-demo-control--filled:hover, .daterange-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.daterange-demo-control--filled:focus-visible, .daterange-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.daterange-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.daterange-demo-control--filled[aria-disabled="true"], .daterange-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+/* ---------- Time demo (time-default.html) ----------
+   Same pattern as Date Picker - a role="button" div control (not a real
+   input, since a time's value is set via a time-selection UI, not
+   typed). */
+.time-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.time-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.time-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.time-demo-value{ flex: 1 1 auto; min-width: 0; font-family: var(--font-body); color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.time-demo-value.is-filled{ color: var(--text-hi); }
+.time-demo-icon{ margin-left: auto; flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.time-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.time-demo-note{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); margin: 0; }
+.time-demo-note.is-error{ color: var(--danger-500); }
+
+.time-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.time-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.time-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.time-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.time-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.time-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.time-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.time-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.time-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.time-demo-control--outlined:hover, .time-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.time-demo-control--outlined:focus-visible, .time-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.time-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.time-demo-control--outlined[aria-disabled="true"], .time-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.time-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.time-demo-control--filled:hover, .time-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.time-demo-control--filled:focus-visible, .time-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.time-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.time-demo-control--filled[aria-disabled="true"], .time-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+/* ---------- Color Picker demo (color-picker-default.html) ----------
+   Outlined/Filled only (no Underlined - a swatch panel reads better
+   anchored to a boxed field, same reasoning as Autocomplete/Mention).
+   .colorpicker-demo-field needs position:relative so
+   .colorpicker-demo-panel can anchor to it. */
+.colorpicker-demo-field{ position: relative; display: flex; flex-direction: column; gap: 6px; width: 220px; text-align: left; }
+.colorpicker-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
+.colorpicker-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.colorpicker-demo-swatch{ flex: none; width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--line-strong); }
+.colorpicker-demo-value{ flex: 1 1 auto; min-width: 0; font-family: var(--font-body); color: var(--text-hi); letter-spacing: 0.02em; }
+
+.colorpicker-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.colorpicker-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.colorpicker-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.colorpicker-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.colorpicker-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.colorpicker-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.colorpicker-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.colorpicker-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.colorpicker-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.colorpicker-demo-control--outlined:hover, .colorpicker-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.colorpicker-demo-control--outlined:focus-within, .colorpicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+
+.colorpicker-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.colorpicker-demo-control--filled:hover, .colorpicker-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.colorpicker-demo-control--filled:focus-within, .colorpicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+
+.colorpicker-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; background: var(--graphite-900); border: 1px solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 8px; }
+.colorpicker-demo-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.colorpicker-demo-swatch-option{ width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
+.colorpicker-demo-swatch-option.is-active{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-field:has(.colorpicker-demo-panel){ margin-bottom: 100px; }
+
+/* ---------- Slider demo (slider-default.html) ----------
+   Not a text field - a draggable track with one thumb (Single) or two
+   thumbs (Range). Track thickness uses its own small THICKNESS_OPTIONS
+   scale (4/6/8/10px), not the usual 8-option Size scale. Corner radius
+   is always a full pill, not configurable. */
+.slider-demo-field{ display: flex; flex-direction: column; gap: 10px; width: 220px; }
+.slider-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); margin: 0; }
+.slider-demo-track-wrap{ position: relative; padding: 10px 0; cursor: pointer; }
+.slider-demo-track{ width: 100%; border-radius: 9999px; position: relative; overflow: visible; background: var(--graphite-800); }
+.slider-demo-track-wrap:hover .slider-demo-track, .slider-demo-track-wrap.is-hover .slider-demo-track{ background: var(--graphite-700); }
+.slider-demo-fill{ position: absolute; top: 0; bottom: 0; border-radius: 9999px; background: var(--red-500); }
+.slider-demo-thumb{ position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 9999px; background: #FFFFFF; border: 2px solid var(--red-500); transform: translate(-50%, -50%); box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+.slider-demo-track-wrap:focus-within .slider-demo-thumb, .slider-demo-track-wrap.is-focus .slider-demo-thumb{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.slider-demo-track-wrap.is-disabled, .slider-demo-track-wrap:has(:disabled){ opacity: 0.4; cursor: not-allowed; }
+
+/* ---------- Rating demo (rating-default.html) ----------
+   Not a text field - a row of 5 identical icon buttons (Star or Heart)
+   that fill in to reflect a 0-5 score. Icon size uses its own small
+   SIZE_OPTIONS scale (16/20/24/32px), set inline on each <svg> by the
+   driver script, not via a CSS class. */
+.rating-demo-field{ display: flex; flex-direction: column; gap: 8px; }
+.rating-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); margin: 0; }
+.rating-demo-row{ display: flex; align-items: center; gap: 4px; }
+.rating-demo-icon{ flex: none; display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 2px; cursor: pointer; color: var(--text-dim); transition: color 0.15s ease; }
+.rating-demo-icon svg{ display: block; }
+.rating-demo-icon.is-filled{ color: var(--red-500); }
+.rating-demo-icon.is-preview{ color: var(--red-400); opacity: 0.6; }
+.rating-demo-row.is-disabled .rating-demo-icon, .rating-demo-icon:disabled{ opacity: 0.4; cursor: not-allowed; }
+.rating-demo-icon:hover:not(:disabled){ color: var(--text-hi); }
+
+/* ---------- Alert demo (alert-default.html) ----------
+   An inline status banner embedded in page content - colored icon and
+   left-border accent carry the semantic type, background stays neutral
+   and consistent across all 4 types. */
+.alert-demo-banner{ box-sizing: border-box; display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--graphite-800); max-width: 420px; }
+.alert-demo-banner--info{ border-left: 3px solid var(--blue-500); }
+.alert-demo-banner--success{ border-left: 3px solid var(--green-500); }
+.alert-demo-banner--warning{ border-left: 3px solid var(--amber-500); }
+.alert-demo-banner--error{ border-left: 3px solid var(--danger-500); }
+
+.alert-demo-icon{ flex: none; width: 20px; height: 20px; margin-top: 1px; }
+.alert-demo-banner--info .alert-demo-icon{ color: var(--blue-500); }
+.alert-demo-banner--success .alert-demo-icon{ color: var(--green-500); }
+.alert-demo-banner--warning .alert-demo-icon{ color: var(--amber-500); }
+.alert-demo-banner--error .alert-demo-icon{ color: var(--danger-500); }
+
+.alert-demo-body{ flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.alert-demo-title{ font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-hi); }
+.alert-demo-description{ font-family: var(--font-body); font-size: 13px; color: var(--text-mid); }
+.alert-demo-close{ flex: none; width: 16px; height: 16px; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 0; margin-left: auto; }
+.alert-demo-action{ font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--red-400); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; align-self: flex-start; margin-top: 2px; }
+
+/* ---------- Toast demo (toast-default.html) ----------
+   A floating, elevated notification card - solid background, border and a
+   real drop shadow (unlike Alert's flat inline banner). Only the icon
+   (and progress-fill, when shown) carry the per-type color. */
+.toast-demo-card{ box-sizing: border-box; position: relative; display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; width: 100%; max-width: 340px; background: var(--graphite-850); border: 1px solid var(--line-strong); box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; }
+
+.toast-demo-icon{ flex: none; width: 20px; height: 20px; margin-top: 1px; }
+.toast-demo-card--info .toast-demo-icon{ color: var(--blue-500); }
+.toast-demo-card--success .toast-demo-icon{ color: var(--green-500); }
+.toast-demo-card--warning .toast-demo-icon{ color: var(--amber-500); }
+.toast-demo-card--error .toast-demo-icon{ color: var(--danger-500); }
+
+.toast-demo-body{ flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-right: 16px; }
+.toast-demo-title{ font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-hi); margin: 0; }
+.toast-demo-description{ font-family: var(--font-body); font-size: 13px; color: var(--text-mid); margin: 0; }
+.toast-demo-close{ position: absolute; top: 10px; right: 10px; width: 16px; height: 16px; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 0; }
+.toast-demo-action{ font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--red-400); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; align-self: flex-start; margin-top: 2px; }
+
+.toast-demo-progress{ position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--graphite-700); }
+.toast-demo-progress-fill{ height: 100%; background: currentColor; }
+.toast-demo-card--info .toast-demo-progress-fill{ color: var(--blue-500); }
+.toast-demo-card--success .toast-demo-progress-fill{ color: var(--green-500); }
+.toast-demo-card--warning .toast-demo-progress-fill{ color: var(--amber-500); }
+.toast-demo-card--error .toast-demo-progress-fill{ color: var(--danger-500); }
+
+/* ---------- Modal demo (modal-default.html) ----------
+   A dialog shown above a dimmed backdrop (scrim) - the most "elevated"
+   surface in the system, so its shadow is deliberately more prominent
+   than the .menu-demo-panel / .autocomplete-demo-panel floating-panel
+   language it's otherwise modeled on. */
+.modal-demo-scrim{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.55); border-radius: var(--radius-md); }
+.modal-demo-dialog{ box-sizing: border-box; width: 100%; background: var(--graphite-900); border: 1px solid var(--line-strong); box-shadow: 0 24px 48px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; }
+.modal-demo-dialog--small{ max-width: 320px; }
+.modal-demo-dialog--medium{ max-width: 440px; }
+.modal-demo-dialog--large{ max-width: 560px; }
+
+.modal-demo-header{ display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.modal-demo-title{ font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-hi); }
+.modal-demo-close{ flex: none; width: 20px; height: 20px; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 0; }
+
+.modal-demo-body{ padding: 16px 20px; font-family: var(--font-body); font-size: 14px; color: var(--text-mid); position: relative; }
+.modal-demo-body--scrollable{ max-height: 64px; overflow: hidden; }
+.modal-demo-fade{ position: absolute; left: 0; right: 0; bottom: 0; height: 32px; background: linear-gradient(to bottom, transparent, var(--graphite-900)); }
+
+.modal-demo-footer{ display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.modal-demo-btn{ font-family: var(--font-body); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: var(--radius-sm); cursor: pointer; border: 1.5px solid transparent; }
+.modal-demo-btn--cancel{ background: transparent; border-color: var(--line-strong); color: var(--text-hi); }
+.modal-demo-btn--primary{ color: #FFFFFF; }
+.modal-demo-dialog--default .modal-demo-btn--primary{ background: var(--red-500); }
+.modal-demo-dialog--default .modal-demo-btn--primary:hover{ background: var(--red-600); }
+.modal-demo-dialog--destructive .modal-demo-btn--primary{ background: var(--danger-500); }
+.modal-demo-dialog--destructive .modal-demo-btn--primary:hover{ background: var(--danger-600); }
+
+/* ---------- Tooltip demo (tooltip-default.html) ----------
+   A small floating label anchored to a trigger on one of 4 sides, with a
+   connecting arrow. Unlike Autocomplete's absolutely-positioned dropdown
+   panel, the bubble+arrow live in NORMAL DOCUMENT FLOW next to the
+   trigger - no position:absolute, no overlap-fix margin needed. DOM
+   order is always bubble, then arrow, then trigger; flex-direction alone
+   decides which side of the trigger the bubble visually lands on. */
+.tooltip-demo-wrap{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; }
+.tooltip-demo-wrap--top,
+.tooltip-demo-wrap--bottom{ flex-direction: column; }
+.tooltip-demo-wrap--bottom{ flex-direction: column-reverse; }
+.tooltip-demo-wrap--left{ flex-direction: row; }
+.tooltip-demo-wrap--right{ flex-direction: row-reverse; }
+
+.tooltip-demo-trigger{ flex: none; width: 28px; height: 28px; border-radius: 9999px; background: var(--graphite-800); border: 1px solid var(--line-strong); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: default; }
+
+.tooltip-demo-bubble{ box-sizing: border-box; background: var(--graphite-700); color: var(--text-hi); border-radius: var(--radius-sm); font-family: var(--font-body); white-space: nowrap; }
+.tooltip-demo-bubble.is-long-text{ white-space: normal; max-width: 180px; }
+.tooltip-demo-title{ display: block; font-weight: 600; font-size: inherit; }
+.tooltip-demo-description{ display: block; font-size: 11px; color: var(--text-mid); }
+
+.tooltip-demo-arrow{ flex: none; width: 8px; height: 8px; background: var(--graphite-700); transform: rotate(45deg); margin: -4px auto; }
+.tooltip-demo-wrap--left .tooltip-demo-arrow,
+.tooltip-demo-wrap--right .tooltip-demo-arrow{ margin: auto -4px; }
+
+/* ---------- Group Button / segmented control demo (group-button.html) ----------
+   A row of joined segments where exactly one is selected at a time. Real
+   :hover/:focus-visible/:disabled are combined with the matching static
+   .is-hover/.is-focus/.is-disabled class on every rule (same dual pattern
+   as .btn-demo and .input-demo-control), so hovering/focusing any Live
+   Preview cell shows genuine feedback, not just a frozen row illustration.
+   .is-selected has no real pseudo-class equivalent (it's a value state,
+   not an interaction), so it's static-class only, same as .input-demo's
+   .is-filled/.is-error. */
+.group-btn{
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.group-btn-segment{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.group-btn-segment:disabled{ cursor: not-allowed; }
+
+/* Size scale (height in px) - default is 40, same scale as the rest of the system */
+.group-btn-segment--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.group-btn-segment--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.group-btn-segment--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.group-btn-segment--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.group-btn-segment--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.group-btn-segment--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.group-btn-segment--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.group-btn-segment--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+/* Outlined - bordered container, segments divided by 1px lines, selected segment gets a brand-tint fill */
+.group-btn--outlined{ border: 1.5px solid var(--line-strong); }
+.group-btn--outlined .group-btn-segment{ background: transparent; color: var(--text-hi); border-right: 1.5px solid var(--line-strong); }
+.group-btn--outlined .group-btn-segment:last-child{ border-right: none; }
+.group-btn--outlined .group-btn-segment:hover, .group-btn--outlined .group-btn-segment.is-hover{ background: var(--graphite-800); }
+.group-btn--outlined .group-btn-segment:active, .group-btn--outlined .group-btn-segment.is-pressed{ background: var(--graphite-700); }
+.group-btn--outlined .group-btn-segment.is-selected{ background: var(--red-tint); color: var(--red-500); }
+.group-btn--outlined .group-btn-segment:focus-visible, .group-btn--outlined .group-btn-segment.is-focus{ outline: 2px solid var(--red-400); outline-offset: -3px; }
+.group-btn--outlined .group-btn-segment:disabled, .group-btn--outlined .group-btn-segment.is-disabled{ opacity: 0.4; }
+
+/* Filled - solid track, selected segment gets a solid brand pill */
+.group-btn--filled{ background: var(--graphite-800); padding: 3px; gap: 2px; }
+.group-btn--filled .group-btn-segment{ background: transparent; color: var(--text-mid); border-radius: inherit; }
+.group-btn--filled .group-btn-segment:hover, .group-btn--filled .group-btn-segment.is-hover{ background: var(--graphite-700); color: var(--text-hi); }
+.group-btn--filled .group-btn-segment:active, .group-btn--filled .group-btn-segment.is-pressed{ background: var(--graphite-600); }
+.group-btn--filled .group-btn-segment.is-selected{ background: var(--red-500); color: #FFFFFF; }
+.group-btn--filled .group-btn-segment:focus-visible, .group-btn--filled .group-btn-segment.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.group-btn--filled .group-btn-segment:disabled, .group-btn--filled .group-btn-segment.is-disabled{ opacity: 0.4; }
+
+.group-btn-field{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.group-btn-field-label{
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-hi);
+  margin: 0;
+}
+.group-btn-field-note{
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.do-dont-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 12px;
+}
+.do-dont-col{
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-strong);
+}
+.do-dont-do{ background: rgba(47,191,110,0.06); border-color: rgba(47,191,110,0.3); }
+.do-dont-dont{ background: var(--red-tint); border-color: rgba(255,3,26,0.3); }
+.do-dont-label{ font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; margin: 0 0 8px; }
+.do-dont-do .do-dont-label{ color: var(--green-500); }
+.do-dont-dont .do-dont-label{ color: var(--red-400); }
+.do-dont-list{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.do-dont-list li{ font-size: 14px; line-height: 20px; color: var(--text-mid); padding-left: 20px; position: relative; }
+.do-dont-do .do-dont-list li::before{ content: "✓"; position: absolute; left: 0; color: var(--green-500); }
+.do-dont-dont .do-dont-list li::before{ content: "✕"; position: absolute; left: 0; color: var(--red-400); }
+
+a.system-card{ text-decoration: none; color: inherit; }
+.recommendation-text a{ color: var(--red-400); }
+.recommendation-text a:hover{ text-decoration: underline; }
+
+/* ---------- button detail pages ---------- */
+.back-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+.back-link:hover{ color: var(--red-400); }
+
+.button-state-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 12px;
+  padding: 28px;
+  background: var(--graphite-950);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.button-state-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.button-state-caption{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+.button-example-chips{ margin-top: 12px; }
+
+.btn-sm{ padding: 6px 12px; font-size: 11px; }
+
+.card-copy-row{
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+.card-copy-row .btn{ flex: 1; text-align: center; }
+
+.card-configure-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-top: 2px;
+}
+.card-configure-link:hover{ color: var(--red-400); }
+
+/* ---------- lightweight hover/focus tooltip ---------- */
+.info-tip{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  margin-left: 8px;
+  border-radius: 50%;
+  background: var(--graphite-800);
+  border: 1px solid var(--line-strong);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  cursor: help;
+  position: relative;
+  vertical-align: middle;
+}
+.info-tip:hover, .info-tip:focus-visible{ color: var(--text-hi); border-color: var(--red-500); outline: none; }
+
+.info-tip::before, .info-tip::after{
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.info-tip::after{
+  content: attr(data-tooltip);
+  width: max-content;
+  max-width: 240px;
+  background: var(--graphite-800);
+  color: var(--text-hi);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  z-index: 20;
+}
+.info-tip::before{
+  content: "";
+  bottom: calc(100% + 3px);
+  border: 5px solid transparent;
+  border-top-color: var(--graphite-800);
+  z-index: 21;
+}
+.info-tip:hover::before, .info-tip:hover::after,
+.info-tip:focus-visible::before, .info-tip:focus-visible::after{ opacity: 1; }
+
+/* ---------- dynamic, collision-aware tooltip ----------
+   Positioned in JS (see attachSmartTooltip) - the [data-placement]
+   attribute it sets just picks which side the arrow points from. */
+.dynamic-tooltip{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  max-width: 220px;
+  width: max-content;
+  padding: 8px 12px;
+  background: var(--graphite-800);
+  color: var(--text-hi);
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+.dynamic-tooltip.is-visible{ opacity: 1; }
+.dynamic-tooltip::after{
+  content: "";
+  position: absolute;
+  border: 5px solid transparent;
+}
+.dynamic-tooltip[data-placement="top"]::after{ top: 100%; left: 50%; transform: translateX(-50%); border-top-color: var(--graphite-800); }
+.dynamic-tooltip[data-placement="bottom"]::after{ bottom: 100%; left: 50%; transform: translateX(-50%); border-bottom-color: var(--graphite-800); }
+.dynamic-tooltip[data-placement="left"]::after{ left: 100%; top: 50%; transform: translateY(-50%); border-left-color: var(--graphite-800); }
+
+/* ---------- Multi-select checkbox dropdown (see multiselect.js) ----------
+   Reusable component used for the Properties panel's Size / Corner radius /
+   Content controls - styled to match the existing .type-control select
+   convention (dark graphite fields, var(--line-strong) borders, red-500
+   accents) rather than introducing new colors. */
+.multiselect{ position: relative; }
+
+.multiselect-trigger{
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: left;
+  color: var(--text-hi);
+  background-color: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.multiselect-trigger:hover{ border-color: var(--red-500); }
+.multiselect-trigger:focus-visible{ outline: 2px solid var(--red-500); outline-offset: 2px; }
+.multiselect.is-open .multiselect-trigger{ border-color: var(--red-500); }
+
+.multiselect-trigger-label{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.multiselect-trigger-caret{
+  flex: none;
+  width: 10px;
+  height: 6px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: transform 0.12s ease;
+}
+.multiselect.is-open .multiselect-trigger-caret{ transform: rotate(180deg); }
+
+.multiselect-panel{
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 280px;
+  z-index: 30;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  padding: 6px;
+}
+.multiselect-panel[hidden]{ display: none; }
+.multiselect-panel.multiselect-panel--right{ left: auto; right: 0; }
+
+.multiselect-fieldset{ border: 0; margin: 0; padding: 0; min-width: 0; }
+
+.multiselect-option{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-hi);
+  cursor: pointer;
+  user-select: none;
+}
+.multiselect-option:hover{ background: var(--graphite-800); }
+.multiselect-option.is-selected{ background: var(--red-tint); }
+
+.multiselect-option input[type="checkbox"]{
+  width: 16px;
+  height: 16px;
+  flex: none;
+  accent-color: var(--red-500);
+  cursor: pointer;
+}
+.multiselect-option input[type="checkbox"]:focus-visible{ outline: 2px solid var(--red-500); outline-offset: 2px; }
+
+.multiselect-option-all{ font-weight: 600; }
+
+.multiselect-divider{
+  height: 1px;
+  background: var(--line-strong);
+  margin: 6px 2px;
+}
+
+.multiselect-options{
+  max-height: 208px;
+  overflow-y: auto;
+}
+
+.multiselect-sr-only{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Copy prompt/code dropdown (see buildCopyControl in
+   button-dualicon-detail.js) - appears in place of the plain Copy
+   prompt/Copy code button whenever more than one Size/Corner radius/
+   Content combination is currently selected, so the user can pick the
+   exact combination they want a prompt or code snippet for. */
+.copy-action{ position: relative; display: inline-flex; }
+.copy-dropdown{ position: relative; }
+
+.copy-dropdown-trigger{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.copy-dropdown-caret{
+  width: 10px;
+  height: 6px;
+  flex: none;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: transform 0.12s ease;
+}
+.copy-dropdown-trigger[aria-expanded="true"] .copy-dropdown-caret{ transform: rotate(180deg); }
+
+.copy-dropdown-panel{
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: max-content;
+  min-width: 280px;
+  max-width: 360px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 30;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  padding: 6px;
+}
+.copy-dropdown-panel[hidden]{ display: none; }
+
+.copy-dropdown-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+}
+.copy-dropdown-item:hover{ background: var(--graphite-800); }
+
+.copy-dropdown-item-label{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text-hi);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-dropdown-item-copy{
+  flex: none;
+  padding: 4px 10px;
+  font-size: 11px;
+}
+.dynamic-tooltip[data-placement="right"]::after{ right: 100%; top: 50%; transform: translateY(-50%); border-right-color: var(--graphite-800); }
+
+/* ---------- Select demo (select.html / select-dropdown.html) ----------
+   Mirrors .input-demo-* one-for-one: same field/label/note structure, same
+   size scale (identical px/pad/font values, reused on purpose so Copy Code
+   output for Select's h* classes matches Input's already-verified numbers),
+   same dual real-pseudo-class + static-class state pattern (so hovering or
+   focusing a real Live Preview cell shows genuine feedback, not just a
+   frozen illustration). Select's control is a <div role="button"> instead
+   of a real <input> (it's a picker, not editable text) - there is no
+   :focus-within/:disabled to key off of, so real :hover/:focus-visible are
+   paired with .is-hover/.is-focus/.is-disabled, and the "has a value"/
+   "invalid" states (.is-filled/.is-error) are static-class only, exactly
+   like .input-demo-control's own .is-filled/.is-error. */
+.select-demo-field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  text-align: left;
+}
+.select-demo-label{
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-hi);
+}
+.select-demo-control{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.select-demo-control[aria-disabled="true"]{ cursor: not-allowed; }
+.select-demo-value{
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body);
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select-demo-value.is-filled{ color: var(--text-hi); }
+.select-demo-icon{ margin-left: auto; flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.select-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.select-demo-note{
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+.select-demo-note.is-error{ color: var(--danger-500); }
+
+/* Size scale (height in px) - default is 40, identical values to
+   .input-demo-control--h* on purpose (see block comment above) */
+.select-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.select-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.select-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.select-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.select-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.select-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.select-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.select-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.select-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.select-demo-control--outlined:hover, .select-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.select-demo-control--outlined:focus-visible, .select-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.select-demo-control--outlined.is-disabled{ opacity: 0.5; }
+
+.select-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.select-demo-control--filled:hover, .select-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.select-demo-control--filled:focus-visible, .select-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.select-demo-control--filled.is-disabled{ opacity: 0.5; }
+
+/* ---------- Date Picker demo (date-picker-default.html) ----------
+   Same pattern as Select - a role="button" div control (not a real input,
+   since a date's value is set via its calendar panel, not typed), sharing
+   the exact size scale and dual real-pseudo/static-class state approach. */
+.datepicker-demo-field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  text-align: left;
+}
+.datepicker-demo-label{
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-hi);
+}
+.datepicker-demo-control{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.datepicker-demo-value{
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body);
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.datepicker-demo-value.is-filled{ color: var(--text-hi); }
+.datepicker-demo-icon{ margin-left: auto; flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.datepicker-demo-icon svg{ width: 100%; height: 100%; display: block; }
+.datepicker-demo-note{
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0;
+}
+.datepicker-demo-note.is-error{ color: var(--danger-500); }
+
+/* Size scale (height in px) - default is 40, same scale as Input/Select */
+.datepicker-demo-control--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.datepicker-demo-control--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.datepicker-demo-control--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.datepicker-demo-control--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.datepicker-demo-control--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.datepicker-demo-control--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.datepicker-demo-control--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.datepicker-demo-control--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.datepicker-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.datepicker-demo-control--outlined:hover, .datepicker-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
+.datepicker-demo-control--outlined:focus-visible, .datepicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.datepicker-demo-control--outlined.is-error{ border-color: var(--danger-500); }
+.datepicker-demo-control--outlined[aria-disabled="true"], .datepicker-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.datepicker-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.datepicker-demo-control--filled:hover, .datepicker-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.datepicker-demo-control--filled:focus-visible, .datepicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.datepicker-demo-control--filled.is-error{ border-color: var(--danger-500); }
+.datepicker-demo-control--filled[aria-disabled="true"], .datepicker-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+/* ---------- Checkbox demo (checkbox.html / checkbox-default.html) ---------- */
+.checkbox-demo-field{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.checkbox-demo-field.is-disabled{ cursor: not-allowed; }
+
+/* Real, focusable, operable checkbox input - visually hidden via the same
+   sr-only clip pattern already used by .multiselect-sr-only, NOT
+   display:none, so it stays in the tab order and keeps native keyboard/
+   screen-reader behavior. */
+.checkbox-demo-input{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.checkbox-demo-box{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1.5px solid var(--line-strong);
+  background: transparent;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+/* Size scale - box width/height in px. Must stay in sync with the
+   SIZE_SCALE lookup in checkbox-detail.js (not re-derived by formula) so
+   Copy Code reproduces exactly what the Live Preview shows at every size. */
+.checkbox-demo-box--h16{ width: 16px; height: 16px; }
+.checkbox-demo-box--h20{ width: 20px; height: 20px; }
+.checkbox-demo-box--h24{ width: 24px; height: 24px; }
+
+.checkbox-demo-box--h16 .checkbox-demo-icon svg{ width: 10px; height: 10px; }
+.checkbox-demo-box--h20 .checkbox-demo-icon svg{ width: 12px; height: 12px; }
+.checkbox-demo-box--h24 .checkbox-demo-icon svg{ width: 14px; height: 14px; }
+
+/* Corner radius (4 options) - reusable utility classes for shipped Copy
+   Code output; the Live Preview applies radius inline per-cell instead. */
+.checkbox--radius-2{ border-radius: 2px; }
+.checkbox--radius-4{ border-radius: 4px; }
+.checkbox--radius-6{ border-radius: 6px; }
+.checkbox--radius-pill{ border-radius: 9999px; }
+
+.checkbox-demo-icon{ display: flex; color: #FFFFFF; }
+.checkbox-demo-label{ font-size: 14px; color: var(--text-hi); }
+
+/* Checked / Indeterminate are read live off the real input via CSS sibling
+   selectors - genuine DOM states, not simulated ones. */
+.checkbox-demo-input:checked + .checkbox-demo-box{ background: var(--red-500); border-color: var(--red-500); }
+.checkbox-demo-input:indeterminate + .checkbox-demo-box{ background: var(--red-500); border-color: var(--red-500); }
+
+.checkbox-demo-box:hover,
+.checkbox-demo-box.is-hover{ border-color: var(--text-dim); }
+
+.checkbox-demo-input:focus-visible + .checkbox-demo-box,
+.checkbox-demo-box.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+
+.checkbox-demo-input:disabled + .checkbox-demo-box,
+.checkbox-demo-box.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity: 0.7; }
+
+/* Card type - box + label wrapped in a bordered row that highlights as a
+   whole when checked. .is-checked is added directly by checkbox-detail.js's
+   render function (indeterminate/hover/focus/disabled rows never carry it). */
+.checkbox-demo-card{
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.checkbox-demo-card.is-checked{ background: var(--red-tint); border-color: var(--red-500); }
+
+/* ---------- Radio demo (radio.html / radio-default.html) ---------- */
+.radio-demo-field{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.radio-demo-input{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.radio-demo-circle{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
+  background: transparent;
+  transition: border-color .15s ease, background-color .15s ease, outline-color .15s ease;
+}
+
+/* Size scale (circle diameter, in px) - dot diameter is a fixed lookup
+   value per size (~45% of the circle), matching radio-detail.js exactly. */
+.radio-demo-circle--h16{ width: 16px; height: 16px; }
+.radio-demo-circle--h20{ width: 20px; height: 20px; }
+.radio-demo-circle--h24{ width: 24px; height: 24px; }
+
+.radio-demo-dot{ background: var(--red-500); border-radius: 50%; }
+.radio-demo-dot--h16{ width: 7px; height: 7px; }
+.radio-demo-dot--h20{ width: 9px; height: 9px; }
+.radio-demo-dot--h24{ width: 11px; height: 11px; }
+
+.radio-demo-label{ font-size: 14px; color: var(--text-hi); }
+
+.radio-demo-input:checked + .radio-demo-circle{ border-color: var(--red-500); background: transparent; }
+
+.radio-demo-circle:hover,
+.radio-demo-circle.is-hover{ border-color: var(--text-dim); }
+
+.radio-demo-input:focus-visible + .radio-demo-circle,
+.radio-demo-circle.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+
+.radio-demo-input:disabled + .radio-demo-circle,
+.radio-demo-circle.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+/* Card type - circle + label inside a bordered, clickable row that
+   highlights once its radio is checked (.is-checked added directly by
+   radio-detail.js's render function). */
+.radio-demo-card{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.radio-demo-card.is-checked{ background: var(--red-tint); border-color: var(--red-500); }
+
+/* ---------- Switch demo (switch.html / switch-default.html) ---------- */
+.switch-demo-field{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.switch-demo-input{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.switch-demo-track{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: var(--graphite-700);
+  padding: 0 2px;
+  cursor: pointer;
+  flex: none;
+  transition: background-color .15s ease, outline-color .15s ease;
+}
+
+/* Size scale (track height in px). Width = round(height * 1.75) - the SAME
+   formula is reused identically in switch-detail.js's SIZE_SCALE lookup so
+   Copy Code can never drift from what the Live Preview actually renders. */
+.switch-demo-track--h20{ width: 35px; height: 20px; }
+.switch-demo-track--h24{ width: 42px; height: 24px; }
+.switch-demo-track--h32{ width: 56px; height: 32px; }
+
+.switch-demo-thumb{
+  border-radius: 50%;
+  background: #FFFFFF;
+  transform: translateX(0);
+  transition: transform .15s ease;
+  flex: none;
+}
+.switch-demo-track--h20 .switch-demo-thumb{ width: 16px; height: 16px; }
+.switch-demo-track--h24 .switch-demo-thumb{ width: 20px; height: 20px; }
+.switch-demo-track--h32 .switch-demo-thumb{ width: 28px; height: 28px; }
+
+.switch-demo-label{
+  font-size: 14px;
+  color: var(--text-hi);
+  font-family: var(--font-body);
+}
+
+.switch-demo-input:checked + .switch-demo-track{ background: var(--red-500); }
+.switch-demo-input:checked + .switch-demo-track--h20 .switch-demo-thumb{ transform: translateX(15px); }
+.switch-demo-input:checked + .switch-demo-track--h24 .switch-demo-thumb{ transform: translateX(18px); }
+.switch-demo-input:checked + .switch-demo-track--h32 .switch-demo-thumb{ transform: translateX(24px); }
+
+.switch-demo-track:hover,
+.switch-demo-track.is-hover{ background: var(--graphite-600); }
+
+.switch-demo-input:focus-visible + .switch-demo-track,
+.switch-demo-track.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+
+.switch-demo-input:disabled + .switch-demo-track,
+.switch-demo-track.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+/* ---------- Tabs demo (tabs.html / tabs-default.html) ---------- */
+.tabs-demo-bar{
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+.tabs-demo-bar--underline{
+  gap: 24px;
+  border-bottom: 1.5px solid var(--line-strong);
+}
+.tabs-demo-bar--pill{
+  gap: 4px;
+  align-items: center;
+}
+.tabs-demo-trigger{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-body);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--text-mid);
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.tabs-demo-trigger:disabled{ cursor: not-allowed; }
+
+/* Size scale (height in px) - must stay identical to SIZE_SCALE in
+   tabs-detail.js (hand-tuned, not derived by formula). */
+.tabs-demo-trigger--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.tabs-demo-trigger--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.tabs-demo-trigger--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.tabs-demo-trigger--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.tabs-demo-trigger--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.tabs-demo-trigger--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.tabs-demo-trigger--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.tabs-demo-trigger--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.tabs-demo-bar--underline .tabs-demo-trigger.is-active{
+  color: var(--text-hi);
+  border-bottom-color: var(--red-500);
+  font-weight: 600;
+  margin-bottom: -1.5px;
+}
+.tabs-demo-bar--underline .tabs-demo-trigger:hover,
+.tabs-demo-bar--underline .tabs-demo-trigger.is-hover{ color: var(--text-hi); }
+.tabs-demo-bar--underline .tabs-demo-trigger:focus-visible,
+.tabs-demo-bar--underline .tabs-demo-trigger.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.tabs-demo-bar--underline .tabs-demo-trigger:disabled,
+.tabs-demo-bar--underline .tabs-demo-trigger.is-disabled{ opacity: 0.4; }
+
+.tabs-demo-bar--pill .tabs-demo-trigger.is-active{
+  background: var(--red-tint);
+  color: var(--red-500);
+  font-weight: 600;
+}
+.tabs-demo-bar--pill .tabs-demo-trigger:hover,
+.tabs-demo-bar--pill .tabs-demo-trigger.is-hover{ background: var(--graphite-800); color: var(--text-hi); }
+.tabs-demo-bar--pill .tabs-demo-trigger:focus-visible,
+.tabs-demo-bar--pill .tabs-demo-trigger.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.tabs-demo-bar--pill .tabs-demo-trigger:disabled,
+.tabs-demo-bar--pill .tabs-demo-trigger.is-disabled{ opacity: 0.4; }
+
+/* Corner radius (5 options, default 8px) - Pill type's active tab only. */
+.tabs-demo-bar--radius-0.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 0px; }
+.tabs-demo-bar--radius-4.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 4px; }
+.tabs-demo-bar--radius-8.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 8px; }
+.tabs-demo-bar--radius-12.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 12px; }
+.tabs-demo-bar--radius-pill.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 9999px; }
+
+/* ---------- Anchor demo (anchor.html / anchor-default.html) ---------- */
+.anchor-demo-link{
+  font-family: var(--font-body);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--red-400);
+}
+
+.anchor-demo-link--fs12{ font-size: 12px; }
+.anchor-demo-link--fs14{ font-size: 14px; }
+.anchor-demo-link--fs16{ font-size: 16px; }
+.anchor-demo-link--fs18{ font-size: 18px; }
+
+.anchor-demo-icon{ display: inline-block; flex: none; }
+.anchor-demo-link--fs12 .anchor-demo-icon{ width: 14px; height: 14px; }
+.anchor-demo-link--fs14 .anchor-demo-icon{ width: 16px; height: 16px; }
+.anchor-demo-link--fs16 .anchor-demo-icon{ width: 18px; height: 18px; }
+.anchor-demo-link--fs18 .anchor-demo-icon{ width: 20px; height: 20px; }
+
+.anchor-demo-link:hover,
+.anchor-demo-link.is-hover{
+  color: var(--red-500);
+  text-decoration: underline;
+}
+.anchor-demo-link:focus-visible,
+.anchor-demo-link.is-focus{
+  color: var(--red-400);
+  text-decoration: none;
+  outline: 2px solid var(--red-400);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.anchor-demo-link:visited,
+.anchor-demo-link.is-visited{
+  color: var(--red-600);
+}
+.anchor-demo-link[aria-disabled="true"],
+.anchor-demo-link.is-disabled{
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---------- Breadcrumb demo (breadcrumb.html / breadcrumb-default.html) ---------- */
+.breadcrumb-demo-trail{
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.breadcrumb-demo-trail--chevron .breadcrumb-demo-divider{
+  display: inline-flex;
+  align-items: center;
+  margin: 0 6px;
+}
+.breadcrumb-demo-trail--slash .breadcrumb-demo-divider{
+  margin: 0 8px;
+}
+
+/* Size scale (font-size in px) - must stay byte-identical to
+   breadcrumb-detail.js's own SIZE_SCALE lookup. */
+.breadcrumb-demo-trail--24{ font-size: 12px; }
+.breadcrumb-demo-trail--28{ font-size: 13px; }
+.breadcrumb-demo-trail--32{ font-size: 13px; }
+.breadcrumb-demo-trail--36{ font-size: 14px; }
+.breadcrumb-demo-trail--40{ font-size: 15px; }
+.breadcrumb-demo-trail--44{ font-size: 16px; }
+.breadcrumb-demo-trail--48{ font-size: 17px; }
+.breadcrumb-demo-trail--56{ font-size: 19px; }
+
+.breadcrumb-demo-link{
+  color: var(--text-dim);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .15s ease;
+}
+.breadcrumb-demo-link:hover,
+.breadcrumb-demo-link.is-hover{
+  color: var(--text-hi);
+  text-decoration: underline;
+}
+.breadcrumb-demo-link:focus-visible,
+.breadcrumb-demo-link.is-focus{
+  outline: 2px solid var(--red-400);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.breadcrumb-demo-link[aria-disabled="true"],
+.breadcrumb-demo-link.is-disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}
+.breadcrumb-demo-divider{
+  color: var(--text-dim);
+}
+.breadcrumb-demo-current{
+  color: var(--text-hi);
+  cursor: default;
+}
+
+/* ---------- Dropdown demo (dropdown.html / dropdown-default.html) ----------
+   The trigger button for an action menu - distinct from the separate Menu
+   component (the floating panel itself) and from Select (a form value
+   picker). Mirrors .select-demo-control's size scale one-for-one. */
+.dropdown-demo-trigger{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--text-hi);
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.dropdown-demo-icon{ flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
+.dropdown-demo-icon svg{ width: 100%; height: 100%; display: block; }
+
+.dropdown-demo-trigger--h24{ height: 24px; padding: 0 10px; font-size: 11px; }
+.dropdown-demo-trigger--h28{ height: 28px; padding: 0 12px; font-size: 12px; }
+.dropdown-demo-trigger--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.dropdown-demo-trigger--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
+.dropdown-demo-trigger--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.dropdown-demo-trigger--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
+.dropdown-demo-trigger--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
+.dropdown-demo-trigger--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+
+.dropdown-demo-trigger--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
+.dropdown-demo-trigger--outlined:hover, .dropdown-demo-trigger--outlined.is-hover{ border-color: var(--text-dim); }
+.dropdown-demo-trigger--outlined.is-open{ border-color: var(--red-500); background: var(--red-tint); }
+.dropdown-demo-trigger--outlined:focus-visible, .dropdown-demo-trigger--outlined.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.dropdown-demo-trigger--outlined:disabled, .dropdown-demo-trigger--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+
+.dropdown-demo-trigger--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
+.dropdown-demo-trigger--filled:hover, .dropdown-demo-trigger--filled.is-hover{ background: var(--graphite-700); }
+.dropdown-demo-trigger--filled.is-open{ background: var(--graphite-900); }
+.dropdown-demo-trigger--filled:focus-visible, .dropdown-demo-trigger--filled.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.dropdown-demo-trigger--filled:disabled, .dropdown-demo-trigger--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Pagination demo (pagination.html / pagination-default.html) ---------- */
+.pagination-demo-bar{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+.pagination-demo-bar--simple{ gap: 10px; }
+
+.pagination-demo-item,
+.pagination-demo-arrow{
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-hi);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.pagination-demo-arrow svg{ width: 16px; height: 16px; }
+
+.pagination-demo-item:hover, .pagination-demo-item.is-hover,
+.pagination-demo-arrow:hover, .pagination-demo-arrow.is-hover{ background: var(--graphite-800); }
+
+.pagination-demo-item:focus-visible, .pagination-demo-item.is-focus,
+.pagination-demo-arrow:focus-visible, .pagination-demo-arrow.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+
+.pagination-demo-item:disabled, .pagination-demo-item.is-disabled,
+.pagination-demo-arrow:disabled, .pagination-demo-arrow.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+
+.pagination-demo-item.is-current{ background: var(--red-500); color: #FFFFFF; border-color: var(--red-500); }
+.pagination-demo-item.is-current:hover{ background: var(--red-500); color: #FFFFFF; border-color: var(--red-500); }
+
+.pagination-demo-count{
+  color: var(--text-mid);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+.pagination-demo-item--h24, .pagination-demo-arrow--h24{ height: 24px; min-width: 24px; padding: 0 8px; font-size: 11px; }
+.pagination-demo-item--h28, .pagination-demo-arrow--h28{ height: 28px; min-width: 28px; padding: 0 10px; font-size: 12px; }
+.pagination-demo-item--h32, .pagination-demo-arrow--h32{ height: 32px; min-width: 32px; padding: 0 10px; font-size: 12px; }
+.pagination-demo-item--h36, .pagination-demo-arrow--h36{ height: 36px; min-width: 36px; padding: 0 12px; font-size: 13px; }
+.pagination-demo-item--h40, .pagination-demo-arrow--h40{ height: 40px; min-width: 40px; padding: 0 14px; font-size: 14px; }
+.pagination-demo-item--h44, .pagination-demo-arrow--h44{ height: 44px; min-width: 44px; padding: 0 16px; font-size: 15px; }
+.pagination-demo-item--h48, .pagination-demo-arrow--h48{ height: 48px; min-width: 48px; padding: 0 18px; font-size: 16px; }
+.pagination-demo-item--h56, .pagination-demo-arrow--h56{ height: 56px; min-width: 56px; padding: 0 20px; font-size: 17px; }
+
+.pagination--radius-0{ border-radius: 0px; }
+.pagination--radius-4{ border-radius: 4px; }
+.pagination--radius-8{ border-radius: 8px; }
+.pagination--radius-12{ border-radius: 12px; }
+.pagination--radius-pill{ border-radius: 9999px; }
+
+/* ---------- Menu demo (menu.html / menu-default.html) ----------
+   The floating panel/list of commands itself - not the trigger button
+   (see Dropdown) and not the same thing as a form Select. */
+.menu-demo-panel{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-sizing: border-box;
+  padding: 6px;
+  background: var(--graphite-900);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.menu-demo-item{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-align: left;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-hi);
+  transition: background-color .15s ease, color .15s ease;
+}
+.menu-demo-item svg{ width: 16px; height: 16px; flex: none; }
+.menu-demo-item:hover, .menu-demo-item.is-hover{ background: var(--graphite-800); }
+.menu-demo-item:focus-visible, .menu-demo-item.is-focus{ outline: 2px solid var(--red-500); outline-offset: -2px; }
+.menu-demo-item:disabled, .menu-demo-item.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.menu-demo-item.is-destructive{ color: var(--danger-500); }
+.menu-demo-divider{ margin: 6px 2px; height: 1px; background: var(--line); }
+
+/* Size scale (row height in px) - must stay identical to SIZE_SCALE in
+   menu-detail.js (hand-tuned, not derived by formula). */
+.menu-demo-item--h24{ height: 24px; padding: 0 8px; font-size: 11px; }
+.menu-demo-item--h28{ height: 28px; padding: 0 9px; font-size: 12px; }
+.menu-demo-item--h32{ height: 32px; padding: 0 10px; font-size: 12px; }
+.menu-demo-item--h36{ height: 36px; padding: 0 11px; font-size: 13px; }
+.menu-demo-item--h40{ height: 40px; padding: 0 12px; font-size: 14px; }
+.menu-demo-item--h44{ height: 44px; padding: 0 14px; font-size: 14px; }
+.menu-demo-item--h48{ height: 48px; padding: 0 16px; font-size: 15px; }
+.menu-demo-item--h56{ height: 56px; padding: 0 18px; font-size: 16px; }
+
+/* Corner radius (5 options) - panel's outer corners only, applied inline
+   per-cell in the Live Preview (same convention as Group Button/Menu's
+   siblings); these utility classes exist for Copy Code's own reference. */
+.menu-demo-panel--radius-0{ border-radius: 0px; }
+.menu-demo-panel--radius-4{ border-radius: 4px; }
+.menu-demo-panel--radius-8{ border-radius: 8px; }
+.menu-demo-panel--radius-12{ border-radius: 12px; }
+.menu-demo-panel--radius-pill{ border-radius: 9999px; }
+
+/* ---------- Steps demo (steps.html / steps-default.html) ---------- */
+.steps-demo-row{
+  display: flex;
+  align-items: flex-start;
+}
+.steps-demo-step{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+.steps-demo-label{
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-mid);
+  white-space: nowrap;
+}
+.steps-demo-connector{
+  flex: 1 1 auto;
+  min-width: 16px;
+  height: 1.5px;
+  background: var(--line-strong);
+}
+.steps-demo-connector.is-completed{ background: var(--red-500); }
+
+.steps-demo-circle{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.steps-demo-circle svg{ display: block; }
+
+/* Size scale - literal lookup matching SIZE_SCALE in steps-detail.js
+   exactly (circle diameter / number font-size / icon size). */
+.steps-demo-step--h24 .steps-demo-circle{ width: 24px; height: 24px; font-size: 11px; }
+.steps-demo-step--h24 .steps-demo-circle svg{ width: 12px; height: 12px; }
+
+.steps-demo-step--h32 .steps-demo-circle{ width: 32px; height: 32px; font-size: 13px; }
+.steps-demo-step--h32 .steps-demo-circle svg{ width: 14px; height: 14px; }
+
+.steps-demo-step--h40 .steps-demo-circle{ width: 40px; height: 40px; font-size: 15px; }
+.steps-demo-step--h40 .steps-demo-circle svg{ width: 16px; height: 16px; }
+
+.steps-demo-step.is-upcoming .steps-demo-circle{
+  background: transparent;
+  border: 1.5px solid var(--line-strong);
+  color: var(--text-dim);
+}
+.steps-demo-step.is-upcoming .steps-demo-label{ color: var(--text-dim); }
+
+.steps-demo-step.is-current .steps-demo-circle{
+  background: var(--red-500);
+  border: 1.5px solid var(--red-500);
+  color: #FFFFFF;
+}
+.steps-demo-step.is-current .steps-demo-label{ color: var(--text-hi); font-weight: 700; }
+
+.steps-demo-step.is-completed .steps-demo-circle{
+  background: var(--red-500);
+  border: 1.5px solid var(--red-500);
+  color: #FFFFFF;
+}
+.steps-demo-step.is-completed .steps-demo-label{ color: var(--text-hi); }
+
+.steps-demo-step.is-error .steps-demo-circle{
+  background: var(--danger-500);
+  border: 1.5px solid var(--danger-500);
+  color: #FFFFFF;
+}
+.steps-demo-step.is-error .steps-demo-label{ color: var(--danger-500); }
+
+.steps-demo-step.is-disabled{ opacity: 0.4; }
+.steps-demo-step.is-disabled .steps-demo-circle{
+  background: transparent;
+  border: 1.5px solid var(--line-strong);
+  color: var(--text-dim);
+}
+
+.steps-demo-row--simple .steps-demo-connector{ background: var(--line-strong); margin-top: 10px; }
+.steps-demo-row--simple .steps-demo-label{
+  border-bottom: 2px solid transparent;
+  padding-bottom: 6px;
+}
+.steps-demo-row--simple .steps-demo-step.is-current .steps-demo-label{ border-bottom-color: var(--red-500); }
+.steps-demo-row--simple .steps-demo-step.is-completed .steps-demo-label{ border-bottom-color: var(--red-500); }
+.steps-demo-row--simple .steps-demo-step.is-error .steps-demo-label{ border-bottom-color: var(--danger-500); }
