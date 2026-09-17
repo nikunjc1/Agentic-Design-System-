@@ -141,8 +141,8 @@
     lines.push(".card-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".card-demo-media{ height:80px; background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
     lines.push(".card-demo-body-wrap{ padding:14px 16px; display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); }');
-    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); }');
+    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); text-align:left; }');
+    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align:left; }');
     lines.push("/* Footer reuses Modal's own .modal-demo-footer/.modal-demo-btn classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent. */");
     lines.push(".card-demo-footer .modal-demo-btn--primary{ background:var(--red-500); }");
     return lines.join("\n");

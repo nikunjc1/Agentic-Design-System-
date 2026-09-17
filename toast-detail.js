@@ -153,7 +153,7 @@
     lines.push("/* Agentic Design System - Toast (floating notification) component */");
     lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:12px; padding:14px 16px; width:340px; background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
     lines.push(".toast-demo-icon{ flex:none; width:20px; height:20px; margin-top:1px; }");
-    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; padding-right:16px; }");
+    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; padding-right:16px; text-align:left; }");
     lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; }');
     lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; }');
     lines.push(".toast-demo-close{ position:absolute; top:10px; right:10px; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");

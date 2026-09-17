@@ -110,7 +110,7 @@
     lines.push("");
     lines.push(".tour-demo-target{ display:inline-flex; padding:6px 12px; border-radius:var(--radius-sm); background:var(--graphite-800); border:2px solid var(--red-500); box-shadow:0 0 0 3px var(--red-tint); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; }");
     lines.push("");
-    lines.push(".tour-demo-card{ box-sizing:border-box; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; }");
+    lines.push(".tour-demo-card{ box-sizing:border-box; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; text-align:left; }");
     lines.push(".tour-demo-step-counter{ font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-bottom:6px; }");
     lines.push(".tour-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; }");
     lines.push(".tour-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin-top:4px; margin-bottom:0; line-height:1.5; }");

@@ -8,7 +8,8 @@
   // current checkbox value.
   var TYPES = [
     { key: "default", label: "Default" },
-    { key: "alternate", label: "Alternate" }
+    { key: "alternate", label: "Alternate" },
+    { key: "horizontal", label: "Horizontal" }
   ];
   var STATES = [
     { key: "default", label: "Default" },
@@ -104,9 +105,10 @@
     lines.push("");
     lines.push("Build it as ONE reusable component controlled by properties (layout, state, show icons) - a vertical list of chronological events, each with a dot (or optional status icon) connected by a continuous vertical line, used for activity logs, order status history, or a project's milestone history.");
     lines.push("");
-    lines.push("Layouts (2):");
-    lines.push("- Default: dots aligned to the left, with every event's title and timestamp to the right of the connecting line.");
-    lines.push("- Alternate: dots centered on the line, with event content alternating left and right of it for odd/even events - a classic alternating timeline layout.");
+    lines.push("Layouts (3):");
+    lines.push("- Default: dots aligned to the left, with every event's title and timestamp to the right of the connecting line, stacked vertically.");
+    lines.push("- Alternate: dots centered on the line, with event content alternating left and right of it for odd/even events - a classic alternating vertical timeline layout.");
+    lines.push("- Horizontal: events flow left to right along a single horizontal line, with each dot centered above its own title and timestamp.");
     lines.push("");
     lines.push("States (3):");
     lines.push("- Default: plain, neutral-colored dots (or icons) - every event reads as complete/neutral, with no emphasis on any one item.");
@@ -140,6 +142,17 @@
     lines.push(".timeline-demo-list--alternate .timeline-demo-marker{ grid-column:2; }");
     lines.push(".timeline-demo-list--alternate .timeline-demo-content{ grid-column:3; text-align:left; }");
     lines.push(".timeline-demo-list--alternate .timeline-demo-item--left .timeline-demo-content{ grid-column:1; text-align:right; }");
+    lines.push("");
+    lines.push("/* Horizontal layout - items flow left to right; each dot sits centered");
+    lines.push("   in its own item slot, and the connector is a line from this dot's");
+    lines.push("   center spanning the full item width to reach the next dot's center */");
+    lines.push(".timeline-demo-list--horizontal{ flex-direction:row; width:auto; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-item{ flex:1 1 0; flex-direction:column; align-items:center; min-width:72px; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-marker{ position:relative; flex-direction:row; justify-content:center; width:100%; height:16px; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-connector{ position:absolute; top:50%; left:50%; width:100%; height:2px; min-height:0; transform:translateY(-50%); }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-dot,");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-icon{ position:relative; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-content{ padding-bottom:0; padding-top:10px; text-align:center; }");
     if (showIcons){
       lines.push("");
       lines.push("/* Show icons - replaces the plain dot with a small checkmark-in-circle status icon */");

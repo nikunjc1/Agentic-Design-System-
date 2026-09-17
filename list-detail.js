@@ -131,7 +131,7 @@
     lines.push(".list-demo-row--divided{ border-bottom:1px solid var(--line); }");
     lines.push(".list-demo-panel--bordered .list-demo-row--divided{ border-bottom-color:var(--line-strong); }");
     lines.push("/* Leading avatar reuses the Avatar component's own .avatar-demo-circle/.avatar-demo-circle--initials/.avatar-demo-circle--h32 classes directly - no separate box or font-size rules. */");
-    lines.push(".list-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }");
+    lines.push(".list-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; text-align:left; }");
     lines.push('.list-demo-title{ margin:0; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.list-demo-description{ margin:0; font-family:var(--font-body); font-size:12px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".list-demo-action{ flex:none; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; }");

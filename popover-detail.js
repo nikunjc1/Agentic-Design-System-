@@ -100,7 +100,7 @@
     lines.push(".popover-demo-trigger{ padding:8px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; cursor:pointer; }");
     lines.push(".popover-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
-    lines.push(".popover-demo-bubble{ box-sizing:border-box; position:relative; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:10px 12px; border-radius:var(--radius-md); min-width:180px; max-width:220px; }");
+    lines.push(".popover-demo-bubble{ box-sizing:border-box; position:relative; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:10px 12px; border-radius:var(--radius-md); min-width:180px; max-width:220px; text-align:left; }");
     lines.push(".popover-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }");
     lines.push(".popover-demo-body{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin:4px 0 0; line-height:1.5; }");
     lines.push(".popover-demo-close{ position:absolute; top:6px; right:6px; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");

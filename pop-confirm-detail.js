@@ -106,7 +106,7 @@
     lines.push(".popconfirm-demo-trigger{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:6px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1.5px solid var(--line-strong); color:var(--text-hi); cursor:pointer; }");
     lines.push(".popconfirm-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
-    lines.push(".popconfirm-demo-bubble{ box-sizing:border-box; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; }");
+    lines.push(".popconfirm-demo-bubble{ box-sizing:border-box; background:var(--graphite-900); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; text-align:left; }");
     lines.push(".popconfirm-demo-question{ display:flex; align-items:flex-start; gap:6px; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }");
     lines.push(".popconfirm-demo-icon{ flex:none; width:14px; height:14px; color:var(--amber-500); }");
     lines.push(".popconfirm-demo-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }");

@@ -156,7 +156,7 @@
       var css = liveCssFor(t.key);
       lines.push(".alert-demo-banner--" + t.key + " .alert-demo-icon{ color:" + css.accent + "; }");
     });
-    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; }");
+    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; text-align:left; }");
     lines.push('.alert-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); }');
     lines.push('.alert-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); }');
     lines.push(".alert-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; margin-left:auto; }");

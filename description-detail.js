@@ -105,7 +105,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Description component */");
-    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:10px; width:280px; }");
+    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:10px; width:280px; text-align:left; }");
     lines.push(".description-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); }");
     lines.push(".description-demo-grid{ display:grid; gap:12px; }");
     lines.push(".description-demo-panel--bordered .description-demo-grid{ gap:0; border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }");

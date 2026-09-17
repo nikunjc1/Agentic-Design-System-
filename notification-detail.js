@@ -94,7 +94,7 @@
     lines.push("/* Agentic Design System - Notification component */");
     lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:10px; width:260px; padding:12px 14px; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:0 8px 24px rgba(0,0,0,0.35); position:relative; }");
     lines.push(".notification-demo-icon{ flex:none; width:18px; height:18px; margin-top:1px; }");
-    lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; }");
+    lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align:left; }");
     lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }');
     lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin-top:2px; line-height:1.5; }');
     lines.push(".notification-demo-close{ flex:none; background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px; line-height:1; padding:0; }");
