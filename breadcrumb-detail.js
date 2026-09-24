@@ -9,6 +9,14 @@
   // same "ask the question vs state the explicit choice" Copy Prompt/Code
   // logic via selectionMode.
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "chevron", label: "Chevron" },
     { key: "slash", label: "Slash" }
@@ -121,6 +129,7 @@
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var css = linkStateCss();
 
     var lines = [];
@@ -140,13 +149,14 @@
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Font-size scales proportionally, applied to the whole trail.");
     lines.push("");
-    lines.push("Component properties: Labels (comma-separated editable text, one per breadcrumb item, default \"Home, Products, Shoes\" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.");
+    lines.push("Component properties: Labels (comma-separated editable text, one per breadcrumb item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.");
     return lines.join("\n");
   }
 
   function buildFullCode(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var link = linkStateCss();
     var divider = dividerCss();
     var current = currentCss();
@@ -180,12 +190,12 @@
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " -->");
     TYPES.forEach(function(t){
       lines.push('<nav class="breadcrumb breadcrumb--' + t.key + " breadcrumb--" + exampleSize + '" aria-label="Breadcrumb">');
-      DEFAULT_LABELS.forEach(function(label, i){
-        var isLast = i === DEFAULT_LABELS.length - 1;
+      labels.forEach(function(label, i){
+        var isLast = i === labels.length - 1;
         if (isLast){
-          lines.push('  <span class="breadcrumb-current">' + label + "</span>");
+          lines.push('  <span class="breadcrumb-current">' + escapeHtml(label) + "</span>");
         } else {
-          lines.push('  <a class="breadcrumb-link" href="#">' + label + "</a>");
+          lines.push('  <a class="breadcrumb-link" href="#">' + escapeHtml(label) + "</a>");
           lines.push('  <span class="breadcrumb-divider" aria-hidden="true">' + (t.key === "chevron" ? CHEVRON_SVG : "/") + "</span>");
         }
       });
@@ -197,12 +207,12 @@
   // Builds the prompt/code for exactly ONE Size, fully resolved (never
   // "ask the question") - used by the Copy prompt/Copy code dropdown's
   // per-combination "Copy" buttons.
-  function buildComboPrompt(size){
-    return buildFullPrompt({ size: { mode: "specific", values: [size] } });
+  function buildComboPrompt(size, labels){
+    return buildFullPrompt({ size: { mode: "specific", values: [size] }, labels: labels });
   }
 
-  function buildComboCode(size){
-    return buildFullCode({ size: { mode: "specific", values: [size] } });
+  function buildComboCode(size, labels){
+    return buildFullCode({ size: { mode: "specific", values: [size] }, labels: labels });
   }
 
   document.addEventListener("DOMContentLoaded", function(){
@@ -357,15 +367,15 @@
       labels.forEach(function(label, i){
         var isLast = i === labels.length - 1;
         if (isLast){
-          parts.push('<span class="breadcrumb-demo-current">' + label + "</span>");
+          parts.push('<span class="breadcrumb-demo-current">' + escapeHtml(label) + "</span>");
           return;
         }
         if (i === 0){
           var linkCls = "breadcrumb-demo-link" + stateCls;
           var disabledAttr = (i === 0 && isDisabled) ? ' aria-disabled="true"' : "";
-          parts.push('<a class="' + linkCls + '" href="#"' + disabledAttr + ">" + label + "</a>");
+          parts.push('<a class="' + linkCls + '" href="#"' + disabledAttr + ">" + escapeHtml(label) + "</a>");
         } else {
-          parts.push('<a class="breadcrumb-demo-link" href="#">' + label + "</a>");
+          parts.push('<a class="breadcrumb-demo-link" href="#">' + escapeHtml(label) + "</a>");
         }
         parts.push('<span class="breadcrumb-demo-divider" aria-hidden="true">' + (typeKey === "chevron" ? CHEVRON_SVG : "/") + "</span>");
       });
@@ -401,7 +411,8 @@
 
     function currentSelectionInfo(){
       return {
-        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size])
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
+        labels: parseLabels(labelsInput.value)
       };
     }
 
@@ -413,12 +424,12 @@
       var combos = [];
       sizes.forEach(function(size){
         html += buildMatrixSection(size, labels);
-        combos.push({ size: size, label: comboLabel(size) });
+        combos.push({ size: size, label: comboLabel(size), labels: labels });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.labels); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.labels); });
     }
 
     var propertyMultiSelects = {};

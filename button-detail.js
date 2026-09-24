@@ -8,6 +8,21 @@
 
   function icon(svgTpl, size){ return svgTpl.replace(/\{s\}/g, size); }
 
+  // Loading uses the same rotating-ring visual as the Spin component (not a
+  // bespoke spinner per component) so "something is in flight" reads the
+  // same way everywhere in the system.
+  function spinnerHtml(size){
+    return '<span class="btn-demo-spinner" style="width:' + size + 'px;height:' + size + 'px;" aria-hidden="true"></span>';
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Column order and row order are fixed per spec, independent of which
   // type's own page this is - every page shows the same full matrix.
   var TYPES = [
@@ -16,7 +31,7 @@
     { key: "tertiary", label: "Tertiary" },
     { key: "ghost", label: "Ghost" },
     { key: "neutral", label: "Neutral" },
-    { key: "link", label: "Transparent" },
+    { key: "link", label: "Link" },
     { key: "approve", label: "Approve" },
     { key: "destructive", label: "Delete" }
   ];
@@ -25,7 +40,8 @@
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "pressed", cls: " is-pressed", label: "Pressed" },
     { key: "focus", cls: " is-focus", label: "Focus" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" }
   ];
 
   // Purpose/sample/CSS for every type, keyed the same as TYPES above -
@@ -307,9 +323,11 @@
     lines.push("  display:inline-flex; align-items:center; justify-content:center; gap:8px;");
     lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:600;');
     lines.push("  white-space:nowrap; cursor:pointer; user-select:none;");
+    lines.push("  max-width:320px; overflow:hidden; text-overflow:ellipsis;");
     lines.push("  border:1.5px solid transparent;");
     lines.push("  transition:background-color .15s ease, border-color .15s ease, color .15s ease;");
     lines.push("}");
+    lines.push(".btn > span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -637,22 +655,30 @@
       var iconSize = ICON_SIZE_BY_HEIGHT[size] || 16;
       var classes = "btn-demo btn-demo--" + typeKey + " btn-demo--h" + size + stateCls;
       var inner;
+      var safeLabel = escapeHtml(label);
+      var isLoading = / is-loading\b/.test(stateCls);
 
-      if (content === "text"){
-        inner = label;
+      if (isLoading){
+        // The spinner replaces the leading icon slot and disables the
+        // trailing one - a button mid-request doesn't also promise a second
+        // action (icon-right) is still available to click.
+        inner = spinnerHtml(iconSize) + (content === "icon-only" ? "" : "<span>" + safeLabel + "</span>");
+      } else if (content === "text"){
+        inner = "<span>" + safeLabel + "</span>";
       } else if (content === "icon-left"){
-        inner = icon(ICON_PLUS, iconSize) + "<span>" + label + "</span>";
+        inner = icon(ICON_PLUS, iconSize) + "<span>" + safeLabel + "</span>";
       } else if (content === "icon-right"){
-        inner = "<span>" + label + "</span>" + icon(ICON_ARROW, iconSize);
+        inner = "<span>" + safeLabel + "</span>" + icon(ICON_ARROW, iconSize);
       } else if (content === "icon-both"){
-        inner = icon(ICON_PLUS, iconSize) + "<span>" + label + "</span>" + icon(ICON_ARROW, iconSize);
+        inner = icon(ICON_PLUS, iconSize) + "<span>" + safeLabel + "</span>" + icon(ICON_ARROW, iconSize);
       } else {
         classes += " is-icon-only";
-        inner = icon(ICON_GEAR, iconSize);
+        inner = isLoading ? spinnerHtml(iconSize) : icon(ICON_GEAR, iconSize);
       }
 
       var attrs = (content === "icon-only" && ariaLabel) ? ' aria-label="' + ariaLabel.replace(/"/g, "&quot;") + '"' : "";
-      var disabledAttr = / is-disabled\b/.test(stateCls) ? " disabled" : "";
+      if (isLoading) attrs += ' aria-busy="true"';
+      var disabledAttr = (/ is-disabled\b/.test(stateCls) || isLoading) ? " disabled" : "";
       return '<button class="' + classes + '" type="button" style="border-radius:' + radius + '"' + attrs + disabledAttr + '>' + inner + "</button>";
     }
 

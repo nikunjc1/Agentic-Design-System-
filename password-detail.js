@@ -1,7 +1,17 @@
 (() => {
   "use strict";
 
-  var ICON_EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_EYE ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var ICON_EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-7-11-7a18.7 18.7 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a18.7 18.7 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -177,7 +187,7 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text).");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text), Allow clear (boolean - once the field has a value, shows an × button before the reveal toggle that clears it).");
     return lines.join("\n");
   }
 
@@ -185,9 +195,9 @@
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
     var lines = [];
     lines.push('<div class="password-field">');
-    lines.push('  <label class="password-field-label">' + label + "</label>");
+    lines.push('  <label class="password-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="password-control password-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="password" placeholder="' + placeholder + '" />');
+    lines.push('    <input type="password" placeholder="' + escapeHtml(placeholder) + '" />');
     lines.push("  </div>");
     lines.push("</div>");
     return lines.join("\n");
@@ -294,6 +304,28 @@
       try{ document.execCommand("copy"); }catch(e){}
       document.body.removeChild(ta);
     }
+
+    // The reveal toggle actually reveals - delegated on the document since
+    // the Live Preview matrix's whole innerHTML is rebuilt on every
+    // property change (any listener bound directly to a button would be
+    // thrown away with it). Also covers the static card on password.html's
+    // listing page, which loads this same script - registered on the
+    // capture phase and stopped there so the card's own click-to-navigate
+    // listener (bound directly on the card, closer to the target, so it
+    // would otherwise fire first during the bubble phase) never sees this
+    // click and navigates away instead of toggling.
+    document.addEventListener("click", function(e){
+      var toggle = e.target.closest && e.target.closest(".password-demo-toggle");
+      if (!toggle) return;
+      e.stopPropagation();
+      var control = toggle.closest(".password-demo-control");
+      var input = control && control.querySelector(".password-demo-input");
+      if (!input) return;
+      var revealed = input.type === "text";
+      input.type = revealed ? "password" : "text";
+      toggle.innerHTML = revealed ? ICON_EYE : ICON_EYE_OFF;
+      toggle.setAttribute("aria-label", revealed ? "Show password" : "Hide password");
+    }, true);
 
     // Gallery-card copy CTA + click-to-navigate (password.html's listing
     // card) - separate data-role from every other system's own copy roles
@@ -405,25 +437,32 @@
     var labelInput = document.querySelector('[data-role="password-label"]');
     var placeholderInput = document.querySelector('[data-role="password-placeholder"]');
     var showRevealInput = document.querySelector('[data-role="password-show-reveal"]');
+    var allowClearInput = document.querySelector('[data-role="password-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="password-size-mount"]');
     var radiusMount = document.querySelector('[data-role="password-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildPasswordField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showReveal){
+    function buildPasswordField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showReveal, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
+      var hasValue = isFilled || isError;
       var controlClasses = "password-demo-control password-demo-control--" + typeKey + " password-demo-control--h" + size + stateCls;
       var valueAttr = isFilled ? ' value="correcthorse"' : (isError ? ' value="short"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="password" class="password-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
-      var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password" tabindex="-1">' + ICON_EYE + "</button>" : "";
+      var inputHtml = '<input type="password" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // No tabindex override - a real <button> is focusable by default, and
+      // a reveal toggle a keyboard user can't reach defeats its own purpose.
+      var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password">' + ICON_EYE + "</button>" : "";
+      var clearHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="password-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="password-demo-note is-error">Password must be at least 8 characters.</p>' : "";
       return '<div class="password-demo-field">' +
-        '<label class="password-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + toggleHtml + "</div>" +
+        '<label class="password-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + toggleHtml + "</div>" +
         noteHtml +
         "</div>";
     }
@@ -441,10 +480,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showReveal){
+    function buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildPasswordField(t.key, state.key, state.cls, size, radius, label, placeholder, showReveal) + "</td>";
+          return '<td class="button-matrix-cell">' + buildPasswordField(t.key, state.key, state.cls, size, radius, label, placeholder, showReveal, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -466,6 +505,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var showReveal = showRevealInput ? showRevealInput.checked : false;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -474,7 +514,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showReveal);
+          html += buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -509,6 +549,7 @@
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
     if (showRevealInput) showRevealInput.addEventListener("change", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

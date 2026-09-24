@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "default", label: "Default" },
     { key: "with-search", label: "With search" }
@@ -98,7 +106,7 @@
     lines.push(".transfer-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push("");
     lines.push(".transfer-demo-column{ flex:1 1 0; min-width:140px; display:flex; flex-direction:column; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; }");
-    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:8px 12px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; font-weight:600; color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); }');
+    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:8px 12px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; font-weight:600; color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.transfer-demo-search{ margin:8px; padding:6px 8px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); color:var(--text-hi); }');
     lines.push("");
     lines.push("/* Size (3 options) - controls each panel's list height */");
@@ -110,8 +118,10 @@
     lines.push('.transfer-demo-item{ display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; color:var(--text-hi); cursor:pointer; }');
     lines.push(".transfer-demo-item:hover, .transfer-demo-item.is-hover{ background:var(--graphite-800); }");
     lines.push("");
+    lines.push(".transfer-demo-checkbox-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
     lines.push(".transfer-demo-checkbox{ flex:none; width:16px; height:16px; border-radius:4px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; }");
-    lines.push(".transfer-demo-checkbox.is-checked{ background:var(--red-500); border-color:var(--red-500); }");
+    lines.push(".transfer-demo-checkbox-input:checked + .transfer-demo-checkbox{ background:var(--red-500); border-color:var(--red-500); }");
+    lines.push(".transfer-demo-checkbox-input:focus-visible + .transfer-demo-checkbox{ outline:2px solid var(--red-400); outline-offset:2px; }");
     lines.push(".transfer-demo-checkbox svg{ width:11px; height:11px; color:#FFFFFF; }");
     lines.push("");
     lines.push(".transfer-demo-arrows{ flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:0 4px; }");
@@ -126,24 +136,26 @@
       var hasSearch = t.key === "with-search";
       lines.push('<div class="transfer-demo-panel">');
       lines.push('  <div class="transfer-demo-column">');
-      lines.push('    <div class="transfer-demo-column-title"><span>' + leftTitle + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>');
+      lines.push('    <div class="transfer-demo-column-title"><span>' + escapeHtml(leftTitle) + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>');
       if (hasSearch) lines.push('    <input type="text" class="transfer-demo-search" placeholder="Search..." />');
       lines.push('    <div class="transfer-demo-list transfer-demo-list--' + sizeKey + '">');
       SOURCE_ITEMS.forEach(function(item){
-        lines.push('      <label class="transfer-demo-item"><span class="transfer-demo-checkbox' + (item.checked ? " is-checked" : "") + '">' + (item.checked ? CHECK_ICON_SVG : "") + '</span><span>' + item.name + '</span></label>');
+        var inputAttr = '<input type="checkbox" class="transfer-demo-checkbox-input"' + (item.checked ? " checked" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
+        lines.push('      <label class="transfer-demo-item">' + inputAttr + '<span class="transfer-demo-checkbox' + (item.checked ? " is-checked" : "") + '">' + (item.checked ? CHECK_ICON_SVG : "") + '</span><span>' + item.name + '</span></label>');
       });
       lines.push('    </div>');
       lines.push('  </div>');
       lines.push('  <div class="transfer-demo-arrows">');
-      lines.push('    <button type="button" class="transfer-demo-arrow-btn">&gt;</button>');
-      lines.push('    <button type="button" class="transfer-demo-arrow-btn">&lt;</button>');
+      lines.push('    <button type="button" class="transfer-demo-arrow-btn" aria-label="Move checked items right">&gt;</button>');
+      lines.push('    <button type="button" class="transfer-demo-arrow-btn" aria-label="Move checked items left">&lt;</button>');
       lines.push('  </div>');
       lines.push('  <div class="transfer-demo-column">');
-      lines.push('    <div class="transfer-demo-column-title"><span>' + rightTitle + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>');
+      lines.push('    <div class="transfer-demo-column-title"><span>' + escapeHtml(rightTitle) + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>');
       if (hasSearch) lines.push('    <input type="text" class="transfer-demo-search" placeholder="Search..." />');
       lines.push('    <div class="transfer-demo-list transfer-demo-list--' + sizeKey + '">');
       TARGET_ITEMS.forEach(function(item){
-        lines.push('      <label class="transfer-demo-item"><span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>');
+        var inputAttr = '<input type="checkbox" class="transfer-demo-checkbox-input" aria-label="' + escapeHtml(item.name) + '" />';
+        lines.push('      <label class="transfer-demo-item">' + inputAttr + '<span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>');
       });
       lines.push('    </div>');
       lines.push('  </div>');
@@ -159,28 +171,30 @@
     var isDisabled = stateKey === "disabled";
     var hasSearch = typeKey === "with-search";
     var listHeight = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
-    var searchHtml = hasSearch ? '<input type="text" class="transfer-demo-search" placeholder="Search..." tabindex="-1" />' : "";
+    var searchHtml = hasSearch ? '<input type="text" class="transfer-demo-search" placeholder="Search..." />' : "";
 
     var sourceRows = SOURCE_ITEMS.map(function(item, i){
       var hoverCls = (stateKey === "hover" && i === 0) ? " is-hover" : "";
+      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input"' + (item.checked ? " checked" : "") + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
       var checkboxHtml = item.checked
         ? '<span class="transfer-demo-checkbox is-checked">' + CHECK_ICON_SVG + '</span>'
         : '<span class="transfer-demo-checkbox"></span>';
-      return '<label class="transfer-demo-item' + hoverCls + '">' + checkboxHtml + '<span>' + item.name + '</span></label>';
+      return '<label class="transfer-demo-item' + hoverCls + '">' + inputHtml + checkboxHtml + '<span>' + item.name + '</span></label>';
     }).join("");
 
     var targetRows = TARGET_ITEMS.map(function(item){
-      return '<label class="transfer-demo-item"><span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>';
+      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input"' + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
+      return '<label class="transfer-demo-item">' + inputHtml + '<span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>';
     }).join("");
 
     var leftColumn = '<div class="transfer-demo-column">' +
-      '<div class="transfer-demo-column-title"><span>' + leftTitle + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>' +
+      '<div class="transfer-demo-column-title"><span>' + escapeHtml(leftTitle) + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>' +
       searchHtml +
       '<div class="transfer-demo-list" style="height:' + listHeight + 'px;">' + sourceRows + '</div>' +
       '</div>';
 
     var rightColumn = '<div class="transfer-demo-column">' +
-      '<div class="transfer-demo-column-title"><span>' + rightTitle + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>' +
+      '<div class="transfer-demo-column-title"><span>' + escapeHtml(rightTitle) + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>' +
       searchHtml +
       '<div class="transfer-demo-list" style="height:' + listHeight + 'px;">' + targetRows + '</div>' +
       '</div>';
@@ -188,8 +202,8 @@
     var rightArrowCls = "transfer-demo-arrow-btn" + ((stateKey === "focus") ? " is-focus" : "");
     var disabledAttr = isDisabled ? " disabled" : "";
     var arrows = '<div class="transfer-demo-arrows">' +
-      '<button type="button" class="' + rightArrowCls + '" tabindex="-1"' + disabledAttr + '>&gt;</button>' +
-      '<button type="button" class="transfer-demo-arrow-btn" tabindex="-1"' + disabledAttr + '>&lt;</button>' +
+      '<button type="button" class="' + rightArrowCls + '" aria-label="Move checked items right"' + disabledAttr + '>&gt;</button>' +
+      '<button type="button" class="transfer-demo-arrow-btn" aria-label="Move checked items left"' + disabledAttr + '>&lt;</button>' +
       '</div>';
 
     var panelCls = "transfer-demo-panel" + (isDisabled ? " is-disabled" : "");

@@ -9,6 +9,22 @@
   // rather than one page per type.
   var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 
+  // Same spinner used by the flexible Button system (button-detail.js) -
+  // currentColor so it self-adjusts to whichever type's own label color is
+  // active, instead of hardcoding one color that would only read correctly
+  // on some of the 7 types here.
+  function spinnerHtml(size){
+    return '<span class="btn-demo-spinner" style="width:' + size + 'px;height:' + size + 'px;" aria-hidden="true"></span>';
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Same size scale as the flexible Button system's .btn-demo--h* classes,
   // so Size here behaves identically to every other button page - width is
   // never fixed, it's a natural result of height/padding/content like
@@ -26,8 +42,8 @@
   };
   var ICON_SIZE_BY_HEIGHT = { "24": 12, "28": 14, "32": 14, "36": 16, "40": 16, "44": 18, "48": 20, "56": 22 };
 
-  var STATES = ["rest", "hover", "pressed", "focused", "disabled"];
-  var STATE_LABELS = { rest: "Rest", hover: "Hover", pressed: "Pressed", focused: "Focused", disabled: "Disabled" };
+  var STATES = ["rest", "hover", "pressed", "focused", "disabled", "loading"];
+  var STATE_LABELS = { rest: "Rest", hover: "Hover", pressed: "Pressed", focused: "Focused", disabled: "Disabled", loading: "Loading" };
 
   var TYPES = ["primary-icon", "secondary-icon", "tertiary-icon", "ghost-icon", "transparent-icon", "approve-icon", "delete-icon"];
   var TYPE_LABELS = {
@@ -48,7 +64,8 @@
         hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
         focused: { css: "background:var(--red-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background the selected brand color, label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:var(--red-500);color:#FFFFFF;", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. The label and both icon slots are replaced by one spinner; not clickable." }
       }
     },
     "secondary-icon": {
@@ -58,7 +75,8 @@
         hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
         focused: { css: "background:var(--red-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background the selected brand color, label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:#FFFFFF;color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     },
     "tertiary-icon": {
@@ -68,7 +86,8 @@
         hover: { css: "background:var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background a lighter tint of the selected brand color, inside border 1px solid the selected brand color, label and icons the selected brand color." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background a lighter tint of the selected brand color with a 10% black overlay, inside border 1px solid the selected brand color, label and icons the selected brand color - slightly darker than Hover." },
         focused: { css: "background:var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background a lighter tint of the selected brand color, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:#FFFFFF;color:var(--red-500);box-shadow:inset 0 0 0 1px #E0E0E0;", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     },
     "ghost-icon": {
@@ -78,7 +97,8 @@
         hover: { css: "background:#F5F5F5;color:var(--red-500);", desc: "Background #F5F5F5, label and icons the selected brand color, no border or shadow." },
         pressed: { css: "background:#E0E0E0;color:var(--red-500);", desc: "Background #E0E0E0, label and icons the selected brand color, no border or shadow - visibly darker than Hover." },
         focused: { css: "background:#FFFFFF;color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background #FFFFFF, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring, shadow, hover or pressed effects." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring, shadow, hover or pressed effects." },
+        loading: { css: "background:#FFFFFF;color:var(--red-500);", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     },
     "transparent-icon": {
@@ -88,7 +108,8 @@
         hover: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color - same appearance as Rest." },
         pressed: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color - same appearance as Rest and Hover." },
         focused: { css: "background:transparent;color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background fully transparent, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:transparent;color:#A4A7AE;", desc: "Background fully transparent, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:transparent;color:#A4A7AE;", desc: "Background fully transparent, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:transparent;color:var(--red-500);", desc: "Same appearance as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     },
     "approve-icon": {
@@ -98,7 +119,8 @@
         hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500) with a 20% black overlay, label and icons #FFFFFF, no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
         focused: { css: "background:var(--green-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background the fixed Approve green (--green-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:var(--green-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     },
     "delete-icon": {
@@ -108,7 +130,8 @@
         hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500) with a 20% black overlay, label and icons #FFFFFF, no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
         focused: { css: "background:var(--danger-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", desc: "Background the fixed Delete red (--danger-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in #202124." },
-        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." }
+        disabled: { css: "background:#E0E0E0;color:#A4A7AE;", desc: "Background #E0E0E0, label and icons #A4A7AE, no border, focus ring or shadow." },
+        loading: { css: "background:var(--danger-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
     }
   };
@@ -193,7 +216,7 @@
     var contentInfo = selectionInfo.content || selectionMode(null, CONTENT_OPTIONS);
 
     var lines = [];
-    lines.push("Create a complete Dual Icon Button component system, covering all 7 types below, each with five states: Rest, Hover, Pressed, Focused, Disabled.");
+    lines.push("Create a complete Dual Icon Button component system, covering all 7 types below, each with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.");
     lines.push("");
     lines.push("Default size: 122 x 36px (height 36px, 16px horizontal padding), corner radius 4px, horizontal layout, 8px gap between elements - also supports the full size scale (24/28/32/36/40/44/48/56px height, padding/font-size/icon-size scaling with it) and corner radius (0/4/8/12px/full pill), same as the rest of this Button system.");
     lines.push("Content: left chevron-down icon, label (Inter Medium, default \"Save\"), right chevron-down icon.");
@@ -207,7 +230,7 @@
     });
     lines.push("");
     lines.push("Component properties per type:");
-    lines.push("  State: Rest / Hover / Pressed / Focused / Disabled.");
+    lines.push("  State: Rest / Hover / Pressed / Focused / Disabled / Loading.");
     lines.push("  " + propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS));
     lines.push("  " + propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS));
     lines.push("  " + propertyPromptLine("Content", contentInfo, CONTENT_OPTIONS));
@@ -238,10 +261,11 @@
     lines.push("/* Dual Icon Button system - all 7 types */");
     lines.push(".dualicon-btn{");
     lines.push("  display:inline-flex; align-items:center; justify-content:center;");
-    lines.push("  width:auto; border:none;");
+    lines.push("  width:auto; max-width:320px; border:none;");
     lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500;');
-    lines.push("  white-space:nowrap; cursor:pointer;");
+    lines.push("  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer;");
     lines.push("}");
+    lines.push(".dualicon-btn > span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -266,7 +290,7 @@
       var spec = TYPE_SPEC[typeKey];
       lines.push("/* " + TYPE_LABELS[typeKey] + " */");
       STATES.forEach(function(key){
-        var extra = key === "disabled" ? "cursor:not-allowed;" : "";
+        var extra = key === "disabled" ? "cursor:not-allowed;" : (key === "loading" ? "cursor:wait;pointer-events:none;" : "");
         lines.push(".btn--" + typeKey + "-" + key + "{ " + spec.states[key].css + extra + " }");
       });
       lines.push("");
@@ -313,12 +337,18 @@
     hover: { wrap: "background:var(--red-tint);color:var(--red-500);border:1px solid var(--red-500);", divider: "background:var(--red-500);" },
     pressed: { wrap: "background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--red-tint);color:var(--red-500);border:1px solid var(--red-500);", divider: "background:var(--red-500);" },
     focused: { wrap: "background:var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid #202124;outline-offset:2px;", divider: "background:var(--red-500);" },
-    disabled: { wrap: "background:#E0E0E0;color:#A4A7AE;border:1px solid #A4A7AE;", divider: "background:#A4A7AE;" }
+    disabled: { wrap: "background:#E0E0E0;color:#A4A7AE;border:1px solid #A4A7AE;", divider: "background:#A4A7AE;" },
+    // Same background/border/label color as Rest (still reads as present, not
+    // unavailable) - only the main action's leading slot becomes a spinner;
+    // pointer-events:none on the wrap blocks both buttons without a native
+    // disabled attribute, matching the 7 icon-button types' own loading state.
+    loading: { wrap: "background:#FFFFFF;color:var(--red-500);border:1px solid var(--red-500);cursor:wait;pointer-events:none;", divider: "background:var(--red-500);" }
   };
 
   function buildSplitCta(stateKey, label, showLeading, size, radius){
     var spec = SPLIT_STATES[stateKey];
     var isDisabled = stateKey === "disabled";
+    var isLoading = stateKey === "loading";
     var wrapClass = "splitcta" + (isDisabled ? " is-disabled" : "");
     var disabledAttr = isDisabled ? " disabled" : "";
     var scale = SIZE_SCALE[size] || SIZE_SCALE["36"];
@@ -328,7 +358,9 @@
     var mainStyle = "padding:" + scale.padding + ";font-size:" + scale.fontSize + ";gap:" + scale.gap + ";";
     var triggerStyle = "width:" + size + "px;padding:0;";
     var iconStyle = "width:" + iconSize + "px;height:" + iconSize + "px;";
-    var leadingHtml = showLeading ? '<span class="splitcta-icon" style="' + iconStyle + '">' + ICON_CHEVRON_DOWN + "</span>" : "";
+    var leadingHtml = isLoading
+      ? spinnerHtml(iconSize)
+      : (showLeading ? '<span class="splitcta-icon" style="' + iconStyle + '">' + ICON_CHEVRON_DOWN + "</span>" : "");
     return '<div class="' + wrapClass + '" data-rowstate="' + stateKey + '" data-size="' + size + '" data-radius="' + radius + '" style="' + wrapStyle + '">' +
       '<button type="button" class="splitcta-main" style="' + mainStyle + '"' + disabledAttr + ">" + leadingHtml + "<span>" + label + "</span></button>" +
       '<div class="splitcta-divider" style="' + spec.divider + '"></div>' +
@@ -338,7 +370,7 @@
 
   function buildSplitPrompt(){
     var lines = [];
-    lines.push('Create an editable "CTA With Dropdown" split-button component set with five states: Rest, Hover, Pressed, Focused, Disabled.');
+    lines.push('Create an editable "CTA With Dropdown" split-button component set with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.');
     lines.push("");
     lines.push("Dimensions: 141 x 36px total - a 105x36px main action joined with no gap to a 36x36px dropdown trigger, 1px divider between them, 4px outer corner radius with the joining edge kept square.");
     lines.push("Main action: 16px horizontal padding, 8px gap, left chevron-down icon (20x20px), label (Inter Medium 14px/20px, shares the same Label property as the button matrix, default \"Save\"). Dropdown trigger: centered chevron-down icon (20x20px), 8px padding.");
@@ -348,8 +380,9 @@
     lines.push("Pressed: same tint as Hover with a 10% black overlay, slightly darker than Hover.");
     lines.push("Focused: same background as Hover, 1px white inner border around the whole control, 2px outside focus ring in #202124.");
     lines.push("Disabled: both sections #E0E0E0, label/icons/outline/divider #A4A7AE, no focus ring.");
+    lines.push("Loading: same background, outline and divider color as Rest - still reads as present, not unavailable. The main action's leading icon is replaced by a spinner; neither section is clickable.");
     lines.push("");
-    lines.push("Component properties: State (Rest/Hover/Pressed/Focused/Disabled), Size and Corner radius (shared with the button matrix's own Size/Corner radius properties), Label (editable text, shared with the button matrix's own Label field, default \"Save\"), Leading Icon (boolean, default true). The main action and dropdown trigger are two separate clickable areas, not one button.");
+    lines.push("Component properties: State (Rest/Hover/Pressed/Focused/Disabled/Loading), Size and Corner radius (shared with the button matrix's own Size/Corner radius properties), Label (editable text, shared with the button matrix's own Label field, default \"Save\"), Leading Icon (boolean, default true). The main action and dropdown trigger are two separate clickable areas, not one button.");
     lines.push("Keep dimensions, padding, typography, alignment and radius identical across every state - only change what each state specifies. Do not introduce additional colors, gradients or effects beyond what's listed.");
     return lines.join("\n");
   }
@@ -520,12 +553,24 @@
     function buildButton(typeKey, stateKey, label, showLeft, showRight, size, radius){
       var stateCss = TYPE_SPEC[typeKey].states[stateKey].css;
       var iconSize = ICON_SIZE_BY_HEIGHT[size] || 16;
-      var css = sizeCssFor(size, radius) + stateCss;
+      var isLoading = stateKey === "loading";
+      // Loading isn't a native-disabled look (see TYPE_SPEC's loading desc) -
+      // block interaction via cursor/pointer-events only, same technique the
+      // flexible Button system uses (shell.css's .btn-demo.is-loading).
+      var extraCss = isLoading ? "cursor:wait;pointer-events:none;" : "";
+      var css = sizeCssFor(size, radius) + stateCss + extraCss;
       var iconHtml = '<span class="dualicon-btn-icon" style="width:' + iconSize + 'px;height:' + iconSize + 'px;">' + ICON_CHEVRON_DOWN + "</span>";
       var inner = "";
-      if (showLeft) inner += iconHtml;
-      inner += "<span>" + label + "</span>";
-      if (showRight) inner += iconHtml;
+      if (isLoading){
+        // Spinner replaces BOTH icon slots (not just the leading one) - this
+        // component always shows the same chevron on both sides, so keeping
+        // one during loading would look like a second still-available action.
+        inner = spinnerHtml(iconSize) + "<span>" + escapeHtml(label) + "</span>";
+      } else {
+        if (showLeft) inner += iconHtml;
+        inner += "<span>" + escapeHtml(label) + "</span>";
+        if (showRight) inner += iconHtml;
+      }
       var disabledAttr = stateKey === "disabled" ? " disabled" : "";
       return '<button type="button" class="dualicon-btn" data-type="' + typeKey + '" data-rowstate="' + stateKey + '" data-size="' + size + '" data-radius="' + radius + '" style="' + css + '"' + disabledAttr + ">" + inner + "</button>";
     }
@@ -544,7 +589,7 @@
       container.querySelectorAll(".dualicon-btn[data-type]").forEach(function(btn){
         var typeKey = btn.dataset.type;
         var rowState = btn.dataset.rowstate;
-        if (rowState === "disabled") return;
+        if (rowState === "disabled" || rowState === "loading") return;
         var baseSize = sizeCssFor(btn.dataset.size, btn.dataset.radius);
         var states = TYPE_SPEC[typeKey].states;
         var restCss = baseSize + states[rowState].css;
@@ -563,7 +608,7 @@
     function wireSplitInteraction(container){
       container.querySelectorAll(".splitcta[data-rowstate]").forEach(function(wrap){
         var rowState = wrap.dataset.rowstate;
-        if (rowState === "disabled") return;
+        if (rowState === "disabled" || rowState === "loading") return;
         var scale = SIZE_SCALE[wrap.dataset.size] || SIZE_SCALE["36"];
         var radiusCss = wrap.dataset.radius === "9999" ? "9999px" : wrap.dataset.radius + "px";
         var baseWrapCss = "width:auto;height:" + wrap.dataset.size + "px;border-radius:" + radiusCss + ";";

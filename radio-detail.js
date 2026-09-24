@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "standard", label: "Standard" },
     { key: "card", label: "Card" }
@@ -162,7 +170,7 @@
     lines.push("/* Disabled - real :disabled combined with .is-disabled */");
     lines.push(".radio-demo-input:disabled + .radio-demo-circle, .radio-demo-circle.is-disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("");
-    lines.push(".radio-demo-label{ font-size:14px; color:" + textHi + "; }");
+    lines.push(".radio-demo-label{ font-size:14px; color:" + textHi + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Card type - the whole row highlights once its radio is checked */");
     lines.push(".radio-demo-card{ display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid " + lineStrong + "; border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
@@ -342,7 +350,7 @@
       var field = '<label class="radio-demo-field radio-demo-field--' + typeKey + '">' +
         '<input type="radio" class="radio-demo-input" name="' + inputName + '"' + checkedAttr + disabledAttr + " />" +
         '<span class="' + circleCls + '">' + dotSpan + "</span>" +
-        '<span class="radio-demo-label">' + label + "</span>" +
+        '<span class="radio-demo-label">' + escapeHtml(label) + "</span>" +
       "</label>";
       if (typeKey === "card"){
         var cardCls = "radio-demo-card" + (isChecked ? " is-checked" : "");

@@ -1,6 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" }
@@ -171,9 +181,9 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="autocomplete-field">');
-    lines.push('  <label class="autocomplete-field-label">' + label + "</label>");
+    lines.push('  <label class="autocomplete-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="autocomplete-control autocomplete-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
-    lines.push('    <input type="text" placeholder="' + placeholder + '" />');
+    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '" />');
     lines.push("  </div>");
     lines.push("  <!-- Suggestion panel - only rendered while the field is in the Open state -->");
     lines.push('  <div class="autocomplete-panel">');
@@ -405,19 +415,24 @@
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "Search a city...";
     var labelInput = document.querySelector('[data-role="autocomplete-label"]');
     var placeholderInput = document.querySelector('[data-role="autocomplete-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="autocomplete-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="autocomplete-size-mount"]');
     var radiusMount = document.querySelector('[data-role="autocomplete-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildAutocompleteField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildAutocompleteField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
+      var hasValue = isOpen || isFilled;
       var controlClasses = "autocomplete-demo-control autocomplete-demo-control--" + typeKey + " autocomplete-demo-control--h" + size + stateCls;
-      var valueAttr = (isOpen || isFilled) ? ' value="San"' : "";
+      var valueAttr = hasValue ? ' value="San"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="autocomplete-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="text" class="autocomplete-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var clearHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="autocomplete-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen
         ? '<div class="autocomplete-demo-panel">' +
@@ -427,8 +442,8 @@
           "</div>"
         : "";
       return '<div class="autocomplete-demo-field">' +
-        '<label class="autocomplete-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + "</div>" +
+        '<label class="autocomplete-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + "</div>" +
         panelHtml +
         "</div>";
     }
@@ -446,10 +461,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildAutocompleteField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildAutocompleteField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -470,6 +485,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -478,7 +494,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -512,6 +528,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

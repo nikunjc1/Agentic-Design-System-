@@ -8,6 +8,14 @@
   // own class/data-role names (uses "menu" throughout) so the two stay
   // clearly distinct.
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "default", label: "Default" },
     { key: "icons", label: "With icons" }
@@ -49,7 +57,7 @@
       focus: "outline:2px solid " + red500 + ";outline-offset:-2px;",
       disabled: "opacity:0.4;cursor:not-allowed;",
       destructive: "color:" + danger500 + ";",
-      divider: "height:1px;background:" + line + ";"
+      line: line
     };
   }
 
@@ -113,7 +121,7 @@
   // The last item is automatically styled destructive whenever its label
   // is literally "Delete" or "Remove" (case-insensitive) - regardless of
   // which state row it's in - matching how real menus separate a
-  // destructive action visually with a divider above it.
+  // destructive action visually with a top border on that item itself.
   function destructiveIndexFor(labels){
     if (!labels.length) return -1;
     var last = labels[labels.length - 1].trim().toLowerCase();
@@ -150,6 +158,7 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var css = liveCssFor();
 
     var lines = [];
@@ -167,13 +176,13 @@
     lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
     lines.push("  Disabled: " + css.disabled);
     lines.push("");
-    lines.push("Destructive item: if the last item's label is literally \"Delete\" or \"Remove\" (case-insensitive), automatically style that item's text and icon (" + css.destructive + ") and render a thin divider (" + css.divider + ") directly above it, separating it from the regular actions above - a common pattern real menus use to set a destructive action apart.");
+    lines.push("Destructive item: if the last item's label is literally \"Delete\" or \"Remove\" (case-insensitive), automatically style that item's text and icon (" + css.destructive + ") and add a thin top border (border-top:1px solid " + css.line + ") on that item itself, separating it from the regular actions above - a common pattern real menus use to set a destructive action apart. Draw the border inside the item's own box (box-sizing:border-box) so it never adds extra spacing beyond the panel's normal item gap, and zero out that item's own top-left/top-right corner radius (border-start-start-radius / border-start-end-radius) so the line stays flush edge-to-edge instead of curling in with the item's own rounded corners - its bottom corners keep the inherited radius since it's the last item, sitting at the panel's actual bottom edge.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Controls each item's row height - padding and font-size scale proportionally.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the panel's outer corners only.");
     lines.push("");
-    lines.push("Component properties: Labels (comma-separated editable text, one per item, default \"Edit, Duplicate, Archive, Delete\" - item count follows the number of labels entered).");
+    lines.push("Component properties: Labels (comma-separated editable text, one per item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered).");
     return lines.join("\n");
   }
 
@@ -181,18 +190,18 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var css = liveCssFor();
 
     var lines = [];
     lines.push("/* Agentic Design System - Menu (floating panel) component */");
     lines.push(".menu-demo-panel{ display:flex; flex-direction:column; gap:2px; box-sizing:border-box; padding:6px; " + css.panel + " }");
-    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:8px; width:100%; border:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; text-align:left; border-radius:4px; cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
+    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:8px; width:100%; border:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; text-align: start; border-radius:4px; cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
     lines.push(".menu-demo-item svg{ width:16px; height:16px; flex:none; }");
     lines.push(".menu-demo-item:hover, .menu-demo-item.is-hover{ " + css.hover + " }");
     lines.push(".menu-demo-item:focus-visible, .menu-demo-item.is-focus{ " + css.focus + " }");
     lines.push(".menu-demo-item:disabled, .menu-demo-item.is-disabled{ " + css.disabled + " }");
-    lines.push(".menu-demo-item.is-destructive{ " + css.destructive + " }");
-    lines.push(".menu-demo-divider{ margin:6px 2px; " + css.divider + " }");
+    lines.push(".menu-demo-item.is-destructive{ " + css.destructive + " border-top:1px solid " + css.line + "; border-start-start-radius:0; border-start-end-radius:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -211,21 +220,18 @@
       lines.push(".menu-demo-panel--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
-    lines.push("/* Destructive item - automatic whenever the last item's label is \"Delete\" or \"Remove\" (case-insensitive); apply .is-destructive plus a .menu-demo-divider directly above it wherever labels are rendered. */");
+    lines.push("/* Destructive item - automatic whenever the last item's label is \"Delete\" or \"Remove\" (case-insensitive); apply .is-destructive wherever that label is rendered. Its border-top draws inside the item's own box (box-sizing:border-box), so it never adds extra gap beyond the panel's normal 2px item spacing. */");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
-    var exampleDestructiveIndex = destructiveIndexFor(DEFAULT_LABELS);
+    var exampleDestructiveIndex = destructiveIndexFor(labels);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
       lines.push('<div class="menu-demo-panel menu-demo-panel--radius-' + radiusClassSuffix(exampleRadius) + '" style="border-radius:' + radiusCssFor(exampleRadius) + '">');
-      DEFAULT_LABELS.forEach(function(label, i){
-        if (i === exampleDestructiveIndex){
-          lines.push('  <div class="menu-demo-divider"></div>');
-        }
+      labels.forEach(function(label, i){
         var itemCls = "menu-demo-item menu-demo-item--h" + exampleSize + (i === exampleDestructiveIndex ? " is-destructive" : "");
         var icon = t.key === "icons" ? ICON_SVG : "";
-        lines.push('  <button type="button" class="' + itemCls + '">' + icon + label + "</button>");
+        lines.push('  <button type="button" class="' + itemCls + '">' + icon + escapeHtml(label) + "</button>");
       });
       lines.push("</div>");
     });
@@ -235,17 +241,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, labels){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      labels: labels
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, labels){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      labels: labels
     });
   }
 
@@ -395,13 +403,12 @@
       var destructiveIndex = destructiveIndexFor(labels);
       var itemsHtml = labels.map(function(label, i){
         var out = "";
-        if (i === destructiveIndex) out += '<div class="menu-demo-divider"></div>';
         var itemCls = "menu-demo-item menu-demo-item--h" + size +
           (i === destructiveIndex ? " is-destructive" : "") +
           (i === 0 ? stateCls : "");
         var disabledAttr = (i === 0 && isDisabledState) ? " disabled" : "";
         var icon = typeKey === "icons" ? ICON_SVG : "";
-        out += '<button type="button" class="' + itemCls + '"' + disabledAttr + ">" + icon + label + "</button>";
+        out += '<button type="button" class="' + itemCls + '"' + disabledAttr + ">" + icon + escapeHtml(label) + "</button>";
         return out;
       }).join("");
       return '<div class="menu-demo-panel" style="border-radius:' + radiusCss + '">' + itemsHtml + "</div>";
@@ -437,7 +444,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        labels: parseLabels(labelsInput.value)
       };
     }
 
@@ -452,13 +460,13 @@
       sizes.forEach(function(size){
         radii.forEach(function(radius){
           html += buildMatrixSection(size, radius, labels);
-          combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
+          combos.push({ size: size, radius: radius, label: comboLabel(size, radius), labels: labels });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.labels); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.labels); });
     }
 
     var propertyMultiSelects = {};

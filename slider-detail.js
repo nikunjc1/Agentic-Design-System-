@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "single", label: "Single" },
     { key: "range", label: "Range" }
@@ -161,7 +169,7 @@
     var exampleThickness = thicknessInfo.mode === "all" ? FALLBACK_DEFAULTS.thickness : thicknessInfo.values[0];
     lines.push("<!-- Example usage - one per type" + (thicknessInfo.mode === "specific" ? ", at the explicitly chosen track thickness" : "") + " -->");
     lines.push('<div class="slider-field">');
-    lines.push('  <p class="slider-field-label">' + label + "</p>");
+    lines.push('  <p class="slider-field-label">' + escapeHtml(label) + "</p>");
     lines.push('  <div class="slider-track-wrap">');
     lines.push('    <div class="slider-track slider-track--t' + exampleThickness + '">');
     lines.push('      <div class="slider-track-fill" style="left:0;width:' + value + '%;"></div>');
@@ -171,7 +179,7 @@
     lines.push("</div>");
     lines.push("");
     lines.push('<div class="slider-field">');
-    lines.push('  <p class="slider-field-label">' + label + "</p>");
+    lines.push('  <p class="slider-field-label">' + escapeHtml(label) + "</p>");
     lines.push('  <div class="slider-track-wrap">');
     lines.push('    <div class="slider-track slider-track--t' + exampleThickness + '">');
     lines.push('      <div class="slider-track-fill" style="left:' + RANGE_LOW + '%;right:' + (100 - RANGE_HIGH) + '%;"></div>');
@@ -358,7 +366,7 @@
       var wrapCls = "slider-demo-track-wrap" + stateCls;
       var disabledAttr = isDisabled ? ' aria-disabled="true"' : "";
       return '<div class="slider-demo-field">' +
-        '<p class="slider-demo-label">' + label + "</p>" +
+        '<p class="slider-demo-label">' + escapeHtml(label) + "</p>" +
         '<div class="' + wrapCls + '"' + disabledAttr + ">" +
           '<div class="slider-demo-track" style="' + trackStyle + '">' +
             '<div class="slider-demo-fill" style="' + fillStyle + '"></div>' +

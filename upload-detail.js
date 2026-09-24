@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon set - viewBox 0 0 24 24, stroke currentColor,
   // stroke-width 2, fill none - same convention as toast-detail.js /
   // alert-detail.js's icon sets.
@@ -89,8 +97,8 @@
     lines.push("");
     lines.push(".upload-demo-dropzone{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:20px 16px; border:1.5px dashed var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); text-align:center; }");
     lines.push(".upload-demo-dropzone svg{ width:24px; height:24px; color:var(--text-dim); }");
-    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }');
-    lines.push('.upload-demo-dropzone-helper{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); margin:0; }');
+    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.upload-demo-dropzone-helper{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); margin:0; max-width:260px; overflow-wrap:anywhere; }');
     lines.push("");
     lines.push(".upload-demo-trigger-btn{ display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; cursor:pointer; width:fit-content; }");
     lines.push(".upload-demo-trigger-btn:hover{ background:var(--graphite-700); }");
@@ -115,8 +123,8 @@
     lines.push('<div class="upload-demo-field">');
     lines.push('  <div class="upload-demo-dropzone">');
     lines.push("    " + UPLOAD_ICON);
-    lines.push('    <p class="upload-demo-dropzone-title">' + label + "</p>");
-    lines.push('    <p class="upload-demo-dropzone-helper">' + helper + "</p>");
+    lines.push('    <p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>");
+    lines.push('    <p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>");
     lines.push("  </div>");
     lines.push('  <div class="upload-demo-file-list">');
     lines.push('    <div class="upload-demo-file-row is-complete">');
@@ -139,9 +147,9 @@
     lines.push("");
     lines.push("<!-- Example usage - Button type, Empty state -->");
     lines.push('<div class="upload-demo-field">');
-    lines.push('  <p class="upload-demo-dropzone-title">' + label + "</p>");
+    lines.push('  <p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>");
     lines.push('  <button type="button" class="upload-demo-trigger-btn">' + UPLOAD_ICON + "<span>Upload file</span></button>");
-    lines.push('  <p class="upload-demo-dropzone-helper">' + helper + "</p>");
+    lines.push('  <p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -157,14 +165,14 @@
     var controlHtml;
     if (typeKey === "dropzone"){
       controlHtml = '<div class="upload-demo-dropzone">' + UPLOAD_ICON +
-        '<p class="upload-demo-dropzone-title">' + label + "</p>" +
-        '<p class="upload-demo-dropzone-helper">' + helper + "</p>" +
+        '<p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>" +
+        '<p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>" +
         "</div>";
     } else {
       var disabledAttr = isDisabled ? " disabled" : "";
-      controlHtml = '<p class="upload-demo-dropzone-title">' + label + "</p>" +
+      controlHtml = '<p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>" +
         '<button type="button" class="upload-demo-trigger-btn" tabindex="-1"' + disabledAttr + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px;"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg><span>Upload file</span></button>' +
-        '<p class="upload-demo-dropzone-helper">' + helper + "</p>";
+        '<p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>";
     }
 
     var fileListHtml = "";

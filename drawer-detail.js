@@ -1,9 +1,19 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "right", label: "Right" },
-    { key: "left", label: "Left" }
+    { key: "left", label: "Left" },
+    { key: "top", label: "Top" },
+    { key: "bottom", label: "Bottom" }
   ];
   var STATES = [
     { key: "default", label: "Default" },
@@ -13,8 +23,12 @@
 
   var FULL_SPEC = {
     right: { purpose: "Slides in from the right edge of the screen - the far more common real-world default for edit panels, filters and detail views." },
-    left: { purpose: "Slides in from the left edge of the screen - same structure as Right, used when the trigger or surrounding navigation sits on the left." }
+    left: { purpose: "Slides in from the left edge of the screen - same structure as Right, used when the trigger or surrounding navigation sits on the left." },
+    top: { purpose: "Slides down from the top edge, full width - useful for a global filter bar or announcement that needs to span the whole screen rather than sit in a side column." },
+    bottom: { purpose: "Slides up from the bottom edge, full width - the standard placement on narrow/mobile viewports, where a side panel would be too cramped to read." }
   };
+
+  var HORIZONTAL_TYPES = { left: true, right: true };
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -56,14 +70,12 @@
     return value === "9999" ? "9999px" : value + "px";
   }
 
-  // Rounds the panel's INNER edge only - the two corners furthest from the
-  // screen edge it is anchored to. The outer edge (flush with the screen)
-  // always stays square, same concept as a real edge-anchored drawer.
-  function innerRadiusStyleFor(typeKey, radiusCss){
-    if (typeKey === "left"){
-      return "border-top-right-radius:" + radiusCss + ";border-bottom-right-radius:" + radiusCss + ";";
-    }
-    return "border-top-left-radius:" + radiusCss + ";border-bottom-left-radius:" + radiusCss + ";";
+  // All 4 corners round, regardless of placement - a prior version only
+  // rounded the panel's inner edge (the two corners furthest from the
+  // screen edge it's anchored to), leaving the outer edge flush/square,
+  // but that read as "corners aren't rounding" rather than intentional.
+  function radiusStyleFor(radiusCss){
+    return "border-radius:" + radiusCss + ";";
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -103,9 +115,9 @@
     var lines = [];
     lines.push("Create a complete Drawer component for the Agentic Design System.");
     lines.push("");
-    lines.push("Build it as ONE reusable panel component controlled by properties (type, state, size, radius) - a panel that slides in from a screen edge (Left or Right) above a dimmed backdrop (scrim), full-height, with a title bar (optional close \"x\"), a body, and (usually) a footer with Cancel/Save buttons. It reuses the exact same header/body/footer/button visual language as this system's Modal component, just edge-anchored and full-height instead of centered - for tasks that need more room than a Modal but shouldn't fully interrupt the page layout.");
+    lines.push("Build it as ONE reusable panel component controlled by properties (type, state, size, radius) - a panel that slides in from a screen edge (Left, Right, Top or Bottom) above a dimmed backdrop (scrim), with a title bar (optional close \"x\"), a body, and (usually) a footer with Cancel/Save buttons. Left/Right are full-height and their Size controls width; Top/Bottom are full-width and their Size controls height instead. It reuses the exact same header/body/footer/button visual language as this system's Modal component, just edge-anchored instead of centered - for tasks that need more room than a Modal but shouldn't fully interrupt the page layout.");
     lines.push("");
-    lines.push("Types (2):");
+    lines.push("Types (4):");
     TYPES.forEach(function(t){
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
     });
@@ -116,10 +128,10 @@
     lines.push("- No close: title bar has NO close X, forcing the user to pick a footer action - same concept as Modal's own No-close state.");
     lines.push("");
     var sizePx = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
-    lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - controls the panel's width (" + sizePx + "px). The panel is always full-height regardless of size. Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
+    lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - on Left/Right, controls the panel's width (" + sizePx + "px) and it stays full-height; on Top/Bottom, it controls the panel's minimum height instead (a separate, smaller scale, since Top/Bottom's own header+body+footer content sets a real floor a width-sized value would undershoot) and the panel stays full-width. Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS));
-    lines.push("Corner radius applies to the panel's inner edge only - the outer edge flush against the screen always stays square.");
+    lines.push("Corner radius applies to all 4 corners of the panel.");
     lines.push("");
     lines.push("Component properties: Title (text, e.g. \"" + title + "\"); Body text (text, e.g. \"" + body + "\"); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).");
     lines.push("Show close button is currently: " + (showClose ? "on" : "off") + ".");
@@ -146,23 +158,40 @@
     var lines = [];
     lines.push("/* Agentic Design System - Drawer component */");
     lines.push(".drawer-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; padding:0; background:rgba(0,0,0,0.55); z-index:1000; }");
+    lines.push(".drawer-scrim--vertical{ flex-direction:column; }");
     lines.push('.drawer-panel{ box-sizing:border-box; height:100%; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
-    lines.push(".drawer-panel--right{ margin-left:auto; }");
-    lines.push(".drawer-panel--left{ margin-right:auto; }");
+    lines.push(".drawer-panel--right{ margin-inline-start:auto; }");
+    lines.push(".drawer-panel--left{ margin-inline-end:auto; }");
+    lines.push(".drawer-panel--top, .drawer-panel--bottom{ width:100%; height:auto; }");
+    lines.push(".drawer-panel--top{ margin-bottom:auto; }");
+    lines.push(".drawer-panel--bottom{ margin-top:auto; }");
     lines.push("");
-    lines.push("/* Size - controls panel width, panel is always full-height */");
+    lines.push("/* Size - on Left/Right controls panel width (panel stays full-height); on Top/Bottom controls height instead (panel stays full-width) */");
     SIZE_OPTIONS.forEach(function(o){
-      lines.push(".drawer-panel--" + o.value + "{ width:" + SIZE_MAP[o.value] + "px; }");
+      lines.push(".drawer-panel--right.drawer-panel--" + o.value + ", .drawer-panel--left.drawer-panel--" + o.value + "{ width:" + SIZE_MAP[o.value] + "px; }");
+    });
+    // min-height, not height - with the header/footer's real padding
+    // (16px 20px / 12px 20px, matching what the Live Preview measures
+    // against) a 2-line body plus header and footer needs ~178px/195px
+    // at Small/Medium, more than a flat 120px/170px would give. .drawer-
+    // body's own flex:1 + overflow:auto (above) means a fixed height
+    // wouldn't actually clip the header/footer here the way the Live
+    // Preview's simpler markup did - the body would just scroll instead
+    // - but min-height keeps this recipe matching the corrected Preview
+    // and still lets Size mean something (a floor) without a mismatched
+    // scrollbar appearing on ordinary content that would easily fit.
+    var VERTICAL_SIZE_MAP = { small: 180, medium: 200, large: 220 };
+    SIZE_OPTIONS.forEach(function(o){
+      lines.push(".drawer-panel--top.drawer-panel--" + o.value + ", .drawer-panel--bottom.drawer-panel--" + o.value + "{ min-height:" + VERTICAL_SIZE_MAP[o.value] + "px; }");
     });
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - inner edge only, not chosen yet, default is 8px */"
-      : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - inner edge only */");
+      ? "/* Corner radius (5 options) - all 4 corners, not chosen yet, default is 8px */"
+      : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - all 4 corners */");
     radiiToEmit.forEach(function(radius){
       var radiusCss = radiusCssFor(radius);
-      lines.push(".drawer-panel--right.drawer-panel--radius-" + radiusClassSuffix(radius) + "{ border-top-left-radius:" + radiusCss + "; border-bottom-left-radius:" + radiusCss + "; }");
-      lines.push(".drawer-panel--left.drawer-panel--radius-" + radiusClassSuffix(radius) + "{ border-top-right-radius:" + radiusCss + "; border-bottom-right-radius:" + radiusCss + "; }");
+      lines.push(".drawer-panel--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCss + "; }");
     });
     lines.push("");
     lines.push(".drawer-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 20px; border-bottom:1px solid " + line + "; }");
@@ -180,16 +209,13 @@
     var exampleRadiusCss = radiusCssFor(exampleRadius);
     lines.push("<!-- Example usage - one per type, at " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " size" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
     TYPES.forEach(function(t){
-      var innerStyle = t.key === "left"
-        ? "border-top-right-radius:" + exampleRadiusCss + ";border-bottom-right-radius:" + exampleRadiusCss + ";"
-        : "border-top-left-radius:" + exampleRadiusCss + ";border-bottom-left-radius:" + exampleRadiusCss + ";";
       lines.push('<div class="drawer-scrim">');
-      lines.push('  <div class="drawer-panel drawer-panel--' + t.key + " drawer-panel--" + sizeKey + '" style="' + innerStyle + '">');
+      lines.push('  <div class="drawer-panel drawer-panel--' + t.key + " drawer-panel--" + sizeKey + '" style="border-radius:' + exampleRadiusCss + ';">');
       lines.push('    <div class="drawer-header">');
-      lines.push('      <p class="drawer-title">' + title + "</p>");
+      lines.push('      <p class="drawer-title">' + escapeHtml(title) + "</p>");
       if (showClose) lines.push('      <button type="button" class="drawer-close" aria-label="Close">&times;</button>');
       lines.push("    </div>");
-      lines.push('    <div class="drawer-body"><p>' + body + "</p></div>");
+      lines.push('    <div class="drawer-body"><p>' + escapeHtml(body) + "</p></div>");
       lines.push('    <div class="drawer-footer">');
       lines.push('      <button type="button" class="drawer-btn drawer-btn--cancel">Cancel</button>');
       lines.push('      <button type="button" class="drawer-btn drawer-btn--primary">Save</button>');
@@ -369,9 +395,9 @@
       var radiusCss = radiusCssFor(radius);
       var hideClose = !showClose || stateKey === "no-close";
       var closeHtml = hideClose ? "" : '<button type="button" class="modal-demo-close" aria-label="Close" tabindex="-1">&times;</button>';
-      var headerHtml = '<div class="modal-demo-header"><span class="modal-demo-title">' + title + "</span>" + closeHtml + "</div>";
+      var headerHtml = '<div class="modal-demo-header"><span class="modal-demo-title">' + escapeHtml(title) + "</span>" + closeHtml + "</div>";
 
-      var bodyHtml = '<div class="modal-demo-body"><p style="margin:0;">' + body + "</p></div>";
+      var bodyHtml = '<div class="modal-demo-body"><p style="margin:0;">' + escapeHtml(body) + "</p></div>";
 
       var footerHtml = "";
       if (stateKey !== "no-footer"){
@@ -382,8 +408,10 @@
       }
 
       var panelClass = "drawer-demo-panel drawer-demo-panel--" + typeKey + " drawer-demo-panel--" + sizeKey;
-      var panelStyle = innerRadiusStyleFor(typeKey, radiusCss);
-      return '<div class="drawer-demo-scrim"><div class="' + panelClass + '" style="' + panelStyle + '">' +
+      var panelStyle = radiusStyleFor(radiusCss);
+      var isHorizontal = HORIZONTAL_TYPES[typeKey];
+      var scrimClass = "drawer-demo-scrim" + (isHorizontal ? "" : " drawer-demo-scrim--vertical");
+      return '<div class="' + scrimClass + '"><div class="' + panelClass + '" style="' + panelStyle + '">' +
         headerHtml + bodyHtml + footerHtml +
         "</div></div>";
     }

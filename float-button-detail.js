@@ -19,6 +19,14 @@
     square: { purpose: "Same neutral coloring as Default, but with a soft rounded-square corner radius instead of a full circle - the variant to reach for when a page's other controls are already rounded-square rather than pill-shaped." }
   };
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     return (v || fallback).toUpperCase();
@@ -167,7 +175,7 @@
     lines.push(".floatbutton-demo-badge{ position:absolute; top:-2px; right:-2px; width:10px; height:10px; border-radius:9999px; background:var(--danger-500); border:2px solid var(--graphite-950); }");
     lines.push("");
     lines.push("/* Tooltip label - a simple caption near the button, not a floating tooltip bubble */");
-    lines.push(".floatbutton-demo-tooltip-label{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); text-align:center; }");
+    lines.push(".floatbutton-demo-tooltip-label{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); text-align:center; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " - position:fixed to a screen corner in real usage -->");
@@ -349,7 +357,7 @@
         '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>' +
         badgeHtml +
         "</button>";
-      var tooltipHtml = tooltip ? '<p class="floatbutton-demo-tooltip-label">' + tooltip + "</p>" : "";
+      var tooltipHtml = tooltip ? '<p class="floatbutton-demo-tooltip-label">' + escapeHtml(tooltip) + "</p>" : "";
       return '<div class="floatbutton-demo-wrap">' + btnHtml + tooltipHtml + "</div>";
     }
 

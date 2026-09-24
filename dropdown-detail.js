@@ -3,6 +3,14 @@
 
   var ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" }
@@ -145,6 +153,7 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var label = selectionInfo.label || "Options";
 
     var lines = [];
     lines.push("Create a complete Dropdown component system for the Agentic Design System.");
@@ -170,14 +179,14 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text inside the button, e.g. \"More actions\").");
+    lines.push("Component properties: Label (editable text inside the button, current value \"" + label + "\").");
     return lines.join("\n");
   }
 
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label){
     var lines = [];
     lines.push('<button type="button" class="dropdown-trigger dropdown-trigger--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
-    lines.push("  " + label);
+    lines.push("  " + escapeHtml(label));
     lines.push('  <span class="dropdown-trigger-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>");
     lines.push("</button>");
     return lines.join("\n");
@@ -187,6 +196,7 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var label = selectionInfo.label || "Options";
 
     var lines = [];
     lines.push("/* Agentic Design System - Dropdown (trigger button) component (all types, states, sizes) */");
@@ -229,7 +239,7 @@
     var radiusClassAttr = "dropdown-trigger--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Options"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, label));
     });
     return lines.join("\n");
   }
@@ -237,17 +247,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, label){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      label: label
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, label){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      label: label
     });
   }
 
@@ -398,7 +410,7 @@
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var disabledAttr = isDisabled ? " disabled" : "";
       return '<button type="button" class="' + triggerClasses + '"' + radiusStyle + disabledAttr + ">" +
-        label +
+        escapeHtml(label) +
         '<span class="dropdown-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>" +
         "</button>";
     }
@@ -433,7 +445,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        label: labelInput.value.trim() || defaultLabel
       };
     }
 
@@ -448,13 +461,13 @@
       sizes.forEach(function(size){
         radii.forEach(function(radius){
           html += buildMatrixSection(size, radius, label);
-          combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
+          combos.push({ size: size, radius: radius, label: comboLabel(size, radius), fieldLabel: label });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.fieldLabel); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.fieldLabel); });
     }
 
     var propertyMultiSelects = {};

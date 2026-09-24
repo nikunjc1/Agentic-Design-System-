@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" },
@@ -185,9 +193,9 @@
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
     var lines = [];
     lines.push('<div class="textarea-field">');
-    lines.push('  <label class="textarea-field-label">' + label + "</label>");
+    lines.push('  <label class="textarea-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="textarea-control textarea-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <textarea rows="' + rows + '" placeholder="' + placeholder + '"></textarea>');
+    lines.push('    <textarea rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"></textarea>');
     lines.push("  </div>");
     lines.push("</div>");
     return lines.join("\n");
@@ -416,11 +424,11 @@
       var controlClasses = "textarea-demo-control textarea-demo-control--" + typeKey + " textarea-demo-control--h" + size + stateCls;
       var disabledAttr = isDisabled ? " disabled" : "";
       var content = isFilled ? "This feature has been incredibly helpful for our team's daily workflow." : (isError ? "ok" : "");
-      var textareaHtml = '<textarea class="textarea-demo-input" rows="' + rows + '" placeholder="' + placeholder + '"' + disabledAttr + ">" + content + "</textarea>";
+      var textareaHtml = '<textarea class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ">" + content + "</textarea>";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="textarea-demo-note is-error">Please provide at least 10 characters.</p>' : "";
       return '<div class="textarea-demo-field">' +
-        '<label class="textarea-demo-label">' + label + "</label>" +
+        '<label class="textarea-demo-label">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + textareaHtml + "</div>" +
         noteHtml +
         "</div>";

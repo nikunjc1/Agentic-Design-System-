@@ -1,6 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" },
@@ -192,11 +202,11 @@
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
     var lines = [];
     lines.push('<div class="addon-field">');
-    lines.push('  <label class="addon-field-label">' + label + "</label>");
+    lines.push('  <label class="addon-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="addon-control addon-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <span class="addon-segment addon-segment--prefix">' + prefixText + "</span>");
-    lines.push('    <input type="text" placeholder="' + placeholder + '" />');
-    lines.push('    <span class="addon-segment addon-segment--suffix">' + suffixText + "</span>");
+    lines.push('    <span class="addon-segment addon-segment--prefix">' + escapeHtml(prefixText) + "</span>");
+    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '" />');
+    lines.push('    <span class="addon-segment addon-segment--suffix">' + escapeHtml(suffixText) + "</span>");
     lines.push("  </div>");
     lines.push("</div>");
     return lines.join("\n");
@@ -214,8 +224,8 @@
     lines.push(".addon-control{ box-sizing:border-box; display:flex; align-items:center; width:100%; border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.addon-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0 12px; }');
     lines.push(".addon-segment{ flex:none; white-space:nowrap; background:var(--graphite-800); color:var(--text-dim); }");
-    lines.push(".addon-segment--prefix{ border-right:1px solid var(--line-strong); }");
-    lines.push(".addon-segment--suffix{ border-left:1px solid var(--line-strong); }");
+    lines.push(".addon-segment--prefix{ border-inline-end:1px solid var(--line-strong); }");
+    lines.push(".addon-segment--suffix{ border-inline-start:1px solid var(--line-strong); }");
     lines.push('.addon-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -422,6 +432,7 @@
     var prefixTextInput = document.querySelector('[data-role="addon-prefix-text"]');
     var prefixFieldWrap = document.querySelector('[data-role="addon-prefix-field"]');
     var showSuffixInput = document.querySelector('[data-role="addon-show-suffix"]');
+    var allowClearInput = document.querySelector('[data-role="addon-allow-clear"]');
     var suffixTextInput = document.querySelector('[data-role="addon-suffix-text"]');
     var suffixFieldWrap = document.querySelector('[data-role="addon-suffix-field"]');
     var sizeMount = document.querySelector('[data-role="addon-size-mount"]');
@@ -429,22 +440,30 @@
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildAddonField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText){
+    function buildAddonField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
+      var hasValue = isFilled || isError;
       var controlClasses = "addon-demo-control addon-demo-control--" + typeKey + " addon-demo-control--h" + size + stateCls;
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var innerRadius = typeKey === "underlined" ? "0" : innerRadiusCss(radius);
-      var prefixHtml = showPrefix ? '<span class="addon-demo-segment addon-demo-segment--prefix" style="border-radius:' + innerRadius + " 0 0 " + innerRadius + '">' + prefixText + "</span>" : "";
-      var suffixHtml = showSuffix ? '<span class="addon-demo-segment addon-demo-segment--suffix" style="border-radius:0 ' + innerRadius + " " + innerRadius + ' 0">' + suffixText + "</span>" : "";
+      var prefixHtml = showPrefix ? '<span class="addon-demo-segment addon-demo-segment--prefix" style="border-radius:' + innerRadius + " 0 0 " + innerRadius + '">' + escapeHtml(prefixText) + "</span>" : "";
+      var suffixHtml = showSuffix ? '<span class="addon-demo-segment addon-demo-segment--suffix" style="border-radius:0 ' + innerRadius + " " + innerRadius + ' 0">' + escapeHtml(suffixText) + "</span>" : "";
+      // Sits inside the input area, immediately before the Suffix addon (if
+      // any) - a fixed addon segment is a permanent part of the field's
+      // structure, so allowClear can never take it over the way it takes
+      // over a plain trailing icon slot elsewhere in this Input family.
+      var clearHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="addon-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : "";
       var valueAttr = isFilled ? ' value="yourcompany"' : (isError ? ' value="a"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="addon-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="text" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
       var noteHtml = isError ? '<p class="addon-demo-note is-error">Enter at least 3 characters.</p>' : "";
       return '<div class="addon-demo-field">' +
-        '<label class="addon-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + prefixHtml + inputHtml + suffixHtml + "</div>" +
+        '<label class="addon-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + prefixHtml + inputHtml + clearHtml + suffixHtml + "</div>" +
         noteHtml +
         "</div>";
     }
@@ -462,10 +481,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText){
+    function buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildAddonField(t.key, state.key, state.cls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText) + "</td>";
+          return '<td class="button-matrix-cell">' + buildAddonField(t.key, state.key, state.cls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -490,6 +509,7 @@
       var prefixText = (prefixTextInput && prefixTextInput.value.trim()) || "https://";
       var showSuffix = showSuffixInput ? showSuffixInput.checked : false;
       var suffixText = (suffixTextInput && suffixTextInput.value.trim()) || ".com";
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -498,7 +518,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText);
+          html += buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -548,6 +568,7 @@
       });
     }
     if (suffixTextInput) suffixTextInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

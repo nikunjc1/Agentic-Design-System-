@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -38,11 +39,56 @@
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
     }
   }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
+    }
+  }catch(e){}
 })();
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Color - Agentic Design System</title>
+<title>Colors - Agentic Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,444 +233,508 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
 <main class="app-main">
-  <p class="page-eyebrow">Foundations &middot; Color</p>
-  <h1 class="page-title">Color</h1>
-  <p class="page-lede">The primary, secondary and tertiary colors that drive every semantic token, component and generated design in this system.</p>
+  <p class="page-eyebrow" id="colors">Foundations &middot; Colors</p>
+  <h1 class="page-title">Colors</h1>
+  <p class="page-lede">Color carries meaning before anything else on the page loads. This system runs on one editable brand hue, a fixed set of semantic colors that never change meaning, and a neutral scale that flips between dark and light theme. Configure the two editable pieces below; everything else follows automatically.</p>
 
-  <section class="panel color-foundation" id="colors">
-    <p class="panel-title">Brand colors</p>
-    <p class="get-library-copy">Primary defines the system - every semantic color token derives from it. Secondary and tertiary are optional accents; leave them off if your brand doesn't use them. Whatever you pick, choose colors that hold up against <strong>WCAG A, AA and AAA</strong> contrast guidelines so text and interactive states stay readable and accessible for everyone.</p>
+  <section class="panel color-foundation">
+    <p class="panel-title">Brand color</p>
+    <p class="get-library-copy">One primary hex drives the whole brand scale - hover/pressed (600), tint and glow are derived automatically. Light theme is set directly below; turn on dark theme to give it its own hue, generated from light as a starting point and fully refinable on its own.</p>
 
-    <div class="usage-hierarchy" id="brandColorRows">
-      <div class="usage-row" data-role="brand-row" data-color="primary">
-        <div class="usage-label-cell">
-          <span class="usage-label">Primary</span>
-          <span class="badge badge-required">Required</span>
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="brand-dark-enable" />
+      <span>Also set a separate brand color for dark theme</span>
+    </label>
+
+    <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-col">
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Light theme</p>
         </div>
-        <span class="usage-desc">Every semantic color token in the system derives from this</span>
-        <span class="usage-values" data-role="brand-values">21.0 : 1 &middot; AA &#10003; &middot; AAA &#10003;</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="brand-swatch" value="#ff031a" />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="brand-hex" maxlength="6" value="FF031A" autocomplete="off" spellcheck="false" />
-        </span>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head">
+              <span class="color-field-label">PRIMARY</span>
+              <span class="badge badge-required">Required</span>
+            </div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="brand-light-picker" value="#ff031a" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="brand-light-hex" maxlength="6" value="FF031A" />
+            </span>
+            <p class="color-rgba" data-role="brand-light-rgba">rgb(255, 3, 26)</p>
+          </div>
+        </div>
+        <p class="empty-eyebrow" style="margin-top:16px;">Derived scale</p>
+        <div class="color-chip-strip" data-role="brand-light-scale"></div>
       </div>
 
-      <div class="usage-row" data-role="brand-row" data-color="secondary">
-        <div class="usage-label-cell">
-          <label class="optional-toggle">
-            <input type="checkbox" id="secondaryColorToggle" data-role="brand-toggle" />
-            <span class="usage-label">Secondary</span>
-          </label>
-          <span class="badge badge-optional">Optional</span>
+      <div class="theme-pair-col" data-role="brand-dark-col" hidden>
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="brand-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="brand-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
         </div>
-        <span class="usage-desc">An optional accent - leave it off if your brand doesn't use one</span>
-        <span class="usage-values" data-role="brand-values">21.0 : 1 &middot; AA &#10003; &middot; AAA &#10003;</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="brand-swatch" value="#383d44" disabled />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="brand-hex" maxlength="6" value="383D44" autocomplete="off" spellcheck="false" disabled />
-        </span>
-      </div>
-
-      <div class="usage-row" data-role="brand-row" data-color="tertiary">
-        <div class="usage-label-cell">
-          <label class="optional-toggle">
-            <input type="checkbox" id="tertiaryColorToggle" data-role="brand-toggle" />
-            <span class="usage-label">Tertiary</span>
-          </label>
-          <span class="badge badge-optional">Optional</span>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head">
+              <span class="color-field-label">PRIMARY</span>
+              <span class="badge badge-optional">Optional</span>
+            </div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="brand-dark-picker" value="#f74858" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="brand-dark-hex" maxlength="6" value="F74858" />
+            </span>
+            <p class="color-rgba" data-role="brand-dark-rgba">rgb(247, 72, 88)</p>
+          </div>
         </div>
-        <span class="usage-desc">A second optional accent, used more sparingly than secondary</span>
-        <span class="usage-values" data-role="brand-values">21.0 : 1 &middot; AA &#10003; &middot; AAA &#10003;</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="brand-swatch" value="#4f8fe6" disabled />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="brand-hex" maxlength="6" value="4F8FE6" autocomplete="off" spellcheck="false" disabled />
-        </span>
+        <p class="empty-eyebrow" style="margin-top:16px;">Derived scale</p>
+        <div class="color-chip-strip" data-role="brand-dark-scale"></div>
       </div>
     </div>
 
     <div class="panel-footer-row">
-      <button class="btn btn-primary" id="saveColorsBtn" type="button">Save brand colors</button>
-      <button class="btn btn-ghost" id="resetColorsBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="colorSaveStatus" hidden></span>
+      <button class="btn btn-primary" id="saveBrandBtn" type="button">Save brand color</button>
+      <button class="btn btn-ghost" id="resetBrandBtn" type="button">Reset to default</button>
+      <span class="save-status" id="brandSaveStatus" hidden></span>
     </div>
   </section>
 
-  <section class="panel color-foundation" id="bg-colors">
-    <p class="panel-title">Background colors</p>
-    <p class="get-library-copy">The neutral surface stack every panel, card and layer sits on - independent of your brand color. Primary is the base canvas the whole page sits on; Secondary sits one level above it (panels, cards); Tertiary sits above that (nested or hovered surfaces, popovers).</p>
+  <section class="panel color-foundation">
+    <p class="panel-title" id="bg-surface">Background &amp; surface elevation</p>
+    <p class="get-library-copy">Three stacked surfaces - page, panel and raised - separate content without relying on shadow. Light theme is set directly below; turn on dark theme to generate a matching set, refinable independently.</p>
 
-    <span class="bg-theme-note" id="bgThemeNote">Editing <strong id="bgThemeLabel">Dark</strong> theme backgrounds - toggle the theme switch (top right) to edit the other one.</span>
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="bg-dark-enable" />
+      <span>Also set separate surface colors for dark theme</span>
+    </label>
 
-    <div class="usage-hierarchy" id="bgColorRows">
-      <div class="usage-row" data-role="bg-row" data-color="primary">
-        <div class="usage-label-cell">
-          <span class="usage-label">BG Primary</span>
-          <span class="badge badge-required">Base canvas</span>
+    <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-col">
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Light theme</p>
         </div>
-        <span class="usage-desc">The base canvas the whole page sits on</span>
-        <span class="usage-values" data-role="bg-values">--graphite-950</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="bg-swatch" value="#0d0f11" />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="bg-hex" maxlength="6" value="0D0F11" autocomplete="off" spellcheck="false" />
-        </span>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">PAGE (PRIMARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-light-primary-picker" value="#f6f6f4" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-light-primary-hex" maxlength="6" value="F6F6F4" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">PANEL (SECONDARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-light-secondary-picker" value="#ffffff" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-light-secondary-hex" maxlength="6" value="FFFFFF" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">RAISED (TERTIARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-light-tertiary-picker" value="#fbfbfa" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-light-tertiary-hex" maxlength="6" value="FBFBFA" />
+            </span>
+          </div>
+        </div>
+        <p class="empty-eyebrow" style="margin-top:16px;">Live preview</p>
+        <div class="elevation-demo elevation-demo--compact elevation-demo--for-light">
+          <div class="elevation-demo-layer is-primary" data-role="elevation-light-primary">Page
+            <div class="elevation-demo-layer is-secondary" data-role="elevation-light-secondary">Panel
+              <div class="elevation-demo-layer is-tertiary" data-role="elevation-light-tertiary">Raised</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="usage-row" data-role="bg-row" data-color="secondary">
-        <div class="usage-label-cell">
-          <span class="usage-label">BG Secondary</span>
-          <span class="badge badge-optional">Panels &middot; cards</span>
+      <div class="theme-pair-col" data-role="bg-dark-col" hidden>
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="bg-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="bg-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
         </div>
-        <span class="usage-desc">Sits one level above Primary - panels and cards</span>
-        <span class="usage-values" data-role="bg-values">--graphite-900</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="bg-swatch" value="#15171a" />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="bg-hex" maxlength="6" value="15171A" autocomplete="off" spellcheck="false" />
-        </span>
-      </div>
-
-      <div class="usage-row" data-role="bg-row" data-color="tertiary">
-        <div class="usage-label-cell">
-          <span class="usage-label">BG Tertiary</span>
-          <span class="badge badge-optional">Nested &middot; hover</span>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">PAGE (PRIMARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-dark-primary-picker" value="#0d0f11" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-dark-primary-hex" maxlength="6" value="0D0F11" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">PANEL (SECONDARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-dark-secondary-picker" value="#15171a" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-dark-secondary-hex" maxlength="6" value="15171A" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">RAISED (TERTIARY)</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="bg-dark-tertiary-picker" value="#191c20" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="bg-dark-tertiary-hex" maxlength="6" value="191C20" />
+            </span>
+          </div>
         </div>
-        <span class="usage-desc">Sits above Secondary - nested or hovered surfaces, popovers</span>
-        <span class="usage-values" data-role="bg-values">--graphite-850</span>
-        <span class="hex-input-wrap state-color-wrap">
-          <input type="color" class="type-color-swatch" data-role="bg-swatch" value="#191c20" />
-          <span class="hex-prefix">#</span>
-          <input type="text" class="state-color-hex" data-role="bg-hex" maxlength="6" value="191C20" autocomplete="off" spellcheck="false" />
-        </span>
-      </div>
-    </div>
-
-    <p class="empty-eyebrow" style="margin-top:8px;">Live preview - real nested surfaces</p>
-    <div class="elevation-demo">
-      <div class="elevation-demo-layer is-primary" data-role="elevation-primary">
-        Primary background
-        <div class="elevation-demo-layer is-secondary" data-role="elevation-secondary">
-          Secondary background
-          <div class="elevation-demo-layer is-tertiary" data-role="elevation-tertiary">Tertiary background</div>
+        <p class="empty-eyebrow" style="margin-top:16px;">Live preview</p>
+        <div class="elevation-demo elevation-demo--compact elevation-demo--for-dark">
+          <div class="elevation-demo-layer is-primary" data-role="elevation-dark-primary">Page
+            <div class="elevation-demo-layer is-secondary" data-role="elevation-dark-secondary">Panel
+              <div class="elevation-demo-layer is-tertiary" data-role="elevation-dark-tertiary">Raised</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="panel-footer-row">
-      <button class="btn btn-primary" id="saveBgColorsBtn" type="button">Save background colors</button>
-      <button class="btn btn-ghost" id="resetBgColorsBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="bgColorSaveStatus" hidden></span>
+      <button class="btn btn-primary" id="saveBgBtn" type="button">Save surface colors</button>
+      <button class="btn btn-ghost" id="resetBgBtn" type="button">Reset to defaults</button>
+      <span class="save-status" id="bgSaveStatus" hidden></span>
     </div>
+  </section>
+
+  <section class="panel color-foundation">
+    <p class="panel-title">Semantic &amp; status colors</p>
+    <p class="get-library-copy">Success, warning, danger and info - independent of the brand hue, and by default identical in both themes so a red error stays recognizably the same red everywhere. Turn on dark theme only if a status color actually needs its own contrast against dark surfaces; each still defaults to the exact same hue as light until you change it.</p>
+
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="status-dark-enable" />
+      <span>Also set separate status colors for dark theme</span>
+    </label>
+
+    <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-col">
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Light theme</p>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">SUCCESS</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-light-success-picker" value="#2fbf6e" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-light-success-hex" maxlength="6" value="2FBF6E" />
+            </span>
+            <p class="color-rgba">Confirmations, completed states, positive deltas.</p>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">WARNING</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-light-warning-picker" value="#e6a53a" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-light-warning-hex" maxlength="6" value="E6A53A" />
+            </span>
+            <p class="color-rgba">Needs attention but isn't blocking.</p>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">DANGER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-light-danger-picker" value="#ff031a" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-light-danger-hex" maxlength="6" value="FF031A" />
+            </span>
+            <p class="color-rgba">Destructive actions, failed states, blocking errors.</p>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">INFO</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-light-info-picker" value="#4f8fe6" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-light-info-hex" maxlength="6" value="4F8FE6" />
+            </span>
+            <p class="color-rgba">Neutral, non-urgent context.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-pair-col" data-role="status-dark-col" hidden>
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="status-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="status-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">SUCCESS</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-dark-success-picker" value="#5ecd8f" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-dark-success-hex" maxlength="6" value="5ECD8F" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">WARNING</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-dark-warning-picker" value="#e6bc77" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-dark-warning-hex" maxlength="6" value="E6BC77" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">DANGER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-dark-danger-picker" value="#f74858" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-dark-danger-hex" maxlength="6" value="F74858" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">INFO</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="status-dark-info-picker" value="#8ab2e8" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="status-dark-info-hex" maxlength="6" value="8AB2E8" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-footer-row">
+      <button class="btn btn-primary" id="saveStatusBtn" type="button">Save status colors</button>
+      <button class="btn btn-ghost" id="resetStatusBtn" type="button">Reset to defaults</button>
+      <span class="save-status" id="statusSaveStatus" hidden></span>
+    </div>
+  </section>
+
+  <section class="panel color-foundation">
+    <p class="panel-title">Neutral scale</p>
+    <p class="get-library-copy">Seven steps of graphite plus one dedicated control border. <strong>950 / 900 / 850</strong> (page / panel / raised) are configured in <a href="#bg-surface">Background &amp; surface elevation</a> above; the remaining four steps below cover hover fills, dividers, disabled content and control borders. Light is set directly; turn on dark to generate a matching set.</p>
+
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="neutral-dark-enable" />
+      <span>Also set separate values for dark theme</span>
+    </label>
+
+    <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-col">
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Light theme</p>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">800 &middot; HOVER FILL</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-light-c800-picker" value="#f1f1ee" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-light-c800-hex" maxlength="6" value="F1F1EE" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">700 &middot; RESTING FILL</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-light-c700-picker" value="#e3e3df" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-light-c700-hex" maxlength="6" value="E3E3DF" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">600 &middot; DISABLED / DIVIDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-light-c600-picker" value="#c7c7c1" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-light-c600-hex" maxlength="6" value="C7C7C1" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">500 &middot; PLACEHOLDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-light-c500-picker" value="#8f918c" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-light-c500-hex" maxlength="6" value="8F918C" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">CONTROL BORDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-light-border-picker" value="#85888d" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-light-border-hex" maxlength="6" value="85888D" />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-pair-col" data-role="neutral-dark-col" hidden>
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="neutral-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="neutral-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">800 &middot; HOVER FILL</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-dark-c800-picker" value="#1c1f23" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-dark-c800-hex" maxlength="6" value="1C1F23" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">700 &middot; RESTING FILL</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-dark-c700-picker" value="#262a2f" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-dark-c700-hex" maxlength="6" value="262A2F" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">600 &middot; DISABLED / DIVIDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-dark-c600-picker" value="#383d44" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-dark-c600-hex" maxlength="6" value="383D44" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">500 &middot; PLACEHOLDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-dark-c500-picker" value="#565c64" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-dark-c500-hex" maxlength="6" value="565C64" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">CONTROL BORDER</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="neutral-dark-border-picker" value="#72767e" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="neutral-dark-border-hex" maxlength="6" value="72767E" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-footer-row">
+      <button class="btn btn-primary" id="saveNeutralBtn" type="button">Save neutral scale</button>
+      <button class="btn btn-ghost" id="resetNeutralBtn" type="button">Reset to defaults</button>
+      <span class="save-status" id="neutralSaveStatus" hidden></span>
+    </div>
+  </section>
+
+  <section class="panel color-foundation">
+    <p class="panel-title">Text colors</p>
+    <p class="get-library-copy">Three fixed steps of text emphasis rather than picking grays ad hoc. Border color and opacity are their own topic with their own controls on the <a href="borders.html">Borders</a> page - not duplicated here.</p>
+
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="text-dark-enable" />
+      <span>Also set separate text colors for dark theme</span>
+    </label>
+
+    <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-col">
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Light theme</p>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - HIGH</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-light-hi-picker" value="#15171a" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-light-hi-hex" maxlength="6" value="15171A" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - MID</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-light-mid-picker" value="#53565c" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-light-mid-hex" maxlength="6" value="53565C" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - DIM</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-light-dim-picker" value="#85888d" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-light-dim-hex" maxlength="6" value="85888D" />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-pair-col" data-role="text-dark-col" hidden>
+        <div class="theme-pair-label-row">
+          <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="text-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="text-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
+        </div>
+        <div class="color-field-grid">
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - HIGH</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-dark-hi-picker" value="#f3f2ef" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-dark-hi-hex" maxlength="6" value="F3F2EF" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - MID</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-dark-mid-picker" value="#a7abb2" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-dark-mid-hex" maxlength="6" value="A7ABB2" />
+            </span>
+          </div>
+          <div class="color-field">
+            <div class="color-field-head"><span class="color-field-label">TEXT - DIM</span></div>
+            <span class="hex-input-wrap type-color-wrap">
+              <input type="color" class="type-color-swatch" data-role="text-dark-dim-picker" value="#64686f" />
+              <span class="hex-prefix">#</span>
+              <input type="text" data-role="text-dark-dim-hex" maxlength="6" value="64686F" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-footer-row">
+      <button class="btn btn-primary" id="saveTextBtn" type="button">Save text colors</button>
+      <button class="btn btn-ghost" id="resetTextBtn" type="button">Reset to defaults</button>
+      <span class="save-status" id="textSaveStatus" hidden></span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Light &amp; dark theme behavior</p>
+    <p class="get-library-copy">Every section on this page now follows the same rule: light is the value you set directly, dark is optional, auto-generated as a starting point the moment you turn it on, and fully independent the moment you touch it. Leave dark off anywhere and that piece simply keeps using its built-in default when the site is in dark theme - nothing breaks, nothing needs configuring twice.</p>
   </section>
 </main>
 
 <script src="shell.js"></script>
-<script>
-(function(){
-  var STORAGE_KEY = "ads:colors";
-  var HEX_RE = /^#[0-9a-f]{6}$/i;
-
-  function clamp(n, min, max){ return Math.min(max, Math.max(min, n)); }
-
-  function hexToRgb(hex){
-    return {
-      r: parseInt(hex.slice(1, 3), 16),
-      g: parseInt(hex.slice(3, 5), 16),
-      b: parseInt(hex.slice(5, 7), 16)
-    };
-  }
-  function rgbToHex(r, g, b){
-    return "#" + [r, g, b].map(function(c){
-      var h = clamp(Math.round(c), 0, 255).toString(16);
-      return h.length === 1 ? "0" + h : h;
-    }).join("").toUpperCase();
-  }
-
-  // WCAG relative-luminance / contrast-ratio math, checked against white -
-  // the surface these brand colors are most often used as text or a solid fill on.
-  function channelLuminance(c){
-    c = c / 255;
-    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  }
-  function contrastVsWhite(hex){
-    var rgb = hexToRgb(hex);
-    var l = 0.2126 * channelLuminance(rgb.r) + 0.7152 * channelLuminance(rgb.g) + 0.0722 * channelLuminance(rgb.b);
-    return 1.05 / (l + 0.05);
-  }
-
-  // ---------- brand colors (row-based listing) ----------
-  var brandRows = {};
-  document.querySelectorAll('[data-role="brand-row"]').forEach(function(row){
-    var key = row.dataset.color;
-    brandRows[key] = {
-      row: row,
-      swatch: row.querySelector('[data-role="brand-swatch"]'),
-      hex: row.querySelector('[data-role="brand-hex"]'),
-      values: row.querySelector('[data-role="brand-values"]'),
-      toggle: row.querySelector('[data-role="brand-toggle"]')
-    };
-  });
-
-  var BRAND_DEFAULTS = { primary: "FF031A", secondary: "383D44", tertiary: "4F8FE6" };
-
-  function updateBrandValues(key){
-    var r = brandRows[key];
-    var ratio = contrastVsWhite("#" + r.hex.value);
-    var aa = ratio >= 4.5, aaa = ratio >= 7;
-    r.values.textContent = ratio.toFixed(2) + " : 1 · AA " + (aa ? "✓" : "✗") + " · AAA " + (aaa ? "✓" : "✗");
-  }
-
-  function setBrandRow(key, hex){
-    hex = hex.replace("#", "").toUpperCase();
-    var r = brandRows[key];
-    r.swatch.value = "#" + hex.toLowerCase();
-    r.hex.value = hex;
-    updateBrandValues(key);
-  }
-
-  function setBrandEnabled(key, on){
-    var r = brandRows[key];
-    if (r.toggle) r.toggle.checked = on;
-    r.swatch.disabled = !on;
-    r.hex.disabled = !on;
-  }
-
-  Object.keys(brandRows).forEach(function(key){
-    var r = brandRows[key];
-    r.hex.addEventListener("input", function(){
-      var v = r.hex.value.replace(/[^0-9a-f]/gi, "").toUpperCase().slice(0, 6);
-      r.hex.value = v;
-      if (/^[0-9A-F]{6}$/.test(v)){
-        r.swatch.value = "#" + v.toLowerCase();
-        updateBrandValues(key);
-      }
-    });
-    r.swatch.addEventListener("input", function(){
-      setBrandRow(key, r.swatch.value);
-    });
-    if (r.toggle){
-      r.toggle.addEventListener("change", function(){
-        setBrandEnabled(key, r.toggle.checked);
-      });
-    }
-  });
-
-  setBrandRow("primary", BRAND_DEFAULTS.primary);
-  setBrandRow("secondary", BRAND_DEFAULTS.secondary);
-  setBrandRow("tertiary", BRAND_DEFAULTS.tertiary);
-  setBrandEnabled("secondary", false);
-  setBrandEnabled("tertiary", false);
-
-  var saveBtn = document.getElementById("saveColorsBtn");
-  var saveStatus = document.getElementById("colorSaveStatus");
-
-  function loadColors(){
-    var saved;
-    try{ saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }catch(e){ saved = null; }
-    if (!saved) return;
-
-    if (saved.primary && HEX_RE.test(saved.primary.hex)){
-      setBrandRow("primary", saved.primary.hex);
-    }
-    if (saved.secondary && HEX_RE.test(saved.secondary.hex)){
-      setBrandEnabled("secondary", true);
-      setBrandRow("secondary", saved.secondary.hex);
-    }
-    if (saved.tertiary && HEX_RE.test(saved.tertiary.hex)){
-      setBrandEnabled("tertiary", true);
-      setBrandRow("tertiary", saved.tertiary.hex);
-    }
-  }
-  loadColors();
-
-  function applyAccent(hex){
-    var rgb = hexToRgb(hex);
-    var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
-    var dark600 = rgbToHex(mix(rgb.r, 0, 0.18), mix(rgb.g, 0, 0.18), mix(rgb.b, 0, 0.18));
-    var light400 = rgbToHex(mix(rgb.r, 255, 0.25), mix(rgb.g, 255, 0.25), mix(rgb.b, 255, 0.25));
-    var rootStyle = document.documentElement.style;
-    rootStyle.setProperty("--red-500", hex);
-    rootStyle.setProperty("--red-600", dark600);
-    rootStyle.setProperty("--red-400", light400);
-    rootStyle.setProperty("--red-tint", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.08)");
-    rootStyle.setProperty("--red-glow", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.35)");
-  }
-
-  saveBtn.addEventListener("click", function(){
-    var payload = { primary: { hex: "#" + brandRows.primary.hex.value, opacity: 100 } };
-    if (brandRows.secondary.toggle.checked){
-      payload.secondary = { hex: "#" + brandRows.secondary.hex.value, opacity: 100 };
-    }
-    if (brandRows.tertiary.toggle.checked){
-      payload.tertiary = { hex: "#" + brandRows.tertiary.hex.value, opacity: 100 };
-    }
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    applyAccent(payload.primary.hex);
-
-    saveStatus.hidden = false;
-    saveStatus.textContent = payload.primary.hex + " is now the system's base color - applied across every page";
-    setTimeout(function(){ saveStatus.hidden = true; }, 4000);
-  });
-
-  var resetBtn = document.getElementById("resetColorsBtn");
-  resetBtn.addEventListener("click", function(){
-    localStorage.removeItem(STORAGE_KEY);
-
-    setBrandRow("primary", BRAND_DEFAULTS.primary);
-    setBrandEnabled("secondary", false);
-    setBrandRow("secondary", BRAND_DEFAULTS.secondary);
-    setBrandEnabled("tertiary", false);
-    setBrandRow("tertiary", BRAND_DEFAULTS.tertiary);
-
-    applyAccent("#" + BRAND_DEFAULTS.primary);
-
-    saveStatus.hidden = false;
-    saveStatus.textContent = "Reset to default colors";
-    setTimeout(function(){ saveStatus.hidden = true; }, 2500);
-  });
-
-  // ---------- background / surface-elevation colors ----------
-  // Dark and light graphite tokens are near-inverses of each other, so a
-  // single absolute override would look right in one theme and broken in
-  // the other - every save is scoped to whichever theme is active.
-  var BG_KEY = "ads:bg-colors";
-  var BG_DEFAULTS = {
-    dark: { primary: "#0D0F11", secondary: "#15171A", tertiary: "#191C20" },
-    light: { primary: "#F6F6F4", secondary: "#FFFFFF", tertiary: "#FBFBFA" }
-  };
-
-  var bgRows = {};
-  document.querySelectorAll('[data-role="bg-row"]').forEach(function(row){
-    var key = row.dataset.color;
-    bgRows[key] = {
-      row: row,
-      swatch: row.querySelector('[data-role="bg-swatch"]'),
-      hex: row.querySelector('[data-role="bg-hex"]')
-    };
-  });
-
-  var bgThemeLabel = document.getElementById("bgThemeLabel");
-  var saveBgBtn = document.getElementById("saveBgColorsBtn");
-  var resetBgBtn = document.getElementById("resetBgColorsBtn");
-  var bgSaveStatus = document.getElementById("bgColorSaveStatus");
-
-  function currentTheme(){
-    return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
-  }
-
-  function readBgStore(){
-    try{ return JSON.parse(localStorage.getItem(BG_KEY) || "null") || {}; }catch(e){ return {}; }
-  }
-
-  function applyBgVars(hexes){
-    var rootStyle = document.documentElement.style;
-    rootStyle.setProperty("--graphite-950", hexes.primary);
-    rootStyle.setProperty("--graphite-900", hexes.secondary);
-    rootStyle.setProperty("--graphite-850", hexes.tertiary);
-  }
-
-  function setBgRow(key, hex){
-    hex = hex.replace("#", "").toUpperCase();
-    var r = bgRows[key];
-    r.swatch.value = "#" + hex.toLowerCase();
-    r.hex.value = hex;
-  }
-
-  function getBgHex(key){
-    return "#" + bgRows[key].hex.value;
-  }
-
-  var elevationPrimary = document.querySelector('[data-role="elevation-primary"]');
-  var elevationSecondary = document.querySelector('[data-role="elevation-secondary"]');
-  var elevationTertiary = document.querySelector('[data-role="elevation-tertiary"]');
-
-  // The nested preview updates as you type/pick in each row - separate
-  // from applyBgVars, which only commits to the rest of the app on Save.
-  function updateElevationPreview(){
-    elevationPrimary.style.background = getBgHex("primary");
-    elevationSecondary.style.background = getBgHex("secondary");
-    elevationTertiary.style.background = getBgHex("tertiary");
-  }
-
-  Object.keys(bgRows).forEach(function(key){
-    var r = bgRows[key];
-    r.hex.addEventListener("input", function(){
-      var v = r.hex.value.replace(/[^0-9a-f]/gi, "").toUpperCase().slice(0, 6);
-      r.hex.value = v;
-      if (/^[0-9A-F]{6}$/.test(v)){
-        r.swatch.value = "#" + v.toLowerCase();
-        updateElevationPreview();
-      }
-    });
-    r.swatch.addEventListener("input", function(){
-      setBgRow(key, r.swatch.value);
-      updateElevationPreview();
-    });
-  });
-
-  function loadBgForTheme(theme){
-    var store = readBgStore();
-    var hexes = store[theme] || BG_DEFAULTS[theme];
-
-    bgThemeLabel.textContent = theme === "light" ? "Light" : "Dark";
-    setBgRow("primary", hexes.primary);
-    setBgRow("secondary", hexes.secondary);
-    setBgRow("tertiary", hexes.tertiary);
-    applyBgVars(hexes);
-    updateElevationPreview();
-  }
-  loadBgForTheme(currentTheme());
-
-  new MutationObserver(function(){ loadBgForTheme(currentTheme()); })
-    .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-
-  saveBgBtn.addEventListener("click", function(){
-    var theme = currentTheme();
-    var hexes = {
-      primary: getBgHex("primary"),
-      secondary: getBgHex("secondary"),
-      tertiary: getBgHex("tertiary")
-    };
-    var store = readBgStore();
-    store[theme] = hexes;
-    localStorage.setItem(BG_KEY, JSON.stringify(store));
-    applyBgVars(hexes);
-
-    bgSaveStatus.hidden = false;
-    bgSaveStatus.textContent = "Saved - applied across every page in " + (theme === "light" ? "Light" : "Dark") + " theme";
-    setTimeout(function(){ bgSaveStatus.hidden = true; }, 4000);
-  });
-
-  resetBgBtn.addEventListener("click", function(){
-    var theme = currentTheme();
-    var store = readBgStore();
-    delete store[theme];
-    if (Object.keys(store).length){
-      localStorage.setItem(BG_KEY, JSON.stringify(store));
-    } else {
-      localStorage.removeItem(BG_KEY);
-    }
-    loadBgForTheme(theme);
-
-    bgSaveStatus.hidden = false;
-    bgSaveStatus.textContent = "Reset to default backgrounds";
-    setTimeout(function(){ bgSaveStatus.hidden = true; }, 2500);
-  });
-})();
-</script>
+<script src="foundations.js"></script>
 </body>
 </html>

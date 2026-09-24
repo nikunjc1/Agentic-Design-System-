@@ -48,14 +48,20 @@
   // a dashed outline (circular) rather than a plain solid color - both
   // verified visually distinct from the solid in-progress red via headless
   // Chrome screenshot zoom.
+  // aria-valuemin/max/now + role="progressbar" go on the TRACK element (the
+  // one whose size represents 0-100%), matching Lightning Design System's
+  // ProgressBar anatomy - not on the outer wrapper (which also holds the
+  // text label) or the fill (which is a decorative child, never the
+  // accessible object itself).
   function buildProgressField(typeKey, stateKey, percent, showLabel){
     var pct = cellPercent(stateKey, percent);
     var labelHtml = showLabel ? '<span class="progress-demo-label">' + pct + "%</span>" : "";
+    var progressbarAttrs = ' role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Progress"';
 
     if (typeKey === "linear"){
       var fillModClass = stateKey === "success" ? " progress-demo-fill--success" : stateKey === "error" ? " progress-demo-fill--error" : "";
       return '<div class="progress-demo-linear">' +
-        '<div class="progress-demo-track"><div class="progress-demo-fill' + fillModClass + '" style="width:' + pct + '%;"></div></div>' +
+        '<div class="progress-demo-track"' + progressbarAttrs + '><div class="progress-demo-fill' + fillModClass + '" style="width:' + pct + '%;"></div></div>' +
         labelHtml +
         "</div>";
     }
@@ -63,7 +69,7 @@
     var color = cellColorVar(stateKey);
     var wrapClass = "progress-demo-circular" + (stateKey === "error" ? " progress-demo-circular--error" : "");
     var bg = "conic-gradient(" + color + " calc(" + pct + "*1%), var(--graphite-700) 0)";
-    return '<div class="' + wrapClass + '" style="background:' + bg + ';">' +
+    return '<div class="' + wrapClass + '"' + progressbarAttrs + ' style="background:' + bg + ';">' +
       '<div class="progress-demo-circular-inner"></div>' +
       (showLabel ? '<span class="progress-demo-label">' + pct + "%</span>" : "") +
       "</div>";
@@ -85,6 +91,8 @@
     lines.push("- Error: always shows a fixed, partial value (" + ERROR_PERCENT + "%), filled in a darker red with a diagonal hazard-stripe pattern (linear) or a dashed outline (circular) rather than a plain solid fill - represents a stalled or failed operation, visually distinct from the in-progress state even though both are red-family colors.");
     lines.push("");
     lines.push("Component properties: Percent (0-100, default " + percent + " - drives only the In progress state's fill), Show label (boolean, default " + (showLabel ? "on" : "off") + " - " + (showLabel ? "shows" : "hides") + " the percentage as text alongside the bar or ring).");
+    lines.push("");
+    lines.push("Accessibility: the track element (the one whose size represents 0-100%, not the wrapper or the fill) carries role=\"progressbar\" with aria-valuemin=\"0\", aria-valuemax=\"100\", and aria-valuenow set to its current percent, plus an aria-label describing what it measures - so assistive technology can announce real progress, not just read a silent colored bar.");
     return lines.join("\n");
   }
 
@@ -92,20 +100,20 @@
     var lines = [];
     lines.push("/* Agentic Design System - Progress component */");
     lines.push(".progress-demo-linear{ display:flex; align-items:center; gap:10px; width:220px; }");
-    lines.push(".progress-demo-track{ flex:1 1 auto; height:8px; border-radius:9999px; background:var(--graphite-700); overflow:hidden; }");
-    lines.push(".progress-demo-fill{ height:100%; border-radius:9999px; background:var(--red-500); }");
+    lines.push(".progress-demo-track{ flex:1 1 auto; height:8px; border-radius:0; background:var(--graphite-700); overflow:hidden; }");
+    lines.push(".progress-demo-fill{ height:100%; border-radius:0; background:var(--red-500); }");
     lines.push(".progress-demo-fill--success{ background:var(--green-500); }");
     lines.push(".progress-demo-fill--error{ background: repeating-linear-gradient(135deg, var(--danger-600) 0 6px, var(--danger-500) 6px 12px); }");
-    lines.push(".progress-demo-label{ flex:none; font-family:var(--font-mono); font-size:12px; color:var(--text-mid); min-width:36px; text-align:right; }");
+    lines.push(".progress-demo-label{ flex:none; font-family:var(--font-mono); font-size:12px; color:var(--text-mid); min-width:36px; text-align: end; }");
     lines.push("");
     lines.push(".progress-demo-circular{ position:relative; width:72px; height:72px; border-radius:9999px; display:flex; align-items:center; justify-content:center; }");
     lines.push(".progress-demo-circular--error{ outline: 2px dashed var(--danger-600); outline-offset: 2px; }");
     lines.push(".progress-demo-circular-inner{ position:absolute; inset:8px; border-radius:9999px; background:var(--graphite-950); }");
     lines.push(".progress-demo-circular .progress-demo-label{ position:relative; z-index:1; text-align:center; min-width:0; }");
     lines.push("");
-    lines.push("<!-- Example usage - Linear layout, In progress state -->");
+    lines.push("<!-- Example usage - Linear layout, In progress state - the track carries role=\"progressbar\" so assistive technology announces real progress, not just a silent colored bar -->");
     lines.push('<div class="progress-demo-linear">');
-    lines.push('  <div class="progress-demo-track">');
+    lines.push('  <div class="progress-demo-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + percent + '" aria-label="Progress">');
     lines.push('    <div class="progress-demo-fill" style="width:' + percent + '%;"></div>');
     lines.push("  </div>");
     if (showLabel) lines.push('  <span class="progress-demo-label">' + percent + "%</span>");
@@ -159,6 +167,7 @@
         copyTextFull(buildFullCode(65, true), cardCopyCodeBtn);
       });
     }
+
     var progressTypeCards = document.querySelectorAll(".progress-type-card[data-system]");
     progressTypeCards.forEach(function(card){
       card.setAttribute("role", "link");

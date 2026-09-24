@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem("ads:theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  }catch(e){}
+
+  try{
+    var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
+    if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
+      var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+      var toHex = function(rr, gg, bb){
+        return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+      };
+      var dark600 = toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18));
+      var light400 = toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25));
+      var rootStyle = document.documentElement.style;
+      rootStyle.setProperty("--red-500", hex);
+      rootStyle.setProperty("--red-600", dark600);
+      rootStyle.setProperty("--red-400", light400);
+      rootStyle.setProperty("--red-tint", "rgba(" + r + "," + g + "," + b + ",0.08)");
+      rootStyle.setProperty("--red-glow", "rgba(" + r + "," + g + "," + b + ",0.35)");
+    }
+  }catch(e){}
+
+  try{
+    var savedBg = JSON.parse(localStorage.getItem("ads:bg-colors") || "null");
+    var bgSet = savedBg && savedBg[t];
+    if (bgSet){
+      var bgRoot = document.documentElement.style;
+      if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
+      if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
+      if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
+    }
+  }catch(e){}
+})();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tree - Hierarchical Structure - Agentic Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shell.css" />
+</head>
+<body>
+
+<header class="app-topbar">
+  <a class="brand" href="overview.html">
+    <span class="brand-sub">Agentic Design System</span>
+  </a>
+  <div class="topbar-right">
+    <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+      <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+      <span class="theme-toggle-label" id="themeToggleLabel">Dark</span>
+    </button>
+    <span class="version-badge">v3.4.0</span>
+    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+  </div>
+</header>
+
+<aside class="app-sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-group-label">Design System</span>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="foundations">
+      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="foundations.html#colors">Colors</a>
+        <a class="nav-link" href="grid-layout.html">Grid &amp; Layout</a>
+        <a class="nav-link" href="typography.html">Typography</a>
+        <a class="nav-link" href="spacing.html">Spacing</a>
+        <a class="nav-link" href="radius.html">Radius</a>
+        <a class="nav-link" href="borders.html">Borders</a>
+        <a class="nav-link" href="shadows.html">Shadows</a>
+        <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="components">
+      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <span class="nav-subgroup-label">Actions</span>
+        <a class="nav-link" href="components.html#button">Button</a>
+        <a class="nav-link" href="group-button.html">Group Button</a>
+        <a class="nav-link" href="float-button.html">Float Button</a>
+
+        <span class="nav-subgroup-label">Forms</span>
+        <a class="nav-link" href="input.html">Input</a>
+        <a class="nav-link" href="select.html">Select</a>
+        <a class="nav-link" href="checkbox.html">Checkbox</a>
+        <a class="nav-link" href="radio.html">Radio</a>
+        <a class="nav-link" href="switch.html">Switch</a>
+        <a class="nav-link" href="date-picker.html">Date Picker</a>
+        <a class="nav-link" href="password.html">Password</a>
+        <a class="nav-link" href="number.html">Number</a>
+        <a class="nav-link" href="mention.html">Mention</a>
+        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
+        <a class="nav-link" href="date-range.html">Date Range</a>
+        <a class="nav-link" href="time.html">Time</a>
+        <a class="nav-link" href="text-area.html">Text Area</a>
+        <a class="nav-link" href="search.html">Search</a>
+        <a class="nav-link" href="add-on.html">Add-on</a>
+        <a class="nav-link" href="color-picker.html">Color Picker</a>
+        <a class="nav-link" href="slider.html">Slider</a>
+        <a class="nav-link" href="rating.html">Rating</a>
+        <a class="nav-link" href="cascader.html">Cascader</a>
+        <a class="nav-link" href="transfer.html">Transfer</a>
+        <a class="nav-link" href="tree-select.html">Tree Select</a>
+        <a class="nav-link" href="upload.html">Upload</a>
+
+        <span class="nav-subgroup-label">Navigation</span>
+        <a class="nav-link" href="tabs.html">Tabs</a>
+        <a class="nav-link" href="anchor.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown.html">Dropdown</a>
+        <a class="nav-link" href="pagination.html">Pagination</a>
+        <a class="nav-link" href="menu.html">Menu</a>
+        <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
+
+        <span class="nav-subgroup-label">Feedback</span>
+        <a class="nav-link" href="alert.html">Alert</a>
+        <a class="nav-link" href="toast.html">Toast</a>
+        <a class="nav-link" href="modal.html">Modal</a>
+        <a class="nav-link" href="tooltip.html">Tooltip</a>
+        <a class="nav-link" href="tour.html">Tour</a>
+        <a class="nav-link" href="drawer.html">Drawer</a>
+        <a class="nav-link" href="notification.html">Notification</a>
+        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <a class="nav-link" href="result.html">Result</a>
+        <a class="nav-link" href="skeleton.html">Skeleton</a>
+        <a class="nav-link" href="spin.html">Spin</a>
+
+        <span class="nav-subgroup-label">Data Display</span>
+        <a class="nav-link" href="divider.html">Divider</a>
+        <a class="nav-link" href="avatar.html">Avatar</a>
+        <a class="nav-link" href="badge.html">Badge</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="card.html">Card</a>
+        <a class="nav-link" href="collapse.html">Collapse</a>
+        <a class="nav-link" href="description.html">Description</a>
+        <a class="nav-link" href="empty.html">Empty</a>
+        <a class="nav-link" href="image.html">Image</a>
+        <a class="nav-link" href="list.html">List</a>
+        <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
+        <a class="nav-link" href="table.html">Table</a>
+        <a class="nav-link" href="tag.html">Tag</a>
+        <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <a class="nav-link" href="patterns.html">Patterns</a>
+      <a class="nav-link" href="templates.html">Templates</a>
+      <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
+      <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
+      <a class="nav-link" href="figma.html">Figma</a>
+      <a class="nav-link" href="documentation.html">Documentation</a>
+      <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </div>
+  </nav>
+</aside>
+
+<main class="app-main">
+  <p class="page-eyebrow">Components &middot; Data Display &middot; Tree</p>
+  <a class="back-link" href="tree.html">&larr; Back to Tree types</a>
+  <h1 class="page-title">Tree <span class="component-status is-experimental">Experimental</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
+  <p class="page-lede">Use for a standalone, always-visible hierarchical structure with expandable branches, like a file system or an org chart - one Tree component, controlled by properties, not a one-off nested list rebuilt per screen. Distinct from Tree Select, which is the same structure behind a Select-style dropdown trigger.</p>
+
+  <section class="panel color-foundation">
+    <div class="panel-title-row">
+      <p class="panel-title">Properties</p>
+      <div class="panel-title-actions">
+        <div class="copy-action" data-role="copy-prompt-action"></div>
+        <div class="copy-action" data-role="copy-code-action"></div>
+      </div>
+    </div>
+    <p class="get-library-copy">Root label and icon visibility are properties of the same component, not a separate tree - change them below to check all 3 types and every state in the Live Preview. The node structure itself (Reports/Presentations/Notes.txt) is fixed reference content, matching Cascader's and Tree Select's own fixed demo hierarchies.</p>
+
+    <div class="border-config-grid" style="margin-bottom:20px;">
+      <label class="type-control">
+        <span>Root label</span>
+        <input type="text" data-role="tree-root-label" value="Documents" />
+      </label>
+
+      <div class="type-control type-control-checkbox">
+        <span>Show icons</span>
+        <label class="type-control-checkbox-row" title="Shows a folder or file icon next to each node.">
+          <input type="checkbox" data-role="tree-show-icons" checked />
+          <span class="type-control-scope">folder/file icon next to each node</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Live Preview</p>
+    <p class="get-library-copy">All 3 types compared side by side, each in 4 states - Default (collapsed), Expanded (Reports open), Selected (Q1 Report.pdf highlighted or checked) and Disabled. One preview is rendered at the chosen Root label and icon visibility.</p>
+    <div class="button-matrix-wrap" data-role="tree-matrix-container"></div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Try it</p>
+    <p class="get-library-copy">The matrix above renders each state fixed, so all four can be compared at once. This one is live: expand and collapse branches, and check nodes to watch the selection cascade down to children and roll up into indeterminate parents.</p>
+    <div class="interactive-demo" data-role="tree-interactive"></div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">When to use</p>
+    <p class="get-library-copy">Any hierarchical, nested structure the user needs to browse, expand, or select nodes from directly on the page.</p>
+    <div class="chip-row button-example-chips">
+      <span class="chip">File/folder browser</span>
+      <span class="chip">Org chart</span>
+      <span class="chip">Category tree</span>
+      <span class="chip">Permission tree with checkboxes</span>
+      <span class="chip">Nested settings navigation</span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Tree is a standalone, always-visible hierarchical structure with expandable branches - each node can be a folder-like parent with children or a leaf, optionally with a checkbox for multi-select. It's the always-on-page counterpart to Tree Select, which hides the same structure behind a dropdown trigger.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>A file or folder browser</strong> - nested files and directories the user expands and browses directly.</li>
+        <li><strong>An org chart or category tree</strong> - a structure worth keeping visible while the user works, not hidden behind a click.</li>
+        <li><strong>A permission tree with checkboxes</strong> - selecting individual nodes or whole branches at once.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>A form field that picks one value from hierarchical data</strong> - use Tree Select so the structure stays hidden until needed, saving space.</li>
+        <li><strong>Linked columns where each choice narrows the next</strong> - use Cascader instead of a single expandable tree.</li>
+        <li><strong>Flat, non-hierarchical data</strong> - use List or Table; a Tree's indentation and expand controls add nothing when there's no real nesting.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Keep deeply nested branches collapsed by default, expanding only the path relevant to the current context.</li>
+        <li>Use the Checkable type's parent-checkbox to reflect a partial (indeterminate) selection when only some children are checked.</li>
+        <li>Pair folder/file icons with the indentation, not instead of it - icons alone don't communicate depth as clearly as indentation does.</li>
+        <li>Reach for the Metatext type's second line of supplemental text to disambiguate similarly-named nodes or surface a quick detail (a file size, an item count) without adding a column.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="tree-demo-wrap"><div class="tree-demo-root"><div class="tree-demo-row"><span class="tree-demo-toggle">&#9662;</span><span class="tree-demo-icon">&#128193;</span><span class="tree-demo-label">Design</span></div><div class="tree-demo-children"><div class="tree-demo-row"><span class="tree-demo-toggle-spacer"></span><span class="tree-demo-icon">&#128196;</span><span class="tree-demo-label">Icons.fig</span></div></div></div></div></div>
+          <p class="guide-dodont-note">Folders and files read differently at a glance, and the hierarchy is shown through real indentation, not just a label prefix.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="tree-demo-wrap"><div class="tree-demo-root"><div class="tree-demo-row"><span class="tree-demo-toggle-spacer"></span><span class="tree-demo-label">Design</span></div><div class="tree-demo-row"><span class="tree-demo-toggle-spacer"></span><span class="tree-demo-label">- Icons.fig</span></div></div></div></div>
+          <p class="guide-dodont-note">A hyphen standing in for indentation collapses the moment there is more than one level deep, and gives folders no toggle to collapse their contents.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>Implemented with tree/treeitem roles, so screen readers announce each node's depth and expanded/collapsed state.</li>
+        <li>Fully keyboard-operable - arrow keys move between nodes, and left/right expand or collapse a branch.</li>
+        <li>Checkbox state (checked/indeterminate/unchecked) is exposed programmatically, not communicated by fill color alone.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Tree Select, Cascader, Transfer.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Tree",
+  "status": "Experimental",
+  "category": "Data Display",
+  "summary": "Tree is a standalone, always-visible hierarchical structure with expandable branches - the always-on-page counterpart to Tree Select's dropdown-hidden variant.",
+  "whenToUse": [
+    "A file or folder browser with nested files and directories.",
+    "An org chart or category tree worth keeping visible while the user works.",
+    "A permission tree with checkboxes for selecting individual nodes or whole branches."
+  ],
+  "whenNotToUse": [
+    "A form field that picks one value from hierarchical data - use Tree Select instead.",
+    "Linked columns where each choice narrows the next - use Cascader instead.",
+    "Flat, non-hierarchical data - use List or Table instead."
+  ],
+  "bestPractices": [
+    "Keep deeply nested branches collapsed by default, expanding only the relevant path.",
+    "Use the Checkable type's parent-checkbox to reflect a partial (indeterminate) selection.",
+    "Pair folder/file icons with indentation, not instead of it.",
+    "Reach for the Metatext type's second line of supplemental text to disambiguate similarly-named nodes or surface a quick detail without adding a column."
+  ],
+  "doAndDont": {
+    "do": "Folders and files read differently at a glance, and the hierarchy is shown through real indentation, not just a label prefix.",
+    "dont": "A hyphen standing in for indentation collapses the moment there is more than one level deep, and gives folders no toggle to collapse their contents."
+  },
+  "accessibility": [
+    "Implemented with tree/treeitem roles announcing depth and expanded state.",
+    "Fully keyboard-operable - arrow keys move between nodes, left/right expand or collapse.",
+    "Checkbox state is exposed programmatically, not communicated by color alone."
+  ],
+  "relatedComponents": [
+    "Tree Select",
+    "Cascader",
+    "Transfer"
+  ]
+}</code></pre>
+    </div>
+  </section>
+
+</main>
+
+<script src="shell.js"></script>
+<script src="tree-detail.js"></script>
+</body>
+</html>

@@ -10,7 +10,8 @@
     { key: "on", cls: "", label: "On", checked: true },
     { key: "hover", cls: " is-hover", label: "Hover", checked: false },
     { key: "focus", cls: " is-focus", label: "Focused", checked: false },
-    { key: "disabled", cls: " is-disabled", label: "Disabled", checked: false, disabled: true }
+    { key: "disabled", cls: " is-disabled", label: "Disabled", checked: false, disabled: true },
+    { key: "loading", cls: " is-loading", label: "Loading", checked: true, disabled: true, loading: true }
   ];
 
   var FULL_SPEC = {
@@ -334,10 +335,12 @@
       var trackCls = "switch-demo-track switch-demo-track--h" + size + state.cls;
       var checkedAttr = state.checked ? " checked" : "";
       var disabledAttr = state.disabled ? " disabled" : "";
+      var busyAttr = state.loading ? ' aria-busy="true"' : "";
+      var thumbInner = state.loading ? '<span class="switch-demo-spinner"></span>' : "";
       var labelSpan = typeKey === "labeled" ? '<span class="switch-demo-label">' + escapeAttr(labelText) + "</span>" : "";
       return '<label class="switch-demo-field">' +
-        '<input type="checkbox" role="switch" class="switch-demo-input" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + " />" +
-        '<span class="' + trackCls + '"><span class="switch-demo-thumb"></span></span>' +
+        '<input type="checkbox" role="switch" class="switch-demo-input" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + busyAttr + " />" +
+        '<span class="' + trackCls + '"><span class="switch-demo-thumb">' + thumbInner + "</span></span>" +
         labelSpan +
         "</label>";
     }

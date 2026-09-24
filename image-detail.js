@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon constants - viewBox 0 0 24 24, stroke currentColor
   // so each icon inherits its surrounding element's color rather than a
   // hard-coded fill.
@@ -131,15 +139,17 @@
     lines.push(".image-demo-frame{ box-sizing:border-box; position:relative; overflow:hidden; background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
     lines.push(".image-demo-frame.image-demo-frame--loading{ background:var(--graphite-800); }");
     lines.push(".image-demo-frame.image-demo-frame--error{ background:var(--graphite-850); display:flex; align-items:center; justify-content:center; }");
-    lines.push(".image-demo-skeleton{ position:absolute; inset:0; background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer 1.5s ease-in-out infinite; }");
+    lines.push(".image-demo-skeleton{ position:absolute; inset:0; background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }");
     lines.push("@keyframes image-demo-shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }");
+    lines.push("/* The shimmer is decorative - the placeholder's shape already says \"loading\" - so it switches off entirely when reduced motion is requested. */");
+    lines.push("@media (prefers-reduced-motion: reduce){ .image-demo-skeleton{ animation:none; background:var(--graphite-700); } }");
     lines.push(".image-demo-error{ display:flex; flex-direction:column; align-items:center; gap:6px; color:var(--text-dim); }");
     lines.push(".image-demo-error svg{ width:24px; height:24px; }");
     lines.push('.image-demo-error-text{ font-family:var(--font-body); font-size:11px; }');
     lines.push(".image-demo-zoom-icon{ position:absolute; bottom:6px; right:6px; width:22px; height:22px; border-radius:9999px; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#FFFFFF; opacity:0.7; transition:opacity .15s ease; }");
     lines.push(".image-demo-frame:hover .image-demo-zoom-icon, .image-demo-frame--hover .image-demo-zoom-icon{ opacity:1; }");
     lines.push(".image-demo-zoom-icon svg{ width:12px; height:12px; }");
-    lines.push('.image-demo-caption{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); }');
+    lines.push('.image-demo-caption{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     return lines.join("\n");
   }
 
@@ -162,7 +172,7 @@
       innerHtml = '<span class="image-demo-zoom-icon">' + ZOOM_ICON + "</span>";
     }
     var frameHtml = '<div class="image-demo-frame image-demo-frame--' + stateKey + '" style="' + frameStyle + '">' + innerHtml + "</div>";
-    var captionHtml = (typeKey === "with-caption") ? '<p class="image-demo-caption">' + caption + "</p>" : "";
+    var captionHtml = (typeKey === "with-caption") ? '<p class="image-demo-caption">' + escapeHtml(caption) + "</p>" : "";
     return '<div class="image-demo-wrap">' + frameHtml + captionHtml + "</div>";
   }
 

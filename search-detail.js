@@ -1,7 +1,15 @@
 (() => {
   "use strict";
 
-  var ICON_SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>';
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_SEARCH ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>';
   var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
@@ -189,7 +197,7 @@
     lines.push('<div class="search-field">');
     lines.push('  <div class="search-control search-control--' + typeKey + " " + sizeClass + radiusClass + '">');
     lines.push('    <span class="search-icon"><!-- magnifying-glass icon --></span>');
-    lines.push('    <input type="search" placeholder="' + placeholder + '" />');
+    lines.push('    <input type="search" placeholder="' + escapeHtml(placeholder) + '" />');
     lines.push('    <button type="button" class="search-clear" aria-label="Clear search"><!-- x icon --></button>');
     lines.push("  </div>");
     lines.push("</div>");
@@ -419,8 +427,12 @@
       var leadingHtml = showLeadingIcon ? '<span class="search-demo-icon">' + ICON_SEARCH + "</span>" : "";
       var valueAttr = isFilled ? ' value="dashboard"' : (isError ? ' value="xyz123notfound"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
-      var clearHtml = (showClearButton && hasValue) ? '<button type="button" class="search-demo-clear" tabindex="-1" aria-label="Clear search">' + ICON_CLEAR + "</button>" : "";
+      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // No tabindex override here - a real <button> is focusable by default,
+      // and the page's own Accessibility text claims exactly that ("the
+      // clear button is independently focusable"), so a hard-coded -1
+      // would silently contradict it.
+      var clearHtml = (showClearButton && hasValue) ? '<button type="button" class="search-demo-clear" aria-label="Clear search">' + ICON_CLEAR + "</button>" : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="search-demo-note is-error">No results found for &quot;xyz123notfound&quot;.</p>' : "";
       return '<div class="search-demo-field">' +

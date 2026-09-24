@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Forms &middot; Cascader</p>
   <a class="back-link" href="cascader.html">&larr; Back to Cascader types</a>
-  <h1 class="page-title">Cascader</h1>
+  <h1 class="page-title">Cascader <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for a field that selects hierarchical, multi-level data - like Country / State / City - where picking an option in one column reveals the next column's choices, letting the user drill down to a final value.</p>
 
   <section class="panel color-foundation">
@@ -214,6 +282,14 @@
         <span>Placeholder</span>
         <input type="text" data-role="cascader-placeholder" value="Select location" />
       </label>
+
+      <div class="type-control type-control-checkbox">
+        <span>Allow clear</span>
+        <label class="type-control-checkbox-row" title="Once a path is selected, replaces the trailing chevron with an &times; button that clears it.">
+          <input type="checkbox" data-role="cascader-allow-clear" />
+          <span class="type-control-scope">&times; replaces chevron once filled</span>
+        </label>
+      </div>
     </div>
   </section>
 
@@ -221,6 +297,12 @@
     <p class="panel-title">Live Preview</p>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="cascader-matrix-container"></div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Multiple selection + Search</p>
+    <p class="get-library-copy">Two documented Ant Cascader features the matrix above can't show, since it's single-select with no search: typing narrows the first column to matches (highlighted inline), and a checkbox per option lets more than one leaf be picked across different branches - here, China and Beijing are checked at once, in different columns.</p>
+    <div data-role="cascader-multi-search-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
@@ -232,6 +314,114 @@
       <span class="chip">Org chart picker</span>
       <span class="chip">File path picker</span>
       <span class="chip">Date-part picker (Year/Month/Day)</span>
+    </div>
+  </section>
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Validation</p>
+    <p class="get-library-copy">A required Cascader has two invalid states, not one: nothing picked at all, and a path started but never finished - a user who picked Country and State but never reached City has technically "touched" the field, so the error needs to say which level is still open rather than treating both cases the same.</p>
+    <ul class="guide-list">
+      <li><strong>Required marking</strong> - the asterisk or "Required" text sits on the field label, same as Select, regardless of how many levels the path has.</li>
+      <li><strong>Validation timing</strong> - validate on blur (closing the panel without reaching a leaf) and again on submit, so an incomplete path is caught the moment the user moves on, not only at the end of the form.</li>
+      <li><strong>Error message</strong> - distinguish the two failure modes: "Choose a location" when nothing is selected at all, versus "Choose a city to finish this selection" when Country and State are picked but City isn't - a generic "Required field" doesn't tell the user which column to reopen.</li>
+      <li><strong>Recovery</strong> - reopening the panel from an incomplete-path error should land on the column where the path stopped, not back at column one, so the user resumes rather than restarts.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Cascader selects hierarchical, multi-level data - like Country / State / City - through a multi-column panel where picking an option in one column reveals the next column's choices, letting the user drill down step by step to a final value.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>A hierarchical address or location field</strong> - Country, then State/Province, then City.</li>
+        <li><strong>A category drill-down</strong> - a top-level category narrowing into subcategories.</li>
+        <li><strong>An org chart or file-path picker</strong> - any strictly nested structure with a clear parent-to-child relationship.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>A single flat list with no hierarchy</strong> - use Select instead - Cascader's multi-column panel adds unneeded complexity for a non-nested choice.</li>
+        <li><strong>Data that's nested but the user needs to see the whole tree at once, expanding and collapsing branches freely</strong> - use Tree Select instead of Cascader's linked-column drill-down.</li>
+        <li><strong>Free-form text with a suggestion list</strong> - use Autocomplete, not a fixed hierarchical structure.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Show the full selected path in the closed trigger (e.g. "Asia / India / Mumbai"), not just the final leaf value.</li>
+        <li>Keep each column's option count reasonable - if the deepest level has hundreds of items, add search/filtering within the column.</li>
+        <li>Let users jump back to an earlier column to change a prior choice without restarting the whole selection.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="cascader-demo-field"><label class="cascader-demo-label">Category</label><div class="cascader-demo-control cascader-demo-control--outlined cascader-demo-control--h40"><span class="cascader-demo-input">Audio / Headphones</span><span class="cascader-demo-chevron">&#9662;</span></div><div class="cascader-demo-panel"><div class="cascader-demo-column"><div class="cascader-demo-option is-active">Audio<span class="cascader-demo-option-arrow">&rsaquo;</span></div><div class="cascader-demo-option">Video<span class="cascader-demo-option-arrow">&rsaquo;</span></div></div><div class="cascader-demo-column"><div class="cascader-demo-option is-active">Headphones</div><div class="cascader-demo-option">Speakers</div></div></div></div></div>
+          <p class="guide-dodont-note">A genuine hierarchy, two levels deep, with the chosen path spelled out in the control so the selection is readable without reopening it.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="cascader-demo-field"><label class="cascader-demo-label">Country</label><div class="cascader-demo-control cascader-demo-control--outlined cascader-demo-control--h40"><span class="cascader-demo-input">Portugal</span><span class="cascader-demo-chevron">&#9662;</span></div><div class="cascader-demo-panel"><div class="cascader-demo-column"><div class="cascader-demo-option is-active">Portugal</div><div class="cascader-demo-option">Spain</div></div></div></div></div>
+          <p class="guide-dodont-note">A single flat level in a Cascader is a Select wearing extra machinery. Only reach for it when the options genuinely nest.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>Each column is independently reachable and operable by keyboard, with arrow keys moving within a column and revealing the next one on selection.</li>
+        <li>The currently selected path at every level is announced as the user drills down, not only shown visually.</li>
+        <li>The trigger's accessible name reflects the full selected path once a choice is made.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Select, Tree Select, Autocomplete.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Cascader",
+  "status": "Stable",
+  "category": "Forms",
+  "summary": "Cascader selects hierarchical, multi-level data - like Country / State / City - through a multi-column panel where picking an option in one column reveals the next column's choices, letting the user drill down step by step to a final value.",
+  "whenToUse": [
+    "A hierarchical address or location field - Country, then State/Province, then City.",
+    "A category drill-down - a top-level category narrowing into subcategories.",
+    "An org chart or file-path picker - any strictly nested structure with a clear parent-to-child relationship."
+  ],
+  "whenNotToUse": [
+    "A single flat list with no hierarchy - use Select instead - Cascader's multi-column panel adds unneeded complexity for a non-nested choice.",
+    "Data that's nested but the user needs to see the whole tree at once, expanding and collapsing branches freely - use Tree Select instead of Cascader's linked-column drill-down.",
+    "Free-form text with a suggestion list - use Autocomplete, not a fixed hierarchical structure."
+  ],
+  "bestPractices": [
+    "Show the full selected path in the closed trigger (e.g. \"Asia / India / Mumbai\"), not just the final leaf value.",
+    "Keep each column's option count reasonable - if the deepest level has hundreds of items, add search/filtering within the column.",
+    "Let users jump back to an earlier column to change a prior choice without restarting the whole selection."
+  ],
+  "doAndDont": {
+    "do": "A genuine hierarchy, two levels deep, with the chosen path spelled out in the control so the selection is readable without reopening it.",
+    "dont": "A single flat level in a Cascader is a Select wearing extra machinery. Only reach for it when the options genuinely nest."
+  },
+  "accessibility": [
+    "Each column is independently reachable and operable by keyboard, with arrow keys moving within a column and revealing the next one on selection.",
+    "The currently selected path at every level is announced as the user drills down, not only shown visually.",
+    "The trigger's accessible name reflects the full selected path once a choice is made."
+  ],
+  "relatedComponents": [
+    "Select",
+    "Tree Select",
+    "Autocomplete"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

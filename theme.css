@@ -22,6 +22,16 @@
   --text-mid: #a7abb2;
   --text-dim: #64686f;
 
+  /* For an overlay that must always invert against the page (Tooltip's
+     bubble) - never reuse --text-hi/--graphite-900 for this. Both are
+     wired to the per-theme brand color customization in Foundations
+     (shell.js's applySavedColorsForTheme), so a saved custom "Text Hi" or
+     "Background Secondary" for a theme silently breaks the guaranteed
+     black-on-light/white-on-dark contrast an inverted overlay depends on.
+     These stay fixed regardless of any saved customization. */
+  --overlay-invert-bg: #f3f2ef;
+  --overlay-invert-text: #15171a;
+
   /* Brand red */
   --red-500: #ff031a;
   --red-400: #ff3f4f;
@@ -43,6 +53,21 @@
 
   --radius-sm: 4px;
   --radius-md: 8px;
+
+  /* Motion - every transition and animation in the system resolves to one
+     of these, so timing is tuned centrally rather than per rule, and the
+     whole system can be quieted at once under prefers-reduced-motion
+     (see the reduce block at the end of shell.css). Motion tokens are
+     theme-independent, so they are declared here only, not re-declared in
+     the light-theme block below. */
+  --duration-fast: 0.12s;     /* micro-feedback - small toggles, switches */
+  --duration-base: 0.15s;     /* default - hover, focus, color changes */
+  --duration-slow: 0.8s;      /* continuous - spinner rotation */
+  --duration-shimmer: 1.5s;   /* continuous - skeleton/loading shimmer */
+
+  --ease-standard: ease;      /* default easing for discrete state changes */
+  --ease-emphasis: ease-in-out; /* looping/continuous animations */
+  --ease-linear: linear;      /* constant-rate rotation */
 }
 
 /* Light theme - opt-in via data-theme="light" on <html>.
@@ -63,6 +88,9 @@
   --text-hi: #15171a;
   --text-mid: #53565c;
   --text-dim: #85888d;
+
+  --overlay-invert-bg: #15171a;
+  --overlay-invert-text: #ffffff;
 
   --red-tint: rgba(255,3,26,0.07);
 }

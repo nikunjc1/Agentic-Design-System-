@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Forms &middot; Checkbox</p>
   <a class="back-link" href="checkbox.html">&larr; Back to Checkbox types</a>
-  <h1 class="page-title">Checkbox</h1>
+  <h1 class="page-title">Checkbox <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for agreements, multi-select lists and settings rows where more than one option can be active at once - one Checkbox component, controlled by properties, with a real tri-state (unchecked, checked, indeterminate) control underneath.</p>
 
   <section class="panel color-foundation">
@@ -226,6 +294,115 @@
       <span class="chip">Select multiple</span>
       <span class="chip">Settings toggle list</span>
       <span class="chip">Bulk select in a table</span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Validation</p>
+    <p class="get-library-copy">A single required checkbox, like a Terms of Service agreement, has no half-checked state to catch on blur - validate it on submit instead.</p>
+    <ul class="guide-list">
+      <li><strong>Required marking</strong> - unlike a text field, there's no natural "on blur" moment for a checkbox, so check the required state on submit rather than as the user tabs past it.</li>
+      <li><strong>Validation timing</strong> - validate a required checkbox at submit, not on blur.</li>
+      <li><strong>Error message</strong> - put the message and required indicator right next to the checkbox's own label, "You must agree to the Terms of Service to continue," not a separate banner far from the control.</li>
+      <li><strong>Checkbox lists</strong> - for a list of selectable items, "required" more often means at least one must be checked - validate that at the group/fieldset level, not per checkbox.</li>
+    </ul>
+  </section>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Checkbox is a tri-state control (unchecked, checked, indeterminate) for choices where more than one option can be active at once, or for a single explicit agreement toggle - unlike Radio, which enforces exactly one choice from a set.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>An explicit agreement toggle</strong> - accepting terms and conditions.</li>
+        <li><strong>Selecting multiple items from a list</strong> - picking several rows in a table, several tags in a filter.</li>
+        <li><strong>A settings page's list of independent toggles</strong> - each one on or off without affecting the others.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>Exactly one choice from a small, fully visible set</strong> - use Radio so only one option can ever be selected.</li>
+        <li><strong>An immediate, standalone on/off setting outside a form</strong> - use Switch - it applies instantly with no submit step.</li>
+        <li><strong>A value chosen from a very large list</strong> - use a multi-select Select variant or Transfer instead of dozens of checkboxes.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Always show a visible label next to the box - never the checkbox alone with no text.</li>
+        <li>Use the indeterminate state for a "select all" checkbox that reflects a partial child selection.</li>
+        <li>Group related checkboxes visually, with a shared heading or fieldset, so the set of options reads as one question.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="checkbox-demo-field"><span class="checkbox-demo-box checkbox-demo-box--h20 is-checked"></span><span class="checkbox-demo-label">Email me about order updates</span></div></div>
+          <p class="guide-dodont-note">A label that states what checking it actually does, so the choice is clear without reading anything else.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="checkbox-demo-field"><span class="checkbox-demo-box checkbox-demo-box--h20 is-checked"></span><span class="checkbox-demo-label">Do not opt out of non-essential email</span></div></div>
+          <p class="guide-dodont-note">A double negative makes the user solve a logic puzzle to work out what checking the box means.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>Uses real native checkbox semantics - checked and indeterminate are reflected in the accessibility tree, not just visually.</li>
+        <li>The label is clickable and programmatically linked to its input.</li>
+        <li>Indeterminate is set via the DOM property (not CSS alone) so assistive technology announces the partial-selection state correctly.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Radio, Switch, Transfer (bulk multi-select across two panels), Group Button.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Checkbox",
+  "status": "Stable",
+  "category": "Forms",
+  "summary": "Checkbox is a tri-state control (unchecked, checked, indeterminate) for choices where more than one option can be active at once, or for a single explicit agreement toggle - unlike Radio, which enforces exactly one choice from a set.",
+  "whenToUse": [
+    "An explicit agreement toggle - accepting terms and conditions.",
+    "Selecting multiple items from a list - picking several rows in a table, several tags in a filter.",
+    "A settings page's list of independent toggles - each one on or off without affecting the others."
+  ],
+  "whenNotToUse": [
+    "Exactly one choice from a small, fully visible set - use Radio so only one option can ever be selected.",
+    "An immediate, standalone on/off setting outside a form - use Switch - it applies instantly with no submit step.",
+    "A value chosen from a very large list - use a multi-select Select variant or Transfer instead of dozens of checkboxes."
+  ],
+  "bestPractices": [
+    "Always show a visible label next to the box - never the checkbox alone with no text.",
+    "Use the indeterminate state for a \"select all\" checkbox that reflects a partial child selection.",
+    "Group related checkboxes visually, with a shared heading or fieldset, so the set of options reads as one question."
+  ],
+  "doAndDont": {
+    "do": "A label that states what checking it actually does, so the choice is clear without reading anything else.",
+    "dont": "A double negative makes the user solve a logic puzzle to work out what checking the box means."
+  },
+  "accessibility": [
+    "Uses real native checkbox semantics - checked and indeterminate are reflected in the accessibility tree, not just visually.",
+    "The label is clickable and programmatically linked to its input.",
+    "Indeterminate is set via the DOM property (not CSS alone) so assistive technology announces the partial-selection state correctly."
+  ],
+  "relatedComponents": [
+    "Radio",
+    "Switch",
+    "Transfer",
+    "Group Button"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

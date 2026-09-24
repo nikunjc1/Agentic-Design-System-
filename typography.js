@@ -6,6 +6,58 @@
 
   function clamp(n, min, max){ return Math.min(max, Math.max(min, n)); }
 
+  function hexToRgb(hex){
+    hex = (hex || "").replace("#", "");
+    if (hex.length !== 6) hex = "111827";
+    return { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6), 16) };
+  }
+  function hexToHsl(hex){
+    var rgb = hexToRgb(hex);
+    var r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min){ h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h /= 6;
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+  function hslToHex(h, s, l){
+    h = ((h % 360) + 360) % 360; s = clamp(s, 0, 100) / 100; l = clamp(l, 0, 100) / 100;
+    var c = (1 - Math.abs(2 * l - 1)) * s;
+    var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    var m = l - c / 2;
+    var r, g, b;
+    if (h < 60){ r = c; g = x; b = 0; }
+    else if (h < 120){ r = x; g = c; b = 0; }
+    else if (h < 180){ r = 0; g = c; b = x; }
+    else if (h < 240){ r = 0; g = x; b = c; }
+    else if (h < 300){ r = x; g = 0; b = c; }
+    else { r = c; g = 0; b = x; }
+    var toByte = function(v){ var n = Math.round((v + m) * 255); var hh = n.toString(16); return hh.length === 1 ? "0" + hh : hh; };
+    return "#" + toByte(r) + toByte(g) + toByte(b);
+  }
+  // A per-level text color can be a near-black/near-white heading/body
+  // gray OR a real accent (error/warning/success/info/active/selected).
+  // HSL saturation is unreliable right at the lightness extremes (a tiny
+  // RGB difference reads as a big saturation swing near 0%/100% L), so
+  // very dark/light colors are always treated as text-style regardless of
+  // their nominal saturation; only colors in the middle lightness range
+  // are judged by saturation to tell "gray" from "accent" apart.
+  function suggestDarkForTypeColor(lightHex){
+    var hsl = hexToHsl(lightHex);
+    var isTextLike = hsl.l < 20 || hsl.l > 80 || hsl.s < 20;
+    if (isTextLike){
+      return hslToHex(hsl.h, hsl.s, clamp(100 - hsl.l, 0, 100));
+    }
+    return hslToHex(hsl.h, clamp(hsl.s - 8, 35, 100), clamp(hsl.l + 12, 0, 78));
+  }
+
   // Starting-point type scales per product/device category. Dense dashboards
   // (SaaS, mobile app) run smaller so more fits on screen; desktop web apps
   // get more room; mobile web / marketing desktop sites lean on bigger
@@ -18,24 +70,28 @@
     "web-and-desktop-site": { h1: "display-lg", h2: "display-md", h3: "display-sm", h4: "display-xs", h5: "text-xl", h6: "text-lg", body: "text-md", paragraph: "text-md", caption: "text-xs" }
   };
 
+  // darkColor is a starting suggestion, not a hand-picked value - it's
+  // whatever suggestDarkForTypeColor() below computes from the matching
+  // light color, so the two always agree with the live auto-generation
+  // logic instead of quietly drifting from it over time.
   var ROW_DEFAULTS = {
-    h1: { family: "primary", size: "display-lg", lineHeightPct: "125", weight: "700", italic: false, color: "#111827" },
-    h2: { family: "primary", size: "display-md", lineHeightPct: "122", weight: "700", italic: false, color: "#111827" },
-    h3: { family: "primary", size: "display-sm", lineHeightPct: "127", weight: "600", italic: false, color: "#111827" },
-    h4: { family: "primary", size: "display-xs", lineHeightPct: "133", weight: "600", italic: false, color: "#111827" },
-    h5: { family: "primary", size: "text-xl", lineHeightPct: "150", weight: "500", italic: false, color: "#111827" },
-    h6: { family: "primary", size: "text-lg", lineHeightPct: "156", weight: "500", italic: false, color: "#111827" },
-    body: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563" },
-    paragraph: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563" },
-    caption: { family: "secondary", size: "text-xs", lineHeightPct: "150", weight: "400", italic: false, color: "#6B7280" },
+    h1: { family: "primary", size: "display-lg", lineHeightPct: "125", weight: "700", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    h2: { family: "primary", size: "display-md", lineHeightPct: "122", weight: "700", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    h3: { family: "primary", size: "display-sm", lineHeightPct: "127", weight: "600", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    h4: { family: "primary", size: "display-xs", lineHeightPct: "133", weight: "600", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    h5: { family: "primary", size: "text-xl", lineHeightPct: "150", weight: "500", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    h6: { family: "primary", size: "text-lg", lineHeightPct: "156", weight: "500", italic: false, color: "#111827", darkColor: "#D8DFEE" },
+    body: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563", darkColor: "#9CA6B4" },
+    paragraph: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563", darkColor: "#9CA6B4" },
+    caption: { family: "secondary", size: "text-xs", lineHeightPct: "150", weight: "400", italic: false, color: "#6B7280", darkColor: "#7F8694" },
 
-    active: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF031A" },
-    selected: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "600", italic: false, color: "#FF031A" },
-    disabled: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "400", italic: false, color: "#9CA3AF" },
-    error: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF3F4F" },
-    warning: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#E6A53A" },
-    success: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#2FBF6E" },
-    info: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#4F8FE6" }
+    active: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF031A", darkColor: "#F74858" },
+    selected: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "600", italic: false, color: "#FF031A", darkColor: "#F74858" },
+    disabled: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "400", italic: false, color: "#9CA3AF", darkColor: "#505763" },
+    error: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF3F4F", darkColor: "#FA818B" },
+    warning: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#E6A53A", darkColor: "#E6BC77" },
+    success: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#2FBF6E", darkColor: "#5ECD8F" },
+    info: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#4F8FE6", darkColor: "#8AB2E8" }
   };
 
   var CATEGORY_FONTS = {
@@ -196,6 +252,14 @@
     var italicChk = row.querySelector('[data-role="italic"]');
     var colorPicker = row.querySelector('[data-role="color-picker"]');
     var colorHex = row.querySelector('[data-role="color-hex"]');
+    var darkColorPicker = row.querySelector('[data-role="color-picker-dark"]');
+    var darkColorHex = row.querySelector('[data-role="color-hex-dark"]');
+
+    // Dark starts auto-generated from Light and stays in sync with it
+    // (like the same auto/custom idea on the Colors page) until the user
+    // edits the dark field directly, at which point it's theirs to keep -
+    // editing Light afterward no longer overwrites it.
+    var darkAuto = true;
 
     // Picking a size seeds a sensible line-height %, but the % field is
     // independently editable afterward - it never gets overwritten except
@@ -211,6 +275,13 @@
       lhInput.value = clamp(parseInt(lhInput.value, 10) || 100, 50, 300);
     }
 
+    function regenerateDark(){
+      var hex = suggestDarkForTypeColor(colorPicker.value);
+      darkColorPicker.value = hex;
+      darkColorHex.value = hex.replace("#", "").toUpperCase();
+      darkAuto = true;
+    }
+
     sizeSel.addEventListener("change", function(){
       seedLineHeightFromSize();
       apply();
@@ -224,6 +295,7 @@
     colorPicker.addEventListener("input", function(){
       colorHex.value = colorPicker.value.replace("#", "").toUpperCase();
       apply();
+      if (darkAuto) regenerateDark();
     });
     colorHex.addEventListener("input", function(){
       var v = colorHex.value.replace(/[^0-9a-f]/gi, "").toUpperCase().slice(0, 6);
@@ -231,6 +303,19 @@
       if (HEX6_RE.test(v)){
         colorPicker.value = "#" + v;
         apply();
+        if (darkAuto) regenerateDark();
+      }
+    });
+    darkColorPicker.addEventListener("input", function(){
+      darkColorHex.value = darkColorPicker.value.replace("#", "").toUpperCase();
+      darkAuto = false;
+    });
+    darkColorHex.addEventListener("input", function(){
+      var v = darkColorHex.value.replace(/[^0-9a-f]/gi, "").toUpperCase().slice(0, 6);
+      darkColorHex.value = v;
+      if (HEX6_RE.test(v)){
+        darkColorPicker.value = "#" + v;
+        darkAuto = false;
       }
     });
 
@@ -244,7 +329,9 @@
           lineHeightPct: lhInput.value,
           weight: weightSel.value,
           italic: italicChk.checked,
-          color: colorPicker.value
+          color: colorPicker.value,
+          darkColor: darkColorPicker.value,
+          darkColorAuto: darkAuto
         };
       },
       setSize: function(sizeKey){
@@ -263,8 +350,16 @@
           colorPicker.value = s.color;
           colorHex.value = s.color.replace("#", "").toUpperCase();
         }
+        if (s.darkColor){
+          darkColorPicker.value = s.darkColor;
+          darkColorHex.value = s.darkColor.replace("#", "").toUpperCase();
+          darkAuto = s.darkColorAuto !== false;
+        } else {
+          regenerateDark();
+        }
         apply();
-      }
+      },
+      regenerateDark: regenerateDark
     };
   }
 
@@ -329,6 +424,17 @@
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
+      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+    });
+
+    var regenerateDarkBtn = document.getElementById("regenerateDarkColorsBtn");
+    regenerateDarkBtn.addEventListener("click", function(){
+      Object.keys(rowControllers).forEach(function(level){
+        rowControllers[level].regenerateDark();
+      });
+
+      saveStatus.hidden = false;
+      saveStatus.textContent = "Dark colors regenerated from Light";
       setTimeout(function(){ saveStatus.hidden = true; }, 2500);
     });
 

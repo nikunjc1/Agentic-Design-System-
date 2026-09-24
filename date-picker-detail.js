@@ -1,7 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var ICON_CALENDAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -177,9 +186,9 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="datepicker-field">');
-    lines.push('  <label class="datepicker-field-label">' + label + "</label>");
+    lines.push('  <label class="datepicker-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="datepicker-control datepicker-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
-    lines.push('    <span class="datepicker-control-value">' + placeholder + "</span>");
+    lines.push('    <span class="datepicker-control-value">' + escapeHtml(placeholder) + "</span>");
     lines.push('    <span class="datepicker-control-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>");
     lines.push("  </div>");
     lines.push("</div>");
@@ -198,7 +207,7 @@
     lines.push('.datepicker-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
     lines.push(".datepicker-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.datepicker-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
-    lines.push(".datepicker-control-icon{ margin-left:auto; flex:none; width:16px; height:16px; }");
+    lines.push(".datepicker-control-icon{ margin-inline-start:auto; flex:none; width:16px; height:16px; }");
     lines.push('.datepicker-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -397,6 +406,7 @@
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "MM/DD/YYYY";
     var labelInput = document.querySelector('[data-role="datepicker-label"]');
     var placeholderInput = document.querySelector('[data-role="datepicker-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="datepicker-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="datepicker-size-mount"]');
     var radiusMount = document.querySelector('[data-role="datepicker-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -404,7 +414,7 @@
 
     var FILLED_VALUE = "03/14/2026";
 
-    function buildDatePickerField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildDatePickerField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
@@ -414,11 +424,17 @@
       var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="datepicker-demo-note is-error">Enter a valid date.</p>' : "";
+      // allowClear takes over the calendar icon's slot once there's a real
+      // value - the icon comes back once cleared, matching Select's own
+      // chevron-vs-clear-button rule.
+      var trailingHtml = (allowClear && isFilled && !isDisabled)
+        ? '<button type="button" class="datepicker-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : '<span class="datepicker-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
       return '<div class="datepicker-demo-field">' +
-        '<label class="datepicker-demo-label">' + label + "</label>" +
+        '<label class="datepicker-demo-label">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
-          '<span class="' + valueClasses + '">' + text + "</span>" +
-          '<span class="datepicker-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>" +
+          '<span class="' + valueClasses + '">' + escapeHtml(text) + "</span>" +
+          trailingHtml +
         "</div>" +
         noteHtml +
         "</div>";
@@ -437,10 +453,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildDatePickerField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildDatePickerField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -461,6 +477,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -469,7 +486,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -503,6 +520,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

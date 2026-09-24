@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "bordered", label: "Bordered" },
     { key: "borderless", label: "Borderless" }
@@ -32,8 +40,16 @@
     { value: "12", label: "12px - Soft" },
     { value: "9999", label: "Full - Pill" }
   ];
+  // Size (3) - Ant documents large/medium(default)/small, scaling header
+  // and body padding plus header text one step - body text stays fixed.
+  var SIZE_OPTIONS = [
+    { value: "small", label: "Small" },
+    { value: "medium", label: "Medium" },
+    { value: "large", label: "Large" }
+  ];
   var FALLBACK_DEFAULTS = {
     radius: "8",
+    size: "medium",
     header: "What's included in the free plan?",
     body: "The free plan includes up to 3 projects, 1GB of storage, and community support.",
     showIcon: true
@@ -83,6 +99,7 @@
     selectionInfo = selectionInfo || {};
     return {
       radius: selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS),
+      size: selectionInfo.size || selectionMode(null, SIZE_OPTIONS),
       header: (selectionInfo.header !== undefined) ? selectionInfo.header : FALLBACK_DEFAULTS.header,
       body: (selectionInfo.body !== undefined) ? selectionInfo.body : FALLBACK_DEFAULTS.body,
       showIcon: (selectionInfo.showIcon !== undefined) ? selectionInfo.showIcon : FALLBACK_DEFAULTS.showIcon
@@ -110,7 +127,9 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to the Bordered type only - Borderless panels never carry a radius.");
     lines.push("");
-    lines.push("Component properties: Corner radius (Bordered type only); Header text (text, default \"" + FALLBACK_DEFAULTS.header + "\"); Body text (text, default \"" + FALLBACK_DEFAULTS.body + "\", shown only in the Expanded state); Show icon (boolean, default checked - shows a chevron indicator on the right side of the header).");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Scales header/body padding and the header text one step - body text stays fixed at 13px regardless of size.");
+    lines.push("");
+    lines.push("Component properties: Corner radius (Bordered type only); Size; Header text (text, default \"" + FALLBACK_DEFAULTS.header + "\"); Body text (text, default \"" + FALLBACK_DEFAULTS.body + "\", shown only in the Expanded state); Show icon (boolean, default checked - shows a chevron indicator on the right side of the header).");
     lines.push("Current values - Header: \"" + info.header + "\", Body: \"" + info.body + "\", Show icon: " + (info.showIcon ? "yes" : "no") + ".");
     return lines.join("\n");
   }
@@ -125,31 +144,41 @@
     lines.push(".collapse-demo-panel--borderless{ border-top:1px solid var(--line); }");
     lines.push(".collapse-demo-group--borderless .collapse-demo-panel--borderless:last-child{ border-bottom:1px solid var(--line); }");
     lines.push('.collapse-demo-header{ box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; cursor:pointer; font-family:var(--font-body); }');
-    lines.push('.collapse-demo-header-text{ font-size:13px; font-weight:600; color:var(--text-hi); text-align:left; }');
+    lines.push('.collapse-demo-header-text{ font-size:13px; font-weight:600; color:var(--text-hi); text-align: start; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".collapse-demo-chevron{ flex:none; width:14px; height:14px; color:var(--text-dim); transition:transform .15s ease; }");
     lines.push(".collapse-demo-chevron.is-open{ transform:rotate(180deg); }");
-    lines.push('.collapse-demo-body{ padding:0 14px 14px; font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align:left; }');
+    lines.push('.collapse-demo-body{ padding:0 14px 14px; font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align: start; max-width:260px; overflow-wrap:anywhere; }');
     lines.push(".collapse-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".collapse-demo-panel.is-disabled .collapse-demo-header{ cursor:not-allowed; }");
+    lines.push("");
+    lines.push("/* Size (3) - Medium is the default; header/body padding and header text scale, body text stays fixed */");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-header{ padding:8px 10px; }");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-header-text{ font-size:12px; }");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-body{ padding:0 10px 10px; }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-header{ padding:16px 18px; }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-header-text{ font-size:14px; }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-body{ padding:0 18px 18px; }");
     return lines.join("\n");
   }
 
   function buildFullCode(selectionInfo){
     var info = resolveInfo(selectionInfo);
     var radiusInfo = info.radius;
+    var sizeInfo = info.size;
 
     var lines = [];
     lines.push(cssBlock());
     lines.push("");
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
-    lines.push("<!-- Example usage - one per type, Expanded state" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen corner radius" : "") + " -->");
+    var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
+    lines.push("<!-- Example usage - one per type, Expanded state" + (radiusInfo.mode === "specific" || sizeInfo.mode === "specific" ? ", at the explicitly chosen corner radius/size" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(buildCollapseField(t.key, "expanded", exampleRadius, info.header, info.body, info.showIcon));
+      lines.push(buildCollapseField(t.key, "expanded", exampleRadius, info.header, info.body, info.showIcon, exampleSize));
     });
     lines.push("");
     lines.push("<!-- Example usage - the other 2 states (Bordered type) -->");
-    lines.push(buildCollapseField("bordered", "collapsed", exampleRadius, info.header, info.body, info.showIcon));
-    lines.push(buildCollapseField("bordered", "disabled", exampleRadius, info.header, info.body, info.showIcon));
+    lines.push(buildCollapseField("bordered", "collapsed", exampleRadius, info.header, info.body, info.showIcon, exampleSize));
+    lines.push(buildCollapseField("bordered", "disabled", exampleRadius, info.header, info.body, info.showIcon, exampleSize));
     return lines.join("\n");
   }
 
@@ -177,8 +206,8 @@
     var styleAttr = isBordered ? ' style="border-radius:' + radiusCssFor(radius) + ';"' : "";
     var panelCls = "collapse-demo-panel collapse-demo-panel--" + typeKey + (isDisabled ? " is-disabled" : "");
     var iconHtml = showIcon ? chevronSvg(isExpanded) : "";
-    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text">' + header + "</span>" + iconHtml + "</div>";
-    var bodyHtml = isExpanded ? '<div class="collapse-demo-body">' + body + "</div>" : "";
+    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text">' + escapeHtml(header) + "</span>" + iconHtml + "</div>";
+    var bodyHtml = isExpanded ? '<div class="collapse-demo-body">' + escapeHtml(body) + "</div>" : "";
     return '<div class="' + panelCls + '"' + styleAttr + ">" + headerHtml + bodyHtml + "</div>";
   }
 
@@ -186,28 +215,33 @@
   // items so bordered-vs-borderless grouping is visible even for a single
   // cell: a plain static "collapsed" panel for stacking context, followed
   // by the panel that actually reflects the requested state/properties.
-  function buildCollapseField(typeKey, stateKey, radius, header, body, showIcon){
-    var groupCls = "collapse-demo-group collapse-demo-group--" + typeKey;
+  // Size is a group-level modifier (padding/text scale under the group
+  // class), not a per-panel one.
+  function buildCollapseField(typeKey, stateKey, radius, header, body, showIcon, sizeKey){
+    var sizeCls = (sizeKey && sizeKey !== "medium") ? " collapse-demo-group--sz-" + sizeKey : "";
+    var groupCls = "collapse-demo-group collapse-demo-group--" + typeKey + sizeCls;
     var contextPanel = buildContextPanel(typeKey, radius, showIcon);
     var statePanel = buildStatePanel(typeKey, stateKey, radius, header, body, showIcon);
     return '<div class="' + groupCls + '">' + contextPanel + statePanel + "</div>";
   }
 
-  // Builds the prompt/code for exactly ONE Corner radius value, fully
-  // resolved (never "ask the question") - used by the Copy prompt/Copy code
-  // dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(radius, header, body, showIcon){
+  // Builds the prompt/code for exactly ONE Corner radius x Size
+  // combination, fully resolved (never "ask the question") - used by the
+  // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
+  function buildComboPrompt(radius, size, header, body, showIcon){
     return buildFullPrompt({
       radius: { mode: "specific", values: [radius] },
+      size: { mode: "specific", values: [size] },
       header: header,
       body: body,
       showIcon: showIcon
     });
   }
 
-  function buildComboCode(radius, header, body, showIcon){
+  function buildComboCode(radius, size, header, body, showIcon){
     return buildFullCode({
       radius: { mode: "specific", values: [radius] },
+      size: { mode: "specific", values: [size] },
       header: header,
       body: body,
       showIcon: showIcon
@@ -349,6 +383,7 @@
     if (!matrixContainer) return;
 
     var radiusMount = document.querySelector('[data-role="collapse-radius-mount"]');
+    var sizeMount = document.querySelector('[data-role="collapse-size-mount"]');
     var headerInput = document.querySelector('[data-role="collapse-header"]');
     var bodyInput = document.querySelector('[data-role="collapse-body"]');
     var showIconInput = document.querySelector('[data-role="collapse-show-icon"]');
@@ -364,24 +399,22 @@
       return ordered.length ? ordered : [fallback];
     }
 
-    function comboLabel(radius){
-      return optionLabelFor(RADIUS_OPTIONS, radius);
+    function comboLabel(radius, size){
+      return optionLabelFor(RADIUS_OPTIONS, radius) + " / " + optionLabelFor(SIZE_OPTIONS, size);
     }
 
-    // Since Collapse has no Size property, only Corner radius drives
-    // multiple combos - STATES become the rows and TYPES the columns,
-    // exactly like alert-detail.js's buildMatrixSection does with radius,
-    // just with Collapse's own two types and three states.
-    function buildMatrixSection(radius, header, body, showIcon){
+    // Corner radius and Size both drive combos now - STATES become the
+    // rows and TYPES the columns per combo.
+    function buildMatrixSection(radius, size, header, body, showIcon){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildCollapseField(t.key, state.key, radius, header, body, showIcon) + "</td>";
+          return '<td class="button-matrix-cell">' + buildCollapseField(t.key, state.key, radius, header, body, showIcon, size) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
       var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead">' + t.label + "</th>"; }).join("");
       return '<div class="button-matrix-combo">' +
-        '<p class="button-matrix-combo-label">' + comboLabel(radius) + "</p>" +
+        '<p class="button-matrix-combo-label">' + comboLabel(radius, size) + "</p>" +
         '<table class="button-matrix"><thead><tr><th class="button-matrix-rowhead"></th>' + headCells + "</tr></thead>" +
         "<tbody>" + rows + "</tbody></table></div>";
     }
@@ -389,6 +422,7 @@
     function currentSelectionInfo(){
       return {
         radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
         header: headerInput ? (headerInput.value.trim() || FALLBACK_DEFAULTS.header) : FALLBACK_DEFAULTS.header,
         body: bodyInput ? (bodyInput.value.trim() || FALLBACK_DEFAULTS.body) : FALLBACK_DEFAULTS.body,
         showIcon: showIconInput ? showIconInput.checked : FALLBACK_DEFAULTS.showIcon
@@ -401,17 +435,20 @@
       var showIcon = showIconInput ? showIconInput.checked : FALLBACK_DEFAULTS.showIcon;
 
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
+      var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
 
       var html = "";
       var combos = [];
-      radii.forEach(function(radius){
-        html += buildMatrixSection(radius, header, body, showIcon);
-        combos.push({ radius: radius, label: comboLabel(radius), header: header, body: body, showIcon: showIcon });
+      sizes.forEach(function(size){
+        radii.forEach(function(radius){
+          html += buildMatrixSection(radius, size, header, body, showIcon);
+          combos.push({ radius: radius, size: size, label: comboLabel(radius, size), header: header, body: body, showIcon: showIcon });
+        });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, c.header, c.body, c.showIcon); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, c.header, c.body, c.showIcon); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, c.size, c.header, c.body, c.showIcon); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, c.size, c.header, c.body, c.showIcon); });
     }
 
     var propertyMultiSelects = {};
@@ -422,6 +459,16 @@
         defaultSelected: [FALLBACK_DEFAULTS.radius],
         ariaLabel: "Corner radius options",
         labelledBy: "collapse-radius-dropdown-label",
+        onChange: render
+      });
+    }
+    if (sizeMount && window.createMultiSelect){
+      propertyMultiSelects.size = window.createMultiSelect({
+        root: sizeMount,
+        options: SIZE_OPTIONS,
+        defaultSelected: [FALLBACK_DEFAULTS.size],
+        ariaLabel: "Size options",
+        labelledBy: "collapse-size-dropdown-label",
         onChange: render
       });
     }

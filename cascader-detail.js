@@ -1,7 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
   var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
 
   var TYPES = [
@@ -177,16 +186,16 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces each option's single active-row highlight with a real checkbox, letting more than one leaf be picked across different branches). Search (boolean - a real input inside the trigger itself, narrowing the first column to matches with the matched substring highlighted).");
     return lines.join("\n");
   }
 
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="cascader-field">');
-    lines.push('  <label class="cascader-field-label">' + label + "</label>");
+    lines.push('  <label class="cascader-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="cascader-control cascader-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
-    lines.push('    <input type="text" readonly placeholder="' + placeholder + '" value="Asia / India / Mumbai" />');
+    lines.push('    <input type="text" readonly placeholder="' + escapeHtml(placeholder) + '" value="Asia / India / Mumbai" />');
     lines.push('    <span class="cascader-chevron">&#9660;</span>');
     lines.push("  </div>");
     lines.push("  <!-- Multi-column panel - only rendered while the field is in the Open state -->");
@@ -266,8 +275,8 @@
     lines.push("   corners and a soft drop shadow - laid out as a row of columns, no wrap, each");
     lines.push("   column separated by a hairline divider except the last. */");
     lines.push(".cascader-panel{ position:absolute; top:calc(100% + 4px); left:0; z-index:5; box-sizing:border-box; display:flex; min-width:360px; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
-    lines.push(".cascader-column{ flex:1 1 0; min-width:110px; padding:4px; display:flex; flex-direction:column; gap:2px; border-right:1px solid " + line + "; }");
-    lines.push(".cascader-column:last-child{ border-right:none; }");
+    lines.push(".cascader-column{ flex:1 1 0; min-width:110px; padding:4px; display:flex; flex-direction:column; gap:2px; border-inline-end:1px solid " + line + "; }");
+    lines.push(".cascader-column:last-child{ border-inline-end:none; }");
     lines.push('.cascader-option{ box-sizing:border-box; padding:8px 10px; border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; cursor:default; user-select:none; display:flex; align-items:center; justify-content:space-between; gap:6px; }');
     lines.push(".cascader-option.is-active{ background:" + optionActiveBg + "; color:" + red400 + "; }");
     lines.push(".cascader-option-arrow{ flex:none; width:12px; height:12px; }");
@@ -434,10 +443,56 @@
     var matrixContainer = document.querySelector('[data-role="cascader-matrix-container"]');
     if (!matrixContainer) return;
 
+    // Multiple selection + Search - both explicitly documented Ant Cascader
+    // features, neither reachable from the Type x State matrix above (that
+    // matrix is single-select, no search box). Rendered as its own static
+    // example: a search field narrows the first column to matches, and
+    // checkboxes replace the single active-row highlight so more than one
+    // leaf can be picked across different branches at once.
+    var multiSearchContainer = document.querySelector('[data-role="cascader-multi-search-container"]');
+    if (multiSearchContainer){
+      var searchHtml = '<div class="cascader-demo-search"><input type="text" class="cascader-demo-search-input" placeholder="Search..." value="mu" readonly tabindex="-1" /></div>';
+      var col1 = ['<div class="cascader-demo-option is-active"><span>As<mark>ia</mark></span><span class="cascader-demo-option-arrow">' + ICON_CHEVRON_RIGHT + "</span></div>",
+        '<div class="cascader-demo-option"><span>Europe</span><span class="cascader-demo-option-arrow">' + ICON_CHEVRON_RIGHT + "</span></div>"].join("");
+      var col2Options = [
+        { label: "India", checked: false },
+        { label: "China", checked: true },
+        { label: "Japan", checked: false }
+      ];
+      var col2 = col2Options.map(function(o){
+        return '<div class="cascader-demo-option cascader-demo-option--checkable">' +
+          '<label class="cascader-demo-option-check"><input type="checkbox"' + (o.checked ? " checked" : "") + ' tabindex="-1" /><span>' + o.label + "</span></label>" +
+          '<span class="cascader-demo-option-arrow">' + ICON_CHEVRON_RIGHT + "</span></div>";
+      }).join("");
+      var col3Options = [
+        { label: "Beijing", checked: true },
+        { label: "Shanghai", checked: false },
+        { label: "Guangzhou", checked: false }
+      ];
+      var col3 = col3Options.map(function(o){
+        return '<div class="cascader-demo-option cascader-demo-option--checkable">' +
+          '<label class="cascader-demo-option-check"><input type="checkbox"' + (o.checked ? " checked" : "") + ' tabindex="-1" /><span>' + o.label + "</span></label></div>";
+      }).join("");
+      var panelHtml = '<div class="cascader-demo-panel">' +
+        '<div class="cascader-demo-column">' + col1 + "</div>" +
+        '<div class="cascader-demo-column">' + col2 + "</div>" +
+        '<div class="cascader-demo-column">' + col3 + "</div>" +
+        "</div>";
+      multiSearchContainer.innerHTML =
+        '<div class="cascader-demo-field">' +
+        '<label class="cascader-demo-label">Regions (2 selected)</label>' +
+        '<div class="cascader-demo-control cascader-demo-control--outlined cascader-demo-control--h40 is-open">' +
+        searchHtml +
+        '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span></div>" +
+        panelHtml +
+        "</div>";
+    }
+
     var defaultLabel = document.body.dataset.defaultLabel || "Location";
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "Select location";
     var labelInput = document.querySelector('[data-role="cascader-label"]');
     var placeholderInput = document.querySelector('[data-role="cascader-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="cascader-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="cascader-size-mount"]');
     var radiusMount = document.querySelector('[data-role="cascader-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -456,20 +511,23 @@
       return '<div class="cascader-demo-panel">' + columnsHtml + "</div>";
     }
 
-    function buildCascaderField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildCascaderField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
+      var hasValue = isOpen || isFilled;
       var controlClasses = "cascader-demo-control cascader-demo-control--" + typeKey + " cascader-demo-control--h" + size + stateCls;
-      var valueAttr = (isOpen || isFilled) ? ' value="' + SELECTED_PATH_VALUE + '"' : "";
+      var valueAttr = hasValue ? ' value="' + SELECTED_PATH_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="cascader-demo-input" readonly placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
-      var chevronHtml = '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
+      var inputHtml = '<input type="text" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var trailingHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="cascader-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen ? buildCascaderPanel() : "";
       return '<div class="cascader-demo-field">' +
-        '<label class="cascader-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + chevronHtml + "</div>" +
+        '<label class="cascader-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + trailingHtml + "</div>" +
         panelHtml +
         "</div>";
     }
@@ -487,10 +545,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildCascaderField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildCascaderField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -511,6 +569,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -519,7 +578,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -553,6 +612,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

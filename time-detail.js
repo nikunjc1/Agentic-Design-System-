@@ -1,7 +1,16 @@
 (() => {
   "use strict";
 
-  var ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>';
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLOCK ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -177,9 +186,9 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="time-field">');
-    lines.push('  <label class="time-field-label">' + label + "</label>");
+    lines.push('  <label class="time-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="time-control time-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
-    lines.push('    <span class="time-control-value">' + placeholder + "</span>");
+    lines.push('    <span class="time-control-value">' + escapeHtml(placeholder) + "</span>");
     lines.push('    <span class="time-control-icon" aria-hidden="true">' + ICON_CLOCK + "</span>");
     lines.push("  </div>");
     lines.push("</div>");
@@ -198,7 +207,7 @@
     lines.push('.time-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
     lines.push(".time-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.time-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
-    lines.push(".time-control-icon{ margin-left:auto; flex:none; width:16px; height:16px; }");
+    lines.push(".time-control-icon{ margin-inline-start:auto; flex:none; width:16px; height:16px; }");
     lines.push('.time-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -397,6 +406,7 @@
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "Select a time";
     var labelInput = document.querySelector('[data-role="time-label"]');
     var placeholderInput = document.querySelector('[data-role="time-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="time-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="time-size-mount"]');
     var radiusMount = document.querySelector('[data-role="time-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -405,7 +415,7 @@
     var FILLED_VALUE = "10:30 AM";
     var ERROR_VALUE = "25:99";
 
-    function buildTimeField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildTimeField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
@@ -415,11 +425,16 @@
       var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="time-demo-note is-error">Enter a valid time.</p>' : "";
+      // Ant defaults allowClear to true for Time specifically, so this is
+      // the one field in the family where Rest shows it checked, not off.
+      var trailingHtml = (allowClear && isFilled && !isDisabled)
+        ? '<button type="button" class="time-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : '<span class="time-demo-icon" aria-hidden="true">' + ICON_CLOCK + "</span>";
       return '<div class="time-demo-field">' +
-        '<label class="time-demo-label">' + label + "</label>" +
+        '<label class="time-demo-label">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
-          '<span class="' + valueClasses + '">' + text + "</span>" +
-          '<span class="time-demo-icon" aria-hidden="true">' + ICON_CLOCK + "</span>" +
+          '<span class="' + valueClasses + '">' + escapeHtml(text) + "</span>" +
+          trailingHtml +
         "</div>" +
         noteHtml +
         "</div>";
@@ -438,10 +453,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTimeField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTimeField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -462,6 +477,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -470,7 +486,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -504,6 +520,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon constants - viewBox 0 0 24 24, stroke currentColor
   // so each icon inherits its type's accent color from the .alert-demo-banner
   // modifier class it sits inside, rather than hard-coding a fill per icon.
@@ -149,17 +157,17 @@
     lines.push(".alert-demo-banner{ box-sizing:border-box; display:flex; align-items:flex-start; gap:12px; padding:14px 16px; background:var(--graphite-800); max-width:420px; }");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
-      lines.push(".alert-demo-banner--" + t.key + "{ border-left:3px solid " + css.accent + "; }");
+      lines.push(".alert-demo-banner--" + t.key + "{ border-inline-start:3px solid " + css.accent + "; }");
     });
     lines.push(".alert-demo-icon{ flex:none; width:20px; height:20px; margin-top:1px; }");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       lines.push(".alert-demo-banner--" + t.key + " .alert-demo-icon{ color:" + css.accent + "; }");
     });
-    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; text-align:left; }");
-    lines.push('.alert-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); }');
-    lines.push('.alert-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); }');
-    lines.push(".alert-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; margin-left:auto; }");
+    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; text-align: start; }");
+    lines.push('.alert-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.alert-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push(".alert-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; margin-inline-start:auto; }");
     lines.push('.alert-demo-action{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:2px; }');
     return lines.join("\n");
   }
@@ -191,9 +199,9 @@
   function buildAlertField(typeKey, stateKey, radius, title, description, showIcon){
     var radiusCss = radiusCssFor(radius);
     var iconHtml = showIcon ? '<span class="alert-demo-icon">' + ICONS[typeKey] + "</span>" : "";
-    var titleHtml = '<p class="alert-demo-title">' + title + "</p>";
+    var titleHtml = '<p class="alert-demo-title">' + escapeHtml(title) + "</p>";
     // "title-only" always drops the description, even if one is set.
-    var descriptionHtml = (stateKey === "title-only") ? "" : '<p class="alert-demo-description">' + description + "</p>";
+    var descriptionHtml = (stateKey === "title-only") ? "" : '<p class="alert-demo-description">' + escapeHtml(description) + "</p>";
     var bodyHtml = '<div class="alert-demo-body">' + titleHtml + descriptionHtml + "</div>";
     var trailingHtml = "";
     if (stateKey === "dismissible"){

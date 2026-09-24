@@ -1,6 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" }
@@ -188,7 +198,7 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, hexValue){
     var lines = [];
     lines.push('<div class="colorpicker-field">');
-    lines.push('  <label class="colorpicker-field-label">' + label + "</label>");
+    lines.push('  <label class="colorpicker-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="colorpicker-control colorpicker-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
     lines.push('    <span class="colorpicker-swatch" style="background:' + hexValue + ';"></span>');
     lines.push('    <span class="colorpicker-value">' + hexValue + "</span>");
@@ -427,6 +437,7 @@
     var defaultHex = document.body.dataset.defaultHex || "#FF031A";
     var labelInput = document.querySelector('[data-role="colorpicker-label"]');
     var hexInput = document.querySelector('[data-role="colorpicker-hex"]');
+    var allowClearInput = document.querySelector('[data-role="colorpicker-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="colorpicker-size-mount"]');
     var radiusMount = document.querySelector('[data-role="colorpicker-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -445,11 +456,20 @@
     // Open state's panel can anchor to it) containing a swatch + hex-value
     // control, and, only in the Open state, a palette panel of 8 preset
     // swatches below it with the first one marked active.
-    function buildColorPickerField(typeKey, stateKey, stateCls, size, radius, label, hexValue){
+    function buildColorPickerField(typeKey, stateKey, stateCls, size, radius, label, hexValue, allowClear){
       var isOpen = stateKey === "open";
+      var isDisabled = stateKey === "disabled";
       var controlClasses = "colorpicker-demo-control colorpicker-demo-control--" + typeKey + " colorpicker-demo-control--h" + size + stateCls;
       var swatchHtml = '<span class="colorpicker-demo-swatch" style="background:' + hexValue + ';"></span>';
       var valueHtml = '<span class="colorpicker-demo-value">' + hexValue + "</span>";
+      // Unlike the other field-with-a-picker components, ColorPicker always
+      // holds a real value (there's no meaningful "empty" swatch), so
+      // allowClear's button sits alongside the value rather than replacing
+      // a placeholder icon - clicking it would revert to the default color,
+      // not to nothing.
+      var clearHtml = (allowClear && !isDisabled)
+        ? '<button type="button" class="colorpicker-demo-clear" aria-label="Reset color">' + ICON_CLEAR + "</button>"
+        : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = "";
       if (isOpen){
@@ -459,8 +479,8 @@
         panelHtml = '<div class="colorpicker-demo-panel"><div class="colorpicker-demo-grid">' + optionsHtml + "</div></div>";
       }
       return '<div class="colorpicker-demo-field">' +
-        '<label class="colorpicker-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + swatchHtml + valueHtml + "</div>" +
+        '<label class="colorpicker-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + swatchHtml + valueHtml + clearHtml + "</div>" +
         panelHtml +
         "</div>";
     }
@@ -478,10 +498,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, hexValue){
+    function buildMatrixSection(size, radius, label, hexValue, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildColorPickerField(t.key, state.key, state.cls, size, radius, label, hexValue) + "</td>";
+          return '<td class="button-matrix-cell">' + buildColorPickerField(t.key, state.key, state.cls, size, radius, label, hexValue, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -502,6 +522,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var hexValue = normalizedHex(hexInput.value);
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -510,7 +531,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, hexValue);
+          html += buildMatrixSection(size, radius, label, hexValue, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -544,6 +565,7 @@
 
     labelInput.addEventListener("input", render);
     hexInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

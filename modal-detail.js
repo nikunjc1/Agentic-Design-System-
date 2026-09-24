@@ -1,6 +1,51 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // Same icon set as Toast/Alert/Notification, so Modal.info/.success/
+  // .warning/.error read as the same semantic language everywhere else in
+  // this system uses it, rather than a Modal-specific icon style.
+  var CONFIRM_ICONS = {
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+    confirm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="16.5" x2="12" y2="16.5"/></svg>'
+  };
+  var CONFIRM_SHORTCUTS = [
+    { key: "info", label: "Modal.info", title: "New version available", body: "Version 3.5 adds bulk export and faster search." },
+    { key: "success", label: "Modal.success", title: "Payment received", body: "Your invoice has been marked as paid." },
+    { key: "warning", label: "Modal.warning", title: "Storage almost full", body: "You're using 92% of your storage. Free up space soon." },
+    { key: "error", label: "Modal.error", title: "Upload failed", body: "The file exceeds the 50MB size limit." },
+    { key: "confirm", label: "Modal.confirm", title: "Delete this project?", body: "This can't be undone. All files and history will be permanently removed." }
+  ];
+
+  // Renders one of Ant's confirm-type shortcuts - an icon beside the title
+  // (no separate header row, no close "x"), single OK button for info/
+  // success/warning/error, OK + Cancel for confirm - the shape these exist
+  // specifically to save a caller from re-declaring every time.
+  function buildConfirmShortcut(kind){
+    var spec = CONFIRM_SHORTCUTS.filter(function(c){ return c.key === kind; })[0];
+    var iconHtml = '<span class="modal-demo-confirm-icon modal-demo-confirm-icon--' + kind + '">' + CONFIRM_ICONS[kind] + "</span>";
+    var headerHtml = '<div class="modal-demo-confirm-header">' + iconHtml +
+      '<div><p class="modal-demo-confirm-title">' + escapeHtml(spec.title) + '</p>' +
+      '<p class="modal-demo-confirm-body">' + escapeHtml(spec.body) + "</p></div></div>";
+    var footerHtml = kind === "confirm"
+      ? '<div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">OK</button></div>'
+      : '<div class="modal-demo-footer" style="justify-content:flex-end;"><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">OK</button></div>';
+    return '<div class="modal-demo-scrim" style="padding:12px;"><div class="modal-demo-dialog modal-demo-dialog--default" style="max-width:220px;border-radius:8px;">' +
+      '<div class="modal-demo-body" style="padding-top:16px;">' + headerHtml + "</div>" +
+      footerHtml +
+      "</div></div>";
+  }
+
   var TYPES = [
     { key: "default", label: "Default" },
     { key: "destructive", label: "Destructive" }
@@ -111,12 +156,17 @@
     lines.push("");
     lines.push("Build it as ONE reusable dialog component controlled by properties (type, state, size, radius) - a dialog box shown above a dimmed page backdrop (scrim), blocking interaction with the rest of the page until dismissed or actioned. It has a title bar (with an optional close \"x\"), a body area for content, and usually a footer with Cancel/primary-action buttons.");
     lines.push("");
-    lines.push("Types (2):");
+    lines.push("Types (" + TYPES.length + "):");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
       lines.push("  Primary action button: background:" + css.primaryBg + "; Hover: background:" + css.primaryHoverBg + ";");
     });
+    if (selectionInfo.typeFilter){
+      var filteredType = TYPES.filter(function(t){ return t.key === selectionInfo.typeFilter; })[0];
+      lines.push("");
+      lines.push("This card's live example commits specifically to the " + (filteredType ? filteredType.label : selectionInfo.typeFilter) + " type - generate that type first, though the full component still supports all " + TYPES.length + " listed above.");
+    }
     lines.push("");
     lines.push("States (4, structural):");
     lines.push("- Default: title bar with close X, body, and a footer with Cancel/primary-action buttons.");
@@ -178,7 +228,7 @@
     lines.push(".modal-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
     lines.push(".modal-btn--primary{ color:#FFFFFF; }");
     lines.push("");
-    lines.push("/* Types (2) - primary action button color per type */");
+    lines.push("/* Types (" + TYPES.length + ") - primary action button color per type */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       lines.push(".modal-dialog--" + t.key + " .modal-btn--primary{ background:" + css.primaryBg + "; }");
@@ -187,16 +237,17 @@
     lines.push("");
 
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
-    lines.push("<!-- Example usage - one per type, at " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " size" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
-    TYPES.forEach(function(t){
+    var typesToRender = selectionInfo.typeFilter ? TYPES.filter(function(t){ return t.key === selectionInfo.typeFilter; }) : TYPES;
+    lines.push("<!-- Example usage - " + (selectionInfo.typeFilter ? "the " + (typesToRender[0] ? typesToRender[0].label : selectionInfo.typeFilter) + " type only" : "one per type") + ", at " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " size" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
+    typesToRender.forEach(function(t){
       var primaryLabel = t.key === "destructive" ? "Delete" : "Confirm";
       lines.push('<div class="modal-scrim">');
       lines.push('  <div class="modal-dialog modal-dialog--' + t.key + " modal-dialog--" + sizeKey + " modal-dialog--radius-" + radiusClassSuffix(exampleRadius) + '" style="border-radius:' + radiusCssFor(exampleRadius) + ';">');
       lines.push('    <div class="modal-header">');
-      lines.push('      <p class="modal-title">' + title + "</p>");
+      lines.push('      <p class="modal-title">' + escapeHtml(title) + "</p>");
       if (showClose) lines.push('      <button type="button" class="modal-close" aria-label="Close">&times;</button>');
       lines.push("    </div>");
-      lines.push('    <div class="modal-body"><p>' + body + "</p></div>");
+      lines.push('    <div class="modal-body"><p>' + escapeHtml(body) + "</p></div>");
       lines.push('    <div class="modal-footer">');
       lines.push('      <button type="button" class="modal-btn modal-btn--cancel">Cancel</button>');
       lines.push('      <button type="button" class="modal-btn modal-btn--primary">' + primaryLabel + "</button>");
@@ -276,11 +327,13 @@
         copyTextFull(buildFullCode(), cardCopyCodeBtn);
       });
     }
+
     var modalTypeCards = document.querySelectorAll(".modal-type-card[data-system]");
     modalTypeCards.forEach(function(card){
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "modal-" + card.dataset.system + ".html";
+      if (card.dataset.type) href += "?type=" + encodeURIComponent(card.dataset.type);
       card.addEventListener("click", function(){ window.location.href = href; });
       card.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " "){
@@ -364,6 +417,16 @@
     var matrixContainer = document.querySelector('[data-role="modal-matrix-container"]');
     if (!matrixContainer) return;
 
+    var confirmShortcutsContainer = document.querySelector('[data-role="modal-confirm-shortcuts-container"]');
+    if (confirmShortcutsContainer){
+      confirmShortcutsContainer.innerHTML = CONFIRM_SHORTCUTS.map(function(c){
+        return '<div class="modal-demo-confirm-shortcut-cell">' +
+          '<p class="button-matrix-combo-label">' + c.label + "</p>" +
+          buildConfirmShortcut(c.key) +
+          "</div>";
+      }).join("");
+    }
+
     var sizeSelect = document.querySelector('[data-role="modal-size-select"]');
     var radiusMount = document.querySelector('[data-role="modal-radius-mount"]');
     var titleInput = document.querySelector('[data-role="modal-title"]');
@@ -376,17 +439,17 @@
       var radiusCss = radiusCssFor(radius);
       var hideClose = !showClose || stateKey === "no-close";
       var closeHtml = hideClose ? "" : '<button type="button" class="modal-demo-close" aria-label="Close" tabindex="-1">&times;</button>';
-      var headerHtml = '<div class="modal-demo-header"><span class="modal-demo-title">' + title + "</span>" + closeHtml + "</div>";
+      var headerHtml = '<div class="modal-demo-header"><span class="modal-demo-title">' + escapeHtml(title) + "</span>" + closeHtml + "</div>";
 
       var bodyHtml;
       if (stateKey === "scrollable"){
         bodyHtml = '<div class="modal-demo-body modal-demo-body--scrollable">' +
-          '<p style="margin:0;">' + body + "</p>" +
+          '<p style="margin:0;">' + escapeHtml(body) + "</p>" +
           '<p style="margin:8px 0 0;">Additional details continue below to demonstrate scrolling behavior within a fixed-height dialog body.</p>' +
           '<div class="modal-demo-fade"></div>' +
           "</div>";
       } else {
-        bodyHtml = '<div class="modal-demo-body"><p style="margin:0;">' + body + "</p></div>";
+        bodyHtml = '<div class="modal-demo-body"><p style="margin:0;">' + escapeHtml(body) + "</p></div>";
       }
 
       var footerHtml = "";
@@ -417,11 +480,11 @@
     function buildMatrixSection(sizeKey, radius, title, body, showClose){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildModalField(t.key, state.key, sizeKey, radius, title, body, showClose) + "</td>";
+          return '<td class="button-matrix-cell" data-type-key="' + t.key + '">' + buildModalField(t.key, state.key, sizeKey, radius, title, body, showClose) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
-      var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead">' + t.label + "</th>"; }).join("");
+      var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead" data-type-key="' + t.key + '">' + t.label + "</th>"; }).join("");
       return '<div class="button-matrix-combo">' +
         '<p class="button-matrix-combo-label">' + optionLabelFor(RADIUS_OPTIONS, radius) + "</p>" +
         '<table class="button-matrix"><thead><tr><th class="button-matrix-rowhead"></th>' + headCells + "</tr></thead>" +
@@ -484,5 +547,24 @@
     }
 
     render();
+
+    // Landing here with a ?type= query param (e.g. modal-default.html?type=destructive)
+    // should visibly land ON that type's column of the Live Preview matrix,
+    // not just generically at the top of the page looking identical to what
+    // the Default card's click produces - scroll to it and pulse a brief
+    // highlight so the click clearly went somewhere specific.
+    (function jumpToRequestedType(){
+      var params = new URLSearchParams(window.location.search);
+      var typeKey = params.get("type");
+      if (!typeKey || !TYPES.some(function(t){ return t.key === typeKey; })) return;
+      var targets = matrixContainer.querySelectorAll('[data-type-key="' + typeKey + '"]');
+      if (!targets.length) return;
+      targets[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+      // Stays applied - not removed on a timer - so the distinction is
+      // still visible in a still screenshot taken any time after landing,
+      // not just during the first couple seconds. Naturally clears the
+      // next time render() rebuilds the matrix (a property changes).
+      targets.forEach(function(el){ el.classList.add("is-jump-target"); });
+    })();
   });
 })();

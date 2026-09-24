@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon set - viewBox 0 0 24 24, stroke currentColor,
   // stroke-width 2, fill none - identical shapes to Toast/Alert's own icon
   // set so all three components read as the same semantic language
@@ -47,7 +55,7 @@
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var accent = { info: blue500, success: green500, warning: amber500, error: danger500 }[typeKey];
     return {
-      card: "background:" + getCssVar("--graphite-900", "#14171B") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-left:3px solid " + accent + ";box-shadow:0 8px 24px rgba(0,0,0,0.35);",
+      card: "background:" + getCssVar("--graphite-900", "#14171B") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-inline-start:3px solid " + accent + ";box-shadow:0 8px 24px rgba(0,0,0,0.35);",
       icon: "color:" + accent + ";",
       accent: accent
     };
@@ -80,7 +88,7 @@
     lines.push("- With action: same as Default, plus an inline text-style action button (\"Undo\") below the description.");
     lines.push("- Stacked: shows two of the same notification card layered with a small gap, the second one sitting slightly behind and reduced in opacity, to demonstrate multiple simultaneous notifications.");
     lines.push("");
-    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\").");
+    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\"); Placement (topRight/topLeft/bottomRight/bottomLeft, default topRight - which viewport corner the notification stacks in; multiple notifications in the same placement stack outward from the edge they anchor to).");
     lines.push("Current values - Title: \"" + title + "\", Description: \"" + description + "\".");
     return lines.join("\n");
   }
@@ -94,11 +102,11 @@
     lines.push("/* Agentic Design System - Notification component */");
     lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:10px; width:260px; padding:12px 14px; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:0 8px 24px rgba(0,0,0,0.35); position:relative; }");
     lines.push(".notification-demo-icon{ flex:none; width:18px; height:18px; margin-top:1px; }");
-    lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align:left; }");
-    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }');
-    lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin-top:2px; line-height:1.5; }');
-    lines.push(".notification-demo-close{ flex:none; background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px; line-height:1; padding:0; }");
-    lines.push('.notification-demo-action{ margin-top:8px; font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align:left; }');
+    lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align: start; }");
+    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin-top:2px; margin-bottom:0; line-height:1.5; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push(".notification-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px; line-height:1; padding:0; }");
+    lines.push('.notification-demo-action{ margin-top:8px; font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align: start; }');
     lines.push(".notification-demo-stack{ position:relative; width:268px; padding-bottom:8px; }");
     lines.push(".notification-demo-stack .notification-demo-card{ width:260px; }");
     lines.push(".notification-demo-stack .notification-demo-card:not(.is-behind){ position:relative; z-index:1; }");
@@ -107,7 +115,7 @@
     lines.push("/* Types (4) - color the left accent border and the icon only - the card stays neutral */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
-      lines.push(".notification-demo-card--" + t.key + "{ border-left-color:" + css.accent + "; }");
+      lines.push(".notification-demo-card--" + t.key + "{ border-inline-start-color:" + css.accent + "; }");
       lines.push(".notification-demo-card--" + t.key + " .notification-demo-icon{ " + css.icon + " }");
     });
     lines.push("");
@@ -116,8 +124,8 @@
       lines.push('<div class="notification-demo-card notification-demo-card--' + t.key + '">');
       lines.push("  " + ICONS[t.key].replace('<svg ', '<svg class="notification-demo-icon" '));
       lines.push('  <div class="notification-demo-body">');
-      lines.push('    <p class="notification-demo-title">' + title + "</p>");
-      lines.push('    <p class="notification-demo-description">' + description + "</p>");
+      lines.push('    <p class="notification-demo-title">' + escapeHtml(title) + "</p>");
+      lines.push('    <p class="notification-demo-description">' + escapeHtml(description) + "</p>");
       lines.push("  </div>");
       lines.push('  <button type="button" class="notification-demo-close">&times;</button>');
       lines.push("</div>");
@@ -141,15 +149,15 @@
   // cards) for a given type/state combination.
   function buildNotificationField(typeKey, stateKey, title, description){
     var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="notification-demo-icon" ');
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action" tabindex="-1">Undo</button>' : "";
-    var closeHtml = '<button type="button" class="notification-demo-close" tabindex="-1" aria-hidden="true">' + CLOSE_ICON + "</button>";
+    var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action">Undo</button>' : "";
+    var closeHtml = '<button type="button" class="notification-demo-close" aria-label="Dismiss notification">' + CLOSE_ICON + "</button>";
 
     function cardHtml(extraClass){
       return '<div class="notification-demo-card notification-demo-card--' + typeKey + (extraClass ? " " + extraClass : "") + '">' +
         iconHtml +
         '<div class="notification-demo-body">' +
-          '<p class="notification-demo-title">' + title + "</p>" +
-          '<p class="notification-demo-description">' + description + "</p>" +
+          '<p class="notification-demo-title">' + escapeHtml(title) + "</p>" +
+          '<p class="notification-demo-description">' + escapeHtml(description) + "</p>" +
           actionHtml +
         "</div>" +
         closeHtml +
@@ -299,8 +307,28 @@
 
     var titleInput = document.querySelector('[data-role="notification-title"]');
     var descriptionInput = document.querySelector('[data-role="notification-description"]');
+    var placementSelect = document.querySelector('[data-role="notification-placement-select"]');
+    var placementContainer = document.querySelector('[data-role="notification-placement-container"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
+
+    // Placement is Ant's most central Notification prop - which of the 4
+    // viewport corners it stacks in - shown as a mock viewport frame rather
+    // than woven into the type x state matrix, since it's an orthogonal
+    // "where," not another visual variant of the card itself.
+    var PLACEMENT_STYLES = {
+      topRight: "top:10px; right:10px;",
+      topLeft: "top:10px; left:10px;",
+      bottomRight: "bottom:10px; right:10px;",
+      bottomLeft: "bottom:10px; left:10px;"
+    };
+    function buildPlacementDemo(placement, title, description){
+      var posStyle = PLACEMENT_STYLES[placement] || PLACEMENT_STYLES.topRight;
+      var card = buildNotificationField("info", "default", title, description);
+      return '<div class="notification-demo-viewport">' +
+        '<div class="notification-demo-viewport-card" style="' + posStyle + '">' + card + "</div>" +
+        "</div>";
+    }
 
     function buildMatrix(title, description){
       var rows = STATES.map(function(state){
@@ -324,8 +352,10 @@
     function render(){
       var title = titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE;
       var description = descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION;
+      var placement = placementSelect ? placementSelect.value : "topRight";
 
       matrixContainer.innerHTML = buildMatrix(title, description);
+      if (placementContainer) placementContainer.innerHTML = buildPlacementDemo(placement, title, description);
 
       var combos = [{ label: "Notification", title: title, description: description }];
 
@@ -338,6 +368,9 @@
     }
     if (descriptionInput){
       descriptionInput.addEventListener("input", render);
+    }
+    if (placementSelect){
+      placementSelect.addEventListener("change", render);
     }
 
     render();

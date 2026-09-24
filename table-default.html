@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Data Display &middot; Table</p>
   <a class="back-link" href="table.html">&larr; Back to Table types</a>
-  <h1 class="page-title">Table</h1>
+  <h1 class="page-title">Table <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for displaying structured data across fixed columns, like an admin data grid or a report view - one Table component, controlled by properties, not a one-off grid of divs rebuilt per screen.</p>
 
   <section class="panel color-foundation">
@@ -192,12 +260,17 @@
         <div class="copy-action" data-role="copy-code-action"></div>
       </div>
     </div>
-    <p class="get-library-copy">Corner radius and the header row are properties of the same component, not separate tables - change them below to check this table's types and states in the Live Preview.</p>
+    <p class="get-library-copy">Corner radius, size and the header row are properties of the same component, not separate tables - change them below to check this table's types and states in the Live Preview.</p>
 
     <div class="border-config-grid" style="margin-bottom:20px;">
       <div class="type-control">
         <span id="table-radius-dropdown-label">Corner radius</span>
         <div class="multiselect" data-role="table-radius-mount" title="Only applies to the Bordered type"></div>
+      </div>
+
+      <div class="type-control">
+        <span id="table-size-dropdown-label">Size</span>
+        <div class="multiselect" data-role="table-size-mount"></div>
       </div>
 
       <div class="type-control type-control-checkbox">
@@ -212,7 +285,7 @@
 
   <section class="panel spacing-model-panel">
     <p class="panel-title">Live Preview</p>
-    <p class="get-library-copy">Both types compared side by side, each in all 3 states - plain rows, Striped for alternating row backgrounds, and Selected showing a checkbox column with one row highlighted. One full matrix is rendered per selected Corner radius, with the current Show header setting applied throughout.</p>
+    <p class="get-library-copy">Both types compared side by side, each in all 5 states - plain rows, Striped for alternating row backgrounds, Selected showing a checkbox column with one row highlighted, Loading, and Empty. One full matrix is rendered per selected combination of Corner radius and Size, with the current Show header setting applied throughout.</p>
     <div class="button-matrix-wrap" data-role="table-matrix-container"></div>
   </section>
 
@@ -225,6 +298,230 @@
       <span class="chip">Order history</span>
       <span class="chip">Report/analytics view</span>
       <span class="chip">Inventory listing</span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Selection</p>
+    <p class="get-library-copy">Row selection is one of three modes per table instance, not a single on/off switch - pick the one that matches what an action needs to operate on.</p>
+    <ul class="guide-list">
+      <li><strong>None</strong> - rows aren't selectable. No checkbox column, no row highlight on click; a click (if it does anything) navigates or expands the row instead of selecting it.</li>
+      <li><strong>Single-row</strong> - clicking a row selects it exclusively, like a radio group: selecting a different row clears the previous selection. Use when exactly one record is ever acted on at a time.</li>
+      <li><strong>Multi-row (checkbox column)</strong> - a leading checkbox column: one checkbox per row, plus a header checkbox that selects or deselects every row currently visible. When some but not all visible rows are checked, the header checkbox renders <strong>indeterminate</strong> - a dash, not a checkmark or an empty box - rather than falsely claiming everything or nothing is selected.</li>
+    </ul>
+    <p class="guide-body-text">Keyboard: a selectable row is a focusable element (<code>tabindex="0"</code>); pressing <strong>Space</strong> while a row has focus toggles that row's selection, without requiring the pointer to land precisely on the checkbox.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Sort</p>
+    <p class="get-library-copy">Sorting can happen entirely in the browser or round-trip to the server, depending on how much of the dataset is already loaded.</p>
+    <ul class="guide-list">
+      <li><strong>Client-side sort</strong> - re-orders rows already loaded in memory. Fine for small, fully-loaded datasets where every row is already on the page.</li>
+      <li><strong>Server-side sort</strong> - re-requests the current page/window from the server on every sort change. Required once pagination or virtualization is itself server-driven, so sorting one column doesn't mean silently fetching the entire dataset just to reorder it locally.</li>
+      <li><strong>Multi-column sort</strong> - single-column sort is the default; supporting a secondary sort key (e.g. shift-click a header to add it) is an opt-in advanced behavior, not something every Table instance is required to implement.</li>
+    </ul>
+    <p class="guide-body-text">Accessibility contract - per <strong>WCAG 2.1 Success Criterion 4.1.3 (Status Messages)</strong>, a sortable column header must expose its current state via <code>aria-sort="ascending"</code>, <code>aria-sort="descending"</code> or <code>aria-sort="none"</code> on the <code>&lt;th&gt;</code>, update that attribute the instant the sort changes, and announce the change to assistive technology - a visual arrow icon alone is not sufficient.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Filter</p>
+    <p class="get-library-copy">Filtering narrows which rows show, through either a scoped per-column control or a single global search - and the resulting empty state needs to say which situation it is.</p>
+    <ul class="guide-list">
+      <li><strong>Per-column filter</strong> - a control scoped to one field, e.g. a status dropdown inside the Status column's header, narrowing on that attribute alone.</li>
+      <li><strong>Global search bar</strong> - one search input above the table that matches across every visible column at once, for a user who doesn't know which column their query lives in.</li>
+    </ul>
+    <p class="guide-body-text"><strong>"No rows match" is not the same empty state as "no data at all."</strong> A filtered-to-zero result (rows exist, the current filter or search just matched none of them) should say so and offer a "Clear filters" action; the true empty state (no data exists, prior to any filter) should instead offer a call-to-action to create the first record. Rendering the same message for both hides the fact that data exists somewhere but the filter is too narrow.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Pagination vs. Virtualization</p>
+    <p class="get-library-copy">A Table doesn't scale linearly in the DOM as row count grows, so which rendering strategy applies depends on how many rows are in play.</p>
+    <ul class="guide-list">
+      <li><strong>Below 500 rows</strong> - client-side pagination, or simply rendering every row at once, is fine. The DOM cost is small and bounded.</li>
+      <li><strong>At or above 500 rows</strong> - virtualization (windowed rendering, where only the rows in or near the current viewport are ever mounted) is required. A table row is not a cheap DOM node - each one carries multiple cells, and often interactive controls (checkboxes, action buttons) with their own event listeners - so total DOM node count and layout/reflow cost grow far faster than linearly with row count once a table passes a few hundred rows.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Density</p>
+    <p class="get-library-copy">A two-value row-height property, independent of the Size property already shown above in Live Preview.</p>
+    <ul class="guide-list">
+      <li><strong>Comfortable</strong> - the default row height and cell padding, matching what's shown throughout this page's Live Preview.</li>
+      <li><strong>Compact</strong> - reduced row height and cell padding, for scanning more rows within the same viewport height.</li>
+    </ul>
+    <p class="guide-body-text">This design system doesn't yet have a dedicated Density foundation or token (Spacing documents the spacing scale, not a density switch) - so for now, Density is documented here as a two-value property local to Table. Promote it to a shared foundation if another data-dense component (List, Description) needs the same switch.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Required States</p>
+    <p class="get-library-copy">A real, data-backed Table has no fallback "shape" the way this page's static demos do - empty, loading and error all need an explicit, intentional rendering, not an accidental one.</p>
+
+    <p class="guide-subhead">Empty (no data at all)</p>
+    <div class="guide-dodont">
+      <div class="guide-dodont-case is-do">
+        <p class="guide-dodont-label">Do</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, no members yet"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:32px;height:32px;"></div><p class="empty-demo-title" style="font-size:13px;">No team members yet</p><p class="empty-demo-description" style="font-size:12px;">Invite someone to get started.</p><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="margin-top:4px;">Invite member</button></div></td></tr></tbody></table></div>
+        <p class="guide-dodont-note">Reuses the Empty component (icon, title, description) plus a call-to-action that matches the table's content, inside one spanning cell.</p>
+      </div>
+      <div class="guide-dodont-case is-dont">
+        <p class="guide-dodont-label">Don't</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, no members yet"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody></tbody></table></div>
+        <p class="guide-dodont-note">A header with a silently blank body reads as broken or still loading, never as "there's nothing here yet."</p>
+      </div>
+    </div>
+
+    <p class="guide-subhead">Loading</p>
+    <div class="guide-dodont">
+      <div class="guide-dodont-case is-do">
+        <p class="guide-dodont-label">Do</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, loading" aria-busy="true" aria-live="polite"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row" aria-hidden="true"><td><span class="skeleton-demo-line is-animated" style="width:70%;"></span></td><td><span class="skeleton-demo-line is-animated" style="width:50%;"></span></td></tr><tr class="table-demo-row" aria-hidden="true"><td><span class="skeleton-demo-line is-animated" style="width:70%;"></span></td><td><span class="skeleton-demo-line is-animated" style="width:50%;"></span></td></tr></tbody></table></div>
+        <p class="guide-dodont-note">Skeleton rows matching the real column count keep the table's shape stable, so it doesn't jump once data arrives.</p>
+      </div>
+      <div class="guide-dodont-case is-dont">
+        <p class="guide-dodont-label">Don't</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, loading"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><p class="empty-demo-title" style="font-size:13px;">No results</p></div></td></tr></tbody></table></div>
+        <p class="guide-dodont-note">Showing the same "No results" empty state while a fetch is still in flight misreports that there's no data - rows popping in a moment later contradicts what was just displayed.</p>
+      </div>
+    </div>
+
+    <p class="guide-subhead">Error</p>
+    <div class="guide-dodont">
+      <div class="guide-dodont-case is-do">
+        <p class="guide-dodont-label">Do</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, failed to load"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="alert-demo-banner alert-demo-banner--error"><div class="alert-demo-body"><p class="alert-demo-title">Couldn't load rows</p><p class="alert-demo-description">Something went wrong fetching this data.</p><button type="button" class="alert-demo-action">Retry</button></div></div></td></tr></tbody></table></div>
+        <p class="guide-dodont-note">Names what happened and gives a Retry action, inside the same spanning cell used by the other states.</p>
+      </div>
+      <div class="guide-dodont-case is-dont">
+        <p class="guide-dodont-label">Don't</p>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, failed to load"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><p class="empty-demo-title" style="font-size:13px;">No results</p></div></td></tr></tbody></table></div>
+        <p class="guide-dodont-note">A failed request that silently renders the same empty state as a true zero-result answer gives the user no way to tell the two apart, and no path to retry.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Table displays structured data across fixed columns, like an admin data grid or a report view - rows and columns that let a user compare values across many records at once, unlike List's simpler stacked-row layout with no column alignment.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>An admin data grid or user management list</strong> - structured records compared across shared columns.</li>
+        <li><strong>Order history or a report/analytics view</strong> - tabular data where column alignment aids comparison.</li>
+        <li><strong>An inventory listing</strong> - any dataset naturally organized into consistent fields per row.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>A simple stack of similar items with no meaningful column structure</strong> - use List instead - Table's column overhead isn't worth it for unstructured rows.</li>
+        <li><strong>A small number of visually distinct content blocks</strong> - use Card or a grid of Cards.</li>
+        <li><strong>Data better suited to a single set of label/value pairs</strong> - use Description for one record's details rather than a one-row table.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Keep column headers concise and consistently aligned with their column's data type (numbers right-aligned, text left-aligned).</li>
+        <li>Support sorting on columns where order genuinely helps comparison, and clearly indicate the active sort.</li>
+        <li>Pair large tables with pagination, virtualized scrolling, or both - virtualize once a table is showing 500+ rows, rather than rendering thousands of rows at once.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Example of well-scoped columns"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td>Aria Chen</td><td><span class="table-demo-status-cell">Active</span></td></tr><tr class="table-demo-row table-demo-row--striped"><td>Leo Fischer</td><td><span class="table-demo-status-cell">Invited</span></td></tr></tbody></table></div>
+          <p class="guide-dodont-note">Column headers that name exactly one kind of value each, so every cell in a column is comparable to the one above it.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Example of a collapsed, unscannable column"><thead><tr><th scope="col">Details</th></tr></thead><tbody><tr class="table-demo-row"><td>Aria Chen - active - joined Jan 2024 - admin</td></tr><tr class="table-demo-row table-demo-row--striped"><td>Leo Fischer, invited, pending since last week</td></tr></tbody></table></div>
+          <p class="guide-dodont-note">Collapsing several fields into one free-text column removes the ability to sort, filter or scan by any single attribute - it stops being a table.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>Uses real table semantics (thead/tbody/th with proper scope), so screen readers can announce row/column context for each cell.</li>
+        <li>Sortable column headers are real, keyboard-operable buttons that announce the current sort direction.</li>
+        <li>Row selection checkboxes are independently labeled with which row they apply to.</li>
+        <li>Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header sets <code>aria-sort="ascending"</code>, <code>aria-sort="descending"</code> or <code>aria-sort="none"</code> and announces the change - a visual arrow icon alone is not sufficient.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">List, Pagination, Description.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Table",
+  "status": "Stable",
+  "category": "Data Display",
+  "summary": "Table displays structured data across fixed columns, like an admin data grid or a report view - rows and columns that let a user compare values across many records at once, unlike List's simpler stacked-row layout with no column alignment.",
+  "whenToUse": [
+    "An admin data grid or user management list - structured records compared across shared columns.",
+    "Order history or a report/analytics view - tabular data where column alignment aids comparison.",
+    "An inventory listing - any dataset naturally organized into consistent fields per row."
+  ],
+  "whenNotToUse": [
+    "A simple stack of similar items with no meaningful column structure - use List instead - Table's column overhead isn't worth it for unstructured rows.",
+    "A small number of visually distinct content blocks - use Card or a grid of Cards.",
+    "Data better suited to a single set of label/value pairs - use Description for one record's details rather than a one-row table."
+  ],
+  "bestPractices": [
+    "Keep column headers concise and consistently aligned with their column's data type (numbers right-aligned, text left-aligned).",
+    "Support sorting on columns where order genuinely helps comparison, and clearly indicate the active sort.",
+    "Pair large tables with pagination, virtualized scrolling, or both - virtualize once a table is showing 500+ rows, rather than rendering thousands of rows at once."
+  ],
+  "doAndDont": {
+    "do": "Column headers that name exactly one kind of value each, so every cell in a column is comparable to the one above it.",
+    "dont": "Collapsing several fields into one free-text column removes the ability to sort, filter or scan by any single attribute - it stops being a table."
+  },
+  "accessibility": [
+    "Uses real table semantics (thead/tbody/th with proper scope), so screen readers can announce row/column context for each cell.",
+    "Sortable column headers are real, keyboard-operable buttons that announce the current sort direction.",
+    "Row selection checkboxes are independently labeled with which row they apply to.",
+    "Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header sets aria-sort=\"ascending|descending|none\" and announces the change - a visual arrow icon alone is not sufficient."
+  ],
+  "selection": {
+    "modes": ["none", "single-row", "multi-row"],
+    "multiRowCheckboxHeader": "Indeterminate (not checked, not unchecked) when some but not all visible rows are selected.",
+    "keyboard": "Space toggles selection on a focused row."
+  },
+  "sort": {
+    "clientSide": "Re-orders already-loaded rows in memory - fine for small, fully-loaded datasets.",
+    "serverSide": "Re-requests the current page/window from the server on every sort change - required once pagination or virtualization is server-driven.",
+    "multiColumn": "Not on by default - single-column sort unless explicitly extended with shift-click to add a secondary sort key.",
+    "accessibility": "Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header must expose aria-sort=\"ascending|descending|none\" and announce the change to assistive technology."
+  },
+  "filter": {
+    "perColumn": "A filter control scoped to a single column's field.",
+    "global": "A global search bar above the table, matching across every visible column.",
+    "emptyStates": "\"No rows match\" (filtered-to-zero, offer Clear filters) must read differently from the true empty state (no data exists at all, offer a create action)."
+  },
+  "paginationAndVirtualization": {
+    "thresholdRows": 500,
+    "belowThreshold": "Client-side pagination (or simple full rendering) is sufficient.",
+    "atOrAboveThreshold": "Virtualization (windowed rendering) is required - a table row is not a cheap DOM node, and DOM/layout cost does not scale linearly with row count past a few hundred rows."
+  },
+  "density": {
+    "modes": ["comfortable", "compact"],
+    "note": "Two-value property local to Table for now - this design system has no dedicated Density foundation/token yet."
+  },
+  "requiredStates": ["empty", "loading", "error"],
+  "relatedComponents": [
+    "List",
+    "Pagination",
+    "Description"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -38,6 +39,51 @@
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
     }
   }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
+    }
+  }catch(e){}
 })();
 </script>
 <meta charset="UTF-8" />
@@ -47,19 +93,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
-<link rel="stylesheet" href="overview.css" />
 </head>
-<body class="overview-page">
-<a class="skip-link" href="#main">Skip to main content</a>
+<body>
 
 <header class="app-topbar">
-  <button class="btn btn-ghost mobile-menu" id="mobileMenu" aria-expanded="false" aria-controls="sidebar" type="button">Menu</button>
   <a class="brand" href="overview.html">
     <span class="brand-sub">Agentic Design System</span>
   </a>
   <div class="topbar-right">
     <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
-    <button class="theme-toggle" id="themeToggle" aria-label="Use light theme" type="button" aria-pressed="false">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
       <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
       <span class="theme-toggle-label" id="themeToggleLabel">Dark</span>
     </button>
@@ -68,17 +111,21 @@
   </div>
 </header>
 
-<aside class="app-sidebar" id="sidebar">
-  <nav class="sidebar-nav" aria-label="Design system">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" aria-label="Search navigation" placeholder="Search navigation…" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+<aside class="app-sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
-      <a class="nav-link" href="overview.html" aria-current="page">Overview</a>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -92,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -135,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -162,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -172,28 +233,150 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
-<main class="app-main" id="main" tabindex="-1">
-  <div class="overview-heading"><div><p class="page-eyebrow">Damco · Design system workspace</p><h1 class="page-title">Overview</h1></div><button class="btn btn-primary" id="headerCreate" data-action="create" hidden>Create a New Project</button></div>
-  <p class="page-lede">Bring your design system into a project. Keep its resources and team handoff in one place.</p>
-  <div class="prototype-note"><span class="status-badge">Local prototype</span><span>Saved in this browser. Resources are previews; invitations do not send email.</span></div>
-  <div id="workspaceError" class="feedback error" role="alert" hidden></div>
-  <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
-  <div id="workspace"></div>
-  <details class="prototype-tools" id="prototypeTools"><summary>Prototype scenarios</summary><p>Test recovery states locally. Each simulated failure applies to the next matching action only.</p><label class="form-field">Next action scenario<select id="scenario"><option value="none">Normal behavior</option><option value="network">Project generation: network failure</option><option value="resource">Resource generation: NPM failure</option><option value="invite">Invitation: save failure</option></select></label></details>
-  <noscript><div class="feedback error">Enable JavaScript to create projects and manage resources in this local prototype.</div></noscript>
+<main class="app-main">
+  <p class="page-eyebrow">Design System &middot; Overview</p>
+  <h1 class="page-title">Agentic Design System</h1>
+  <p class="page-lede">A design system built to be read the same way by a designer, a developer and a model generating from it - every token, component and rule documented once and reused everywhere. Start with Foundations for the raw tokens, Components for the 58-plus building blocks, or jump straight to a Pattern or Template already assembled from them.</p>
+
+  <section class="panel spacing-system-panel">
+    <p class="panel-title">Start here</p>
+    <p class="get-library-copy">The four sections everything else in this system builds on.</p>
+
+    <div class="system-card-grid" data-role="system-grid">
+      <a class="system-card" href="foundations.html#colors">
+        <div class="system-card-head">
+          <span class="system-card-unit">Foundations</span>
+        </div>
+        <p class="system-card-desc">Color, spacing, radius, borders, shadows, typography and icons - the raw tokens every component is built from.</p>
+      </a>
+
+      <a class="system-card" href="components.html">
+        <div class="system-card-head">
+          <span class="system-card-unit">Components</span>
+        </div>
+        <p class="system-card-desc">Every button, form control, overlay and data-display element - each with live states, sizes and a Machine View JSON spec.</p>
+      </a>
+
+      <a class="system-card" href="patterns.html">
+        <div class="system-card-head">
+          <span class="system-card-unit">Patterns</span>
+        </div>
+        <p class="system-card-desc">Recurring problems - empty states, confirmations, multi-step flows - solved once so they're solved the same way everywhere.</p>
+      </a>
+
+      <a class="system-card" href="templates.html">
+        <div class="system-card-head">
+          <span class="system-card-unit">Templates</span>
+        </div>
+        <p class="system-card-desc">Full page layouts assembled from patterns and components - a starting point instead of a blank canvas.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Guidelines &amp; governance</p>
+    <p class="get-library-copy">How and why the system makes the decisions it does - read these before proposing an exception.</p>
+
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Design Values</span>
+        <span class="usage-desc">The four values every rule in this system traces back to - legible, consistent, honest, adaptive.</span>
+        <span class="usage-values"><a href="values.html">View &rarr;</a></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Design Principles</span>
+        <span class="usage-desc">Ten working principles for applying the values to a real screen.</span>
+        <span class="usage-values"><a href="principles.html">View &rarr;</a></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Component Guidelines</span>
+        <span class="usage-desc">Global rules that hold across every component domain - forms, feedback, navigation and more.</span>
+        <span class="usage-values"><a href="guidelines.html">View &rarr;</a></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Copywriting &amp; Data Format</span>
+        <span class="usage-desc">Tone, terminology and formatting rules for every string this system renders.</span>
+        <span class="usage-values"><a href="copywriting.html">View &rarr;</a> &middot; <a href="data-format.html">View &rarr;</a></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Governance</span>
+        <span class="usage-desc">How this system is versioned, reviewed and extended.</span>
+        <span class="usage-values"><a href="governance.html">View &rarr;</a></span>
+      </div>
+    </div>
+  </section>
 </main>
-<dialog class="modal workspace-dialog" id="workspaceDialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescription"></dialog>
+
+<div class="welcome-modal-overlay" data-role="welcome-overlay" hidden>
+  <div class="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle" data-role="welcome-modal" tabindex="-1">
+
+    <div data-role="welcome-step-choice">
+      <h2 class="welcome-modal-title" id="welcomeModalTitle">Welcome to the Agentic Design System</h2>
+      <p class="welcome-modal-lede">Are you continuing an existing project, or starting a new one?</p>
+      <div class="welcome-modal-choices">
+        <button type="button" class="welcome-choice-btn" data-role="welcome-choose-old">
+          <span class="welcome-choice-btn-title">Continue with existing project</span>
+          <span class="welcome-choice-btn-desc">Jump to Components - nothing else to set up.</span>
+        </button>
+        <button type="button" class="welcome-choice-btn" data-role="welcome-choose-new">
+          <span class="welcome-choice-btn-title">Create new project</span>
+          <span class="welcome-choice-btn-desc">A few details, then copy a link or export a Markdown brief.</span>
+        </button>
+      </div>
+    </div>
+
+    <div data-role="welcome-step-form" hidden>
+      <button type="button" class="welcome-modal-back" data-role="welcome-back">&larr; Back</button>
+      <h2 class="welcome-modal-title">Create your project</h2>
+      <p class="welcome-modal-lede">This isn't saved to the portal itself - it only fills the link and the Markdown file below. To actually save something, continue to Foundations afterwards.</p>
+      <div class="welcome-modal-fields">
+        <div class="form-demo-field form-demo-field--vertical">
+          <label class="form-demo-label" for="welcomeName">Your name <span class="badge badge-required">Required</span></label>
+          <input class="form-demo-input" id="welcomeName" data-role="welcome-name" type="text" autocomplete="name" placeholder="e.g. Nikunj Chaurasiya" />
+        </div>
+        <div class="form-demo-field form-demo-field--vertical">
+          <label class="form-demo-label" for="welcomeDesignation">Designation</label>
+          <input class="form-demo-input" id="welcomeDesignation" data-role="welcome-designation" type="text" autocomplete="organization-title" placeholder="e.g. UX Designer" />
+        </div>
+        <div class="form-demo-field form-demo-field--vertical">
+          <label class="form-demo-label" for="welcomeEmail">Email ID <span class="badge badge-required">Required</span></label>
+          <input class="form-demo-input" id="welcomeEmail" data-role="welcome-email" type="email" autocomplete="email" placeholder="you@company.com" />
+        </div>
+        <div class="form-demo-field form-demo-field--vertical">
+          <label class="form-demo-label" for="welcomePortalType">Portal type</label>
+          <select class="form-demo-select" id="welcomePortalType" data-role="welcome-portal-type">
+            <option value="SaaS">SaaS</option>
+            <option value="Enterprise" selected>Enterprise</option>
+            <option value="Consumer">Consumer</option>
+            <option value="Internal tool">Internal tool</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="welcome-modal-actions">
+        <button type="button" class="btn btn-ghost" data-role="welcome-copy-link">Copy link</button>
+        <button type="button" class="btn btn-ghost" data-role="welcome-export-md">Export MD file</button>
+      </div>
+      <p class="welcome-modal-status" data-role="welcome-status" role="status" aria-live="polite"></p>
+      <button type="button" class="btn btn-primary" style="width:100%;" data-role="welcome-continue-foundations">Continue to Foundations &rarr;</button>
+    </div>
+
+  </div>
+</div>
+
 <script src="shell.js"></script>
-<script src="overview-model.js"></script>
-<script src="overview.js"></script>
+<script src="welcome.js"></script>
 </body>
 </html>

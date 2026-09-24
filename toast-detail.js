@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon set - viewBox 0 0 24 24, stroke currentColor,
   // stroke-width 2, fill none - one shape per semantic type. Intentionally
   // close to a typical Alert icon set: both components legitimately share
@@ -153,9 +161,9 @@
     lines.push("/* Agentic Design System - Toast (floating notification) component */");
     lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:12px; padding:14px 16px; width:340px; background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
     lines.push(".toast-demo-icon{ flex:none; width:20px; height:20px; margin-top:1px; }");
-    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; padding-right:16px; text-align:left; }");
-    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; }');
-    lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; }');
+    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; padding-inline-end:16px; text-align: start; }");
+    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; max-width:260px; overflow-wrap:anywhere; }');
     lines.push(".toast-demo-close{ position:absolute; top:10px; right:10px; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");
     lines.push('.toast-demo-action{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:2px; }');
     lines.push(".toast-demo-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--graphite-700); }");
@@ -182,8 +190,8 @@
       lines.push('<div class="toast-demo-card toast-demo-card--' + t.key + '" style="border-radius:' + radiusCssFor(exampleRadius) + '">');
       if (showIcon) lines.push("  " + ICONS[t.key].replace('<svg ', '<svg class="toast-demo-icon" '));
       lines.push('  <div class="toast-demo-body">');
-      lines.push('    <p class="toast-demo-title">' + title + "</p>");
-      lines.push('    <p class="toast-demo-description">' + description + "</p>");
+      lines.push('    <p class="toast-demo-title">' + escapeHtml(title) + "</p>");
+      lines.push('    <p class="toast-demo-description">' + escapeHtml(description) + "</p>");
       lines.push("  </div>");
       lines.push("</div>");
     });
@@ -215,12 +223,12 @@
   function buildToastField(typeKey, stateKey, radius, title, description, showIcon){
     var radiusCss = radiusCssFor(radius);
     var iconHtml = showIcon ? ICONS[typeKey].replace('<svg ', '<svg class="toast-demo-icon" ') : "";
-    var closeHtml = stateKey === "dismissible" ? '<button type="button" class="toast-demo-close" tabindex="-1" aria-hidden="true">' + CLOSE_ICON + "</button>" : "";
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="toast-demo-action" tabindex="-1">View</button>' : "";
+    var closeHtml = stateKey === "dismissible" ? '<button type="button" class="toast-demo-close" aria-label="Dismiss">' + CLOSE_ICON + "</button>" : "";
+    var actionHtml = stateKey === "with-action" ? '<button type="button" class="toast-demo-action">View</button>' : "";
     var progressHtml = stateKey === "with-progress" ? '<div class="toast-demo-progress"><div class="toast-demo-progress-fill" style="width:60%;"></div></div>' : "";
     var bodyHtml = '<div class="toast-demo-body">' +
-      '<p class="toast-demo-title">' + title + "</p>" +
-      '<p class="toast-demo-description">' + description + "</p>" +
+      '<p class="toast-demo-title">' + escapeHtml(title) + "</p>" +
+      '<p class="toast-demo-description">' + escapeHtml(description) + "</p>" +
       actionHtml +
       "</div>";
     return '<div class="toast-demo-card toast-demo-card--' + typeKey + '" style="border-radius:' + radiusCss + '">' +

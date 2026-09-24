@@ -1,6 +1,23 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // A third "Scoped" type was built and removed here previously: its active-tab
+  // background used --graphite-900/--graphite-800 for contrast, but that pair's
+  // brightness relationship inverts between themes (dark: 900 darker than 800;
+  // light, this site's default: 900 is near-white, brighter than 800), so the
+  // "active tab reads lighter" effect was inverted/invisible in light theme.
+  // If a third type is added again, verify contrast in LIGHT theme specifically -
+  // prefer a color-mix(in srgb, var(--text-hi) N%, transparent) ink-tint (like
+  // --line/--line-strong) over a raw graphite-step, since that stays correct
+  // in both themes.
   var TYPES = [
     { key: "underline", label: "Underline" },
     { key: "pill", label: "Pill" }
@@ -134,6 +151,7 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
 
     var lines = [];
     lines.push("Create a complete Tabs (tab bar) component for the Agentic Design System.");
@@ -158,7 +176,7 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Only visually affects the Pill type's active tab (its pill background) - the Underline type ignores it entirely.");
     lines.push("");
-    lines.push("Component properties: Labels (comma-separated editable text, one per trigger, default \"Overview, Activity, Settings\" - trigger count follows the number of labels entered).");
+    lines.push("Component properties: Labels (comma-separated editable text, one per trigger, current value \"" + labels.join(", ") + "\" - trigger count follows the number of labels entered).");
     return lines.join("\n");
   }
 
@@ -166,6 +184,7 @@
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
 
     var lines = [];
     lines.push("/* Agentic Design System - Tabs component */");
@@ -208,9 +227,9 @@
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
       lines.push('<div class="tabs-demo-bar tabs-demo-bar--' + t.key + " tabs-demo-bar--radius-" + radiusClassSuffix(exampleRadius) + '">');
-      DEFAULT_LABELS.forEach(function(label, i){
+      labels.forEach(function(label, i){
         var activeCls = i === 1 ? " is-active" : "";
-        lines.push('  <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h' + exampleSize + activeCls + '">' + label + "</button>");
+        lines.push('  <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h' + exampleSize + activeCls + '">' + escapeHtml(label) + "</button>");
       });
       lines.push("</div>");
     });
@@ -220,17 +239,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, labels){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      labels: labels
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, labels){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      labels: labels
     });
   }
 
@@ -380,7 +401,7 @@
         if (i === 1) cls += " is-active";
         if (i === 0) cls += stateCls;
         var disabledAttr = (i === 0 && stateKey === "disabled") ? " disabled" : "";
-        return '<button type="button" class="' + cls + '"' + disabledAttr + ">" + label + "</button>";
+        return '<button type="button" class="' + cls + '"' + disabledAttr + ">" + escapeHtml(label) + "</button>";
       }).join("");
       return '<div class="tabs-demo-bar tabs-demo-bar--' + typeKey + " tabs-demo-bar--radius-" + radiusClassSuffix(radius) + '">' + triggers + "</div>";
     }
@@ -415,7 +436,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        labels: parseLabels(labelsInput.value)
       };
     }
 
@@ -430,13 +452,13 @@
       sizes.forEach(function(size){
         radii.forEach(function(radius){
           html += buildMatrixSection(size, radius, labels);
-          combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
+          combos.push({ size: size, radius: radius, label: comboLabel(size, radius), labels: labels });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.labels); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.labels); });
     }
 
     var propertyMultiSelects = {};

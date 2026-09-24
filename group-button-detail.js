@@ -19,6 +19,14 @@
     filled: { purpose: "A solid track where the selected segment gets its own pill highlight - useful when the group needs to stand out as one cohesive control." }
   };
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     return (v || fallback).toUpperCase();
@@ -37,7 +45,7 @@
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:transparent;color:" + textHi + ";border-right:1.5px solid " + lineStrong + ";",
+        rest: "background:transparent;color:" + textHi + ";border-inline-end:1.5px solid " + lineStrong + ";",
         hover: "background:" + graphite800 + ";",
         pressed: "background:" + graphite700 + ";",
         selected: "background:" + redTint + ";color:" + red500 + ";",
@@ -49,7 +57,11 @@
       hover: "background:" + graphite700 + ";color:" + textHi + ";",
       pressed: "background:" + graphite600 + ";",
       selected: "background:" + red500 + ";color:#FFFFFF;",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+      // Inset, not outward - a positive offset gets clipped by the track's
+      // own overflow:hidden, cutting the ring into a lopsided arc at the
+      // first/last segment instead of a clean rectangle (matches the fix
+      // already used by the Outlined type above).
+      focus: "outline:2px solid " + red400 + ";outline-offset:-3px;"
     };
   }
 
@@ -421,8 +433,8 @@
       }).join("");
       var groupHtml = '<div class="group-btn group-btn--' + typeKey + '" style="border-radius:' + radiusCss + '">' + segments + "</div>";
       if (!fieldLabel && !supportingText) return groupHtml;
-      var labelHtml = fieldLabel ? '<p class="group-btn-field-label">' + fieldLabel + "</p>" : "";
-      var supportingHtml = supportingText ? '<p class="group-btn-field-note">' + supportingText + "</p>" : "";
+      var labelHtml = fieldLabel ? '<p class="group-btn-field-label">' + escapeHtml(fieldLabel) + "</p>" : "";
+      var supportingHtml = supportingText ? '<p class="group-btn-field-note">' + escapeHtml(supportingText) + "</p>" : "";
       return '<div class="group-btn-field">' + labelHtml + groupHtml + supportingHtml + "</div>";
     }
 

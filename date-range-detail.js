@@ -1,7 +1,16 @@
 (() => {
   "use strict";
 
-  var ICON_CALENDAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CALENDAR ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -177,12 +186,12 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, startPlaceholder, endPlaceholder){
     var lines = [];
     lines.push('<div class="daterange-field">');
-    lines.push('  <label class="daterange-field-label">' + label + "</label>");
+    lines.push('  <label class="daterange-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="daterange-control daterange-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
     lines.push('    <span class="daterange-control-value">');
-    lines.push('      <span class="daterange-control-segment">' + startPlaceholder + "</span>");
+    lines.push('      <span class="daterange-control-segment">' + escapeHtml(startPlaceholder) + "</span>");
     lines.push('      <span class="daterange-control-arrow">&#8594;</span>');
-    lines.push('      <span class="daterange-control-segment">' + endPlaceholder + "</span>");
+    lines.push('      <span class="daterange-control-segment">' + escapeHtml(endPlaceholder) + "</span>");
     lines.push("    </span>");
     lines.push('    <span class="daterange-control-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>");
     lines.push("  </div>");
@@ -203,7 +212,7 @@
     lines.push(".daterange-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.daterange-control-value{ flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
     lines.push(".daterange-control-arrow{ flex:none; }");
-    lines.push(".daterange-control-icon{ margin-left:auto; flex:none; width:16px; height:16px; }");
+    lines.push(".daterange-control-icon{ margin-inline-start:auto; flex:none; width:16px; height:16px; }");
     lines.push('.daterange-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -404,6 +413,7 @@
     var labelInput = document.querySelector('[data-role="daterange-label"]');
     var startPlaceholderInput = document.querySelector('[data-role="daterange-start-placeholder"]');
     var endPlaceholderInput = document.querySelector('[data-role="daterange-end-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="daterange-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="daterange-size-mount"]');
     var radiusMount = document.querySelector('[data-role="daterange-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -414,7 +424,7 @@
     var ERROR_START = "Jan 9, 2026";
     var ERROR_END = "Jan 4, 2026";
 
-    function buildDateRangeField(typeKey, stateKey, stateCls, size, radius, label, startPlaceholder, endPlaceholder){
+    function buildDateRangeField(typeKey, stateKey, stateCls, size, radius, label, startPlaceholder, endPlaceholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
@@ -422,18 +432,21 @@
       var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var segmentClass = (isFilled || isError) ? "daterange-demo-segment" : "daterange-demo-segment is-placeholder";
-      var startText = isFilled ? FILLED_START : (isError ? ERROR_START : startPlaceholder);
-      var endText = isFilled ? FILLED_END : (isError ? ERROR_END : endPlaceholder);
+      var startText = escapeHtml(isFilled ? FILLED_START : (isError ? ERROR_START : startPlaceholder));
+      var endText = escapeHtml(isFilled ? FILLED_END : (isError ? ERROR_END : endPlaceholder));
       var noteHtml = isError ? '<p class="daterange-demo-note is-error">End date must be after the start date.</p>' : "";
+      var trailingHtml = (allowClear && isFilled && !isDisabled)
+        ? '<button type="button" class="daterange-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : '<span class="daterange-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
       return '<div class="daterange-demo-field">' +
-        '<label class="daterange-demo-label">' + label + "</label>" +
+        '<label class="daterange-demo-label">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
           '<span class="daterange-demo-value">' +
             '<span class="' + segmentClass + '">' + startText + "</span>" +
             '<span class="daterange-demo-arrow">&#8594;</span>' +
             '<span class="' + segmentClass + '">' + endText + "</span>" +
           "</span>" +
-          '<span class="daterange-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>" +
+          trailingHtml +
         "</div>" +
         noteHtml +
         "</div>";
@@ -452,10 +465,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder){
+    function buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildDateRangeField(t.key, state.key, state.cls, size, radius, label, startPlaceholder, endPlaceholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildDateRangeField(t.key, state.key, state.cls, size, radius, label, startPlaceholder, endPlaceholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -477,6 +490,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var startPlaceholder = startPlaceholderInput.value.trim() || defaultStartPlaceholder;
       var endPlaceholder = endPlaceholderInput.value.trim() || defaultEndPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -485,7 +499,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder);
+          html += buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -520,6 +534,7 @@
     labelInput.addEventListener("input", render);
     startPlaceholderInput.addEventListener("input", render);
     endPlaceholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

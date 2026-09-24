@@ -1,6 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" }
@@ -175,8 +185,8 @@
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="mention-field">');
-    lines.push('  <label class="mention-field-label">' + label + "</label>");
-    lines.push('  <div class="mention-control mention-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" contenteditable="true" data-placeholder="' + placeholder + '">');
+    lines.push('  <label class="mention-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <div class="mention-control mention-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" contenteditable="true" data-placeholder="' + escapeHtml(placeholder) + '">');
     lines.push('    Hey <span class="mention-chip">@Jordan</span>, can you review this before end of day?');
     lines.push("  </div>");
     lines.push("  <!-- Suggestion panel - only rendered while the field is in the Open state, i.e. actively typing after \"@\" -->");
@@ -414,6 +424,7 @@
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "Type @ to mention someone";
     var labelInput = document.querySelector('[data-role="mention-label"]');
     var placeholderInput = document.querySelector('[data-role="mention-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="mention-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="mention-size-mount"]');
     var radiusMount = document.querySelector('[data-role="mention-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -427,7 +438,7 @@
     // Focus show the dim placeholder text (nothing typed yet); Filled and
     // Open show the mixed text + chip content; Open additionally renders
     // the suggestion panel of people.
-    function buildMentionField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildMentionField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
@@ -435,9 +446,12 @@
       var controlClasses = "mention-demo-control mention-demo-control--" + typeKey + " mention-demo-control--h" + size + stateCls;
       var contentHtml = showsContent
         ? 'Hey <span class="mention-demo-chip">@Jordan</span>, can you review this before end of day?'
-        : placeholder;
+        : escapeHtml(placeholder);
       var inputClasses = "mention-demo-input" + (showsContent ? "" : " mention-demo-input--empty");
       var inputHtml = '<div class="' + inputClasses + '" contenteditable="false" tabindex="-1">' + contentHtml + "</div>";
+      var clearHtml = (allowClear && showsContent && !isDisabled)
+        ? '<button type="button" class="mention-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen
         ? '<div class="mention-demo-panel">' +
@@ -447,8 +461,8 @@
           "</div>"
         : "";
       return '<div class="mention-demo-field">' +
-        '<label class="mention-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + "</div>" +
+        '<label class="mention-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + "</div>" +
         panelHtml +
         "</div>";
     }
@@ -466,10 +480,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildMentionField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildMentionField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -490,6 +504,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -498,7 +513,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -532,6 +547,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

@@ -99,8 +99,8 @@
     lines.push(".empty-demo-icon-wrap--default svg{ width:28px; height:28px; }");
     lines.push(".empty-demo-icon-wrap--simple{ width:40px; height:40px; }");
     lines.push(".empty-demo-icon-wrap--simple svg{ width:36px; height:36px; }");
-    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); }');
-    lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); line-height:1.5; }');
+    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; }');
+    lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); line-height:1.5; margin:0; max-width:260px; overflow-wrap:anywhere; }');
     lines.push("/* Action button reuses Modal's own .modal-demo-btn/.modal-demo-btn--primary classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent, and this panel isn't inside one. */");
     lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); margin-top:4px; }");
     return lines.join("\n");

@@ -136,6 +136,8 @@
     lines.push("- Removable: label plus a trailing \"x\" remove icon button.");
     lines.push("- Selected: the label alone, no remove button, rendered with the type's Selected look instead of its Default look - demonstrates the toggled-on appearance of a selectable/filter-style tag.");
     lines.push("");
+    lines.push("Checkable mode (Ant's Tag.CheckableTag): a real <button> with aria-pressed instead of a plain <span>, toggling the Selected look on click. Independent, not mutually exclusive - any number of tags in the same group can be pressed at once, unlike a radio group.");
+    lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to each chip individually.");
     lines.push("");
     lines.push("Component properties: Corner radius; Label (text, default \"" + FALLBACK_DEFAULTS.label + "\").");
@@ -425,5 +427,26 @@
     }
 
     render();
+
+    // Real Tag.CheckableTag sandbox - actual <button>s with aria-pressed
+    // that toggle on click, not a static "Selected" cell in the matrix
+    // above. Independent chips (any combination can be on at once), unlike
+    // a radio group.
+    var checkableContainer = document.querySelector('[data-role="tag-checkable-container"]');
+    if (checkableContainer){
+      var CHECKABLE_LABELS = ["Design", "Engineering", "Marketing", "Sales"];
+      var DEFAULT_CHECKED = { Design: true, Marketing: true };
+      checkableContainer.innerHTML = CHECKABLE_LABELS.map(function(l){
+        var checked = !!DEFAULT_CHECKED[l];
+        return '<button type="button" class="tag-demo-chip tag-demo-chip--default' + (checked ? " is-selected" : "") + '" aria-pressed="' + checked + '">' + escapeHtml(l) + "</button>";
+      }).join("");
+      checkableContainer.addEventListener("click", function(e){
+        var btn = e.target.closest(".tag-demo-chip");
+        if (!btn || !checkableContainer.contains(btn)) return;
+        var nowPressed = btn.getAttribute("aria-pressed") !== "true";
+        btn.setAttribute("aria-pressed", String(nowPressed));
+        btn.classList.toggle("is-selected", nowPressed);
+      });
+    }
   });
 })();

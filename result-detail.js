@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   // Simple inline SVG icon set - viewBox 0 0 24 24, stroke currentColor,
   // stroke-width 2, fill none - reused verbatim from Notification's own
   // ICONS object so Result reads as the same semantic language
@@ -97,8 +105,8 @@
       lines.push(".result-demo-panel--" + t.key + " .result-demo-icon{ " + css.icon + " }");
     });
     lines.push("");
-    lines.push('.result-demo-title{ font-family:var(--font-body); font-size:16px; font-weight:700; color:var(--text-hi); }');
-    lines.push('.result-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); line-height:1.5; }');
+    lines.push('.result-demo-title{ font-family:var(--font-body); font-size:16px; font-weight:700; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.result-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); line-height:1.5; margin:0; max-width:260px; overflow-wrap:anywhere; }');
     lines.push(".result-demo-actions{ display:flex; gap:8px; margin-top:12px; justify-content:center; }");
     lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:8px 16px; border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
     lines.push(".result-demo-btn--primary{ background:var(--red-500); color:#FFFFFF; }");
@@ -107,15 +115,15 @@
     lines.push("/* Compact - smaller icon, tighter spacing, for inline use within a card */");
     lines.push(".result-demo-panel--compact{ padding:16px 14px; gap:4px; }");
     lines.push(".result-demo-panel--compact .result-demo-icon{ width:32px; height:32px; margin-bottom:2px; }");
-    lines.push(".result-demo-panel--compact .result-demo-title{ font-size:14px; }");
-    lines.push(".result-demo-panel--compact .result-demo-description{ font-size:12px; }");
+    lines.push(".result-demo-panel--compact .result-demo-title{ font-size:14px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".result-demo-panel--compact .result-demo-description{ font-size:12px; max-width:260px; overflow-wrap:anywhere; }");
     lines.push("");
     lines.push("<!-- Example usage - one per type, Default state -->");
     TYPES.forEach(function(t){
       lines.push('<div class="result-demo-panel result-demo-panel--' + t.key + '">');
       lines.push("  " + ICONS[t.key].replace('<svg ', '<svg class="result-demo-icon" '));
-      lines.push('  <p class="result-demo-title">' + title + "</p>");
-      lines.push('  <p class="result-demo-description">' + description + "</p>");
+      lines.push('  <p class="result-demo-title">' + escapeHtml(title) + "</p>");
+      lines.push('  <p class="result-demo-description">' + escapeHtml(description) + "</p>");
       lines.push('  <div class="result-demo-actions">');
       lines.push('    <button type="button" class="result-demo-btn result-demo-btn--primary">Done</button>');
       lines.push("  </div>");
@@ -148,8 +156,8 @@
 
     return '<div class="result-demo-panel result-demo-panel--' + typeKey + extraClass + '">' +
       iconHtml +
-      '<p class="result-demo-title">' + title + "</p>" +
-      '<p class="result-demo-description">' + description + "</p>" +
+      '<p class="result-demo-title">' + escapeHtml(title) + "</p>" +
+      '<p class="result-demo-description">' + escapeHtml(description) + "</p>" +
       '<div class="result-demo-actions">' +
         '<button type="button" class="result-demo-btn result-demo-btn--primary" tabindex="-1">Done</button>' +
         secondaryHtml +

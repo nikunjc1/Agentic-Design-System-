@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Forms &middot; Upload</p>
   <a class="back-link" href="upload.html">&larr; Back to Upload types</a>
-  <h1 class="page-title">Upload</h1>
+  <h1 class="page-title">Upload <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for adding one or more files to a form - either a large drag-and-drop dropzone or a compact trigger button, paired with a file list that reports each file's name, size and upload status - one Upload component, controlled by properties, not separate widgets glued together.</p>
 
   <section class="panel color-foundation">
@@ -222,6 +290,116 @@
       <span class="chip">Bulk CSV import</span>
       <span class="chip">Design asset submission</span>
       <span class="chip">Resume/CV upload</span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Validation</p>
+    <p class="get-library-copy">Upload has three distinct failure modes, and each needs its own timing and its own message - lumping them into one generic "Upload failed" tells the user nothing about what to change or whether their other files are still safe.</p>
+    <ul class="guide-list">
+      <li><strong>Required marking</strong> - if at least one file is required before submit, mark the field the same way any other required field is marked, and keep submit disabled (or the first submit attempt blocked with an inline message) until a file is present - don't let the user reach a server-side rejection for something the form already knew.</li>
+      <li><strong>Validation timing</strong> - type and size are both knowable the instant a file is selected or dropped, so check both before any upload attempt starts. Never let a doomed upload begin just to fail later - that wastes the user's time and bandwidth for an error the client already had the information to catch.</li>
+      <li><strong>Wrong file type</strong> - reject on selection/drop, not after. Show the message inline on that file's own row, not a top-of-page banner, and name the file and what it actually is: "PDF, PNG or JPG only - invoice-scan.heic is a .heic file." The row never enters the list as if it were queued to upload.</li>
+      <li><strong>File too large</strong> - also reject on selection, before any transfer starts: "invoice-scan.pdf is 42 MB - the limit is 25 MB." Don't rely on this row-level message alone - state the size limit up front near the dropzone (in the helper text or a caption), so most oversized files are ruled out before the user even picks one.</li>
+      <li><strong>Network failure mid-upload</strong> - the one failure that can't be caught before the transfer starts. Move that file's row to a distinct error state instead of letting it silently disappear or silently retry - "Upload interrupted - check your connection and try again," with a Retry action scoped to that row alone. Retrying one failed file must never re-trigger or disturb files that already finished successfully.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Upload adds one or more files to a form - either a large drag-and-drop dropzone or a compact trigger button - paired with a file list that reports each file's name, size, and upload status, so the user always knows what was added and whether it succeeded.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>Attaching documents to a record</strong> - a support ticket, an application form.</li>
+        <li><strong>Uploading a profile photo or design asset</strong> - a single-file, often image-specific upload.</li>
+        <li><strong>Bulk file import</strong> - a CSV import, a batch of resumes/CVs.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>Collecting a URL to an already-hosted file rather than the file itself</strong> - use Input or Add-on instead.</li>
+        <li><strong>A field that doesn't actually involve a file</strong> - obviously use a different form field type - Upload exists specifically for file transfer.</li>
+        <li><strong>A single, tiny, purely decorative image with no need for status feedback</strong> - a simpler custom control may be lighter weight than the full Upload component.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Always show per-file progress and a clear success/error state, not just a single overall spinner.</li>
+        <li>State accepted file types and size limits up front, before the user picks a file, not only after a rejected upload.</li>
+        <li>Let the user remove a file from the list before final submission, in case they attached the wrong one.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="upload-demo-field"><div class="upload-demo-dropzone"><p class="upload-demo-dropzone-title">Drop files or browse</p><p class="upload-demo-dropzone-helper">PDF or PNG, up to 10 MB each</p></div><div class="upload-demo-file-list"><div class="upload-demo-file-row is-complete"><div class="upload-demo-file-info"><span class="upload-demo-file-name">contract.pdf</span><span class="upload-demo-file-size">2.4 MB</span></div></div></div></div></div>
+          <p class="guide-dodont-note">Accepted formats and the size ceiling are stated before the user picks a file, and each upload reports its own outcome.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="upload-demo-field"><div class="upload-demo-dropzone"><p class="upload-demo-dropzone-title">Drop files or browse</p></div><div class="upload-demo-file-list"><div class="upload-demo-file-row is-error"><div class="upload-demo-file-info"><span class="upload-demo-file-name">contract.tiff</span><span class="upload-demo-file-error-text">Upload failed</span></div></div></div></div></div>
+          <p class="guide-dodont-note">Withholding the rules until after the upload wastes the user's time and bandwidth, and "Upload failed" still does not tell them what to change.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>The dropzone is also operable via a real file-picker trigger, since drag-and-drop alone isn't reachable by keyboard.</li>
+        <li>Upload progress and completion/error status are announced via an aria-live region, not just shown visually.</li>
+        <li>Each file row's remove control is independently labeled with that file's name ("Remove report.pdf"), not a generic "Remove" repeated for every row.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Input, Progress, Result.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Upload",
+  "status": "Stable",
+  "category": "Forms",
+  "summary": "Upload adds one or more files to a form - either a large drag-and-drop dropzone or a compact trigger button - paired with a file list that reports each file's name, size, and upload status, so the user always knows what was added and whether it succeeded.",
+  "whenToUse": [
+    "Attaching documents to a record - a support ticket, an application form.",
+    "Uploading a profile photo or design asset - a single-file, often image-specific upload.",
+    "Bulk file import - a CSV import, a batch of resumes/CVs."
+  ],
+  "whenNotToUse": [
+    "Collecting a URL to an already-hosted file rather than the file itself - use Input or Add-on instead.",
+    "A field that doesn't actually involve a file - obviously use a different form field type - Upload exists specifically for file transfer.",
+    "A single, tiny, purely decorative image with no need for status feedback - a simpler custom control may be lighter weight than the full Upload component."
+  ],
+  "bestPractices": [
+    "Always show per-file progress and a clear success/error state, not just a single overall spinner.",
+    "State accepted file types and size limits up front, before the user picks a file, not only after a rejected upload.",
+    "Let the user remove a file from the list before final submission, in case they attached the wrong one."
+  ],
+  "doAndDont": {
+    "do": "Accepted formats and the size ceiling are stated before the user picks a file, and each upload reports its own outcome.",
+    "dont": "Withholding the rules until after the upload wastes the user's time and bandwidth, and \"Upload failed\" still does not tell them what to change."
+  },
+  "accessibility": [
+    "The dropzone is also operable via a real file-picker trigger, since drag-and-drop alone isn't reachable by keyboard.",
+    "Upload progress and completion/error status are announced via an aria-live region, not just shown visually.",
+    "Each file row's remove control is independently labeled with that file's name (\"Remove report.pdf\"), not a generic \"Remove\" repeated for every row."
+  ],
+  "relatedComponents": [
+    "Input",
+    "Progress",
+    "Result"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

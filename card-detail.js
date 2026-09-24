@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "default", label: "Default" },
     { key: "with-media", label: "With media" },
@@ -10,7 +18,8 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "selected", cls: " is-selected", label: "Selected" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" }
   ];
 
   var FULL_SPEC = {
@@ -51,8 +60,17 @@
     { value: "12", label: "12px - Soft" },
     { value: "9999", label: "Full - Pill" }
   ];
+  // Size (2) - Ant documents medium(default)/small. Small tightens padding
+  // and drops one type-scale step on title/body text, the same "rhythm
+  // changes, type scale mostly doesn't" rule this system's density mode
+  // already follows elsewhere.
+  var SIZE_OPTIONS = [
+    { value: "default", label: "Default" },
+    { value: "small", label: "Small" }
+  ];
   var FALLBACK_DEFAULTS = {
     radius: "8",
+    size: "default",
     title: "Team standup",
     body: "Daily sync at 9:30 AM in the main conference room.",
     showShadow: true
@@ -97,6 +115,7 @@
     selectionInfo = selectionInfo || {};
     return {
       radius: selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS),
+      size: selectionInfo.size || selectionMode(null, SIZE_OPTIONS),
       title: (selectionInfo.title !== undefined) ? selectionInfo.title : FALLBACK_DEFAULTS.title,
       body: (selectionInfo.body !== undefined) ? selectionInfo.body : FALLBACK_DEFAULTS.body,
       showShadow: (selectionInfo.showShadow !== undefined) ? selectionInfo.showShadow : FALLBACK_DEFAULTS.showShadow
@@ -126,7 +145,9 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the whole card; With media's cover area follows the card's top corners only.");
     lines.push("");
-    lines.push("Component properties: Corner radius; Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Body (text, default \"" + FALLBACK_DEFAULTS.body + "\"); Show shadow (boolean, default checked - adds a resting drop-shadow beneath the card, even before hover, distinct from and combinable with the Hover state's own lift shadow).");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Small tightens body-wrap padding to 10px/12px and drops title to 13px, body to 12px - the corner radius, type and state set stay identical at either size.");
+    lines.push("");
+    lines.push("Component properties: Corner radius; Size; Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Body (text, default \"" + FALLBACK_DEFAULTS.body + "\"); Show shadow (boolean, default checked - adds a resting drop-shadow beneath the card, even before hover, distinct from and combinable with the Hover state's own lift shadow).");
     lines.push("Current values - Title: \"" + info.title + "\", Body: \"" + info.body + "\", Show shadow: " + (info.showShadow ? "yes" : "no") + ".");
     return lines.join("\n");
   }
@@ -141,10 +162,19 @@
     lines.push(".card-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".card-demo-media{ height:80px; background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
     lines.push(".card-demo-body-wrap{ padding:14px 16px; display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); text-align:left; }');
-    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align:left; }');
-    lines.push("/* Footer reuses Modal's own .modal-demo-footer/.modal-demo-btn classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent. */");
+    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); text-align: start; margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align: start; margin:0; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push("/* Footer reuses Modal's own .modal-demo-footer/.modal-demo-btn classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent. Tightened padding restores real margin in this narrower 240px card (Modal's own 20px side padding left almost none); flex-shrink:0 stops the buttons from ever shrinking below their own text width, so they overflow visibly in a worst case instead of silently truncating. */");
+    lines.push(".card-demo-footer{ padding:12px 16px; }");
+    lines.push(".card-demo-footer .modal-demo-btn{ flex-shrink:0; }");
     lines.push(".card-demo-footer .modal-demo-btn--primary{ background:var(--red-500); }");
+    lines.push("");
+    lines.push("/* Size (2) - Small tightens padding and drops one type-scale step */");
+    lines.push(".card-demo-panel--sz-small .card-demo-body-wrap{ padding:10px 12px; gap:4px; }");
+    lines.push(".card-demo-panel--sz-small .card-demo-title{ font-size:13px; }");
+    lines.push(".card-demo-panel--sz-small .card-demo-text{ font-size:12px; }");
+    lines.push(".card-demo-panel--sz-small .card-demo-media{ height:60px; }");
+    lines.push(".card-demo-panel--sz-small .card-demo-footer{ padding:8px 12px; }");
     return lines.join("\n");
   }
 
@@ -152,16 +182,26 @@
   // then a title + body text-wrap, then an optional footer button row
   // ("with-actions"). showShadow adds a resting drop-shadow modifier class
   // independent of the state classes, so it can combine with any state.
-  function buildCardField(typeKey, stateKey, radius, title, body, showShadow){
+  function buildCardField(typeKey, stateKey, radius, title, body, showShadow, sizeKey){
     var stateCls = (STATES.filter(function(s){ return s.key === stateKey; })[0] || {}).cls || "";
     var radiusCss = radiusCssFor(radius);
     var shadowCls = showShadow ? " card-demo-shadow" : "";
-    var classes = "card-demo-panel card-demo-panel--" + typeKey + shadowCls + stateCls;
+    var sizeCls = sizeKey === "small" ? " card-demo-panel--sz-small" : "";
+    var classes = "card-demo-panel card-demo-panel--" + typeKey + shadowCls + sizeCls + stateCls;
+    var isLoading = stateKey === "loading";
     var mediaHtml = (typeKey === "with-media")
-      ? '<div class="card-demo-media" style="border-top-left-radius:' + radiusCss + ';border-top-right-radius:' + radiusCss + ';"></div>'
+      ? '<div class="card-demo-media" style="border-top-left-radius:' + radiusCss + ';border-top-right-radius:' + radiusCss + ';"' + (isLoading ? ' aria-hidden="true"' : "") + "></div>"
       : "";
-    var bodyWrapHtml = '<div class="card-demo-body-wrap"><p class="card-demo-title">' + title + '</p><p class="card-demo-text">' + body + "</p></div>";
-    var footerHtml = (typeKey === "with-actions")
+    // Loading swaps the real title/body for placeholder bars reusing
+    // Skeleton's own line shape - one shimmer language for "content is on
+    // its way," not a second one invented per component.
+    var bodyWrapHtml = isLoading
+      ? '<div class="card-demo-body-wrap" aria-busy="true" aria-live="polite">' +
+        '<span class="skeleton-demo-line is-animated" style="width:60%;height:14px;"></span>' +
+        '<span class="skeleton-demo-line is-animated" style="margin-top:10px;"></span>' +
+        '<span class="skeleton-demo-line is-animated" style="width:80%;"></span></div>'
+      : '<div class="card-demo-body-wrap"><p class="card-demo-title">' + escapeHtml(title) + '</p><p class="card-demo-text">' + escapeHtml(body) + "</p></div>";
+    var footerHtml = (typeKey === "with-actions" && !isLoading)
       ? '<div class="card-demo-footer modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="background:var(--red-500);">View details</button></div>'
       : "";
     return '<div class="' + classes + '" style="border-radius:' + radiusCss + ';">' + mediaHtml + bodyWrapHtml + footerHtml + "</div>";
@@ -170,38 +210,43 @@
   function buildFullCode(selectionInfo){
     var info = resolveInfo(selectionInfo);
     var radiusInfo = info.radius;
+    var sizeInfo = info.size;
 
     var lines = [];
     lines.push(cssBlock());
     lines.push("");
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
-    lines.push("<!-- Example usage - one per type, Rest state" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen corner radius" : "") + " -->");
+    var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
+    lines.push("<!-- Example usage - one per type, Rest state" + (radiusInfo.mode === "specific" || sizeInfo.mode === "specific" ? ", at the explicitly chosen corner radius/size" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(buildCardField(t.key, "rest", exampleRadius, info.title, info.body, info.showShadow));
+      lines.push(buildCardField(t.key, "rest", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
     });
     lines.push("");
-    lines.push("<!-- Example usage - the other 3 states (Default type) -->");
-    lines.push(buildCardField("default", "hover", exampleRadius, info.title, info.body, info.showShadow));
-    lines.push(buildCardField("default", "selected", exampleRadius, info.title, info.body, info.showShadow));
-    lines.push(buildCardField("default", "disabled", exampleRadius, info.title, info.body, info.showShadow));
+    lines.push("<!-- Example usage - the other 4 states (Default type) -->");
+    lines.push(buildCardField("default", "hover", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
+    lines.push(buildCardField("default", "selected", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
+    lines.push(buildCardField("default", "disabled", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
+    lines.push(buildCardField("default", "loading", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
     return lines.join("\n");
   }
 
-  // Builds the prompt/code for exactly ONE Corner radius value, fully
-  // resolved (never "ask the question") - used by the Copy prompt/Copy code
-  // dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(radius, title, body, showShadow){
+  // Builds the prompt/code for exactly ONE Corner radius x Size combination,
+  // fully resolved (never "ask the question") - used by the Copy prompt/Copy
+  // code dropdown's per-combination "Copy" buttons.
+  function buildComboPrompt(radius, size, title, body, showShadow){
     return buildFullPrompt({
       radius: { mode: "specific", values: [radius] },
+      size: { mode: "specific", values: [size] },
       title: title,
       body: body,
       showShadow: showShadow
     });
   }
 
-  function buildComboCode(radius, title, body, showShadow){
+  function buildComboCode(radius, size, title, body, showShadow){
     return buildFullCode({
       radius: { mode: "specific", values: [radius] },
+      size: { mode: "specific", values: [size] },
       title: title,
       body: body,
       showShadow: showShadow
@@ -343,6 +388,7 @@
     if (!matrixContainer) return;
 
     var radiusMount = document.querySelector('[data-role="card-radius-mount"]');
+    var sizeMount = document.querySelector('[data-role="card-size-mount"]');
     var titleInput = document.querySelector('[data-role="card-title"]');
     var bodyInput = document.querySelector('[data-role="card-body"]');
     var showShadowInput = document.querySelector('[data-role="card-show-shadow"]');
@@ -358,23 +404,23 @@
       return ordered.length ? ordered : [fallback];
     }
 
-    function comboLabel(radius){
-      return optionLabelFor(RADIUS_OPTIONS, radius);
+    function comboLabel(radius, size){
+      return optionLabelFor(RADIUS_OPTIONS, radius) + " / " + optionLabelFor(SIZE_OPTIONS, size);
     }
 
-    // Since Card has no Size property, only Corner radius drives multiple
-    // combos - STATES become the rows and TYPES the columns, exactly like
-    // alert-detail.js's buildMatrixSection does with radius-only combos.
-    function buildMatrixSection(radius, title, body, showShadow){
+    // Corner radius and Size both drive multiple combos now - STATES become
+    // the rows and TYPES the columns per combo, same nested-loop shape as
+    // Select/Button's size x radius combos.
+    function buildMatrixSection(radius, size, title, body, showShadow){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildCardField(t.key, state.key, radius, title, body, showShadow) + "</td>";
+          return '<td class="button-matrix-cell">' + buildCardField(t.key, state.key, radius, title, body, showShadow, size) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
       var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead">' + t.label + "</th>"; }).join("");
       return '<div class="button-matrix-combo">' +
-        '<p class="button-matrix-combo-label">' + comboLabel(radius) + "</p>" +
+        '<p class="button-matrix-combo-label">' + comboLabel(radius, size) + "</p>" +
         '<table class="button-matrix"><thead><tr><th class="button-matrix-rowhead"></th>' + headCells + "</tr></thead>" +
         "<tbody>" + rows + "</tbody></table></div>";
     }
@@ -382,6 +428,7 @@
     function currentSelectionInfo(){
       return {
         radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
         title: titleInput ? (titleInput.value.trim() || FALLBACK_DEFAULTS.title) : FALLBACK_DEFAULTS.title,
         body: bodyInput ? (bodyInput.value.trim() || FALLBACK_DEFAULTS.body) : FALLBACK_DEFAULTS.body,
         showShadow: showShadowInput ? showShadowInput.checked : FALLBACK_DEFAULTS.showShadow
@@ -394,17 +441,20 @@
       var showShadow = showShadowInput ? showShadowInput.checked : FALLBACK_DEFAULTS.showShadow;
 
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
+      var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
 
       var html = "";
       var combos = [];
-      radii.forEach(function(radius){
-        html += buildMatrixSection(radius, title, body, showShadow);
-        combos.push({ radius: radius, label: comboLabel(radius), title: title, body: body, showShadow: showShadow });
+      sizes.forEach(function(size){
+        radii.forEach(function(radius){
+          html += buildMatrixSection(radius, size, title, body, showShadow);
+          combos.push({ radius: radius, size: size, label: comboLabel(radius, size), title: title, body: body, showShadow: showShadow });
+        });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, c.title, c.body, c.showShadow); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, c.title, c.body, c.showShadow); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, c.size, c.title, c.body, c.showShadow); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, c.size, c.title, c.body, c.showShadow); });
     }
 
     var propertyMultiSelects = {};
@@ -415,6 +465,16 @@
         defaultSelected: [FALLBACK_DEFAULTS.radius],
         ariaLabel: "Corner radius options",
         labelledBy: "card-radius-dropdown-label",
+        onChange: render
+      });
+    }
+    if (sizeMount && window.createMultiSelect){
+      propertyMultiSelects.size = window.createMultiSelect({
+        root: sizeMount,
+        options: SIZE_OPTIONS,
+        defaultSelected: [FALLBACK_DEFAULTS.size],
+        ariaLabel: "Size options",
+        labelledBy: "card-size-dropdown-label",
         onChange: render
       });
     }

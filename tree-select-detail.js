@@ -1,7 +1,16 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
   var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
 
   var TYPES = [
@@ -181,25 +190,25 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces the single active-row highlight with a real checkbox per node, parents included, letting more than one node be picked across branches). Search (boolean - a real input inside the trigger itself, narrowing the tree to matching nodes with the matched substring highlighted).");
     return lines.join("\n");
   }
 
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
     var lines = [];
     lines.push('<div class="treeselect-field">');
-    lines.push('  <label class="treeselect-field-label">' + label + "</label>");
+    lines.push('  <label class="treeselect-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="treeselect-control treeselect-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
-    lines.push('    <input type="text" readonly placeholder="' + placeholder + '" value="Engineering / Frontend" />');
+    lines.push('    <input type="text" readonly placeholder="' + escapeHtml(placeholder) + '" value="Engineering / Frontend" />');
     lines.push('    <span class="treeselect-chevron">&#9660;</span>');
     lines.push("  </div>");
     lines.push("  <!-- Indented tree panel - only rendered while the field is in the Open state -->");
     lines.push('  <div class="treeselect-panel">');
     lines.push('    <div class="treeselect-tree">');
-    lines.push('      <div class="treeselect-node" style="padding-left:10px"><span class="treeselect-caret">&#9660;</span><span>Engineering</span></div>');
-    lines.push('      <div class="treeselect-node is-active" style="padding-left:26px"><span class="treeselect-caret"></span><span>Frontend</span></div>');
-    lines.push('      <div class="treeselect-node" style="padding-left:26px"><span class="treeselect-caret"></span><span>Backend</span></div>');
-    lines.push('      <div class="treeselect-node" style="padding-left:10px"><span class="treeselect-caret">&#9654;</span><span>Design</span></div>');
+    lines.push('      <div class="treeselect-node" style="padding-inline-start:10px"><span class="treeselect-caret">&#9660;</span><span>Engineering</span></div>');
+    lines.push('      <div class="treeselect-node is-active" style="padding-inline-start:26px"><span class="treeselect-caret"></span><span>Frontend</span></div>');
+    lines.push('      <div class="treeselect-node" style="padding-inline-start:26px"><span class="treeselect-caret"></span><span>Backend</span></div>');
+    lines.push('      <div class="treeselect-node" style="padding-inline-start:10px"><span class="treeselect-caret">&#9654;</span><span>Design</span></div>');
     lines.push("    </div>");
     lines.push("  </div>");
     lines.push("</div>");
@@ -427,10 +436,46 @@
     var matrixContainer = document.querySelector('[data-role="treeselect-matrix-container"]');
     if (!matrixContainer) return;
 
+    // Multiple selection + Search - same pair of documented Ant TreeSelect
+    // features Cascader also lacks, and for the same reason: the base
+    // matrix is single-select with no search box, so neither is reachable
+    // from it. A search field sits in the trigger, and every node gets a
+    // real checkbox (parent nodes included) instead of the single active-
+    // row highlight.
+    var multiSearchContainer = document.querySelector('[data-role="treeselect-multi-search-container"]');
+    if (multiSearchContainer){
+      var MULTI_NODES = [
+        { label: "Engineering", depth: 0, isParent: true, expanded: true, checked: false },
+        { label: "Fr<mark>ont</mark>end", depth: 1, isParent: false, checked: true },
+        { label: "Backend", depth: 1, isParent: false, checked: false },
+        { label: "Design", depth: 0, isParent: true, expanded: true, checked: false },
+        { label: "Fr<mark>ont</mark> of house", depth: 1, isParent: false, checked: true }
+      ];
+      var nodesHtml = MULTI_NODES.map(function(n){
+        var caretHtml = n.isParent
+          ? '<span class="treeselect-demo-caret">' + ICON_CHEVRON_DOWN + "</span>"
+          : '<span class="treeselect-demo-caret" aria-hidden="true"></span>';
+        var padding = n.depth * 16 + 10;
+        return '<div class="treeselect-demo-node treeselect-demo-node--checkable" style="padding-inline-start:' + padding + 'px">' +
+          caretHtml +
+          '<label class="treeselect-demo-node-check"><input type="checkbox"' + (n.checked ? " checked" : "") + ' tabindex="-1" /><span>' + n.label + "</span></label>" +
+          "</div>";
+      }).join("");
+      multiSearchContainer.innerHTML =
+        '<div class="treeselect-demo-field">' +
+        '<label class="treeselect-demo-label">Teams (2 selected)</label>' +
+        '<div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40 is-open">' +
+        '<div class="treeselect-demo-search"><input type="text" class="treeselect-demo-search-input" placeholder="Search..." value="front" readonly tabindex="-1" /></div>' +
+        '<span class="treeselect-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span></div>" +
+        '<div class="treeselect-demo-panel"><div class="treeselect-demo-tree">' + nodesHtml + "</div></div>" +
+        "</div>";
+    }
+
     var defaultLabel = document.body.dataset.defaultLabel || "Assignee team";
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "Select a team";
     var labelInput = document.querySelector('[data-role="treeselect-label"]');
     var placeholderInput = document.querySelector('[data-role="treeselect-placeholder"]');
+    var allowClearInput = document.querySelector('[data-role="treeselect-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="treeselect-size-mount"]');
     var radiusMount = document.querySelector('[data-role="treeselect-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -442,7 +487,7 @@
         : '<span class="treeselect-demo-caret" aria-hidden="true"></span>';
       var activeCls = node.active ? " is-active" : "";
       var padding = node.depth * 16 + 10;
-      return '<div class="treeselect-demo-node' + activeCls + '" style="padding-left:' + padding + 'px">' + caretHtml + "<span>" + node.label + "</span></div>";
+      return '<div class="treeselect-demo-node' + activeCls + '" style="padding-inline-start:' + padding + 'px">' + caretHtml + "<span>" + node.label + "</span></div>";
     }
 
     function buildTreePanel(){
@@ -450,20 +495,23 @@
       return '<div class="treeselect-demo-panel"><div class="treeselect-demo-tree">' + rowsHtml + "</div></div>";
     }
 
-    function buildTreeSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder){
+    function buildTreeSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
+      var hasValue = isOpen || isFilled;
       var controlClasses = "treeselect-demo-control treeselect-demo-control--" + typeKey + " treeselect-demo-control--h" + size + stateCls;
-      var valueAttr = (isOpen || isFilled) ? ' value="' + SELECTED_VALUE + '"' : "";
+      var valueAttr = hasValue ? ' value="' + SELECTED_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
-      var chevronHtml = '<span class="treeselect-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
+      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var trailingHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="treeselect-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : '<span class="treeselect-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen ? buildTreePanel() : "";
       return '<div class="treeselect-demo-field">' +
-        '<label class="treeselect-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + chevronHtml + "</div>" +
+        '<label class="treeselect-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + trailingHtml + "</div>" +
         panelHtml +
         "</div>";
     }
@@ -481,10 +529,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTreeSelectField(t.key, state.key, state.cls, size, radius, label, placeholder) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTreeSelectField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -505,6 +553,7 @@
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -513,7 +562,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -547,6 +596,7 @@
 
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

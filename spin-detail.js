@@ -72,13 +72,15 @@
     var lines = [];
     lines.push("/* Agentic Design System - Spin component */");
     lines.push("@keyframes spin-demo-rotate{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }");
-    lines.push(".spin-demo-ring{ box-sizing:border-box; border-radius:9999px; border:2.5px solid var(--graphite-700); border-top-color:var(--red-500); animation: spin-demo-rotate 0.8s linear infinite; flex:none; }");
+    lines.push(".spin-demo-ring{ box-sizing:border-box; border-radius:9999px; border:2.5px solid var(--graphite-700); border-top-color:var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex:none; }");
+    lines.push("/* The rotation IS the loading signal here, so reduced motion slows it rather than freezing it - a stopped spinner reads as a hung interface. */");
+    lines.push("@media (prefers-reduced-motion: reduce){ .spin-demo-ring{ animation-duration:3s; } }");
     lines.push(".spin-demo-ring--small{ width:14px; height:14px; border-width:2px; }");
     lines.push(".spin-demo-ring--default{ width:20px; height:20px; }");
     lines.push(".spin-demo-ring--large{ width:28px; height:28px; border-width:3px; }");
     lines.push("");
     lines.push(".spin-demo-row{ display:flex; align-items:center; gap:8px; }");
-    lines.push(".spin-demo-label{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); }");
+    lines.push(".spin-demo-label{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push(".spin-demo-overlay-wrap{ box-sizing:border-box; width:100%; height:90px; border-radius:var(--radius-md); background:var(--graphite-850); display:flex; align-items:center; justify-content:center; border:1px solid var(--line-strong); }");
     lines.push("");

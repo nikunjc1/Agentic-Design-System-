@@ -1,6 +1,18 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CHEVRON_UP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>';
+  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+
   var TYPES = [
     { key: "outlined", label: "Outlined" },
     { key: "filled", label: "Filled" },
@@ -175,7 +187,7 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by 1).");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by 1), Allow clear (boolean - once the field has a value, shows an × button before the stepper that clears it).");
     return lines.join("\n");
   }
 
@@ -183,9 +195,9 @@
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
     var lines = [];
     lines.push('<div class="number-field">');
-    lines.push('  <label class="number-field-label">' + label + "</label>");
+    lines.push('  <label class="number-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="number-control number-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="number" placeholder="' + placeholder + '" />');
+    lines.push('    <input type="number" placeholder="' + escapeHtml(placeholder) + '" />');
     lines.push("  </div>");
     lines.push("</div>");
     return lines.join("\n");
@@ -291,6 +303,25 @@
       try{ document.execCommand("copy"); }catch(e){}
       document.body.removeChild(ta);
     }
+
+    // The stepper actually steps - delegated on the document (capture
+    // phase, stopped there) for the same reason as Password's reveal
+    // toggle: the Live Preview matrix's innerHTML is rebuilt on every
+    // property change, and the listing card's own click-to-navigate
+    // listener sits closer to the target so it would otherwise fire first.
+    document.addEventListener("click", function(e){
+      var step = e.target.closest && e.target.closest(".number-demo-step");
+      if (!step) return;
+      e.stopPropagation();
+      var control = step.closest(".number-demo-control");
+      var input = control && control.querySelector(".number-demo-input");
+      if (!input || input.disabled) return;
+      var direction = step.classList.contains("number-demo-step-up") ? 1 : -1;
+      var current = parseFloat(input.value);
+      if (isNaN(current)) current = 0;
+      input.value = current + direction;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }, true);
 
     // Gallery-card copy CTA + click-to-navigate (number.html's listing
     // card) - separate data-role from every other system's own copy roles
@@ -402,27 +433,32 @@
     var labelInput = document.querySelector('[data-role="number-label"]');
     var placeholderInput = document.querySelector('[data-role="number-placeholder"]');
     var showStepperInput = document.querySelector('[data-role="number-show-stepper"]');
+    var allowClearInput = document.querySelector('[data-role="number-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="number-size-mount"]');
     var radiusMount = document.querySelector('[data-role="number-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildNumberField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showStepper){
+    function buildNumberField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showStepper, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
+      var hasValue = isFilled || isError;
       var controlClasses = "number-demo-control number-demo-control--" + typeKey + " number-demo-control--h" + size + stateCls;
       var stepperHtml = showStepper
-        ? '<div class="number-demo-stepper"><button type="button" class="number-demo-step number-demo-step-up" tabindex="-1">▲</button><button type="button" class="number-demo-step number-demo-step-down" tabindex="-1">▼</button></div>'
+        ? '<div class="number-demo-stepper"><button type="button" class="number-demo-step number-demo-step-up" aria-label="Increase value">' + ICON_CHEVRON_UP + '</button><button type="button" class="number-demo-step number-demo-step-down" aria-label="Decrease value">' + ICON_CHEVRON_DOWN + "</button></div>"
+        : "";
+      var clearHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="number-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
         : "";
       var valueAttr = isFilled ? ' value="3"' : (isError ? ' value="-5"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="number" class="number-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="number" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="number-demo-note is-error">Enter a number of 0 or more.</p>' : "";
       return '<div class="number-demo-field">' +
-        '<label class="number-demo-label">' + label + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + stepperHtml + "</div>" +
+        '<label class="number-demo-label">' + escapeHtml(label) + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + stepperHtml + "</div>" +
         noteHtml +
         "</div>";
     }
@@ -440,10 +476,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showStepper){
+    function buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildNumberField(t.key, state.key, state.cls, size, radius, label, placeholder, showStepper) + "</td>";
+          return '<td class="button-matrix-cell">' + buildNumberField(t.key, state.key, state.cls, size, radius, label, placeholder, showStepper, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -465,6 +501,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var showStepper = showStepperInput ? showStepperInput.checked : false;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -473,7 +510,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showStepper);
+          html += buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -508,6 +545,7 @@
     labelInput.addEventListener("input", render);
     placeholderInput.addEventListener("input", render);
     if (showStepperInput) showStepperInput.addEventListener("change", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

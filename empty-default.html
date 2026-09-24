@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Data Display &middot; Empty</p>
   <a class="back-link" href="empty.html">&larr; Back to Empty types</a>
-  <h1 class="page-title">Empty</h1>
+  <h1 class="page-title">Empty <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use whenever a list, table, or search result has no data to show, so the space reads as intentionally empty rather than broken - one Empty component, controlled by properties, not a one-off blank div left behind.</p>
 
   <section class="panel color-foundation">
@@ -227,6 +295,103 @@
       <span class="chip">Empty inbox or notifications</span>
       <span class="chip">No data in a table</span>
       <span class="chip">Empty shopping cart</span>
+    </div>
+  </section>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Empty stands in whenever a list, table, or search result has no data to show, so the space reads as intentionally empty rather than broken - an icon, a title, an optional description, and an optional action to resolve the empty state.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>A search with no matching results</strong> - explaining that nothing matched, not leaving a blank area.</li>
+        <li><strong>A brand-new or unused feature area</strong> - before the user has created their first item.</li>
+        <li><strong>An empty inbox, notification list, or shopping cart</strong> - any collection with genuinely zero items.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>Content that's still loading</strong> - use Skeleton or Spin - Empty means "confirmed nothing here," not "still checking."</li>
+        <li><strong>An error that prevented data from loading at all</strong> - use Result or an explicit error message - a failed fetch isn't the same as a legitimately empty result.</li>
+        <li><strong>A brief, non-blocking status update</strong> - use Toast or Alert instead of a full empty-state panel for something transient.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Explain why the space is empty and, when possible, what the user can do about it (e.g. "No results - try a different search").</li>
+        <li>Offer a direct action to resolve the state when one exists ("Create your first project"), not just a passive message.</li>
+        <li>Keep the tone matter-of-fact rather than apologetic - an empty state is often a normal, expected condition, not a failure.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="empty-demo-panel"><div class="empty-demo-icon-wrap empty-demo-icon-wrap--default"></div><p class="empty-demo-title">No invoices yet</p><p class="empty-demo-description">Invoices you send will show up here.</p><span class="btn-demo btn-demo--secondary btn-demo--h32">Create invoice</span></div></div>
+          <p class="guide-dodont-note">Explains why the space is blank and offers the one action that would fill it, rather than leaving a dead end.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="empty-demo-panel"><div class="empty-demo-icon-wrap empty-demo-icon-wrap--default"></div><p class="empty-demo-title">No data</p></div></div>
+          <p class="guide-dodont-note">"No data" does not say whether that is because nothing has happened yet, a filter is hiding everything, or something failed - three states that each need a different message.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>The message is real text, not baked into an illustration, so screen readers can announce it.</li>
+        <li>Any resolving action is a real, keyboard-operable control, not just a static graphic.</li>
+        <li>Decorative illustrations are marked so assistive technology doesn't announce them as meaningful content.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Result, Skeleton, List.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Empty",
+  "status": "Stable",
+  "category": "Data Display",
+  "summary": "Empty stands in whenever a list, table, or search result has no data to show, so the space reads as intentionally empty rather than broken - an icon, a title, an optional description, and an optional action to resolve the empty state.",
+  "whenToUse": [
+    "A search with no matching results - explaining that nothing matched, not leaving a blank area.",
+    "A brand-new or unused feature area - before the user has created their first item.",
+    "An empty inbox, notification list, or shopping cart - any collection with genuinely zero items."
+  ],
+  "whenNotToUse": [
+    "Content that's still loading - use Skeleton or Spin - Empty means \"confirmed nothing here,\" not \"still checking.\"",
+    "An error that prevented data from loading at all - use Result or an explicit error message - a failed fetch isn't the same as a legitimately empty result.",
+    "A brief, non-blocking status update - use Toast or Alert instead of a full empty-state panel for something transient."
+  ],
+  "bestPractices": [
+    "Explain why the space is empty and, when possible, what the user can do about it (e.g. \"No results - try a different search\").",
+    "Offer a direct action to resolve the state when one exists (\"Create your first project\"), not just a passive message.",
+    "Keep the tone matter-of-fact rather than apologetic - an empty state is often a normal, expected condition, not a failure."
+  ],
+  "doAndDont": {
+    "do": "Explains why the space is blank and offers the one action that would fill it, rather than leaving a dead end.",
+    "dont": "\"No data\" does not say whether that is because nothing has happened yet, a filter is hiding everything, or something failed - three states that each need a different message."
+  },
+  "accessibility": [
+    "The message is real text, not baked into an illustration, so screen readers can announce it.",
+    "Any resolving action is a real, keyboard-operable control, not just a static graphic.",
+    "Decorative illustrations are marked so assistive technology doesn't announce them as meaningful content."
+  ],
+  "relatedComponents": [
+    "Result",
+    "Skeleton",
+    "List"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

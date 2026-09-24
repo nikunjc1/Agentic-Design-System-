@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "initials", label: "Initials" },
     { key: "icon", label: "Icon" },
@@ -86,7 +94,7 @@
     lines.push("- Offline: a small gray/dim dot.");
     lines.push("These are structural/presentational variants, not interaction states - Avatar itself is not interactive.");
     lines.push("");
-    lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\").");
+    lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a \"+N\" overflow indicator styled like a real avatar.");
     return lines.join("\n");
   }
 
@@ -123,7 +131,7 @@
       var shapeCls = " avatar-demo-circle--" + shape;
       var circleCls = "avatar-demo-circle avatar-demo-circle--" + t.key + shapeCls + " avatar-demo-circle--h" + size;
       var inner = "";
-      if (t.key === "initials") inner = "<span>" + initials + "</span>";
+      if (t.key === "initials") inner = "<span>" + escapeHtml(initials) + "</span>";
       else if (t.key === "icon") inner = PERSON_ICON_SVG;
       lines.push('<div class="avatar-demo-wrap" data-size="' + size + '">');
       lines.push('  <div class="' + circleCls + '">' + inner + "</div>");
@@ -148,7 +156,7 @@
     var circleStyle = "width:" + sizeInfo.box + "px;height:" + sizeInfo.box + "px;font-size:" + sizeInfo.font + "px;";
     var inner = "";
     if (typeKey === "initials"){
-      inner = "<span>" + (initials || FALLBACK_DEFAULTS.initials) + "</span>";
+      inner = "<span>" + escapeHtml(initials || FALLBACK_DEFAULTS.initials) + "</span>";
     } else if (typeKey === "icon"){
       inner = PERSON_ICON_SVG;
     }
@@ -297,6 +305,32 @@
 
     var matrixContainer = document.querySelector('[data-role="avatar-matrix-container"]');
     if (!matrixContainer) return;
+
+    // Avatar.Group - overlapping circles with a "+N" overflow tile once the
+    // set exceeds max, rendered once as its own static example (not woven
+    // into the Size x Shape matrix, since overlap only means something
+    // across multiple avatars, not one).
+    var groupContainer = document.querySelector('[data-role="avatar-group-container"]');
+    if (groupContainer){
+      var GROUP_PEOPLE = [
+        { initials: "JL" }, { initials: "SO" }, { initials: "PN" }, { initials: "AK" }, { initials: "MD" }
+      ];
+      var GROUP_MAX = 4;
+      var visible = GROUP_PEOPLE.slice(0, GROUP_MAX);
+      var overflowCount = GROUP_PEOPLE.length - GROUP_MAX;
+      var circlesHtml = visible.map(function(p){
+        return '<div class="avatar-demo-group-item">' +
+          '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40">' + escapeHtml(p.initials) + "</span>" +
+          "</div>";
+      }).join("");
+      if (overflowCount > 0){
+        circlesHtml += '<div class="avatar-demo-group-item">' +
+          '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40 avatar-demo-circle--overflow" title="' +
+          GROUP_PEOPLE.slice(GROUP_MAX).map(function(p){ return escapeHtml(p.initials); }).join(", ") +
+          '">+' + overflowCount + "</span></div>";
+      }
+      groupContainer.innerHTML = '<div class="avatar-demo-group">' + circlesHtml + "</div>";
+    }
 
     var sizeSelect = document.querySelector('[data-role="avatar-size-select"]');
     var shapeSelect = document.querySelector('[data-role="avatar-shape-select"]');

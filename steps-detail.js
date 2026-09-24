@@ -13,9 +13,16 @@
   // radius - circles are always round), so "combos" below are per-size
   // rather than size x radius.
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
-    { key: "numbered", label: "Numbered" },
-    { key: "simple", label: "Simple" }
+    { key: "numbered", label: "Numbered" }
   ];
 
   // Steps are inherently sequential, so - unlike Group Button, where only
@@ -32,8 +39,7 @@
   ];
 
   var FULL_SPEC = {
-    numbered: { purpose: "Each step is a circle containing its number, or a checkmark icon once that step is completed - the clearest option when steps benefit from an at-a-glance count." },
-    simple: { purpose: "No circles - just a horizontal row of labels with a colored underline beneath the current/completed ones and a plain connecting line - useful when the flow is short enough that labels alone carry it." }
+    numbered: { purpose: "Each step is a circle containing its number, or a checkmark icon once that step is completed - the clearest option when steps benefit from an at-a-glance count." }
   };
 
   var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
@@ -71,12 +77,36 @@
     { value: "32", label: "32px - M" },
     { value: "40", label: "40px - L" }
   ];
-  var FALLBACK_DEFAULTS = { size: "32" };
+  var ORIENTATION_OPTIONS = [
+    { value: "horizontal", label: "Horizontal" },
+    { value: "vertical", label: "Vertical" }
+  ];
+  var FALLBACK_DEFAULTS = { size: "32", orientation: "horizontal" };
   var DEFAULT_LABELS = ["Details", "Shipping", "Payment"];
+  var MIN_STEPS = 2;
+  var MAX_STEPS = 12;
 
   function optionLabelFor(optionList, value){
     var match = optionList.filter(function(opt){ return opt.value === value; })[0];
     return match ? match.label : value;
+  }
+
+  function clampStepCount(n){
+    n = Math.round(Number(n));
+    if (isNaN(n)) return DEFAULT_LABELS.length;
+    return Math.max(MIN_STEPS, Math.min(MAX_STEPS, n));
+  }
+
+  // Scales a label list to an exact count without discarding custom text
+  // that's still in range: keeps every label up to count (or drops from
+  // the end if shrinking), and only invents generic "Step N" placeholders
+  // for newly-added slots beyond what was already there.
+  function labelsForCount(currentLabels, count){
+    var result = currentLabels.slice(0, count);
+    for (var i = result.length; i < count; i++){
+      result.push("Step " + (i + 1));
+    }
+    return result;
   }
 
   function parseLabels(raw){
@@ -138,15 +168,20 @@
     return String(number);
   }
 
-  function buildStepsRow(typeKey, midStatusKey, size, labels){
+  function buildStepsRow(typeKey, midStatusKey, size, labels, orientation){
+    var isVertical = orientation === "vertical";
     var midIndex = Math.floor(labels.length / 2);
     var parts = labels.map(function(label, i){
       var statusKey = statusAt(i, midIndex, midStatusKey);
-      var circleHtml = typeKey === "numbered"
-        ? '<span class="steps-demo-circle">' + circleContent(statusKey, i + 1) + "</span>"
-        : "";
-      var labelHtml = '<span class="steps-demo-label">' + label + "</span>";
-      var connectorAttr = typeKey === "numbered" ? ' style="margin-top:' + (Math.round(Number(size) / 2) - 1) + 'px"' : "";
+      var circleHtml = '<span class="steps-demo-circle">' + circleContent(statusKey, i + 1) + "</span>";
+      var labelHtml = '<span class="steps-demo-label">' + escapeHtml(label) + "</span>";
+      // Centers the connector under the circle column - a horizontal
+      // margin-top offset for a horizontal row's vertically-centered
+      // connector, or a vertical margin-inline-start offset for a
+      // vertical row's horizontally-centered one. Same half-circle math
+      // either way, just rotated onto the other axis with orientation.
+      var offset = Math.round(Number(size) / 2) - 1;
+      var connectorAttr = isVertical ? ' style="margin-inline-start:' + offset + 'px"' : ' style="margin-top:' + offset + 'px"';
       var stepHtml = '<div class="steps-demo-step steps-demo-step--h' + size + " is-" + statusKey + '">' + circleHtml + labelHtml + "</div>";
       if (i < labels.length - 1){
         var nextStatusKey = statusAt(i + 1, midIndex, midStatusKey);
@@ -155,23 +190,23 @@
       }
       return stepHtml;
     }).join("");
-    return '<div class="steps-demo-row steps-demo-row--' + typeKey + '">' + parts + "</div>";
+    var rowClass = "steps-demo-row steps-demo-row--" + typeKey + (isVertical ? " steps-demo-row--vertical" : "");
+    return '<div class="' + rowClass + '">' + parts + "</div>";
   }
 
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var orientationInfo = selectionInfo.orientation || selectionMode(null, ORIENTATION_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var c = liveStepsColors();
 
     var lines = [];
-    lines.push("Create a complete Steps (horizontal progress indicator) component for the Agentic Design System.");
+    lines.push("Create a complete Steps (progress indicator) component for the Agentic Design System.");
     lines.push("");
-    lines.push("Build it as ONE reusable component controlled by properties (type, size, labels, per-step status) - a horizontal row showing position within a multi-step flow like checkout or onboarding, not separate one-off labels glued together. Steps are inherently sequential: every step before the current one renders as completed, every step after it renders as upcoming.");
+    lines.push("Build it as ONE reusable component controlled by properties (type, orientation, size, labels, per-step status) - a row showing position within a multi-step flow like checkout or onboarding, not separate one-off labels glued together. Steps are inherently sequential: every step before the current one renders as completed, every step after it renders as upcoming.");
     lines.push("");
-    lines.push("Types (2):");
-    TYPES.forEach(function(t){
-      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
-    });
+    lines.push("Type: Numbered - " + FULL_SPEC.numbered.purpose);
     lines.push("");
     lines.push("States (5, apply per step):");
     lines.push("- Upcoming: empty ring (1.5px " + c.lineStrong + " border, transparent fill), step number in " + c.textDim + ", connector lines on both sides in " + c.lineStrong + ".");
@@ -181,24 +216,36 @@
     lines.push("- Disabled: empty ring at 40% opacity, label text at 40% opacity - static/illustrative, not interactive.");
     lines.push("- A connector is only filled (brand red) when both steps it joins are completed; otherwise it stays the neutral line color.");
     lines.push("");
+    lines.push(propertyPromptLine("Orientation", orientationInfo, ORIENTATION_OPTIONS) + " Horizontal runs left-to-right with the circle above its label and a horizontal connector between circles; Vertical stacks top-to-bottom with the circle beside its label and a vertical connector below each circle, centered under the circle column either way.");
+    lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Circle diameter and the number/icon size scale together, applied to every step.");
     lines.push("");
-    lines.push("Component properties: Labels (comma-separated editable text, one per step, default \"Details, Shipping, Payment\" - step count follows the number of labels entered, connected by a horizontal connector line between circles, or a colored underline beneath the current/completed labels for Simple type).");
+    lines.push("Component properties: Labels (comma-separated editable text, one per step, current value \"" + labels.join(", ") + "\" - step count follows the number of labels entered).");
     return lines.join("\n");
   }
 
   function buildFullCode(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var orientationInfo = selectionInfo.orientation || selectionMode(null, ORIENTATION_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
     var c = liveStepsColors();
 
     var lines = [];
     lines.push("/* Agentic Design System - Steps (progress indicator) component */");
     lines.push(".steps-demo-row{ display:flex; align-items:flex-start; }");
     lines.push(".steps-demo-step{ display:flex; flex-direction:column; align-items:center; gap:8px; box-sizing:border-box; }");
-    lines.push('.steps-demo-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; white-space:nowrap; }');
+    lines.push('.steps-demo-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; white-space:nowrap; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".steps-demo-connector{ flex:1 1 auto; min-width:16px; height:1.5px; background:" + c.lineStrong + "; }");
     lines.push(".steps-demo-connector.is-completed{ background:" + c.red500 + "; }");
+    lines.push("");
+    lines.push(orientationInfo.mode === "all"
+      ? "/* Orientation - not chosen yet, default is Horizontal */"
+      : "/* Orientation - explicitly chosen: " + orientationInfo.values.map(function(v){ return optionLabelFor(ORIENTATION_OPTIONS, v); }).join(", ") + " */");
+    lines.push(".steps-demo-row--vertical{ flex-direction:column; align-items:flex-start; }");
+    lines.push(".steps-demo-row--vertical .steps-demo-step{ flex-direction:row; align-items:center; gap:12px; }");
+    lines.push(".steps-demo-row--vertical .steps-demo-label{ white-space:normal; }");
+    lines.push(".steps-demo-row--vertical .steps-demo-connector{ flex:none; width:1.5px; height:20px; min-width:0; margin-top:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -210,44 +257,45 @@
       lines.push(".steps-demo-step--h" + size + " .steps-demo-circle svg{ width:" + scale.icon + "px; height:" + scale.icon + "px; }");
     });
     lines.push("");
-    lines.push("/* Types (2) */");
+    lines.push("/* Type: Numbered */");
     lines.push(".steps-demo-circle{ display:inline-flex; align-items:center; justify-content:center; border-radius:9999px; box-sizing:border-box; font-weight:700; }");
-    lines.push('.steps-demo-row--simple .steps-demo-label{ border-bottom:2px solid transparent; padding-bottom:6px; }');
-    lines.push(".steps-demo-row--simple .steps-demo-connector{ background:" + c.lineStrong + "; }");
     lines.push("");
     lines.push("/* States (5, apply per step) */");
     lines.push(".steps-demo-step.is-upcoming .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
-    lines.push(".steps-demo-step.is-upcoming .steps-demo-label{ color:" + c.textDim + "; }");
+    lines.push(".steps-demo-step.is-upcoming .steps-demo-label{ color:" + c.textDim + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-current .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-current .steps-demo-label{ color:" + c.textHi + "; font-weight:700; }");
+    lines.push(".steps-demo-step.is-current .steps-demo-label{ color:" + c.textHi + "; font-weight:700; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-completed .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-completed .steps-demo-label{ color:" + c.textHi + "; }");
+    lines.push(".steps-demo-step.is-completed .steps-demo-label{ color:" + c.textHi + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-error .steps-demo-circle{ background:" + c.danger500 + "; border:1.5px solid " + c.danger500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-error .steps-demo-label{ color:" + c.danger500 + "; }");
+    lines.push(".steps-demo-step.is-error .steps-demo-label{ color:" + c.danger500 + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-disabled{ opacity:0.4; }");
     lines.push(".steps-demo-step.is-disabled .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
     lines.push("");
-    lines.push('.steps-demo-row--simple .steps-demo-step.is-current .steps-demo-label{ border-bottom-color:' + c.red500 + '; }');
-    lines.push('.steps-demo-row--simple .steps-demo-step.is-completed .steps-demo-label{ border-bottom-color:' + c.red500 + '; }');
-    lines.push('.steps-demo-row--simple .steps-demo-step.is-error .steps-demo-label{ border-bottom-color:' + c.danger500 + '; }');
-    lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
-    lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + ", a 3-step flow with the middle step Current -->");
-    TYPES.forEach(function(t){
-      lines.push(buildStepsRow(t.key, "current", exampleSize, DEFAULT_LABELS));
-    });
+    var exampleOrientation = orientationInfo.mode === "all" ? FALLBACK_DEFAULTS.orientation : orientationInfo.values[0];
+    lines.push("<!-- Example usage" + ((sizeInfo.mode === "specific" || orientationInfo.mode === "specific") ? " - at the explicitly chosen size/orientation" : "") + ", a 3-step flow with the middle step Current -->");
+    lines.push(buildStepsRow("numbered", "current", exampleSize, labels, exampleOrientation));
     return lines.join("\n");
   }
 
-  // Builds the prompt/code for exactly ONE Size - fully resolved (never
-  // "ask the question") - used by the Copy prompt/Copy code dropdown's
-  // per-combination "Copy" buttons.
-  function buildComboPrompt(size){
-    return buildFullPrompt({ size: { mode: "specific", values: [size] } });
+  // Builds the prompt/code for exactly ONE Size x Orientation combination,
+  // fully resolved (never "ask the question") - used by the Copy prompt/
+  // Copy code dropdown's per-combination "Copy" buttons.
+  function buildComboPrompt(size, orientation, labels){
+    return buildFullPrompt({
+      size: { mode: "specific", values: [size] },
+      orientation: { mode: "specific", values: [orientation] },
+      labels: labels
+    });
   }
 
-  function buildComboCode(size){
-    return buildFullCode({ size: { mode: "specific", values: [size] } });
+  function buildComboCode(size, orientation, labels){
+    return buildFullCode({
+      size: { mode: "specific", values: [size] },
+      orientation: { mode: "specific", values: [orientation] },
+      labels: labels
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function(){
@@ -296,11 +344,33 @@
         copyTextFull(buildFullCode(), cardCopyCodeBtn);
       });
     }
+
+    // Second gallery card (Vertical) - same page, same component, so its
+    // Copy prompt/Copy code commit explicitly to Orientation: Vertical
+    // (matching what the card actually shows) instead of asking the
+    // question the way the first card's un-narrowed buttons do.
+    var verticalSelection = { size: { mode: "specific", values: ["32"] }, orientation: { mode: "specific", values: ["vertical"] } };
+    var cardCopyPromptVerticalBtn = document.querySelector('[data-role="copy-prompt-steps-vertical"]');
+    var cardCopyCodeVerticalBtn = document.querySelector('[data-role="copy-code-steps-vertical"]');
+    if (cardCopyPromptVerticalBtn){
+      cardCopyPromptVerticalBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        copyTextFull(buildFullPrompt(verticalSelection), cardCopyPromptVerticalBtn);
+      });
+    }
+    if (cardCopyCodeVerticalBtn){
+      cardCopyCodeVerticalBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        copyTextFull(buildFullCode(verticalSelection), cardCopyCodeVerticalBtn);
+      });
+    }
+
     var stepsTypeCards = document.querySelectorAll(".steps-type-card[data-system]");
     stepsTypeCards.forEach(function(card){
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "steps-" + card.dataset.system + ".html";
+      if (card.dataset.orientation === "vertical") href += "?orientation=vertical";
       card.addEventListener("click", function(){ window.location.href = href; });
       card.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " "){
@@ -384,8 +454,19 @@
     var matrixContainer = document.querySelector('[data-role="steps-matrix-container"]');
     if (!matrixContainer) return;
 
+    // Landing here from the listing page's Vertical card (steps-default.html?orientation=vertical)
+    // should open with Vertical already selected, matching what that card showed -
+    // not silently fall back to the Horizontal default and look like the wrong page loaded.
+    var requestedOrientation = (function(){
+      var params = new URLSearchParams(window.location.search);
+      var v = params.get("orientation");
+      return ORIENTATION_OPTIONS.some(function(o){ return o.value === v; }) ? v : FALLBACK_DEFAULTS.orientation;
+    })();
+
     var labelsInput = document.querySelector('[data-role="steps-label"]');
+    var stepsCountInput = document.querySelector('[data-role="steps-count-input"]');
     var sizeMount = document.querySelector('[data-role="steps-size-mount"]');
+    var orientationMount = document.querySelector('[data-role="steps-orientation-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
@@ -398,44 +479,49 @@
       return ordered.length ? ordered : [fallback];
     }
 
-    function comboLabel(size){
-      return optionLabelFor(SIZE_OPTIONS, size);
+    function comboLabel(size, orientation){
+      return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(ORIENTATION_OPTIONS, orientation);
     }
 
-    function buildMatrixSection(size, labels){
+    function buildMatrixSection(size, orientation, labels){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildStepsRow(t.key, state.key, size, labels) + "</td>";
+          return '<td class="button-matrix-cell">' + buildStepsRow(t.key, state.key, size, labels, orientation) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
       var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead">' + t.label + "</th>"; }).join("");
       return '<div class="button-matrix-combo">' +
-        '<p class="button-matrix-combo-label">' + comboLabel(size) + "</p>" +
+        '<p class="button-matrix-combo-label">' + comboLabel(size, orientation) + "</p>" +
         '<table class="button-matrix"><thead><tr><th class="button-matrix-rowhead"></th>' + headCells + "</tr></thead>" +
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
     function currentSelectionInfo(){
       return {
-        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size])
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
+        orientation: selectionMode(propertyMultiSelects.orientation, ORIENTATION_OPTIONS, [FALLBACK_DEFAULTS.orientation]),
+        labels: parseLabels(labelsInput.value)
       };
     }
 
     function render(){
       var labels = parseLabels(labelsInput.value);
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
+      var orientations = selectedOrDefault(propertyMultiSelects.orientation, ORIENTATION_OPTIONS, FALLBACK_DEFAULTS.orientation);
 
       var html = "";
       var combos = [];
       sizes.forEach(function(size){
-        html += buildMatrixSection(size, labels);
-        combos.push({ size: size, label: comboLabel(size) });
+        orientations.forEach(function(orientation){
+          html += buildMatrixSection(size, orientation, labels);
+          combos.push({ size: size, orientation: orientation, label: comboLabel(size, orientation), labels: labels });
+        });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.orientation, c.labels); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.orientation, c.labels); });
     }
 
     var propertyMultiSelects = {};
@@ -449,8 +535,45 @@
         onChange: render
       });
     }
+    if (orientationMount && window.createMultiSelect){
+      propertyMultiSelects.orientation = window.createMultiSelect({
+        root: orientationMount,
+        options: ORIENTATION_OPTIONS,
+        defaultSelected: [requestedOrientation],
+        ariaLabel: "Orientation options",
+        labelledBy: "steps-orientation-dropdown-label",
+        onChange: render
+      });
+    }
 
-    if (labelsInput) labelsInput.addEventListener("input", render);
+    if (labelsInput){
+      labelsInput.addEventListener("input", function(){
+        // Keep Step count honest about what Labels actually holds, so the
+        // two controls never silently disagree - typing a 5th label here
+        // should show "5" over there without needing to touch that field.
+        if (stepsCountInput) stepsCountInput.value = String(parseLabels(labelsInput.value).length);
+        render();
+      });
+    }
+
+    if (stepsCountInput){
+      // "change" (fires on blur, Enter, or a spinner-arrow click) rather
+      // than "input" (fires per keystroke) - clamping on every keystroke
+      // fought a two-digit target the moment the first digit landed:
+      // typing "10" hit "1" first, which is below the minimum, so it
+      // instantly snapped to "2" before "0" could ever be typed, and
+      // rebuilt Labels around that wrong intermediate count in the
+      // process (silently discarding labels the very next keystroke was
+      // about to keep). Waiting for the value to actually be committed
+      // lets any number be typed freely; only the finished value clamps
+      // and updates Labels.
+      stepsCountInput.addEventListener("change", function(){
+        var clamped = clampStepCount(stepsCountInput.value);
+        if (String(clamped) !== stepsCountInput.value) stepsCountInput.value = clamped;
+        labelsInput.value = labelsForCount(parseLabels(labelsInput.value), clamped).join(", ");
+        render();
+      });
+    }
 
     render();
   });

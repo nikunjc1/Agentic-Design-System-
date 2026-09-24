@@ -92,7 +92,9 @@
     lines.push(".skeleton-demo-row{ display:flex; gap:12px; align-items:flex-start; }");
     lines.push(".skeleton-demo-col{ flex:1 1 auto; min-width:0; }");
     lines.push(".skeleton-demo-text, .skeleton-demo-card{ display:flex; flex-direction:column; width:200px; }");
-    lines.push(".skeleton-demo-line.is-animated, .skeleton-demo-avatar.is-animated, .skeleton-demo-media.is-animated{ background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer 1.5s ease-in-out infinite; }");
+    lines.push(".skeleton-demo-line.is-animated, .skeleton-demo-avatar.is-animated, .skeleton-demo-media.is-animated{ background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }");
+    lines.push("/* The shimmer is decorative - the skeleton's shape already says \"loading\" - so it switches off entirely when reduced motion is requested. */");
+    lines.push("@media (prefers-reduced-motion: reduce){ .skeleton-demo-line.is-animated, .skeleton-demo-avatar.is-animated, .skeleton-demo-media.is-animated{ animation:none; background:var(--graphite-700); } }");
     return lines.join("\n");
   }
 

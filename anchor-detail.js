@@ -10,6 +10,14 @@
   // hardcoded CSS exactly, and the same ask-vs-specific Copy Prompt/Code
   // dropdown pattern via selectionMode.
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "standalone", label: "Standalone" },
     { key: "icon", label: "With icon" }
@@ -124,6 +132,7 @@
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var label = selectionInfo.label || DEFAULT_LABEL;
     var css = liveCssFor();
 
     var lines = [];
@@ -147,13 +156,14 @@
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Anchors are sized by font-size, not height - the icon (With icon type) scales alongside it.");
     lines.push("");
-    lines.push("Component properties: Label (editable text, default \"" + DEFAULT_LABEL + "\").");
+    lines.push("Component properties: Label (editable text, current value \"" + label + "\").");
     return lines.join("\n");
   }
 
   function buildFullCode(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var label = selectionInfo.label || DEFAULT_LABEL;
     var c = liveCssFor();
 
     var lines = [];
@@ -182,7 +192,7 @@
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " -->");
     TYPES.forEach(function(t){
       var iconMarkup = t.key === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
-      lines.push('<a href="#" class="anchor-demo-link anchor-demo-link--' + t.key + ' anchor-demo-link--fs' + exampleSize + '">' + DEFAULT_LABEL + iconMarkup + "</a>");
+      lines.push('<a href="#" class="anchor-demo-link anchor-demo-link--' + t.key + ' anchor-demo-link--fs' + exampleSize + '">' + escapeHtml(label) + iconMarkup + "</a>");
     });
     return lines.join("\n");
   }
@@ -190,12 +200,12 @@
   // Builds the prompt/code for exactly ONE Size, fully resolved (never
   // "ask the question") - used by the Copy prompt/Copy code dropdown's
   // per-combination "Copy" buttons.
-  function buildComboPrompt(size){
-    return buildFullPrompt({ size: { mode: "specific", values: [size] } });
+  function buildComboPrompt(size, label){
+    return buildFullPrompt({ size: { mode: "specific", values: [size] }, label: label });
   }
 
-  function buildComboCode(size){
-    return buildFullCode({ size: { mode: "specific", values: [size] } });
+  function buildComboCode(size, label){
+    return buildFullCode({ size: { mode: "specific", values: [size] }, label: label });
   }
 
   document.addEventListener("DOMContentLoaded", function(){
@@ -342,7 +352,7 @@
       var cls = "anchor-demo-link anchor-demo-link--" + typeKey + " anchor-demo-link--fs" + size + stateCls;
       var ariaAttr = isDisabled ? ' aria-disabled="true"' : "";
       var iconMarkup = typeKey === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
-      return '<a href="#" class="' + cls + '"' + ariaAttr + ">" + label + iconMarkup + "</a>";
+      return '<a href="#" class="' + cls + '"' + ariaAttr + ">" + escapeHtml(label) + iconMarkup + "</a>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){
@@ -374,7 +384,8 @@
 
     function currentSelectionInfo(){
       return {
-        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size])
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
+        label: parseLabel(labelInput.value)
       };
     }
 
@@ -386,12 +397,12 @@
       var combos = [];
       sizes.forEach(function(size){
         html += buildMatrixSection(size, label);
-        combos.push({ size: size, label: comboLabel(size) });
+        combos.push({ size: size, label: comboLabel(size), fieldLabel: label });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.fieldLabel); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.fieldLabel); });
     }
 
     var propertyMultiSelects = {};

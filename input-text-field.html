@@ -4,13 +4,14 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem("ads:theme") || "dark";
+    var t = localStorage.getItem("ads:theme") || "light";
     document.documentElement.setAttribute("data-theme", t);
   }catch(e){}
 
   try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var hex = saved && saved.primary && saved.primary.hex;
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
     if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
       var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
@@ -36,6 +37,51 @@
       if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
       if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
       if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
 })();
@@ -67,15 +113,19 @@
 
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
-    <div class="sidebar-search">
-      <span class="search-icon">&#8981;</span>
-      <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" autocomplete="off" spellcheck="false" />
-      <span class="kbd">/</span>
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
     </div>
 
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">New Project</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -89,6 +139,16 @@
         <a class="nav-link" href="borders.html">Borders</a>
         <a class="nav-link" href="shadows.html">Shadows</a>
         <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
       </div>
     </div>
 
@@ -132,6 +192,7 @@
         <a class="nav-link" href="pagination.html">Pagination</a>
         <a class="nav-link" href="menu.html">Menu</a>
         <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
 
         <span class="nav-subgroup-label">Feedback</span>
         <a class="nav-link" href="alert.html">Alert</a>
@@ -159,9 +220,12 @@
         <a class="nav-link" href="image.html">Image</a>
         <a class="nav-link" href="list.html">List</a>
         <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
         <a class="nav-link" href="table.html">Table</a>
         <a class="nav-link" href="tag.html">Tag</a>
         <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
       </div>
     </div>
 
@@ -169,10 +233,13 @@
       <a class="nav-link" href="patterns.html">Patterns</a>
       <a class="nav-link" href="templates.html">Templates</a>
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
       <a class="nav-link" href="code.html">Code</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="documentation.html">Documentation</a>
       <a class="nav-link" href="governance.html">Governance</a>
+      <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
@@ -181,7 +248,8 @@
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Forms &middot; Input</p>
   <a class="back-link" href="input.html">&larr; Back to Input types</a>
-  <h1 class="page-title">Input Text Field</h1>
+  <h1 class="page-title">Input Text Field <span class="component-status is-stable">Stable</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for collecting a single line of free-form text, like an email address, a name, or a search query.</p>
 
   <section class="panel color-foundation">
@@ -225,9 +293,17 @@
 
       <div class="type-control type-control-checkbox">
         <span>Trailing icon</span>
-        <label class="type-control-checkbox-row" title="Shows a checkmark icon after the entered text, on the right side of the field - useful for validation, a clear button, or a password-reveal toggle.">
+        <label class="type-control-checkbox-row" title="Shows a checkmark icon after the entered text, on the right side of the field - useful for validation or a password-reveal toggle.">
           <input type="checkbox" data-role="input-trailing-icon" />
           <span class="type-control-scope">icon on the right</span>
+        </label>
+      </div>
+
+      <div class="type-control type-control-checkbox">
+        <span>Allow clear</span>
+        <label class="type-control-checkbox-row" title="Once the field has a value, shows an &times; button that clears it - takes over the trailing slot from Trailing icon whenever both are on.">
+          <input type="checkbox" data-role="input-allow-clear" />
+          <span class="type-control-scope">&times; button once filled</span>
         </label>
       </div>
     </div>
@@ -248,6 +324,109 @@
       <span class="chip">Search</span>
       <span class="chip">Phone number</span>
       <span class="chip">Company</span>
+    </div>
+  </section>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+      <div class="guide-view-toggle" role="group" aria-label="Documentation view">
+        <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
+        <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="human">
+      <p class="guide-subhead">Overview</p>
+      <p class="guide-body-text">Input (Text Field) is the base single-line text control for collecting free-form values - a label, a text box with a placeholder, and states for focus, filled, error and disabled - the foundation every more specialized text field (Password, Number, Search, and others) builds on.</p>
+
+      <p class="guide-subhead">When to Use</p>
+      <ul class="guide-list">
+        <li><strong>Any short, free-form line of text</strong> - email address, full name, company name.</li>
+        <li><strong>A value with no fixed format the system can validate character-by-character</strong> - a search term typed into a form.</li>
+        <li><strong>A phone number or similar short structured value with no dedicated component</strong> - when no more specific field type exists.</li>
+      </ul>
+
+      <p class="guide-subhead">When Not to Use</p>
+      <ul class="guide-list">
+        <li><strong>A value from a fixed, known list</strong> - use Select so the user picks rather than types a value that must match exactly.</li>
+        <li><strong>Multiple lines of text</strong> - use Text Area.</li>
+        <li><strong>A secret value that should stay hidden while typing</strong> - use Password.</li>
+        <li><strong>A value with a live suggestion list</strong> - use Autocomplete or Mention.</li>
+      </ul>
+
+      <p class="guide-subhead">Best Practices</p>
+      <ul class="guide-list">
+        <li>Always pair the field with a visible label, not placeholder-only text - placeholders disappear once typing starts and fail low-vision and memory-impaired users.</li>
+        <li>Show validation errors inline, next to the field, with a specific message rather than a generic "Invalid input."</li>
+        <li>Use placeholder text only for a format example (e.g. "name@company.com"), never as the only instruction for what to enter.</li>
+      </ul>
+
+      <p class="guide-subhead">Do and Don't</p>
+      <div class="guide-dodont">
+        <div class="guide-dodont-case is-do">
+          <p class="guide-dodont-label">Do</p>
+          <div class="guide-dodont-demo"><div class="input-demo-field"><label class="input-demo-label">Email address</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input type="text" class="input-demo-input" readonly tabindex="-1" placeholder="name@company.com" /></div></div></div>
+          <p class="guide-dodont-note">A visible label that stays put, with the placeholder showing the expected format rather than carrying the meaning.</p>
+        </div>
+        <div class="guide-dodont-case is-dont">
+          <p class="guide-dodont-label">Don't</p>
+          <div class="guide-dodont-demo"><div class="input-demo-field"><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input type="text" class="input-demo-input" readonly tabindex="-1" placeholder="Email address" /></div></div></div>
+          <p class="guide-dodont-note">A placeholder used as the label disappears the moment someone types, leaving the filled field unlabelled for anyone who looks away and back.</p>
+        </div>
+      </div>
+
+      <p class="guide-subhead">Accessibility</p>
+      <ul class="guide-list">
+        <li>The label is programmatically associated with the input (via for/id or by wrapping it), not just visually adjacent.</li>
+        <li>The error state sets aria-invalid and links the error message with aria-describedby, so screen readers announce it.</li>
+        <li>Focus state shows a visible outline distinct from the field's default border.</li>
+      </ul>
+
+      <p class="guide-subhead">Related Components</p>
+      <p class="guide-body-text">Password, Number, Search, Autocomplete, Mention, Text Area.</p>
+    </div>
+
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "component": "Input",
+  "status": "Stable",
+  "type": "Text Field",
+  "category": "Forms",
+  "summary": "Input (Text Field) is the base single-line text control for collecting free-form values - a label, a text box with a placeholder, and states for focus, filled, error and disabled - the foundation every more specialized text field (Password, Number, Search, and others) builds on.",
+  "whenToUse": [
+    "Any short, free-form line of text - email address, full name, company name.",
+    "A value with no fixed format the system can validate character-by-character - a search term typed into a form.",
+    "A phone number or similar short structured value with no dedicated component - when no more specific field type exists."
+  ],
+  "whenNotToUse": [
+    "A value from a fixed, known list - use Select so the user picks rather than types a value that must match exactly.",
+    "Multiple lines of text - use Text Area.",
+    "A secret value that should stay hidden while typing - use Password.",
+    "A value with a live suggestion list - use Autocomplete or Mention."
+  ],
+  "bestPractices": [
+    "Always pair the field with a visible label, not placeholder-only text - placeholders disappear once typing starts and fail low-vision and memory-impaired users.",
+    "Show validation errors inline, next to the field, with a specific message rather than a generic \"Invalid input.\"",
+    "Use placeholder text only for a format example (e.g. \"name@company.com\"), never as the only instruction for what to enter."
+  ],
+  "doAndDont": {
+    "do": "A visible label that stays put, with the placeholder showing the expected format rather than carrying the meaning.",
+    "dont": "A placeholder used as the label disappears the moment someone types, leaving the filled field unlabelled for anyone who looks away and back."
+  },
+  "accessibility": [
+    "The label is programmatically associated with the input (via for/id or by wrapping it), not just visually adjacent.",
+    "The error state sets aria-invalid and links the error message with aria-describedby, so screen readers announce it.",
+    "Focus state shows a visible outline distinct from the field's default border."
+  ],
+  "relatedComponents": [
+    "Password",
+    "Number",
+    "Search",
+    "Autocomplete",
+    "Mention",
+    "Text Area"
+  ]
+}</code></pre>
     </div>
   </section>
 </main>

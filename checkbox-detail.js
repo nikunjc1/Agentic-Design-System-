@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "standard", label: "Standard" },
     { key: "card", label: "Card" }
@@ -194,7 +202,7 @@
     lines.push(".checkbox-demo-input:focus-visible + .checkbox-demo-box, .checkbox-demo-box.is-focus{ " + css.box.focus + " }");
     lines.push(".checkbox-demo-input:disabled + .checkbox-demo-box, .checkbox-demo-box.is-disabled{ " + css.box.disabled + " }");
     lines.push(".checkbox-demo-icon{ display:flex; color:#FFFFFF; }");
-    lines.push(".checkbox-demo-label{ font-size:14px; color:var(--text-hi); }");
+    lines.push(".checkbox-demo-label{ font-size:14px; color:var(--text-hi); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Card type (2nd Types option) - whole row highlights when checked */");
     var cardCss = liveCssFor("card");
@@ -202,7 +210,7 @@
     lines.push(".checkbox-demo-card.is-checked{ " + cardCss.card + " }");
     lines.push("");
     lines.push("/* Disabled - 40% opacity, not-allowed cursor */");
-    lines.push(".checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity:0.7; }");
+    lines.push(".checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity:0.7; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
@@ -396,7 +404,7 @@
       var fieldHtml = '<label class="checkbox-demo-field checkbox-demo-field--' + typeKey + stateCls + '">' +
         '<input type="checkbox" class="checkbox-demo-input"' + indeterminateAttr + checkedAttr + disabledAttr + ' />' +
         '<span class="' + boxCls + '" style="border-radius:' + radiusCss + '">' + icon + '</span>' +
-        '<span class="checkbox-demo-label">' + label + '</span>' +
+        '<span class="checkbox-demo-label">' + escapeHtml(label) + '</span>' +
         '</label>';
       if (typeKey === "card"){
         var cardCls = "checkbox-demo-card" + (isChecked ? " is-checked" : "");

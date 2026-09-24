@@ -1,8 +1,17 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var ICON_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
   var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -176,7 +185,7 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Leading icon (boolean, optional icon before the input text), Trailing icon (boolean, optional icon after the input text - e.g. validation, a clear button, or a password-reveal toggle).");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Leading icon (boolean, optional icon before the input text), Trailing icon (boolean, optional icon after the input text - e.g. validation or a password-reveal toggle), Allow clear (boolean, shows an × button in the trailing slot once the field has a value, clearing it on click - takes over the trailing slot from Trailing icon whenever both are on and there's a value, since Ant never shows both at once).");
     return lines.join("\n");
   }
 
@@ -184,9 +193,9 @@
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
     var lines = [];
     lines.push('<div class="input-field">');
-    lines.push('  <label class="input-field-label">' + label + "</label>");
+    lines.push('  <label class="input-field-label">' + escapeHtml(label) + "</label>");
     lines.push('  <div class="input-control input-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="text" placeholder="' + placeholder + '" />');
+    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '" />');
     lines.push("  </div>");
     lines.push("</div>");
     return lines.join("\n");
@@ -404,25 +413,32 @@
     var placeholderInput = document.querySelector('[data-role="input-placeholder"]');
     var leadingIconInput = document.querySelector('[data-role="input-leading-icon"]');
     var trailingIconInput = document.querySelector('[data-role="input-trailing-icon"]');
+    var allowClearInput = document.querySelector('[data-role="input-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="input-size-mount"]');
     var radiusMount = document.querySelector('[data-role="input-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildInputField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon){
+    function buildInputField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear){
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
+      var hasValue = isFilled || isError;
       var controlClasses = "input-demo-control input-demo-control--" + typeKey + " input-demo-control--h" + size + stateCls;
       var leadingHtml = showLeadingIcon ? '<span class="input-demo-icon">' + ICON_MAIL + "</span>" : "";
-      var trailingHtml = showTrailingIcon ? '<span class="input-demo-icon input-demo-icon--trailing">' + ICON_CHECK + "</span>" : "";
+      // allowClear takes over the trailing slot once there's a value to
+      // clear - a static trailing icon and a clear button would otherwise
+      // compete for the same spot, and Ant's own Input never shows both.
+      var trailingHtml = (allowClear && hasValue && !isDisabled)
+        ? '<button type="button" class="input-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        : (showTrailingIcon ? '<span class="input-demo-icon input-demo-icon--trailing">' + ICON_CHECK + "</span>" : "");
       var valueAttr = isFilled ? ' value="jane@example.com"' : (isError ? ' value="not-an-email"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="input-demo-input" placeholder="' + placeholder + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="text" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="input-demo-note is-error">Enter a valid email address.</p>' : "";
       return '<div class="input-demo-field">' +
-        '<label class="input-demo-label">' + label + "</label>" +
+        '<label class="input-demo-label">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + leadingHtml + inputHtml + trailingHtml + "</div>" +
         noteHtml +
         "</div>";
@@ -441,10 +457,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon){
+    function buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildInputField(t.key, state.key, state.cls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon) + "</td>";
+          return '<td class="button-matrix-cell">' + buildInputField(t.key, state.key, state.cls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -467,6 +483,7 @@
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var showLeadingIcon = leadingIconInput ? leadingIconInput.checked : false;
       var showTrailingIcon = trailingIconInput ? trailingIconInput.checked : false;
+      var allowClear = allowClearInput ? allowClearInput.checked : false;
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -475,7 +492,7 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon);
+          html += buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
@@ -511,6 +528,7 @@
     placeholderInput.addEventListener("input", render);
     if (leadingIconInput) leadingIconInput.addEventListener("change", render);
     if (trailingIconInput) trailingIconInput.addEventListener("change", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();
   });

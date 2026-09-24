@@ -1,6 +1,14 @@
 (() => {
   "use strict";
 
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   var TYPES = [
     { key: "star", label: "Star" },
     { key: "heart", label: "Heart" }
@@ -144,7 +152,7 @@
     var lines = [];
     lines.push("/* Agentic Design System - Rating component */");
     lines.push(".rating-demo-field{ display:flex; flex-direction:column; gap:8px; }");
-    lines.push(".rating-demo-label{ font-size:13px; font-weight:500; color:var(--text-hi); margin:0; }");
+    lines.push(".rating-demo-label{ font-size:13px; font-weight:500; color:var(--text-hi); margin:0; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".rating-demo-row{ display:flex; align-items:center; gap:4px; }");
     lines.push(".rating-demo-icon{ flex:none; display:flex; align-items:center; justify-content:center; background:none; border:none; padding:2px; cursor:pointer; color:var(--text-dim); transition:color .15s ease; }");
     lines.push(".rating-demo-icon svg{ display:block; }");
@@ -160,7 +168,7 @@
     lines.push("<!-- Example usage - one per type, Selected state showing " + selectedCount + " of 5 filled, at " + exampleSize + "px -->");
     TYPES.forEach(function(t){
       lines.push('<div class="rating-demo-field">');
-      lines.push('  <p class="rating-demo-label">' + label + "</p>");
+      lines.push('  <p class="rating-demo-label">' + escapeHtml(label) + "</p>");
       lines.push('  <div class="rating-demo-row is-selected">');
       for (var i = 0; i < MAX_ICONS; i++){
         var filled = i < selectedCount;
@@ -347,7 +355,7 @@
         icons.push('<button type="button" class="rating-demo-icon' + extraCls + '"' + disabledAttr + ">" + iconSvg(typeKey, filled, size) + "</button>");
       }
       var rowHtml = '<div class="rating-demo-row' + stateCls + '">' + icons.join("") + "</div>";
-      return '<div class="rating-demo-field"><p class="rating-demo-label">' + label + "</p>" + rowHtml + "</div>";
+      return '<div class="rating-demo-field"><p class="rating-demo-label">' + escapeHtml(label) + "</p>" + rowHtml + "</div>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){
