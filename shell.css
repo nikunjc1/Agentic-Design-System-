@@ -3565,7 +3565,24 @@ button{ font-family: inherit; }
 .avatar-demo-group-item{ display: inline-flex; margin-inline-start: -10px; }
 .avatar-demo-group-item:first-child{ margin-inline-start: 0; }
 .avatar-demo-group-item .avatar-demo-circle{ border: 2px solid var(--graphite-950); }
-.avatar-demo-circle--overflow{ background: var(--graphite-700); color: var(--text-mid); cursor: default; }
+/* Pre-existing bug found while adding the Names-only toggle above:
+   .avatar-demo-circle--overflow was a single-class selector, same
+   specificity as .avatar-demo-circle--initials (which sets its own,
+   different background) - since --initials is declared later in this
+   file, it silently won the cascade, so the "+N" tile rendered in the
+   avatar's own red instead of the intended muted gray, undermining the
+   "styled distinctly so it reads as an overflow indicator, not a real
+   person" intent described in the Copy Prompt text. The compound
+   selector (.avatar-demo-circle.avatar-demo-circle--overflow) has one
+   more class than --initials alone, so it now wins regardless of
+   declaration order. */
+.avatar-demo-circle.avatar-demo-circle--overflow{ background: var(--graphite-700); color: var(--text-mid); cursor: default; }
+/* "Show as: Names only" - the same list, with no avatar circle at all
+   rather than a per-avatar property, since it represents whether the
+   avatar graphic is worth showing for this list in the first place. */
+.avatar-demo-group-names{ display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.avatar-demo-group-name-item{ font-family: var(--font-body); font-size: 13px; color: var(--text-hi); }
+.avatar-demo-group-name-item--overflow{ color: var(--text-dim); }
 
 .avatar-demo-circle{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 9999px; font-family: var(--font-body); font-weight: 600; color: #FFFFFF; overflow: hidden; flex: none; }
 .avatar-demo-circle--square{ border-radius: var(--radius-md); }
@@ -3948,15 +3965,38 @@ button{ font-family: inherit; }
 .popover-demo-wrap--right .popover-demo-arrow{ margin: auto -12px auto -4px; }
 
 /* ---------- Table demo (table-default.html) ---------- */
-.table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 320px; max-width: 100%; }
+/* Width grows with the column set - Email/Mobile need real room
+   ("jordan.lee@company.com" alone needs ~165px) or they'd squeeze
+   Name/Role into wrapping the same way the checkbox column did before
+   table-demo-table--has-checkbox existed (see the note on that rule
+   below). */
+.table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; }
 .table-demo-table th{ text-align: start; padding: 8px 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1.5px solid var(--line-strong); }
-.table-demo-table td{ padding: 8px 10px; border-bottom: 1px solid var(--line); }
+/* text-align:start was only ever set on th (above), never td - td's text
+   was silently inheriting text-align:center from the outer Live Preview
+   matrix cell (.button-matrix-cell's shared default), centering Name/
+   Status/Role text while the header labels above them stayed correctly
+   left-aligned. */
+.table-demo-table td{ padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: start; }
 .table-demo-table--bordered{ border: 1px solid var(--line-strong); overflow: hidden; }
 .table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end: 1px solid var(--line); }
 .table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end: none; }
 .table-demo-row--striped{ background: var(--graphite-850); }
 .table-demo-row--selected{ background: var(--red-tint); }
 .table-demo-status-cell{ display: flex; align-items: center; gap: 6px; }
+/* Selected adds a leading checkbox column, but the table's own width
+   stayed a fixed 320px - the checkbox column (measured ~40px) had to
+   come out of Name/Role's existing share instead of growing the table,
+   squeezing "Jordan Lee" from 98px down to 85px and "Product Designer"
+   from 140px down to 120px, both narrow enough to wrap onto a second
+   line. Widening the table by the checkbox column's own measured need
+   restores Name/Role to their original widths instead. */
+.table-demo-table--has-checkbox{ width: 670px; }
+/* No underline at rest - only on hover, giving interaction feedback
+   rather than a permanent decoration. Same pattern this system's own
+   Link-type Button already uses (see .btn-demo--link:hover above). */
+.table-demo-link-cell{ color: var(--red-400); text-decoration: none; }
+.table-demo-link-cell:hover{ text-decoration: underline; }
 /* Size (3) - Large is the default (the base th/td padding); Middle and
    Small only tighten padding - font-size stays fixed at every size, the
    same restraint every sized component in this system follows. */
@@ -5801,11 +5841,34 @@ a.system-card{ text-decoration: none; color: inherit; }
 .statistic-demo-value--positive{ color: var(--green-500); }
 .statistic-demo-value--negative{ color: var(--danger-500); }
 .statistic-demo-affix{ font-size: 16px; font-weight: 600; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.statistic-demo-trend{ display: inline-flex; align-items: center; gap: 2px; font-size: 14px; font-weight: 600; margin-inline-start: 4px; color: var(--text-dim); }
+/* Its own line below the value now (a sibling in .statistic-demo-field,
+   not a flex child inside .statistic-demo-value) - field's own gap:6px
+   is the single source of the value-to-trend spacing, the same fix
+   applied when the redundant margin-inline-start:4px was removed
+   earlier. */
+.statistic-demo-trend{ display: inline-flex; align-items: center; gap: 2px; font-size: 14px; font-weight: 600; color: var(--text-dim); }
 .statistic-demo-trend svg{ width: 14px; height: 14px; }
 .statistic-demo-trend--positive{ color: var(--green-500); }
 .statistic-demo-trend--negative{ color: var(--danger-500); }
 .statistic-demo-skeleton{ width: 120px; height: 28px; border-radius: var(--radius-sm); background: linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size: 200% 100%; animation: image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }
+/* Title/value's own max-width:260px (shared truncation rule) capped their
+   boxes well below the column's actual available width (measured 260px
+   box in a 326-370px-wide field), but the box itself was already left-
+   anchored - text-align:center (inherited from the matrix's shared
+   default) was only centering the text within that narrower box, not
+   the column, landing it noticeably off the column's true center. Same
+   scoped-override pattern as Rating/Upload/Calendar. */
+[data-role="statistic-matrix-container"] .button-matrix-colhead,
+[data-role="statistic-matrix-container"] .button-matrix-cell{ text-align: start; }
+
+/* Same table auto-layout bug already fixed for Steps, Avatar, Badge and
+   Calendar: the sticky row-head column ("Default"/"Positive"/"Negative"/
+   "Loading") measured 199.7px wide, well beyond what any of these labels
+   actually need. "Negative" is the longest at 80px content width plus
+   the column's own 40px of side padding; 130px covers every label with
+   room to spare. Scoped to Statistic's own matrix only. */
+[data-role="statistic-matrix-container"] .button-matrix{ table-layout: fixed; }
+[data-role="statistic-matrix-container"] .button-matrix-rowhead{ width: 130px; }
 
 /* ---------- Affix demo (affix-default.html) ---------- */
 .affix-demo-viewport{ position: relative; width: 220px; height: 140px; overflow: hidden; box-sizing: border-box; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--graphite-900); padding: 8px; display: flex; flex-direction: column; gap: 8px; }

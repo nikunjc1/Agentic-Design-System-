@@ -349,6 +349,73 @@ That surfaced a second, latent issue while testing: the close button is absolute
 
 Verified: blank space next to short content now measures exactly 0px (down from 65px) across all placements and states. Stress-tested with a long custom title typed into the page's own Title field - confirmed visually via screenshot that it truncates cleanly to "Cloud storage usage su…" with a real gap before the (x), no overlap, in the "With close" state specifically (the only one with a close button). `node --check` passes on `popover-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
 
+## Statistic — two real bugs behind "spacing, margin, padding, and alignment"
+
+Reported via screenshot as general spacing/margin/padding/alignment issues on the Statistic detail page. Measured every dimension before assuming anything - title-to-value gap, row heights, and vertical alignment all came back consistent and correct, so those weren't the problem. Found two separate, genuine bugs instead:
+
+1. **A redundant/doubled gap** - `.statistic-demo-value` is a flex row (`gap:4px`) holding the prefix, value text, suffix and trend badge as siblings, but `.statistic-demo-trend` also had its own `margin-inline-start:4px` - stacking on top of the parent's gap between the same two elements, measured at 8px instead of the intended 4px. Same redundant-spacing bug class as Timeline's Horizontal layout (item gap stacking with content's own padding) found earlier this session.
+2. **The same table auto-layout rowhead bug as Steps/Avatar/Badge/Calendar** - the sticky row-head column ("Default"/"Positive"/"Negative"/"Loading") measured 199.7px wide against a 1206px table, well beyond what any of these labels need. "Negative" is the longest at 80px content width plus the column's own 40px of side padding; 130px covers every label with room to spare.
+
+Fixed both in `shell.css` (removed the trend's redundant margin; added scoped `table-layout:fixed` + explicit rowhead width) and synced the trend fix into `statistic-detail.js`'s Copy Code emission (the rowhead fix is generic matrix scaffolding, not component-specific, so it needs no JS-side change, same as Avatar/Badge/Calendar).
+
+Verified: the value-to-trend gap now measures exactly 4px (down from 8px), and the rowhead measures exactly 130px (down from 199.7px). Confirmed visually via screenshot - the trend arrow sits tight against the value, and the row labels no longer eat a large dead gutter. `node --check` passes on `statistic-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Statistic — left-aligned content, trend moved below the value
+
+Two follow-up requests on the same component: left-align the Title/Value text (previously centered), and move the trend indicator to its own line below the value instead of sitting inline next to it.
+
+For the alignment: measured before assuming anything, since simply adding `text-align:start` without understanding *why* it looked centered could have missed the real cause. `.statistic-demo-title`/`.statistic-demo-value` share a `max-width:260px` truncation rule (meant for the Properties panel's narrower context) that capped their boxes at 260px even though the column itself measured 326-370px wide - the box was already left-anchored, but `text-align:center` (inherited from the matrix's shared default) was centering the text *within that narrower box*, landing it visibly off the true column center rather than looking genuinely centered or left-aligned. Added the same scoped override already used for Rating/Upload/Calendar: `[data-role="statistic-matrix-container"] .button-matrix-colhead, .button-matrix-cell{ text-align: start; }` in `shell.css`.
+
+For the trend: restructured `buildStatisticField()` in `statistic-detail.js` so the trend `<span>` is now a sibling of `.statistic-demo-value` inside `.statistic-demo-field`, instead of a flex child packed onto the same line inside `.statistic-demo-value`. `.statistic-demo-field`'s own `gap:6px` (already used for the title-to-value spacing) is now the single source of the value-to-trend spacing too - no new margin needed. Updated the stale Copy Prompt line that described the trend as "next to the value" to "on its own line below the value," and fixed an outdated code comment left over from the earlier redundant-margin fix (which referenced the trend still being inside `.statistic-demo-value`).
+
+Verified visually via screenshot: "Active Users" and "112,893" now sit flush against the column's left edge (matching the column headers, which the same override also left-aligns) instead of looking off-center, and the trend arrow + percentage now render as a clear second line under the number in the "With Trend" column, reading like a real KPI card. `node --check` passes on `statistic-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Table — Selected state's checkbox column squeezed Name/Role into wrapping
+
+Reported as an alignment issue plus "Jordan Lee" wrapping onto two lines when it should stay on one. Measured before touching anything: `.table-demo-table` has a fixed `width:320px` used by every state, but the Selected state adds a leading checkbox column - without any extra width budget for it, that column's own ~40px had to come out of Name/Role's existing share instead. Name shrank from 98px to 85px and Role from 140px to 120px, both narrow enough that "Jordan Lee" and "Product Designer" wrapped onto a second line - which in turn made that row visibly taller than the others and threw off the checkbox's vertical alignment relative to the surrounding rows, matching the "not aligned on the left-hand side" part of the report.
+
+Added a `table-demo-table--has-checkbox` modifier (applied only when the Selected state's checkbox column is present) that widens the table to 360px - exactly the checkbox column's own measured need - so Name/Role keep their normal widths instead of being squeezed. Wired the class in `table-detail.js`'s `buildTableField()` and added the matching rule to both `shell.css` and the Copy Code CSS emission.
+
+Verified: Name and Role are back to within 1-2px of their un-squeezed widths (97px and 138px, versus 98px/140px with no checkbox column), and "Jordan Lee"/"Product Designer" both render on one line in every Selected-state table across the matrix. Confirmed visually via screenshot - the checkbox now sits aligned with a single-line row, matching the unchecked rows below it. `node --check` passes on `table-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Table — data cells were centered, only the header row was left-aligned
+
+Follow-up report on the same component: Role (and every other data cell) still read as center-aligned. Measured directly: `.table-demo-table th` had an explicit `text-align: start`, but the matching `.table-demo-table td` rule never set `text-align` at all - it was silently inheriting `text-align: center` from the outer Live Preview matrix cell's shared default, so every row's Name/Status/Role text was centered while the column headers above them stayed correctly left-aligned.
+
+Added `text-align: start` to `.table-demo-table td` in `shell.css`, synced into `table-detail.js`'s Copy Code emission.
+
+Verified: `td` now computes `text-align: start`, matching `th`. Confirmed visually via screenshot across every state (Default/Striped/Selected/Loading/Empty) and both types (Default/Bordered) - all cell text now lines up on the same left edge as its column header. Double-checked the Empty state's own centered icon/title/description block (which sets its own explicit `text-align: center`) still renders centered as intended, since an element's own explicit style always wins over an inherited one regardless of this change. `node --check` passes on `table-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Table — added Email and Mobile columns
+
+Requested addition: two new columns (Email, Mobile), rendered in this system's defined "link" color. Checked first rather than assuming blue - this system has no blue link token anywhere; the actual defined link color (confirmed via the Link-type Button's own Copy Code output, and reused by Toast's inline "View" action) is `var(--red-400)`. Asked the user directly whether to use that or a literal blue as requested; they confirmed `var(--red-400)`, staying consistent with the rest of the system.
+
+Added `email`/`mobile` fields to `ROWS_DATA` in `table-detail.js`, extended the header row and every row-building branch (data rows, the Loading state's skeleton rows, and the Empty state's `colspan`, updated from 3 to 5) to include the two new columns, and rendered Email/Mobile as real `mailto:`/`tel:` links with a new `.table-demo-link-cell{ color: var(--red-400); text-decoration: underline; }` class - the same color + underline treatment already used by Toast's own inline link.
+
+Given this session's repeated table-width-squeeze bug (Steps/Avatar/Badge/Calendar/Statistic's rowhead, and Table's own checkbox column earlier today), pre-emptively sized the table wide enough for the new columns instead of waiting for a wrap report: `.table-demo-table`'s fixed width grew from 320px to 630px (Email alone needs ~165px for "jordan.lee@company.com"), and `.table-demo-table--has-checkbox` grew from 360px to 670px, keeping the same +40px checkbox-column allowance on top of the new base width. Synced both into `shell.css` and `table-detail.js`'s Copy Code emission, and updated the stale "Name / Status / Role example columns" line in the Copy Prompt description.
+
+Verified: every row across all 5 states and both types measures a uniform 33px height (single-line, no wrapping) in a direct DOM check. Confirmed visually via screenshot - Email/Mobile render in red-400 with an underline, consistent with Toast's own link style. Also exercised the actual Copy Code and Copy Prompt buttons (clipboard-stubbed) to confirm the new columns, the `.table-demo-link-cell` rule, and `mailto:`/`tel:` links all appear in the copied output with no console errors. `node --check` passes on `table-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Table — Email/Mobile underline moved to hover-only
+
+Follow-up on the new columns: drop the permanent underline, show it only on hover as interaction feedback. This is exactly the pattern this system's own Link-type Button already uses (`.btn-demo--link:hover{ text-decoration: underline; }`, no underline at rest) - reused it directly rather than inventing a new one. Changed `.table-demo-link-cell` to `text-decoration: none` at rest with a `:hover{ text-decoration: underline; }` rule, in `shell.css` and synced into `table-detail.js`'s Copy Code emission.
+
+Verified: `text-decoration-line` computes `none` at rest and `underline` on `:hover` for the link cells. Confirmed visually via screenshot in both states - no underline on any cell until hovered, then only the hovered cell shows one, matching the requested "gives feedback that the user is interacting with it" behavior. `node --check` passes on `table-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
+## Avatar — new "Show as: Avatars / Names only" toggle for Avatar.Group
+
+Requested feature: a "user profile name" section with a dropdown to choose whether the avatar graphic shows or not. Took two rounds of clarification to locate, since nothing by that name existed yet - landed on Avatar.Group (the overlapping-circle example for a list of people), which currently shows no names at all, only initials in circles.
+
+Added a `name` field to each person in `GROUP_PEOPLE` (`avatar-detail.js`) and a new "Show as" dropdown (`avatar-group-view-select`) in `avatar-default.html`, next to the Avatar.Group example. Refactored the group-rendering code into `renderAvatarGroup(viewMode)`, wired to the select's `change` event:
+- **Avatars** (default): the existing overlapping-circle stack, unchanged, except the overflow tile's tooltip now shows full names ("Morgan Diaz") instead of initials ("MD").
+- **Names only**: a new vertical list of full names with no avatar circle at all, using the identical "+N more" overflow pattern so both modes represent the same underlying list.
+
+Added `.avatar-demo-group-names`/`.avatar-demo-group-name-item` to `shell.css`, and updated the Copy Prompt's Avatar.Group description in `avatar-detail.js` to document the new property.
+
+**Found and fixed a real, pre-existing bug while verifying**: the overflow tile ("+1") rendered in the avatar's own red instead of its intended muted gray. `.avatar-demo-circle--overflow` and `.avatar-demo-circle--initials` are both single-class selectors of equal specificity, and `--initials` happens to be declared later in `shell.css`, so it silently won the cascade regardless of the overflow tile's own class - undermining the "styled distinctly, not a real person" intent already described in the Copy Prompt text. Fixed by raising `--overflow`'s specificity to a compound selector (`.avatar-demo-circle.avatar-demo-circle--overflow`), which now wins regardless of declaration order.
+
+Verified: switching the dropdown correctly re-renders between the two modes (confirmed the Names-only list text: "Jordan Lee, Sam Ortiz, Priya Nair, Alex Kim, +1 more"), the overflow tile now renders in the correct muted gray instead of red, and the Copy Prompt output includes "Show as"/"Names only". No console errors when exercising the Copy Prompt button (clipboard-stubbed). `node --check` passes on `avatar-detail.js` and the full 157-page HTTP-200 + tag-balance sweep passes.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.

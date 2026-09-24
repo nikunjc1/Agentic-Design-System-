@@ -94,7 +94,7 @@
     lines.push("- Offline: a small gray/dim dot.");
     lines.push("These are structural/presentational variants, not interaction states - Avatar itself is not interactive.");
     lines.push("");
-    lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a \"+N\" overflow indicator styled like a real avatar.");
+    lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a \"+N\" overflow indicator styled like a real avatar. Show as (Avatars / Names only) - whether the group renders as that overlapping avatar-circle stack, or as a plain vertical list of full names with no avatar graphic at all, for contexts where showing the avatar image isn't worth the space; both modes represent the identical list, including the same \"+N\" overflow count.");
     return lines.join("\n");
   }
 
@@ -309,27 +309,59 @@
     // Avatar.Group - overlapping circles with a "+N" overflow tile once the
     // set exceeds max, rendered once as its own static example (not woven
     // into the Size x Shape matrix, since overlap only means something
-    // across multiple avatars, not one).
+    // across multiple avatars, not one). "Show as" toggles this same list
+    // between the avatar-circle stack and a plain name list - whether the
+    // avatar graphic itself is worth showing at all, not a property of any
+    // one avatar.
     var groupContainer = document.querySelector('[data-role="avatar-group-container"]');
+    var groupViewSelect = document.querySelector('[data-role="avatar-group-view-select"]');
     if (groupContainer){
       var GROUP_PEOPLE = [
-        { initials: "JL" }, { initials: "SO" }, { initials: "PN" }, { initials: "AK" }, { initials: "MD" }
+        { initials: "JL", name: "Jordan Lee" },
+        { initials: "SO", name: "Sam Ortiz" },
+        { initials: "PN", name: "Priya Nair" },
+        { initials: "AK", name: "Alex Kim" },
+        { initials: "MD", name: "Morgan Diaz" }
       ];
       var GROUP_MAX = 4;
       var visible = GROUP_PEOPLE.slice(0, GROUP_MAX);
-      var overflowCount = GROUP_PEOPLE.length - GROUP_MAX;
-      var circlesHtml = visible.map(function(p){
-        return '<div class="avatar-demo-group-item">' +
-          '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40">' + escapeHtml(p.initials) + "</span>" +
-          "</div>";
-      }).join("");
-      if (overflowCount > 0){
-        circlesHtml += '<div class="avatar-demo-group-item">' +
-          '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40 avatar-demo-circle--overflow" title="' +
-          GROUP_PEOPLE.slice(GROUP_MAX).map(function(p){ return escapeHtml(p.initials); }).join(", ") +
-          '">+' + overflowCount + "</span></div>";
+      var overflowPeople = GROUP_PEOPLE.slice(GROUP_MAX);
+      var overflowCount = overflowPeople.length;
+
+      function renderAvatarGroup(viewMode){
+        if (viewMode === "names"){
+          // No avatar circle at all in this mode - just each person's full
+          // name, one per line, with the same "+N more" overflow pattern
+          // as the avatar view so both modes represent the identical list.
+          var namesHtml = visible.map(function(p){
+            return '<li class="avatar-demo-group-name-item">' + escapeHtml(p.name) + "</li>";
+          }).join("");
+          if (overflowCount > 0){
+            namesHtml += '<li class="avatar-demo-group-name-item avatar-demo-group-name-item--overflow">+' + overflowCount + " more</li>";
+          }
+          groupContainer.innerHTML = '<ul class="avatar-demo-group-names">' + namesHtml + "</ul>";
+          return;
+        }
+        var circlesHtml = visible.map(function(p){
+          return '<div class="avatar-demo-group-item">' +
+            '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40">' + escapeHtml(p.initials) + "</span>" +
+            "</div>";
+        }).join("");
+        if (overflowCount > 0){
+          circlesHtml += '<div class="avatar-demo-group-item">' +
+            '<span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40 avatar-demo-circle--overflow" title="' +
+            overflowPeople.map(function(p){ return escapeHtml(p.name); }).join(", ") +
+            '">+' + overflowCount + "</span></div>";
+        }
+        groupContainer.innerHTML = '<div class="avatar-demo-group">' + circlesHtml + "</div>";
       }
-      groupContainer.innerHTML = '<div class="avatar-demo-group">' + circlesHtml + "</div>";
+
+      renderAvatarGroup(groupViewSelect ? groupViewSelect.value : "avatars");
+      if (groupViewSelect){
+        groupViewSelect.addEventListener("change", function(){
+          renderAvatarGroup(groupViewSelect.value);
+        });
+      }
     }
 
     var sizeSelect = document.querySelector('[data-role="avatar-size-select"]');

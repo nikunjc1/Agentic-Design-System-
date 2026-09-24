@@ -67,9 +67,14 @@
     // to an anonymous flex item, so a long value would clip mid-glyph with no
     // truncation indicator.
     var valueHtml = '<p class="statistic-demo-value' + colorClass + monoClass + '">' +
-      prefixHtml + '<span class="statistic-demo-value-text">' + escapeHtml(value) + "</span>" + suffixHtml + trendHtml + "</p>";
+      prefixHtml + '<span class="statistic-demo-value-text">' + escapeHtml(value) + "</span>" + suffixHtml + "</p>";
 
-    return '<div class="statistic-demo-field">' + titleHtml + valueHtml + "</div>";
+    // Trend renders as its own line below the value (a sibling in the
+    // field, not packed into the same line as the number) rather than
+    // inline next to it - reads more like a real KPI card, where the
+    // trend is a secondary annotation under the headline number rather
+    // than competing with it on the same baseline.
+    return '<div class="statistic-demo-field">' + titleHtml + valueHtml + trendHtml + "</div>";
   }
 
   function buildFullPrompt(title, value, prefix, suffix){
@@ -87,7 +92,7 @@
     lines.push("");
     lines.push("Types (3):");
     lines.push("- Default: a title above a large, bold value, with optional prefix/suffix.");
-    lines.push("- With Trend: same as Default, plus a small colored up/down arrow and a percentage change next to the value.");
+    lines.push("- With Trend: same as Default, plus a small colored up/down arrow and a percentage change on its own line below the value.");
     lines.push("- Countdown: same as Default, but the value renders in a monospace, timer-like style.");
     lines.push("");
     lines.push("States (4, apply to every type):");
@@ -116,7 +121,10 @@
     lines.push(".statistic-demo-value--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-value--negative{ color:var(--danger-500); }");
     lines.push(".statistic-demo-affix{ font-size:16px; font-weight:600; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:2px; font-size:14px; font-weight:600; margin-inline-start:4px; color:var(--text-dim); }");
+    lines.push("/* Its own line below the value (a sibling in .statistic-demo-field, not");
+    lines.push("   packed into the same line as the number) - field's own gap:6px is the");
+    lines.push("   single source of the value-to-trend spacing; no margin needed here. */");
+    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:2px; font-size:14px; font-weight:600; color:var(--text-dim); }");
     lines.push(".statistic-demo-trend svg{ width:14px; height:14px; }");
     lines.push(".statistic-demo-trend--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-trend--negative{ color:var(--danger-500); }");

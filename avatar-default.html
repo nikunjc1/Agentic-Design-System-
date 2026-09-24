@@ -297,6 +297,17 @@
   <section class="panel spacing-model-panel">
     <p class="panel-title">Avatar.Group</p>
     <p class="get-library-copy">A short overlapping stack for a list of people at a glance - a comment thread's participants, a document's collaborators. Once the set exceeds a max count, the last tile becomes a real avatar-shaped "+N" instead of growing the row further; hover it to see who's hidden.</p>
+
+    <div class="border-config-grid" style="margin-bottom:20px;">
+      <label class="type-control">
+        <span>Show as</span>
+        <select data-role="avatar-group-view-select">
+          <option value="avatars" selected>Avatars</option>
+          <option value="names">Names only</option>
+        </select>
+      </label>
+    </div>
+
     <div data-role="avatar-group-container"></div>
   </section>
 

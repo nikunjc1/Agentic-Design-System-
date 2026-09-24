@@ -107,9 +107,9 @@
   // Code always reproduces exactly what's on screen. Same people used by the
   // List component elsewhere in this codebase, for consistency.
   var ROWS_DATA = [
-    { name: "Jordan Lee", status: "Active", statusColor: "success", role: "Product Designer" },
-    { name: "Sam Ortiz", status: "Active", statusColor: "success", role: "Engineer" },
-    { name: "Priya Nair", status: "Away", statusColor: "warning", role: "PM" }
+    { name: "Jordan Lee", status: "Active", statusColor: "success", role: "Product Designer", email: "jordan.lee@company.com", mobile: "+1 415-555-0142" },
+    { name: "Sam Ortiz", status: "Active", statusColor: "success", role: "Engineer", email: "sam.ortiz@company.com", mobile: "+1 415-555-0198" },
+    { name: "Priya Nair", status: "Away", statusColor: "warning", role: "PM", email: "priya.nair@company.com", mobile: "+1 415-555-0233" }
   ];
 
   function optionLabelFor(optionList, value){
@@ -163,7 +163,7 @@
     var lines = [];
     lines.push("Create a complete Table component for the Agentic Design System.");
     lines.push("");
-    lines.push("Build it as ONE reusable component controlled by properties (type, corner radius, size, show header) - a structured grid of rows and columns for displaying tabular data (Name / Status / Role example columns), with a header row and optional cell borders, alternating row stripes, or row selection.");
+    lines.push("Build it as ONE reusable component controlled by properties (type, corner radius, size, show header) - a structured grid of rows and columns for displaying tabular data (Name / Status / Role / Email / Mobile example columns - Email and Mobile render as real mailto:/tel: links, styled in this system's defined link color, var(--red-400)), with a header row and optional cell borders, alternating row stripes, or row selection.");
     lines.push("");
     lines.push("Border styles (2):");
     TYPES.forEach(function(t){
@@ -196,9 +196,13 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Table component */");
-    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:13px; color:var(--text-hi); width:320px; }");
+    lines.push("/* Width grows with the column set - Email/Mobile need real room");
+    lines.push("   (\"jordan.lee@company.com\" alone needs ~165px) or they'd squeeze");
+    lines.push("   Name/Role into wrapping onto a second line, same as the checkbox");
+    lines.push("   column did before table-demo-table--has-checkbox existed. */");
+    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:13px; color:var(--text-hi); width:630px; }");
     lines.push(".table-demo-table th{ text-align: start; padding:8px 10px; font-size:11px; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:1.5px solid var(--line-strong); }");
-    lines.push(".table-demo-table td{ padding:8px 10px; border-bottom:1px solid var(--line); }");
+    lines.push(".table-demo-table td{ padding:8px 10px; border-bottom:1px solid var(--line); text-align: start; }");
     lines.push(".table-demo-table--bordered{ border:1px solid var(--line-strong); overflow:hidden; }");
     lines.push(".table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end:1px solid var(--line); }");
     lines.push(".table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end:none; }");
@@ -206,6 +210,20 @@
     lines.push(".table-demo-row--selected{ background:var(--red-tint); }");
     lines.push(".table-demo-status-cell{ display:flex; align-items:center; gap:6px; }");
     lines.push("/* Status dot reuses the Badge component's own .badge-demo-status-dot--success/--warning classes directly - no separate dot styling defined here. */");
+    lines.push("");
+    lines.push("/* Email/Mobile render as real mailto:/tel: links styled in this");
+    lines.push("   system's actual defined link color - var(--red-400), the same token");
+    lines.push("   the Link-type Button and Toast's own inline action use. There is no");
+    lines.push("   blue \"link\" token anywhere in this system. No underline at rest -");
+    lines.push("   only on hover, the same interaction-feedback pattern this system's");
+    lines.push("   own Link-type Button already uses. */");
+    lines.push(".table-demo-link-cell{ color:var(--red-400); text-decoration:none; }");
+    lines.push(".table-demo-link-cell:hover{ text-decoration:underline; }");
+    lines.push("");
+    lines.push("/* Selection adds a leading checkbox column - width grows by that");
+    lines.push("   column's own need (~40px) so Name/Role keep their normal widths");
+    lines.push("   instead of being squeezed into wrapping onto a second line. */");
+    lines.push(".table-demo-table--has-checkbox{ width:670px; }");
     lines.push("");
     lines.push("/* Size (3) - Large is the default (the base th/td padding above); Middle and Small only tighten padding, font-size stays fixed at every size. */");
     lines.push(".table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding:6px 8px; }");
@@ -243,7 +261,8 @@
     var isStriped = stateKey === "striped";
     var isLoading = stateKey === "loading";
     var sizeCls = (sizeKey && sizeKey !== "large") ? " table-demo-table--sz-" + sizeKey : "";
-    var tableCls = "table-demo-table table-demo-table--" + typeKey + sizeCls;
+    var checkboxColCls = isSelected ? " table-demo-table--has-checkbox" : "";
+    var tableCls = "table-demo-table table-demo-table--" + typeKey + sizeCls + checkboxColCls;
     // Names the table's purpose for assistive tech - required since the
     // matrix below renders many of these side by side with no visible
     // caption of its own.
@@ -254,13 +273,13 @@
       var checkboxTh = isSelected ? "<th></th>" : "";
       // scope="col" so a screen reader announces the column a cell belongs
       // to when navigating row by row, not just when reading the header row.
-      theadHtml = "<thead><tr>" + checkboxTh + '<th scope="col">Name</th><th scope="col">Status</th><th scope="col">Role</th></tr></thead>';
+      theadHtml = "<thead><tr>" + checkboxTh + '<th scope="col">Name</th><th scope="col">Status</th><th scope="col">Role</th><th scope="col">Email</th><th scope="col">Mobile</th></tr></thead>';
     }
 
     if (isLoading){
       var loadingRowsHtml = ROWS_DATA.map(function(){
         var cell = '<td><span class="skeleton-demo-line is-animated" style="width:70%;"></span></td>';
-        return '<tr class="table-demo-row" aria-hidden="true">' + (isSelected ? "<td></td>" : "") + cell + cell + cell + "</tr>";
+        return '<tr class="table-demo-row" aria-hidden="true">' + (isSelected ? "<td></td>" : "") + cell + cell + cell + cell + cell + "</tr>";
       }).join("");
       return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ' aria-busy="true" aria-live="polite">' + theadHtml + "<tbody>" + loadingRowsHtml + "</tbody></table>";
     }
@@ -270,7 +289,7 @@
       // one spanning cell, rather than inventing a second "no results"
       // visual language - a zero-row table and an empty list should look
       // like the same idea.
-      var emptyHtml = '<tr class="table-demo-row"><td colspan="3">' +
+      var emptyHtml = '<tr class="table-demo-row"><td colspan="5">' +
         '<div class="empty-demo-panel" style="padding:20px;">' +
         '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:32px;height:32px;"></div>' +
         '<p class="empty-demo-title" style="font-size:13px;">No results</p>' +
@@ -286,7 +305,13 @@
       var checkboxTd = isSelected ? '<td><input type="checkbox"' + (i === 0 ? " checked" : "") + " /></td>" : "";
       var statusDotClass = "badge-demo-status-dot--" + person.statusColor;
       var statusHtml = '<td><span class="table-demo-status-cell"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
-      return '<tr class="' + classes.join(" ") + '">' + checkboxTd + "<td>" + person.name + "</td>" + statusHtml + "<td>" + person.role + "</td></tr>";
+      // Email/Mobile render as real links (mailto:/tel:) styled in this
+      // system's actual defined link color - var(--red-400), the same
+      // token the Link-type Button and Toast's own inline action use.
+      // There is no blue "link" token anywhere in this system.
+      var emailHtml = '<td><a class="table-demo-link-cell" href="mailto:' + person.email + '">' + person.email + "</a></td>";
+      var mobileHtml = '<td><a class="table-demo-link-cell" href="tel:' + person.mobile.replace(/[^+\d]/g, "") + '">' + person.mobile + "</a></td>";
+      return '<tr class="' + classes.join(" ") + '">' + checkboxTd + "<td>" + person.name + "</td>" + statusHtml + "<td>" + person.role + "</td>" + emailHtml + mobileHtml + "</tr>";
     }).join("");
 
     return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + "<tbody>" + rowsHtml + "</tbody></table>";
