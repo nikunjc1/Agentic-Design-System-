@@ -25,8 +25,9 @@ passes all 4 tests.
 | `project-model.js` | New data model for a "project profile" (project name, product type, target platforms, name/email/designation/role). Validates, saves/reads from `localStorage` (`ads:project-profile:v1`, draft at `ads:project-draft:v1`), and generates the Markdown export. Isolated, dependency-free, usable from both the browser (`window.ADSProject`) and Node (`module.exports`). |
 | `experience.js` | Runtime layer wired into every page: sitewide accessibility injections (skip-link, `aria-current`, a page-outline nav when a page has >2 headings, labelling the sidebar/matrix regions), a contextual "your design system" setup banner, the New Project multi-step wizard (`setupForm()`), the MD Export page (`exportPage()`), and the Settings profile summary (`settings()`). |
 | `experience.css` | Styling for everything `experience.js` adds, plus a real responsive/touch-target pass (44px min touch targets, mobile breakpoints for the topbar/sidebar/matrix/forms, `prefers-reduced-motion` support, several `overflow-wrap`/min-width overflow fixes). |
-| `docs-catalog.json` | Generated catalog of every page's title/kind/status/plain-text content, built by `tools/audit_pages.py`. Feeds MD Export's "include component guides" option and `tools/browser-audit.js`. |
-| `tools/audit_pages.py` | Regenerates `docs-catalog.json` and `audit/page-inventory.{json,md}` — parses every `.html` file's `<main>`, checks for a single `<h1>`, duplicate `id`s, and broken local links/asset references. Run it after adding or renaming any page: `python3 tools/audit_pages.py`. |
+| `docs-catalog.json` | Generated catalog of every page's title/kind/status/plain-text content, built by `tools/audit_pages.py`. Feeds `tools/browser-audit.js` (which runs against a live server). |
+| `docs-catalog.js` | Same catalog, same generator, as `window.ADSDocsCatalog = [...]` instead of raw JSON — loaded via a plain `<script src>` on `md-export.html` so MD Export's "include component guides"/"complete documentation" scopes work whether the page is opened directly (`file://`) or served over HTTP (see §7 — this was added as a fix, not part of Codex's original session). |
+| `tools/audit_pages.py` | Regenerates `docs-catalog.json`, `docs-catalog.js` and `audit/page-inventory.{json,md}` — parses every `.html` file's `<main>`, checks for a single `<h1>`, duplicate `id`s, and broken local links/asset references. Run it after adding or renaming any page: `python3 tools/audit_pages.py`. |
 | `tools/browser-audit.js` | A `docs-catalog.json`-driven in-browser sweep: loads every page in an iframe at 1440/768/390/320px, checks for content/overflow/heading-count problems and exercises every Component Guide toggle. Meant to be run via `agent-browser eval --stdin` against a local preview server. |
 | `tests/project-model.test.js` | Node's built-in test runner, 4 tests covering validation, storage round-tripping (including "don't clobber good data with bad"), Markdown content, and metadata escaping. Run with `node --test tests/project-model.test.js`. |
 | `audit/page-inventory.json` / `audit/page-inventory.md` | Output of `tools/audit_pages.py` — currently **all 154 pages show "Source checks passed,"** no outstanding issues flagged. |
@@ -207,7 +208,7 @@ work itself.
    end-to-end flow, and `node --test tests/project-model.test.js` after both
    changes — all still clean/passing.
 
-## 7. Found after the push: MD Export breaks under `file://`
+## 7. Found after the push: MD Export breaks under `file://` — fixed for real
 
 Reported by the user after trying MD Export themselves: two of the three
 export scopes ("Brief + all component detail guides," "Brief + complete
@@ -220,21 +221,33 @@ component documentation text, and browsers block `fetch` outright against the
 `file:` protocol. Copy/Download only looked broken too because they act on
 whatever's in the (now empty) preview textarea — not independently broken.
 
-The failure was real, but `experience.js`'s error handling made it worse: the
-raw `"Failed to fetch"` browser error got a generic, actively misleading
-suffix appended ("... Check saved foundation values or try again.") that
-pointed at the wrong cause entirely. Fixed in `experience.js`'s `generate()`:
-detect `location.protocol === "file:"` before attempting the fetch and show a
-specific message instead — that this scope needs the portal served over
-`http(s)://`, the exact command to do that, and that "Project brief and saved
-foundations" is the one scope that doesn't need it. Also dropped the same
-misleading suffix from the other two error paths on this page, since both
-already end in a complete sentence of their own.
+**First pass (superseded):** detected `location.protocol === "file:"` and
+showed a clearer error message explaining that this scope needs a local
+server, with the command to start one. That was a real improvement over the
+previous message (which blamed "saved foundation values" — completely
+wrong), but the user pushed back correctly: it still didn't *work*, it just
+explained why it didn't. Every other script on every other page of this site
+already loads fine under `file://` without needing a server — the actual fix
+was to stop making this one page the exception.
 
-Verified: the new message reproduces correctly under the exact `file://`
-condition that caused the report; all three scopes still generate correctly
-when properly served (958 chars / ~427 KB / ~543 KB); full 154-page sweep
-still 0 console errors. Committed and pushed on top of the work below.
+**Real fix:** `fetch` is blocked under `file://`, but a `<script src>` tag
+isn't — so the catalog is no longer fetched at all. `tools/audit_pages.py`
+now also writes `docs-catalog.js` (`window.ADSDocsCatalog = [...]`) alongside
+the existing `docs-catalog.json`; `md-export.html` loads it via a plain
+`<script src="docs-catalog.js">` before `experience.js`; `experience.js`'s
+`generate()` reads `window.ADSDocsCatalog` directly instead of awaiting a
+fetch. No server required, no special-case error message needed — it just
+works the same way whether opened directly or served. Kept
+`docs-catalog.json` as-is for `tools/browser-audit.js`, which already runs
+against a live server and didn't need to change.
+
+Verified by reproducing the user's exact scenario end to end: all three
+scopes generate real content under `file://` with no server running (958
+chars / 427 KB / 543 KB, matching HTTP-served output exactly), Copy Markdown
+copies the full text, Refresh Preview works, and the "Export this guide"
+deep link (`?page=table-default.html`) still resolves to that page's real
+content. Re-ran the full 154-page sweep over HTTP too — still 0 console
+errors, all three scopes still correct there as well.
 
 ## 8. Current state
 

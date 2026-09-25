@@ -187,7 +187,7 @@
   }
   function exportPage() {
     const preview = $('#markdownPreview'); if (!preview) return;
-    let catalog = null, busy = false;
+    let busy = false;
     const status = $('#exportStatus'), download = $('#downloadMarkdown'), copy = $('#copyMarkdown');
     const selector = $('#exportScope'), identity = $('#includeIdentity');
     const requestedPage = new URLSearchParams(location.search).get('page');
@@ -202,13 +202,14 @@
       try {
         let docs = [];
         if (selector.value !== 'context') {
-          if (location.protocol === 'file:') throw new Error('This scope needs the portal served over http(s):// — opening the file directly blocks loading the documentation. Run a local server (e.g. "python3 -m http.server" in this folder) and open the page from http://localhost instead, or choose "Project brief and saved foundations," which doesn\'t need it.');
-          if (!catalog) {
-            const response = await fetch('docs-catalog.json');
-            if (!response.ok) throw new Error('Documentation could not be loaded. Retry, or choose Project brief.');
-            catalog = await response.json();
-          }
-          docs = catalog.filter(d => selector.value === 'page' ? d.file === requestedPage : selector.value === 'all' || d.kind === 'Detail');
+          // Loaded from docs-catalog.js (a plain <script src>, evaluated
+          // before this file - see its own script tag in each page's HTML)
+          // rather than fetched, specifically so this works when the portal
+          // is opened directly as a file:// page and not just over
+          // http(s):// - fetch() is blocked against local files by every
+          // browser, but a <script> tag isn't subject to that restriction.
+          if (!Array.isArray(window.ADSDocsCatalog)) throw new Error('Documentation catalog is unavailable. Retry, or choose "Project brief and saved foundations."');
+          docs = window.ADSDocsCatalog.filter(d => selector.value === 'page' ? d.file === requestedPage : selector.value === 'all' || d.kind === 'Detail');
           if (!docs.length) throw new Error('The selected guide was not found. Choose another export scope.');
         }
         preview.value = M.markdown(profile, savedTokens(), docs, identity.checked);

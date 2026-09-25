@@ -636,6 +636,14 @@ The failure itself was real but the *message* shown for it was actively misleadi
 
 Verified the new message reproduces correctly under the exact `file://` condition that caused the original report, confirmed all three scopes still generate correctly when properly served (958 / ~427 KB / ~543 KB, matching the page count each scope claims), and re-ran the full 154-page sweep: 0 console errors.
 
+## MD Export - actually fixed the file:// case, not just explained it
+
+Follow-up to the previous entry. The earlier fix (a clearer error message when opened via `file://`) was a real improvement over the misleading one before it, but it was still just explaining a failure, not fixing it - and the user correctly called that out. Reopened it and fixed the actual cause instead.
+
+Root cause: two of MD Export's three scopes called `fetch("docs-catalog.json")`, and `fetch` is blocked against the `file:` protocol by every browser - a hard platform restriction, not a bug in this code, but one this code didn't need to be subject to. A `<script src>` tag, unlike `fetch`, is *not* restricted under `file://` - every other script on every other page of this 154-page site already loads that way and works fine opened directly. So the fix was to stop fetching the catalog and start loading it the same way: `tools/audit_pages.py` now also writes `docs-catalog.js` (`window.ADSDocsCatalog = [...]`) alongside the existing `docs-catalog.json`, `md-export.html` loads it via a plain `<script src="docs-catalog.js">` before `experience.js`, and `experience.js`'s `generate()` reads `window.ADSDocsCatalog` directly - no `fetch`, no async wait, no `file://` special-case error message needed at all anymore. Kept `docs-catalog.json` as-is for `tools/browser-audit.js`, which already runs against a live server and has no reason to change.
+
+Verified by reproducing the user's exact scenario (`file:///.../md-export.html`, opened directly, no server): all three scopes now generate real content (958 chars / 427 KB / 543 KB, matching what serving over HTTP produces), Copy Markdown copies the full generated text, Refresh Preview works, and the deep-link "Export this guide" flow (`?page=table-default.html`) still resolves to that page's real content. Re-ran the full 154-page sweep over HTTP too: 0 console errors, all three scopes still correct there as well.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
