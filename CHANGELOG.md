@@ -562,6 +562,22 @@ Added `patterns.js` and `templates.js`: each wires a "Copy prompt" and "Copy cod
 
 Verified all 20 buttons (10 illustrations × 2 actions) via Playwright - correct "Copied!" feedback, correct clipboard contents, no leftover `readonly`/`tabindex` artifacts in copied code - and re-ran the full 157-page sweep afterward: 0 console errors.
 
+## Patterns and Templates, round 2 - icons and structure that didn't match the real components they claimed to be built from
+
+Reported again after the previous pass ("the components are not matching our design system") with a screenshot of the KPI row. That specific screenshot turned out to be the real Card component's own documented hover effect (verified: identical `border-color`/`box-shadow` change reproduces on Card's own listing page at `card.html`, not a bug), but re-auditing all 10 illustrations against their real counterparts instead of stopping there turned up four genuine mismatches, all from the same root cause: several illustrations used a plain Unicode/emoji character or skipped a piece of markup instead of the real component's own SVG icon or structure.
+
+- **Search icon** (Filter bar, Search + results): was the Unicode character `⚲` (U+26C2, Misc. Technical block - not a magnifying glass in most fonts), not the real Search component's SVG (`circle` + diagonal `line`). Both instances swapped in the real SVG.
+- **Date Range's calendar icon** (Filter bar): was 📅 (an emoji, OS/font-dependent rendering), not the real component's SVG (`rect` + tick lines). Swapped in the real SVG.
+- **Select's chevron was missing entirely** (Filter bar's "Status" field, Settings template's "UTC+1" field) - both rendered as a bare box with no dropdown affordance at all, unlike every real Select instance elsewhere in the portal. Added the same chevron SVG Select uses everywhere else.
+- **Statistic's trend arrows** (KPI row): were the Unicode characters `▲`/`▼`, not the real component's SVG arrows (`line` + `polyline`). Swapped both in.
+
+Also found two structural gaps in `templates.html` while re-checking each "Built from" credit against what the markup actually contains (three of the ten were listing a component that wasn't actually there - `Search, Table, Empty` when no table existed, `... Divider` when no divider existed - corrected to match reality):
+
+- **Dashboard's "Recent activity" table** had plain text status cells (`Active`/`Invited`) instead of the real Table component's own status-dot treatment (a colored `badge-demo-status-dot--*` dot, reused from Badge, precedes the label in every real usage). Added the dots (success/warning).
+- **List + detail's "list" half was never actually the List component** - two plain inline-styled `<div>`s standing in for it, which is exactly why its own credit line was wrong. Rebuilt using the real `.list-demo-panel`/`.list-demo-row`/`.list-demo-body`/`.list-demo-title` markup, with the selected row highlighted the same way the sidebar marks its own active link (`--red-tint` background, red left border) - and its neighboring Description pairing (`STATUS`/`Paid`) was missing the `.description-demo-item` wrapper the real component requires to stack label over value, so the two were running together on one line; wrapped it correctly.
+
+Verified all four icon swaps and both structural fixes visually, re-ran all 20 Copy prompt/Copy code buttons (content changes automatically since both scripts read the live DOM, not a duplicated copy), and the full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
