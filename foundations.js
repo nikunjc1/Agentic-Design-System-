@@ -355,6 +355,11 @@
         root.removeProperty("--red-tint");
         root.removeProperty("--red-glow");
       }
+      // This function only ever runs from Save's click handler below, which
+      // already applies the new color to the current page without a reload
+      // - keep the topbar swatch's tooltip in sync with that same action,
+      // instead of it only picking up the new hex on the next page load.
+      if (window.ADS_updateBrandColorDotTitle) window.ADS_updateBrandColorDotTitle();
     }
 
     var saveBrandBtn = document.getElementById("saveBrandBtn");

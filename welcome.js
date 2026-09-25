@@ -1,9 +1,20 @@
 (() => {
   "use strict";
 
+  var SEEN_KEY = "ads:welcome-seen";
+  function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
+  function writePreference(key, value) { try { localStorage.setItem(key, value); } catch {} }
+
   document.addEventListener("DOMContentLoaded", function(){
     var overlay = document.querySelector('[data-role="welcome-overlay"]');
     if (!overlay) return;
+    // Every path out of this modal (choosing a path, closing via Escape,
+    // closing via backdrop click) was re-running on every single visit to
+    // Overview - there was nothing recording that the visitor had already
+    // seen and dismissed it once. Skipping openModal() below when this flag
+    // is already set fixes that, while leaving Escape/backdrop-click (which
+    // already worked - closeModal() is already wired to both) untouched.
+    if (readPreference(SEEN_KEY) === "1") return;
 
     var modal = overlay.querySelector('[data-role="welcome-modal"]');
     var stepChoice = overlay.querySelector('[data-role="welcome-step-choice"]');
@@ -14,7 +25,10 @@
     var nameInput = overlay.querySelector('[data-role="welcome-name"]');
     var designationInput = overlay.querySelector('[data-role="welcome-designation"]');
     var emailInput = overlay.querySelector('[data-role="welcome-email"]');
-    var portalTypeSelect = overlay.querySelector('[data-role="welcome-portal-type"]');
+    var portalTrigger = overlay.querySelector('[data-role="welcome-portal-type-trigger"]');
+    var portalValueEl = overlay.querySelector('[data-role="welcome-portal-type-value"]');
+    var portalPanel = overlay.querySelector('[data-role="welcome-portal-type-panel"]');
+    var portalOptions = Array.prototype.slice.call(portalPanel.querySelectorAll(".select-demo-option"));
     var copyLinkBtn = overlay.querySelector('[data-role="welcome-copy-link"]');
     var exportMdBtn = overlay.querySelector('[data-role="welcome-export-md"]');
     var continueBtn = overlay.querySelector('[data-role="welcome-continue-foundations"]');
@@ -31,6 +45,7 @@
     function closeModal(){
       overlay.hidden = true;
       document.body.style.overflow = "";
+      writePreference(SEEN_KEY, "1");
       if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
@@ -71,7 +86,7 @@
     modal.addEventListener("keydown", function(e){
       if (e.key !== "Tab") return;
       var focusables = Array.prototype.filter.call(
-        modal.querySelectorAll("button, input, select, a[href]"),
+        modal.querySelectorAll('button, input, select, a[href], [role="combobox"]'),
         function(el){ return el.offsetParent !== null; }
       );
       if (!focusables.length) return;
@@ -85,6 +100,99 @@
       }
     });
 
+    // Portal type - a real interactive combobox + listbox pair built on the
+    // Select component's own visual classes. There was no existing open/
+    // close/choose behavior to reuse here: select-detail.js's Live Preview
+    // matrix only ever renders each state (default/filled/open/...) as a
+    // separate static markup string, picked by the page's own property
+    // controls - it never wires up a click on the control itself to
+    // actually open anything. This is genuinely new code, following the
+    // standard combobox pattern (focus stays on the trigger; the
+    // highlighted option is tracked via aria-activedescendant, not real
+    // DOM focus, matching how a native <select>'s own listbox behaves).
+    portalOptions.forEach(function(opt, i){ if (!opt.id) opt.id = "welcomePortalOption" + i; });
+    var portalHighlightIndex = -1;
+
+    function portalSelectedIndex(){
+      return portalOptions.findIndex(function(opt){ return opt.classList.contains("is-selected"); });
+    }
+    function portalCurrentValue(){
+      var opt = portalOptions[portalSelectedIndex()];
+      return opt ? opt.dataset.value : "";
+    }
+    function setPortalHighlight(index){
+      portalHighlightIndex = index;
+      portalOptions.forEach(function(opt, i){ opt.classList.toggle("is-highlighted", i === index); });
+      var opt = portalOptions[index];
+      if (opt){
+        portalTrigger.setAttribute("aria-activedescendant", opt.id);
+        opt.scrollIntoView({ block: "nearest" });
+      }
+    }
+    function selectPortalOption(index){
+      var opt = portalOptions[index];
+      if (!opt) return;
+      portalOptions.forEach(function(o){
+        o.classList.remove("is-selected");
+        o.setAttribute("aria-selected", "false");
+      });
+      opt.classList.add("is-selected");
+      opt.setAttribute("aria-selected", "true");
+      portalValueEl.textContent = opt.textContent;
+    }
+    function onPortalDocClick(e){
+      if (portalTrigger.contains(e.target) || portalPanel.contains(e.target)) return;
+      closePortalPanel();
+    }
+    function openPortalPanel(){
+      portalPanel.hidden = false;
+      portalTrigger.setAttribute("aria-expanded", "true");
+      setPortalHighlight(portalSelectedIndex());
+      document.addEventListener("click", onPortalDocClick, false);
+    }
+    function closePortalPanel(){
+      portalPanel.hidden = true;
+      portalTrigger.setAttribute("aria-expanded", "false");
+      portalTrigger.removeAttribute("aria-activedescendant");
+      portalOptions.forEach(function(o){ o.classList.remove("is-highlighted"); });
+      portalHighlightIndex = -1;
+      document.removeEventListener("click", onPortalDocClick, false);
+    }
+
+    portalTrigger.addEventListener("click", function(){
+      if (portalPanel.hidden) openPortalPanel(); else closePortalPanel();
+    });
+    portalTrigger.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        if (portalPanel.hidden){ openPortalPanel(); }
+        else { selectPortalOption(portalHighlightIndex >= 0 ? portalHighlightIndex : portalSelectedIndex()); closePortalPanel(); }
+      } else if (e.key === "ArrowDown"){
+        e.preventDefault();
+        if (portalPanel.hidden) openPortalPanel();
+        else setPortalHighlight(Math.min(portalHighlightIndex + 1, portalOptions.length - 1));
+      } else if (e.key === "ArrowUp"){
+        e.preventDefault();
+        if (portalPanel.hidden) openPortalPanel();
+        else setPortalHighlight(Math.max(portalHighlightIndex - 1, 0));
+      } else if (e.key === "Escape" && !portalPanel.hidden){
+        // Close just the panel, not the whole modal - stopPropagation keeps
+        // this from also reaching the document-level Escape-closes-modal
+        // handler registered below.
+        e.preventDefault();
+        e.stopPropagation();
+        closePortalPanel();
+      }
+    });
+    portalOptions.forEach(function(opt, i){
+      opt.addEventListener("click", function(){
+        selectPortalOption(i);
+        closePortalPanel();
+        portalTrigger.focus();
+      });
+      opt.addEventListener("mouseenter", function(){ setPortalHighlight(i); });
+    });
+
     function fieldsFilled(){
       return Boolean(nameInput.value.trim() && emailInput.value.trim());
     }
@@ -94,7 +202,7 @@
         name: nameInput.value.trim(),
         designation: designationInput.value.trim() || "Not specified",
         email: emailInput.value.trim(),
-        portalType: portalTypeSelect.value
+        portalType: portalCurrentValue()
       };
     }
 

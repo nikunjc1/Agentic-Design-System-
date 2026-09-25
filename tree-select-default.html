@@ -102,9 +102,8 @@
   </a>
   <div class="topbar-right">
     <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
-      <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
-      <span class="theme-toggle-label" id="themeToggleLabel">Dark</span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.4.0</span>
     <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
@@ -114,9 +113,9 @@
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
     <div class="sidebar-search-sticky">
-      <div class="sidebar-search">
-        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+      <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
+        <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -129,7 +128,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
-      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <a class="nav-link" href="foundations.html#colors">Colors</a>
         <a class="nav-link" href="grid-layout.html">Grid &amp; Layout</a>
@@ -143,7 +142,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="guidelines">
-      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <a class="nav-link" href="principles.html">Design Principles</a>
         <a class="nav-link" href="guidelines.html">Component Guidelines</a>
@@ -153,7 +152,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="components">
-      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <span class="nav-subgroup-label">Actions</span>
         <a class="nav-link" href="components.html#button">Button</a>
@@ -247,7 +246,7 @@
 
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Forms &middot; Tree Select</p>
-  <a class="back-link" href="tree-select.html">&larr; Back to Tree Select types</a>
+  <a class="back-link" href="tree-select.html"><span class="back-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></span>Back to Tree Select types</a>
   <h1 class="page-title">Tree Select <span class="component-status is-stable">Stable</span></h1>
   <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for a select field over hierarchical, nested data - like an org chart or a folder structure - where the user can pick any node, parent or leaf, at any depth from an indented, expandable tree.</p>
@@ -365,12 +364,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Design / Icons</span><span class="treeselect-demo-chevron">&#9662;</span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret">&#9662;</span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Logos</div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Design / Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Logos</div></div></div></div></div>
           <p class="guide-dodont-note">The control shows the whole path, so "Icons" is never confused with another folder of the same name elsewhere in the tree.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Icons</span><span class="treeselect-demo-chevron">&#9662;</span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret">&#9662;</span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node"><span class="treeselect-demo-caret">&#9662;</span>Marketing</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Icons</div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Marketing</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Icons</div></div></div></div></div>
           <p class="guide-dodont-note">Showing only the leaf name makes two different folders look like the same choice once the panel is closed.</p>
         </div>
       </div>

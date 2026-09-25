@@ -157,8 +157,8 @@
       lines.push(".radio-demo-dot--h" + size + "{ width:" + scale.dot + "px; height:" + scale.dot + "px; }");
     });
     lines.push("");
-    lines.push("/* Checked - real :checked via the adjacent-sibling selector, dot is a separate nested span */");
-    lines.push(".radio-demo-input:checked + .radio-demo-circle{ border-color:" + red500 + "; background:transparent; }");
+    lines.push("/* Checked - real :checked via the adjacent-sibling selector, dot is a separate nested span. .is-checked is the class-based fallback for static illustrations with no real sibling input to drive :checked from - every other state (hover/focus/disabled) already has one. */");
+    lines.push(".radio-demo-input:checked + .radio-demo-circle, .radio-demo-circle.is-checked{ border-color:" + red500 + "; background:transparent; }");
     lines.push(".radio-demo-dot{ background:" + red500 + "; border-radius:50%; }");
     lines.push("");
     lines.push("/* Hover - real :hover combined with a static .is-hover class for demoing the state without a real mouse */");

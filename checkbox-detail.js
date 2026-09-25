@@ -196,7 +196,7 @@
     lines.push("/* Box - shared across both types, radius applied inline per-instance */");
     var css = liveCssFor("standard");
     lines.push(".checkbox-demo-box{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; flex:none; border:1.5px solid transparent; transition:background-color .15s ease, border-color .15s ease; " + css.box.unchecked + " }");
-    lines.push(".checkbox-demo-input:checked + .checkbox-demo-box{ " + css.box.checked + " }");
+    lines.push(".checkbox-demo-input:checked + .checkbox-demo-box, .checkbox-demo-box.is-checked{ " + css.box.checked + " }");
     lines.push(".checkbox-demo-input:indeterminate + .checkbox-demo-box{ " + css.box.indeterminate + " }");
     lines.push(".checkbox-demo-box:hover, .checkbox-demo-box.is-hover{ " + css.box.hover + " }");
     lines.push(".checkbox-demo-input:focus-visible + .checkbox-demo-box, .checkbox-demo-box.is-focus{ " + css.box.focus + " }");

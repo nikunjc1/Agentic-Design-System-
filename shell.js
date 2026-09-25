@@ -91,7 +91,24 @@
       hexProp(textSet && textSet.mid, "--text-mid");
       hexProp(textSet && textSet.dim, "--text-dim");
     } catch {}
+
+    updateBrandColorDotTitle();
   }
+
+  // The topbar swatch's own background already tracks the active brand
+  // color correctly (it's just var(--red-500), which the block above keeps
+  // current) - the actual gap was that nothing ever showed WHICH color that
+  // is, only a generic "Active brand color" tooltip with no value in it.
+  // Exposed on window so foundations.js's own Save action (which applies
+  // the new brand color to the current page immediately, no reload
+  // required) can refresh this same tooltip right away too.
+  function updateBrandColorDotTitle() {
+    const dot = document.getElementById("brandColorDot");
+    if (!dot) return;
+    const hex = getComputedStyle(document.documentElement).getPropertyValue("--red-500").trim();
+    dot.title = hex ? `Active brand color: ${hex.toUpperCase()}` : "Active brand color";
+  }
+  window.ADS_updateBrandColorDotTitle = updateBrandColorDotTitle;
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
@@ -161,6 +178,32 @@
       });
     }
 
+    // Every one of a component's own type/detail pages (table-default.html,
+    // button-primary.html, select-dropdown.html, ...) is reached by a
+    // dynamic window.location.href navigation, not a sidebar <a href> - the
+    // sidebar only ever links to the listing page (table.html,
+    // components.html#button). So on all 69 of those pages, neither check
+    // above ever matches anything, and the sidebar was left with no active
+    // item at all - never highlighted, never scrolled into view. Every one
+    // of those pages already carries a "Back to X types" link whose href is
+    // exactly its own listing page (verified: all 69 point at a real
+    // sidebar link) - reuse that instead of re-deriving the listing
+    // filename from this page's own name, which would mean guessing where
+    // the component name ends and the type key begins (both can contain
+    // hyphens, e.g. "date-picker-default").
+    if (!matched){
+      const backLink = document.querySelector(".back-link");
+      const backHref = backLink ? backLink.getAttribute("href") || "" : "";
+      if (backHref){
+        const [backFile, backHash] = backHref.split("#");
+        matched = links.find((link) => {
+          const href = link.getAttribute("href") || "";
+          const [file, hash] = href.split("#");
+          return file === backFile && (hash || "") === (backHash || "");
+        });
+      }
+    }
+
     if (matched) matched.classList.add("is-active");
     return matched;
   }
@@ -189,6 +232,54 @@
     });
   }
 
+  // Mobile drawer - the sidebar itself is unchanged (still the same search,
+  // collapsible groups, active-link scroll as desktop); this only adds a
+  // way to open/close it below 900px, where shell.css now slides it in as
+  // an overlay instead of hiding it outright. Injected at runtime instead
+  // of duplicating a hamburger button into all 157 pages' own topbar
+  // markup - .sidebar-menu-toggle is display:none above 900px anyway.
+  function initSidebarDrawer() {
+    const sidebar = document.querySelector(".app-sidebar");
+    const topbarRight = document.querySelector(".topbar-right");
+    if (!sidebar || !topbarRight) return;
+
+    const backdrop = document.createElement("div");
+    backdrop.className = "sidebar-drawer-backdrop";
+    document.body.appendChild(backdrop);
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "sidebar-menu-toggle";
+    toggle.setAttribute("aria-label", "Open navigation menu");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+    topbarRight.insertAdjacentElement("beforebegin", toggle);
+
+    function openDrawer(){
+      sidebar.classList.add("is-open");
+      backdrop.classList.add("is-open");
+      toggle.setAttribute("aria-expanded", "true");
+    }
+    function closeDrawer(){
+      sidebar.classList.remove("is-open");
+      backdrop.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    toggle.addEventListener("click", () => {
+      if (sidebar.classList.contains("is-open")) closeDrawer(); else openDrawer();
+    });
+    backdrop.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && sidebar.classList.contains("is-open")) closeDrawer();
+    });
+    // Closing on nav so picking a page doesn't leave the drawer sitting
+    // open over the new page underneath it.
+    sidebar.addEventListener("click", (e) => {
+      if (e.target.closest(".nav-link")) closeDrawer();
+    });
+  }
+
   function initSidebarSearch() {
     const input = document.getElementById("globalSearch");
     if (!input) return;
@@ -197,6 +288,16 @@
     const allSubLabels = Array.from(document.querySelectorAll(".nav-subgroup-label"));
     const allGroups = Array.from(document.querySelectorAll(".nav-group"));
 
+    // A query matching nothing used to just leave every group empty with no
+    // explanation - the sidebar went blank under the top-level headers with
+    // no indication of why, or that the search itself was the cause. Built
+    // once, hidden by default, and toggled instead of rebuilt per keystroke.
+    const nav = document.querySelector(".sidebar-nav");
+    const emptyState = document.createElement("p");
+    emptyState.className = "sidebar-search-empty";
+    emptyState.hidden = true;
+    if (nav) nav.appendChild(emptyState);
+
     input.addEventListener("input", () => {
       const query = input.value.trim().toLowerCase();
 
@@ -204,6 +305,7 @@
         allLinks.forEach((l) => l.classList.remove("is-hidden"));
         allSubLabels.forEach((l) => l.classList.remove("is-hidden"));
         allGroups.forEach((g) => g.classList.remove("is-collapsed"));
+        emptyState.hidden = true;
         // restore persisted collapse state
         allGroups.forEach((g) => {
           const key = g.dataset.group;
@@ -231,12 +333,23 @@
           if (toggle) toggle.setAttribute("aria-expanded", String(hasMatch));
         }
       });
+
+      const anyMatch = allLinks.some((l) => !l.classList.contains("is-hidden"));
+      emptyState.hidden = anyMatch;
+      if (!anyMatch) emptyState.textContent = `No results for "${input.value.trim()}"`;
     });
 
     document.addEventListener("keydown", (e) => {
       if (e.key !== "/" ) return;
       const tag = document.activeElement && document.activeElement.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || document.activeElement?.isContentEditable || document.querySelector("dialog[open]")) return;
+      // "dialog[open]" alone missed the welcome modal (overview.html), which
+      // is a plain div toggled via a "hidden" attribute on its overlay, not
+      // a native <dialog> - this global shortcut kept stealing focus out of
+      // that modal's own trap while it was open. The site's other
+      // role="dialog" elements (Modal/Drawer/Tour's Do/Don't illustrations)
+      // are static, always-visible demo markup, not real toggleable
+      // overlays, so they're deliberately not matched here.
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || document.activeElement?.isContentEditable || document.querySelector("dialog[open]") || document.querySelector('[data-role="welcome-overlay"]:not([hidden])')) return;
       e.preventDefault();
       input.focus();
     });
@@ -267,6 +380,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const activeLink = markActiveLink();
     initCollapsibleGroups(activeLink ? activeLink.closest(".nav-group") : null);
+    initSidebarDrawer();
     initSidebarSearch();
     initThemeToggle();
     initGuideViewToggle();

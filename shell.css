@@ -81,11 +81,11 @@ button{ font-family: inherit; }
    version badge + settings) no longer fits even after min-width:0 lets it
    shrink - drop the purely decorative pieces so the bar itself, and every
    grid track it shares with .app-main, can actually fit the viewport
-   instead of forcing the whole page to scroll horizontally. */
+   instead of forcing the whole page to scroll horizontally. .theme-toggle
+   is icon-only now, so it has no text label left to hide at this width. */
 @media (max-width: 640px){
   .app-topbar{ padding: 0 16px; gap: 8px; }
   .version-badge{ display: none; }
-  .theme-toggle-label{ display: none; }
   .kbd{ display: none; }
 }
 
@@ -97,61 +97,47 @@ button{ font-family: inherit; }
   flex: none;
 }
 
+/* Restyled from a track/thumb pill switch + text label into a plain
+   icon-only button, matching .icon-btn (the Settings gear button right
+   next to it) - same 32x32 bordered box, so the two read as a consistent
+   pair rather than two different control styles side by side. The icon
+   itself uses mask-image (not background-image, the old thumb's
+   approach) so its color is real currentColor - it inherits .icon-btn's
+   color/hover-color instead of two hardcoded literal fill colors baked
+   into the SVG data URIs, so it responds to hover the same way the
+   Settings icon does, automatically. Semantics unchanged from the old
+   thumb icon: the glyph shown represents the CURRENTLY active theme, not
+   what clicking switches to - moon while dark is active (aria-pressed
+   false, the default), sun once light is toggled on (aria-pressed
+   true), matching the sun/moon icon pair already used before. */
 .theme-toggle{
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   background: none;
-  border: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  width: 32px; height: 32px;
   cursor: pointer;
   color: var(--text-mid);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 }
-.theme-toggle:hover{ color: var(--text-hi); }
-.theme-toggle-track{
-  width: 32px; height: 16px;
-  border-radius: 999px;
-  background: var(--graphite-700);
-  border: 1px solid var(--line-strong);
-  position: relative;
-  transition: border-color var(--duration-base) var(--ease-standard);
+.theme-toggle:hover{ border-color: var(--red-500); color: var(--text-hi); }
+.theme-toggle-icon{
+  width: 18px; height: 18px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/%3E%3C/svg%3E");
 }
-.theme-toggle-thumb{
-  position: absolute;
-  top: 1px; left: 1px;
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  background: var(--text-hi);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
-}
-/* The thumb itself is the icon, swapping glyph as it slides - moon while
-   dark is active (thumb sits left, background stays the near-white
-   --text-hi token so a dark-filled moon reads clearly), sun once light is
-   toggled on (thumb slides right and turns --red-500, so the sun needs a
-   light fill instead). Both are fixed literal fill colors rather than
-   theme tokens: aria-pressed deterministically pins each glyph to one of
-   these two exact thumb colors regardless of which theme is active. */
-.theme-toggle-thumb::before{
-  content: "";
-  width: 9px;
-  height: 9px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2315171A'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/%3E%3C/svg%3E");
-}
-.theme-toggle:hover .theme-toggle-track{ border-color: var(--red-500); }
-.theme-toggle[aria-pressed="true"] .theme-toggle-thumb{
-  transform: translateX(16px);
-  background: var(--red-500);
-}
-.theme-toggle[aria-pressed="true"] .theme-toggle-thumb::before{
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFFFFF'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z'/%3E%3C/svg%3E");
+.theme-toggle[aria-pressed="true"] .theme-toggle-icon{
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z'/%3E%3C/svg%3E");
 }
 .version-badge{
   font-family: var(--font-mono);
@@ -163,11 +149,17 @@ button{ font-family: inherit; }
   padding: 4px 8px;
 }
 .icon-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: 1px solid var(--line-strong);
   color: var(--text-mid);
   border-radius: var(--radius-md);
   width: 32px; height: 32px;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 }
@@ -222,18 +214,15 @@ button{ font-family: inherit; }
 
 /* Moved here from the topbar - same visual treatment (icon + input + kbd
    hint), just laid out as a block instead of a flex:1 topbar child, since
-   the sidebar is a fixed 264px column rather than a flexible bar. */
-.sidebar-search{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: var(--graphite-800);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  transition: border-color var(--duration-base) var(--ease-standard);
-}
-.sidebar-search:focus-within{ border-color: var(--red-500); }
+   the sidebar is a fixed 264px column rather than a flexible bar. Sizing,
+   color and the focus ring now all come from the real Search component's
+   own classes (.search-demo-control--filled --h36, added alongside this
+   one in the markup) instead of a separate parallel set of rules that
+   happened to look the same - the one sidebar-specific tweak left
+   (a resting border, since --filled's own default is transparent) is
+   applied further down, after those classes are defined, so it actually
+   wins the cascade instead of being overridden by them. */
+.sidebar-search .kbd{ flex: none; }
 
 .nav-group{ padding: 8px 12px; }
 .nav-group + .nav-group{ border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
@@ -258,7 +247,26 @@ button{ font-family: inherit; }
   cursor: pointer;
 }
 .nav-group-label.as-toggle:hover{ color: var(--text-mid); }
-.chev{ font-family: var(--font-mono); font-size: 12px; transition: transform var(--duration-base) var(--ease-standard); }
+/* Was a bare Unicode character (U+2304, "⌄") in the label's own monospace
+   text font - that glyph is from Unicode's phonetic/diacritic block, not
+   designed as a standalone UI icon, and rendered thin, undersized and
+   sitting low in its own line box (squeezed-looking, off-center from the
+   label text next to it) rather than the crisp centered arrow every other
+   icon in this shell (search, back-link, theme toggle) already gets from
+   being a sized, explicitly centered SVG instead of relying on a font's
+   own glyph metrics. Switched to the same SVG chevron path already used
+   by Select's own dropdown icon, for one consistent chevron look
+   everywhere in the portal. */
+.chev{
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.chev svg{ width: 100%; height: 100%; display: block; }
 .nav-group.is-collapsed .chev{ transform: rotate(-90deg); }
 .nav-group.is-collapsed .nav-group-items{ display: none; }
 
@@ -289,6 +297,16 @@ button{ font-family: inherit; }
 }
 .nav-link.is-hidden{ display: none; }
 .nav-subgroup-label.is-hidden{ display: none; }
+
+.sidebar-search-empty{
+  margin: 8px 12px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-dim);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+}
 
 /* ---------- main content frame ---------- */
 .app-main{
@@ -529,6 +547,19 @@ button{ font-family: inherit; }
 .btn-ghost:hover{ color: var(--text-hi); border-color: var(--red-500); }
 
 /* ---------- welcome modal (overview.html only - real, not a demo) ---------- */
+/* Same root cause already fixed once for .select-demo-panel: this class's
+   own "display:flex" has the same specificity as the browser's UA rule
+   "[hidden]{display:none}", and an author style always wins a same-
+   specificity tie against a UA style regardless of source order - so
+   toggling the "hidden" attribute alone (what closeModal() does in
+   welcome.js) never actually hid this overlay. Every dismissal path that
+   also navigates away (choosing a project path, "Continue to Foundations")
+   masked this, since the whole page unloads a moment later anyway - it
+   only became visible testing Escape and backdrop-click, the two paths
+   that close the modal and then leave the visitor on the same page, which
+   is exactly when the still-rendered, still-click-blocking overlay was
+   left sitting on top of the entire page. */
+.welcome-modal-overlay[hidden]{ display: none; }
 .welcome-modal-overlay{
   position: fixed;
   inset: 0;
@@ -570,9 +601,17 @@ button{ font-family: inherit; }
 .welcome-choice-btn-title{ display: block; font-weight: 600; font-size: 14px; margin-bottom: 2px; }
 .welcome-choice-btn-desc{ display: block; font-size: 12px; color: var(--text-dim); }
 .welcome-modal-fields{ display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
-.welcome-modal-fields .form-demo-input,
-.welcome-modal-fields .form-demo-select{ width: 100%; }
-.form-demo-select{ box-sizing: border-box; height: 40px; padding: 0 12px; border-radius: var(--radius-sm); border: 1px solid var(--line-strong); background: var(--graphite-800); color: var(--text-hi); font-family: var(--font-body); font-size: 14px; }
+/* .input-demo-field/.select-demo-field (the real Input/Select components'
+   own wrappers) default to a fixed 220px, sized for sitting in a Live
+   Preview matrix cell - override to fill this modal's own width instead. */
+.welcome-modal-fields .input-demo-field,
+.welcome-modal-fields .select-demo-field{ width: 100%; }
+/* Select's own panel was only ever rendered as one more static state
+   illustration (see select-detail.js) - it never needed a hover/keyboard-
+   highlight style of its own before now, when welcome.js turns it into a
+   real, clickable, arrow-key-navigable listbox. */
+.select-demo-option:hover:not(.is-selected),
+.select-demo-option.is-highlighted:not(.is-selected){ background: var(--graphite-800); }
 .welcome-modal-actions{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
 .welcome-modal-actions .btn{ flex: 1; min-width: 140px; }
 .welcome-modal-status{ font-size: 12px; color: var(--green-500); min-height: 16px; margin: 0 0 12px; }
@@ -799,6 +838,13 @@ button{ font-family: inherit; }
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
+/* Same "[hidden] loses to an author display rule of equal specificity"
+   gotcha already fixed for .select-demo-panel and .welcome-modal-overlay:
+   these 5 columns (Brand/Background/Status/Neutral/Text's own "separate
+   dark value" override fields) start hidden until their own "enable"
+   checkbox is checked (foundations.js toggles the hidden attribute alone),
+   so without this they were always visible regardless of that checkbox. */
+.theme-pair-col[hidden]{ display: none; }
 .theme-pair-col{ display: flex; flex-direction: column; }
 /* Light's header is just a label; Dark's carries a status badge and a
    Regenerate button, which render taller than the bare label text. A
@@ -1569,9 +1615,60 @@ button{ font-family: inherit; }
   padding: 4px 12px;
 }
 
+/* Below 900px the sidebar used to just vanish (display:none) with no way
+   to bring it back at all - every page except the one you'd already
+   landed on became unreachable except via a "Back to X types" link or the
+   browser's own back button. Turned into a slide-in drawer instead,
+   toggled by a hamburger button shell.js injects into the topbar (only at
+   this width - see .sidebar-menu-toggle below): .app-sidebar stays in the
+   DOM and keeps working exactly as it does on desktop (search, collapsible
+   groups, active-link scroll), it's just fixed-position and translated
+   off-screen until .is-open is added. */
+.sidebar-menu-toggle{ display: none; }
 @media (max-width: 900px){
   body{ grid-template-columns: 1fr; grid-template-areas: "topbar" "main"; }
-  .app-sidebar{ display: none; }
+
+  .sidebar-menu-toggle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    color: var(--text-mid);
+    cursor: pointer;
+    flex: none;
+  }
+  .sidebar-menu-toggle:hover{ border-color: var(--red-500); color: var(--text-hi); }
+  .sidebar-menu-toggle svg{ width: 18px; height: 18px; display: block; }
+
+  .app-sidebar{
+    display: flex;
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    width: 264px;
+    max-width: 84vw;
+    height: 100vh;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform var(--duration-base) var(--ease-standard);
+    box-shadow: none;
+  }
+  .app-sidebar.is-open{
+    transform: translateX(0);
+    box-shadow: 8px 0 24px rgba(0,0,0,0.35);
+  }
+
+  .sidebar-drawer-backdrop{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 30;
+  }
+  .sidebar-drawer-backdrop.is-open{ display: block; }
 }
 
 /* ---------- icon foundations ---------- */
@@ -2737,6 +2834,12 @@ button{ font-family: inherit; }
 .search-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .search-demo-control--filled:has(.search-demo-input:disabled), .search-demo-control--filled.is-disabled{ opacity: 0.5; }
 
+/* Sidebar-specific: --filled's own resting border is transparent, which
+   read fine standing alone but let the sidebar search field blend
+   invisibly into .app-sidebar's own graphite-900 background - restoring a
+   visible resting border here so it still reads as a distinct field. */
+.sidebar-search.search-demo-control--filled{ border-color: var(--line); }
+
 .search-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .search-demo-control--underlined:hover, .search-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
 .search-demo-control--underlined:focus-within, .search-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
@@ -2794,6 +2897,14 @@ button{ font-family: inherit; }
    own edges, reading as attached zones rather than icons floating inside
    one shared field background. */
 .addon-demo-field{ display: flex; flex-direction: column; gap: 6px; width: 280px; text-align: start; }
+/* The Don't example's whole point is that a label-as-prefix "steals the
+   width the value needs" - but at the field's normal 280px width, there
+   was always enough slack to absorb "Set the amount" without the input
+   ever visibly shrinking (measured 144px, plenty of room for "49.00").
+   Narrower here so the input genuinely gets squeezed (measured 85px,
+   barely more than the text itself needs), the way a real, more
+   space-constrained form would actually show this problem. */
+.guide-dodont-case.is-dont .addon-demo-field{ width: 220px; }
 .addon-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
 .addon-demo-control{ box-sizing: border-box; display: flex; align-items: center; width: 100%; overflow: hidden; border-radius: var(--radius-md); transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard); }
 .addon-demo-input{ flex: 1 1 auto; min-width: 0; border: none; background: transparent; outline: none; font-family: var(--font-body); color: var(--text-hi); }
@@ -3863,6 +3974,12 @@ button{ font-family: inherit; }
 .image-demo-frame:hover .image-demo-zoom-icon, .image-demo-frame--hover .image-demo-zoom-icon{ opacity: 1; }
 .image-demo-zoom-icon svg{ width: 12px; height: 12px; }
 .image-demo-caption{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); }
+/* The shared "truncate at 150px" rule (below, meant for the real Image
+   component's own matrix) clipped this Do example's caption to
+   "Warehouse floor plan, L..." - the exact opposite of what it's meant
+   to illustrate ("a caption that says what the image actually is").
+   Letting it wrap instead of truncating here restores the full text. */
+.guide-dodont-demo .image-demo-caption{ max-width: none; overflow: visible; text-overflow: clip; white-space: normal; text-align: center; }
 
 /* ---------- List demo (list-default.html) ---------- */
 .list-demo-panel{ display: flex; flex-direction: column; width: 260px; background: var(--graphite-900); }
@@ -3992,6 +4109,13 @@ button{ font-family: inherit; }
    line. Widening the table by the checkbox column's own measured need
    restores Name/Role to their original widths instead. */
 .table-demo-table--has-checkbox{ width: 670px; }
+/* The listing page's own preview card (table.html, 3 plain columns) reuses
+   this same class but sits in a ~330px-wide grid card, not the detail
+   page's wide Live Preview matrix - the fixed 630px width above overflowed
+   that card on both sides (clipping Name and the Role column). Only the
+   detail page's matrix needs the fixed width Email/Mobile require; the
+   listing card can size to its own content instead. */
+.table-type-card .table-demo-table{ width: auto; }
 /* No underline at rest - only on hover, giving interaction feedback
    rather than a permanent decoration. Same pattern this system's own
    Link-type Button already uses (see .btn-demo--link:hover above). */
@@ -4005,6 +4129,12 @@ button{ font-family: inherit; }
 
 /* ---------- Tag demo (tag-default.html) ---------- */
 .tag-demo-chip{ box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-family: var(--font-body); font-size: 12px; font-weight: 600; white-space: nowrap; border: none; cursor: default; }
+/* The shared max-width:150px truncation rule (below, meant for the real
+   Tag component) silently ellipsis-clipped this Don't example's long
+   sentence to "Last edited 3 days ago b..." - the opposite of its own
+   caption, which specifically describes the text wrapping the row, not
+   being truncated. Letting it wrap here instead restores that. */
+.guide-dodont-demo .tag-demo-chip{ max-width: none; overflow: visible; text-overflow: clip; white-space: normal; }
 /* The static matrix renders this as a <span>; the real interactive
    checkable-tag sandbox below renders the same class on a <button> - this
    makes the button variant clickable without a second class name. */
@@ -4162,6 +4292,16 @@ button{ font-family: inherit; }
 .drawer-demo-panel--right{ margin-inline-start: auto; }
 .drawer-demo-panel--left{ margin-inline-end: auto; }
 .drawer-demo-panel--small{ width: 200px; }
+/* The footer reuses Modal's own .modal-demo-footer/.modal-demo-btn
+   directly, with padding sized for Modal's much wider dialog - inside a
+   200px-wide Small drawer that left only ~6px of slack for two buttons
+   with real labels ("Cancel"/"Discard"), thin enough to tip into the
+   buttons' shared 150px truncation rule and clip them to "Can..."/
+   "Disc...". Same bug, same fix as Card's own footer earlier: tighter
+   padding restores real margin, and flex-shrink:0 stops the buttons
+   from ever shrinking below their own text width again. */
+.drawer-demo-panel--small .modal-demo-footer{ padding: 12px 12px; }
+.drawer-demo-panel--small .modal-demo-footer .modal-demo-btn{ flex-shrink: 0; }
 .drawer-demo-panel--medium{ width: 260px; }
 .drawer-demo-panel--large{ width: 320px; }
 /* Top/Bottom are full-width instead - Size controls height, not width,
@@ -4343,6 +4483,16 @@ button{ font-family: inherit; }
 .skeleton-demo-media{ width: 100%; height: 100px; border-radius: var(--radius-md); background: var(--graphite-700); margin-bottom: 10px; }
 .skeleton-demo-row{ display: flex; gap: 12px; align-items: flex-start; }
 .skeleton-demo-col{ flex: 1 1 auto; min-width: 0; }
+/* .skeleton-demo-row normally sits in a plain block ancestor (its own
+   Live Preview matrix cell), so it naturally fills 100% of that block's
+   width and .skeleton-demo-col's flex:1 1 auto has real space to grow
+   into. Inside .guide-dodont-demo (itself display:flex), the row becomes
+   a shrink-to-fit flex item instead of a block box - with no intrinsic
+   content of its own (the lines are 100%-width placeholders with nothing
+   to size from), it and every line inside it collapsed to 0 width,
+   rendering completely invisible except for the fixed-width avatar
+   circle. */
+.guide-dodont-demo .skeleton-demo-row{ width: 100%; }
 .skeleton-demo-text, .skeleton-demo-card{ display: flex; flex-direction: column; width: 200px; }
 .skeleton-demo-line.is-animated,
 .skeleton-demo-avatar.is-animated,
@@ -4499,6 +4649,17 @@ a.system-card{ text-decoration: none; color: inherit; }
 .recommendation-text a:hover{ text-decoration: underline; }
 
 /* ---------- button detail pages ---------- */
+/* The arrow and label used to be one plain text node ("&larr; Back to X
+   types") inside this flex row, so display:inline-flex/gap:4px above had
+   nothing to apply between - there was only ever one child. The actual
+   gap the user saw was whatever a literal space character happened to
+   render as in this font, with no control over the arrow's own vertical
+   position relative to the label. Wrapping the arrow in its own span
+   makes it a real second flex item, so the gap and alignment rules
+   already written here finally take effect. flex:none stops the arrow
+   from stretching/shrinking under the row's own layout; line-height:1
+   keeps the glyph's own line box from padding out the row's height and
+   throwing off align-items:center. */
 .back-link{
   display: inline-flex;
   align-items: center;
@@ -4509,6 +4670,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   text-decoration: none;
   margin-bottom: 8px;
 }
+.back-link-icon{ flex: none; line-height: 1; }
 .back-link:hover{ color: var(--red-400); }
 
 .button-state-row{
@@ -4860,7 +5022,20 @@ a.system-card{ text-decoration: none; color: inherit; }
 /* Open state's panel is absolutely positioned below the field, so the row
    underneath it in the matrix needs the extra clearance - same technique
    as Autocomplete/Cascader/Mention/Tree Select's own open-panel rows. */
-.select-demo-field:has(.select-demo-panel){ margin-bottom: 128px; }
+/* :not([hidden]) matters now that welcome.js keeps a real Select panel
+   permanently in the DOM and only toggles its [hidden] attribute - without
+   it this margin would apply even while the panel is closed (this rule
+   only needs to make room for it in the static Live Preview matrix's
+   always-open illustration, and in welcome.js's own open state). */
+.select-demo-field:has(.select-demo-panel:not([hidden])){ margin-bottom: 128px; }
+/* select-detail.js never toggled a "hidden" attribute on this panel before
+   - it only ever printed the <ul> into the HTML string for the "open"
+   state row, so it either existed (always shown) or didn't. Now that
+   welcome.js toggles a real, persistent panel's [hidden] attribute open
+   and closed, this class's own "display:flex" (same specificity as the
+   UA's own "[hidden]{display:none}") would otherwise win by cascade order
+   and keep the "closed" panel visually rendered and clickable. */
+.select-demo-panel[hidden]{ display: none; }
 .select-demo-panel{
   position: absolute;
   top: calc(100% + 4px);
@@ -5108,8 +5283,15 @@ a.system-card{ text-decoration: none; color: inherit; }
 .checkbox-demo-label{ font-size: 14px; color: var(--text-hi); }
 
 /* Checked / Indeterminate are read live off the real input via CSS sibling
-   selectors - genuine DOM states, not simulated ones. */
-.checkbox-demo-input:checked + .checkbox-demo-box{ background: var(--red-500); border-color: var(--red-500); }
+   selectors - genuine DOM states, not simulated ones. .is-checked is the
+   class-based fallback for static illustrations with no real sibling
+   input to drive :checked from (e.g. Do/Don't examples) - every other
+   state here (hover/focus/disabled) already has one; this one was
+   missing, so is-checked silently did nothing wherever it was used
+   without a real input. The checkmark icon is still a separate child
+   span that has to be added in markup - a class alone can't inject it. */
+.checkbox-demo-input:checked + .checkbox-demo-box,
+.checkbox-demo-box.is-checked{ background: var(--red-500); border-color: var(--red-500); }
 .checkbox-demo-input:indeterminate + .checkbox-demo-box{ background: var(--red-500); border-color: var(--red-500); }
 
 .checkbox-demo-box:hover,
@@ -5178,7 +5360,14 @@ a.system-card{ text-decoration: none; color: inherit; }
 
 .radio-demo-label{ font-size: 14px; color: var(--text-hi); }
 
-.radio-demo-input:checked + .radio-demo-circle{ border-color: var(--red-500); background: transparent; }
+/* .is-checked is the class-based fallback for static illustrations that
+   have no real sibling <input> to drive :checked from (e.g. the Do/Don't
+   examples) - every other state here (hover/focus/disabled) already has
+   one; this one was missing, so is-checked silently did nothing wherever
+   it was used without a real input, and the dot child span still has to
+   be added separately since a class alone can't inject a whole element. */
+.radio-demo-input:checked + .radio-demo-circle,
+.radio-demo-circle.is-checked{ border-color: var(--red-500); background: transparent; }
 
 .radio-demo-circle:hover,
 .radio-demo-circle.is-hover{ border-color: var(--text-dim); }
@@ -5894,39 +6083,6 @@ a.system-card{ text-decoration: none; color: inherit; }
 .splitter-demo-wrap--vertical .splitter-demo-handle{ width: 16px; height: 3px; }
 .splitter-demo-divider.is-dragging .splitter-demo-handle{ background: #FFFFFF; }
 
-/* ---------- Form demo (form-default.html) ---------- */
-.form-demo-field{ display: flex; gap: 6px; font-family: var(--font-body); }
-.form-demo-field--vertical{ flex-direction: column; align-items: flex-start; }
-.form-demo-field--horizontal{ flex-direction: row; align-items: flex-start; gap: 12px; }
-.form-demo-field--horizontal .form-demo-label{ flex: 0 0 110px; padding-top: 9px; }
-.form-demo-body{ flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-.form-demo-field--inline{ flex-direction: row; align-items: center; gap: 8px; flex-wrap: wrap; }
-.form-demo-field.is-disabled{ opacity: 0.5; }
-.form-demo-label{ font-size: 13px; font-weight: 500; color: var(--text-hi); }
-.form-demo-required{ color: var(--danger-500); margin-inline-start: 2px; }
-.form-demo-input{ box-sizing: border-box; width: 200px; height: 40px; padding: 0 12px; border-radius: var(--radius-sm); border: 1px solid var(--line-strong); background: var(--graphite-800); color: var(--text-hi); font-family: var(--font-body); font-size: 14px; }
-.form-demo-input::placeholder{ color: var(--text-dim); }
-.form-demo-input.is-error{ border-color: var(--danger-500); }
-.form-demo-input.is-success{ border-color: var(--green-500); }
-.form-demo-input.is-validating{ border-color: var(--blue-500); }
-.form-demo-help.is-validating{ color: var(--blue-500); }
-.form-demo-spinner{
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  box-sizing: border-box;
-  border-radius: 9999px;
-  border: 1.5px solid color-mix(in srgb, var(--blue-500) 30%, transparent);
-  border-top-color: var(--blue-500);
-  margin-inline-end: 4px;
-  vertical-align: -2px;
-  animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite;
-}
-.form-demo-input:disabled{ cursor: not-allowed; }
-.form-demo-help{ margin: 0; display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-dim); }
-.form-demo-help.is-error{ color: var(--danger-500); }
-.form-demo-help.is-success{ color: var(--green-500); }
-
 /* ---------- Tree demo (tree-default.html) ---------- */
 .tree-demo-wrap{ width: 220px; font-family: var(--font-body); font-size: 13px; }
 .tree-demo-wrap.is-disabled{ opacity: 0.4; pointer-events: none; }
@@ -6270,6 +6426,17 @@ a.system-card{ text-decoration: none; color: inherit; }
   line-height: 1.5;
   color: var(--text-mid);
 }
+/* Cascader's Do/Don't example shows the field with its dropdown panel
+   already open, as a static snapshot - but .cascader-demo-panel is
+   position:absolute with its own min-width:360px (appropriate for the
+   real component, where it has a full-width column to open into), which
+   doesn't shrink to fit a Do/Don't card's much narrower ~465px box. The
+   panel measured 483px, 18px wider than the box, and .guide-dodont-demo's
+   own overflow:hidden silently clipped that overhang instead of showing
+   it or wrapping it. Dropping the panel's min-width here lets it size to
+   its actual 2-column content (measured 222px, comfortably inside the
+   box) instead of the fixed minimum meant for the real, wider layout. */
+.guide-dodont-demo .cascader-demo-panel{ min-width: 0; }
 
 /* ---------- concept cards ----------
    A static (non-interactive) card grid for prose-level concepts - design

@@ -275,6 +275,23 @@
       });
     });
 
+    // Listing-page type-card preview (Chevron type, "Home / Products /
+    // Shoes" trail) - rendered once, independent of the detail page's own
+    // property controls (which don't exist on breadcrumb.html). Must run
+    // before the "if (!matrixContainer) return;" guard below: that guard
+    // exists to skip the Live Preview matrix setup on breadcrumb.html
+    // (which has no matrix container), but since this preview fill used to
+    // sit textually AFTER that guard in the same function, the early
+    // return was skipping it too - the listing card's preview never
+    // rendered, leaving only its "System Generated Breadcrumb" placeholder
+    // label visible. buildBreadcrumbDemo is a hoisted function declaration
+    // (defined further down in this same scope), so calling it up here
+    // works the same as calling it from its original spot.
+    var typeCardPreview = document.querySelector('[data-role="breadcrumb-type-card-preview"]');
+    if (typeCardPreview){
+      typeCardPreview.innerHTML = buildBreadcrumbDemo("chevron", "rest", "", FALLBACK_DEFAULTS.size, DEFAULT_LABELS);
+    }
+
     // Renders either a plain Copy prompt/Copy code button (exactly one
     // Size is in play) or, whenever more than one size is currently
     // selected, a disclosure dropdown listing every size by name with its
@@ -447,13 +464,5 @@
     if (labelsInput) labelsInput.addEventListener("input", render);
 
     render();
-
-    // Listing-page type-card preview (Chevron type, "Home / Products /
-    // Shoes" trail) - rendered once, independent of the detail page's own
-    // property controls (which don't exist on breadcrumb.html).
-    var typeCardPreview = document.querySelector('[data-role="breadcrumb-type-card-preview"]');
-    if (typeCardPreview){
-      typeCardPreview.innerHTML = buildBreadcrumbDemo("chevron", "rest", "", FALLBACK_DEFAULTS.size, DEFAULT_LABELS);
-    }
   });
 })();

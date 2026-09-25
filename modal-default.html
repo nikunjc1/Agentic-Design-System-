@@ -102,9 +102,8 @@
   </a>
   <div class="topbar-right">
     <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
-      <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
-      <span class="theme-toggle-label" id="themeToggleLabel">Dark</span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.4.0</span>
     <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
@@ -114,9 +113,9 @@
 <aside class="app-sidebar">
   <nav class="sidebar-nav">
     <div class="sidebar-search-sticky">
-      <div class="sidebar-search">
-        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+      <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
+        <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -129,7 +128,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
-      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <a class="nav-link" href="foundations.html#colors">Colors</a>
         <a class="nav-link" href="grid-layout.html">Grid &amp; Layout</a>
@@ -143,7 +142,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="guidelines">
-      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <a class="nav-link" href="principles.html">Design Principles</a>
         <a class="nav-link" href="guidelines.html">Component Guidelines</a>
@@ -153,7 +152,7 @@
     </div>
 
     <div class="nav-group is-collapsible" data-group="components">
-      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev">&#8964;</span></button>
+      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
         <span class="nav-subgroup-label">Actions</span>
         <a class="nav-link" href="components.html#button">Button</a>
@@ -247,7 +246,7 @@
 
 <main class="app-main">
   <p class="page-eyebrow">Components &middot; Feedback &middot; Modal</p>
-  <a class="back-link" href="modal.html">&larr; Back to Modal types</a>
+  <a class="back-link" href="modal.html"><span class="back-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></span>Back to Modal types</a>
   <h1 class="page-title">Modal <span class="component-status is-stable">Stable</span></h1>
   <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
   <p class="page-lede">Use for a dialog box that appears above a dimmed backdrop to focus the user on one task or decision before returning them to the page - one Modal component, controlled by properties, not a one-off overlay built from scratch each time.</p>
