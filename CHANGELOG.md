@@ -578,6 +578,20 @@ Also found two structural gaps in `templates.html` while re-checking each "Built
 
 Verified all four icon swaps and both structural fixes visually, re-ran all 20 Copy prompt/Copy code buttons (content changes automatically since both scripts read the live DOM, not a duplicated copy), and the full 157-page sweep: 0 console errors.
 
+## Removed 3 sidebar tabs that duplicated functionality already built elsewhere
+
+Reported as "lots of tabs, but they don't have any good information - remove any unnecessary ones." Audited all 10 tabs in the sidebar's bottom group rather than acting on the description alone: 6 of them (AI Generator, Code, Figma, Documentation, Governance, Settings) turned out to be the same genre - a one-line pitch plus a "Not built yet" placeholder with a chip-list of planned sub-features, not broken pages, just intentionally thin (matching this portal's own established "static mockup, be honest about what's real" ethos). The other 4 (Patterns, Templates, MD Export, NPM Package, History) are already fully built out.
+
+Checked each placeholder's own pitch against what already exists elsewhere in the portal before deciding anything, and confirmed the result with the user (with selectable options, one tab or group at a time) before removing or keeping each:
+
+- **Code** - promised "copy production code per component." Every one of the 62 components already has its own real "Copy code" button. Removed - a dedicated tab for this would only duplicate what's already on every component page.
+- **Documentation** - promised "usage guidelines, do/don't rules, accessibility notes per component." Every component page already has exactly this in its own Component Guide section (Human View/Machine View toggle). Removed for the same reason.
+- **Governance** - promised versioning (already real, in **History**) and component status (already real, as the `.component-status` badges every component page already carries) alongside two genuinely new ideas (Approvals, Compliance audit) that weren't enough on their own to justify keeping a dedicated tab. Removed.
+- **AI Generator** and **Figma** - kept as-is. Neither duplicates anything else in the portal - AI Generator is this system's actual core premise (an agent reusing existing components before generating anything new), and Figma is a standard, non-redundant integration promise.
+- **Settings** - kept as-is. It already correctly defers to Foundations · Colors for the one piece of it that's real today, and honestly labels the rest (team access, integrations) as not built yet.
+
+Removed `code.html`, `documentation.html` and `governance.html` entirely, their sidebar `<a class="nav-link">` entries across all 157 pages (byte-identical markup, removed via a scripted pass), and the one other cross-reference to any of them (a "Governance" row in Overview's own "Guidelines & governance" panel, which also linked to `governance.html`). Verified afterward: no remaining `.html` href pointing at a file that no longer exists anywhere in the codebase, and a full sweep of all 154 remaining pages - 0 console errors, 0 failed asset/page requests.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
