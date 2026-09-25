@@ -1,17 +1,21 @@
 # Codex session — what changed and where to pick up
 
 This documents a parallel editing session run in Codex against this same working
-copy, captured before anything was committed. Nothing here has been pushed to
-GitHub yet — it's still sitting uncommitted on disk alongside the last few
-CHANGELOG.md entries from the Claude session (the Design System/Guidelines tab
-audit and the Design Principles alignment fixes), which are a separate, already
--reported set of edits and are not part of Codex's work.
+copy, captured after the fact. It's now merged, committed and **pushed to
+GitHub** (`main`, commit `487bf9c`, on top of `b8ac9a3`) alongside the last
+few CHANGELOG.md entries from the Claude session (the Design System/Guidelines
+tab audit and the Design Principles alignment fixes) and the two follow-up
+fixes described in §6 below — all as one commit.
 
-**Scale:** 226 files touched, +1298 / −13739 lines. Verified against a live
-server after the fact: all 154 pages load with 0 console errors and 0 failed
-requests, the new project-setup wizard runs end-to-end (fill → review → save →
-Settings reflects it → MD Export includes it), and the bundled test suite
-(`node --test tests/project-model.test.js`) passes all 4 tests.
+**Scale:** 226 files from Codex's own session (+1298 / −13739 lines), plus
+this session's own follow-up fixes on top (see §6) — 243 files in the final
+commit (+6275 / −14033 lines, the larger insertion count mostly `CODEX-CHANGES.md`
+itself and the newly-committed `audit`/`tools`/test files). Verified against a
+live server both before and after the follow-up fixes: all 154 pages load with
+0 console errors and 0 failed requests, the new project-setup wizard runs
+end-to-end (fill → review → save → Settings reflects it → MD Export includes
+it), and the bundled test suite (`node --test tests/project-model.test.js`)
+passes all 4 tests.
 
 ## 1. New files
 
@@ -203,8 +207,22 @@ work itself.
    end-to-end flow, and `node --test tests/project-model.test.js` after both
    changes — all still clean/passing.
 
-## 7. What's still a judgment call, not a bug
+## 7. Current state
 
-Nothing here has been committed. When ready, review `git status`/`git diff`
-yourself (or ask for a commit) — this file is a map of that diff, not a
-substitute for looking at it.
+Committed and pushed — `git log --oneline -1` on `main` is `487bf9c Merge
+parallel Codex session's feature work, fix its two loose ends, document it
+all`, on top of `b8ac9a3` (the last Claude-session commit before this one).
+Nothing is pending in the working tree beyond this file's own edit.
+
+Remaining judgment calls, not bugs — worth deciding on later, not fixing now:
+
+- `ai-generator.html`, `figma.html`, `npm-package.html`, `history.html` are
+  still "Coming soon" pages (their own content untouched by Codex; it only
+  added a small dynamic notice on top pointing at Markdown export as today's
+  real alternative). Whether/when to build any of them out for real is a
+  product decision, not a leftover bug.
+- The `audit/` and `tools/` additions are now genuinely useful ongoing
+  tooling (`python3 tools/audit_pages.py` regenerates the doc catalog and
+  page inventory; `tools/browser-audit.js` is a repeatable multi-viewport
+  sweep) — worth reaching for the next time a page gets added, renamed, or
+  restructured, rather than a one-off artifact from this session.
