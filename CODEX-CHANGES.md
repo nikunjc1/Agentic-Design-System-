@@ -207,11 +207,41 @@ work itself.
    end-to-end flow, and `node --test tests/project-model.test.js` after both
    changes — all still clean/passing.
 
-## 7. Current state
+## 7. Found after the push: MD Export breaks under `file://`
+
+Reported by the user after trying MD Export themselves: two of the three
+export scopes ("Brief + all component detail guides," "Brief + complete
+documentation") plus Copy/Refresh appeared not to work. Reproduced by opening
+`md-export.html` directly as a local file (`file:///.../md-export.html`)
+instead of through the local HTTP server — under that condition, the default
+scope ("Project brief and saved foundations") still worked, but the other two
+failed immediately, because both call `fetch("docs-catalog.json")` to pull in
+component documentation text, and browsers block `fetch` outright against the
+`file:` protocol. Copy/Download only looked broken too because they act on
+whatever's in the (now empty) preview textarea — not independently broken.
+
+The failure was real, but `experience.js`'s error handling made it worse: the
+raw `"Failed to fetch"` browser error got a generic, actively misleading
+suffix appended ("... Check saved foundation values or try again.") that
+pointed at the wrong cause entirely. Fixed in `experience.js`'s `generate()`:
+detect `location.protocol === "file:"` before attempting the fetch and show a
+specific message instead — that this scope needs the portal served over
+`http(s)://`, the exact command to do that, and that "Project brief and saved
+foundations" is the one scope that doesn't need it. Also dropped the same
+misleading suffix from the other two error paths on this page, since both
+already end in a complete sentence of their own.
+
+Verified: the new message reproduces correctly under the exact `file://`
+condition that caused the report; all three scopes still generate correctly
+when properly served (958 chars / ~427 KB / ~543 KB); full 154-page sweep
+still 0 console errors. Committed and pushed on top of the work below.
+
+## 8. Current state
 
 Committed and pushed — `git log --oneline -1` on `main` is `487bf9c Merge
 parallel Codex session's feature work, fix its two loose ends, document it
-all`, on top of `b8ac9a3` (the last Claude-session commit before this one).
+all`, on top of `b8ac9a3` (the last Claude-session commit before this one),
+plus the MD Export fix in §7 above as a follow-up commit.
 Nothing is pending in the working tree beyond this file's own edit.
 
 Remaining judgment calls, not bugs — worth deciding on later, not fixing now:

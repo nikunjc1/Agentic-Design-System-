@@ -202,6 +202,7 @@
       try {
         let docs = [];
         if (selector.value !== 'context') {
+          if (location.protocol === 'file:') throw new Error('This scope needs the portal served over http(s):// — opening the file directly blocks loading the documentation. Run a local server (e.g. "python3 -m http.server" in this folder) and open the page from http://localhost instead, or choose "Project brief and saved foundations," which doesn\'t need it.');
           if (!catalog) {
             const response = await fetch('docs-catalog.json');
             if (!response.ok) throw new Error('Documentation could not be loaded. Retry, or choose Project brief.');
@@ -213,7 +214,7 @@
         preview.value = M.markdown(profile, savedTokens(), docs, identity.checked);
         status.textContent = `${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
         download.disabled = false; copy.disabled = false;
-      } catch (error) { preview.value = ''; status.textContent = error.message + ' Check saved foundation values or try again.'; }
+      } catch (error) { preview.value = ''; status.textContent = error.message; }
       finally { busy = false; selector.disabled = false; identity.disabled = false; }
     }
     $('#refreshMarkdown').addEventListener('click', generate);
