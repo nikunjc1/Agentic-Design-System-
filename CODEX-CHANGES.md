@@ -249,13 +249,50 @@ deep link (`?page=table-default.html`) still resolves to that page's real
 content. Re-ran the full 154-page sweep over HTTP too — still 0 console
 errors, all three scopes still correct there as well.
 
-## 8. Current state
+## 8. Found after the push: the click-hijack fix (§4) broke 5 Foundation pages
 
-Committed and pushed — `git log --oneline -1` on `main` is `487bf9c Merge
-parallel Codex session's feature work, fix its two loose ends, document it
-all`, on top of `b8ac9a3` (the last Claude-session commit before this one),
-plus the MD Export fix in §7 above as a follow-up commit.
-Nothing is pending in the working tree beyond this file's own edit.
+Reported by the user: selecting a card on Grid & Layout, Colors, Typography,
+Spacing, Radius, Borders, Shadow or Icons appeared to do nothing. Tested each
+page the way a real user would interact with it (not just checked for
+console errors): Colors, Typography and Icons all worked correctly. Grid &
+Layout, Spacing, Radius, Borders and Shadow did not — clicking any card did
+literally nothing, silently.
+
+Root cause is a direct regression from §4's click-hijack fix. That fix
+(`if (e.target.closest("button, input, select, textarea, a,
+[role=combobox]")) return;`) was written to stop a card's click/select
+handler from also firing when a click actually landed on something nested
+*inside* the card, like a Copy button. It works correctly everywhere the
+card itself is a `<div>` (every component listing page, 60+ files). But on
+exactly these 5 Foundation pages, the card is itself a real `<button
+class="product-card">`/`<button class="system-card">` element — so
+`e.target.closest("button, ...")` matches the card *itself*, on every click,
+anywhere on it, and the guard silently swallows all of them. §4's fix,
+applied uniformly across the codebase, missed that these 5 pages use a
+structurally different card element than the other 60+ files it was also
+touching.
+
+Fixed by excluding the card itself from the match: `var hit =
+e.target.closest(...); if (hit && hit !== card) return;` — across all 8
+click handlers in `grid-layout.js` (×2), `spacing.js` (×2), `radius.js`
+(×2), `borders.js` (×1) and `shadows.js` (×1). Confirmed via a sitewide grep
+that only these 5 HTML files use a `<button>`-tag card; every `*-detail.js`
+file's own copy of the original guard is untouched and doesn't need this,
+since none of those cards are buttons.
+
+Verified each of the 5 pages individually (clicking a product card now
+correctly activates its matching system card and recommendation text;
+clicking a system card directly now correctly switches which one is
+active) and re-ran the full 154-page sweep — 0 console errors.
+
+## 9. Current state
+
+Committed and pushed on `main`, on top of `b8ac9a3` (the last Claude-session
+commit before this whole merge): the Codex feature-work merge (`487bf9c`),
+the CODEX-CHANGES.md correction (`563aeae`), the MD Export `file://` message
+fix (`424b1a5`), the real MD Export `file://` fix (`5b66a3e`), and the
+Foundation-pages click-hijack regression fix from §8 above as a follow-up
+commit. Nothing is pending in the working tree beyond this file's own edit.
 
 Remaining judgment calls, not bugs — worth deciding on later, not fixing now:
 

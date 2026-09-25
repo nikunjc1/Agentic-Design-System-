@@ -14,7 +14,7 @@
 
     systemCards.forEach(function(card){
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; selectSystem(card.dataset.system); });
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
     });
 
     function getActiveSystem(){

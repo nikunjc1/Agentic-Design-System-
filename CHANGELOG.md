@@ -644,6 +644,16 @@ Root cause: two of MD Export's three scopes called `fetch("docs-catalog.json")`,
 
 Verified by reproducing the user's exact scenario (`file:///.../md-export.html`, opened directly, no server): all three scopes now generate real content (958 chars / 427 KB / 543 KB, matching what serving over HTTP produces), Copy Markdown copies the full generated text, Refresh Preview works, and the deep-link "Export this guide" flow (`?page=table-default.html`) still resolves to that page's real content. Re-ran the full 154-page sweep over HTTP too: 0 console errors, all three scopes still correct there as well.
 
+## Grid & Layout, Spacing, Radius, Borders, Shadow - selecting a card did nothing at all
+
+Reported as "when I click on the selection, values are not changing" across Grid & Layout, Colors, Typography, Spacing, Radius, Borders, Shadow and Icons. Tested each one directly rather than assuming all eight had the same problem. Colors (typing a hex value updates the RGBA text and scale chips correctly), Typography (choosing a category then a font correctly updates the live preview's font-family) and Icons (changing the size/stroke/corner selects correctly updates the preview SVG; clicking a library card correctly checks its radio) all worked exactly as expected once tested the way a real user actually interacts with them.
+
+The other five - Grid & Layout, Spacing, Radius, Borders, Shadow - were genuinely, completely broken: clicking any product or system card did nothing whatsoever, silently, with no console error. Root cause: on these five pages specifically, the clickable "card" is itself a `<button class="product-card">`/`<button class="system-card">` element (every other card-based page on the site - all 60+ component listing pages - uses a `<div class="system-card">` instead). The click-hijack guard added earlier this session (`if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return;`, meant to stop a card's own navigate/select handler from also firing when a click actually landed on a nested interactive element like a Copy button) matches the *card itself* whenever the card is a real `<button>` - so every single click on these cards, no matter where on the card, was being silently swallowed by a guard meant only to catch clicks on something *nested inside* it.
+
+Fixed by checking that the closest interactive ancestor isn't the card itself: `var hit = e.target.closest(...); if (hit && hit !== card) return;`. Applied to all 8 affected click handlers across `grid-layout.js` (×2: product cards, system cards), `spacing.js` (×2), `radius.js` (×2), `borders.js` (×1) and `shadows.js` (×1) - confirmed via a sitewide grep that these were the only 5 HTML pages using a `<button>`-tag card (every `*-detail.js` file's own guard is untouched and doesn't need this, since none of their cards are buttons).
+
+Verified each of the 5 pages individually after the fix (clicking a product card now correctly activates its matching system and shows the recommendation callout; clicking a system card directly now correctly switches which one is marked active) and re-ran the full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
