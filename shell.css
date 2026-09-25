@@ -545,6 +545,14 @@ button{ font-family: inherit; }
 .btn-primary:hover{ background: var(--red-600); border-color: var(--red-600); }
 .btn-ghost{ background: none; border: 1px solid var(--line-strong); color: var(--text-mid); }
 .btn-ghost:hover{ color: var(--text-hi); border-color: var(--red-500); }
+/* Foundations' per-section Save buttons (.btn-primary by default): once the
+   fields on screen match what's actually saved, the button switches from
+   "Save ..." to "Saved ..." - .is-saved gives that state its own look
+   (muted, like .btn-ghost) instead of staying visually identical to "you
+   still need to click this," which is what a plain label swap alone would
+   still look like. */
+.btn-primary.is-saved{ background: var(--graphite-700); border-color: var(--line-strong); color: var(--text-hi); }
+.btn-primary.is-saved:hover{ background: var(--graphite-600); border-color: var(--red-500); }
 
 /* ---------- welcome modal (overview.html only - real, not a demo) ---------- */
 /* Same root cause already fixed once for .select-demo-panel: this class's

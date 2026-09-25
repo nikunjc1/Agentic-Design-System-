@@ -654,6 +654,14 @@ Fixed by checking that the closest interactive ancestor isn't the card itself: `
 
 Verified each of the 5 pages individually after the fix (clicking a product card now correctly activates its matching system and shows the recommendation callout; clicking a system card directly now correctly switches which one is marked active) and re-ran the full 154-page sweep: 0 console errors.
 
+## Colors - each section's Save button now shows whether it's actually saved
+
+Reported as: the Save button on each Colors section (Brand, Surface, Status, Neutral, Text) always just says "Save," with no way to tell whether that section currently holds a saved value or is still showing defaults - and no way to tell it apart from "saved, but you've since changed something and need to save again." The only existing feedback was a transient "Saved just now" message next to the button that disappeared after 2.5 seconds, so that information was gone the moment you reloaded the page or moved on.
+
+Added persistent save-state tracking, per section, independent of the other four: the button itself now reads "Save brand color" when the fields on screen don't match what's saved (nothing saved yet, or edited since the last save) and "Saved brand color" (visually distinct - muted, like the Reset button next to it - instead of staying red like an action still waiting to happen) the moment they do. This isn't a value-by-value comparison against the saved JSON (hex casing and optional dark-override keys make that more fragile than it's worth) - it tracks the simpler, equivalent fact directly: the fields start in sync with storage right after a page load or a successful save, and fall out of sync the instant anything in that section is actually edited. A single delegated `input`/`change` listener on each section's own container catches every field in it - hex text, the native color pickers, and the "customize dark separately" checkbox - without having to wire each one by hand.
+
+Applied identically to all 5 sections (`grid-layout.js` untouched - this is Colors-specific). Verified: a fresh page load with nothing saved shows "Save ..." on all 5; saving one flips it to "Saved ..." and persists across a reload; editing any field in that section immediately reverts it to "Save ..."; saving again restores "Saved ..."; Reset always returns to "Save ..." (correct, since Reset means nothing is saved anymore); editing one section never affects another's state. Full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.

@@ -25,6 +25,32 @@
 
   document.addEventListener("DOMContentLoaded", function(){
 
+    // Each color section's Save button used to always read "Save ..." no
+    // matter what - clicking it only ever produced a transient "Saved just
+    // now" message that vanished after 2.5s, so there was no way to tell,
+    // especially after a reload, whether a section actually had a saved
+    // value or was still just showing defaults. wireSaveState makes the
+    // button's own label the persistent answer to that question: "Save ..."
+    // means the fields on screen don't match what's in localStorage yet
+    // (either nothing's been saved, or something's been edited since the
+    // last save); "Saved ..." means they match exactly, right now. It
+    // doesn't attempt to deep-compare field values against the saved
+    // payload (hex casing, key order and optional dark overrides make that
+    // fragile) - instead it tracks the simpler, equivalent fact: the fields
+    // start in sync with storage right after a load or a save, and go out
+    // of sync the moment any field in the section actually changes.
+    function wireSaveState(section, btn){
+      var unsavedLabel = btn.textContent.trim();
+      var savedLabel = unsavedLabel.replace(/^Save\b/, "Saved");
+      function setSaved(isSaved){
+        btn.textContent = isSaved ? savedLabel : unsavedLabel;
+        btn.classList.toggle("is-saved", isSaved);
+      }
+      section.addEventListener("input", function(){ setSaved(false); });
+      section.addEventListener("change", function(){ setSaved(false); });
+      return setSaved;
+    }
+
     function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
     function normalizeHex(value){
@@ -309,6 +335,9 @@
       brandDarkCol.hidden = !brandDarkEnable.checked;
     });
 
+    var saveBrandBtn = document.getElementById("saveBrandBtn");
+    var setBrandSaved = wireSaveState(saveBrandBtn.closest(".color-foundation"), saveBrandBtn);
+
     function loadBrand(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(BRAND_KEY) || "null"); }catch(e){ saved = null; }
@@ -326,6 +355,7 @@
         brandDarkCol.hidden = true;
         regenerateBrandDark();
       }
+      setBrandSaved(!!saved);
     }
     loadBrand();
 
@@ -362,7 +392,6 @@
       if (window.ADS_updateBrandColorDotTitle) window.ADS_updateBrandColorDotTitle();
     }
 
-    var saveBrandBtn = document.getElementById("saveBrandBtn");
     var brandSaveStatus = document.getElementById("brandSaveStatus");
     saveBrandBtn.addEventListener("click", function(){
       var lightHex = normalizeHex(brandLightHex.value);
@@ -378,6 +407,7 @@
       if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto };
       localStorage.setItem(BRAND_KEY, JSON.stringify(payload));
       applyBrandLiveForActiveTheme();
+      setBrandSaved(true);
 
       brandSaveStatus.hidden = false;
       brandSaveStatus.textContent = "Saved just now";
@@ -396,6 +426,7 @@
       document.documentElement.style.removeProperty("--red-400");
       document.documentElement.style.removeProperty("--red-tint");
       document.documentElement.style.removeProperty("--red-glow");
+      setBrandSaved(false);
 
       brandSaveStatus.hidden = false;
       brandSaveStatus.textContent = "Reset to default";
@@ -508,6 +539,9 @@
       bgDarkCol.hidden = !bgDarkEnable.checked;
     });
 
+    var saveBgBtn = document.getElementById("saveBgBtn");
+    var setBgSaved = wireSaveState(saveBgBtn.closest(".color-foundation"), saveBgBtn);
+
     function loadBg(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(BG_KEY) || "null"); }catch(e){ saved = null; }
@@ -527,6 +561,7 @@
         bgDarkCol.hidden = true;
         regenerateBgDark();
       }
+      setBgSaved(!!saved);
     }
     loadBg();
 
@@ -547,7 +582,6 @@
       }
     }
 
-    var saveBgBtn = document.getElementById("saveBgBtn");
     var bgSaveStatus = document.getElementById("bgSaveStatus");
     saveBgBtn.addEventListener("click", function(){
       var saved;
@@ -563,6 +597,7 @@
       }
       localStorage.setItem(BG_KEY, JSON.stringify(saved));
       applyBgLiveForActiveTheme();
+      setBgSaved(true);
 
       bgSaveStatus.hidden = false;
       bgSaveStatus.textContent = "Saved just now";
@@ -577,6 +612,7 @@
       bgDarkEnable.checked = false;
       bgDarkCol.hidden = true;
       regenerateBgDark();
+      setBgSaved(false);
       document.documentElement.style.removeProperty("--graphite-950");
       document.documentElement.style.removeProperty("--graphite-900");
       document.documentElement.style.removeProperty("--graphite-850");
@@ -613,6 +649,9 @@
       })
     });
 
+    var saveStatusBtn = document.getElementById("saveStatusBtn");
+    var setStatusSaved = wireSaveState(saveStatusBtn.closest(".color-foundation"), saveStatusBtn);
+
     function loadStatus(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(STATUS_KEY) || "null"); }catch(e){ saved = null; }
@@ -627,6 +666,7 @@
         statusDarkCol.hidden = true;
         statusSection.regenerateAll();
       }
+      setStatusSaved(!!saved);
     }
     loadStatus();
 
@@ -652,7 +692,6 @@
       }
     }
 
-    var saveStatusBtn = document.getElementById("saveStatusBtn");
     var statusSaveStatus = document.getElementById("statusSaveStatus");
     saveStatusBtn.addEventListener("click", function(){
       var payload = { light: statusSection.readLight() };
@@ -663,6 +702,7 @@
       }
       localStorage.setItem(STATUS_KEY, JSON.stringify(payload));
       applyStatusLiveForActiveTheme();
+      setStatusSaved(true);
 
       statusSaveStatus.hidden = false;
       statusSaveStatus.textContent = "Saved just now";
@@ -682,6 +722,7 @@
       document.documentElement.style.removeProperty("--danger-500");
       document.documentElement.style.removeProperty("--danger-600");
       document.documentElement.style.removeProperty("--danger-400");
+      setStatusSaved(false);
 
       statusSaveStatus.hidden = false;
       statusSaveStatus.textContent = "Reset to defaults";
@@ -716,6 +757,9 @@
       })
     });
 
+    var saveNeutralBtn = document.getElementById("saveNeutralBtn");
+    var setNeutralSaved = wireSaveState(saveNeutralBtn.closest(".color-foundation"), saveNeutralBtn);
+
     function loadNeutral(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(NEUTRAL_KEY) || "null"); }catch(e){ saved = null; }
@@ -730,6 +774,7 @@
         neutralDarkCol.hidden = true;
         neutralSection.regenerateAll();
       }
+      setNeutralSaved(!!saved);
     }
     loadNeutral();
 
@@ -752,7 +797,6 @@
       }
     }
 
-    var saveNeutralBtn = document.getElementById("saveNeutralBtn");
     var neutralSaveStatus = document.getElementById("neutralSaveStatus");
     saveNeutralBtn.addEventListener("click", function(){
       var payload = { light: neutralSection.readLight() };
@@ -763,6 +807,7 @@
       }
       localStorage.setItem(NEUTRAL_KEY, JSON.stringify(payload));
       applyNeutralLiveForActiveTheme();
+      setNeutralSaved(true);
 
       neutralSaveStatus.hidden = false;
       neutralSaveStatus.textContent = "Saved just now";
@@ -781,6 +826,7 @@
       document.documentElement.style.removeProperty("--graphite-600");
       document.documentElement.style.removeProperty("--graphite-500");
       document.documentElement.style.removeProperty("--control-border");
+      setNeutralSaved(false);
 
       neutralSaveStatus.hidden = false;
       neutralSaveStatus.textContent = "Reset to defaults";
@@ -815,6 +861,9 @@
       })
     });
 
+    var saveTextBtn = document.getElementById("saveTextBtn");
+    var setTextSaved = wireSaveState(saveTextBtn.closest(".color-foundation"), saveTextBtn);
+
     function loadText(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(TEXT_KEY) || "null"); }catch(e){ saved = null; }
@@ -829,6 +878,7 @@
         textDarkCol.hidden = true;
         textSection.regenerateAll();
       }
+      setTextSaved(!!saved);
     }
     loadText();
 
@@ -847,7 +897,6 @@
       }
     }
 
-    var saveTextBtn = document.getElementById("saveTextBtn");
     var textSaveStatus = document.getElementById("textSaveStatus");
     saveTextBtn.addEventListener("click", function(){
       var payload = { light: textSection.readLight() };
@@ -858,6 +907,7 @@
       }
       localStorage.setItem(TEXT_KEY, JSON.stringify(payload));
       applyTextLiveForActiveTheme();
+      setTextSaved(true);
 
       textSaveStatus.hidden = false;
       textSaveStatus.textContent = "Saved just now";
@@ -874,6 +924,7 @@
       document.documentElement.style.removeProperty("--text-hi");
       document.documentElement.style.removeProperty("--text-mid");
       document.documentElement.style.removeProperty("--text-dim");
+      setTextSaved(false);
 
       textSaveStatus.hidden = false;
       textSaveStatus.textContent = "Reset to defaults";
