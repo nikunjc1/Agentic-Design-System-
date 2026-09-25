@@ -68,6 +68,23 @@
       };
     }
 
+    // WCAG 2.x contrast (relative luminance -> (L1+0.05)/(L2+0.05)). AA
+    // normal text needs >=4.5:1, AAA needs >=7:1 - the thresholds every
+    // "AA/AAA" contrast badge in design tooling is built on.
+    function srgbChannelToLinear(c){
+      c = c / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+    function relativeLuminance(hex){
+      var rgb = hexToRgb(hex);
+      return 0.2126 * srgbChannelToLinear(rgb.r) + 0.7152 * srgbChannelToLinear(rgb.g) + 0.0722 * srgbChannelToLinear(rgb.b);
+    }
+    function contrastRatio(hexA, hexB){
+      var l1 = relativeLuminance(hexA), l2 = relativeLuminance(hexB);
+      var lighter = Math.max(l1, l2), darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
     function hexToHsl(hex){
       var rgb = hexToRgb(hex);
       var r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
@@ -930,5 +947,72 @@
       textSaveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ textSaveStatus.hidden = true; }, 2500);
     });
+
+    // AA/AAA contrast badge under every color swatch's hex field - checked
+    // against that swatch's own theme's Page (Primary) background, which is
+    // what every one of these colors (brand accent, status color, neutral
+    // fill, body text) actually gets read against on a real page. Runs once
+    // all 5 sections above have loaded their saved (or default) values, and
+    // recomputes on any input/change anywhere on the page - editing the
+    // background itself has to update every other field's badge too, not
+    // just its own.
+    function initContrastBadges(){
+      var fields = Array.prototype.slice.call(document.querySelectorAll(".color-field"));
+      fields.forEach(function(field){
+        // .color-rgba only exists on 6 of the 32 fields (Brand and Status's
+        // light column show a live rgb()/description string there;
+        // Background, Neutral, Text and Status's dark column don't have one
+        // at all) - .hex-input-wrap (the swatch + hex text input row) is
+        // the one element every field actually has, so the badge anchors
+        // to that instead, right after the input itself.
+        var anchor = field.querySelector(".hex-input-wrap");
+        if (!anchor || field.querySelector(".color-contrast")) return;
+        var badge = document.createElement("p");
+        badge.className = "color-contrast";
+        anchor.insertAdjacentElement("afterend", badge);
+      });
+
+      var lightBgHexInput = document.querySelector('[data-role="bg-light-primary-hex"]');
+      var darkBgHexInput = document.querySelector('[data-role="bg-dark-primary-hex"]');
+      var lightTextHiHexInput = document.querySelector('[data-role="text-light-hi-hex"]');
+      var darkTextHiHexInput = document.querySelector('[data-role="text-dark-hi-hex"]');
+
+      function recompute(){
+        var lightBg = normalizeHex(lightBgHexInput.value) || BG_DEFAULTS.light.primary;
+        var darkBg = normalizeHex(darkBgHexInput.value) || BG_DEFAULTS.dark.primary;
+        var lightTextHi = normalizeHex(lightTextHiHexInput.value) || TEXT_DEFAULTS.light.hi;
+        var darkTextHi = normalizeHex(darkTextHiHexInput.value) || TEXT_DEFAULTS.dark.hi;
+        fields.forEach(function(field){
+          var hexInput = field.querySelector('input[type="text"][data-role]');
+          var badge = field.querySelector(".color-contrast");
+          if (!hexInput || !badge) return;
+          var hex = normalizeHex(hexInput.value);
+          if (!hex){ badge.textContent = ""; return; }
+          var col = field.closest(".theme-pair-col");
+          var label = col ? (col.querySelector(".theme-pair-label") || {}).textContent || "" : "";
+          var isDark = /Dark/i.test(label);
+          // Background's own swatches (Page/Panel/Raised) ARE the page
+          // background, so checking them against "page background" is
+          // checking a color against itself - always ~1:1, never useful.
+          // What actually matters for a surface color is whether the
+          // page's primary text stays readable on it, so those fields
+          // compare against text-hi instead, and say so in the label.
+          var isBgSwatch = /^bg-/.test(hexInput.dataset.role || "");
+          var bg = isBgSwatch ? (isDark ? darkTextHi : lightTextHi) : (isDark ? darkBg : lightBg);
+          var vsLabel = isBgSwatch ? "vs primary text" : "vs page background";
+          var ratio = contrastRatio(hex, bg);
+          var aaPass = ratio >= 4.5, aaaPass = ratio >= 7;
+          badge.innerHTML =
+            '<span class="contrast-ratio">' + ratio.toFixed(2) + ':1 ' + vsLabel + '</span>' +
+            '<span class="contrast-tag ' + (aaPass ? "is-pass" : "is-fail") + '">AA ' + (aaPass ? "&#10003;" : "&#10007;") + '</span>' +
+            '<span class="contrast-tag ' + (aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+        });
+      }
+
+      document.querySelector("main").addEventListener("input", recompute);
+      document.querySelector("main").addEventListener("change", recompute);
+      recompute();
+    }
+    initContrastBadges();
   });
 })();

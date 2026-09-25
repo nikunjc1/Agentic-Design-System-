@@ -662,11 +662,23 @@ Added persistent save-state tracking, per section, independent of the other four
 
 Applied identically to all 5 sections (`grid-layout.js` untouched - this is Colors-specific). Verified: a fresh page load with nothing saved shows "Save ..." on all 5; saving one flips it to "Saved ..." and persists across a reload; editing any field in that section immediately reverts it to "Save ..."; saving again restores "Saved ..."; Reset always returns to "Save ..." (correct, since Reset means nothing is saved anymore); editing one section never affects another's state. Full 154-page sweep: 0 console errors.
 
+## Colors - AA/AAA contrast checker was missing entirely, not hidden
+
+Reported as: "the AA and AAA color contrast checker is not visible" on every color picker below its hex input. Checked first rather than assuming it was a display bug - a sitewide grep for "contrast", "AA" and "AAA" across `foundations.html`/`foundations.js` turned up nothing relevant at all. It wasn't hidden or broken; it never existed. (An old, already-superseded audit doc referenced AA/AAA badges, but those belonged to a much earlier, since-removed color-picker UI - unrelated to the current one.)
+
+Built it from scratch: three small WCAG helper functions (sRGB-to-linear conversion, relative luminance, contrast ratio) plus a badge under all 32 color fields across Brand, Background, Status, Neutral and Text, showing the ratio and a pass/fail pill for both AA (4.5:1) and AAA (7:1). Each field is checked against the color it would realistically sit next to: Brand/Status/Neutral/Text swatches are checked against their own theme's page background (light fields vs. the light Background section's current Primary color, dark fields vs. the dark one), recomputed live on any edit anywhere on the page - so changing the background color immediately updates every other section's badges, not just its own.
+
+Background's own three swatches (Page/Panel/Raised) needed different treatment: checking a background color's contrast against "the page background" is checking it against itself, which is always a meaningless ~1:1 fail. Those three are checked against the page's own primary text color instead (i.e. "would your body text still be readable on this surface"), labeled "vs primary text" instead of "vs page background" so it's clear what's actually being compared.
+
+First pass anchored each badge to `.color-rgba`, which turned out to exist on only 6 of the 32 fields (Brand shows a live `rgb()` string there; Status's light column reuses the class for static descriptive text; the other 22 fields have no such element) - only 6 badges rendered instead of 32. Fixed by anchoring to `.hex-input-wrap` instead, which every field actually has.
+
+Verified all 32 badges render with sane values (e.g. brand red 3.68:1 vs. the light page background, correctly failing AA - matches known real-world behavior of saturated reds on near-white; body text-hi 16.60:1, correctly passing both; text-dim 3.29:1, correctly failing both, consistent with an old audit's independent finding that the "dim" text tier was under-contrast). Confirmed live recompute by editing the background hex directly and watching an unrelated section's badge update. Full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
 - Governance is still just a static "Owner: Design System Team · Changelog: not yet tracked" string, not a real data model.
-- Several P1 items from the audit remain: Design Values has no per-value AI Rule or priority order; Typography has no script-fallback/truncation rules; Colors has no live contrast matrix; Navigation/Data Display components (Dropdown, Menu, Calendar, Collapse, Splitter, etc.) haven't had their keyboard/ARIA gaps addressed yet.
+- Several P1 items from the audit remain: Design Values has no per-value AI Rule or priority order; Typography has no script-fallback/truncation rules; Navigation/Data Display components (Dropdown, Menu, Calendar, Collapse, Splitter, etc.) haven't had their keyboard/ARIA gaps addressed yet.
 - The 6 unlinked Button pages (Secondary/Tertiary/Ghost/Neutral/Destructive/Link) still exist as files but aren't reachable from the UI — left as-is per the last explicit instruction, not forgotten.
 
 All changes were verified with `node --check` (JS syntax), a full-site tag-balance sweep, a full-site HTTP 200 sweep, and targeted Playwright browser tests for anything involving live JS behavior (theme switching, jump-to-type highlighting, the Button loading state).
