@@ -1,0 +1,2004 @@
+[
+  {
+    "file": "add-on-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Add-on Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 22299
+  },
+  {
+    "file": "add-on.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Add-on",
+      "Add-on type"
+    ],
+    "issues": [],
+    "bytes": 10919
+  },
+  {
+    "file": "affix-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Affix Experimental",
+      "Properties",
+      "Live Preview",
+      "Try it",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18624
+  },
+  {
+    "file": "affix.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Affix",
+      "Affix type"
+    ],
+    "issues": [],
+    "bytes": 10757
+  },
+  {
+    "file": "ai-generator.html",
+    "kind": "Tab",
+    "status": "Reference / planned",
+    "sections": [
+      "AI Generator",
+      "Reuse first, generate second"
+    ],
+    "issues": [],
+    "bytes": 9827
+  },
+  {
+    "file": "alert-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Alert Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20543
+  },
+  {
+    "file": "alert.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Alert",
+      "Alert type"
+    ],
+    "issues": [],
+    "bytes": 10903
+  },
+  {
+    "file": "anchor-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Anchor Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18280
+  },
+  {
+    "file": "anchor.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Anchor",
+      "Anchor type"
+    ],
+    "issues": [],
+    "bytes": 10428
+  },
+  {
+    "file": "autocomplete-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Autocomplete Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21090
+  },
+  {
+    "file": "autocomplete.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Autocomplete",
+      "Autocomplete type"
+    ],
+    "issues": [],
+    "bytes": 11051
+  },
+  {
+    "file": "avatar-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Avatar Stable",
+      "Properties",
+      "Live Preview",
+      "Avatar.Group",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19565
+  },
+  {
+    "file": "avatar.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Avatar",
+      "Avatar type"
+    ],
+    "issues": [],
+    "bytes": 10709
+  },
+  {
+    "file": "badge-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Badge Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18817
+  },
+  {
+    "file": "badge.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Badge",
+      "Badge type"
+    ],
+    "issues": [],
+    "bytes": 10884
+  },
+  {
+    "file": "borders.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Borders",
+      "Border presets",
+      "Configure your border",
+      "Border states"
+    ],
+    "issues": [],
+    "bytes": 34213
+  },
+  {
+    "file": "breadcrumb-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Breadcrumb Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18967
+  },
+  {
+    "file": "breadcrumb.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Breadcrumb",
+      "Breadcrumb type"
+    ],
+    "issues": [],
+    "bytes": 10391
+  },
+  {
+    "file": "button-destructive.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Destructive Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Destructive",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19476
+  },
+  {
+    "file": "button-ghost.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Ghost Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Ghost",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19459
+  },
+  {
+    "file": "button-link.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Link Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Link",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19210
+  },
+  {
+    "file": "button-neutral.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Neutral Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Neutral",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19068
+  },
+  {
+    "file": "button-primary-icon.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Primary Button 36px - Dual Icon Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Primary",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19993
+  },
+  {
+    "file": "button-primary.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Primary Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Primary",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20525
+  },
+  {
+    "file": "button-secondary.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Secondary Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Secondary",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19124
+  },
+  {
+    "file": "button-tertiary.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tertiary Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use Tertiary",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19032
+  },
+  {
+    "file": "calendar-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Calendar Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19099
+  },
+  {
+    "file": "calendar.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Calendar",
+      "Calendar type"
+    ],
+    "issues": [],
+    "bytes": 16051
+  },
+  {
+    "file": "card-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Card Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19464
+  },
+  {
+    "file": "card.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Card",
+      "Card type"
+    ],
+    "issues": [],
+    "bytes": 10581
+  },
+  {
+    "file": "cascader-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Cascader Stable",
+      "Properties",
+      "Live Preview",
+      "Multiple selection + Search",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 22176
+  },
+  {
+    "file": "cascader.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Cascader",
+      "Cascader type"
+    ],
+    "issues": [],
+    "bytes": 10974
+  },
+  {
+    "file": "checkbox-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Checkbox Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19688
+  },
+  {
+    "file": "checkbox.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Checkbox",
+      "Checkbox type"
+    ],
+    "issues": [],
+    "bytes": 10900
+  },
+  {
+    "file": "collapse-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Collapse Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19739
+  },
+  {
+    "file": "collapse.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Collapse",
+      "Collapse type"
+    ],
+    "issues": [],
+    "bytes": 11066
+  },
+  {
+    "file": "color-picker-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Color Picker Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21022
+  },
+  {
+    "file": "color-picker.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Color Picker",
+      "Color Picker type"
+    ],
+    "issues": [],
+    "bytes": 10816
+  },
+  {
+    "file": "components.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Button",
+      "Button type"
+    ],
+    "issues": [],
+    "bytes": 12229
+  },
+  {
+    "file": "copywriting.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Copywriting",
+      "Voice",
+      "Error messages",
+      "Capitalization and punctuation"
+    ],
+    "issues": [],
+    "bytes": 13906
+  },
+  {
+    "file": "data-format.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Data Format",
+      "Numbers and currency",
+      "Dates and times",
+      "Missing and sensitive data",
+      "Empty vs. missing vs. loading"
+    ],
+    "issues": [],
+    "bytes": 15765
+  },
+  {
+    "file": "date-picker-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Date Picker Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21146
+  },
+  {
+    "file": "date-picker.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Date Picker",
+      "Date Picker type"
+    ],
+    "issues": [],
+    "bytes": 11069
+  },
+  {
+    "file": "date-range-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Date Range Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21475
+  },
+  {
+    "file": "date-range.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Date Range",
+      "Date Range type"
+    ],
+    "issues": [],
+    "bytes": 11278
+  },
+  {
+    "file": "description-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Description Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19216
+  },
+  {
+    "file": "description.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Description",
+      "Description type"
+    ],
+    "issues": [],
+    "bytes": 11322
+  },
+  {
+    "file": "divider-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Divider Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18847
+  },
+  {
+    "file": "divider.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Divider",
+      "Divider type"
+    ],
+    "issues": [],
+    "bytes": 10839
+  },
+  {
+    "file": "drawer-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Drawer Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20516
+  },
+  {
+    "file": "drawer.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Drawer",
+      "Drawer type"
+    ],
+    "issues": [],
+    "bytes": 11244
+  },
+  {
+    "file": "dropdown-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Dropdown Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18591
+  },
+  {
+    "file": "dropdown.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Dropdown",
+      "Dropdown type"
+    ],
+    "issues": [],
+    "bytes": 10745
+  },
+  {
+    "file": "empty-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Empty Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19478
+  },
+  {
+    "file": "empty.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Empty",
+      "Empty type"
+    ],
+    "issues": [],
+    "bytes": 11111
+  },
+  {
+    "file": "figma.html",
+    "kind": "Tab",
+    "status": "Reference / planned",
+    "sections": [
+      "Figma",
+      "Kept in sync with your Figma library"
+    ],
+    "issues": [],
+    "bytes": 9714
+  },
+  {
+    "file": "float-button-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Float Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18883
+  },
+  {
+    "file": "float-button.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Float Button",
+      "Float Button type"
+    ],
+    "issues": [],
+    "bytes": 10954
+  },
+  {
+    "file": "foundations.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Colors",
+      "Brand color",
+      "Background & surface elevation",
+      "Semantic & status colors",
+      "Neutral scale",
+      "Text colors",
+      "Light & dark theme behavior"
+    ],
+    "issues": [],
+    "bytes": 36459
+  },
+  {
+    "file": "grid-layout.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Grid & Layout",
+      "What are you building?",
+      "Grid type",
+      "Layout patterns"
+    ],
+    "issues": [],
+    "bytes": 20195
+  },
+  {
+    "file": "group-button-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Group Button Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20221
+  },
+  {
+    "file": "group-button.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Group Button",
+      "Group Button type"
+    ],
+    "issues": [],
+    "bytes": 10707
+  },
+  {
+    "file": "guidelines.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Component Guidelines",
+      "Feedback - which one, when",
+      "Navigation - which one, when",
+      "Data Entry - which one, when",
+      "Data Display - which one, when",
+      "Button - hierarchy in one row",
+      "Data List - grouping and density"
+    ],
+    "issues": [],
+    "bytes": 22197
+  },
+  {
+    "file": "history.html",
+    "kind": "Tab",
+    "status": "Reference / planned",
+    "sections": [
+      "History Mockup",
+      "InsureEdge 3.0 \u00b7 Current version 3.2.0",
+      "Empty state - no published versions yet",
+      "Version detail",
+      "Compare",
+      "Restore",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 22441
+  },
+  {
+    "file": "icons.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Icons",
+      "Configure your icon system",
+      "Bring your own icons"
+    ],
+    "issues": [],
+    "bytes": 16081
+  },
+  {
+    "file": "image-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Image Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19077
+  },
+  {
+    "file": "image.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Image",
+      "Image type"
+    ],
+    "issues": [],
+    "bytes": 10742
+  },
+  {
+    "file": "input-text-field.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Input Text Field Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20302
+  },
+  {
+    "file": "input.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Input",
+      "Input type"
+    ],
+    "issues": [],
+    "bytes": 10617
+  },
+  {
+    "file": "list-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "List Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19173
+  },
+  {
+    "file": "list.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "List",
+      "List type"
+    ],
+    "issues": [],
+    "bytes": 11516
+  },
+  {
+    "file": "md-export.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Take your design system with you",
+      "Choose your export",
+      "Ready for your next tool"
+    ],
+    "issues": [],
+    "bytes": 11161
+  },
+  {
+    "file": "mention-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Mention Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21284
+  },
+  {
+    "file": "mention.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Mention",
+      "Mention type"
+    ],
+    "issues": [],
+    "bytes": 10756
+  },
+  {
+    "file": "menu-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Menu Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18682
+  },
+  {
+    "file": "menu.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Menu",
+      "Menu type"
+    ],
+    "issues": [],
+    "bytes": 10768
+  },
+  {
+    "file": "modal-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Modal Stable",
+      "Properties",
+      "Live Preview",
+      "Confirm-type shortcuts",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21026
+  },
+  {
+    "file": "modal.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Modal",
+      "Modal type"
+    ],
+    "issues": [],
+    "bytes": 11221
+  },
+  {
+    "file": "new-project.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Let\u2019s build around your product",
+      "Your product and platforms",
+      "About you",
+      "Review your setup",
+      "Your setup is ready",
+      "From idea to implementation"
+    ],
+    "issues": [],
+    "bytes": 13921
+  },
+  {
+    "file": "notification-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Notification Stable",
+      "Properties",
+      "Live Preview",
+      "Placement",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19110
+  },
+  {
+    "file": "notification.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Notification",
+      "Notification type"
+    ],
+    "issues": [],
+    "bytes": 11338
+  },
+  {
+    "file": "npm-package.html",
+    "kind": "Tab",
+    "status": "Reference / planned",
+    "sections": [
+      "NPM Package Mockup",
+      "State machine",
+      "Configuration",
+      "Published state",
+      "Version drift",
+      "Publish safety"
+    ],
+    "issues": [],
+    "bytes": 18195
+  },
+  {
+    "file": "number-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Number Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21002
+  },
+  {
+    "file": "number.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Number",
+      "Number type"
+    ],
+    "issues": [],
+    "bytes": 11233
+  },
+  {
+    "file": "overview.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Agentic Design System",
+      "Start here",
+      "Guidelines & governance"
+    ],
+    "issues": [],
+    "bytes": 12663
+  },
+  {
+    "file": "pagination-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Pagination Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19326
+  },
+  {
+    "file": "pagination.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Pagination",
+      "Pagination type"
+    ],
+    "issues": [],
+    "bytes": 11358
+  },
+  {
+    "file": "password-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Password Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 22896
+  },
+  {
+    "file": "password.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Password",
+      "Password type"
+    ],
+    "issues": [],
+    "bytes": 10973
+  },
+  {
+    "file": "patterns.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Patterns",
+      "Filter bar",
+      "KPI row",
+      "Search + results",
+      "Empty state layout",
+      "Form section"
+    ],
+    "issues": [],
+    "bytes": 19267
+  },
+  {
+    "file": "pop-confirm-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Pop Confirm Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20271
+  },
+  {
+    "file": "pop-confirm.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Pop Confirm",
+      "Pop Confirm type"
+    ],
+    "issues": [],
+    "bytes": 11130
+  },
+  {
+    "file": "popover-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Popover Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18979
+  },
+  {
+    "file": "popover.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Popover",
+      "Popover type"
+    ],
+    "issues": [],
+    "bytes": 10751
+  },
+  {
+    "file": "principles.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Design Principles",
+      "1. Proximity",
+      "2. Alignment",
+      "3. Contrast",
+      "4. Repetition",
+      "5. Make it Direct",
+      "6. Stay on the Page",
+      "7. Keep it Lightweight",
+      "8. Provide an Invitation",
+      "9. Use Transition",
+      "10. React Immediately"
+    ],
+    "issues": [],
+    "bytes": 28863
+  },
+  {
+    "file": "progress-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Progress Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20709
+  },
+  {
+    "file": "progress.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Progress",
+      "Progress type"
+    ],
+    "issues": [],
+    "bytes": 10769
+  },
+  {
+    "file": "radio-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Radio Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19023
+  },
+  {
+    "file": "radio.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Radio",
+      "Radio type"
+    ],
+    "issues": [],
+    "bytes": 10620
+  },
+  {
+    "file": "radius.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Radius",
+      "What are you building?",
+      "Radius philosophy",
+      "Recommended global model",
+      "Radius by component role",
+      "Component defaults"
+    ],
+    "issues": [],
+    "bytes": 25185
+  },
+  {
+    "file": "rating-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Rating Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 29994
+  },
+  {
+    "file": "rating.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Rating",
+      "Rating type"
+    ],
+    "issues": [],
+    "bytes": 12273
+  },
+  {
+    "file": "result-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Result Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20526
+  },
+  {
+    "file": "result.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Result",
+      "Result type"
+    ],
+    "issues": [],
+    "bytes": 11107
+  },
+  {
+    "file": "search-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Search Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21405
+  },
+  {
+    "file": "search.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Search",
+      "Search type"
+    ],
+    "issues": [],
+    "bytes": 10822
+  },
+  {
+    "file": "select-dropdown.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Select Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20371
+  },
+  {
+    "file": "select.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Select",
+      "Select type"
+    ],
+    "issues": [],
+    "bytes": 10931
+  },
+  {
+    "file": "settings.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Settings",
+      "Project and profile",
+      "Foundations",
+      "Appearance and integrations"
+    ],
+    "issues": [],
+    "bytes": 10640
+  },
+  {
+    "file": "shadows.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Shadows",
+      "Shadow philosophy",
+      "Elevation hierarchy",
+      "Component defaults"
+    ],
+    "issues": [],
+    "bytes": 22066
+  },
+  {
+    "file": "skeleton-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Skeleton Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19152
+  },
+  {
+    "file": "skeleton.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Skeleton",
+      "Skeleton type"
+    ],
+    "issues": [],
+    "bytes": 10727
+  },
+  {
+    "file": "slider-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Slider Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20082
+  },
+  {
+    "file": "slider.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Slider",
+      "Slider type"
+    ],
+    "issues": [],
+    "bytes": 10674
+  },
+  {
+    "file": "spacing.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Spacing",
+      "What are you building?",
+      "Spacing system",
+      "Recommended global model"
+    ],
+    "issues": [],
+    "bytes": 19906
+  },
+  {
+    "file": "spin-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Spin Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18967
+  },
+  {
+    "file": "spin.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Spin",
+      "Spin type"
+    ],
+    "issues": [],
+    "bytes": 10718
+  },
+  {
+    "file": "splitter-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Splitter Experimental",
+      "Properties",
+      "Live Preview",
+      "Try it",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19027
+  },
+  {
+    "file": "splitter.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Splitter",
+      "Splitter type"
+    ],
+    "issues": [],
+    "bytes": 10752
+  },
+  {
+    "file": "statistic-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Statistic Experimental",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18962
+  },
+  {
+    "file": "statistic.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Statistic",
+      "Statistic type"
+    ],
+    "issues": [],
+    "bytes": 10562
+  },
+  {
+    "file": "steps-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Steps Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20571
+  },
+  {
+    "file": "steps.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Steps",
+      "Steps type"
+    ],
+    "issues": [],
+    "bytes": 12721
+  },
+  {
+    "file": "switch-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Switch Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19702
+  },
+  {
+    "file": "switch.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Switch",
+      "Switch type"
+    ],
+    "issues": [],
+    "bytes": 10604
+  },
+  {
+    "file": "table-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Table Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Selection",
+      "Sort",
+      "Filter",
+      "Pagination vs. Virtualization",
+      "Density",
+      "Required States",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 33054
+  },
+  {
+    "file": "table.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Table",
+      "Table type"
+    ],
+    "issues": [],
+    "bytes": 11432
+  },
+  {
+    "file": "tabs-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tabs Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19680
+  },
+  {
+    "file": "tabs.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tabs",
+      "Tabs type"
+    ],
+    "issues": [],
+    "bytes": 10654
+  },
+  {
+    "file": "tag-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tag Stable",
+      "Properties",
+      "Live Preview",
+      "Checkable",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 18662
+  },
+  {
+    "file": "tag.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tag",
+      "Tag type"
+    ],
+    "issues": [],
+    "bytes": 10716
+  },
+  {
+    "file": "templates.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Templates",
+      "Dashboard",
+      "Settings",
+      "Record detail",
+      "List + detail",
+      "Auth"
+    ],
+    "issues": [],
+    "bytes": 18769
+  },
+  {
+    "file": "text-area-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Text Area Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20307
+  },
+  {
+    "file": "text-area.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Text Area",
+      "Text Area type"
+    ],
+    "issues": [],
+    "bytes": 10644
+  },
+  {
+    "file": "time-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Time Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20855
+  },
+  {
+    "file": "time.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Time",
+      "Time type"
+    ],
+    "issues": [],
+    "bytes": 10906
+  },
+  {
+    "file": "timeline-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Timeline Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19178
+  },
+  {
+    "file": "timeline.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Timeline",
+      "Timeline type"
+    ],
+    "issues": [],
+    "bytes": 11709
+  },
+  {
+    "file": "toast-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Toast Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19416
+  },
+  {
+    "file": "toast.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Toast",
+      "Toast type"
+    ],
+    "issues": [],
+    "bytes": 10929
+  },
+  {
+    "file": "tooltip-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tooltip Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20187
+  },
+  {
+    "file": "tooltip.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tooltip",
+      "Tooltip type"
+    ],
+    "issues": [],
+    "bytes": 10552
+  },
+  {
+    "file": "tour-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tour Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 20163
+  },
+  {
+    "file": "tour.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tour",
+      "Tour type"
+    ],
+    "issues": [],
+    "bytes": 10996
+  },
+  {
+    "file": "transfer-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Transfer Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21058
+  },
+  {
+    "file": "transfer.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Transfer",
+      "Transfer type"
+    ],
+    "issues": [],
+    "bytes": 12420
+  },
+  {
+    "file": "tree-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tree Experimental",
+      "Properties",
+      "Live Preview",
+      "Try it",
+      "When to use",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 19676
+  },
+  {
+    "file": "tree-select-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Tree Select Stable",
+      "Properties",
+      "Live Preview",
+      "Multiple selection + Search",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 23081
+  },
+  {
+    "file": "tree-select.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tree Select",
+      "Tree Select type"
+    ],
+    "issues": [],
+    "bytes": 10998
+  },
+  {
+    "file": "tree.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Tree",
+      "Tree type"
+    ],
+    "issues": [],
+    "bytes": 13052
+  },
+  {
+    "file": "typography.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Typography",
+      "Font families",
+      "Type scale"
+    ],
+    "issues": [],
+    "bytes": 85153
+  },
+  {
+    "file": "upload-default.html",
+    "kind": "Detail",
+    "status": "Available",
+    "sections": [
+      "Upload Stable",
+      "Properties",
+      "Live Preview",
+      "When to use",
+      "Validation",
+      "Component Guide"
+    ],
+    "issues": [],
+    "bytes": 21584
+  },
+  {
+    "file": "upload.html",
+    "kind": "Listing",
+    "status": "Available",
+    "sections": [
+      "Upload",
+      "Upload type"
+    ],
+    "issues": [],
+    "bytes": 12074
+  },
+  {
+    "file": "values.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Design Values",
+      "The four values",
+      "Where each value shows up",
+      "What this is not"
+    ],
+    "issues": [],
+    "bytes": 13776
+  }
+]

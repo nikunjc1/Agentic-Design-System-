@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem("ads:theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  }catch(e){}
+
+  try{
+    var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
+    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
+    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
+    if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
+      var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+      var toHex = function(rr, gg, bb){
+        return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+      };
+      var dark600 = toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18));
+      var light400 = toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25));
+      var rootStyle = document.documentElement.style;
+      rootStyle.setProperty("--red-500", hex);
+      rootStyle.setProperty("--red-600", dark600);
+      rootStyle.setProperty("--red-400", light400);
+      rootStyle.setProperty("--red-tint", "rgba(" + r + "," + g + "," + b + ",0.08)");
+      rootStyle.setProperty("--red-glow", "rgba(" + r + "," + g + "," + b + ",0.35)");
+    }
+  }catch(e){}
+
+  try{
+    var savedBg = JSON.parse(localStorage.getItem("ads:bg-colors") || "null");
+    var bgSet = savedBg && savedBg[t];
+    if (bgSet){
+      var bgRoot = document.documentElement.style;
+      if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
+      if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
+      if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
+    }
+  }catch(e){}
+
+  try{
+    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
+    var statusSet = savedStatus && savedStatus[t];
+    if (statusSet){
+      var stRoot = document.documentElement.style;
+      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
+      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
+      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
+      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
+        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
+        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
+        var dgtoHex = function(rr, gg, bb){
+          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        };
+        stRoot.setProperty("--danger-500", statusSet.danger);
+        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
+        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
+      }
+    }
+  }catch(e){}
+
+  try{
+    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
+    var neutralSet = savedNeutral && savedNeutral[t];
+    if (neutralSet){
+      var nRoot = document.documentElement.style;
+      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
+      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
+      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
+      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
+      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
+    }
+  }catch(e){}
+
+  try{
+    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
+    var textSet = savedText && savedText[t];
+    if (textSet){
+      var txRoot = document.documentElement.style;
+      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
+      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
+      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
+    }
+  }catch(e){}
+})();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Project - Agentic Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shell.css" />
+</head>
+<body>
+
+<header class="app-topbar">
+  <a class="brand" href="overview.html">
+    <span class="brand-sub">Agentic Design System</span>
+  </a>
+  <div class="topbar-right">
+    <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <span class="version-badge">v3.4.0</span>
+    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+  </div>
+</header>
+
+<aside class="app-sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
+        <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-group-label">Design System</span>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link is-active" href="new-project.html">New Project</a>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="foundations">
+      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="foundations.html#colors">Colors</a>
+        <a class="nav-link" href="grid-layout.html">Grid &amp; Layout</a>
+        <a class="nav-link" href="typography.html">Typography</a>
+        <a class="nav-link" href="spacing.html">Spacing</a>
+        <a class="nav-link" href="radius.html">Radius</a>
+        <a class="nav-link" href="borders.html">Borders</a>
+        <a class="nav-link" href="shadows.html">Shadows</a>
+        <a class="nav-link" href="icons.html">Icons</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="components">
+      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <span class="nav-subgroup-label">Actions</span>
+        <a class="nav-link" href="components.html#button">Button</a>
+        <a class="nav-link" href="group-button.html">Group Button</a>
+        <a class="nav-link" href="float-button.html">Float Button</a>
+
+        <span class="nav-subgroup-label">Forms</span>
+        <a class="nav-link" href="input.html">Input</a>
+        <a class="nav-link" href="select.html">Select</a>
+        <a class="nav-link" href="checkbox.html">Checkbox</a>
+        <a class="nav-link" href="radio.html">Radio</a>
+        <a class="nav-link" href="switch.html">Switch</a>
+        <a class="nav-link" href="date-picker.html">Date Picker</a>
+        <a class="nav-link" href="password.html">Password</a>
+        <a class="nav-link" href="number.html">Number</a>
+        <a class="nav-link" href="mention.html">Mention</a>
+        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
+        <a class="nav-link" href="date-range.html">Date Range</a>
+        <a class="nav-link" href="time.html">Time</a>
+        <a class="nav-link" href="text-area.html">Text Area</a>
+        <a class="nav-link" href="search.html">Search</a>
+        <a class="nav-link" href="add-on.html">Add-on</a>
+        <a class="nav-link" href="color-picker.html">Color Picker</a>
+        <a class="nav-link" href="slider.html">Slider</a>
+        <a class="nav-link" href="rating.html">Rating</a>
+        <a class="nav-link" href="cascader.html">Cascader</a>
+        <a class="nav-link" href="transfer.html">Transfer</a>
+        <a class="nav-link" href="tree-select.html">Tree Select</a>
+        <a class="nav-link" href="upload.html">Upload</a>
+
+        <span class="nav-subgroup-label">Navigation</span>
+        <a class="nav-link" href="tabs.html">Tabs</a>
+        <a class="nav-link" href="anchor.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown.html">Dropdown</a>
+        <a class="nav-link" href="pagination.html">Pagination</a>
+        <a class="nav-link" href="menu.html">Menu</a>
+        <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
+
+        <span class="nav-subgroup-label">Feedback</span>
+        <a class="nav-link" href="alert.html">Alert</a>
+        <a class="nav-link" href="toast.html">Toast</a>
+        <a class="nav-link" href="modal.html">Modal</a>
+        <a class="nav-link" href="tooltip.html">Tooltip</a>
+        <a class="nav-link" href="tour.html">Tour</a>
+        <a class="nav-link" href="drawer.html">Drawer</a>
+        <a class="nav-link" href="notification.html">Notification</a>
+        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <a class="nav-link" href="result.html">Result</a>
+        <a class="nav-link" href="skeleton.html">Skeleton</a>
+        <a class="nav-link" href="spin.html">Spin</a>
+
+        <span class="nav-subgroup-label">Data Display</span>
+        <a class="nav-link" href="divider.html">Divider</a>
+        <a class="nav-link" href="avatar.html">Avatar</a>
+        <a class="nav-link" href="badge.html">Badge</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="card.html">Card</a>
+        <a class="nav-link" href="collapse.html">Collapse</a>
+        <a class="nav-link" href="description.html">Description</a>
+        <a class="nav-link" href="empty.html">Empty</a>
+        <a class="nav-link" href="image.html">Image</a>
+        <a class="nav-link" href="list.html">List</a>
+        <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
+        <a class="nav-link" href="table.html">Table</a>
+        <a class="nav-link" href="tag.html">Tag</a>
+        <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <a class="nav-link" href="patterns.html">Patterns</a>
+      <a class="nav-link" href="templates.html">Templates</a>
+      <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
+      <a class="nav-link" href="figma.html">Figma</a>
+      <a class="nav-link" href="history.html">History</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </div>
+  </nav>
+</aside>
+
+<main class="app-main">
+  <p class="page-eyebrow">Design System &middot; Onboarding</p>
+  <h1 class="page-title">New Project <span class="component-status is-draft">Mockup</span></h1>
+  <p class="component-meta">Owner: Design System Team &middot; Version: v3.4.0 &middot; Changelog: not yet tracked</p>
+  <p class="page-lede">The flow a user with no projects goes through to get a working design system: a choice, a short wizard, generation, and either a success or a partial-failure landing. Shown here as static reference screens (this portal has no backend to actually run generation) - every state below is grounded in the build brief's own corrections (a modal only ever carries the choice; the flow itself is a routed, resumable wizard).</p>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">1. Entry modal - shown once, choice only</p>
+    <p class="get-library-copy">Appears only for a user with zero projects. Everyone else lands on the project Listing page; creation stays reachable from a persistent "+ Create New Design System" action rather than reappearing as a blocking modal.</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:24px;">
+      <div style="max-width:420px;width:100%;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--graphite-950);padding:20px;" role="dialog" aria-modal="true" aria-labelledby="npMockTitle">
+        <p id="npMockTitle" style="margin:0 0 4px;font-weight:700;font-size:16px;color:var(--text-hi);">Create your first Design System</p>
+        <p style="margin:0 0 16px;font-size:13px;color:var(--text-mid);">Set up your project details. These generate your design system, AI context, NPM package, and Markdown documentation.</p>
+        <div style="border:1px solid var(--red-500);border-radius:var(--radius-md);padding:14px;background:var(--red-tint);">
+          <p style="margin:0 0 2px;font-weight:600;font-size:14px;color:var(--text-hi);">&#10022; Create New</p>
+          <p style="margin:0;font-size:12px;color:var(--text-mid);">Start from a few project details &middot; ~3 minutes</p>
+        </div>
+      </div>
+    </div>
+    <ul class="guide-list">
+      <li><strong>Accessibility</strong> - dismissible via close button, Escape, and backdrop click; focus moves to the first interactive element on open and returns to the trigger on close; <code>role="dialog"</code>, <code>aria-modal="true"</code>, labelled by its own title.</li>
+      <li><strong>Not shown again</strong> in the same session after dismissal, but the create action remains available at all times from the Listing page.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">2. Wizard structure - routed, resumable, autosaved</p>
+    <p class="get-library-copy">A modal cannot hold this many fields accessibly (no deep-linking, no browser back, total work loss on accidental dismiss, unusable on mobile) - so the flow itself lives at its own routes. Only Step 1 is required.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">1. Project details</span>
+        <span class="usage-desc">Name, product type, email, designation</span>
+        <span class="usage-values"><span class="badge badge-required">Required</span></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">2. Context</span>
+        <span class="usage-desc">Product description, users, market, direction</span>
+        <span class="usage-values"><span class="badge badge-optional">Skippable</span></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">3. Review</span>
+        <span class="usage-desc">Generation scope preview</span>
+        <span class="usage-values"><span class="badge badge-optional">&mdash;</span></span>
+      </div>
+    </div>
+    <div class="ai-rule-callout">
+      <p class="ai-rule-eyebrow">No separate Brand or Foundations steps</p>
+      <p class="ai-rule-text">Brand color already lives on the Colors foundation page, and Typography / Spacing / Accessibility already have their own foundation pages in this portal - re-collecting them here would just duplicate what those tabs already own. The wizard only asks for what doesn't exist anywhere else yet.</p>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">3. Step 1 - Project details</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:20px;">
+      <div style="display:flex;flex-direction:column;gap:14px;width:100%;max-width:420px;">
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Project name <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="InsureEdge 3.0" readonly tabindex="-1" /></div><p class="input-demo-note">Used for your package name and MD files - slug: insureedge-3-0</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Product type <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="Enterprise" readonly tabindex="-1" /></div><p class="input-demo-note">SaaS &middot; Enterprise &middot; Consumer &middot; Internal tool &middot; Other</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Your email</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="nikunj@company.com  (from your account)" readonly tabindex="-1" style="color:var(--text-dim);" /></div><p class="input-demo-note is-error">Use a different email</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Designation <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="UX Designer" readonly tabindex="-1" /></div></div>
+      </div>
+    </div>
+    <ul class="guide-list">
+      <li><strong>Email is prefilled, never re-requested</strong> - the user is already authenticated, so asking again is redundant entry (<strong>WCAG 2.2 SC 3.3.7</strong>). Shown read-only with a "use a different email" affordance for the invite/unauthenticated case only.</li>
+      <li><strong>Designation is not cosmetic</strong> - it sets the default landing tab (Designer &rarr; Foundations, Developer &rarr; Tokens &amp; Code, PM &rarr; Overview) and the default MD export tier. "Other" requires a free-text field before continuing - never restricted to a fixed list of job titles.</li>
+      <li><strong>Validation</strong> - project name 2-60 characters, must produce a valid, URL-safe npm slug; the derived slug is shown live and collisions with existing projects in the org are flagged immediately, not on submit.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">4. Step 2 - Product context (skippable, high value)</p>
+    <p class="get-library-copy">This becomes the project's AI Context. Skipping it is allowed, but the field states plainly what's lost by skipping.</p>
+    <div class="chip-row">
+      <span class="chip">Market: US</span>
+      <span class="chip">Market: Middle East</span>
+      <span class="chip">Direction: LTR</span>
+      <span class="chip">Direction: RTL</span>
+    </div>
+    <ul class="guide-list" style="margin-top:12px;">
+      <li><strong>Text direction is required, not optional,</strong> the moment any RTL market is selected - it is a token mode dimension, not a late styling concern, and retrofitting it after components exist is expensive.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">5. Step 3 - Generation preview</p>
+    <p class="get-library-copy">Every line is deselectable. Nothing generates silently.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row"><span class="usage-label">Foundations</span><span class="usage-desc">Colors, Typography, Grid &amp; Layout, Spacing, Radius, Borders, Shadows, Icons, Motion</span><span class="usage-values">9</span></div>
+      <div class="usage-row"><span class="usage-label">Components</span><span class="usage-desc">Actions, Forms, Navigation, Feedback, Data Display</span><span class="usage-values">62</span></div>
+      <div class="usage-row"><span class="usage-label">Patterns / Templates</span><span class="usage-desc">Composed from the components above</span><span class="usage-values">10 / 8</span></div>
+      <div class="usage-row"><span class="usage-label">AI</span><span class="usage-desc">AI rules, AI context</span><span class="usage-values">~4,100 tokens</span></div>
+      <div class="usage-row"><span class="usage-label">NPM package</span><span class="usage-desc">Unchecked by default - requires registry configuration first</span><span class="usage-values"><span class="badge badge-optional">Configure later</span></span></div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">6. Generation - progress, never a bare spinner</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:20px;">
+      <div style="width:100%;max-width:460px;display:flex;flex-direction:column;gap:8px;" role="status" aria-live="polite">
+        <p style="margin:0;font-size:12px;color:var(--green-500);">&#10003; Foundations &mdash; 9 of 9</p>
+        <p style="margin:0;font-size:12px;color:var(--green-500);">&#10003; Design principles &mdash; 4 of 4</p>
+        <div>
+          <p style="margin:0 0 4px;font-size:12px;color:var(--text-hi);">&#9680; Components &mdash; 41 of 62</p>
+          <div style="height:6px;border-radius:999px;background:var(--graphite-800);overflow:hidden;"><div style="height:100%;width:66%;background:var(--red-500);"></div></div>
+        </div>
+        <p style="margin:0;font-size:12px;color:var(--text-dim);">&#9675; Patterns &nbsp;&#9675; Templates &nbsp;&#9675; AI rules &nbsp;&#9675; Documentation &amp; Markdown</p>
+      </div>
+    </div>
+    <ul class="guide-list">
+      <li>Continues if the user navigates away or closes the tab; completion is announced via an in-app notification (and email past 2 minutes).</li>
+      <li>Cancel is available until the publish step; cancelling discards the partial system and returns to the wizard with inputs intact.</li>
+      <li><code>aria-live="polite"</code> with stage-level announcements, never percentage-level - that would flood a screen reader.</li>
+      <li>Idempotent - a retry after a dropped connection must never create a duplicate project.</li>
+    </ul>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <div class="panel-title-row">
+      <p class="panel-title">7. Outcome states</p>
+    </div>
+    <div class="guide-dodont">
+      <div class="guide-dodont-case is-do">
+        <p class="guide-dodont-label">Success</p>
+        <div class="guide-dodont-demo" style="flex-direction:column;align-items:flex-start;gap:6px;padding:16px;">
+          <p style="margin:0;font-weight:600;color:var(--text-hi);">&#10003; InsureEdge 3.0 &middot; Version 1.0.0 <span class="component-status is-published">Published</span></p>
+          <p style="margin:0;font-size:12px;color:var(--text-mid);">62 components &middot; ~4,100 AI-context tokens &middot; 62 documentation pages &middot; MD v1.0.0 stored</p>
+          <p style="margin:0;font-size:12px;color:var(--text-dim);">Setup checklist: Product context &middot; Figma connection &middot; NPM package - each names the capability it unlocks, not the task.</p>
+        </div>
+      </div>
+      <div class="guide-dodont-case is-dont">
+        <p class="guide-dodont-label">Partial failure</p>
+        <div class="guide-dodont-demo" style="flex-direction:column;align-items:flex-start;gap:6px;padding:16px;">
+          <p style="margin:0;font-weight:600;color:var(--text-hi);">&#9888; InsureEdge 3.0 &middot; Version 1.0.0 <span class="component-status is-draft">Draft</span></p>
+          <p style="margin:0;font-size:12px;color:var(--danger-500);">&#10007; AI rules &mdash; 4 of 62 components failed rule generation (Button, Table, Date Range, Transfer)</p>
+          <p style="margin:0;font-size:12px;color:var(--danger-500);">&#10007; Markdown &mdash; not generated (depends on AI rules)</p>
+          <p style="margin:0;font-size:12px;color:var(--text-dim);">Created as draft, never published. Retry is scoped to the failed stages only; the Overview shows a persistent banner until resolved.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component Guide</p>
+    </div>
+    <p class="guide-subhead">Accessibility</p>
+    <ul class="guide-list">
+      <li>Modal and wizard: focus moves in on open, returns to trigger on close; Esc dismisses; focus trapped while open (SC 2.4.3, 2.1.2).</li>
+      <li>Each wizard step is a landmark with a heading; progress is announced on change (SC 1.3.1, 4.1.2).</li>
+      <li>Prefilled email is never re-requested (SC 3.3.7 Redundant Entry).</li>
+      <li>Generation progress uses <code>aria-live="polite"</code>, stage-level announcements, no timeout (SC 4.1.3, 2.2.1).</li>
+    </ul>
+    <p class="guide-subhead">Related</p>
+    <p class="guide-body-text">Brand color is configured on <a href="foundations.html#colors">Foundations &middot; Colors</a>, and Typography / Spacing / Accessibility target on their own foundation pages - not repeated in this wizard. Generation feeds directly into <a href="npm-package.html">NPM Package</a> (Step 3's optional NPM checkbox), <a href="md-export.html">MD Export</a> (the generated documentation), and <a href="history.html">History</a> (generation always creates Version 1.0.0).</p>
+  </section>
+</main>
+
+<script src="shell.js"></script>
+</body>
+</html>

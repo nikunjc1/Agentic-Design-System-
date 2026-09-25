@@ -284,8 +284,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "alert-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -446,10 +448,10 @@
     }
 
     if (titleInput){
-      titleInput.addEventListener("input", render);
+      titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
     if (descriptionInput){
-      descriptionInput.addEventListener("input", render);
+      descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
     if (showIconInput){
       showIconInput.addEventListener("change", render);

@@ -1,91 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>
-(function(){
-  try{
-    var t = localStorage.getItem("ads:theme") || "light";
-    document.documentElement.setAttribute("data-theme", t);
-  }catch(e){}
-
-  try{
-    var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-    var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
-    var hex = themeColors && themeColors.primary && themeColors.primary.hex;
-    if (hex && /^#[0-9a-f]{6}$/i.test(hex)){
-      var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-      var mix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
-      var toHex = function(rr, gg, bb){
-        return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
-      };
-      var dark600 = toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18));
-      var light400 = toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25));
-      var rootStyle = document.documentElement.style;
-      rootStyle.setProperty("--red-500", hex);
-      rootStyle.setProperty("--red-600", dark600);
-      rootStyle.setProperty("--red-400", light400);
-      rootStyle.setProperty("--red-tint", "rgba(" + r + "," + g + "," + b + ",0.08)");
-      rootStyle.setProperty("--red-glow", "rgba(" + r + "," + g + "," + b + ",0.35)");
-    }
-  }catch(e){}
-
-  try{
-    var savedBg = JSON.parse(localStorage.getItem("ads:bg-colors") || "null");
-    var bgSet = savedBg && savedBg[t];
-    if (bgSet){
-      var bgRoot = document.documentElement.style;
-      if (bgSet.primary && /^#[0-9a-f]{6}$/i.test(bgSet.primary)) bgRoot.setProperty("--graphite-950", bgSet.primary);
-      if (bgSet.secondary && /^#[0-9a-f]{6}$/i.test(bgSet.secondary)) bgRoot.setProperty("--graphite-900", bgSet.secondary);
-      if (bgSet.tertiary && /^#[0-9a-f]{6}$/i.test(bgSet.tertiary)) bgRoot.setProperty("--graphite-850", bgSet.tertiary);
-    }
-  }catch(e){}
-
-  try{
-    var savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
-    var statusSet = savedStatus && savedStatus[t];
-    if (statusSet){
-      var stRoot = document.documentElement.style;
-      if (statusSet.success && /^#[0-9a-f]{6}$/i.test(statusSet.success)) stRoot.setProperty("--green-500", statusSet.success);
-      if (statusSet.warning && /^#[0-9a-f]{6}$/i.test(statusSet.warning)) stRoot.setProperty("--amber-500", statusSet.warning);
-      if (statusSet.info && /^#[0-9a-f]{6}$/i.test(statusSet.info)) stRoot.setProperty("--blue-500", statusSet.info);
-      if (statusSet.danger && /^#[0-9a-f]{6}$/i.test(statusSet.danger)){
-        var dgr = parseInt(statusSet.danger.slice(1, 3), 16), dgg = parseInt(statusSet.danger.slice(3, 5), 16), dgb = parseInt(statusSet.danger.slice(5, 7), 16);
-        var dgmix = function(c, target, amt){ return Math.round(c + (target - c) * amt); };
-        var dgtoHex = function(rr, gg, bb){
-          return "#" + [rr, gg, bb].map(function(v){ var h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
-        };
-        stRoot.setProperty("--danger-500", statusSet.danger);
-        stRoot.setProperty("--danger-600", dgtoHex(dgmix(dgr, 0, 0.18), dgmix(dgg, 0, 0.18), dgmix(dgb, 0, 0.18)));
-        stRoot.setProperty("--danger-400", dgtoHex(dgmix(dgr, 255, 0.25), dgmix(dgg, 255, 0.25), dgmix(dgb, 255, 0.25)));
-      }
-    }
-  }catch(e){}
-
-  try{
-    var savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
-    var neutralSet = savedNeutral && savedNeutral[t];
-    if (neutralSet){
-      var nRoot = document.documentElement.style;
-      if (neutralSet.c800 && /^#[0-9a-f]{6}$/i.test(neutralSet.c800)) nRoot.setProperty("--graphite-800", neutralSet.c800);
-      if (neutralSet.c700 && /^#[0-9a-f]{6}$/i.test(neutralSet.c700)) nRoot.setProperty("--graphite-700", neutralSet.c700);
-      if (neutralSet.c600 && /^#[0-9a-f]{6}$/i.test(neutralSet.c600)) nRoot.setProperty("--graphite-600", neutralSet.c600);
-      if (neutralSet.c500 && /^#[0-9a-f]{6}$/i.test(neutralSet.c500)) nRoot.setProperty("--graphite-500", neutralSet.c500);
-      if (neutralSet.border && /^#[0-9a-f]{6}$/i.test(neutralSet.border)) nRoot.setProperty("--control-border", neutralSet.border);
-    }
-  }catch(e){}
-
-  try{
-    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
-    var textSet = savedText && savedText[t];
-    if (textSet){
-      var txRoot = document.documentElement.style;
-      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
-      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
-      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
-    }
-  }catch(e){}
-})();
-</script>
+<script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Design Principles - Agentic Design System</title>
@@ -93,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
+<link rel="stylesheet" href="experience.css" />
 </head>
 <body>
 
@@ -252,12 +169,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:16px;"><div style="display:flex;flex-direction:column;gap:4px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Last name</div></div><div style="display:flex;flex-direction:column;gap:4px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Phone</div></div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:16px;"><div style="display:flex;flex-direction:column;gap:4px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Last name</div></div><div style="display:flex;flex-direction:column;gap:4px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Phone</div></div></div></div>
         <p class="guide-dodont-note">Two related pairs, 4px apart inside each pair, 16px between the pairs - the grouping is visible before any label is read.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:10px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Last name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Phone</div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:10px;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Last name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;">Phone</div></div></div>
         <p class="guide-dodont-note">Identical 10px gaps everywhere erase the grouping entirely - the form reads as one undifferentiated stack of four unrelated fields.</p>
       </div>
     </div>
@@ -269,12 +186,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:160px;">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:160px;">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:160px;">Billing email</div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:160px;">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:160px;">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:160px;">Billing email</div></div></div>
         <p class="guide-dodont-note">Every field shares the same left edge and the same width - the column reads as one aligned unit.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:160px;">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:120px;margin-inline-start:14px;">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:140px;" style="width:180px;margin-inline-start:6px;">Billing email</div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:160px;">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:120px;margin-inline-start:14px;">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:8px 10px;font-size:12px;color:var(--text-mid);width:180px;margin-inline-start:6px;">Billing email</div></div></div>
         <p class="guide-dodont-note">Every field starts and ends at a slightly different point - nothing is broken, but the eye has to work to find the column that isn't there.</p>
       </div>
     </div>
@@ -286,12 +203,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="font-size:12px;color:var(--text-dim);">Draft saved 2 minutes ago</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="font-size:12px;color:var(--text-dim);">Draft saved 2 minutes ago</span></div>
         <p class="guide-dodont-note">One saturated Primary action against dim, small status text - the eye finds the action first, exactly once.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="font-size:14px;font-weight:700;color:var(--text-hi);">Draft saved 2 minutes ago</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="font-size:14px;font-weight:700;color:var(--text-hi);">Draft saved 2 minutes ago</span></div>
         <p class="guide-dodont-note">Status text bolded and sized to match the button competes with it for attention - now there are two things to look at with no way to tell which mattered more.</p>
       </div>
     </div>
@@ -303,12 +220,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:8px;width:200px;"><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4021</p></div><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4022</p></div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:8px;width:200px;"><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4021</p></div><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4022</p></div></div></div>
         <p class="guide-dodont-note">Every row in the list uses the exact same card structure and spacing - no row asks to be looked at differently from its neighbor.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:8px;width:200px;"><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4021</p></div><div class="card-demo-panel" style="padding:14px;border-radius:0;"><p class="card-demo-title" style="font-size:14px;font-weight:800;">Invoice #4022</p></div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:8px;width:200px;"><div class="card-demo-panel" style="padding:10px;"><p class="card-demo-title" style="font-size:13px;">Invoice #4021</p></div><div class="card-demo-panel" style="padding:14px;border-radius:0;"><p class="card-demo-title" style="font-size:14px;font-weight:800;">Invoice #4022</p></div></div></div>
         <p class="guide-dodont-note">The second row has different padding, corner radius and title weight for no reason tied to its content - the user now wonders if it means something.</p>
       </div>
     </div>
@@ -320,12 +237,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);border-bottom:1px dashed var(--line-strong);cursor:text;padding-bottom:1px;">Q1 Roadmap</span><span style="font-size:11px;color:var(--text-dim);">click to rename</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span style="font-size:13px;color:var(--text-hi);border-bottom:1px dashed var(--line-strong);cursor:text;padding-bottom:1px;">Q1 Roadmap</span><span style="font-size:11px;color:var(--text-dim);">click to rename</span></div>
         <p class="guide-dodont-note">Clicking the title renames it in place - the object being edited and the control for editing it are the same element.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);">Q1 Roadmap</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Open settings to rename</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span style="font-size:13px;color:var(--text-hi);">Q1 Roadmap</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Open settings to rename</span></div>
         <p class="guide-dodont-note">Renaming a title routes through a separate settings surface for a change that has nothing to do with settings - three clicks for one word.</p>
       </div>
     </div>
@@ -337,12 +254,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div class="drawer-demo-scrim" style="height:90px;"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small"><div class="modal-demo-header"><span class="modal-demo-title" style="font-size:12px;">Filters</span></div></div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div class="drawer-demo-scrim" style="height:90px;"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small"><div class="modal-demo-header"><span class="modal-demo-title" style="font-size:12px;">Filters</span></div></div></div></div>
         <p class="guide-dodont-note">Filtering opens a drawer beside the list - the list, scroll position and selection stay exactly where the user left them.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div style="display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:11px;color:var(--text-dim);">&larr; navigates away from the list entirely</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Go to Filter Settings page</span></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:4px;align-items:center;"><span style="font-size:11px;color:var(--text-dim);">&larr; navigates away from the list entirely</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Go to Filter Settings page</span></div></div>
         <p class="guide-dodont-note">Sending the user to a whole new page to set one filter loses their place in the list they were just looking at.</p>
       </div>
     </div>
@@ -354,12 +271,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><span class="btn-demo btn-demo--primary btn-demo--h36">Create</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><span class="btn-demo btn-demo--primary btn-demo--h36">Create</span></div>
         <p class="guide-dodont-note">One field to get started - everything else (description, members, template) is filled in later, from inside the thing that now exists.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span style="font-size:11px;color:var(--text-dim);">Step 1 of 5</span><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><div class="input-demo-field"><label class="input-demo-label">Description</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" readonly tabindex="-1" /></div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;flex-direction:column;gap:10px;width:100%;"><span style="font-size:11px;color:var(--text-dim);">Step 1 of 5</span><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><div class="input-demo-field"><label class="input-demo-label">Description</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" readonly tabindex="-1" /></div></div></div></div>
         <p class="guide-dodont-note">A five-step wizard before the project even exists front-loads setup the user hasn't earned the payoff for yet.</p>
       </div>
     </div>
@@ -371,12 +288,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div style="display:flex;align-items:center;justify-content:space-between;width:200px;background:var(--graphite-800);padding:8px 10px;border-radius:var(--radius-sm);"><span style="font-size:12px;color:var(--text-hi);">Q1 Report.pdf</span><span style="font-size:11px;color:var(--text-mid);border:1px solid var(--line-strong);border-radius:4px;padding:2px 6px;">Rename &middot; Delete</span></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;align-items:center;justify-content:space-between;width:200px;background:var(--graphite-800);padding:8px 10px;border-radius:var(--radius-sm);"><span style="font-size:12px;color:var(--text-hi);">Q1 Report.pdf</span><span style="font-size:11px;color:var(--text-mid);border:1px solid var(--line-strong);border-radius:4px;padding:2px 6px;">Rename &middot; Delete</span></div></div>
         <p class="guide-dodont-note">Row actions are visible - dimmed to stay out of the way, but present enough that the user knows they exist without hovering to discover them.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div style="display:flex;align-items:center;justify-content:space-between;width:200px;background:var(--graphite-800);padding:8px 10px;border-radius:var(--radius-sm);"><span style="font-size:12px;color:var(--text-hi);">Q1 Report.pdf</span><span style="font-size:10px;color:var(--text-dim);">(actions appear only on hover, with no visible cue)</span></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div style="display:flex;align-items:center;gap:10px;background:var(--graphite-800);padding:8px 10px;border-radius:var(--radius-sm);"><span style="font-size:12px;color:var(--text-hi);white-space:nowrap;">Q1 Report.pdf</span><span style="font-size:10px;color:var(--text-dim);white-space:nowrap;">(actions appear only on hover, with no visible cue)</span></div></div>
         <p class="guide-dodont-note">Actions that exist only on hover, with nothing hinting they're there, are invisible on touch devices and undiscoverable everywhere else.</p>
       </div>
     </div>
@@ -388,12 +305,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span></div><div class="collapse-demo-body">Expands with a height transition, so the content below visibly slides down rather than jumping into place.</div></div></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span></div><div class="collapse-demo-body">Expands with a height transition, so the content below visibly slides down rather than jumping into place.</div></div></div>
         <p class="guide-dodont-note">The panel's height animates open - the reader's eye follows the content arriving instead of losing its place when the layout jumps.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span></div></div><span style="font-size:11px;color:var(--text-dim);">(body would appear instantly, no transition, shifting everything below it in one frame)</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span></div></div><span style="font-size:11px;color:var(--text-dim);">(body would appear instantly, no transition, shifting everything below it in one frame)</span></div>
         <p class="guide-dodont-note">Content snapping into existence with no transition shoves every element below it in one frame - disorienting on a long, scrolled page.</p>
       </div>
     </div>
@@ -405,12 +322,12 @@
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span class="btn-demo btn-demo--primary btn-demo--h36" style="opacity:.85;">Saving&hellip;</span><span style="font-size:11px;color:var(--text-dim);">state changes the instant it's clicked</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span class="btn-demo btn-demo--primary btn-demo--h36" style="opacity:.85;">Saving&hellip;</span><span style="font-size:11px;color:var(--text-dim);">state changes the instant it's clicked</span></div>
         <p class="guide-dodont-note">The button visibly enters a loading state the moment it's pressed, before the network call has even resolved - the click clearly registered.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span class="btn-demo btn-demo--primary btn-demo--h36">Save</span><span style="font-size:11px;color:var(--text-dim);">(nothing changes for 1-2s while the request is in flight)</span></div>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:20px;"><span class="btn-demo btn-demo--primary btn-demo--h36">Save</span><span style="font-size:11px;color:var(--text-dim);">(nothing changes for 1-2s while the request is in flight)</span></div>
         <p class="guide-dodont-note">A button that gives no feedback until the request finishes leaves the user unsure whether the click landed, and often clicking again.</p>
       </div>
     </div>
@@ -420,5 +337,7 @@
 </main>
 
 <script src="shell.js"></script>
+<script src="project-model.js"></script>
+<script src="experience.js"></script>
 </body>
 </html>

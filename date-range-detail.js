@@ -324,8 +324,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "date-range-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -531,9 +533,9 @@
       });
     }
 
-    labelInput.addEventListener("input", render);
-    startPlaceholderInput.addEventListener("input", render);
-    endPlaceholderInput.addEventListener("input", render);
+    labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    startPlaceholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    endPlaceholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();

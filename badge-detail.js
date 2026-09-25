@@ -250,8 +250,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "badge-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -407,9 +409,9 @@
       });
     }
 
-    if (countInput) countInput.addEventListener("input", render);
-    if (maxInput) maxInput.addEventListener("input", render);
-    if (labelInput) labelInput.addEventListener("input", render);
+    if (countInput) countInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (maxInput) maxInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (labelInput) labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

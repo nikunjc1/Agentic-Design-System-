@@ -212,8 +212,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "pop-confirm-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -335,9 +337,9 @@
       buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(values.question, values.confirmLabel, values.cancelLabel); }, [], function(){ return ""; });
     }
 
-    if (questionInput) questionInput.addEventListener("input", render);
-    if (confirmLabelInput) confirmLabelInput.addEventListener("input", render);
-    if (cancelLabelInput) cancelLabelInput.addEventListener("input", render);
+    if (questionInput) questionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (confirmLabelInput) confirmLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (cancelLabelInput) cancelLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

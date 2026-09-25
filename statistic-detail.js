@@ -189,8 +189,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "statistic-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -303,10 +305,10 @@
       buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(v.title, v.value, v.prefix, v.suffix); }, [], function(){ return ""; });
     }
 
-    if (titleInput) titleInput.addEventListener("input", render);
-    if (valueInput) valueInput.addEventListener("input", render);
-    if (prefixInput) prefixInput.addEventListener("input", render);
-    if (suffixInput) suffixInput.addEventListener("input", render);
+    if (titleInput) titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (valueInput) valueInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (prefixInput) prefixInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (suffixInput) suffixInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

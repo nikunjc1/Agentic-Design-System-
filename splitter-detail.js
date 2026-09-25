@@ -162,8 +162,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "splitter-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -274,9 +276,9 @@
       buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(v.panel1Label, v.panel2Label, v.ratio); }, [], function(){ return ""; });
     }
 
-    if (panel1Input) panel1Input.addEventListener("input", render);
-    if (panel2Input) panel2Input.addEventListener("input", render);
-    if (ratioInput) ratioInput.addEventListener("input", render);
+    if (panel1Input) panel1Input.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (panel2Input) panel2Input.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (ratioInput) ratioInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
 

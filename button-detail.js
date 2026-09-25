@@ -792,8 +792,8 @@
       });
     }
 
-    labelInput.addEventListener("input", render);
-    accessibleInput.addEventListener("input", render);
+    labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    accessibleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     function currentSelectionInfo(){
       return {

@@ -158,7 +158,8 @@
     }
 
     systemCards.forEach(function(card){
-      card.addEventListener("click", function(){ selectSystem(card.dataset.system); });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; selectSystem(card.dataset.system); });
     });
 
     widthSelect.addEventListener("change", applyPreview);

@@ -195,8 +195,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "popover-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -317,9 +319,9 @@
       buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(values.triggerLabel, values.title, values.body); }, [], function(){ return ""; });
     }
 
-    if (triggerLabelInput) triggerLabelInput.addEventListener("input", render);
-    if (titleInput) titleInput.addEventListener("input", render);
-    if (bodyInput) bodyInput.addEventListener("input", render);
+    if (triggerLabelInput) triggerLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (titleInput) titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (bodyInput) bodyInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

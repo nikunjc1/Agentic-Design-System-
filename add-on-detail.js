@@ -341,8 +341,10 @@
       card.setAttribute("role", "link");
       card.setAttribute("tabindex", "0");
       var href = "add-on-" + card.dataset.system + ".html";
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -550,8 +552,8 @@
       });
     }
 
-    labelInput.addEventListener("input", render);
-    placeholderInput.addEventListener("input", render);
+    labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     if (showPrefixInput && prefixFieldWrap){
       showPrefixInput.addEventListener("change", function(){
@@ -559,7 +561,7 @@
         render();
       });
     }
-    if (prefixTextInput) prefixTextInput.addEventListener("input", render);
+    if (prefixTextInput) prefixTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     if (showSuffixInput && suffixFieldWrap){
       showSuffixInput.addEventListener("change", function(){
@@ -567,7 +569,7 @@
         render();
       });
     }
-    if (suffixTextInput) suffixTextInput.addEventListener("input", render);
+    if (suffixTextInput) suffixTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
 
     render();

@@ -3,6 +3,12 @@
 
   const COLLAPSE_KEY_PREFIX = "ads:nav-collapsed:";
   const THEME_KEY = "ads:theme";
+  // Coalesce rapid property edits before rebuilding a potentially large state matrix.
+  const renderTimers = new WeakMap();
+  window.ADS_scheduleRender = function(render) {
+    clearTimeout(renderTimers.get(render));
+    renderTimers.set(render, setTimeout(() => { renderTimers.delete(render); render(); }, 80));
+  };
 
   // Preferences remain optional when browser storage is unavailable.
   function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
@@ -155,6 +161,7 @@
 
   function markActiveLink() {
     const links = Array.from(document.querySelectorAll(".nav-link"));
+    links.forEach(link => { link.classList.remove('is-active'); link.removeAttribute('aria-current'); });
     const currentHash = location.hash || "";
 
     // Prefer an exact file+hash match (e.g. landing on components.html#button
@@ -204,7 +211,7 @@
       }
     }
 
-    if (matched) matched.classList.add("is-active");
+    if (matched) { matched.classList.add("is-active"); matched.setAttribute('aria-current', 'page'); }
     return matched;
   }
 
@@ -252,18 +259,42 @@
     toggle.className = "sidebar-menu-toggle";
     toggle.setAttribute("aria-label", "Open navigation menu");
     toggle.setAttribute("aria-expanded", "false");
+    sidebar.id ||= 'site-navigation';
+    toggle.setAttribute('aria-controls', sidebar.id);
     toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
     topbarRight.insertAdjacentElement("beforebegin", toggle);
 
+    const narrow = matchMedia('(max-width: 900px)');
+    const main = document.querySelector('.app-main');
+    const brand = document.querySelector('.brand');
+    let previousOverflow = '';
+    function syncClosedState() { sidebar.inert = narrow.matches && !sidebar.classList.contains('is-open'); }
+    syncClosedState();
+
     function openDrawer(){
+      previousOverflow = document.body.style.overflow;
       sidebar.classList.add("is-open");
       backdrop.classList.add("is-open");
       toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute('aria-label', 'Close navigation menu');
+      sidebar.inert = false;
+      if (main) main.inert = true;
+      if (brand) brand.inert = true;
+      topbarRight.inert = true;
+      document.body.style.overflow = 'hidden';
+      sidebar.querySelector('input, a, button')?.focus();
     }
     function closeDrawer(){
       sidebar.classList.remove("is-open");
       backdrop.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      if (main) main.inert = false;
+      if (brand) brand.inert = false;
+      topbarRight.inert = false;
+      document.body.style.overflow = previousOverflow;
+      syncClosedState();
+      if (narrow.matches) toggle.focus();
     }
 
     toggle.addEventListener("click", () => {
@@ -272,7 +303,14 @@
     backdrop.addEventListener("click", closeDrawer);
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && sidebar.classList.contains("is-open")) closeDrawer();
+      if (e.key === 'Tab' && sidebar.classList.contains('is-open')) {
+        const items = [toggle, ...sidebar.querySelectorAll('input, a[href], button')].filter(n => n.getClientRects().length && !n.disabled);
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
+    narrow.addEventListener('change', () => { if (!narrow.matches && sidebar.classList.contains('is-open')) closeDrawer(); syncClosedState(); });
     // Closing on nav so picking a page doesn't leave the drawer sitting
     // open over the new page underneath it.
     sidebar.addEventListener("click", (e) => {
@@ -351,6 +389,7 @@
       // overlays, so they're deliberately not matched here.
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || document.activeElement?.isContentEditable || document.querySelector("dialog[open]") || document.querySelector('[data-role="welcome-overlay"]:not([hidden])')) return;
       e.preventDefault();
+      if (document.querySelector('.app-sidebar')?.inert) document.querySelector('.sidebar-menu-toggle')?.click();
       input.focus();
     });
   }
@@ -399,4 +438,5 @@
       });
     }
   });
+  window.addEventListener('hashchange', markActiveLink);
 })();

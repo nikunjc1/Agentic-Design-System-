@@ -729,7 +729,7 @@
       });
     }
 
-    labelInput.addEventListener("input", render);
+    labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (splitLeadingIconInput) splitLeadingIconInput.addEventListener("change", render);
 
     function currentSelectionInfo(){

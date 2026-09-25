@@ -334,8 +334,10 @@
       card.setAttribute("tabindex", "0");
       var href = "modal-" + card.dataset.system + ".html";
       if (card.dataset.type) href += "?type=" + encodeURIComponent(card.dataset.type);
-      card.addEventListener("click", function(){ window.location.href = href; });
+      card.addEventListener("click", function(e){
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
       card.addEventListener("keydown", function(e){
+        if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
           window.location.href = href;
@@ -537,10 +539,10 @@
       sizeSelect.addEventListener("change", render);
     }
     if (titleInput){
-      titleInput.addEventListener("input", render);
+      titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
     if (bodyInput){
-      bodyInput.addEventListener("input", render);
+      bodyInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
     if (showCloseInput){
       showCloseInput.addEventListener("change", render);
