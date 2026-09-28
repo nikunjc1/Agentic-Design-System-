@@ -10,6 +10,11 @@
   }catch(e){}
 
   try{
+    var dir = localStorage.getItem("ads:direction") || "ltr";
+    document.documentElement.setAttribute("dir", dir);
+  }catch(e){}
+
+  try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
     var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
     var hex = themeColors && themeColors.primary && themeColors.primary.hex;

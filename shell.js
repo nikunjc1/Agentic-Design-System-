@@ -4,6 +4,7 @@
   const COLLAPSE_KEY_PREFIX = "ads:nav-collapsed:";
   const THEME_KEY = "ads:theme";
   const DENSITY_KEY = "ads:density";
+  const DIRECTION_KEY = "ads:direction";
   // Coalesce rapid property edits before rebuilding a potentially large state matrix.
   const renderTimers = new WeakMap();
   window.ADS_scheduleRender = function(render) {
@@ -162,6 +163,30 @@
     });
   }
 
+  // Direction, same pattern again: an attribute already native to <html>
+  // (dir), read once at boot to avoid a flash of the wrong direction,
+  // then live-toggleable and synced across tabs like theme/density.
+  function applyDirection(direction) {
+    document.documentElement.setAttribute("dir", direction);
+    const toggle = document.getElementById("directionToggle");
+    const label = document.getElementById("directionToggleLabel");
+    if (toggle) toggle.setAttribute("aria-pressed", direction === "rtl" ? "true" : "false");
+    if (label) label.textContent = direction === "rtl" ? "Right-to-left" : "Left-to-right";
+  }
+  window.ADS_applyDirection = applyDirection;
+
+  function initDirectionToggle() {
+    const toggle = document.getElementById("directionToggle");
+    applyDirection(document.documentElement.getAttribute("dir") || "ltr");
+    if (!toggle) return;
+    toggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("dir") === "rtl" ? "rtl" : "ltr";
+      const next = current === "rtl" ? "ltr" : "rtl";
+      writePreference(DIRECTION_KEY, next);
+      applyDirection(next);
+    });
+  }
+
   // The <head> boot script only reads localStorage once, at load - it has
   // no way to know the theme changed in a DIFFERENT already-open tab/window
   // of this same site. Without this, switching between several tabs opened
@@ -179,6 +204,10 @@
     }
     if (e.key === DENSITY_KEY) {
       applyDensity(e.newValue === "compact" ? "compact" : "comfortable");
+      return;
+    }
+    if (e.key === DIRECTION_KEY) {
+      applyDirection(e.newValue === "rtl" ? "rtl" : "ltr");
       return;
     }
     if (COLOR_STORAGE_KEYS.includes(e.key)) {
@@ -452,6 +481,7 @@
     initSidebarSearch();
     initThemeToggle();
     initDensityToggle();
+    initDirectionToggle();
     initGuideViewToggle();
 
     // A fresh page load always starts the sidebar scrolled to its top,
