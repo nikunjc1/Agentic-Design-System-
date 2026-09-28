@@ -4022,8 +4022,9 @@ button{ font-family: inherit; }
 
 /* ---------- Card demo (card-default.html) ---------- */
 .card-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; width: 240px; background: var(--graphite-900); border: 1.5px solid var(--line-strong); overflow: hidden; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard); }
-.card-demo-panel.card-demo-shadow{ box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-.card-demo-panel:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+.card-demo-panel.card-demo-shadow{ box-shadow: var(--shadow-sm); }
+.card-demo-panel:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: var(--shadow-md); }
+.card-demo-panel:active, .card-demo-panel.is-pressed{ box-shadow: var(--shadow-xs); }
 .card-demo-panel.is-selected{ border-color: var(--red-500); box-shadow: 0 0 0 1px var(--red-500); }
 .card-demo-panel.is-disabled{ opacity: 0.4; pointer-events: none; }
 .card-demo-panel.is-loading{ pointer-events: none; cursor: wait; }
