@@ -354,6 +354,24 @@
   </section>
 
   <section class="panel spacing-model-panel">
+    <p class="panel-title">Component guidance</p>
+    <p class="get-library-copy">Two component types this page's own live preview doesn't cover, with the real values already in use elsewhere in this system.</p>
+
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Card</span>
+        <span class="usage-desc">A slightly heavier weight than Default, since a card's border is its primary edge (no shadow backs it up by default) - not a state, just Card's own resting value</span>
+        <span class="usage-values">1.5px &middot; Line strong</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Table</span>
+        <span class="usage-desc">Optional per type - the container gets one border, individual cells only get a divider between them (end-side only, never a full grid) when the Bordered type is chosen; row separation usually does this job instead</span>
+        <span class="usage-values">1px &middot; Line / Line strong</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
     <p class="panel-title">Border states</p>
     <p class="get-library-copy">Each state below can independently vary width, color, opacity and style - none of them should ever be the only signal for what's happening.</p>
 
