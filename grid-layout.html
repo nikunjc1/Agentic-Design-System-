@@ -162,6 +162,52 @@
   <p class="page-eyebrow">Foundations &middot; Grid &amp; Layout</p>
   <h1 class="page-title">Grid &amp; Layout</h1>
   <p class="page-lede">Spacing defines relationships, radius defines shape - grid defines structure. This is the invisible system that keeps every column, container and breakpoint coherent across the product.</p>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Breakpoints</p>
+    <p class="get-library-copy">The actual thresholds this system's own CSS switches on today, not an idealized scale - documented here so a new rule reuses one of these instead of quietly adding a twelfth. A plain CSS custom property can't drive a media-query condition (screen width is evaluated before any variable resolves), so these are reference values to copy literally rather than a token you can point to.</p>
+
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">900px</span>
+        <span class="usage-desc">The one real structural collapse: sidebar leaves the grid and becomes a slide-in drawer; New Project's setup layout stacks to one column</span>
+        <span class="usage-values">max-width</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">1440 / 1100 / 700px</span>
+        <span class="usage-desc">Component-listing grids step down one column at each (4 &rarr; 3 &rarr; 2 &rarr; 1)</span>
+        <span class="usage-values">max-width</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">640px</span>
+        <span class="usage-desc">Topbar padding tightens; version badge and keyboard-shortcut hint hide</span>
+        <span class="usage-values">max-width</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">600px</span>
+        <span class="usage-desc">New Project's fields collapse to one column; its action buttons grow to a 44px touch target</span>
+        <span class="usage-values">max-width</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">601-1000px</span>
+        <span class="usage-desc">Borders page's configuration grid drops to 2 columns</span>
+        <span class="usage-values">range</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">1600 / 1150 / 800 / 500px</span>
+        <span class="usage-desc">Overview page's own responsive steps (extra padding on ultra-wide down to single-column mobile) - scoped to that one page, not shared with the rest of the shell</span>
+        <span class="usage-values">mixed</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">pointer: coarse</span>
+        <span class="usage-desc">Icon buttons and nav links grow to a 44px touch target on touch/coarse-pointer devices, regardless of viewport width</span>
+        <span class="usage-values">capability</span>
+      </div>
+    </div>
+
+    <p class="get-library-copy" style="margin-top:16px;">Known gap, left visible rather than papered over: the Overview page collapses to its mobile layout at <strong>800px</strong>, while the shared shell (every other page) collapses at <strong>900px</strong> - two different thresholds doing the same conceptual job. Consolidating the 11 raw values above onto one shared scale (recommend 640 / 900 / 1100 / 1440px, rebuilding the Overview-specific ones onto the same 4 numbers) is tracked as a follow-up, not done here.</p>
+  </section>
+
   <section class="panel spacing-product-panel">
     <p class="panel-title">What are you building?</p>
     <p class="get-library-copy">Pick the product type closest to yours and the recommended column count and gutter below update to match - every value stays fully editable afterward.</p>
