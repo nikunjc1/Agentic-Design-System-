@@ -47,6 +47,20 @@
   --overlay-invert-bg: #f3f2ef;
   --overlay-invert-text: #15171a;
 
+  /* Disabled state sitewide is expressed as reduced opacity of whatever
+     the resting color already is, not a distinct disabled color - there
+     wasn't a single hex value to extract the way there was for spacing/
+     radius/shadow, so this tokenizes the two opacity levels actually in
+     consistent use instead of inventing a --color-disabled that doesn't
+     match how disabled is really implemented here. */
+  --opacity-40: 0.4;
+  --opacity-50: 0.5;
+
+  /* Focus ring - 76 of 82 sitewide focus-visible outlines already use
+     this exact color; the other 6 are deliberate per-component variants
+     (destructive/success/info), not something this alias should absorb. */
+  --color-focus-ring: var(--red-400);
+
   /* Brand red */
   --red-500: #ff031a;
   --red-400: #ff3f4f;

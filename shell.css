@@ -2191,32 +2191,32 @@ button{ font-family: inherit; }
 .btn-demo--primary{ background: var(--red-500); color: #fff; }
 .btn-demo--primary:hover, .btn-demo--primary.is-hover{ background: var(--red-400); }
 .btn-demo--primary:active, .btn-demo--primary.is-pressed{ background: var(--red-600); }
-.btn-demo--primary:focus-visible, .btn-demo--primary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.btn-demo--primary:focus-visible, .btn-demo--primary.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .btn-demo--primary:disabled, .btn-demo--primary.is-disabled{ opacity: 0.45; cursor: not-allowed; }
 
 .btn-demo--secondary{ background: var(--graphite-700); color: var(--text-hi); border-color: var(--line-strong); }
 .btn-demo--secondary:hover, .btn-demo--secondary.is-hover{ background: var(--graphite-600); }
 .btn-demo--secondary:active, .btn-demo--secondary.is-pressed{ background: var(--graphite-800); }
-.btn-demo--secondary:focus-visible, .btn-demo--secondary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.btn-demo--secondary:disabled, .btn-demo--secondary.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--secondary:focus-visible, .btn-demo--secondary.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.btn-demo--secondary:disabled, .btn-demo--secondary.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .btn-demo--tertiary{ background: transparent; color: var(--text-hi); border-color: var(--line-strong); }
 .btn-demo--tertiary:hover, .btn-demo--tertiary.is-hover{ background: var(--graphite-800); }
 .btn-demo--tertiary:active, .btn-demo--tertiary.is-pressed{ background: var(--graphite-700); }
-.btn-demo--tertiary:focus-visible, .btn-demo--tertiary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.btn-demo--tertiary:disabled, .btn-demo--tertiary.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--tertiary:focus-visible, .btn-demo--tertiary.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.btn-demo--tertiary:disabled, .btn-demo--tertiary.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .btn-demo--ghost{ background: transparent; color: var(--text-mid); border-color: transparent; }
 .btn-demo--ghost:hover, .btn-demo--ghost.is-hover{ background: var(--graphite-800); color: var(--text-hi); }
 .btn-demo--ghost:active, .btn-demo--ghost.is-pressed{ background: var(--graphite-700); }
-.btn-demo--ghost:focus-visible, .btn-demo--ghost.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.btn-demo--ghost:disabled, .btn-demo--ghost.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--ghost:focus-visible, .btn-demo--ghost.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.btn-demo--ghost:disabled, .btn-demo--ghost.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .btn-demo--link{ background: transparent; color: var(--red-400); border-color: transparent; padding-inline: 8px; }
 .btn-demo--link:hover, .btn-demo--link.is-hover{ text-decoration: underline; }
 .btn-demo--link:active, .btn-demo--link.is-pressed{ color: var(--red-600); }
-.btn-demo--link:focus-visible, .btn-demo--link.is-focus{ outline: 2px solid var(--red-400); outline-offset: 3px; border-radius: var(--radius-sm); }
-.btn-demo--link:disabled, .btn-demo--link.is-disabled{ opacity: 0.4; cursor: not-allowed; text-decoration: none; }
+.btn-demo--link:focus-visible, .btn-demo--link.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 3px; border-radius: var(--radius-sm); }
+.btn-demo--link:disabled, .btn-demo--link.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; text-decoration: none; }
 
 /* Destructive uses the fixed --danger-* tokens, not the brand-customizable
    --red-* tokens - a Delete button must always read as red, regardless of
@@ -2225,13 +2225,13 @@ button{ font-family: inherit; }
 .btn-demo--destructive:hover, .btn-demo--destructive.is-hover{ background: rgba(255,3,26,0.16); border-color: var(--danger-400); color: var(--danger-400); }
 .btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: rgba(255,3,26,0.26); border-color: var(--danger-600); color: var(--danger-600); }
 .btn-demo--destructive:focus-visible, .btn-demo--destructive.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
-.btn-demo--destructive:disabled, .btn-demo--destructive.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--destructive:disabled, .btn-demo--destructive.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .btn-demo--neutral{ background: var(--graphite-800); color: var(--text-hi); border-color: var(--line-strong); }
 .btn-demo--neutral:hover, .btn-demo--neutral.is-hover{ background: var(--graphite-700); }
 .btn-demo--neutral:active, .btn-demo--neutral.is-pressed{ background: var(--graphite-850); }
-.btn-demo--neutral:focus-visible, .btn-demo--neutral.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.btn-demo--neutral:disabled, .btn-demo--neutral.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--neutral:focus-visible, .btn-demo--neutral.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.btn-demo--neutral:disabled, .btn-demo--neutral.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* Approve is a positive/success semantic action - it gets its own green
    treatment rather than reusing Neutral's gray, matching Destructive's
@@ -2240,7 +2240,7 @@ button{ font-family: inherit; }
 .btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: rgba(47,191,110,0.16); }
 .btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: rgba(47,191,110,0.26); }
 .btn-demo--approve:focus-visible, .btn-demo--approve.is-focus{ outline: 2px solid var(--green-500); outline-offset: 2px; }
-.btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .button-type-demo{ margin-top: 12px; }
 
@@ -2805,19 +2805,19 @@ button{ font-family: inherit; }
 
 .input-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .input-demo-control--outlined:hover, .input-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.input-demo-control--outlined:focus-within, .input-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--outlined:focus-within, .input-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .input-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .input-demo-control--outlined:has(.input-demo-input:disabled), .input-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .input-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .input-demo-control--filled:hover, .input-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.input-demo-control--filled:focus-within, .input-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--filled:focus-within, .input-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .input-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .input-demo-control--filled:has(.input-demo-input:disabled), .input-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .input-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .input-demo-control--underlined:hover, .input-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.input-demo-control--underlined:focus-within, .input-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.input-demo-control--underlined:focus-within, .input-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .input-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .input-demo-control--underlined:has(.input-demo-input:disabled), .input-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -2851,19 +2851,19 @@ button{ font-family: inherit; }
 
 .password-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .password-demo-control--outlined:hover, .password-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.password-demo-control--outlined:focus-within, .password-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--outlined:focus-within, .password-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .password-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .password-demo-control--outlined:has(.password-demo-input:disabled), .password-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .password-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .password-demo-control--filled:hover, .password-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.password-demo-control--filled:focus-within, .password-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--filled:focus-within, .password-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .password-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .password-demo-control--filled:has(.password-demo-input:disabled), .password-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .password-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .password-demo-control--underlined:hover, .password-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.password-demo-control--underlined:focus-within, .password-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.password-demo-control--underlined:focus-within, .password-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .password-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .password-demo-control--underlined:has(.password-demo-input:disabled), .password-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -2909,19 +2909,19 @@ button{ font-family: inherit; }
 
 .number-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .number-demo-control--outlined:hover, .number-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.number-demo-control--outlined:focus-within, .number-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--outlined:focus-within, .number-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .number-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .number-demo-control--outlined:has(.number-demo-input:disabled), .number-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .number-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .number-demo-control--filled:hover, .number-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.number-demo-control--filled:focus-within, .number-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--filled:focus-within, .number-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .number-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .number-demo-control--filled:has(.number-demo-input:disabled), .number-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .number-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .number-demo-control--underlined:hover, .number-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.number-demo-control--underlined:focus-within, .number-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.number-demo-control--underlined:focus-within, .number-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .number-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .number-demo-control--underlined:has(.number-demo-input:disabled), .number-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -3005,13 +3005,13 @@ button{ font-family: inherit; }
 
 .search-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .search-demo-control--outlined:hover, .search-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.search-demo-control--outlined:focus-within, .search-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--outlined:focus-within, .search-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .search-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .search-demo-control--outlined:has(.search-demo-input:disabled), .search-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .search-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .search-demo-control--filled:hover, .search-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.search-demo-control--filled:focus-within, .search-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--filled:focus-within, .search-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .search-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .search-demo-control--filled:has(.search-demo-input:disabled), .search-demo-control--filled.is-disabled{ opacity: 0.5; }
 
@@ -3023,7 +3023,7 @@ button{ font-family: inherit; }
 
 .search-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .search-demo-control--underlined:hover, .search-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.search-demo-control--underlined:focus-within, .search-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.search-demo-control--underlined:focus-within, .search-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .search-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .search-demo-control--underlined:has(.search-demo-input:disabled), .search-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -3055,19 +3055,19 @@ button{ font-family: inherit; }
 
 .textarea-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .textarea-demo-control--outlined:hover, .textarea-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.textarea-demo-control--outlined:focus-within, .textarea-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--outlined:focus-within, .textarea-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .textarea-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .textarea-demo-control--outlined:has(.textarea-demo-input:disabled), .textarea-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .textarea-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .textarea-demo-control--filled:hover, .textarea-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.textarea-demo-control--filled:focus-within, .textarea-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--filled:focus-within, .textarea-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .textarea-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .textarea-demo-control--filled:has(.textarea-demo-input:disabled), .textarea-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .textarea-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .textarea-demo-control--underlined:hover, .textarea-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.textarea-demo-control--underlined:focus-within, .textarea-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.textarea-demo-control--underlined:focus-within, .textarea-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .textarea-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .textarea-demo-control--underlined:has(.textarea-demo-input:disabled), .textarea-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -3135,19 +3135,19 @@ button{ font-family: inherit; }
 
 .addon-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .addon-demo-control--outlined:hover, .addon-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.addon-demo-control--outlined:focus-within, .addon-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--outlined:focus-within, .addon-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .addon-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .addon-demo-control--outlined:has(.addon-demo-input:disabled), .addon-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .addon-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .addon-demo-control--filled:hover, .addon-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.addon-demo-control--filled:focus-within, .addon-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--filled:focus-within, .addon-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .addon-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .addon-demo-control--filled:has(.addon-demo-input:disabled), .addon-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .addon-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .addon-demo-control--underlined:hover, .addon-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.addon-demo-control--underlined:focus-within, .addon-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.addon-demo-control--underlined:focus-within, .addon-demo-control--underlined.is-focus{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .addon-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .addon-demo-control--underlined:has(.addon-demo-input:disabled), .addon-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -3173,14 +3173,14 @@ button{ font-family: inherit; }
 
 .autocomplete-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .autocomplete-demo-control--outlined:hover, .autocomplete-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.autocomplete-demo-control--outlined:focus-within, .autocomplete-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.autocomplete-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--outlined:focus-within, .autocomplete-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.autocomplete-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .autocomplete-demo-control--outlined:has(.autocomplete-demo-input:disabled), .autocomplete-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .autocomplete-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .autocomplete-demo-control--filled:hover, .autocomplete-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.autocomplete-demo-control--filled:focus-within, .autocomplete-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.autocomplete-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.autocomplete-demo-control--filled:focus-within, .autocomplete-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.autocomplete-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .autocomplete-demo-control--filled:has(.autocomplete-demo-input:disabled), .autocomplete-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .autocomplete-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 4px; }
@@ -3226,14 +3226,14 @@ button{ font-family: inherit; }
 
 .mention-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .mention-demo-control--outlined:hover, .mention-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.mention-demo-control--outlined:focus-within, .mention-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.mention-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--outlined:focus-within, .mention-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.mention-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .mention-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .mention-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .mention-demo-control--filled:hover, .mention-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.mention-demo-control--filled:focus-within, .mention-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.mention-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.mention-demo-control--filled:focus-within, .mention-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.mention-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .mention-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .mention-demo-chip{ display: inline-block; background: var(--red-tint); color: var(--red-400); border-radius: 4px; padding: 2px 4px; font-weight: 500; }
@@ -3276,15 +3276,15 @@ button{ font-family: inherit; }
 
 .daterange-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .daterange-demo-control--outlined:hover, .daterange-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.daterange-demo-control--outlined:focus-visible, .daterange-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.daterange-demo-control--outlined:focus-visible, .daterange-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .daterange-demo-control--outlined.is-error{ border-color: var(--danger-500); }
-.daterange-demo-control--outlined[aria-disabled="true"], .daterange-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.daterange-demo-control--outlined[aria-disabled="true"], .daterange-demo-control--outlined.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 .daterange-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .daterange-demo-control--filled:hover, .daterange-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.daterange-demo-control--filled:focus-visible, .daterange-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.daterange-demo-control--filled:focus-visible, .daterange-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .daterange-demo-control--filled.is-error{ border-color: var(--danger-500); }
-.daterange-demo-control--filled[aria-disabled="true"], .daterange-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.daterange-demo-control--filled[aria-disabled="true"], .daterange-demo-control--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 /* ---------- Time demo (time-default.html) ----------
    Same pattern as Date Picker - a role="button" div control (not a real
@@ -3314,15 +3314,15 @@ button{ font-family: inherit; }
 
 .time-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .time-demo-control--outlined:hover, .time-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.time-demo-control--outlined:focus-visible, .time-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.time-demo-control--outlined:focus-visible, .time-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .time-demo-control--outlined.is-error{ border-color: var(--danger-500); }
-.time-demo-control--outlined[aria-disabled="true"], .time-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.time-demo-control--outlined[aria-disabled="true"], .time-demo-control--outlined.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 .time-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .time-demo-control--filled:hover, .time-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.time-demo-control--filled:focus-visible, .time-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.time-demo-control--filled:focus-visible, .time-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .time-demo-control--filled.is-error{ border-color: var(--danger-500); }
-.time-demo-control--filled[aria-disabled="true"], .time-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.time-demo-control--filled[aria-disabled="true"], .time-demo-control--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 /* ---------- Color Picker demo (color-picker-default.html) ----------
    Outlined/Filled only (no Underlined - a swatch panel reads better
@@ -3378,20 +3378,20 @@ button{ font-family: inherit; }
 
 .colorpicker-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .colorpicker-demo-control--outlined:hover, .colorpicker-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.colorpicker-demo-control--outlined:focus-within, .colorpicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.colorpicker-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.colorpicker-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+.colorpicker-demo-control--outlined:focus-within, .colorpicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.colorpicker-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.colorpicker-demo-control--outlined.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 .colorpicker-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .colorpicker-demo-control--filled:hover, .colorpicker-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.colorpicker-demo-control--filled:focus-within, .colorpicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.colorpicker-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.colorpicker-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+.colorpicker-demo-control--filled:focus-within, .colorpicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.colorpicker-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.colorpicker-demo-control--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 .colorpicker-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 8px; }
 .colorpicker-demo-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .colorpicker-demo-swatch-option{ width: 28px; height: 28px; border-radius: var(--radius-6); border: var(--border-width-1) solid var(--line-strong); cursor: pointer; padding: 0; }
-.colorpicker-demo-swatch-option.is-active{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.colorpicker-demo-swatch-option.is-active{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .colorpicker-demo-field:has(.colorpicker-demo-panel){ margin-bottom: 100px; }
 
 /* ---------- Slider demo (slider-default.html) ----------
@@ -3406,8 +3406,8 @@ button{ font-family: inherit; }
 .slider-demo-track-wrap:hover .slider-demo-track, .slider-demo-track-wrap.is-hover .slider-demo-track{ background: var(--graphite-700); }
 .slider-demo-fill{ position: absolute; top: 0; bottom: 0; border-radius: var(--radius-full); background: var(--red-500); }
 .slider-demo-thumb{ position: absolute; top: 50%; width: 16px; height: 16px; border-radius: var(--radius-full); background: #FFFFFF; border: var(--border-width-2) solid var(--red-500); transform: translate(-50%, -50%); box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-.slider-demo-track-wrap:focus-within .slider-demo-thumb, .slider-demo-track-wrap.is-focus .slider-demo-thumb{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.slider-demo-track-wrap.is-disabled, .slider-demo-track-wrap:has(:disabled){ opacity: 0.4; cursor: not-allowed; }
+.slider-demo-track-wrap:focus-within .slider-demo-thumb, .slider-demo-track-wrap.is-focus .slider-demo-thumb{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.slider-demo-track-wrap.is-disabled, .slider-demo-track-wrap:has(:disabled){ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* ---------- Rating demo (rating-default.html) ----------
    Not a text field - a row of 5 identical icon buttons (Star or Heart)
@@ -3430,7 +3430,7 @@ button{ font-family: inherit; }
 .rating-demo-icon svg{ display: block; }
 .rating-demo-icon.is-filled{ color: var(--red-500); }
 .rating-demo-icon.is-preview{ color: var(--red-400); opacity: 0.6; }
-.rating-demo-row.is-disabled .rating-demo-icon, .rating-demo-icon:disabled{ opacity: 0.4; cursor: not-allowed; }
+.rating-demo-row.is-disabled .rating-demo-icon, .rating-demo-icon:disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 .rating-demo-icon:hover:not(:disabled){ color: var(--text-hi); }
 /* Scoped to Rating's own matrix wrapper, not the shared .button-matrix-colhead/
    .button-matrix-cell rule other components' matrices still use centered -
@@ -3618,17 +3618,17 @@ button{ font-family: inherit; }
 
 .floatbutton-demo-btn--default{ background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); color: var(--text-hi); }
 .floatbutton-demo-btn--default:hover, .floatbutton-demo-btn--default.is-hover{ background: var(--graphite-700); }
-.floatbutton-demo-btn--default:focus-visible, .floatbutton-demo-btn--default.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.floatbutton-demo-btn--default:focus-visible, .floatbutton-demo-btn--default.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .floatbutton-demo-btn--primary{ background: var(--red-500); color: #FFFFFF; }
 .floatbutton-demo-btn--primary:hover, .floatbutton-demo-btn--primary.is-hover{ background: var(--red-600); }
-.floatbutton-demo-btn--primary:focus-visible, .floatbutton-demo-btn--primary.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.floatbutton-demo-btn--primary:focus-visible, .floatbutton-demo-btn--primary.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .floatbutton-demo-btn--square{ background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); color: var(--text-hi); }
 .floatbutton-demo-btn--square:hover, .floatbutton-demo-btn--square.is-hover{ background: var(--graphite-700); }
-.floatbutton-demo-btn--square:focus-visible, .floatbutton-demo-btn--square.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.floatbutton-demo-btn--square:focus-visible, .floatbutton-demo-btn--square.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
-.floatbutton-demo-btn:disabled, .floatbutton-demo-btn.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.floatbutton-demo-btn:disabled, .floatbutton-demo-btn.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .floatbutton-demo-badge{ position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--danger-500); border: var(--border-width-2) solid var(--graphite-950); }
 
@@ -3690,14 +3690,14 @@ button{ font-family: inherit; }
 
 .cascader-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .cascader-demo-control--outlined:hover, .cascader-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.cascader-demo-control--outlined:focus-within, .cascader-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.cascader-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.cascader-demo-control--outlined:focus-within, .cascader-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.cascader-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .cascader-demo-control--outlined:has(.cascader-demo-input:disabled), .cascader-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .cascader-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .cascader-demo-control--filled:hover, .cascader-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.cascader-demo-control--filled:focus-within, .cascader-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.cascader-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.cascader-demo-control--filled:focus-within, .cascader-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.cascader-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .cascader-demo-control--filled:has(.cascader-demo-input:disabled), .cascader-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .cascader-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; z-index: 5; box-sizing: border-box; display: flex; min-width: 360px; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; }
@@ -3744,14 +3744,14 @@ button{ font-family: inherit; }
 .transfer-demo-checkbox-input{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .transfer-demo-checkbox{ flex: none; width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--line-strong); display: flex; align-items: center; justify-content: center; }
 .transfer-demo-checkbox-input:checked + .transfer-demo-checkbox, .transfer-demo-checkbox.is-checked{ background: var(--red-500); border-color: var(--red-500); }
-.transfer-demo-checkbox-input:focus-visible + .transfer-demo-checkbox{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.transfer-demo-checkbox-input:focus-visible + .transfer-demo-checkbox{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .transfer-demo-checkbox svg{ width: 11px; height: 11px; color: #FFFFFF; }
 
 .transfer-demo-arrows{ flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 0 4px; }
 .transfer-demo-arrow-btn{ width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); color: var(--text-hi); display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .transfer-demo-arrow-btn:hover{ background: var(--graphite-700); }
-.transfer-demo-arrow-btn:focus-visible, .transfer-demo-arrow-btn.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.transfer-demo-arrow-btn:disabled{ opacity: 0.5; cursor: not-allowed; }
+.transfer-demo-arrow-btn:focus-visible, .transfer-demo-arrow-btn.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.transfer-demo-arrow-btn:disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 /* ---------- Tree Select demo (tree-select-default.html) ----------
    A select-like trigger showing a selected node's label that opens a
@@ -3780,14 +3780,14 @@ button{ font-family: inherit; }
 
 .treeselect-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .treeselect-demo-control--outlined:hover, .treeselect-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.treeselect-demo-control--outlined:focus-within, .treeselect-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.treeselect-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.treeselect-demo-control--outlined:focus-within, .treeselect-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.treeselect-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .treeselect-demo-control--outlined:has(.treeselect-demo-input:disabled), .treeselect-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .treeselect-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .treeselect-demo-control--filled:hover, .treeselect-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.treeselect-demo-control--filled:focus-within, .treeselect-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
-.treeselect-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.treeselect-demo-control--filled:focus-within, .treeselect-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.treeselect-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .treeselect-demo-control--filled:has(.treeselect-demo-input:disabled), .treeselect-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .treeselect-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 4px; overflow: hidden; }
@@ -3820,7 +3820,7 @@ button{ font-family: inherit; }
 
 .upload-demo-trigger-btn{ display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); color: var(--text-hi); font-family: var(--font-body); font-size: 13px; font-weight: 600; cursor: pointer; width: fit-content; }
 .upload-demo-trigger-btn:hover{ background: var(--graphite-700); }
-.upload-demo-trigger-btn:disabled{ opacity: 0.5; cursor: not-allowed; }
+.upload-demo-trigger-btn:disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 .upload-demo-file-list{ display: flex; flex-direction: column; gap: 6px; }
 .upload-demo-file-row{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-sm); }
@@ -3997,7 +3997,7 @@ button{ font-family: inherit; }
    cell's internal centering and the gutter between cells. */
 .calendar-demo-day{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; margin: 0; font-family: var(--font-body); line-height: normal; color: var(--text-hi); background: none; border: none; border-radius: var(--radius-6); cursor: pointer; }
 .calendar-demo-day:hover:not(.is-outside-month){ background: var(--graphite-800); }
-.calendar-demo-day:focus-visible{ outline: 2px solid var(--red-400); outline-offset: 1px; }
+.calendar-demo-day:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 1px; }
 .calendar-demo-grid--full .calendar-demo-day{ width: 36px; height: 36px; font-size: 13px; }
 .calendar-demo-grid--compact .calendar-demo-day{ width: 26px; height: 26px; font-size: 11px; }
 .calendar-demo-day.is-outside-month{ color: var(--text-dim); opacity: 0.4; cursor: default; }
@@ -4321,7 +4321,7 @@ button{ font-family: inherit; }
    makes the button variant clickable without a second class name. */
 .tag-demo-chip[type="button"]{ cursor: pointer; }
 .tag-demo-chip[type="button"]:hover{ filter: brightness(1.15); }
-.tag-demo-chip[type="button"]:focus-visible{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.tag-demo-chip[type="button"]:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .tag-demo-chip--default{ background: var(--graphite-700); color: var(--text-mid); }
 .tag-demo-chip--success{ background: rgba(47,191,110,0.12); color: var(--green-500); }
 .tag-demo-chip--warning{ background: rgba(230,165,58,0.12); color: var(--amber-500); }
@@ -4766,7 +4766,7 @@ button{ font-family: inherit; }
 .group-btn--outlined .group-btn-segment:hover, .group-btn--outlined .group-btn-segment.is-hover{ background: var(--graphite-800); }
 .group-btn--outlined .group-btn-segment:active, .group-btn--outlined .group-btn-segment.is-pressed{ background: var(--graphite-700); }
 .group-btn--outlined .group-btn-segment.is-selected{ background: var(--red-tint); color: var(--red-500); }
-.group-btn--outlined .group-btn-segment:focus-visible, .group-btn--outlined .group-btn-segment.is-focus{ outline: 2px solid var(--red-400); outline-offset: -3px; }
+.group-btn--outlined .group-btn-segment:focus-visible, .group-btn--outlined .group-btn-segment.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: -3px; }
 .group-btn--outlined .group-btn-segment:disabled, .group-btn--outlined .group-btn-segment.is-disabled{ opacity: 0.4; }
 
 /* Filled - solid track, selected segment gets a solid brand pill */
@@ -4781,7 +4781,7 @@ button{ font-family: inherit; }
    into a lopsided arc instead of a clean rectangle. Inset (negative)
    offset keeps the ring inside the segment's own box, same fix already
    used by the Outlined type above, so it never touches that boundary. */
-.group-btn--filled .group-btn-segment:focus-visible, .group-btn--filled .group-btn-segment.is-focus{ outline: 2px solid var(--red-400); outline-offset: -3px; }
+.group-btn--filled .group-btn-segment:focus-visible, .group-btn--filled .group-btn-segment.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: -3px; }
 .group-btn--filled .group-btn-segment:disabled, .group-btn--filled .group-btn-segment.is-disabled{ opacity: 0.4; }
 
 .group-btn-field{
@@ -5311,25 +5311,25 @@ a.system-card{ text-decoration: none; color: inherit; }
 
 .select-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .select-demo-control--outlined:hover, .select-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.select-demo-control--outlined:focus-visible, .select-demo-control--outlined.is-focus, .select-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--outlined:focus-visible, .select-demo-control--outlined.is-focus, .select-demo-control--outlined.is-open{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .select-demo-control--outlined.is-error{ border-color: var(--danger-500); }
 .select-demo-control--outlined.is-disabled{ opacity: 0.5; }
 
 .select-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .select-demo-control--filled:hover, .select-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.select-demo-control--filled:focus-visible, .select-demo-control--filled.is-focus, .select-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--filled:focus-visible, .select-demo-control--filled.is-focus, .select-demo-control--filled.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .select-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .select-demo-control--filled.is-disabled{ opacity: 0.5; }
 
 .select-demo-control--borderless{ background: transparent; border: 1.5px solid transparent; }
 .select-demo-control--borderless:hover, .select-demo-control--borderless.is-hover{ background: var(--graphite-800); }
-.select-demo-control--borderless:focus-visible, .select-demo-control--borderless.is-focus, .select-demo-control--borderless.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--borderless:focus-visible, .select-demo-control--borderless.is-focus, .select-demo-control--borderless.is-open{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .select-demo-control--borderless.is-error{ border-color: var(--danger-500); }
 .select-demo-control--borderless.is-disabled{ opacity: 0.5; }
 
 .select-demo-control--underlined{ background: transparent; border: none; border-bottom: 1.5px solid var(--line-strong); border-radius: 0; }
 .select-demo-control--underlined:hover, .select-demo-control--underlined.is-hover{ border-bottom-color: var(--text-dim); }
-.select-demo-control--underlined:focus-visible, .select-demo-control--underlined.is-focus, .select-demo-control--underlined.is-open{ border-bottom-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.select-demo-control--underlined:focus-visible, .select-demo-control--underlined.is-focus, .select-demo-control--underlined.is-open{ border-bottom-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .select-demo-control--underlined.is-error{ border-bottom-color: var(--danger-500); }
 .select-demo-control--underlined.is-disabled{ opacity: 0.5; }
 
@@ -5395,15 +5395,15 @@ a.system-card{ text-decoration: none; color: inherit; }
 
 .datepicker-demo-control--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .datepicker-demo-control--outlined:hover, .datepicker-demo-control--outlined.is-hover{ border-color: var(--text-dim); }
-.datepicker-demo-control--outlined:focus-visible, .datepicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.datepicker-demo-control--outlined:focus-visible, .datepicker-demo-control--outlined.is-focus{ border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .datepicker-demo-control--outlined.is-error{ border-color: var(--danger-500); }
-.datepicker-demo-control--outlined[aria-disabled="true"], .datepicker-demo-control--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.datepicker-demo-control--outlined[aria-disabled="true"], .datepicker-demo-control--outlined.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 .datepicker-demo-control--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .datepicker-demo-control--filled:hover, .datepicker-demo-control--filled.is-hover{ background: var(--graphite-700); }
-.datepicker-demo-control--filled:focus-visible, .datepicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--red-400); outline-offset: 2px; }
+.datepicker-demo-control--filled:focus-visible, .datepicker-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .datepicker-demo-control--filled.is-error{ border-color: var(--danger-500); }
-.datepicker-demo-control--filled[aria-disabled="true"], .datepicker-demo-control--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.datepicker-demo-control--filled[aria-disabled="true"], .datepicker-demo-control--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
 
 /* ---------- Checkbox demo (checkbox.html / checkbox-default.html) ---------- */
 .checkbox-demo-field{
@@ -5479,10 +5479,10 @@ a.system-card{ text-decoration: none; color: inherit; }
 .checkbox-demo-box.is-hover{ border-color: var(--text-dim); }
 
 .checkbox-demo-input:focus-visible + .checkbox-demo-box,
-.checkbox-demo-box.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.checkbox-demo-box.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .checkbox-demo-input:disabled + .checkbox-demo-box,
-.checkbox-demo-box.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.checkbox-demo-box.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 .checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity: 0.7; }
 
 /* Card type - box + label wrapped in a bordered row that highlights as a
@@ -5554,10 +5554,10 @@ a.system-card{ text-decoration: none; color: inherit; }
 .radio-demo-circle.is-hover{ border-color: var(--text-dim); }
 
 .radio-demo-input:focus-visible + .radio-demo-circle,
-.radio-demo-circle.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.radio-demo-circle.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .radio-demo-input:disabled + .radio-demo-circle,
-.radio-demo-circle.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.radio-demo-circle.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* Card type - circle + label inside a bordered, clickable row that
    highlights once its radio is checked (.is-checked added directly by
@@ -5661,10 +5661,10 @@ a.system-card{ text-decoration: none; color: inherit; }
 .switch-demo-track.is-hover{ background: var(--graphite-600); }
 
 .switch-demo-input:focus-visible + .switch-demo-track,
-.switch-demo-track.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.switch-demo-track.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .switch-demo-input:disabled + .switch-demo-track,
-.switch-demo-track.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.switch-demo-track.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* ---------- Tabs demo (tabs.html / tabs-default.html) ---------- */
 .tabs-demo-bar{
@@ -5727,7 +5727,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .tabs-demo-bar--underline .tabs-demo-trigger:hover,
 .tabs-demo-bar--underline .tabs-demo-trigger.is-hover{ color: var(--text-hi); }
 .tabs-demo-bar--underline .tabs-demo-trigger:focus-visible,
-.tabs-demo-bar--underline .tabs-demo-trigger.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.tabs-demo-bar--underline .tabs-demo-trigger.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .tabs-demo-bar--underline .tabs-demo-trigger:disabled,
 .tabs-demo-bar--underline .tabs-demo-trigger.is-disabled{ opacity: 0.4; }
 
@@ -5739,7 +5739,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .tabs-demo-bar--pill .tabs-demo-trigger:hover,
 .tabs-demo-bar--pill .tabs-demo-trigger.is-hover{ background: var(--graphite-800); color: var(--text-hi); }
 .tabs-demo-bar--pill .tabs-demo-trigger:focus-visible,
-.tabs-demo-bar--pill .tabs-demo-trigger.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.tabs-demo-bar--pill .tabs-demo-trigger.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .tabs-demo-bar--pill .tabs-demo-trigger:disabled,
 .tabs-demo-bar--pill .tabs-demo-trigger.is-disabled{ opacity: 0.4; }
 
@@ -5781,7 +5781,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .anchor-demo-link.is-focus{
   color: var(--red-400);
   text-decoration: none;
-  outline: 2px solid var(--red-400);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-2);
 }
@@ -5839,7 +5839,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 }
 .breadcrumb-demo-link:focus-visible,
 .breadcrumb-demo-link.is-focus{
-  outline: 2px solid var(--red-400);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-2);
 }
@@ -5889,14 +5889,14 @@ a.system-card{ text-decoration: none; color: inherit; }
 .dropdown-demo-trigger--outlined{ background: var(--graphite-900); border: 1.5px solid var(--line-strong); }
 .dropdown-demo-trigger--outlined:hover, .dropdown-demo-trigger--outlined.is-hover{ border-color: var(--text-dim); }
 .dropdown-demo-trigger--outlined.is-open{ border-color: var(--red-500); background: var(--red-tint); }
-.dropdown-demo-trigger--outlined:focus-visible, .dropdown-demo-trigger--outlined.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.dropdown-demo-trigger--outlined:disabled, .dropdown-demo-trigger--outlined.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+.dropdown-demo-trigger--outlined:focus-visible, .dropdown-demo-trigger--outlined.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.dropdown-demo-trigger--outlined:disabled, .dropdown-demo-trigger--outlined.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 .dropdown-demo-trigger--filled{ background: var(--graphite-800); border: 1.5px solid transparent; }
 .dropdown-demo-trigger--filled:hover, .dropdown-demo-trigger--filled.is-hover{ background: var(--graphite-700); }
 .dropdown-demo-trigger--filled.is-open{ background: var(--graphite-900); }
-.dropdown-demo-trigger--filled:focus-visible, .dropdown-demo-trigger--filled.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
-.dropdown-demo-trigger--filled:disabled, .dropdown-demo-trigger--filled.is-disabled{ opacity: 0.5; cursor: not-allowed; }
+.dropdown-demo-trigger--filled:focus-visible, .dropdown-demo-trigger--filled.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.dropdown-demo-trigger--filled:disabled, .dropdown-demo-trigger--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
 /* ---------- Pagination demo (pagination.html / pagination-default.html) ---------- */
 .pagination-demo-bar{
@@ -5927,10 +5927,10 @@ a.system-card{ text-decoration: none; color: inherit; }
 .pagination-demo-arrow:hover, .pagination-demo-arrow.is-hover{ background: var(--graphite-800); }
 
 .pagination-demo-item:focus-visible, .pagination-demo-item.is-focus,
-.pagination-demo-arrow:focus-visible, .pagination-demo-arrow.is-focus{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.pagination-demo-arrow:focus-visible, .pagination-demo-arrow.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .pagination-demo-item:disabled, .pagination-demo-item.is-disabled,
-.pagination-demo-arrow:disabled, .pagination-demo-arrow.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.pagination-demo-arrow:disabled, .pagination-demo-arrow.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .pagination-demo-item.is-current{ background: var(--red-500); color: #FFFFFF; border-color: var(--red-500); }
 .pagination-demo-item.is-current:hover{ background: var(--red-500); color: #FFFFFF; border-color: var(--red-500); }
@@ -6013,7 +6013,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .menu-demo-item svg{ width: 16px; height: 16px; flex: none; }
 .menu-demo-item:hover, .menu-demo-item.is-hover{ background: var(--graphite-800); }
 .menu-demo-item:focus-visible, .menu-demo-item.is-focus{ outline: 2px solid var(--red-500); outline-offset: -2px; }
-.menu-demo-item:disabled, .menu-demo-item.is-disabled{ opacity: 0.4; cursor: not-allowed; }
+.menu-demo-item:disabled, .menu-demo-item.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 /* The divider used to be its own flex child (a <div> sitting between
    Archive and Delete), which meant the panel's gap:2px applied BOTH before
    and after it - 2px + divider height + 2px, always MORE than the 2px
@@ -6326,7 +6326,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 }
 .guide-toggle-btn:hover{ color: var(--text-hi); }
 .guide-toggle-btn.is-active{ background: var(--red-500); color: #FFFFFF; }
-.guide-toggle-btn:focus-visible{ outline: 2px solid var(--red-400); outline-offset: 2px; }
+.guide-toggle-btn:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .guide-view-panel[hidden]{ display: none; }
 
