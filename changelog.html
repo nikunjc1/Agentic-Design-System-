@@ -4,7 +4,7 @@
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tabs - Agentic Design System</title>
+<title>Changelog - Agentic Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -155,38 +155,25 @@
       <a class="nav-link" href="npm-package.html">NPM Package</a>
       <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="history.html">History</a>
+      <a class="nav-link" href="changelog.html">Changelog</a>
       <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
 <main class="app-main">
-  <p class="page-eyebrow">Components &middot; Navigation</p>
-  <h1 class="page-title" id="tabs">Tabs</h1>
-  <p class="page-lede">A horizontal row of tab triggers used to switch between related views or sections, with exactly one tab active at a time.</p>
+  <p class="page-eyebrow">Changelog</p>
+  <h1 class="page-title">Changelog</h1>
+  <p class="page-lede">The real, working history of this system - generated straight from CHANGELOG.md (tools/generate_changelog.py), the same file every session's work has actually been recorded in. This replaces "Changelog: not yet tracked" on every component page with a real link here.</p>
 
-  <section class="panel spacing-system-panel">
-    <div class="panel-title-row">
-      <p class="panel-title">Tabs type</p>
-    </div>
-    <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
+  <section class="panel spacing-model-panel">
+    <p class="panel-title" id="changelogCount">Entries</p>
+    <div id="changelogList"></div>
+  </section>
 
-    <div class="system-card-grid" data-role="tabs-system-grid">
-      <div class="system-card tabs-type-card" data-system="default" data-detail-href="tabs-default.html">
-        <div class="button-type-demo">
-          <div class="tabs-demo-bar tabs-demo-bar--underline">
-            <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h40" tabindex="-1">Overview</button>
-            <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h40 is-active" tabindex="-1">Activity</button>
-            <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h40" tabindex="-1">Settings</button>
-          </div>
-          <p class="dualicon-card-label">System Generated Tabs</p>
-        </div>
-        <div class="card-copy-row">
-          <button class="btn btn-ghost btn-sm" data-role="copy-prompt-tabs" type="button">Copy prompt</button>
-          <button class="btn btn-ghost btn-sm" data-role="copy-code-tabs" type="button">Copy code</button>
-        </div>
-      </div>
-    </div>
+  <section class="panel spacing-model-panel" id="knownGapsSection" hidden>
+    <p class="panel-title">Known gaps</p>
+    <p class="get-library-copy" id="knownGapsBody"></p>
   </section>
 
 </main>
@@ -194,6 +181,39 @@
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
-<script src="tabs-detail.js"></script>
+<script src="changelog.js"></script>
+<script>
+(function(){
+  function inline(text){
+    var esc = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    esc = esc.replace(/`([^`]+)`/g, "<code>$1</code>");
+    esc = esc.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    return esc;
+  }
+  function renderBody(body){
+    return body.split(/\n\n+/).map(function(p){ return "<p class=\"get-library-copy\">" + inline(p.trim()) + "</p>"; }).join("");
+  }
+  document.addEventListener("DOMContentLoaded", function(){
+    var data = window.ADSChangelog || { entries: [], knownGaps: null };
+    var listEl = document.getElementById("changelogList");
+    var countEl = document.getElementById("changelogCount");
+    countEl.textContent = data.entries.length + " entries, newest first";
+    data.entries.forEach(function(entry){
+      var wrap = document.createElement("div");
+      wrap.className = "changelog-entry";
+      var h = document.createElement("h3");
+      h.className = "changelog-entry-title";
+      h.textContent = entry.title;
+      wrap.appendChild(h);
+      wrap.insertAdjacentHTML("beforeend", renderBody(entry.body));
+      listEl.appendChild(wrap);
+    });
+    if (data.knownGaps){
+      document.getElementById("knownGapsSection").hidden = false;
+      document.getElementById("knownGapsBody").innerHTML = renderBody(data.knownGaps);
+    }
+  });
+})();
+</script>
 </body>
 </html>

@@ -6397,6 +6397,12 @@ a.system-card{ text-decoration: none; color: inherit; }
   color: var(--text-mid);
   margin: 0 0 12px;
 }
+
+.changelog-entry{ padding: var(--space-16) 0; border-bottom: var(--border-width-1) solid var(--line); }
+.changelog-entry:first-child{ padding-top: 0; }
+.changelog-entry:last-child{ border-bottom: none; }
+.changelog-entry-title{ font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-hi); margin: 0 0 8px; }
+.changelog-entry code{ font-family: var(--font-mono); font-size: 0.92em; background: var(--graphite-800); border-radius: var(--radius-sm); padding: 1px 5px; }
 .guide-body-text a, .guide-list a{ color: var(--red-400); text-decoration: underline; }
 
 .guide-list{
