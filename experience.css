@@ -9,7 +9,7 @@
    sections, unlike a segmented control's normal fixed 1-9 options -
    isn't at the mercy of stylesheet load order. */
 .page-outline{display:flex;flex-wrap:wrap;gap:2px;margin:20px 0 24px;padding:2px;background:var(--graphite-800);border-radius:var(--radius-md)}
-.page-outline .group-btn-segment{background:transparent;color:var(--text-mid);border-radius:var(--radius-sm)}
+.page-outline .group-btn-segment{background:transparent;color:var(--text-mid);border-radius:inherit}
 .page-outline .group-btn-segment:hover{background:var(--graphite-700);color:var(--text-hi)}
 .page-outline .group-btn-segment.is-selected{background:var(--red-500);color:#fff}
 .page-outline .group-btn-segment:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:-3px}

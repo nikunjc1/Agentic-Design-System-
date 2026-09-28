@@ -756,6 +756,12 @@ Went one step further than a paint job, since a real Group Button's whole point 
 
 Full 157-page sweep: 0 console errors.
 
+## "On this page" outline - corrected against the real component, not just its source
+
+Asked to check the actual rendered Group Button detail page and verify the previous restyle against it directly, rather than trust the earlier CSS read. Did a computed-style diff between the real component (group-button-default.html's live preview) and the outline: container background, gap, segment color/font, and selected-state red/white all matched exactly - but segment `border-radius` didn't. The real component uses `border-radius: inherit` on each segment (so every segment's corners match whatever radius the container is set to), not a fixed value; the earlier pass had hardcoded `var(--radius-sm)` (4px) instead, a real, visible mismatch against the container's 8px.
+
+Fixed to `inherit`, confirmed it now resolves to the same 8px the real component's default example uses. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
