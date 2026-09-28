@@ -694,6 +694,14 @@ The other was a real grid inconsistency, not a false alarm: the AA/AAA badge und
 
 Also verified, to confirm they weren't part of the complaint: the 6 section panels' padding (24px, all six) and the vertical gap between them (24px, all five gaps) were already exactly uniform - nothing to fix there. Full 154-page sweep: 0 console errors.
 
+## Colors - popover's format dropdown wasn't level with its value field
+
+Follow-up, pointed at a screenshot of the popover's format row: the "Hex" dropdown sat visibly lower than the value field beside it, not flush with it the way a dropdown-plus-field control normally reads. Cause: every value field has a small uppercase label above it ("#", "R", "H", ...), but the format `<select>` had no label of its own - with the row's `align-items: center`, that extra label-height on one side and not the other centered the shorter select against the taller (label + field) column next to it, leaving it hanging below where it should sit.
+
+Fixed by wrapping the select in the exact same label+control structure as every value cell, with an invisible (`visibility: hidden`, not removed - it still needs to hold its height) spacer standing in for the label. Both columns are now identically tall regardless of format, so the select and field align on their own without needing any special-cased vertical offset.
+
+Verified: select and input top/bottom edges now measure within 1px of each other (the native OS select renders its own border a hair differently than the styled text input) in Hex mode, and the same holds after switching to RGB, HSL, HSB and CSS. Full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.

@@ -1090,13 +1090,16 @@
           '<span class="color-popover-hue-thumb"></span>' +
         '</div>' +
         '<div class="color-popover-format-row">' +
-          '<select class="color-popover-format-select" aria-label="Color format">' +
-            '<option value="hex">Hex</option>' +
-            '<option value="rgb">RGB</option>' +
-            '<option value="hsl">HSL</option>' +
-            '<option value="hsb">HSB</option>' +
-            '<option value="css">CSS</option>' +
-          '</select>' +
+          '<label class="color-popover-value-cell color-popover-format-cell">' +
+            '<span aria-hidden="true">&nbsp;</span>' +
+            '<select class="color-popover-format-select" aria-label="Color format">' +
+              '<option value="hex">Hex</option>' +
+              '<option value="rgb">RGB</option>' +
+              '<option value="hsl">HSL</option>' +
+              '<option value="hsb">HSB</option>' +
+              '<option value="css">CSS</option>' +
+            '</select>' +
+          '</label>' +
           '<div class="color-popover-values"></div>' +
           '<button type="button" class="color-popover-copy" hidden>Copy</button>' +
         '</div>' +

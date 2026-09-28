@@ -1232,6 +1232,14 @@ button{ font-family: inherit; }
 .color-popover-values{ flex: 1; display: flex; gap: 6px; min-width: 0; }
 .color-popover-value-cell{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .color-popover-value-cell span{ font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+/* The format select has no label of its own, but every value cell next to
+   it does (its uppercase key above the input) - without a same-size
+   spacer here, that extra label row on one side but not the other left
+   the select vertically off from the input boxes it sits beside. This
+   spacer reuses the exact same label styling (just invisible) so the two
+   line up regardless of which format is selected. */
+.color-popover-format-cell{ flex: none; width: auto; }
+.color-popover-format-cell span{ visibility: hidden; }
 .color-popover-value-cell input{
   width: 100%;
   box-sizing: border-box;
