@@ -1032,13 +1032,28 @@
         var bg = isBgSwatch ? (isDark ? darkTextHi : lightTextHi) : (isDark ? darkBg : lightBg);
         var vsLabel = isBgSwatch ? "vs primary text" : "vs page background";
         var ratio = contrastRatio(hex, bg);
-        return { ratio: ratio, aaPass: ratio >= 4.5, aaaPass: ratio >= 7, vsLabel: vsLabel };
+        // A border swatch is a non-text UI boundary, not text - WCAG 1.4.11
+        // (Non-text Contrast) sets its bar at 3:1 against the adjacent
+        // surface, not the 4.5:1/7:1 text thresholds every other swatch is
+        // checked against. Showing this one a "fails AA" reading it was
+        // never actually held to would be misleading, not just imprecise.
+        var isUiComponent = /-border-hex$/.test((hexInput && hexInput.dataset.role) || "");
+        return {
+          ratio: ratio,
+          aaPass: ratio >= 4.5,
+          aaaPass: ratio >= 7,
+          vsLabel: vsLabel,
+          isUiComponent: isUiComponent,
+          uiPass: ratio >= 3
+        };
       }
 
       function badgeHtml(result){
-        return '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' +
-          '<span class="contrast-tag ' + (result.aaPass ? "is-pass" : "is-fail") + '">AA ' + (result.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
-          '<span class="contrast-tag ' + (result.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (result.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+        var tags = result.isUiComponent
+          ? '<span class="contrast-tag ' + (result.uiPass ? "is-pass" : "is-fail") + '">Non-text 3:1 ' + (result.uiPass ? "&#10003;" : "&#10007;") + '</span>'
+          : '<span class="contrast-tag ' + (result.aaPass ? "is-pass" : "is-fail") + '">AA ' + (result.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
+            '<span class="contrast-tag ' + (result.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (result.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+        return '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' + tags;
       }
 
       function recompute(){
