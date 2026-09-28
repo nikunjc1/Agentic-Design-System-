@@ -2238,11 +2238,11 @@ button{ font-family: inherit; }
 .btn-demo.is-icon-only.btn-demo--h48{ width: 48px; }
 .btn-demo.is-icon-only.btn-demo--h56{ width: 56px; }
 
-.btn-demo--primary{ background: var(--red-500); color: #fff; }
-.btn-demo--primary:hover, .btn-demo--primary.is-hover{ background: var(--red-400); }
-.btn-demo--primary:active, .btn-demo--primary.is-pressed{ background: var(--red-600); }
-.btn-demo--primary:focus-visible, .btn-demo--primary.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
-.btn-demo--primary:disabled, .btn-demo--primary.is-disabled{ opacity: 0.45; cursor: not-allowed; }
+.btn-demo--primary{ background: var(--button-primary-bg-default); color: var(--button-primary-text); }
+.btn-demo--primary:hover, .btn-demo--primary.is-hover{ background: var(--button-primary-bg-hover); }
+.btn-demo--primary:active, .btn-demo--primary.is-pressed{ background: var(--button-primary-bg-active); }
+.btn-demo--primary:focus-visible, .btn-demo--primary.is-focus{ outline: 2px solid var(--button-primary-focus-ring); outline-offset: 2px; }
+.btn-demo--primary:disabled, .btn-demo--primary.is-disabled{ opacity: var(--button-primary-disabled-opacity); cursor: not-allowed; }
 
 .btn-demo--secondary{ background: var(--graphite-700); color: var(--text-hi); border-color: var(--line-strong); }
 .btn-demo--secondary:hover, .btn-demo--secondary.is-hover{ background: var(--graphite-600); }
@@ -3548,8 +3548,8 @@ button{ font-family: inherit; }
    surface in the system, so its shadow is deliberately more prominent
    than the .menu-demo-panel / .autocomplete-demo-panel floating-panel
    language it's otherwise modeled on. */
-.modal-demo-scrim{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: var(--space-24); background: var(--overlay-scrim); border-radius: var(--radius-md); }
-.modal-demo-dialog{ box-sizing: border-box; width: 100%; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); box-shadow: var(--shadow-xl); display: flex; flex-direction: column; overflow: hidden; }
+.modal-demo-scrim{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: var(--space-24); background: var(--modal-scrim); border-radius: var(--radius-md); }
+.modal-demo-dialog{ box-sizing: border-box; width: 100%; background: var(--modal-surface); border: var(--border-width-1) solid var(--modal-border-color); box-shadow: var(--modal-shadow); display: flex; flex-direction: column; overflow: hidden; }
 .modal-demo-dialog--small{ max-width: 320px; }
 .modal-demo-dialog--medium{ max-width: 440px; }
 .modal-demo-dialog--large{ max-width: 560px; }
@@ -4071,10 +4071,10 @@ button{ font-family: inherit; }
 [data-role="calendar-matrix-container"] .button-matrix-rowhead{ width: 170px; }
 
 /* ---------- Card demo (card-default.html) ---------- */
-.card-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; width: 240px; background: var(--graphite-900); border: 1.5px solid var(--line-strong); overflow: hidden; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard); }
-.card-demo-panel.card-demo-shadow{ box-shadow: var(--shadow-sm); }
-.card-demo-panel:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: var(--shadow-md); }
-.card-demo-panel:active, .card-demo-panel.is-pressed{ box-shadow: var(--shadow-xs); }
+.card-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; width: 240px; background: var(--card-surface); border: 1.5px solid var(--card-border-color); overflow: hidden; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard); }
+.card-demo-panel.card-demo-shadow{ box-shadow: var(--card-shadow-rest); }
+.card-demo-panel:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: var(--card-shadow-hover); }
+.card-demo-panel:active, .card-demo-panel.is-pressed{ box-shadow: var(--card-shadow-pressed); }
 .card-demo-panel.is-selected{ border-color: var(--red-500); box-shadow: 0 0 0 1px var(--red-500); }
 .card-demo-panel.is-disabled{ opacity: 0.4; pointer-events: none; }
 .card-demo-panel.is-loading{ pointer-events: none; cursor: wait; }
@@ -4320,13 +4320,13 @@ button{ font-family: inherit; }
    table-demo-table--has-checkbox existed (see the note on that rule
    below). */
 .table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; font-variant-numeric: var(--numeric-tabular); }
-.table-demo-table th{ text-align: start; padding: var(--space-8) 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: var(--tracking-4); border-bottom: 1.5px solid var(--line-strong); }
+.table-demo-table th{ text-align: start; padding: var(--table-cell-padding-y-default) 10px; font-size: 11px; font-weight: 600; color: var(--table-header-text); text-transform: uppercase; letter-spacing: var(--tracking-4); border-bottom: 1.5px solid var(--line-strong); }
 /* text-align:start was only ever set on th (above), never td - td's text
    was silently inheriting text-align:center from the outer Live Preview
    matrix cell (.button-matrix-cell's shared default), centering Name/
    Status/Role text while the header labels above them stayed correctly
    left-aligned. */
-.table-demo-table td{ padding: var(--space-8) 10px; border-bottom: var(--border-width-1) solid var(--line); text-align: start; }
+.table-demo-table td{ padding: var(--table-cell-padding-y-default) 10px; border-bottom: var(--border-width-1) solid var(--table-border-color); text-align: start; }
 .table-demo-table--bordered{ border: var(--border-width-1) solid var(--line-strong); overflow: hidden; }
 .table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end: var(--border-width-1) solid var(--line); }
 .table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end: none; }
@@ -4357,7 +4357,7 @@ button{ font-family: inherit; }
    Small only tighten padding - font-size stays fixed at every size, the
    same restraint every sized component in this system follows. */
 .table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding: 6px 8px; }
-.table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding: var(--space-4) 6px; }
+.table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding: var(--table-cell-padding-y-compact) 6px; }
 
 /* ---------- Tag demo (tag-default.html) ---------- */
 .tag-demo-chip{ box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-family: var(--font-body); font-size: 12px; font-weight: 600; white-space: nowrap; border: none; cursor: default; }

@@ -61,6 +61,12 @@
      (destructive/success/info), not something this alias should absorb. */
   --color-focus-ring: var(--red-400);
 
+  /* Text that sits ON a brand-colored surface (a primary button's own
+     label) - was hardcoded #fff at the one place it was needed; naming
+     it lets it move if a future brand color ever needs a dark label
+     instead of a light one, without hunting down the literal. */
+  --color-on-brand: #fff;
+
   /* Brand red */
   --red-500: #ff031a;
   --red-400: #ff3f4f;
@@ -174,6 +180,38 @@
   --ease-standard: ease;      /* default easing for discrete state changes */
   --ease-emphasis: ease-in-out; /* looping/continuous animations */
   --ease-linear: linear;      /* constant-rate rotation */
+
+  /* Component tier - primitive -> semantic -> component. Demonstrated on
+     four real, already-audited components (Button's Primary variant,
+     Table, Modal, Card) rather than attempted across all 63 components
+     at once - a component token is a named alias for one specific
+     component/state, so "restyle the Card" becomes one edit here
+     instead of a hunt through shell.css for every rule that happens to
+     reference --shadow-sm for an unrelated reason too. Extending this
+     tier to more components is real, valuable follow-up work, not
+     something a single pass reasonably finishes. */
+  --button-primary-bg-default: var(--red-500);
+  --button-primary-bg-hover: var(--red-400);
+  --button-primary-bg-active: var(--red-600);
+  --button-primary-text: var(--color-on-brand);
+  --button-primary-focus-ring: var(--color-focus-ring);
+  --button-primary-disabled-opacity: 0.45;
+
+  --table-cell-padding-y-default: var(--space-8);
+  --table-cell-padding-y-compact: var(--space-4);
+  --table-header-text: var(--text-dim);
+  --table-border-color: var(--line);
+
+  --modal-scrim: var(--overlay-scrim);
+  --modal-surface: var(--graphite-900);
+  --modal-shadow: var(--shadow-xl);
+  --modal-border-color: var(--line-strong);
+
+  --card-surface: var(--graphite-900);
+  --card-border-color: var(--line-strong);
+  --card-shadow-rest: var(--shadow-sm);
+  --card-shadow-hover: var(--shadow-md);
+  --card-shadow-pressed: var(--shadow-xs);
 }
 
 /* Light theme - opt-in via data-theme="light" on <html>.
