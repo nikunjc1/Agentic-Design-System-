@@ -762,6 +762,14 @@ Asked to check the actual rendered Group Button detail page and verify the previ
 
 Fixed to `inherit`, confirmed it now resolves to the same 8px the real component's default example uses. Full 157-page sweep: 0 console errors.
 
+## "On this page" outline - strip numbering, force single scrollable row
+
+Two follow-ups on the Group Button restyle, from a screenshot of principles.html (whose 10 headings are themselves numbered, "1. Proximity" through "10. React Immediately"): the numbers doubled up oddly once the same text became a short nav-strip label, and wrapping to a second row (the previous behavior once a page had enough sections to overflow one line) didn't read as one cohesive segmented control anymore.
+
+Strips a leading "N. " ordinal from the nav label only - the heading itself is untouched, this only affects the short outline copy. Changed the outline from wrap-to-second-row to a single row with horizontal scroll (the same behavior a narrow viewport already had, now applied at every width) - segments no longer shrink or wrap their own text, verified via scrollWidth > clientWidth on a 10-segment page and confirmed scrolling reveals the cut-off segment.
+
+Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

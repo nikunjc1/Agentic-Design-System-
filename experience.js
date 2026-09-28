@@ -35,7 +35,13 @@
       // one segment selected at a time" behavior the component always has.
       const links = headings.map((h, i) => {
         h.id ||= 'section-' + (i + 1);
-        const a = el('a', h.textContent, 'group-btn-segment group-btn-segment--h36');
+        // Strip a leading "1. "/"10. " ordinal from the label - some
+        // headings are themselves numbered content (e.g. a page walking
+        // through 10 numbered principles), which reads fine as a heading
+        // but doubles up oddly once it's also a short nav-strip label.
+        // The heading itself is untouched, only this nav copy.
+        const label = h.textContent.replace(/^\d+\.\s*/, '');
+        const a = el('a', label, 'group-btn-segment group-btn-segment--h36');
         a.href = '#' + h.id;
         nav.append(a);
         return a;
