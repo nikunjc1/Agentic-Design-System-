@@ -237,6 +237,7 @@
   <section class="panel color-foundation">
     <p class="panel-title">Configure your icon system</p>
     <p class="get-library-copy">Grid size and stroke weight apply to Line, Dashed and Two-tone; corner treatment controls whether strokes end sharp or rounded.</p>
+    <p class="get-library-copy">Icon-to-text gap: 8px (var(--space-8)) - the same gap every icon+label button already uses, not a separate icon-specific value.</p>
 
     <div class="border-config-grid">
       <label class="type-control">
@@ -275,6 +276,49 @@
       <button class="btn btn-primary" id="saveIconsBtn" type="button">Save icon system</button>
       <button class="btn btn-ghost" id="resetIconsBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="iconsSaveStatus" hidden></span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Icon states</p>
+    <p class="get-library-copy">An icon rarely has its own dedicated state styling - it inherits whatever state its container (button, nav link, input) is already in, using the same tokens that container uses everywhere else.</p>
+
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Rest</span>
+        <span class="usage-desc">Inherits currentColor from its container - never a hardcoded icon color</span>
+        <span class="usage-values">currentColor</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Hover</span>
+        <span class="usage-desc">Follows the container's own hover color shift (e.g. text-mid to text-hi)</span>
+        <span class="usage-values">currentColor</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Pressed / Active</span>
+        <span class="usage-desc">Follows the container's pressed-state color (e.g. a button's :active shade)</span>
+        <span class="usage-values">currentColor</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Focus</span>
+        <span class="usage-desc">The icon itself is never separately outlined - its container's focus-visible ring is the only focus indicator</span>
+        <span class="usage-values">--color-focus-ring</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Selected</span>
+        <span class="usage-desc">Follows the container's selected treatment (e.g. a nav link's active background/border)</span>
+        <span class="usage-values">currentColor</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Disabled</span>
+        <span class="usage-desc">The icon dims with its container, not on its own - same opacity level, not a separate value</span>
+        <span class="usage-values">--opacity-40 / --opacity-50</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Loading</span>
+        <span class="usage-desc">A loading icon (Spin, a button's own loading state) rotates via the shared motion tokens, never a bespoke animation</span>
+        <span class="usage-values">--duration-slow, --ease-linear</span>
+      </div>
     </div>
   </section>
 
