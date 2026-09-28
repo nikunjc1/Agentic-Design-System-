@@ -820,7 +820,13 @@ button{ font-family: inherit; }
   gap: 6px;
   margin: 4px 0 0;
 }
-.contrast-ratio{ font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+/* Always its own line: at some field widths (the 4-up Status columns
+   especially) "X.XX:1 vs page background" plus one pill fit on the first
+   line but the second pill alone spilled onto a lonely second line -
+   different fields in the very same row would then wrap differently and
+   throw off the row's shared baseline below. Forcing this one thing to
+   wrap the same way everywhere keeps every badge a consistent two lines. */
+.contrast-ratio{ font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); flex-basis: 100%; }
 .contrast-tag{
   font-family: var(--font-mono);
   font-size: 11px;
@@ -1161,6 +1167,7 @@ button{ font-family: inherit; }
 .color-swatch-trigger:hover{ border-color: var(--red-500); }
 .color-swatch-trigger:focus-visible{ outline: 2px solid var(--red-500); outline-offset: 2px; }
 
+.color-popover[hidden]{ display: none; }
 .color-popover{
   position: fixed;
   z-index: 60;
@@ -1258,10 +1265,6 @@ button{ font-family: inherit; }
   flex-wrap: wrap;
   gap: 6px;
 }
-/* The popover is narrower than a field row, so the ratio text and both
-   pills don't reliably fit on one line - put the ratio on its own line
-   instead of letting just the AAA pill spill onto a lonely second one. */
-.color-popover-contrast .contrast-ratio{ flex-basis: 100%; }
 
 /* ---------- spacing page ---------- */
 .spacing-product-panel, .spacing-system-panel{ margin-bottom: 24px; }

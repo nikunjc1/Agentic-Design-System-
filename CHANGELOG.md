@@ -684,6 +684,16 @@ Found and fixed one real bug during verification: the popover closed itself the 
 
 Verified all 32 swatches (both light-column, visible by default, and dark-column, revealed via each section's "customize dark separately" checkbox): popover opens with the right starting color, all five formats convert correctly and can be edited directly (confirmed RGB/HSL/HSB/CSS math against known values, e.g. brand red FF031A -> rgb(255,3,26) -> hsl(355,100,51) -> hsb(355,99,100)), editing any format updates the hex text field, the below-field badge and the trigger's own swatch color together, dragging the hue slider changes the color, arrow keys nudge it, Escape and outside-click both close it, the chosen format is remembered across reopening a different swatch, and it stays open and repositions correctly through a scroll instead of closing. Full 154-page sweep: 0 console errors.
 
+## Colors - alignment/spacing pass: a stray popover and a misaligned grid row
+
+Asked for a general review of alignment, spacing, margins, padding and gutters on the Colors tab. Rather than restyle things that already measured out consistently, checked first and found two real, specific bugs.
+
+The bigger one: the new color-picker popover from the previous change rendered on every page load, pinned at the top-left corner and overlapping the sidebar, whether or not anyone had clicked a swatch. Cause: `.color-popover` sets its own `display: flex` for when it's open, and that - being an author-stylesheet rule - overrides the browser's built-in `[hidden]{ display: none }` default at equal specificity, so toggling the element's `hidden` property stopped actually hiding it the moment that class carried a `display` value. Fixed with one rule, `.color-popover[hidden]{ display: none; }` (an attribute+class selector, so it wins regardless of source order): confirmed via computed style that `display` now correctly reads `none` while `hidden` is true, and `flex` once it's open.
+
+The other was a real grid inconsistency, not a false alarm: the AA/AAA badge under each field wraps its ratio text and two pills differently depending on how much room the field has. In the 4-up Semantic & status colors row, Success and Warning's badges fit on one line while Danger and Info's AAA pill spilled onto a lonely second line - so in the very same row, two columns' description text ("Destructive actions...", "Neutral, non-urgent context.") sat 24px lower than the other two's, breaking the row's shared baseline. Fixed by always giving the ratio text its own line (`flex-basis: 100%`), so every badge wraps the same way regardless of field width. Verified with exact measurements before and after: Danger/Info's badge height dropped from 42px to the same 38px as Success/Warning, and all four columns' description text now starts at the identical 2079.78px top offset.
+
+Also verified, to confirm they weren't part of the complaint: the 6 section panels' padding (24px, all six) and the vertical gap between them (24px, all five gaps) were already exactly uniform - nothing to fix there. Full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
