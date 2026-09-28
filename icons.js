@@ -31,18 +31,18 @@
     } else {
       inner = '<g fill="currentColor">' + d + '</g>';
     }
-    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24">' + inner + '</svg>';
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" aria-hidden="true">' + inner + '</svg>';
   }
 
   var ISOMETRIC_SVG =
-    '<svg width="32" height="32" viewBox="0 0 32 32">' +
+    '<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">' +
     '<polygon points="16,3 28,9.5 16,16 4,9.5" fill="currentColor" opacity="0.55"/>' +
     '<polygon points="4,9.5 16,16 16,29 4,22.5" fill="currentColor" opacity="0.85"/>' +
     '<polygon points="28,9.5 16,16 16,29 28,22.5" fill="currentColor" opacity="0.7"/>' +
     '</svg>';
 
   var THREED_SVG =
-    '<svg width="32" height="32" viewBox="0 0 32 32">' +
+    '<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">' +
     '<defs><radialGradient id="adsPreview3d" cx="35%" cy="30%" r="75%">' +
     '<stop offset="0%" stop-color="currentColor" stop-opacity="1"/>' +
     '<stop offset="100%" stop-color="currentColor" stop-opacity="0.45"/>' +
