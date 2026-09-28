@@ -4,7 +4,7 @@
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Upload - Agentic Design System</title>
+<title>Accessibility - Agentic Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -161,49 +161,100 @@
 </aside>
 
 <main class="app-main">
-  <p class="page-eyebrow">Components &middot; Forms</p>
-  <h1 class="page-title" id="upload">Upload</h1>
-  <p class="page-lede">A drag-and-drop dropzone or a button-triggered control for adding files, paired with a file list that shows each file's name, size and upload status.</p>
+  <p class="page-eyebrow">Guidelines &middot; Accessibility</p>
+  <h1 class="page-title">Accessibility</h1>
+  <p class="page-lede">What this system already does for you on every page, without being asked - and, just as importantly, what it doesn't do yet. WCAG 2.2 AA is the baseline referenced throughout.</p>
 
-  <section class="panel spacing-system-panel">
-    <div class="panel-title-row">
-      <p class="panel-title">Upload type</p>
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Automatic on every page</p>
+    <p class="get-library-copy">Injected sitewide by experience.js - a page doesn't opt in, and can't opt out.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Skip to content</span>
+        <span class="usage-desc">A "Skip to content" link is prepended to every page, targeting a real, focusable &lt;main&gt; landmark</span>
+        <span class="usage-values">2.4.1</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Heading structure</span>
+        <span class="usage-desc">Every visually-styled "panel title" is retrofitted into a real &lt;h2&gt;, not left as a plain, non-semantic paragraph</span>
+        <span class="usage-values">1.3.1</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Page outline</span>
+        <span class="usage-desc">An "On this page" navigation landmark is auto-built from a page's real headings once there are more than two</span>
+        <span class="usage-values">2.4.5</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Current page</span>
+        <span class="usage-desc">The active sidebar link carries aria-current="page" automatically</span>
+        <span class="usage-values">4.1.2</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Icon-only buttons</span>
+        <span class="usage-desc">Any icon-only button's title attribute is copied to aria-label automatically, so it has a real accessible name</span>
+        <span class="usage-values">4.1.2</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Clickable cards</span>
+        <span class="usage-desc">A card that navigates on click is a real &lt;a&gt; element, not a div with a click handler and no keyboard path</span>
+        <span class="usage-values">2.1.1</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Horizontal scroll regions</span>
+        <span class="usage-desc">Any horizontally-scrolling comparison table is marked role="region" with a descriptive label</span>
+        <span class="usage-values">1.3.1</span>
+      </div>
     </div>
-    <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
+  </section>
 
-    <div class="system-card-grid" data-role="upload-system-grid">
-      <div class="system-card upload-type-card" data-system="default" data-detail-href="upload-default.html">
-        <div class="button-type-demo">
-          <div class="upload-demo-field">
-            <div class="upload-demo-dropzone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg>
-              <p class="upload-demo-dropzone-title">Click or drag file to upload</p>
-              <p class="upload-demo-dropzone-helper">PNG, JPG or PDF up to 10MB</p>
-            </div>
-            <div class="upload-demo-file-list">
-              <div class="upload-demo-file-row is-complete">
-                <div class="upload-demo-file-info">
-                  <span class="upload-demo-file-name">report.pdf</span>
-                  <span class="upload-demo-file-size">2.4 MB</span>
-                </div>
-                <span class="upload-demo-file-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
-              </div>
-              <div class="upload-demo-file-row is-uploading">
-                <div class="upload-demo-file-info">
-                  <span class="upload-demo-file-name">diagram.png</span>
-                  <span class="upload-demo-file-size">890 KB</span>
-                  <div class="upload-demo-file-progress"><div class="upload-demo-file-progress-fill" style="width:55%;"></div></div>
-                </div>
-                <span class="upload-demo-file-status" style="width:auto;height:auto;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);">55%</span>
-              </div>
-            </div>
-          </div>
-          <p class="dualicon-card-label">System Generated System Control</p>
-        </div>
-        <div class="card-copy-row">
-          <button class="btn btn-ghost btn-sm" data-role="copy-prompt-upload" type="button">Copy prompt</button>
-          <button class="btn btn-ghost btn-sm" data-role="copy-code-upload" type="button">Copy code</button>
-        </div>
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Focus</p>
+    <p class="get-library-copy">A single semantic token, --color-focus-ring (Colors), backs the sitewide focus-visible convention - 76 of 82 focus outlines sitewide use it directly; the other 6 (destructive/success/info contexts) deliberately use that context's own color instead. Keyboard-only focus (:focus-visible), not every mouse click, is what triggers it.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Motion</p>
+    <p class="get-library-copy">Every transition and animation sitewide resolves to one of six shared motion tokens (Motion isn't yet its own Foundation page, but the tokens exist in theme.css). Under prefers-reduced-motion, animation and transition durations sitewide collapse to near-zero - a user who has asked their OS to reduce motion gets that everywhere in this system, not page-by-page.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Touch targets</p>
+    <p class="get-library-copy">Icon buttons and nav links are 32px by default (already above WCAG 2.2's 24px AA minimum) and grow to 44px automatically on a coarse pointer (touch), meeting the AAA-level target size as well wherever it actually matters - a touch device, not a mouse.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Color contrast</p>
+    <p class="get-library-copy">Every one of the 32 color swatches on Colors carries a live, real WCAG contrast badge - AA/AAA (4.5:1 / 7:1) for anything used as text, and a separate 3:1 Non-text check (WCAG 1.4.11) for Control Border, which isn't text and was never correctly held to the text thresholds. See Colors for the live checker itself.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Localization and preferences</p>
+    <p class="get-library-copy">Theme, density and direction (RTL) are each a real, live, sitewide toggle (Settings), persisted per browser and synced instantly across any other open tab of this system - not a per-page setting you'd have to repeat.</p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Known gaps - not yet done</p>
+    <p class="get-library-copy">Said plainly, not glossed over:</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Color-blindness simulation</span>
+        <span class="usage-desc">No CVD (color vision deficiency) preview exists anywhere in the contrast checker</span>
+        <span class="usage-values">Missing</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">ARIA depth per component</span>
+        <span class="usage-desc">Table and Modal have rich, component-specific ARIA; simpler components mostly rely on shared shell chrome - not independently audited component-by-component</span>
+        <span class="usage-values">Uneven</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">200% zoom / reflow</span>
+        <span class="usage-desc">Not individually verified per component across the 63-component library</span>
+        <span class="usage-values">Unverified</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Text spacing override (1.4.12)</span>
+        <span class="usage-desc">Not tested against a user style sheet that overrides line-height/letter-spacing/word-spacing</span>
+        <span class="usage-values">Unverified</span>
       </div>
     </div>
   </section>
@@ -213,6 +264,5 @@
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
-<script src="upload-detail.js"></script>
 </body>
 </html>
