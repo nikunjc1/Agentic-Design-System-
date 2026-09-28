@@ -349,6 +349,15 @@ button{ font-family: inherit; }
   color: var(--text-mid);
   margin: 0 0 32px;
 }
+/* Responsive type scale - the one real display-size step-down sitewide.
+   Below the same 640px mobile threshold documented on Grid & Layout,
+   the page title drops from display-sm (30/38) to display-xs (24/32)
+   per Typography's own scale, so it doesn't overwhelm a narrow screen;
+   body copy (.page-lede) is left at its base size, since shrinking
+   already-small reading text is the wrong direction to solve this in. */
+@media (max-width: 640px){
+  .page-title{ font-size: 24px; line-height: 32px; }
+}
 
 /* ---------- dashboard: stat tiles ---------- */
 .stat-grid{
@@ -4269,7 +4278,7 @@ button{ font-family: inherit; }
    Name/Role into wrapping the same way the checkbox column did before
    table-demo-table--has-checkbox existed (see the note on that rule
    below). */
-.table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; }
+.table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; font-variant-numeric: var(--numeric-tabular); }
 .table-demo-table th{ text-align: start; padding: var(--space-8) 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: var(--tracking-4); border-bottom: 1.5px solid var(--line-strong); }
 /* text-align:start was only ever set on th (above), never td - td's text
    was silently inheriting text-align:center from the outer Live Preview
@@ -6206,7 +6215,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 /* ---------- Statistic demo (statistic-default.html) ---------- */
 .statistic-demo-field{ display: flex; flex-direction: column; gap: 6px; }
 .statistic-demo-title{ font-family: var(--font-body); font-size: 13px; color: var(--text-mid); margin: 0; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.statistic-demo-value{ font-family: var(--font-body); font-size: 28px; font-weight: 700; color: var(--text-hi); margin: 0; display: flex; align-items: baseline; gap: 4px; max-width: 260px; min-width: 0; overflow: hidden; }
+.statistic-demo-value{ font-family: var(--font-body); font-size: 28px; font-weight: 700; color: var(--text-hi); margin: 0; display: flex; align-items: baseline; gap: 4px; max-width: 260px; min-width: 0; overflow: hidden; font-variant-numeric: var(--numeric-tabular); }
 .statistic-demo-value-text{ min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .statistic-demo-value--mono{ font-family: var(--font-mono); }
 .statistic-demo-value--positive{ color: var(--green-500); }
