@@ -170,6 +170,26 @@
     function hexToHsb(hex){ var rgb = hexToRgb(hex); return rgbToHsb(rgb.r, rgb.g, rgb.b); }
     function hsbToHex(h, s, v){ var rgb = hsbToRgb(h, s, v); return rgbToHex(rgb.r, rgb.g, rgb.b); }
 
+    // Color-vision-deficiency preview - the same simplified sRGB matrix
+    // approach widely used by web-based CVD simulators (Coblis and
+    // similar), not the more precise LMS-space method (Brettel/Machado).
+    // That's a deliberate, disclosed tradeoff for a quick design-time
+    // preview, not a claim of clinical accuracy.
+    var CVD_MATRICES = {
+      protanopia: [0.567, 0.433, 0.000, 0.558, 0.442, 0.000, 0.000, 0.242, 0.758],
+      deuteranopia: [0.625, 0.375, 0.000, 0.700, 0.300, 0.000, 0.000, 0.300, 0.700],
+      tritanopia: [0.950, 0.050, 0.000, 0.000, 0.433, 0.567, 0.000, 0.475, 0.525]
+    };
+    function simulateCvd(hex, type){
+      var m = CVD_MATRICES[type];
+      var rgb = hexToRgb(hex);
+      return rgbToHex(
+        m[0] * rgb.r + m[1] * rgb.g + m[2] * rgb.b,
+        m[3] * rgb.r + m[4] * rgb.g + m[5] * rgb.b,
+        m[6] * rgb.r + m[7] * rgb.g + m[8] * rgb.b
+      );
+    }
+
     // Dark-mode adaptation for a near-white/near-black surface. Hue-shifting
     // by lightness inversion doesn't work here: at 96-100% lightness a tiny
     // RGB difference swings the computed hue wildly, and inverting three
@@ -1125,7 +1145,12 @@
           '<div class="color-popover-values"></div>' +
           '<button type="button" class="color-popover-copy" hidden>Copy</button>' +
         '</div>' +
-        '<p class="color-popover-contrast"></p>';
+        '<p class="color-popover-contrast"></p>' +
+        '<div class="color-popover-cvd">' +
+          '<span class="color-popover-cvd-swatch" data-cvd="protanopia" title="Protanopia (red-weak) simulation"></span>' +
+          '<span class="color-popover-cvd-swatch" data-cvd="deuteranopia" title="Deuteranopia (green-weak) simulation"></span>' +
+          '<span class="color-popover-cvd-swatch" data-cvd="tritanopia" title="Tritanopia (blue-weak) simulation"></span>' +
+        '</div>';
       document.body.appendChild(popover);
 
       var svEl = popover.querySelector(".color-popover-sv");
@@ -1140,6 +1165,7 @@
       var valuesEl = popover.querySelector(".color-popover-values");
       var copyBtn = popover.querySelector(".color-popover-copy");
       var contrastEl = popover.querySelector(".color-popover-contrast");
+      var cvdSwatches = Array.prototype.slice.call(popover.querySelectorAll(".color-popover-cvd-swatch"));
 
       var FORMAT_SPECS = {
         hex: [{ key: "hex", label: "#" }],
@@ -1255,6 +1281,9 @@
         syncing = false;
 
         contrastEl.innerHTML = badgeHtml(contrastForField(active.field, hex));
+        cvdSwatches.forEach(function(swatch){
+          swatch.style.background = "#" + simulateCvd(hex, swatch.dataset.cvd);
+        });
         updateValueInputs();
       }
 

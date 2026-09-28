@@ -224,7 +224,7 @@
 
   <section class="panel spacing-model-panel">
     <p class="panel-title">Color contrast</p>
-    <p class="get-library-copy">Every one of the 32 color swatches on Colors carries a live, real WCAG contrast badge - AA/AAA (4.5:1 / 7:1) for anything used as text, and a separate 3:1 Non-text check (WCAG 1.4.11) for Control Border, which isn't text and was never correctly held to the text thresholds. See Colors for the live checker itself.</p>
+    <p class="get-library-copy">Every one of the 32 color swatches on Colors carries a live, real WCAG contrast badge - AA/AAA (4.5:1 / 7:1) for anything used as text, and a separate 3:1 Non-text check (WCAG 1.4.11) for Control Border, which isn't text and was never correctly held to the text thresholds. Opening any swatch's picker also previews it under protanopia, deuteranopia and tritanopia (a standard simplified simulation, not a clinical-grade one) - a color choice that only works when swatches otherwise differ can be caught before it ships, not after. See Colors for the live checker itself.</p>
   </section>
 
   <section class="panel spacing-model-panel">
@@ -236,11 +236,6 @@
     <p class="panel-title">Known gaps - not yet done</p>
     <p class="get-library-copy">Said plainly, not glossed over:</p>
     <div class="usage-hierarchy">
-      <div class="usage-row">
-        <span class="usage-label">Color-blindness simulation</span>
-        <span class="usage-desc">No CVD (color vision deficiency) preview exists anywhere in the contrast checker</span>
-        <span class="usage-values">Missing</span>
-      </div>
       <div class="usage-row">
         <span class="usage-label">ARIA depth per component</span>
         <span class="usage-desc">Table and Modal have rich, component-specific ARIA; simpler components mostly rely on shared shell chrome - not independently audited component-by-component</span>

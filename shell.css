@@ -1329,6 +1329,18 @@ button{ font-family: inherit; }
   flex-wrap: wrap;
   gap: 6px;
 }
+.color-popover-cvd{
+  display: flex;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: var(--border-width-1) solid var(--line);
+}
+.color-popover-cvd-swatch{
+  flex: 1;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: var(--border-width-1) solid var(--line-strong);
+}
 
 /* ---------- spacing page ---------- */
 .spacing-product-panel, .spacing-system-panel{ margin-bottom: 24px; }
