@@ -792,7 +792,7 @@
       <div class="type-row-controls">
         <div class="type-control type-control-level">
           <span>Level</span>
-          <span class="type-level-name">Body</span>
+          <span class="type-level-name" title="Short-form UI text: labels, list items, table cells, card copy - one to a few lines">Body</span>
         </div>
         <label class="type-control type-control-family">
           <span>Font</span>
@@ -878,7 +878,7 @@
       <div class="type-row-controls">
         <div class="type-control type-control-level">
           <span>Level</span>
-          <span class="type-level-name">Paragraph</span>
+          <span class="type-level-name" title="Long-form reading text: articles, descriptions, help text spanning several lines - same size as Body by default, since both are normal-weight reading text, but kept as its own level for multi-line prose contexts (line-height, max-width) that don't apply to a one-line label">Paragraph</span>
         </div>
         <label class="type-control type-control-family">
           <span>Font</span>
@@ -1657,6 +1657,49 @@
       <button class="btn btn-ghost" id="regenerateDarkColorsBtn" type="button">Regenerate dark colors</button>
       <button class="btn btn-ghost" id="resetTypographyBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="typoSaveStatus" hidden></span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Additional semantic levels</p>
+    <p class="get-library-copy">Six more text roles that don't need their own row above - each already has a real, consistent value in use sitewide, referenced here rather than re-declared as a new editable level.</p>
+
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Button text</span>
+        <span class="usage-desc">Scales with the button's own height (11-17px across the seven sizes) - never a fixed size independent of the control it labels</span>
+        <span class="usage-values">11-17px, weight 600</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Table cell</span>
+        <span class="usage-desc">Smaller than Body, since a data table trades reading comfort for density; numeric cells use tabular figures (Type scale panel above)</span>
+        <span class="usage-values">13px / Secondary font</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Code / monospace</span>
+        <span class="usage-desc">Always the monospace family, never Primary/Secondary - inline code, tokens and technical values</span>
+        <span class="usage-values">var(--font-mono)</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Link</span>
+        <span class="usage-desc">Brand red, underlined on hover - the same treatment already used for every inline text link sitewide</span>
+        <span class="usage-values">var(--red-400), underline on hover</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Label</span>
+        <span class="usage-desc">A form field's own caption - monospace, small, wide tracking, muted color, matching every control label already in this system</span>
+        <span class="usage-values">11px, var(--tracking-5), var(--text-dim)</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Overline / eyebrow</span>
+        <span class="usage-desc">The small red label above every page title (e.g. "Foundations &middot; Typography") - monospace, wide tracking, brand-colored</span>
+        <span class="usage-values">12px, var(--tracking-14), var(--red-400)</span>
+      </div>
+    </div>
+
+    <div class="ai-rule-callout">
+      <p class="ai-rule-eyebrow">AI Rule</p>
+      <p class="ai-rule-text">Generated interfaces must take every font size, weight and line-height from this page's Type Scale (or the Additional semantic levels above) - never an arbitrary value, and never a size interpolated between two scale steps to arrive at a novel one.</p>
     </div>
   </section>
 </main>
