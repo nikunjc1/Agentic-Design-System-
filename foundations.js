@@ -1104,6 +1104,13 @@
         '<div class="color-popover-hue" tabindex="0">' +
           '<span class="color-popover-hue-thumb"></span>' +
         '</div>' +
+        '<div class="color-popover-alpha-row">' +
+          '<div class="color-popover-alpha" tabindex="0" title="Preview/copy opacity - the saved swatch color stays fully opaque">' +
+            '<div class="color-popover-alpha-fill"></div>' +
+            '<span class="color-popover-alpha-thumb"></span>' +
+          '</div>' +
+          '<span class="color-popover-alpha-value">100%</span>' +
+        '</div>' +
         '<div class="color-popover-format-row">' +
           '<label class="color-popover-value-cell color-popover-format-cell">' +
             '<span aria-hidden="true">&nbsp;</span>' +
@@ -1125,6 +1132,10 @@
       var svThumb = popover.querySelector(".color-popover-sv-thumb");
       var hueEl = popover.querySelector(".color-popover-hue");
       var hueThumb = popover.querySelector(".color-popover-hue-thumb");
+      var alphaEl = popover.querySelector(".color-popover-alpha");
+      var alphaFill = popover.querySelector(".color-popover-alpha-fill");
+      var alphaThumb = popover.querySelector(".color-popover-alpha-thumb");
+      var alphaValueEl = popover.querySelector(".color-popover-alpha-value");
       var formatSelect = popover.querySelector(".color-popover-format-select");
       var valuesEl = popover.querySelector(".color-popover-values");
       var copyBtn = popover.querySelector(".color-popover-copy");
@@ -1188,7 +1199,9 @@
           inputs[1].value = Math.round(active.hsb.s);
           inputs[2].value = Math.round(active.hsb.b);
         } else if (format === "css"){
-          inputs[0].value = "rgb(" + Math.round(rgb.r) + ", " + Math.round(rgb.g) + ", " + Math.round(rgb.b) + ")";
+          inputs[0].value = active.alpha >= 100
+            ? "rgb(" + Math.round(rgb.r) + ", " + Math.round(rgb.g) + ", " + Math.round(rgb.b) + ")"
+            : "rgba(" + Math.round(rgb.r) + ", " + Math.round(rgb.g) + ", " + Math.round(rgb.b) + ", " + (active.alpha / 100).toFixed(2) + ")";
         }
       }
 
@@ -1229,6 +1242,9 @@
         svThumb.style.top = (100 - active.hsb.b) + "%";
         svThumb.style.background = "#" + hex;
         hueThumb.style.left = (active.hsb.h / 360 * 100) + "%";
+        alphaThumb.style.left = active.alpha + "%";
+        alphaFill.style.background = "linear-gradient(to right, transparent, #" + hex + ")";
+        alphaValueEl.textContent = active.alpha + "%";
 
         active.trigger.style.background = "#" + hex;
         syncing = true;
@@ -1256,7 +1272,7 @@
       function openPopover(input, trigger){
         var field = trigger.closest(".color-field");
         var hex = normalizeHex(input.value.replace("#", "")) || "FFFFFF";
-        active = { picker: input, trigger: trigger, field: field, hsb: hexToHsb(hex) };
+        active = { picker: input, trigger: trigger, field: field, hsb: hexToHsb(hex), alpha: 100 };
         formatSelect.value = lastFormat;
         renderValueInputs();
         popover.hidden = false;
@@ -1302,6 +1318,11 @@
         active.hsb.h = p.x * 360;
         updateVisuals();
       });
+      bindDrag(alphaEl, function(evt){
+        var p = pointFromEvent(alphaEl, evt);
+        active.alpha = Math.round(p.x * 100);
+        updateVisuals();
+      });
 
       svEl.addEventListener("keydown", function(evt){
         if (!active) return;
@@ -1316,6 +1337,12 @@
         var step = evt.shiftKey ? 15 : 3;
         if (evt.key === "ArrowLeft"){ active.hsb.h = clamp(active.hsb.h - step, 0, 360); updateVisuals(); evt.preventDefault(); }
         else if (evt.key === "ArrowRight"){ active.hsb.h = clamp(active.hsb.h + step, 0, 360); updateVisuals(); evt.preventDefault(); }
+      });
+      alphaEl.addEventListener("keydown", function(evt){
+        if (!active) return;
+        var step = evt.shiftKey ? 20 : 5;
+        if (evt.key === "ArrowLeft"){ active.alpha = clamp(active.alpha - step, 0, 100); updateVisuals(); evt.preventDefault(); }
+        else if (evt.key === "ArrowRight"){ active.alpha = clamp(active.alpha + step, 0, 100); updateVisuals(); evt.preventDefault(); }
       });
 
       formatSelect.addEventListener("change", function(){
