@@ -408,6 +408,8 @@
       <span class="save-status" id="radiusSaveStatus" hidden></span>
     </div>
 
+    <p class="get-library-copy" style="margin-top:16px;">Nested corners: an inner element only needs a SMALLER radius than its container when the gap between them is tighter than the container's own radius - the rule is <code>inner radius = max(0, outer radius - padding to the inner element)</code>. Card's 16px body padding is already wider than Card's own 12px radius, so a Button (8px) sitting inside one needs no adjustment at all; something sitting flush against an edge with little or no padding is the case this formula is actually for.</p>
+
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
       <p class="ai-rule-text">Generated interfaces must take a component's corner radius from this page's Component Defaults mapping - never invent a radius value, and never round a component that isn't listed here without first adding it to the mapping.</p>
