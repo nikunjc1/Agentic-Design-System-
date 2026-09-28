@@ -702,6 +702,14 @@ Fixed by wrapping the select in the exact same label+control structure as every 
 
 Verified: select and input top/bottom edges now measure within 1px of each other (the native OS select renders its own border a hair differently than the styled text input) in Hex mode, and the same holds after switching to RGB, HSL, HSB and CSS. Full 154-page sweep: 0 console errors.
 
+## Colors - popover's format dropdown had its native arrow flush against the border
+
+Follow-up, from a close-up screenshot: the chevron inside the "Hex" dropdown had almost no breathing room from the field's right edge. This is a known limitation of a native `<select>`'s own arrow, not something padding can fix - `.form-field select` elsewhere in this codebase already has a comment about exactly this ("the native one sits flush against the edge on some browsers/OSes with no way to control its position"), solved there by turning the native arrow off and drawing a custom one. `.color-popover-format-select` had been styled before that pattern was applied here, so it still had the unfixable native arrow.
+
+Applied the same fix: `appearance: none` to remove the native arrow, a small inline SVG chevron as the background image, positioned a fixed 8px from the right edge, with the field's own right padding increased to keep the chevron clear of the text. Reused the exact same SVG markup already used for `.form-field select`, for visual consistency across the site rather than introducing a second slightly-different chevron.
+
+Verified visually (chevron now sits with clear, even spacing on both sides in a cropped screenshot) and functionally (all five format options still selectable and still convert correctly). Full 154-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
