@@ -1,9 +1,18 @@
 /* Shared navigation and setup, scoped to avoid changing component specimens. */
 .skip-link{position:fixed;top:8px;left:16px;transform:translateY(-180%);z-index:10000;padding:12px 18px;background:var(--graphite-950);border:2px solid var(--red-500);border-radius:8px}
 .skip-link:focus{transform:none}
-.page-outline{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 24px;padding:12px 0;border-block:1px solid var(--line)}
-.page-outline a{padding:8px 12px;font-size:13px;border-radius:6px;color:var(--text-mid)}
-.page-outline a:hover{background:var(--red-tint);color:var(--text-hi)}
+/* A real Group Button (filled segmented control) - .group-btn-segment is
+   the same component class used on group-button.html itself, not a
+   look-alike. Declared self-contained here (not combined with the
+   .group-btn--filled container class from shell.css) so its wrap-on-
+   overflow behavior - needed since a page can have any number of
+   sections, unlike a segmented control's normal fixed 1-9 options -
+   isn't at the mercy of stylesheet load order. */
+.page-outline{display:flex;flex-wrap:wrap;gap:2px;margin:20px 0 24px;padding:2px;background:var(--graphite-800);border-radius:var(--radius-md)}
+.page-outline .group-btn-segment{background:transparent;color:var(--text-mid);border-radius:var(--radius-sm)}
+.page-outline .group-btn-segment:hover{background:var(--graphite-700);color:var(--text-hi)}
+.page-outline .group-btn-segment.is-selected{background:var(--red-500);color:#fff}
+.page-outline .group-btn-segment:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:-3px}
 .app-main :is(h2,h3,section[id]){scroll-margin-top:24px}
 .setup-notice{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;margin-bottom:24px;border:1px solid var(--line-strong);border-radius:12px;background:var(--graphite-900)}
 .setup-notice p{margin:0;max-width:65ch;font-size:14px;line-height:1.6}
@@ -48,7 +57,7 @@
 .setup-notice h2{font-size:16px;margin:0 0 8px}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}
 @media(max-width:900px){.setup-layout{grid-template-columns:1fr}.setup-layout>aside{order:2}}
-@media(max-width:600px){.setup-fields{grid-template-columns:1fr}.setup-actions .btn{min-height:44px}.setup-review{grid-template-columns:1fr;gap:8px}.setup-review dd{margin-bottom:12px}.topbar-right{gap:8px}.app-topbar{gap:8px}.brand{white-space:normal}.page-outline{flex-wrap:nowrap;overflow:auto}.page-outline a{white-space:nowrap;min-height:44px}.setup-notice{padding:16px}.app-main .usage-row{flex-wrap:wrap}.app-main .guide-dodont{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.setup-fields{grid-template-columns:1fr}.setup-actions .btn{min-height:44px}.setup-review{grid-template-columns:1fr;gap:8px}.setup-review dd{margin-bottom:12px}.topbar-right{gap:8px}.app-topbar{gap:8px}.brand{white-space:normal}.page-outline{flex-wrap:nowrap;overflow:auto}.page-outline .group-btn-segment{white-space:nowrap;min-height:44px}.setup-notice{padding:16px}.app-main .usage-row{flex-wrap:wrap}.app-main .guide-dodont{grid-template-columns:minmax(0,1fr)}}
 @media(pointer:coarse){.sidebar-menu-toggle,.theme-toggle,.icon-btn{min-width:44px;min-height:44px}.nav-link{min-height:44px;display:flex;align-items:center}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(max-width:600px){

@@ -29,9 +29,31 @@
     if (headings.length > 2) {
       const nav = el('nav', '', 'page-outline');
       nav.setAttribute('aria-label', 'On this page');
-      headings.forEach((h, i) => { h.id ||= 'section-' + (i + 1); const a = el('a', h.textContent); a.href = '#' + h.id; nav.append(a); });
+      // Styled as a real Group Button (segmented control), not just links
+      // that look like one - .is-selected tracks whichever section is
+      // actually in view (IntersectionObserver below), the same "exactly
+      // one segment selected at a time" behavior the component always has.
+      const links = headings.map((h, i) => {
+        h.id ||= 'section-' + (i + 1);
+        const a = el('a', h.textContent, 'group-btn-segment group-btn-segment--h36');
+        a.href = '#' + h.id;
+        nav.append(a);
+        return a;
+      });
       const intro = main.querySelector('.page-lede') || main.querySelector('h1');
       intro?.after(nav);
+      links[0]?.classList.add('is-selected');
+      const sections = headings.map(h => h.closest('section') || h);
+      const spy = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const i = sections.indexOf(entry.target);
+          if (i === -1) return;
+          links.forEach(l => l.classList.remove('is-selected'));
+          links[i].classList.add('is-selected');
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      sections.forEach(s => spy.observe(s));
     }
     if (!['new-project.html', 'settings.html'].includes(file)) {
       const notice = el('section', '', 'setup-notice');

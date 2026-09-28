@@ -748,6 +748,14 @@ Four real, working components, not static mockups: an attribution badge (`.badge
 
 `ai-generator.html`'s own copy now points here, rather than remaining a dead end with no connection to the rest of the system.
 
+## "On this page" outline restyled as a real Group Button
+
+Asked to turn the auto-generated "On this page" section links (the row that appears under any page with more than 2 headings) into a Group Button. Rather than reskin it to merely look like one, wired it to the actual component: each link gets the real `.group-btn-segment`/`.group-btn-segment--h36` classes group-button.html itself uses, inside a filled segmented-control container.
+
+Went one step further than a paint job, since a real Group Button's whole point is "exactly one segment selected at a time," and a purely static restyle would leave that meaningless: added an IntersectionObserver that marks whichever section is actually scrolled into view as `.is-selected`, live, as you scroll - not just on click. Verified directly: scrolling to a specific section updates the highlighted segment correctly, clicking still jumps via the real anchor hrefs, and the container wraps cleanly onto a second row on a page with 10 sections at a narrow viewport (confirmed at 700px) rather than overflowing.
+
+Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
