@@ -64,7 +64,7 @@
 
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Inter", ui-monospace, "SFMono-Regular", monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
   /* Named tokens (sm/md) predate this pass and are consumed ~40 times
      already - kept as-is rather than renamed. The rest of the documented
