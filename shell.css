@@ -469,7 +469,7 @@ button{ font-family: inherit; }
 .modal-overlay{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: var(--overlay-scrim);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1838,7 +1838,7 @@ button{ font-family: inherit; }
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: var(--overlay-scrim);
     z-index: 30;
   }
   .sidebar-drawer-backdrop.is-open{ display: block; }
@@ -2145,7 +2145,7 @@ button{ font-family: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-8);
   flex: none;
   max-width: 320px;
   overflow: hidden;
@@ -2163,13 +2163,13 @@ button{ font-family: inherit; }
 .btn-demo > span{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 
 .btn-demo--h24{ height: 24px; padding: 0 10px; font-size: 11px; gap: 4px; }
-.btn-demo--h28{ height: 28px; padding: 0 12px; font-size: 12px; gap: 6px; }
-.btn-demo--h32{ height: 32px; padding: 0 12px; font-size: 12px; }
+.btn-demo--h28{ height: 28px; padding: 0 var(--space-12); font-size: 12px; gap: 6px; }
+.btn-demo--h32{ height: 32px; padding: 0 var(--space-12); font-size: 12px; }
 .btn-demo--h36{ height: 36px; padding: 0 14px; font-size: 13px; }
-.btn-demo--h40{ height: 40px; padding: 0 16px; font-size: 14px; }
+.btn-demo--h40{ height: 40px; padding: 0 var(--space-16); font-size: 14px; }
 .btn-demo--h44{ height: 44px; padding: 0 18px; font-size: 15px; }
-.btn-demo--h48{ height: 48px; padding: 0 20px; font-size: 16px; }
-.btn-demo--h56{ height: 56px; padding: 0 24px; font-size: 17px; }
+.btn-demo--h48{ height: 48px; padding: 0 var(--space-20); font-size: 16px; }
+.btn-demo--h56{ height: 56px; padding: 0 var(--space-24); font-size: 17px; }
 .btn-demo.is-icon-only{ padding: 0; }
 .btn-demo.is-icon-only.btn-demo--h24{ width: 24px; }
 .btn-demo.is-icon-only.btn-demo--h28{ width: 28px; }
@@ -3490,8 +3490,8 @@ button{ font-family: inherit; }
    surface in the system, so its shadow is deliberately more prominent
    than the .menu-demo-panel / .autocomplete-demo-panel floating-panel
    language it's otherwise modeled on. */
-.modal-demo-scrim{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.55); border-radius: var(--radius-md); }
-.modal-demo-dialog{ box-sizing: border-box; width: 100%; background: var(--graphite-900); border: 1px solid var(--line-strong); box-shadow: 0 24px 48px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; }
+.modal-demo-scrim{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: var(--space-24); background: var(--overlay-scrim); border-radius: var(--radius-md); }
+.modal-demo-dialog{ box-sizing: border-box; width: 100%; background: var(--graphite-900); border: 1px solid var(--line-strong); box-shadow: var(--shadow-xl); display: flex; flex-direction: column; overflow: hidden; }
 .modal-demo-dialog--small{ max-width: 320px; }
 .modal-demo-dialog--medium{ max-width: 440px; }
 .modal-demo-dialog--large{ max-width: 560px; }
@@ -4261,13 +4261,13 @@ button{ font-family: inherit; }
    table-demo-table--has-checkbox existed (see the note on that rule
    below). */
 .table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; }
-.table-demo-table th{ text-align: start; padding: 8px 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1.5px solid var(--line-strong); }
+.table-demo-table th{ text-align: start; padding: var(--space-8) 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1.5px solid var(--line-strong); }
 /* text-align:start was only ever set on th (above), never td - td's text
    was silently inheriting text-align:center from the outer Live Preview
    matrix cell (.button-matrix-cell's shared default), centering Name/
    Status/Role text while the header labels above them stayed correctly
    left-aligned. */
-.table-demo-table td{ padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: start; }
+.table-demo-table td{ padding: var(--space-8) 10px; border-bottom: 1px solid var(--line); text-align: start; }
 .table-demo-table--bordered{ border: 1px solid var(--line-strong); overflow: hidden; }
 .table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end: 1px solid var(--line); }
 .table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end: none; }
@@ -4298,7 +4298,7 @@ button{ font-family: inherit; }
    Small only tighten padding - font-size stays fixed at every size, the
    same restraint every sized component in this system follows. */
 .table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding: 6px 8px; }
-.table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding: 4px 6px; }
+.table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding: var(--space-4) 6px; }
 
 /* ---------- Tag demo (tag-default.html) ---------- */
 .tag-demo-chip{ box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-family: var(--font-body); font-size: 12px; font-weight: 600; white-space: nowrap; border: none; cursor: default; }
@@ -4444,12 +4444,12 @@ button{ font-family: inherit; }
 
 /* ---------- Drawer (edge-anchored sliding panel) ---------- */
 .drawer-type-card .button-type-demo{ width: 100%; min-width: 0; }
-.drawer-demo-scrim{ box-sizing: border-box; position: relative; display: flex; width: 100%; height: 260px; padding: 16px; background: rgba(0,0,0,0.55); border-radius: var(--radius-md); overflow: hidden; }
+.drawer-demo-scrim{ box-sizing: border-box; position: relative; display: flex; width: 100%; height: 260px; padding: var(--space-16); background: var(--overlay-scrim); border-radius: var(--radius-md); overflow: hidden; }
 /* Top/Bottom flip the scrim to a column flex container - the panel then
    pushes to the top or bottom edge via margin-top/bottom:auto instead of
    the Left/Right pair's margin-inline-start/end:auto. */
 .drawer-demo-scrim--vertical{ flex-direction: column; }
-.drawer-demo-panel{ box-sizing: border-box; max-width: 100%; height: 100%; background: var(--graphite-900); border: 1px solid var(--line-strong); box-shadow: 0 24px 48px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; }
+.drawer-demo-panel{ box-sizing: border-box; max-width: 100%; height: 100%; background: var(--graphite-900); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow: hidden; }
 /* Right/Left are fixed to height:100% of the 260px scrim, but the Live
    Preview's body reuses Modal's own .modal-demo-body, which - unlike
    the real recipe's .drawer-body (already flex:1) - never grows to fill

@@ -54,6 +54,48 @@
   --radius-sm: 4px;
   --radius-md: 8px;
 
+  /* Spacing - the "Balanced (4px)" scale from the Spacing foundation page,
+     as real tokens. Every padding/margin/gap value elsewhere in this file
+     should reference one of these rather than a raw pixel literal, so a
+     component's spacing stays traceable to the documented scale instead
+     of silently drifting from it. Named by their own pixel value (not a
+     multiplier) since that's the number spacing.html already shows next
+     to each step - no translation needed to go from that page to this
+     variable. */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-72: 72px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-112: 112px;
+  --space-128: 128px;
+
+  /* Shadow / elevation - the 7-level scale from the Shadows foundation
+     page, as real tokens. Values match what shadows.html already
+     documents; this just makes them var()-able instead of copy-pasted
+     literals. */
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.14);
+  --shadow-2xl: 0 16px 32px rgba(0,0,0,0.16);
+
+  /* Modal/drawer backdrop - was hardcoded separately wherever a scrim
+     appeared; one token so every overlay dims the page the same amount. */
+  --overlay-scrim: rgba(0,0,0,0.55);
+
   /* Motion - every transition and animation in the system resolves to one
      of these, so timing is tuned centrally rather than per rule, and the
      whole system can be quieted at once under prefers-reduced-motion
