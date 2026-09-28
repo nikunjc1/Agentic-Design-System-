@@ -138,6 +138,38 @@
       return (toByte(r) + toByte(g) + toByte(b)).toUpperCase();
     }
 
+    // HSB/HSV - the color-picker widget's own native space (a 2D
+    // saturation/brightness square at a fixed hue), distinct from the HSL
+    // used elsewhere for dark-theme suggestions. Kept separate rather than
+    // routed through hexToHsl/hslToHex so dragging inside the square maps
+    // directly to s/b without a lossy HSL round-trip.
+    function rgbToHsb(r, g, b){
+      r /= 255; g /= 255; b /= 255;
+      var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+      var h;
+      if (d === 0) h = 0;
+      else if (max === r) h = 60 * (((g - b) / d) % 6);
+      else if (max === g) h = 60 * ((b - r) / d + 2);
+      else h = 60 * ((r - g) / d + 4);
+      if (h < 0) h += 360;
+      var s = max === 0 ? 0 : d / max;
+      return { h: h, s: s * 100, b: max * 100 };
+    }
+    function hsbToRgb(h, s, v){
+      h = ((h % 360) + 360) % 360; s = clamp(s, 0, 100) / 100; v = clamp(v, 0, 100) / 100;
+      var c = v * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = v - c;
+      var r, g, b;
+      if (h < 60){ r = c; g = x; b = 0; }
+      else if (h < 120){ r = x; g = c; b = 0; }
+      else if (h < 180){ r = 0; g = c; b = x; }
+      else if (h < 240){ r = 0; g = x; b = c; }
+      else if (h < 300){ r = x; g = 0; b = c; }
+      else { r = c; g = 0; b = x; }
+      return { r: (r + m) * 255, g: (g + m) * 255, b: (b + m) * 255 };
+    }
+    function hexToHsb(hex){ var rgb = hexToRgb(hex); return rgbToHsb(rgb.r, rgb.g, rgb.b); }
+    function hsbToHex(h, s, v){ var rgb = hsbToRgb(h, s, v); return rgbToHex(rgb.r, rgb.g, rgb.b); }
+
     // Dark-mode adaptation for a near-white/near-black surface. Hue-shifting
     // by lightness inversion doesn't work here: at 96-100% lightness a tiny
     // RGB difference swings the computed hue wildly, and inverting three
@@ -977,42 +1009,401 @@
       var lightTextHiHexInput = document.querySelector('[data-role="text-light-hi-hex"]');
       var darkTextHiHexInput = document.querySelector('[data-role="text-dark-hi-hex"]');
 
-      function recompute(){
+      // Shared with the custom color-picker popover below, so the live
+      // readout inside an open picker always matches the badge under the
+      // field it belongs to - one source of truth for "what should this
+      // swatch be checked against."
+      function contrastForField(field, hex){
+        var hexInput = field.querySelector('input[type="text"][data-role]');
+        var col = field.closest(".theme-pair-col");
+        var label = col ? (col.querySelector(".theme-pair-label") || {}).textContent || "" : "";
+        var isDark = /Dark/i.test(label);
         var lightBg = normalizeHex(lightBgHexInput.value) || BG_DEFAULTS.light.primary;
         var darkBg = normalizeHex(darkBgHexInput.value) || BG_DEFAULTS.dark.primary;
         var lightTextHi = normalizeHex(lightTextHiHexInput.value) || TEXT_DEFAULTS.light.hi;
         var darkTextHi = normalizeHex(darkTextHiHexInput.value) || TEXT_DEFAULTS.dark.hi;
+        // Background's own swatches (Page/Panel/Raised) ARE the page
+        // background, so checking them against "page background" is
+        // checking a color against itself - always ~1:1, never useful.
+        // What actually matters for a surface color is whether the
+        // page's primary text stays readable on it, so those fields
+        // compare against text-hi instead, and say so in the label.
+        var isBgSwatch = /^bg-/.test((hexInput && hexInput.dataset.role) || "");
+        var bg = isBgSwatch ? (isDark ? darkTextHi : lightTextHi) : (isDark ? darkBg : lightBg);
+        var vsLabel = isBgSwatch ? "vs primary text" : "vs page background";
+        var ratio = contrastRatio(hex, bg);
+        return { ratio: ratio, aaPass: ratio >= 4.5, aaaPass: ratio >= 7, vsLabel: vsLabel };
+      }
+
+      function badgeHtml(result){
+        return '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' +
+          '<span class="contrast-tag ' + (result.aaPass ? "is-pass" : "is-fail") + '">AA ' + (result.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
+          '<span class="contrast-tag ' + (result.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (result.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+      }
+
+      function recompute(){
         fields.forEach(function(field){
           var hexInput = field.querySelector('input[type="text"][data-role]');
           var badge = field.querySelector(".color-contrast");
           if (!hexInput || !badge) return;
           var hex = normalizeHex(hexInput.value);
           if (!hex){ badge.textContent = ""; return; }
-          var col = field.closest(".theme-pair-col");
-          var label = col ? (col.querySelector(".theme-pair-label") || {}).textContent || "" : "";
-          var isDark = /Dark/i.test(label);
-          // Background's own swatches (Page/Panel/Raised) ARE the page
-          // background, so checking them against "page background" is
-          // checking a color against itself - always ~1:1, never useful.
-          // What actually matters for a surface color is whether the
-          // page's primary text stays readable on it, so those fields
-          // compare against text-hi instead, and say so in the label.
-          var isBgSwatch = /^bg-/.test(hexInput.dataset.role || "");
-          var bg = isBgSwatch ? (isDark ? darkTextHi : lightTextHi) : (isDark ? darkBg : lightBg);
-          var vsLabel = isBgSwatch ? "vs primary text" : "vs page background";
-          var ratio = contrastRatio(hex, bg);
-          var aaPass = ratio >= 4.5, aaaPass = ratio >= 7;
-          badge.innerHTML =
-            '<span class="contrast-ratio">' + ratio.toFixed(2) + ':1 ' + vsLabel + '</span>' +
-            '<span class="contrast-tag ' + (aaPass ? "is-pass" : "is-fail") + '">AA ' + (aaPass ? "&#10003;" : "&#10007;") + '</span>' +
-            '<span class="contrast-tag ' + (aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+          badge.innerHTML = badgeHtml(contrastForField(field, hex));
         });
       }
 
       document.querySelector("main").addEventListener("input", recompute);
       document.querySelector("main").addEventListener("change", recompute);
       recompute();
+
+      return { contrastForField: contrastForField, badgeHtml: badgeHtml };
     }
-    initContrastBadges();
+    var contrastHelpers = initContrastBadges();
+
+    // Custom color-picker popover - replaces the OS-native <input
+    // type="color"> flyout (which on most platforms only offers RGB, no
+    // Hex/CSS/HSL/HSB switcher and no accessibility feedback at all) with
+    // one built for this site: a saturation/brightness square, hue slider,
+    // a format switcher (Hex/RGB/HSL/HSB/CSS), and the same live AA/AAA
+    // readout as the badge under the field. The underlying native <input
+    // type="color"> for each swatch is kept exactly as-is (still the one
+    // source of truth every other function here already reads/writes) -
+    // just visually hidden and driven by dispatching a real "input" event
+    // on it, so wireHexPair, wireSaveState and the contrast badge above
+    // all react to a picker-driven change exactly as they already do to a
+    // typed hex value, with no changes needed anywhere else.
+    function initCustomColorPickers(contrastForField, badgeHtml){
+      var pairs = [];
+
+      var popover = document.createElement("div");
+      popover.className = "color-popover";
+      popover.setAttribute("role", "dialog");
+      popover.setAttribute("aria-label", "Color picker");
+      popover.hidden = true;
+      popover.innerHTML =
+        '<div class="color-popover-sv" tabindex="0">' +
+          '<div class="color-popover-sv-white"></div>' +
+          '<div class="color-popover-sv-black"></div>' +
+          '<span class="color-popover-sv-thumb"></span>' +
+        '</div>' +
+        '<div class="color-popover-hue" tabindex="0">' +
+          '<span class="color-popover-hue-thumb"></span>' +
+        '</div>' +
+        '<div class="color-popover-format-row">' +
+          '<select class="color-popover-format-select" aria-label="Color format">' +
+            '<option value="hex">Hex</option>' +
+            '<option value="rgb">RGB</option>' +
+            '<option value="hsl">HSL</option>' +
+            '<option value="hsb">HSB</option>' +
+            '<option value="css">CSS</option>' +
+          '</select>' +
+          '<div class="color-popover-values"></div>' +
+          '<button type="button" class="color-popover-copy" hidden>Copy</button>' +
+        '</div>' +
+        '<p class="color-popover-contrast"></p>';
+      document.body.appendChild(popover);
+
+      var svEl = popover.querySelector(".color-popover-sv");
+      var svThumb = popover.querySelector(".color-popover-sv-thumb");
+      var hueEl = popover.querySelector(".color-popover-hue");
+      var hueThumb = popover.querySelector(".color-popover-hue-thumb");
+      var formatSelect = popover.querySelector(".color-popover-format-select");
+      var valuesEl = popover.querySelector(".color-popover-values");
+      var copyBtn = popover.querySelector(".color-popover-copy");
+      var contrastEl = popover.querySelector(".color-popover-contrast");
+
+      var FORMAT_SPECS = {
+        hex: [{ key: "hex", label: "#" }],
+        rgb: [{ key: "r", label: "R" }, { key: "g", label: "G" }, { key: "b", label: "B" }],
+        hsl: [{ key: "h", label: "H" }, { key: "s", label: "S%" }, { key: "l", label: "L%" }],
+        hsb: [{ key: "h", label: "H" }, { key: "s", label: "S%" }, { key: "b", label: "B%" }],
+        css: [{ key: "css", label: "CSS" }]
+      };
+
+      var lastFormat = "hex";
+      var active = null;
+      var syncing = false;
+
+      function currentHex(){ return hsbToHex(active.hsb.h, active.hsb.s, active.hsb.b); }
+
+      function renderValueInputs(){
+        var spec = FORMAT_SPECS[formatSelect.value];
+        valuesEl.innerHTML = "";
+        spec.forEach(function(cell){
+          var wrap = document.createElement("label");
+          wrap.className = "color-popover-value-cell";
+          var span = document.createElement("span");
+          span.textContent = cell.label;
+          var input = document.createElement("input");
+          input.type = "text";
+          input.autocomplete = "off";
+          input.spellcheck = false;
+          input.dataset.key = cell.key;
+          if (formatSelect.value === "css") input.readOnly = true;
+          wrap.appendChild(span);
+          wrap.appendChild(input);
+          valuesEl.appendChild(wrap);
+        });
+        copyBtn.hidden = formatSelect.value !== "css";
+        updateValueInputs();
+      }
+
+      function updateValueInputs(){
+        if (!active) return;
+        var hex = currentHex();
+        var rgb = hexToRgb(hex);
+        var format = formatSelect.value;
+        var inputs = valuesEl.querySelectorAll("input");
+        if (format === "hex"){
+          inputs[0].value = hex;
+        } else if (format === "rgb"){
+          inputs[0].value = Math.round(rgb.r);
+          inputs[1].value = Math.round(rgb.g);
+          inputs[2].value = Math.round(rgb.b);
+        } else if (format === "hsl"){
+          var hsl = hexToHsl(hex);
+          inputs[0].value = Math.round(hsl.h);
+          inputs[1].value = Math.round(hsl.s);
+          inputs[2].value = Math.round(hsl.l);
+        } else if (format === "hsb"){
+          inputs[0].value = Math.round(active.hsb.h);
+          inputs[1].value = Math.round(active.hsb.s);
+          inputs[2].value = Math.round(active.hsb.b);
+        } else if (format === "css"){
+          inputs[0].value = "rgb(" + Math.round(rgb.r) + ", " + Math.round(rgb.g) + ", " + Math.round(rgb.b) + ")";
+        }
+      }
+
+      function applyValueInputs(){
+        if (!active) return;
+        var format = formatSelect.value;
+        var inputs = valuesEl.querySelectorAll("input");
+        if (format === "hex"){
+          var hex = normalizeHex(inputs[0].value);
+          if (hex) active.hsb = hexToHsb(hex);
+        } else if (format === "rgb"){
+          active.hsb = rgbToHsb(
+            clamp(parseInt(inputs[0].value, 10) || 0, 0, 255),
+            clamp(parseInt(inputs[1].value, 10) || 0, 0, 255),
+            clamp(parseInt(inputs[2].value, 10) || 0, 0, 255)
+          );
+        } else if (format === "hsl"){
+          active.hsb = hexToHsb(hslToHex(
+            clamp(parseFloat(inputs[0].value) || 0, 0, 360),
+            clamp(parseFloat(inputs[1].value) || 0, 0, 100),
+            clamp(parseFloat(inputs[2].value) || 0, 0, 100)
+          ));
+        } else if (format === "hsb"){
+          active.hsb = {
+            h: clamp(parseFloat(inputs[0].value) || 0, 0, 360),
+            s: clamp(parseFloat(inputs[1].value) || 0, 0, 100),
+            b: clamp(parseFloat(inputs[2].value) || 0, 0, 100)
+          };
+        }
+        updateVisuals();
+      }
+
+      function updateVisuals(){
+        if (!active) return;
+        var hex = currentHex();
+        svEl.style.background = "#" + hsbToHex(active.hsb.h, 100, 100);
+        svThumb.style.left = active.hsb.s + "%";
+        svThumb.style.top = (100 - active.hsb.b) + "%";
+        svThumb.style.background = "#" + hex;
+        hueThumb.style.left = (active.hsb.h / 360 * 100) + "%";
+
+        active.trigger.style.background = "#" + hex;
+        syncing = true;
+        if (active.picker.value.toLowerCase() !== ("#" + hex).toLowerCase()){
+          active.picker.value = "#" + hex;
+          active.picker.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        syncing = false;
+
+        contrastEl.innerHTML = badgeHtml(contrastForField(active.field, hex));
+        updateValueInputs();
+      }
+
+      function positionPopover(trigger){
+        var rect = trigger.getBoundingClientRect();
+        var popRect = popover.getBoundingClientRect();
+        var top = rect.bottom + 8;
+        var left = rect.left;
+        if (left + popRect.width > window.innerWidth - 12) left = window.innerWidth - popRect.width - 12;
+        if (top + popRect.height > window.innerHeight - 12) top = rect.top - popRect.height - 8;
+        popover.style.left = Math.max(12, left) + "px";
+        popover.style.top = Math.max(12, top) + "px";
+      }
+
+      function openPopover(input, trigger){
+        var field = trigger.closest(".color-field");
+        var hex = normalizeHex(input.value.replace("#", "")) || "FFFFFF";
+        active = { picker: input, trigger: trigger, field: field, hsb: hexToHsb(hex) };
+        formatSelect.value = lastFormat;
+        renderValueInputs();
+        popover.hidden = false;
+        positionPopover(trigger);
+        updateVisuals();
+        svEl.focus();
+      }
+      function closePopover(){
+        if (popover.hidden) return;
+        popover.hidden = true;
+        active = null;
+      }
+
+      function pointFromEvent(el, evt){
+        var rect = el.getBoundingClientRect();
+        return {
+          x: clamp((evt.clientX - rect.left) / rect.width, 0, 1),
+          y: clamp((evt.clientY - rect.top) / rect.height, 0, 1)
+        };
+      }
+      function bindDrag(el, onMove){
+        el.addEventListener("pointerdown", function(evt){
+          if (!active) return;
+          el.setPointerCapture(evt.pointerId);
+          onMove(evt);
+          function move(e){ onMove(e); }
+          function up(){
+            el.removeEventListener("pointermove", move);
+            el.removeEventListener("pointerup", up);
+          }
+          el.addEventListener("pointermove", move);
+          el.addEventListener("pointerup", up);
+        });
+      }
+      bindDrag(svEl, function(evt){
+        var p = pointFromEvent(svEl, evt);
+        active.hsb.s = p.x * 100;
+        active.hsb.b = (1 - p.y) * 100;
+        updateVisuals();
+      });
+      bindDrag(hueEl, function(evt){
+        var p = pointFromEvent(hueEl, evt);
+        active.hsb.h = p.x * 360;
+        updateVisuals();
+      });
+
+      svEl.addEventListener("keydown", function(evt){
+        if (!active) return;
+        var step = evt.shiftKey ? 10 : 2;
+        if (evt.key === "ArrowLeft"){ active.hsb.s = clamp(active.hsb.s - step, 0, 100); updateVisuals(); evt.preventDefault(); }
+        else if (evt.key === "ArrowRight"){ active.hsb.s = clamp(active.hsb.s + step, 0, 100); updateVisuals(); evt.preventDefault(); }
+        else if (evt.key === "ArrowUp"){ active.hsb.b = clamp(active.hsb.b + step, 0, 100); updateVisuals(); evt.preventDefault(); }
+        else if (evt.key === "ArrowDown"){ active.hsb.b = clamp(active.hsb.b - step, 0, 100); updateVisuals(); evt.preventDefault(); }
+      });
+      hueEl.addEventListener("keydown", function(evt){
+        if (!active) return;
+        var step = evt.shiftKey ? 15 : 3;
+        if (evt.key === "ArrowLeft"){ active.hsb.h = clamp(active.hsb.h - step, 0, 360); updateVisuals(); evt.preventDefault(); }
+        else if (evt.key === "ArrowRight"){ active.hsb.h = clamp(active.hsb.h + step, 0, 360); updateVisuals(); evt.preventDefault(); }
+      });
+
+      formatSelect.addEventListener("change", function(){
+        lastFormat = formatSelect.value;
+        renderValueInputs();
+      });
+      valuesEl.addEventListener("change", function(evt){
+        if (evt.target.tagName === "INPUT") applyValueInputs();
+      });
+      valuesEl.addEventListener("keydown", function(evt){
+        if (evt.key === "Enter" && evt.target.tagName === "INPUT"){ applyValueInputs(); evt.target.blur(); }
+      });
+
+      function fallbackCopy(text){
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch (e){}
+        document.body.removeChild(ta);
+      }
+      copyBtn.addEventListener("click", function(){
+        var text = valuesEl.querySelector("input").value;
+        var original = copyBtn.textContent;
+        function done(){
+          copyBtn.textContent = "Copied!";
+          setTimeout(function(){ copyBtn.textContent = original; }, 1500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
+        } else {
+          fallbackCopy(text); done();
+        }
+      });
+
+      var swatchInputs = Array.prototype.slice.call(document.querySelectorAll('input[type="color"].type-color-swatch'));
+      swatchInputs.forEach(function(input){
+        var trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "color-swatch-trigger";
+        trigger.setAttribute("aria-label", "Choose color");
+        trigger.style.background = input.value;
+        input.setAttribute("aria-hidden", "true");
+        input.tabIndex = -1;
+        input.classList.add("type-color-swatch--hidden");
+        input.parentNode.insertBefore(trigger, input);
+        pairs.push({ input: input, trigger: trigger });
+
+        trigger.addEventListener("click", function(evt){
+          evt.stopPropagation();
+          if (active && active.trigger === trigger){ closePopover(); return; }
+          openPopover(input, trigger);
+        });
+        input.addEventListener("input", function(){
+          trigger.style.background = input.value;
+          if (syncing) return;
+          if (active && active.picker === input){
+            var hex = normalizeHex(input.value.replace("#", ""));
+            if (hex){ active.hsb = hexToHsb(hex); updateVisuals(); }
+          }
+        });
+      });
+
+      // Reset/Regenerate buttons set picker.value directly (no dispatched
+      // event, by design elsewhere in this file) - a plain click-delegate
+      // resync after any button click in <main> keeps every trigger's
+      // swatch color from going stale after one of those, without having
+      // to hook each button individually.
+      document.querySelector("main").addEventListener("click", function(evt){
+        if (evt.target.closest("button")){
+          setTimeout(function(){
+            pairs.forEach(function(p){ p.trigger.style.background = p.input.value; });
+          }, 0);
+        }
+      });
+
+      document.addEventListener("mousedown", function(evt){
+        if (popover.hidden) return;
+        if (popover.contains(evt.target)) return;
+        if (active && evt.target === active.trigger) return;
+        closePopover();
+      });
+      document.addEventListener("keydown", function(evt){
+        if (evt.key === "Escape" && !popover.hidden){
+          var trigger = active && active.trigger;
+          closePopover();
+          if (trigger) trigger.focus();
+        }
+      });
+      // Reposition rather than close on scroll/resize - the popover is
+      // position:fixed (viewport-relative) while its trigger scrolls with
+      // the page, so it has to actively track the trigger to stay
+      // anchored. (Closing here instead was tried first and immediately
+      // broke opening altogether: focusing the SV square right after
+      // open can itself cause a scroll, and a capturing window "scroll"
+      // listener sees that and closes the popover before the click that
+      // opened it has even finished.)
+      window.addEventListener("scroll", function(){
+        if (active) positionPopover(active.trigger);
+      }, true);
+      window.addEventListener("resize", function(){
+        if (active) positionPopover(active.trigger);
+      });
+    }
+    initCustomColorPickers(contrastHelpers.contrastForField, contrastHelpers.badgeHtml);
   });
 })();
