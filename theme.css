@@ -62,6 +62,22 @@
   --danger-600: #d80016;
   --blue-500: #4f8fe6;
 
+  /* Letter-spacing was used 48 times across 10 distinct values with no
+     token behind any of them - extracted directly from what was already
+     in use (not a newly-invented scale), same numeric-suffix convention
+     as the space and radius token families. --tracking-tight is the one
+     negative value, used on large display headings. */
+  --tracking-tight: -0.01em;
+  --tracking-2: 0.02em;
+  --tracking-3: 0.03em;
+  --tracking-4: 0.04em;
+  --tracking-5: 0.05em;
+  --tracking-6: 0.06em;
+  --tracking-8: 0.08em;
+  --tracking-10: 0.1em;
+  --tracking-12: 0.12em;
+  --tracking-14: 0.14em;
+
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;

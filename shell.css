@@ -43,8 +43,8 @@ button{ font-family: inherit; }
 }
 
 .brand{ display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
-.brand-mark{ font-family: var(--font-mono); font-weight: 600; font-size: 16px; letter-spacing: 0.1em; }
-.brand-sub{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
+.brand-mark{ font-family: var(--font-mono); font-weight: 600; font-size: 16px; letter-spacing: var(--tracking-10); }
+.brand-sub{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: var(--tracking-4); }
 
 .search-icon{ display: flex; flex: none; color: var(--text-dim); }
 .search-icon svg{ width: 16px; height: 16px; display: block; }
@@ -142,7 +142,7 @@ button{ font-family: inherit; }
 .version-badge{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   color: var(--text-mid);
   border: var(--border-width-1) solid var(--line-strong);
   border-radius: var(--radius-md);
@@ -231,7 +231,7 @@ button{ font-family: inherit; }
   display: block;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-12);
   color: var(--text-dim);
   padding: 8px 12px;
 }
@@ -274,7 +274,7 @@ button{ font-family: inherit; }
   display: block;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-10);
   color: var(--graphite-500);
   padding: 12px 12px 4px;
 }
@@ -329,7 +329,7 @@ button{ font-family: inherit; }
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 18px;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--tracking-14);
   color: var(--red-400);
   margin: 0 0 8px;
 }
@@ -339,7 +339,7 @@ button{ font-family: inherit; }
   font-weight: 700;
   font-size: 30px;
   line-height: 38px;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-tight);
   margin: 0 0 16px;
 }
 
@@ -370,7 +370,7 @@ button{ font-family: inherit; }
 .stat-label{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-10);
   color: var(--text-dim);
   margin: 0 0 8px;
 }
@@ -408,7 +408,7 @@ button{ font-family: inherit; }
   color: var(--text-mid);
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-3);
   padding: 8px 16px;
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
@@ -445,7 +445,7 @@ button{ font-family: inherit; }
   color: var(--text-mid);
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-4);
   padding: 8px 12px;
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
@@ -512,7 +512,7 @@ button{ font-family: inherit; }
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   color: var(--text-dim);
 }
 .form-field input, .form-field select{
@@ -543,7 +543,7 @@ button{ font-family: inherit; }
 .btn{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-4);
   border-radius: var(--radius-md);
   padding: 8px 16px;
   cursor: pointer;
@@ -729,7 +729,7 @@ button{ font-family: inherit; }
 .used-by-status{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-3);
   border-radius: 999px;
   padding: 4px 12px;
   text-align: center;
@@ -757,7 +757,7 @@ button{ font-family: inherit; }
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-10);
   color: var(--text-dim);
   margin: 0 0 16px;
 }
@@ -791,7 +791,7 @@ button{ font-family: inherit; }
 .color-field-label{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   color: var(--text-mid);
 }
 
@@ -801,7 +801,7 @@ button{ font-family: inherit; }
 .badge{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-3);
   border-radius: 999px;
   padding: 4px 12px;
 }
@@ -839,7 +839,7 @@ button{ font-family: inherit; }
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-2);
   border-radius: 999px;
   padding: 2px 8px;
 }
@@ -905,7 +905,7 @@ button{ font-family: inherit; }
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   color: var(--text-hi);
 }
@@ -1054,7 +1054,7 @@ button{ font-family: inherit; }
   min-height: 56px;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   color: var(--text-dim);
 }
 
@@ -1249,7 +1249,7 @@ button{ font-family: inherit; }
 }
 .color-popover-values{ flex: 1; display: flex; gap: 6px; min-width: 0; }
 .color-popover-value-cell{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.color-popover-value-cell span{ font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+.color-popover-value-cell span{ font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: var(--tracking-4); }
 /* The format select has no label of its own, but every value cell next to
    it does (its uppercase key above the input) - without a same-size
    spacer here, that extra label row on one side but not the other left
@@ -1347,7 +1347,7 @@ button{ font-family: inherit; }
 .recommendation-text strong{ color: var(--red-400); }
 
 .ai-rule-callout{ border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); padding: 16px; background: var(--red-tint); margin-top: 16px; }
-.ai-rule-eyebrow{ font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; color: var(--red-400); margin: 0 0 6px; }
+.ai-rule-eyebrow{ font-family: var(--font-mono); font-size: 12px; letter-spacing: var(--tracking-14); color: var(--red-400); margin: 0 0 6px; }
 .ai-rule-text{ font-size: 14px; line-height: 1.5; color: var(--text-hi); margin: 0; }
 
 /* Fixed column count (not auto-fit) so the row is capped at exactly 4
@@ -1602,7 +1602,7 @@ button{ font-family: inherit; }
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-2);
   border-radius: 999px;
   padding: 4px 12px;
 }
@@ -1671,7 +1671,7 @@ button{ font-family: inherit; }
   gap: 4px;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   color: var(--text-dim);
   flex: 1;
   min-width: 0;
@@ -1765,7 +1765,7 @@ button{ font-family: inherit; }
 .empty-eyebrow{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--tracking-14);
   color: var(--red-400);
   margin: 0 0 16px;
 }
@@ -1789,7 +1789,7 @@ button{ font-family: inherit; }
 .chip{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-3);
   color: var(--text-mid);
   border: var(--border-width-1) solid var(--line-strong);
   border-radius: 999px;
@@ -2111,7 +2111,7 @@ button{ font-family: inherit; }
 .divider-demo-label{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   color: var(--text-dim);
   margin: 0 0 8px;
 }
@@ -2440,7 +2440,7 @@ button{ font-family: inherit; }
 .dualicon-card-label{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   color: var(--text-dim);
   margin-top: 12px;
 }
@@ -2456,7 +2456,7 @@ button{ font-family: inherit; }
 .button-type-state-label{
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   color: var(--text-dim);
 }
@@ -2581,7 +2581,7 @@ button{ font-family: inherit; }
   flex: none;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   color: var(--text-dim);
 }
@@ -2605,7 +2605,7 @@ button{ font-family: inherit; }
   flex: none;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   color: var(--text-dim);
 }
@@ -2632,7 +2632,7 @@ button{ font-family: inherit; }
 .spec-table th{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   color: var(--text-dim);
   border-top: none;
@@ -2689,7 +2689,7 @@ button{ font-family: inherit; }
   text-align: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   color: var(--text-dim);
   padding: 0 16px 16px;
   font-weight: 400;
@@ -2730,7 +2730,7 @@ button{ font-family: inherit; }
 .button-matrix-combo-label{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   text-transform: uppercase;
   color: var(--text-dim);
   margin: 0 0 8px;
@@ -3333,7 +3333,7 @@ button{ font-family: inherit; }
 .colorpicker-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); }
 .colorpicker-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; width: 100%; border-radius: var(--radius-md); cursor: pointer; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard); }
 .colorpicker-demo-swatch{ flex: none; width: 16px; height: 16px; border-radius: 4px; border: var(--border-width-1) solid var(--line-strong); }
-.colorpicker-demo-value{ flex: 1 1 auto; min-width: 0; font-family: var(--font-body); color: var(--text-hi); letter-spacing: 0.02em; }
+.colorpicker-demo-value{ flex: 1 1 auto; min-width: 0; font-family: var(--font-body); color: var(--text-hi); letter-spacing: var(--tracking-2); }
 .colorpicker-demo-clear{ flex: none; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; padding: 0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
 .colorpicker-demo-clear:hover{ color: var(--text-hi); }
 .colorpicker-demo-clear svg{ width: 100%; height: 100%; display: block; }
@@ -4109,7 +4109,7 @@ button{ font-family: inherit; }
 .description-demo-panel--bordered .description-demo-item{ padding: 8px 10px; border-inline-end: var(--border-width-1) solid var(--line); border-bottom: var(--border-width-1) solid var(--line); gap: 2px; }
 .description-demo-panel--bordered .description-demo-item.is-last-col{ border-inline-end: none; }
 .description-demo-panel--bordered .description-demo-item.is-last-row{ border-bottom: none; }
-.description-demo-label{ font-family: var(--font-body); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+.description-demo-label{ font-family: var(--font-body); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: var(--tracking-4); }
 .description-demo-value{ font-family: var(--font-body); font-size: 13px; color: var(--text-hi); word-break: break-word; }
 /* Size (3) - Large is the default; Middle/Small tighten item padding and
    both label/value font one step - column count and grid gap stay
@@ -4269,7 +4269,7 @@ button{ font-family: inherit; }
    table-demo-table--has-checkbox existed (see the note on that rule
    below). */
 .table-demo-table{ border-collapse: collapse; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); width: 630px; max-width: 100%; }
-.table-demo-table th{ text-align: start; padding: var(--space-8) 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1.5px solid var(--line-strong); }
+.table-demo-table th{ text-align: start; padding: var(--space-8) 10px; font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: var(--tracking-4); border-bottom: 1.5px solid var(--line-strong); }
 /* text-align:start was only ever set on th (above), never td - td's text
    was silently inheriting text-align:center from the outer Live Preview
    matrix cell (.button-matrix-cell's shared default), centering Name/
@@ -4817,7 +4817,7 @@ button{ font-family: inherit; }
 }
 .do-dont-do{ background: color-mix(in srgb, var(--green-500) 6%, transparent); border-color: color-mix(in srgb, var(--green-500) 30%, transparent); }
 .do-dont-dont{ background: var(--red-tint); border-color: color-mix(in srgb, var(--red-500) 30%, transparent); }
-.do-dont-label{ font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; margin: 0 0 8px; }
+.do-dont-label{ font-family: var(--font-mono); font-size: 12px; letter-spacing: var(--tracking-5); margin: 0 0 8px; }
 .do-dont-do .do-dont-label{ color: var(--green-500); }
 .do-dont-dont .do-dont-label{ color: var(--red-400); }
 .do-dont-list{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
@@ -4873,7 +4873,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .button-state-caption{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-5);
   color: var(--text-dim);
 }
 
@@ -5166,7 +5166,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .copy-dropdown-item-label{
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-2);
   color: var(--text-hi);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6247,7 +6247,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .affix-demo-bar{ flex: none; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--text-hi); }
 .affix-demo-bar.is-affixed{ position: absolute; left: 8px; right: 8px; background: var(--graphite-700); border-color: var(--red-500); box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 1; }
 .affix-demo-bar.is-disabled{ opacity: 0.4; }
-.affix-demo-badge{ font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--red-400); flex: none; }
+.affix-demo-badge{ font-family: var(--font-mono); font-size: 10px; letter-spacing: var(--tracking-5); text-transform: uppercase; color: var(--red-400); flex: none; }
 .affix-demo-badge--muted{ color: var(--text-dim); }
 
 /* ---------- Splitter demo (splitter-default.html) ---------- */
@@ -6267,7 +6267,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 /* ---------- Tree demo (tree-default.html) ---------- */
 .tree-demo-wrap{ width: 220px; font-family: var(--font-body); font-size: 13px; }
 .tree-demo-wrap.is-disabled{ opacity: 0.4; pointer-events: none; }
-.tree-demo-root{ margin: 0 0 6px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
+.tree-demo-root{ margin: 0 0 6px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: var(--tracking-6); text-transform: uppercase; color: var(--text-dim); }
 .tree-demo-row{ display: flex; align-items: center; gap: 4px; padding: 4px 6px; border-radius: var(--radius-sm); color: var(--text-hi); cursor: pointer; }
 .tree-demo-row:hover{ background: var(--graphite-800); }
 .tree-demo-row.is-selected{ background: var(--red-tint); color: var(--red-400); }
@@ -6319,7 +6319,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   padding: 6px 14px;
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.03em;
+  letter-spacing: var(--tracking-3);
   color: var(--text-mid);
   cursor: pointer;
   transition: background-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
@@ -6333,7 +6333,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .guide-subhead{
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-8);
   text-transform: uppercase;
   color: var(--text-dim);
   margin: 20px 0 8px;
@@ -6583,7 +6583,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-8);
   text-transform: uppercase;
 }
 .guide-dodont-case.is-do .guide-dodont-label{ color: var(--green-500); }
@@ -6640,7 +6640,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-8);
   text-transform: uppercase;
   color: var(--red-500);
 }
@@ -6677,7 +6677,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   margin: 0;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-4);
   color: var(--text-dim);
 }
 
@@ -6717,7 +6717,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-6);
   text-transform: uppercase;
   border: var(--border-width-1) solid transparent;
   /* Every page-title h1 this sits inside sets line-height: 38px (fixed px,
