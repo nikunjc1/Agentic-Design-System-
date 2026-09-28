@@ -386,7 +386,15 @@
         <p class="pattern-card-desc">A full-bleed hero above a contained content area.</p>
         <div class="pattern-diagram pattern-hero"><span class="pattern-block pattern-span-full pattern-hero-block">Hero</span><span class="pattern-block">Content</span></div>
       </div>
+
+      <div class="pattern-card">
+        <span class="pattern-card-name">Master-Detail</span>
+        <p class="pattern-card-desc">A scannable list drives which record's full detail shows beside it - email, settings, a record browser. Looks like Sidebar + Content, but the narrow pane is selectable content, not persistent app navigation.</p>
+        <div class="pattern-diagram pattern-sidebar"><span class="pattern-block pattern-narrow">List</span><span class="pattern-block">Detail</span></div>
+      </div>
     </div>
+
+    <p class="get-library-copy" style="margin-top:16px;">Overflow: when content exceeds the space a pattern gives it, the default is to scroll that one region (the way this shell's own sidebar and main content each scroll independently, never the whole page) - reach for truncation with an explicit "show more," or collapsing a secondary pane, only when scrolling that region isn't itself the answer (e.g. a fixed-height dashboard KPI row, or List's items in Master-Detail once virtualization is warranted per Table's own paginationAndVirtualization guidance).</p>
   </section>
 </main>
 
