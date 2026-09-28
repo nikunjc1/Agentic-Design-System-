@@ -262,7 +262,7 @@
       <li><strong>Comfortable</strong> - the default row height and cell padding, matching what's shown throughout this page's Live Preview.</li>
       <li><strong>Compact</strong> - reduced row height and cell padding, for scanning more rows within the same viewport height.</li>
     </ul>
-    <p class="guide-body-text">This design system doesn't yet have a dedicated Density foundation or token (Spacing documents the spacing scale, not a density switch) - so for now, Density is documented here as a two-value property local to Table. Promote it to a shared foundation if another data-dense component (List, Description) needs the same switch.</p>
+    <p class="guide-body-text">A sitewide density mode now exists (Settings &rarr; Density, backed by a data-density attribute the same way theme is), but Table's Size property above is still its own local control and isn't wired to that sitewide setting yet - the two aren't the same switch. Promote Table's Size onto the sitewide toggle once another data-dense component (List, Description) needs the same switch, rather than each maintaining its own.</p>
   </section>
 
   <section class="panel spacing-model-panel">
@@ -426,7 +426,7 @@
   },
   "density": {
     "modes": ["comfortable", "compact"],
-    "note": "Two-value property local to Table for now - this design system has no dedicated Density foundation/token yet."
+    "note": "Two-value property local to Table's own Size control, not yet wired to the sitewide data-density attribute (Settings -> Density) that now exists for the shell frame/panels."
   },
   "requiredStates": ["empty", "loading", "error"],
   "relatedComponents": [

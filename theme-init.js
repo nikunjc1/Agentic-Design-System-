@@ -5,6 +5,11 @@
   }catch(e){}
 
   try{
+    var d = localStorage.getItem("ads:density") || "comfortable";
+    document.documentElement.setAttribute("data-density", d);
+  }catch(e){}
+
+  try{
     var saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
     var themeColors = (saved && saved[t]) || (t === "dark" && saved && saved.light);
     var hex = themeColors && themeColors.primary && themeColors.primary.hex;

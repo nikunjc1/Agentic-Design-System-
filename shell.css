@@ -316,6 +316,14 @@ button{ font-family: inherit; }
   min-width: 0;
   padding: 32px 40px 80px;
 }
+/* Sitewide density - set via the toggle in Settings (shell.js
+   applyDensity/initDensityToggle), persisted the same way theme is.
+   Scoped for now to the two safe, universal shell surfaces every page
+   shares; extending it into individual components (starting with
+   Table's own local size/density property) is tracked as a follow-up
+   rather than rushed in alongside this. */
+[data-density="compact"] .app-main{ padding: var(--space-20) var(--space-24) var(--space-48); }
+[data-density="compact"] .panel{ padding: var(--space-16); }
 
 .page-eyebrow{
   font-family: var(--font-mono);

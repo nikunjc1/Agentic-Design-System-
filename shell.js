@@ -3,6 +3,7 @@
 
   const COLLAPSE_KEY_PREFIX = "ads:nav-collapsed:";
   const THEME_KEY = "ads:theme";
+  const DENSITY_KEY = "ads:density";
   // Coalesce rapid property edits before rebuilding a potentially large state matrix.
   const renderTimers = new WeakMap();
   window.ADS_scheduleRender = function(render) {
@@ -137,6 +138,30 @@
     });
   }
 
+  // Sitewide density, same pattern as theme: one attribute on <html>, read
+  // once at boot (theme-init.js) to avoid a flash of the wrong density,
+  // then live-toggleable and synced across tabs the same way theme is.
+  function applyDensity(density) {
+    document.documentElement.setAttribute("data-density", density);
+    const toggle = document.getElementById("densityToggle");
+    const label = document.getElementById("densityToggleLabel");
+    if (toggle) toggle.setAttribute("aria-pressed", density === "compact" ? "true" : "false");
+    if (label) label.textContent = density === "compact" ? "Compact" : "Comfortable";
+  }
+  window.ADS_applyDensity = applyDensity;
+
+  function initDensityToggle() {
+    const toggle = document.getElementById("densityToggle");
+    applyDensity(document.documentElement.getAttribute("data-density") || "comfortable");
+    if (!toggle) return;
+    toggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-density") === "compact" ? "compact" : "comfortable";
+      const next = current === "compact" ? "comfortable" : "compact";
+      writePreference(DENSITY_KEY, next);
+      applyDensity(next);
+    });
+  }
+
   // The <head> boot script only reads localStorage once, at load - it has
   // no way to know the theme changed in a DIFFERENT already-open tab/window
   // of this same site. Without this, switching between several tabs opened
@@ -150,6 +175,10 @@
     if (!e.key) return;
     if (e.key === THEME_KEY) {
       applyTheme(e.newValue === "dark" ? "dark" : "light");
+      return;
+    }
+    if (e.key === DENSITY_KEY) {
+      applyDensity(e.newValue === "compact" ? "compact" : "comfortable");
       return;
     }
     if (COLOR_STORAGE_KEYS.includes(e.key)) {
@@ -422,6 +451,7 @@
     initSidebarDrawer();
     initSidebarSearch();
     initThemeToggle();
+    initDensityToggle();
     initGuideViewToggle();
 
     // A fresh page load always starts the sidebar scrolled to its top,
