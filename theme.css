@@ -51,8 +51,20 @@
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Inter", ui-monospace, "SFMono-Regular", monospace;
 
+  /* Named tokens (sm/md) predate this pass and are consumed ~40 times
+     already - kept as-is rather than renamed. The rest of the documented
+     Balanced scale (radius.html) follows the same value-suffixed
+     convention as --space-*/--shadow-*, since there's no clean semantic
+     ladder that fits all 9 steps without colliding with sm/md. */
+  --radius-none: 0px;
+  --radius-2: 2px;
   --radius-sm: 4px;
+  --radius-6: 6px;
   --radius-md: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+  --radius-full: 9999px;
 
   /* Spacing - the "Balanced (4px)" scale from the Spacing foundation page,
      as real tokens. Every padding/margin/gap value elsewhere in this file

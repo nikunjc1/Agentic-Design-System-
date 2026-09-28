@@ -1980,13 +1980,13 @@ button{ font-family: inherit; }
   overflow: hidden;
 }
 .grid-demo-columns{ display: flex; gap: 4px; padding: 6px; }
-.grid-demo-col{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+.grid-demo-col{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: var(--radius-2); }
 
 .grid-demo-rows{ display: flex; flex-direction: column; gap: 4px; padding: 6px; height: 100%; box-sizing: border-box; }
-.grid-demo-row-line{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+.grid-demo-row-line{ flex: 1; background: var(--red-tint); border: 1px solid var(--red-500); border-radius: var(--radius-2); }
 
 .grid-demo-cellgrid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; height: 100%; box-sizing: border-box; }
-.grid-demo-cell{ background: var(--red-tint); border: 1px solid var(--red-500); border-radius: 2px; }
+.grid-demo-cell{ background: var(--red-tint); border: 1px solid var(--red-500); border-radius: var(--radius-2); }
 
 .grid-demo-baseline{ display: flex; flex-direction: column; justify-content: space-between; padding: 6px; height: 100%; box-sizing: border-box; }
 .grid-demo-baseline-line{ height: 1px; background: var(--red-500); opacity: 0.6; }
@@ -2071,7 +2071,7 @@ button{ font-family: inherit; }
   display: flex; align-items: center; justify-content: center;
   background: var(--red-tint);
   border: 1px solid var(--red-500);
-  border-radius: 2px;
+  border-radius: var(--radius-2);
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--text-dim);
@@ -2139,7 +2139,7 @@ button{ font-family: inherit; }
 .btn-demo.is-loading{ cursor: wait; pointer-events: none; }
 .btn-demo-spinner{
   box-sizing: border-box;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   /* currentColor at reduced strength for the base ring, full strength for
      the leading edge - self-adjusts to each button type's own text color
      (white on Primary's red fill, a tinted accent elsewhere) instead of
@@ -3192,7 +3192,7 @@ button{ font-family: inherit; }
    panel would visually overlap the Live Preview matrix row beneath it
    instead of reserving its own space. */
 .autocomplete-demo-field:has(.autocomplete-demo-panel){ margin-bottom: 128px; }
-.autocomplete-demo-option{ box-sizing: border-box; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
+.autocomplete-demo-option{ box-sizing: border-box; padding: 8px 10px; border-radius: var(--radius-6); font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
 .autocomplete-demo-option.is-active{ background: var(--graphite-800); }
 
 /* ---------- Mention demo (mention-default.html) ----------
@@ -3239,9 +3239,9 @@ button{ font-family: inherit; }
 .mention-demo-chip{ display: inline-block; background: var(--red-tint); color: var(--red-400); border-radius: 4px; padding: 2px 4px; font-weight: 500; }
 
 .mention-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; background: var(--graphite-900); border: 1px solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 4px; }
-.mention-demo-person{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
+.mention-demo-person{ box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-6); font-family: var(--font-body); font-size: 14px; color: var(--text-hi); cursor: default; user-select: none; }
 .mention-demo-person.is-active{ background: var(--graphite-800); }
-.mention-demo-avatar{ width: 22px; height: 22px; flex-shrink: 0; border-radius: 9999px; background: var(--graphite-700); color: var(--text-hi); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.mention-demo-avatar{ width: 22px; height: 22px; flex-shrink: 0; border-radius: var(--radius-full); background: var(--graphite-700); color: var(--text-hi); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 .mention-demo-field:has(.mention-demo-panel){ margin-bottom: 148px; }
 
 /* ---------- Date Range demo (date-range-default.html) ----------
@@ -3362,8 +3362,8 @@ button{ font-family: inherit; }
 .colorpicker-demo-control--h28 .colorpicker-demo-swatch{ width: 18px; height: 18px; border-radius: 4px; }
 .colorpicker-demo-control--h32 .colorpicker-demo-swatch{ width: 20px; height: 20px; border-radius: 5px; }
 .colorpicker-demo-control--h36 .colorpicker-demo-swatch{ width: 22px; height: 22px; border-radius: 5px; }
-.colorpicker-demo-control--h40 .colorpicker-demo-swatch{ width: 26px; height: 26px; border-radius: 6px; }
-.colorpicker-demo-control--h44 .colorpicker-demo-swatch{ width: 28px; height: 28px; border-radius: 6px; }
+.colorpicker-demo-control--h40 .colorpicker-demo-swatch{ width: 26px; height: 26px; border-radius: var(--radius-6); }
+.colorpicker-demo-control--h44 .colorpicker-demo-swatch{ width: 28px; height: 28px; border-radius: var(--radius-6); }
 .colorpicker-demo-control--h48 .colorpicker-demo-swatch{ width: 32px; height: 32px; border-radius: 7px; }
 .colorpicker-demo-control--h56 .colorpicker-demo-swatch{ width: 38px; height: 38px; border-radius: 8px; }
 
@@ -3390,7 +3390,7 @@ button{ font-family: inherit; }
 
 .colorpicker-demo-panel{ position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; box-sizing: border-box; background: var(--graphite-900); border: 1px solid var(--line-strong); border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.4); padding: 8px; }
 .colorpicker-demo-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.colorpicker-demo-swatch-option{ width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
+.colorpicker-demo-swatch-option{ width: 28px; height: 28px; border-radius: var(--radius-6); border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
 .colorpicker-demo-swatch-option.is-active{ outline: 2px solid var(--red-400); outline-offset: 2px; }
 .colorpicker-demo-field:has(.colorpicker-demo-panel){ margin-bottom: 100px; }
 
@@ -3402,10 +3402,10 @@ button{ font-family: inherit; }
 .slider-demo-field{ display: flex; flex-direction: column; gap: 10px; width: 220px; }
 .slider-demo-label{ font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-hi); margin: 0; }
 .slider-demo-track-wrap{ position: relative; padding: 10px 0; cursor: pointer; }
-.slider-demo-track{ width: 100%; border-radius: 9999px; position: relative; overflow: visible; background: var(--graphite-800); }
+.slider-demo-track{ width: 100%; border-radius: var(--radius-full); position: relative; overflow: visible; background: var(--graphite-800); }
 .slider-demo-track-wrap:hover .slider-demo-track, .slider-demo-track-wrap.is-hover .slider-demo-track{ background: var(--graphite-700); }
-.slider-demo-fill{ position: absolute; top: 0; bottom: 0; border-radius: 9999px; background: var(--red-500); }
-.slider-demo-thumb{ position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 9999px; background: #FFFFFF; border: 2px solid var(--red-500); transform: translate(-50%, -50%); box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+.slider-demo-fill{ position: absolute; top: 0; bottom: 0; border-radius: var(--radius-full); background: var(--red-500); }
+.slider-demo-thumb{ position: absolute; top: 50%; width: 16px; height: 16px; border-radius: var(--radius-full); background: #FFFFFF; border: 2px solid var(--red-500); transform: translate(-50%, -50%); box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
 .slider-demo-track-wrap:focus-within .slider-demo-thumb, .slider-demo-track-wrap.is-focus .slider-demo-thumb{ outline: 2px solid var(--red-400); outline-offset: 2px; }
 .slider-demo-track-wrap.is-disabled, .slider-demo-track-wrap:has(:disabled){ opacity: 0.4; cursor: not-allowed; }
 
@@ -3553,7 +3553,7 @@ button{ font-family: inherit; }
 .tooltip-demo-wrap--left{ flex-direction: row; }
 .tooltip-demo-wrap--right{ flex-direction: row-reverse; }
 
-.tooltip-demo-trigger{ flex: none; width: 28px; height: 28px; border-radius: 9999px; background: var(--graphite-800); border: 1px solid var(--line-strong); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: default; }
+.tooltip-demo-trigger{ flex: none; width: 28px; height: 28px; border-radius: var(--radius-full); background: var(--graphite-800); border: 1px solid var(--line-strong); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: default; }
 
 /* A tooltip is meant to pop as an overlay, so - unlike the rest of this
    system's surfaces, which lighten in light theme and darken in dark
@@ -3604,7 +3604,7 @@ button{ font-family: inherit; }
 /* ---------- Float Button demo (float-button-default.html) ---------- */
 .floatbutton-demo-wrap{ display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
 
-.floatbutton-demo-btn{ box-sizing: border-box; border-radius: 9999px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; position: relative; transition: background-color var(--duration-base) var(--ease-standard); }
+.floatbutton-demo-btn{ box-sizing: border-box; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; position: relative; transition: background-color var(--duration-base) var(--ease-standard); }
 .floatbutton-demo-btn--square{ border-radius: var(--radius-md); }
 
 .floatbutton-demo-btn--h40{ width: 40px; height: 40px; }
@@ -3630,7 +3630,7 @@ button{ font-family: inherit; }
 
 .floatbutton-demo-btn:disabled, .floatbutton-demo-btn.is-disabled{ opacity: 0.4; cursor: not-allowed; }
 
-.floatbutton-demo-badge{ position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: 9999px; background: var(--danger-500); border: 2px solid var(--graphite-950); }
+.floatbutton-demo-badge{ position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--danger-500); border: 2px solid var(--graphite-950); }
 
 .floatbutton-demo-tooltip-label{ font-family: var(--font-body); font-size: 11px; color: var(--text-dim); text-align: center; }
 
@@ -3705,7 +3705,7 @@ button{ font-family: inherit; }
 
 .cascader-demo-column{ flex: 1 1 0; min-width: 110px; padding: 4px; display: flex; flex-direction: column; gap: 2px; border-inline-end: 1px solid var(--line); }
 .cascader-demo-column:last-child{ border-inline-end: none; }
-.cascader-demo-option{ box-sizing: border-box; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: default; user-select: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.cascader-demo-option{ box-sizing: border-box; padding: 8px 10px; border-radius: var(--radius-6); font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: default; user-select: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .cascader-demo-option.is-active{ background: var(--graphite-800); color: var(--red-400); }
 /* Search - a real input inside the trigger itself (not a separate field),
    matching how typing to filter actually replaces the closed-value display
@@ -3713,7 +3713,7 @@ button{ font-family: inherit; }
 .cascader-demo-search{ flex: 1 1 auto; min-width: 0; }
 .cascader-demo-search-input{ width: 100%; border: none; outline: none; background: transparent; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); padding: 0; }
 .cascader-demo-search-input::placeholder{ color: var(--text-dim); }
-.cascader-demo-search mark{ background: var(--red-tint); color: var(--red-400); border-radius: 2px; }
+.cascader-demo-search mark{ background: var(--red-tint); color: var(--red-400); border-radius: var(--radius-2); }
 /* Multiple selection - a real checkbox per option, independent of the
    single active-row highlight the base matrix uses. */
 .cascader-demo-option--checkable{ justify-content: flex-start; }
@@ -3731,7 +3731,7 @@ button{ font-family: inherit; }
 .transfer-demo-column-title{ display: flex; justify-content: space-between; padding: 8px 12px; font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--text-hi); background: var(--graphite-800); border-bottom: 1px solid var(--line); }
 .transfer-demo-search{ margin: 8px; padding: 6px 8px; font-family: var(--font-body); font-size: 12px; background: var(--graphite-800); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: var(--text-hi); }
 .transfer-demo-list{ flex: 1 1 auto; overflow-y: auto; padding: 4px; display: flex; flex-direction: column; gap: 2px; }
-.transfer-demo-item{ display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: pointer; }
+.transfer-demo-item{ display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: var(--radius-6); font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: pointer; }
 .transfer-demo-item:hover, .transfer-demo-item.is-hover{ background: var(--graphite-800); }
 
 /* The Do/Don't guide claims each row's checkbox is "independently
@@ -3794,14 +3794,14 @@ button{ font-family: inherit; }
 .treeselect-demo-field:has(.treeselect-demo-panel){ margin-bottom: 172px; }
 
 .treeselect-demo-tree{ display: flex; flex-direction: column; gap: 2px; }
-.treeselect-demo-node{ box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 6px; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: default; user-select: none; }
+.treeselect-demo-node{ box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: var(--radius-6); font-family: var(--font-body); font-size: 13px; color: var(--text-hi); cursor: default; user-select: none; }
 .treeselect-demo-node.is-active{ background: var(--graphite-800); color: var(--red-400); }
 /* Search - a real input inside the trigger itself, same convention as
    Cascader's own search field. */
 .treeselect-demo-search{ flex: 1 1 auto; min-width: 0; }
 .treeselect-demo-search-input{ width: 100%; border: none; outline: none; background: transparent; font-family: var(--font-body); font-size: 13px; color: var(--text-hi); padding: 0; }
 .treeselect-demo-search-input::placeholder{ color: var(--text-dim); }
-.treeselect-demo-node mark{ background: var(--red-tint); color: var(--red-400); border-radius: 2px; }
+.treeselect-demo-node mark{ background: var(--red-tint); color: var(--red-400); border-radius: var(--radius-2); }
 /* Multiple selection - a real checkbox per node, parents included,
    independent of the single active-row highlight the base matrix uses. */
 .treeselect-demo-node--checkable .treeselect-demo-node-check{ display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; cursor: default; }
@@ -3831,7 +3831,7 @@ button{ font-family: inherit; }
 .upload-demo-file-row.is-complete .upload-demo-file-status{ color: var(--green-500); }
 .upload-demo-file-row.is-error .upload-demo-file-status{ color: var(--danger-500); }
 
-.upload-demo-file-progress{ width: 100%; height: 4px; background: var(--graphite-700); border-radius: 9999px; overflow: hidden; margin-top: 2px; }
+.upload-demo-file-progress{ width: 100%; height: 4px; background: var(--graphite-700); border-radius: var(--radius-full); overflow: hidden; margin-top: 2px; }
 .upload-demo-file-progress-fill{ height: 100%; background: var(--red-500); }
 .upload-demo-file-error-text{ font-family: var(--font-body); font-size: 11px; color: var(--danger-500); margin-top: 2px; }
 
@@ -3876,7 +3876,7 @@ button{ font-family: inherit; }
 .avatar-demo-group-name-item{ font-family: var(--font-body); font-size: 13px; color: var(--text-hi); }
 .avatar-demo-group-name-item--overflow{ color: var(--text-dim); }
 
-.avatar-demo-circle{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 9999px; font-family: var(--font-body); font-weight: 600; color: #FFFFFF; overflow: hidden; flex: none; }
+.avatar-demo-circle{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-full); font-family: var(--font-body); font-weight: 600; color: #FFFFFF; overflow: hidden; flex: none; }
 .avatar-demo-circle--square{ border-radius: var(--radius-md); }
 .avatar-demo-circle--initials{ background: var(--red-500); }
 .avatar-demo-circle--icon{ background: var(--graphite-700); color: var(--text-hi); }
@@ -3888,7 +3888,7 @@ button{ font-family: inherit; }
 .avatar-demo-circle--h40{ width: 40px; height: 40px; font-size: 16px; }
 .avatar-demo-circle--h48{ width: 48px; height: 48px; font-size: 19px; }
 
-.avatar-demo-status{ position: absolute; bottom: -1px; right: -1px; border-radius: 9999px; border: 2px solid var(--graphite-950); box-sizing: border-box; }
+.avatar-demo-status{ position: absolute; bottom: -1px; right: -1px; border-radius: var(--radius-full); border: 2px solid var(--graphite-950); box-sizing: border-box; }
 .avatar-demo-wrap[data-size="24"] .avatar-demo-status{ width: 7px; height: 7px; border-width: 1.5px; }
 .avatar-demo-wrap[data-size="32"] .avatar-demo-status{ width: 9px; height: 9px; }
 .avatar-demo-wrap[data-size="40"] .avatar-demo-status{ width: 10px; height: 10px; }
@@ -3919,9 +3919,9 @@ button{ font-family: inherit; }
 .badge-demo-host-wrap{ display: inline-flex; position: relative; }
 .badge-demo-host{ width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--graphite-800); border: 1px solid var(--line-strong); border-radius: var(--radius-md); color: var(--text-dim); }
 .badge-demo-host svg{ width: 16px; height: 16px; }
-.badge-demo-badge{ position: absolute; top: -6px; right: -6px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--graphite-950); border-radius: 9999px; box-sizing: border-box; }
-.badge-demo-count{ position: relative; min-width: 18px; height: 18px; padding: 0 6px; border-radius: 9999px; font-family: var(--font-body); font-size: 11px; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; justify-content: center; }
-.badge-demo-dot{ position: relative; width: 10px; height: 10px; border-radius: 9999px; }
+.badge-demo-badge{ position: absolute; top: -6px; right: -6px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--graphite-950); border-radius: var(--radius-full); box-sizing: border-box; }
+.badge-demo-count{ position: relative; min-width: 18px; height: 18px; padding: 0 6px; border-radius: var(--radius-full); font-family: var(--font-body); font-size: 11px; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+.badge-demo-dot{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); }
 
 .badge-demo-badge--default .badge-demo-count, .badge-demo-badge--default .badge-demo-dot{ background: var(--red-500); }
 .badge-demo-badge--success .badge-demo-count, .badge-demo-badge--success .badge-demo-dot{ background: var(--green-500); }
@@ -3945,11 +3945,11 @@ button{ font-family: inherit; }
 }
 
 .badge-demo-status-row{ display: inline-flex; align-items: center; gap: 8px; }
-.badge-demo-status-dot--default{ position: relative; width: 10px; height: 10px; border-radius: 9999px; background: var(--red-500); }
-.badge-demo-status-dot--success{ position: relative; width: 10px; height: 10px; border-radius: 9999px; background: var(--green-500); }
-.badge-demo-status-dot--processing{ position: relative; width: 10px; height: 10px; border-radius: 9999px; background: var(--blue-500); }
-.badge-demo-status-dot--warning{ position: relative; width: 10px; height: 10px; border-radius: 9999px; background: var(--amber-500); }
-.badge-demo-status-dot--error{ position: relative; width: 10px; height: 10px; border-radius: 9999px; background: var(--danger-500); }
+.badge-demo-status-dot--default{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--red-500); }
+.badge-demo-status-dot--success{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--green-500); }
+.badge-demo-status-dot--processing{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--blue-500); }
+.badge-demo-status-dot--warning{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--amber-500); }
+.badge-demo-status-dot--error{ position: relative; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--danger-500); }
 .badge-demo-status-label{ font-family: var(--font-body); font-size: 13px; color: var(--text-hi); }
 /* Size (2) - Small tightens the Count pill and Status dot+label together;
    the host icon and every color stay identical at either size. */
@@ -3995,7 +3995,7 @@ button{ font-family: inherit; }
    padding/margin, which ate into the fixed 36px/26px box and stacked on
    top of .calendar-demo-days' own 2px grid gap, throwing off both the
    cell's internal centering and the gutter between cells. */
-.calendar-demo-day{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; margin: 0; font-family: var(--font-body); line-height: normal; color: var(--text-hi); background: none; border: none; border-radius: 6px; cursor: pointer; }
+.calendar-demo-day{ box-sizing: border-box; display: flex; align-items: center; justify-content: center; position: relative; padding: 0; margin: 0; font-family: var(--font-body); line-height: normal; color: var(--text-hi); background: none; border: none; border-radius: var(--radius-6); cursor: pointer; }
 .calendar-demo-day:hover:not(.is-outside-month){ background: var(--graphite-800); }
 .calendar-demo-day:focus-visible{ outline: 2px solid var(--red-400); outline-offset: 1px; }
 .calendar-demo-grid--full .calendar-demo-day{ width: 36px; height: 36px; font-size: 13px; }
@@ -4003,7 +4003,7 @@ button{ font-family: inherit; }
 .calendar-demo-day.is-outside-month{ color: var(--text-dim); opacity: 0.4; cursor: default; }
 .calendar-demo-day.is-today{ background: var(--red-500); color: #FFFFFF; font-weight: 700; }
 .calendar-demo-day.is-today:hover{ background: var(--red-500); }
-.calendar-demo-day.has-event::after{ content: ""; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 9999px; background: var(--blue-500); }
+.calendar-demo-day.has-event::after{ content: ""; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: var(--radius-full); background: var(--blue-500); }
 .calendar-demo-grid--compact .calendar-demo-day.has-event::after{ bottom: auto; top: 2px; right: 2px; left: auto; transform: none; }
 .calendar-demo-day.is-range-start, .calendar-demo-day.is-range-middle, .calendar-demo-day.is-range-end{ background: var(--red-tint); color: var(--red-400); }
 .calendar-demo-day.is-range-start{ border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
@@ -4126,7 +4126,7 @@ button{ font-family: inherit; }
 /* ---------- Empty demo (empty-default.html) ---------- */
 .empty-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 24px; width: 220px; }
 .empty-demo-icon-wrap{ display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
-.empty-demo-icon-wrap--default{ width: 56px; height: 56px; border-radius: 9999px; background: var(--graphite-800); }
+.empty-demo-icon-wrap--default{ width: 56px; height: 56px; border-radius: var(--radius-full); background: var(--graphite-800); }
 .empty-demo-icon-wrap--default svg{ width: 28px; height: 28px; }
 .empty-demo-icon-wrap--simple{ width: 40px; height: 40px; }
 .empty-demo-icon-wrap--simple svg{ width: 36px; height: 36px; }
@@ -4151,7 +4151,7 @@ button{ font-family: inherit; }
 .image-demo-error{ display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-dim); }
 .image-demo-error svg{ width: 24px; height: 24px; }
 .image-demo-error-text{ font-family: var(--font-body); font-size: 11px; }
-.image-demo-zoom-icon{ position: absolute; bottom: 6px; right: 6px; width: 22px; height: 22px; border-radius: 9999px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; color: #FFFFFF; opacity: 0.7; transition: opacity var(--duration-base) var(--ease-standard); }
+.image-demo-zoom-icon{ position: absolute; bottom: 6px; right: 6px; width: 22px; height: 22px; border-radius: var(--radius-full); background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; color: #FFFFFF; opacity: 0.7; transition: opacity var(--duration-base) var(--ease-standard); }
 .image-demo-frame:hover .image-demo-zoom-icon, .image-demo-frame--hover .image-demo-zoom-icon{ opacity: 1; }
 .image-demo-zoom-icon svg{ width: 12px; height: 12px; }
 .image-demo-caption{ font-family: var(--font-body); font-size: 12px; color: var(--text-dim); }
@@ -4660,7 +4660,7 @@ button{ font-family: inherit; }
 .skeleton-demo-line{ height: 10px; border-radius: 4px; background: var(--graphite-700); width: 100%; }
 .skeleton-demo-line + .skeleton-demo-line{ margin-top: 8px; }
 .skeleton-demo-line--short{ width: 60%; }
-.skeleton-demo-avatar{ width: 40px; height: 40px; border-radius: 9999px; background: var(--graphite-700); flex: none; }
+.skeleton-demo-avatar{ width: 40px; height: 40px; border-radius: var(--radius-full); background: var(--graphite-700); flex: none; }
 .skeleton-demo-media{ width: 100%; height: 100px; border-radius: var(--radius-md); background: var(--graphite-700); margin-bottom: 10px; }
 .skeleton-demo-row{ display: flex; gap: 12px; align-items: flex-start; }
 .skeleton-demo-col{ flex: 1 1 auto; min-width: 0; }
@@ -4699,7 +4699,7 @@ button{ font-family: inherit; }
 
 /* ---------- Spin (indeterminate rotating loading ring) ---------- */
 @keyframes spin-demo-rotate{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }
-.spin-demo-ring{ box-sizing: border-box; border-radius: 9999px; border: 2.5px solid var(--graphite-700); border-top-color: var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex: none; }
+.spin-demo-ring{ box-sizing: border-box; border-radius: var(--radius-full); border: 2.5px solid var(--graphite-700); border-top-color: var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex: none; }
 .spin-demo-ring--small{ width: 14px; height: 14px; border-width: 2px; }
 .spin-demo-ring--default{ width: 20px; height: 20px; }
 .spin-demo-ring--large{ width: 28px; height: 28px; border-width: 3px; }
@@ -5238,7 +5238,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .select-demo-option{
   box-sizing: border-box;
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-6);
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--text-hi);
@@ -5252,7 +5252,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   width: 14px;
   height: 14px;
   box-sizing: border-box;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   border: 1.5px solid var(--line-strong);
   border-top-color: var(--text-dim);
   animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite;
@@ -5455,10 +5455,10 @@ a.system-card{ text-decoration: none; color: inherit; }
 
 /* Corner radius (4 options) - reusable utility classes for shipped Copy
    Code output; the Live Preview applies radius inline per-cell instead. */
-.checkbox--radius-2{ border-radius: 2px; }
+.checkbox--radius-2{ border-radius: var(--radius-2); }
 .checkbox--radius-4{ border-radius: 4px; }
-.checkbox--radius-6{ border-radius: 6px; }
-.checkbox--radius-pill{ border-radius: 9999px; }
+.checkbox--radius-6{ border-radius: var(--radius-6); }
+.checkbox--radius-pill{ border-radius: var(--radius-full); }
 
 .checkbox-demo-icon{ display: flex; color: #FFFFFF; }
 .checkbox-demo-label{ font-size: 14px; color: var(--text-hi); }
@@ -5640,7 +5640,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   width: 60%;
   height: 60%;
   box-sizing: border-box;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   border: 1.5px solid var(--graphite-500);
   border-top-color: var(--red-500);
   animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite;
@@ -5747,8 +5747,8 @@ a.system-card{ text-decoration: none; color: inherit; }
 .tabs-demo-bar--radius-0.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 0px; }
 .tabs-demo-bar--radius-4.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 4px; }
 .tabs-demo-bar--radius-8.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 8px; }
-.tabs-demo-bar--radius-12.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 12px; }
-.tabs-demo-bar--radius-pill.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: 9999px; }
+.tabs-demo-bar--radius-12.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: var(--radius-12); }
+.tabs-demo-bar--radius-pill.tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius: var(--radius-full); }
 
 /* ---------- Anchor demo (anchor.html / anchor-default.html) ---------- */
 .anchor-demo-link{
@@ -5783,7 +5783,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   text-decoration: none;
   outline: 2px solid var(--red-400);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-2);
 }
 .anchor-demo-link:visited,
 .anchor-demo-link.is-visited{
@@ -5841,7 +5841,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .breadcrumb-demo-link.is-focus{
   outline: 2px solid var(--red-400);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-2);
 }
 .breadcrumb-demo-link[aria-disabled="true"],
 .breadcrumb-demo-link.is-disabled{
@@ -5955,8 +5955,8 @@ a.system-card{ text-decoration: none; color: inherit; }
 .pagination--radius-0{ border-radius: 0px; }
 .pagination--radius-4{ border-radius: 4px; }
 .pagination--radius-8{ border-radius: 8px; }
-.pagination--radius-12{ border-radius: 12px; }
-.pagination--radius-pill{ border-radius: 9999px; }
+.pagination--radius-12{ border-radius: var(--radius-12); }
+.pagination--radius-pill{ border-radius: var(--radius-full); }
 
 /* ---------- Menu demo (menu.html / menu-default.html) ----------
    The floating panel/list of commands itself - not the trigger button
@@ -6059,8 +6059,8 @@ a.system-card{ text-decoration: none; color: inherit; }
 .menu-demo-panel--radius-0{ border-radius: 0px; }
 .menu-demo-panel--radius-4{ border-radius: 4px; }
 .menu-demo-panel--radius-8{ border-radius: 8px; }
-.menu-demo-panel--radius-12{ border-radius: 12px; }
-.menu-demo-panel--radius-pill{ border-radius: 9999px; }
+.menu-demo-panel--radius-12{ border-radius: var(--radius-12); }
+.menu-demo-panel--radius-pill{ border-radius: var(--radius-full); }
 
 /* ---------- Steps demo (steps.html / steps-default.html) ---------- */
 .steps-demo-row{
@@ -6092,7 +6092,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   box-sizing: border-box;
   font-family: var(--font-body);
   font-weight: 700;
@@ -6260,7 +6260,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 .splitter-demo-wrap--horizontal .splitter-demo-divider{ width: 6px; cursor: col-resize; }
 .splitter-demo-wrap--vertical .splitter-demo-divider{ height: 6px; cursor: row-resize; }
 .splitter-demo-divider.is-dragging{ background: var(--red-500); }
-.splitter-demo-handle{ width: 3px; height: 16px; border-radius: 2px; background: var(--text-dim); }
+.splitter-demo-handle{ width: 3px; height: 16px; border-radius: var(--radius-2); background: var(--text-dim); }
 .splitter-demo-wrap--vertical .splitter-demo-handle{ width: 16px; height: 3px; }
 .splitter-demo-divider.is-dragging .splitter-demo-handle{ background: #FFFFFF; }
 
