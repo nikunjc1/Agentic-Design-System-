@@ -212,6 +212,25 @@
   --card-shadow-rest: var(--shadow-sm);
   --card-shadow-hover: var(--shadow-md);
   --card-shadow-pressed: var(--shadow-xs);
+
+  /* AI Foundation - this system's own name is "Agentic Design System,"
+     but until now nothing distinguished AI-generated/AI-driven content
+     from anything else. One new hue (violet - the common cross-industry
+     association for "AI," distinct from brand red and every status
+     color so it can never be confused with an error/warning/success
+     state) plus aliases onto the existing semantic status colors for
+     confidence and agent outcome, since "high/medium/low confidence"
+     and "succeeded/failed" are already exactly what those tokens mean.
+     Theme-independent, same reasoning as brand/status: an AI-generated
+     badge should read as the same color regardless of light/dark. */
+  --color-ai-accent: #8b5cf6;
+  --color-ai-accent-strong: #7c3aed;
+  --color-ai-accent-tint: rgba(139,92,246,0.12);
+  --color-ai-confidence-high: var(--green-500);
+  --color-ai-confidence-medium: var(--amber-500);
+  --color-ai-confidence-low: var(--danger-500);
+  --color-agent-success: var(--green-500);
+  --color-agent-failure: var(--danger-500);
 }
 
 /* Light theme - opt-in via data-theme="light" on <html>.

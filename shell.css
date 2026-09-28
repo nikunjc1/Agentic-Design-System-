@@ -818,6 +818,55 @@ button{ font-family: inherit; }
 .badge-optional{ color: var(--text-dim); background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); }
 .badge-auto{ color: var(--blue-500); background: rgba(79,143,230,0.12); }
 .badge-custom{ color: var(--green-500); background: rgba(47,191,110,0.12); }
+.badge-ai{ color: var(--color-ai-accent-strong); background: var(--color-ai-accent-tint); }
+
+/* AI Foundation - confidence, agent status, streaming content and
+   explainability. Kept as plain, composable classes (not a new
+   component page's bespoke markup) so any component can adopt them. */
+.ai-confidence, .ai-agent-status{ display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; }
+.ai-confidence-dot, .ai-agent-status-dot{ width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.ai-confidence--high .ai-confidence-dot{ background: var(--color-ai-confidence-high); }
+.ai-confidence--high{ color: var(--color-ai-confidence-high); }
+.ai-confidence--medium .ai-confidence-dot{ background: var(--color-ai-confidence-medium); }
+.ai-confidence--medium{ color: var(--color-ai-confidence-medium); }
+.ai-confidence--low .ai-confidence-dot{ background: var(--color-ai-confidence-low); }
+.ai-confidence--low{ color: var(--color-ai-confidence-low); }
+.ai-agent-status--success{ color: var(--color-agent-success); }
+.ai-agent-status--success .ai-agent-status-dot{ background: var(--color-agent-success); }
+.ai-agent-status--failure{ color: var(--color-agent-failure); }
+.ai-agent-status--failure .ai-agent-status-dot{ background: var(--color-agent-failure); }
+
+.ai-streaming-skeleton{
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--color-ai-accent-tint) 25%, rgba(139,92,246,0.22) 50%, var(--color-ai-accent-tint) 75%);
+  background-size: 200% 100%;
+  animation: image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite;
+}
+
+.ai-explain{
+  border: var(--border-width-1) solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--graphite-900);
+  padding: var(--space-12) var(--space-16);
+}
+.ai-explain summary{
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ai-accent-strong);
+}
+.ai-explain-body{ margin: var(--space-8) 0 0; font-size: 13px; line-height: 1.6; color: var(--text-mid); }
+.ai-explain-citations{ margin: var(--space-8) 0 0; padding-inline-start: 18px; font-size: 12px; color: var(--text-dim); }
+
+.ai-agent-demo-card{
+  max-width: 480px;
+  border: var(--border-width-1) solid var(--color-ai-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-ai-accent-tint);
+  padding: var(--space-16);
+}
+.ai-agent-status{ margin: 0; }
 
 .color-rgba{
   font-family: var(--font-mono);
@@ -2291,6 +2340,15 @@ button{ font-family: inherit; }
 .btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: rgba(47,191,110,0.26); }
 .btn-demo--approve:focus-visible, .btn-demo--approve.is-focus{ outline: 2px solid var(--green-500); outline-offset: 2px; }
 .btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
+
+/* Reject - approve's counterpart, same structure, danger instead of
+   success. An AI-suggestion review needs both, not just an approve
+   path with no equally-visible way to decline one. */
+.btn-demo--reject{ background: rgba(255,3,26,0.1); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
+.btn-demo--reject:hover, .btn-demo--reject.is-hover{ background: rgba(255,3,26,0.16); }
+.btn-demo--reject:active, .btn-demo--reject.is-pressed{ background: rgba(255,3,26,0.26); }
+.btn-demo--reject:focus-visible, .btn-demo--reject.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
+.btn-demo--reject:disabled, .btn-demo--reject.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 .button-type-demo{ margin-top: 12px; }
 

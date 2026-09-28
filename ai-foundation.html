@@ -4,7 +4,7 @@
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Settings - Agentic Design System</title>
+<title>AI &amp; Agents - Agentic Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -163,15 +163,98 @@
 </aside>
 
 <main class="app-main">
+  <p class="page-eyebrow">Foundations &middot; AI &amp; Agents</p>
+  <h1 class="page-title">AI &amp; Agents</h1>
+  <p class="page-lede">This is the Agentic Design System, but until now nothing in it visually distinguished AI-generated content, agent actions, or how sure the system is about either. One accent color, four real components, all built on tokens - not aspirational copy.</p>
 
-<p class="page-eyebrow">Your workspace</p><h1 class="page-title">Settings</h1><p class="page-lede">Manage your product context, appearance and handoff from one place.</p>
-<section class="setup-panel"><h2>Project and profile</h2><p id="profileSummary"></p><div class="setup-actions"><a class="btn btn-primary" href="new-project.html">Edit product setup</a><a class="btn btn-ghost" href="md-export.html">Export Markdown</a></div><p class="setup-help">The current profile and foundation settings are saved in this browser. They are not synced to other devices.</p></section>
-<section class="panel spacing-model-panel"><h2 class="panel-title">Foundations</h2><p class="get-library-copy">Use the foundation editors to change the values that appear in your previews and exported brief.</p><div class="setup-actions"><a class="btn btn-ghost" href="foundations.html#colors">Colors</a><a class="btn btn-ghost" href="typography.html">Typography</a><a class="btn btn-ghost" href="spacing.html">Spacing</a><a class="btn btn-ghost" href="radius.html">Radius</a><a class="btn btn-ghost" href="borders.html">Borders</a><a class="btn btn-ghost" href="shadows.html">Shadows</a></div><p class="setup-help">Every token above, generated straight from this system's shared stylesheet in the W3C Design Tokens format: <a href="design-tokens.json" target="_blank" rel="noopener">design-tokens.json</a>.</p></section>
-<section class="panel spacing-model-panel"><h2 class="panel-title">Appearance and integrations</h2><p class="get-library-copy">Switch light and dark appearance using the theme button in the header. Density controls how tightly the page frame and cards are padded, everywhere, and is remembered the same way theme is. Direction mirrors the whole layout for right-to-left languages (icons included) and is remembered the same way. Npm publication, Figma connection, team accounts and cloud sync are not connected in this local version.</p><div class="setup-actions"><button class="btn btn-ghost" id="densityToggle" type="button" aria-pressed="false">Density: <span id="densityToggleLabel">Comfortable</span></button><button class="btn btn-ghost" id="directionToggle" type="button" aria-pressed="false">Direction: <span id="directionToggleLabel">Left-to-right</span></button><a class="btn btn-ghost" href="npm-package.html">Npm roadmap</a><a class="btn btn-ghost" href="figma.html">Figma status</a></div></section>
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">AI status colors</p>
+    <p class="get-library-copy">One new hue (violet), plus aliases onto the existing semantic status colors for confidence and agent outcome - "high/medium/low confidence" and "succeeded/failed" are already exactly what those tokens mean.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">AI accent</span>
+        <span class="usage-desc">Attribution, processing and anything else that's specifically "the AI," not a status</span>
+        <span class="usage-values">--color-ai-accent</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Confidence - high / medium / low</span>
+        <span class="usage-desc">Aliases var(--green-500) / var(--amber-500) / var(--danger-500) - the same hues used everywhere else those meanings apply</span>
+        <span class="usage-values">--color-ai-confidence-*</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Agent success / failure</span>
+        <span class="usage-desc">Same reasoning - an agent finishing or failing is a status, reusing the status colors</span>
+        <span class="usage-values">--color-agent-*</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Attribution</p>
+    <p class="get-library-copy">Content an AI generated or suggested carries a small, consistent marker - never presented identically to something a person wrote or chose.</p>
+    <p style="font-size:14px;color:var(--text-hi);">This summary was drafted for you. <span class="badge badge-ai">&#10024; AI-generated</span></p>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Confidence</p>
+    <p class="get-library-copy">Not a bare percentage - a three-tier signal, color and text together, so it never depends on color alone.</p>
+    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+      <span class="ai-confidence ai-confidence--high"><span class="ai-confidence-dot"></span>High confidence</span>
+      <span class="ai-confidence ai-confidence--medium"><span class="ai-confidence-dot"></span>Medium confidence</span>
+      <span class="ai-confidence ai-confidence--low"><span class="ai-confidence-dot"></span>Low confidence</span>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Streaming content</p>
+    <p class="get-library-copy">While a response is still generating, its placeholder is tinted with the AI accent - visually distinct from Skeleton's plain gray shimmer, so "this is AI still thinking" doesn't look identical to "this is a normal loading state."</p>
+    <div class="ai-streaming-skeleton" style="width:100%; max-width:420px; height:16px; margin-bottom:8px;"></div>
+    <div class="ai-streaming-skeleton" style="width:70%; max-width:300px; height:16px;"></div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Agent actions: approve, reject, undo</p>
+    <p class="get-library-copy">An AI suggestion needs a real, equally-visible way to decline it, not just an approve path - and acting on one should stay reversible for a moment, not commit silently and permanently. Try it:</p>
+    <div class="ai-agent-demo" data-role="agent-demo">
+      <div class="ai-agent-demo-card" data-role="agent-card">
+        <p style="margin:0 0 4px; font-size:13px; color:var(--text-hi);"><span class="badge badge-ai">&#10024; AI-suggested</span></p>
+        <p style="margin:0; font-size:14px; color:var(--text-hi);" data-role="agent-suggestion">Rename this component from "btn-primary" to "button--primary" to match the rest of the library's naming convention.</p>
+        <div class="panel-footer-row" style="margin-top:12px;" data-role="agent-actions">
+          <button class="btn btn-demo btn-demo--approve btn-demo--h36" type="button" data-role="agent-approve">Approve</button>
+          <button class="btn btn-demo btn-demo--reject btn-demo--h36" type="button" data-role="agent-reject">Reject</button>
+        </div>
+        <p class="ai-agent-status" hidden data-role="agent-result">
+          <span class="ai-agent-status-dot"></span>
+          <span data-role="agent-result-text"></span>
+          <a href="#" data-role="agent-undo" style="margin-inline-start:8px; color:var(--color-focus-ring);">Undo</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Explainability</p>
+    <p class="get-library-copy">A suggestion should be able to say why, on demand, without cluttering the default view - a native, keyboard-operable disclosure, not a bespoke tooltip.</p>
+    <details class="ai-explain">
+      <summary>Why this suggestion?</summary>
+      <p class="ai-explain-body">This system's naming convention uses a double-dash for variant modifiers (<code>button--primary</code>, <code>card--elevated</code>), confirmed across 12 other component files. <code>btn-primary</code> is the one outlier.</p>
+      <ul class="ai-explain-citations">
+        <li>components.html - Button variant class list</li>
+        <li>shell.css:2241 - existing --primary/--secondary/--ghost naming</li>
+      </ul>
+    </details>
+  </section>
+
+  <div class="ai-rule-callout">
+    <p class="ai-rule-eyebrow">AI Rule</p>
+    <p class="ai-rule-text">Generated interfaces must mark AI-generated or AI-suggested content with the attribution pattern above, never present it identically to human-authored content, and must give the user an equally visible way to reject a suggestion, not just approve it.</p>
+  </div>
+
 </main>
 
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
+<script src="ai-foundation.js"></script>
 </body>
 </html>

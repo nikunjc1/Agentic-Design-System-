@@ -738,10 +738,21 @@ Governance was a static "Owner: Design System Team · Version: v3.4.0 · Changel
 
 Added `tools/generate_changelog.py` (parses this file's own `## ` sections into `changelog.js`, the same file:// -compatible script-tag pattern as `docs-catalog.js`) and a real `changelog.html` page rendering it, newest-first, with a separate "Known gaps" section for the "Known follow-ups" heading below. Every component page's metadata line now links there instead of claiming "not yet tracked," and the version bumped to v3.5.0 - an honest reflection of the accumulated work since v3.4.0, not an arbitrary increment. "Owner: Design System Team" is left as a static string deliberately: a single-team ownership model is a legitimate governance choice for a system this size, not a gap that needs a multi-owner/RBAC model invented to fill it.
 
+## A real AI Foundation
+
+The last of the three deferred items. This is the Agentic Design System, but until now nothing in it visually distinguished AI-generated content, agent actions, or how confident the system is about either - `ai-generator.html` was pure "Coming soon" vision copy, and the audit's own AI-readiness section found essentially nothing shipped at the token or component level.
+
+Added a real ninth Foundation page, `ai-foundation.html` ("AI & Agents"), linked from every page's sidebar, built entirely on new tokens rather than one-off styling: one new hue, `--color-ai-accent` (violet, the common cross-industry association for "AI," distinct from brand red and every status color so it can never be confused with an error/warning/success state), plus `--color-ai-confidence-high/medium/low` and `--color-agent-success/failure` - both deliberately aliased onto the *existing* semantic status colors, since "confidence" and "agent outcome" are already exactly what those tokens mean.
+
+Four real, working components, not static mockups: an attribution badge (`.badge-ai`) marking AI-generated content; a three-tier confidence indicator (color and text together, never color alone); a streaming-content skeleton tinted with the AI accent instead of Skeleton's plain gray, so "still generating" doesn't look identical to an ordinary loading state; and a genuinely interactive approve/reject/undo pattern - a new `.btn-demo--reject` variant paired with the existing `.btn-demo--approve`, wired to a real demo card that shows the outcome and a working Undo link (verified via direct click-through: approve, undo, reject, all confirmed to actually transition state, not just declared in markup). Also added an explainability pattern using a native `<details>`/`<summary>` disclosure with citations - keyboard-operable by default, no bespoke JS needed for the interaction itself.
+
+`ai-generator.html`'s own copy now points here, rather than remaining a dead end with no connection to the rest of the system.
+
 ## Known follow-ups (not yet done)
 
-- **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched.
+- **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
 - Governance now has a real Changelog (this file, rendered at changelog.html) and an honest version number (bumped to v3.5.0 to reflect the accumulated real work since v3.4.0) - "Owner: Design System Team" is still a static string, since a single-team ownership model is a legitimate simple governance choice for a system this size, not a gap needing a multi-owner/RBAC model invented to fill it.
+- Component-tier tokens exist for 4 components (Button Primary, Table, Modal, Card) - real, valuable follow-up work is extending the same tier to the rest of the 63-component library, not something one pass reasonably finishes.
 - Several P1 items from the audit remain: Design Values has no per-value AI Rule or priority order; Typography has no script-fallback/truncation rules; Navigation/Data Display components (Dropdown, Menu, Calendar, Collapse, Splitter, etc.) haven't had their keyboard/ARIA gaps addressed yet.
 - The 6 unlinked Button pages (Secondary/Tertiary/Ghost/Neutral/Destructive/Link) still exist as files but aren't reachable from the UI — left as-is per the last explicit instruction, not forgotten.
 
