@@ -770,6 +770,16 @@ Strips a leading "N. " ordinal from the nav label only - the heading itself is u
 
 Full 157-page sweep: 0 console errors.
 
+## Colors - Human View / Machine View added to all 6 sections
+
+Asked to bring the Human View / Machine View pattern - already used across all 70 component detail pages - to Colors' 6 sections (Brand color, Background & surface elevation, Semantic & status colors, Neutral scale, Text colors, Light & dark theme behavior). None of them had it; Colors was the one Foundations tab still missing the toggle entirely.
+
+Reused the real markup exactly (`.component-guide`, `.panel-title-row` + `.guide-view-toggle`, `.guide-toggle-btn[data-view]`, `.guide-view-panel[data-view-panel]`) rather than a look-alike, so the already-generic `initGuideViewToggle()` in shell.js wires up all 6 sections with zero JS changes needed for the toggle itself.
+
+The 5 editable sections aren't like a component's fixed usage docs, though - their whole content is live, user-editable hex values - so a static Machine View JSON would go stale the moment someone typed a new hex. Wrote `initColorMachineViews()` in foundations.js instead: recomputes each section's JSON from its actual current field values on the same delegated `input`/`change` listener pattern `initContrastBadges()` already uses, so editing a color updates that section's Machine View live, not just on save. Light & dark theme behavior has no editable fields at all (pure explanation of the light-is-source-of-truth rule), so it gets a static JSON describing that rule instead.
+
+Verified via Playwright: all 6 toggles switch panels correctly, all 5 live JSON blocks parse as valid JSON and reflect real field values, and editing Brand's light hex updates its Machine View JSON immediately even while that panel stays hidden. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

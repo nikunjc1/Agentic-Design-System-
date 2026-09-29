@@ -1095,6 +1095,52 @@
     }
     var contrastHelpers = initContrastBadges();
 
+    // Machine View for the 5 editable color sections above - unlike a
+    // component page's Machine View (static usage docs), these fields are
+    // live-editable, so its JSON has to be the live current token values,
+    // not a fixed spec. Recomputes on the same delegated input/change
+    // listener pattern initContrastBadges already uses.
+    function initColorMachineViews(){
+      var sections = ["brand", "bg", "status", "neutral", "text"];
+
+      function collectTheme(prefix, theme){
+        var out = {};
+        var stripPrefix = prefix + "-" + theme + "-";
+        var inputs = document.querySelectorAll('input[type="text"][data-role^="' + stripPrefix + '"]');
+        inputs.forEach(function(input){
+          var rest = input.dataset.role.slice(stripPrefix.length);
+          var key;
+          if (rest === "hex") key = "value";
+          else if (/-hex$/.test(rest)) key = rest.slice(0, -4);
+          else return;
+          var hex = normalizeHex(input.value);
+          if (hex) out[key] = "#" + hex;
+        });
+        return out;
+      }
+
+      function recompute(){
+        sections.forEach(function(prefix){
+          var code = document.querySelector('[data-role="' + prefix + '-machine-json"]');
+          if (!code) return;
+          var enableInput = document.querySelector('[data-role="' + prefix + '-dark-enable"]');
+          var darkEnabled = !!(enableInput && enableInput.checked);
+          var data = {
+            token: prefix,
+            light: collectTheme(prefix, "light"),
+            darkOverrideEnabled: darkEnabled,
+            dark: darkEnabled ? collectTheme(prefix, "dark") : null
+          };
+          code.textContent = JSON.stringify(data, null, 2);
+        });
+      }
+
+      document.querySelector("main").addEventListener("input", recompute);
+      document.querySelector("main").addEventListener("change", recompute);
+      recompute();
+    }
+    initColorMachineViews();
+
     // Custom color-picker popover - replaces the OS-native <input
     // type="color"> flyout (which on most platforms only offers RGB, no
     // Hex/CSS/HSL/HSB switcher and no accessibility feedback at all) with
