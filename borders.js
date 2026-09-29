@@ -278,16 +278,10 @@
     var stateDarkAuto = {};
 
     function applyStateSwatch(row, isDark, hex){
-      var width = row.dataset.width;
-      var style = row.dataset.style;
-      var opacity = Number(row.dataset.opacity);
       var swatch = row.querySelector(isDark ? '[data-role="state-swatch-dark"]' : '[data-role="state-swatch"]');
       var hexField = row.querySelector(isDark ? '[data-role="state-hex-dark"]' : '[data-role="state-hex"]');
-      var rgb = hexToRgb(hex);
-      var rgba = "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + (opacity / 100) + ")";
 
       swatch.value = "#" + hex.toLowerCase();
-      swatch.style.border = width + "px " + style + " " + rgba;
       hexField.value = hex.toUpperCase();
     }
 

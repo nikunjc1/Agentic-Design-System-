@@ -780,6 +780,12 @@ The 5 editable sections aren't like a component's fixed usage docs, though - the
 
 Verified via Playwright: all 6 toggles switch panels correctly, all 5 live JSON blocks parse as valid JSON and reflect real field values, and editing Brand's light hex updates its Machine View JSON immediately even while that panel stays hidden. Full 157-page sweep: 0 console errors.
 
+## Borders - Border states swatches had a border drawn around the color box itself
+
+Flagged from a screenshot of Border states (Default/Hover/Focus/etc.): each Light/Dark hex swatch had its own visible border ring drawn around the color box, inside the field's normal pill container. Root cause: `applyStateSwatch()` in borders.js set `swatch.style.border` to that row's own width/color/opacity spec, as a literal "here's what this border looks like" demo - clever in intent, but read as an unwanted stray outline in practice, especially since `.type-color-swatch` is styled `border: none` everywhere else on the site.
+
+Removed the inline border - both the 20 `style="border:..."` attributes baked into borders.html and the `swatch.style.border = ...` line in borders.js that was re-applying the same thing on every load/edit (so removing just the HTML wouldn't have stuck). Verified via computed style: all 20 swatches now resolve to `border: none` before and after editing a hex value. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
