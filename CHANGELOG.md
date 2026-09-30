@@ -989,6 +989,14 @@ Changed the single string in `experience.js` where the link is injected (`shared
 
 Verified: swept all 62 `[data-detail-href]` pages (65 links) - every link now reads "View component guide →", 0 exceptions. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - removed the CTA arrow, fixed its off-center text
+
+Asked to remove the trailing arrow from "View component guide" and fix the button's alignment. Root cause of the alignment problem: a leftover `padding-top:20px` override on `.component-open-link` from the earlier IA reorder, added back when the divider still needed extra clearance - it overrode only `.btn`'s top padding, leaving the bottom at `.btn`'s normal 8px. 20px top vs 8px bottom meant the label sat visibly low in the button instead of centered.
+
+Removed the `→` from the label string in `experience.js`. Removed the `padding-top:20px` override in `experience.css` entirely instead of just rebalancing its value - `.btn`'s own symmetric `8px 16px` padding was already correct and is now what actually applies, so the label centers naturally with no override fighting it.
+
+Verified: swept all 62 `[data-detail-href]` pages (65 links) - every link reads "View component guide" with no arrow, every one has matching top/bottom padding (8px/8px), 0 exceptions. Screenshotted Cascader and Modal (the wide-card variant) to confirm the label now sits centered in the button. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

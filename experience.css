@@ -56,13 +56,15 @@
    classes experience.js applies alongside this one (this link is the
    card's actual primary action - the whole card already navigates here
    on click - so it gets the same treatment as any other primary CTA,
-   not a one-off style). This rule only handles what .btn doesn't:
-   full-width layout, and the divider separating it from the demo/label
-   above. margin-top is 8px, not a "clean" 16px, because this link is
-   always a direct child of .system-card (see experience.js), which
-   already carries its own gap:8px between every child - 8+8 restores
-   the original intended 16px total instead of stacking past it. */
-.component-open-link{display:block;box-sizing:border-box;width:100%;text-align:center;border-top:1px solid var(--line);margin-top:8px;padding-top:20px}
+   not a one-off style) - deliberately not overridden here, so the label
+   stays vertically centered in the button instead of sitting off-center
+   from a mismatched top/bottom padding. This rule only handles what
+   .btn doesn't: full-width layout, and the divider separating it from
+   the demo/label above. margin-top is 8px, not a "clean" 16px, because
+   this link is always a direct child of .system-card (see experience.js),
+   which already carries its own gap:8px between every child - 8+8
+   restores the original intended 16px total instead of stacking past it. */
+.component-open-link{display:block;box-sizing:border-box;width:100%;text-align:center;border-top:1px solid var(--line);margin-top:8px}
 .setup-notice h2{font-size:16px;margin:0 0 8px}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}
 @media(max-width:900px){.setup-layout{grid-template-columns:1fr}.setup-layout>aside{order:2}}
