@@ -1458,7 +1458,7 @@ button{ font-family: inherit; }
    its own the way auto-fit does - only the columns' own width. */
 .system-card-grid{
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   max-width: 1352px;
 }

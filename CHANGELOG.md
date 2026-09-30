@@ -1005,6 +1005,14 @@ Added vertical padding (`16px 0`) for breathing room above/below the preview con
 
 Verified: swept all 62 `[data-detail-href]` pages (65 demos) - every `.button-type-demo` has the white background, 0 still overflow their card, 0 exceptions (including Transfer, re-checked after the fix). Screenshotted Tree Select, Cascader, Modal, Number, Avatar, Progress, Skeleton, Empty, Table and Card to confirm the panel looks correct across both the plain and "wide" card layouts and doesn't clash with components that already have their own dark or bordered preview chrome (e.g. Modal's dialog mockup still reads with proper contrast). Full 157-page regression sweep: 0 console errors.
 
+## Listing screens - three cards per row instead of four
+
+Asked to make every listing screen show three cards per row. `.system-card-grid` (the shared grid behind every component's listing card and, more visibly, the 17-31 card foundation pages - Borders, Radius, Shadows, Icons, Overview, Spacing, Grid & Layout) defaulted to 4 columns above 1440px, dropping to 3 only below that. Changed the default itself to 3, so it's now 3 columns from full width down to the existing 1100px breakpoint (where it was already stepping down to 2, then 1 below 700px - both untouched).
+
+Left three existing special cases alone since they solve unrelated problems: the ~14 components (Add-on, Calendar, Table, etc.) whose single wide card already reserved 3 columns above 1440px are now redundant with the new default (same value, so no visual change) but were left as-is rather than cleaned up, out of scope for this change; Modal, Tabs and Tree's 2-column reservation for their single extra-wide card stays, since those pages only ever show one card regardless of column count. Also found and deliberately left unchanged a third, different grid (`.product-card-grid`, an auto-fill grid used only in the "What are you building?" product-type pickers on Radius/Spacing/Grid & Layout) - a distinct picker pattern, not the component/token listing this request was about.
+
+Verified: measured `.system-card-grid`'s actual computed column count on Borders at five viewport widths (1600/1440/1200/1000/650px) - 3/3/3/2/1, confirming the new default holds through the full desktop range and existing responsive steps are untouched. Confirmed Modal, Tabs and Tree still reserve 2 columns and Table still reserves 3, both unchanged. Screenshotted Overview, Borders, Radius, Shadows and Icons to confirm real 3-per-row layouts read correctly at desktop width. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
