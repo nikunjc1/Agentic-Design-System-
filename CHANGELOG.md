@@ -929,6 +929,16 @@ Fixed by replacing the inline style with `class="card-copy-row"` on all 10 insta
 
 Followed the requested process per page: fixed patterns.html, then verified 3 ways (measured both buttons now render at an identical 439px, screenshotted a row to confirm visually, clicked Copy prompt and confirmed the clipboard still populates correctly - the class swap doesn't touch the `data-role` attributes the JS wiring keys off) before moving to templates.html and repeating all three checks there. Finished with a sitewide sweep across all 64 pages (not just the 2 fixed): 0 width mismatches, 0 Copy prompt/Copy code buttons found outside `.card-copy-row` anywhere. Full 157-page regression sweep: 0 console errors.
 
+## Copy prompt / Copy code CTAs - a real cross-page size inconsistency, not the earlier within-row one
+
+Reported again with screenshots: Tabs' CTAs look dramatically wider than Number's. This was a genuinely different bug from the earlier "Copy prompt wider than Copy code on the same card" fix - within each screenshot the two buttons were already equal width; the actual problem was the whole row's absolute size varying page to page.
+
+Measured before touching anything: every `*-type-card .card-copy-row` rule sets `width:100%` of its own card, and while most listing cards share a 4-column (~286px) or 3-column (~299px) grid, Modal/Tabs/Tree deliberately use a wider 2-column grid (documented in shell.css: "single example cards need more room than the 3-column components above") so their preview content isn't a narrow orphan - but that same extra card width was also stretching their Copy prompt/Copy code row to 477px, a real ~65% jump for what's meant to be the same small utility action everywhere.
+
+Fixed with a `max-width: 320px` on the base `.card-copy-row` rule - bounds Modal/Tabs/Tree's outlier row back down to line up with the rest of the site, while every narrower card (already resolving under 320px at `width:100%`) is untouched.
+
+Verified 3 ways before considering it done: measured the row and both buttons on a narrow (Number), medium (Card/Table) and both previously-oversized wide (Tabs/Modal/Tree) page - all three outliers now cap at exactly 320px, everything else unchanged, buttons still equal within each row; screenshotted Tabs' card to visually confirm it now reads as a normal-sized action row instead of a stretched one; clicked Copy prompt on Tabs to confirm it still copies correctly. Then swept the width of every `.card-copy-row` across all 64 pages: the whole site now falls into exactly 3 tight buckets (286px / 299px / 320px, a 34px spread) with zero rows over 320px, down from a 245-477px spread (232px) beforehand. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

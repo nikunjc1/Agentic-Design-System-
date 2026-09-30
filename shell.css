@@ -4994,6 +4994,16 @@ a.system-card{ text-decoration: none; color: inherit; }
   display: flex;
   gap: 8px;
   margin-top: 4px;
+  /* Every *-type-card .card-copy-row rule above sets width:100% of its own
+     card - fine for the 4-column default (~286px) and 3-column "needs more
+     room for its preview" cards (~299px), but Modal/Tabs/Tree's 2-column
+     cards are wide enough (~660px) that width:100% stretched this row to
+     477px - a real, visible size jump for what's meant to be the same
+     small utility action everywhere. Capping it here bounds all three of
+     those outliers back down to the same ~300px every other listing page
+     already uses, while leaving every narrower card (where 100% already
+     resolves under this cap) completely unchanged. */
+  max-width: 320px;
 }
 .card-copy-row .btn{ flex: 1; text-align: center; }
 
