@@ -167,8 +167,15 @@
   <h1 class="page-title">Grid &amp; Layout</h1>
   <p class="page-lede">Spacing defines relationships, radius defines shape - grid defines structure. This is the invisible system that keeps every column, container and breakpoint coherent across the product.</p>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Breakpoints</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Breakpoints</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">The actual thresholds this system's own CSS switches on today, not an idealized scale - documented here so a new rule reuses one of these instead of quietly adding a twelfth. A plain CSS custom property can't drive a media-query condition (screen width is evaluated before any variable resolves), so these are reference values to copy literally rather than a token you can point to.</p>
 
     <div class="usage-hierarchy">
@@ -210,10 +217,32 @@
     </div>
 
     <p class="get-library-copy" style="margin-top:16px;">Known gap, left visible rather than papered over: the Overview page collapses to its mobile layout at <strong>800px</strong>, while the shared shell (every other page) collapses at <strong>900px</strong> - two different thresholds doing the same conceptual job. Consolidating the 11 raw values above onto one shared scale (recommend 640 / 900 / 1100 / 1440px, rebuilding the Overview-specific ones onto the same 4 numbers) is tracked as a follow-up, not done here.</p>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "breakpoints": [
+    { "value": "900px", "type": "max-width", "effect": "sidebar becomes a slide-in drawer; New Project's setup layout stacks to one column" },
+    { "value": "1440 / 1100 / 700px", "type": "max-width", "effect": "component-listing grids step down one column at each (4→3→2→1)" },
+    { "value": "640px", "type": "max-width", "effect": "topbar padding tightens; version badge and shortcut hint hide" },
+    { "value": "600px", "type": "max-width", "effect": "New Project's fields collapse to one column; action buttons grow to 44px" },
+    { "value": "601-1000px", "type": "range", "effect": "Borders page's configuration grid drops to 2 columns" },
+    { "value": "1600 / 1150 / 800 / 500px", "type": "mixed", "effect": "Overview page's own responsive steps, scoped to that page only" },
+    { "value": "pointer: coarse", "type": "capability", "effect": "icon buttons and nav links grow to a 44px touch target" }
+  ],
+  "knownGap": "Overview collapses to mobile at 800px, the shared shell at 900px - two thresholds doing the same job, not yet consolidated"
+}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-product-panel">
-    <p class="panel-title">What are you building?</p>
+  <section class="panel spacing-product-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">What are you building?</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Pick the product type closest to yours and the recommended column count and gutter below update to match - every value stays fully editable afterward.</p>
 
     <div class="product-card-grid" data-role="product-grid">
@@ -282,10 +311,21 @@
       <p class="empty-eyebrow">Recommended</p>
       <p class="recommendation-text" id="recommendationText"></p>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="building-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Grid type</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Grid type</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Structure defines composition; this decides how content is placed before any spacing or component rules apply.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -341,10 +381,21 @@
       <button class="btn btn-ghost" id="resetGridBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="gridSaveStatus" hidden></span>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="gridtype-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Layout patterns</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Layout patterns</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Reusable compositions that consume the grid above instead of inventing new structure per screen.</p>
 
     <div class="pattern-card-grid" data-role="pattern-grid">
@@ -398,11 +449,38 @@
     </div>
 
     <p class="get-library-copy" style="margin-top:16px;">Overflow: when content exceeds the space a pattern gives it, the default is to scroll that one region (the way this shell's own sidebar and main content each scroll independently, never the whole page) - reach for truncation with an explicit "show more," or collapsing a secondary pane, only when scrolling that region isn't itself the answer (e.g. a fixed-height dashboard KPI row, or List's items in Master-Detail once virtualization is warranted per Table's own paginationAndVirtualization guidance).</p>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "patterns": [
+    "Single Column", "Two Column", "Sidebar + Content", "Dashboard",
+    "Split View", "Card Grid", "Hero + Content", "Master-Detail"
+  ],
+  "overflowRule": "scroll the one region that overflowed, independent of the rest of the page; reach for truncation or a collapsing pane only when scrolling isn't itself the answer"
+}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">How this page fits together</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">How this page fits together</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Breakpoints, grid and layout patterns are three layers of the same decision, not three unrelated choices: the Breakpoints above are where anything on this page actually changes; the product type and grid type set how content is divided into columns and rows at any given width; a Layout pattern is just a named, reusable way of filling that grid that this system already has a diagram for, so a new screen composes one of these instead of inventing structure from scratch.</p>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{
+  "layers": [
+    { "layer": "breakpoints", "role": "where anything on this page actually changes" },
+    { "layer": "product type + grid type", "role": "how content is divided into columns/rows at any given width" },
+    { "layer": "layout pattern", "role": "a named, reusable way of filling that grid - compose one instead of inventing structure from scratch" }
+  ]
+}</code></pre>
+    </div>
   </section>
 </main>
 

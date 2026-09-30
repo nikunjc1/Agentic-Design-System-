@@ -16,11 +16,34 @@
     var systemCards = document.querySelectorAll(".system-card");
     var callout = document.getElementById("recommendationCallout");
     var calloutText = document.getElementById("recommendationText");
+    var buildingMachineJson = document.querySelector('[data-role="building-machine-json"]');
+    var gridtypeMachineJson = document.querySelector('[data-role="gridtype-machine-json"]');
+
+    function updateMachineViews(){
+      if (buildingMachineJson){
+        var activeCard = document.querySelector(".product-card.is-active");
+        buildingMachineJson.textContent = JSON.stringify({
+          selected: activeCard ? activeCard.dataset.product : null,
+          recommendedSystem: activeCard ? activeCard.dataset.system : null,
+          recommendedColumns: activeCard ? Number(activeCard.dataset.columns) : null,
+          recommendedGutter: activeCard ? Number(activeCard.dataset.gutter) : null
+        }, null, 2);
+      }
+      if (gridtypeMachineJson){
+        var activeSystem = document.querySelector(".system-card.is-active");
+        var key = activeSystem ? activeSystem.dataset.system : null;
+        gridtypeMachineJson.textContent = JSON.stringify({
+          selected: key,
+          label: key ? (GRID_TYPE_NAMES[key] || key) : null
+        }, null, 2);
+      }
+    }
 
     function selectSystem(key){
       systemCards.forEach(function(card){
         card.classList.toggle("is-active", card.dataset.system === key);
       });
+      updateMachineViews();
     }
 
     function selectProduct(card){
@@ -37,6 +60,7 @@
         card.dataset.gutter + "px</strong> gutter recommended for " + name + ".";
 
       selectSystem(systemKey);
+      updateMachineViews();
     }
 
     productCards.forEach(function(card){
@@ -69,6 +93,7 @@
       if (saved.system) selectSystem(saved.system);
     }
     loadGrid();
+    updateMachineViews();
 
     var saveBtn = document.getElementById("saveGridBtn");
     var saveStatus = document.getElementById("gridSaveStatus");

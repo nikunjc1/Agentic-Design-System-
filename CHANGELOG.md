@@ -786,6 +786,16 @@ Flagged from a screenshot of Border states (Default/Hover/Focus/etc.): each Ligh
 
 Removed the inline border - both the 20 `style="border:..."` attributes baked into borders.html and the `swatch.style.border = ...` line in borders.js that was re-applying the same thing on every load/edit (so removing just the HTML wouldn't have stuck). Verified via computed style: all 20 swatches now resolve to `border: none` before and after editing a hex value. Full 157-page sweep: 0 console errors.
 
+## Human View / Machine View extended to all remaining Foundations pages
+
+Following straight on from Colors, asked to add the same toggle to every section across Grid & Layout, Typography, Spacing, Radius, Borders, Shadows and Icons - 28 sections total, none of which had it. Two of those pages (Radius, Shadows) had 3 differently-titled sub-sections sharing one physical `<section>`; split each into its own real `<section>` so every title gets its own toggle, rather than one toggle covering three unrelated titles.
+
+Added a third, generic way of populating Machine View to shell.js/experience.js's existing two (a component page's static usage doc, and Colors' page-specific live-JSON functions): `autoMachineViews()` in experience.js scans every `.component-guide` section for a `.usage-row` or `.stat-tile` reference table in its Human View and derives the JSON straight from that markup - zero per-page JS needed. It only touches a `<code>` block that has no `data-role` and is still the `{}` placeholder, so it never overwrites a page-specific live block. This covered about half the 28 sections outright (Additional semantic levels, Recommended global model, Radius by component role, Component guidance, Elevation hierarchy, Icon states, and more).
+
+The other half - product/system card pickers (What are you building?, Grid type, Radius philosophy, Spacing system, Shadow philosophy, Border presets, Icon style), live config controls (Configure your border, Configure your icon system), and two genuinely complex cases (Typography's 16-row Type Scale table, Borders' 10-row state-color table) - got small page-specific `updateMachineViews()` functions added to their own `.js` file, following the exact pattern already established for Colors and Grid & Layout: read current DOM/dataset state, call on every relevant click/input/change, and once on initial load.
+
+Verified via Playwright across all 7 pages: all 28 toggles switch panels, all 28 Machine View blocks parse as valid non-empty JSON, and spot-checked live updates (clicking a product card, editing a border state's hex, changing a type-scale size, picking an icon library) all reflect immediately in their JSON. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

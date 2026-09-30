@@ -5,11 +5,22 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     var systemCards = document.querySelectorAll(".system-card");
+    var machineJson = document.querySelector('[data-role="shadowphilosophy-machine-json"]');
+
+    function updateMachineView(){
+      if (!machineJson) return;
+      var active = document.querySelector(".system-card.is-active");
+      machineJson.textContent = JSON.stringify({
+        selected: active ? active.dataset.system : null,
+        scale: active ? (active.querySelector('[data-role="scale"]') || {}).textContent || null : null
+      }, null, 2);
+    }
 
     function selectSystem(key){
       systemCards.forEach(function(card){
         card.classList.toggle("is-active", card.dataset.system === key);
       });
+      updateMachineView();
     }
 
     systemCards.forEach(function(card){
@@ -30,6 +41,7 @@
       if (saved.philosophy) selectSystem(saved.philosophy);
     }
     loadShadow();
+    updateMachineView();
 
     var saveBtn = document.getElementById("saveShadowBtn");
     var saveStatus = document.getElementById("shadowSaveStatus");

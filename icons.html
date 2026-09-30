@@ -167,8 +167,15 @@
   <h1 class="page-title">Icons</h1>
   <p class="page-lede">The visual language every icon in this system shares - pick a style, tune its weight and grid, then teach Claude or Gemini to keep generating more icons that match.</p>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Icon style</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Icon style</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">How every icon is constructed - stroke, fill, or a layered combination of both. Duotone is the global default unless your product needs something bolder or more restrained.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -235,10 +242,21 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32"><defs><radialGradient id="adsPreviewCard3d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="currentColor" stop-opacity="1"/><stop offset="100%" stop-color="currentColor" stop-opacity="0.45"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#adsPreviewCard3d)"/><ellipse cx="11.5" cy="10.5" rx="4.5" ry="3" fill="#ffffff" opacity="0.35"/></svg></div>
       </button>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="iconstyle-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel color-foundation">
-    <p class="panel-title">Configure your icon system</p>
+  <section class="panel color-foundation component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Configure your icon system</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Grid size and stroke weight apply to Line, Dashed and Two-tone; corner treatment controls whether strokes end sharp or rounded.</p>
     <p class="get-library-copy">Icon-to-text gap: 8px (var(--space-8)) - the same gap every icon+label button already uses, not a separate icon-specific value.</p>
 
@@ -280,10 +298,21 @@
       <button class="btn btn-ghost" id="resetIconsBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="iconsSaveStatus" hidden></span>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="iconconfig-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Icon states</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Icon states</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">An icon rarely has its own dedicated state styling - it inherits whatever state its container (button, nav link, input) is already in, using the same tokens that container uses everywhere else.</p>
 
     <div class="usage-hierarchy">
@@ -323,10 +352,21 @@
         <span class="usage-values">--duration-slow, --ease-linear</span>
       </div>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Bring your own icons</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Bring your own icons</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Upload a handful of reference icons to establish your own visual style, or start from an existing open-source set instead of designing from scratch.</p>
 
     <div class="icon-upload-row">
@@ -408,6 +448,10 @@
         <span class="library-card-meta">Line / Flat &middot; MIT</span>
         <a class="library-card-link" href="https://icons.getbootstrap.com" target="_blank" rel="noopener">icons.getbootstrap.com</a>
       </label>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="iconbyo-machine-json">{}</code></pre>
     </div>
   </section>
 </main>

@@ -167,8 +167,15 @@
   <h1 class="page-title">Spacing</h1>
   <p class="page-lede">The spacing scale and rhythm every layout, component and page in this system is built from.</p>
 
-  <section class="panel spacing-product-panel">
-    <p class="panel-title">What are you building?</p>
+  <section class="panel spacing-product-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">What are you building?</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Pick the product type closest to yours and the recommended spacing system below updates to match - you can still choose a different one manually afterward.</p>
 
     <div class="product-card-grid" data-role="product-grid">
@@ -227,10 +234,21 @@
       <p class="empty-eyebrow">Recommended</p>
       <p class="recommendation-text" id="recommendationText"></p>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="building-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Spacing system</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Spacing system</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">The base unit every spacing token in this system derives from. 4px Balanced is the global default unless your product type above recommends otherwise.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -274,10 +292,21 @@
         <p class="system-card-scale" data-role="scale">2 &middot; 4 &middot; 6 &middot; 8 &middot; 12 &middot; 16 &middot; 24 &middot; 32 &middot; 48 &middot; 64 &middot; 96 &middot; 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:2px"></span><span class="gap-demo-block" style="margin-right:8px"></span><span class="gap-demo-block" style="margin-right:24px"></span><span class="gap-demo-block"></span></div>
       </button>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="spacingsystem-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Recommended global model</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Recommended global model</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">The strongest systems don't force a single unit - they combine three, each doing a different job.</p>
 
     <div class="stat-grid">
@@ -314,10 +343,21 @@
       <p class="ai-rule-eyebrow">AI Rule</p>
       <p class="ai-rule-text">Generated interfaces must use a value from this page's Micro / Component / Layout scale for every margin, padding and gap - never an arbitrary pixel value, and never a value interpolated between two scale steps to arrive at a novel spacing.</p>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Component defaults</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component defaults</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Values already in real, shipped use, not aspirational ones - each references one of this page's own tokens.</p>
 
     <div class="usage-hierarchy">
@@ -346,6 +386,10 @@
         <span class="usage-desc">Internal padding; Compact density (Settings &rarr; Density) steps down to 16px</span>
         <span class="usage-values">24px</span>
       </div>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
     </div>
   </section>
 </main>

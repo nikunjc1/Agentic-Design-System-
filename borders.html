@@ -167,8 +167,15 @@
   <h1 class="page-title">Borders</h1>
   <p class="page-lede">Border defines the visual boundary - width, color, opacity, style and which sides carry it. Shape belongs to Radius; this page never touches corner radius.</p>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Border presets</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Border presets</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Every preset stays fully editable below - picking one just seeds a starting point. Standard is the global default.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -232,10 +239,21 @@
         <div class="border-demo-row"><span class="border-demo-box" style="border:2px solid rgba(79,143,230,1.0)"></span></div>
       </button>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="borderpresets-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel color-foundation">
-    <p class="panel-title">Configure your border</p>
+  <section class="panel color-foundation component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Configure your border</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Width, color, opacity, style and which sides carry it - independently controlled, composited live. Radius / shape is configured separately on the Radius page.</p>
 
     <div class="border-config-grid">
@@ -354,10 +372,21 @@
       <button class="btn btn-ghost" id="resetBorderBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="borderSaveStatus" hidden></span>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="borderconfig-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Component guidance</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component guidance</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Two component types this page's own live preview doesn't cover, with the real values already in use elsewhere in this system.</p>
 
     <div class="usage-hierarchy">
@@ -372,10 +401,21 @@
         <span class="usage-values">1px &middot; Line / Line strong</span>
       </div>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Border states</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Border states</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Each state below can independently vary width, color, opacity and style - none of them should ever be the only signal for what's happening.</p>
 
     <div class="usage-hierarchy" id="stateRows">
@@ -634,6 +674,10 @@
       <p class="ai-rule-text">Generated interfaces must express state changes (error, focus, disabled) through more than border color alone - pair a border-state change with a second signal (icon, text, background tint) so the state doesn't depend on color perception alone.</p>
     </div>
 
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="borderstates-machine-json">{}</code></pre>
+    </div>
   </section>
 </main>
 

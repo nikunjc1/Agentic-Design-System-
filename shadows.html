@@ -167,8 +167,15 @@
   <h1 class="page-title">Shadows</h1>
   <p class="page-lede">Shadow is an elevation system, not decoration - it answers one question: how far above the surrounding surface does this sit? Use the smallest elevation that communicates the right layer, and never rely on shadow alone for focus, selection or state.</p>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Shadow philosophy</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Shadow philosophy</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">The elevation character every card, dropdown, panel and overlay in this system follows. Balanced is the global default unless your product type above recommends otherwise.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -222,10 +229,21 @@
         <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span><span class="shadow-demo-box" style="box-shadow:0 16px 32px rgba(0,0,0,0.16)" title="2xl"></span></div>
       </button>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="shadowphilosophy-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Elevation hierarchy</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Elevation hierarchy</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Semantic elevation layers, not arbitrary box-shadow values - each answers "how far above the surface does this sit?"</p>
 
     <div class="usage-hierarchy">
@@ -266,8 +284,21 @@
         <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 16px 32px rgba(0,0,0,0.16)" title="2xl"></span></div>
       </div>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
+  </section>
 
-    <p class="panel-title">Component defaults</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component defaults</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Button</span>
@@ -341,6 +372,10 @@
       <button class="btn btn-primary" id="saveShadowBtn" type="button">Save shadow system</button>
       <button class="btn btn-ghost" id="resetShadowBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="shadowSaveStatus" hidden></span>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
     </div>
   </section>
 </main>

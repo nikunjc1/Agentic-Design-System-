@@ -128,6 +128,7 @@
       // Sides setting above - a separator line isn't a box with sides.
       previewDividersH.forEach(function(el){ el.style.borderTop = value; });
       previewDividersV.forEach(function(el){ el.style.borderLeft = value; });
+      updateConfigMachineView();
     }
 
     function regenerateDark(){
@@ -138,12 +139,40 @@
       applyPreview();
     }
 
+    var presetsMachineJson = document.querySelector('[data-role="borderpresets-machine-json"]');
+    var configMachineJson = document.querySelector('[data-role="borderconfig-machine-json"]');
+
+    function updatePresetsMachineView(){
+      if (!presetsMachineJson) return;
+      var active = document.querySelector(".system-card.is-active");
+      presetsMachineJson.textContent = JSON.stringify({
+        selected: active ? active.dataset.system : null,
+        width: active ? Number(active.dataset.width) : null,
+        color: active ? active.dataset.color : null,
+        opacity: active ? Number(active.dataset.opacity) : null,
+        style: active ? active.dataset.style : null
+      }, null, 2);
+    }
+
+    function updateConfigMachineView(){
+      if (!configMachineJson) return;
+      configMachineJson.textContent = JSON.stringify({
+        width: Number(widthSelect.value),
+        color: "#" + colorHex.value,
+        colorDark: "#" + darkColorHex.value,
+        colorDarkAuto: darkAuto,
+        opacity: Number(opacityInput.value),
+        style: styleSelect.value,
+        sides: sidesSelect.value
+      }, null, 2);
+    }
+
     function selectSystem(key){
       systemCards.forEach(function(card){
         card.classList.toggle("is-active", card.dataset.system === key);
       });
       var card = document.querySelector('.system-card[data-system="' + key + '"]');
-      if (!card) return;
+      if (!card){ updatePresetsMachineView(); return; }
 
       widthSelect.value = card.dataset.width;
       var hex = card.dataset.color.replace("#", "").toUpperCase();
@@ -155,6 +184,7 @@
       // A freshly chosen preset seeds a fresh coordinated Light+Dark pair,
       // even if a previous manual Dark edit had turned auto-follow off.
       regenerateDark();
+      updatePresetsMachineView();
     }
 
     systemCards.forEach(function(card){
@@ -235,6 +265,7 @@
       applyPreview();
     }
     loadBorder();
+    updatePresetsMachineView();
 
     var saveBtn = document.getElementById("saveBorderBtn");
     var saveStatus = document.getElementById("borderSaveStatus");
@@ -276,6 +307,24 @@
     var stateRows = document.querySelectorAll('[data-role="state-row"]');
     var stateDefaults = {};
     var stateDarkAuto = {};
+    var statesMachineJson = document.querySelector('[data-role="borderstates-machine-json"]');
+
+    function updateStatesMachineView(){
+      if (!statesMachineJson) return;
+      var states = Array.prototype.map.call(stateRows, function(row){
+        var key = row.dataset.state;
+        return {
+          state: key,
+          width: Number(row.dataset.width),
+          opacity: Number(row.dataset.opacity),
+          style: row.dataset.style,
+          light: "#" + row.querySelector('[data-role="state-hex"]').value,
+          dark: "#" + row.querySelector('[data-role="state-hex-dark"]').value,
+          darkAuto: !!stateDarkAuto[key]
+        };
+      });
+      statesMachineJson.textContent = JSON.stringify({ states: states }, null, 2);
+    }
 
     function applyStateSwatch(row, isDark, hex){
       var swatch = row.querySelector(isDark ? '[data-role="state-swatch-dark"]' : '[data-role="state-swatch"]');
@@ -283,6 +332,7 @@
 
       swatch.value = "#" + hex.toLowerCase();
       hexField.value = hex.toUpperCase();
+      updateStatesMachineView();
     }
 
     function regenerateStateDark(row){
@@ -346,6 +396,7 @@
       });
     }
     loadStates();
+    updateStatesMachineView();
 
     var saveStatesBtn = document.getElementById("saveStatesBtn");
     var regenerateStatesDarkBtn = document.getElementById("regenerateStatesDarkBtn");

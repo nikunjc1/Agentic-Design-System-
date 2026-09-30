@@ -8,11 +8,33 @@
     var systemCards = document.querySelectorAll(".system-card");
     var callout = document.getElementById("recommendationCallout");
     var calloutText = document.getElementById("recommendationText");
+    var buildingMachineJson = document.querySelector('[data-role="building-machine-json"]');
+    var systemMachineJson = document.querySelector('[data-role="radiussystem-machine-json"]');
+
+    function updateMachineViews(){
+      if (buildingMachineJson){
+        var activeCard = document.querySelector(".product-card.is-active");
+        buildingMachineJson.textContent = JSON.stringify({
+          selected: activeCard ? activeCard.dataset.product : null,
+          recommendedPhilosophy: activeCard ? activeCard.dataset.philosophy : null,
+          recommendedCore: activeCard ? activeCard.dataset.core : null,
+          recommendedContainer: activeCard ? activeCard.dataset.container : null
+        }, null, 2);
+      }
+      if (systemMachineJson){
+        var activeSystem = document.querySelector(".system-card.is-active");
+        systemMachineJson.textContent = JSON.stringify({
+          selected: activeSystem ? activeSystem.dataset.system : null,
+          scale: activeSystem ? (activeSystem.querySelector('[data-role="scale"]') || {}).textContent || null : null
+        }, null, 2);
+      }
+    }
 
     function selectSystem(key){
       systemCards.forEach(function(card){
         card.classList.toggle("is-active", card.dataset.system === key);
       });
+      updateMachineViews();
     }
 
     function selectProduct(card){
@@ -31,6 +53,7 @@
         " - a " + character.toLowerCase() + " character.";
 
       selectSystem(philosophy);
+      updateMachineViews();
     }
 
     productCards.forEach(function(card){
@@ -64,6 +87,7 @@
       if (saved.philosophy) selectSystem(saved.philosophy);
     }
     loadRadius();
+    updateMachineViews();
 
     var saveBtn = document.getElementById("saveRadiusBtn");
     var saveStatus = document.getElementById("radiusSaveStatus");

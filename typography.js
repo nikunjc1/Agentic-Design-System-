@@ -372,6 +372,27 @@
       rowControllers[row.dataset.level] = wireTypeRow(row);
     });
 
+    var fontFamilyMachineJson = document.querySelector('[data-role="fontfamily-machine-json"]');
+    var typeScaleMachineJson = document.querySelector('[data-role="typescale-machine-json"]');
+    function updateMachineViews(){
+      if (fontFamilyMachineJson){
+        fontFamilyMachineJson.textContent = JSON.stringify({
+          primary: primaryPicker.getState(),
+          secondary: secondaryPicker.getState()
+        }, null, 2);
+      }
+      if (typeScaleMachineJson){
+        var levels = {};
+        Object.keys(rowControllers).forEach(function(level){
+          levels[level] = rowControllers[level].getState();
+        });
+        typeScaleMachineJson.textContent = JSON.stringify({ levels: levels }, null, 2);
+      }
+    }
+    document.querySelector("main").addEventListener("input", updateMachineViews);
+    document.querySelector("main").addEventListener("change", updateMachineViews);
+    document.querySelector("main").addEventListener("click", updateMachineViews);
+
     var platformChips = document.querySelectorAll(".platform-chips .chip");
     platformChips.forEach(function(chip){
       chip.addEventListener("click", function(){
@@ -406,6 +427,7 @@
       }
     }
     loadTypography();
+    updateMachineViews();
 
     var saveBtn = document.getElementById("saveTypographyBtn");
     var saveStatus = document.getElementById("typoSaveStatus");

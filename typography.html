@@ -167,8 +167,15 @@
   <h1 class="page-title">Typography</h1>
   <p class="page-lede">The typefaces, weights and colors that give every heading and line of body copy the same voice, however the page was generated.</p>
 
-  <section class="panel font-family-panel">
-    <p class="panel-title">Font families</p>
+  <section class="panel font-family-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Font families</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Primary is used for every heading; Secondary is used for supporting/body text. Upload your own font file, or browse a curated list by category.</p>
 
     <div class="color-field-grid font-field-grid">
@@ -259,10 +266,21 @@
   </div>
 
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="fontfamily-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel type-scale-panel">
-    <p class="panel-title">Type scale</p>
+  <section class="panel type-scale-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Type scale</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Family comes from Primary (headings) or Secondary (supporting text) above - set the weight, style and color for each level to match your brand guideline. Each level carries its own Light and Dark color - Dark starts auto-generated from Light and stays in sync until you edit it directly; "Regenerate dark colors" below resets any you've customized back to that suggestion.</p>
     <p class="get-library-copy">Responsive step-down: below 640px (the same mobile threshold documented on Grid &amp; Layout), a page's H1 drops one full step on this scale - display-sm (30/38) to display-xs (24/32) - rather than shrinking uniformly or staying fixed at a size built for a wide viewport. Body/supporting text stays at its base size at every width.</p>
     <p class="get-library-copy">Tabular figures: Table's cells and Statistic's headline value both use tabular (fixed-width) digits, so a column of numbers lines up instead of drifting as digit shapes vary - reserved for actual numeric data, not applied to running body text.</p>
@@ -1661,10 +1679,21 @@
       <button class="btn btn-ghost" id="resetTypographyBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="typoSaveStatus" hidden></span>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="typescale-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Additional semantic levels</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Additional semantic levels</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Six more text roles that don't need their own row above - each already has a real, consistent value in use sitewide, referenced here rather than re-declared as a new editable level.</p>
 
     <div class="usage-hierarchy">
@@ -1703,6 +1732,10 @@
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
       <p class="ai-rule-text">Generated interfaces must take every font size, weight and line-height from this page's Type Scale (or the Additional semantic levels above) - never an arbitrary value, and never a size interpolated between two scale steps to arrive at a novel one.</p>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
     </div>
   </section>
 </main>

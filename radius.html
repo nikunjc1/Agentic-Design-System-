@@ -167,8 +167,15 @@
   <h1 class="page-title">Radius</h1>
   <p class="page-lede">The corner-radius language every control, container and surface in this system borrows from - a visual signal of hierarchy, not just a rounded corner.</p>
 
-  <section class="panel spacing-product-panel">
-    <p class="panel-title">What are you building?</p>
+  <section class="panel spacing-product-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">What are you building?</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Pick the product type closest to yours and the recommended radius philosophy below updates to match - you can still choose a different one manually afterward.</p>
 
     <div class="product-card-grid" data-role="product-grid">
@@ -237,10 +244,21 @@
       <p class="empty-eyebrow">Recommended</p>
       <p class="recommendation-text" id="recommendationText"></p>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="building-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-system-panel">
-    <p class="panel-title">Radius philosophy</p>
+  <section class="panel spacing-system-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Radius philosophy</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">The corner-rounding character every control, card and surface in this system follows. Balanced is the global default unless your product type above recommends otherwise.</p>
 
     <div class="system-card-grid" data-role="system-grid">
@@ -299,10 +317,21 @@
         <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:16px"></span><span class="radius-demo-box" style="border-radius:48px"></span><span class="radius-demo-box" style="border-radius:9999px"></span></div>
       </button>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code data-role="radiussystem-machine-json">{}</code></pre>
+    </div>
   </section>
 
-  <section class="panel spacing-model-panel">
-    <p class="panel-title">Recommended global model</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Recommended global model</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Radius communicates hierarchy - smaller values read as precise and utilitarian, larger values read as container or emphasis.</p>
 
     <div class="stat-grid">
@@ -312,8 +341,21 @@
       <div class="stat-tile"><p class="stat-label">Large surface</p><p class="stat-value">16-24px</p></div>
       <div class="stat-tile"><p class="stat-label">Pill / circle</p><p class="stat-value">Full</p></div>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
+  </section>
 
-    <p class="panel-title">Radius by component role</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Radius by component role</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Micro components</span>
@@ -346,8 +388,21 @@
         <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:6px"></span><span class="radius-demo-box" style="border-radius:8px"></span><span class="radius-demo-box" style="border-radius:12px"></span></div>
       </div>
     </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
+  </section>
 
-    <p class="panel-title">Component defaults</p>
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Component defaults</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Button</span>
@@ -416,6 +471,10 @@
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
       <p class="ai-rule-text">Generated interfaces must take a component's corner radius from this page's Component Defaults mapping - never invent a radius value, and never round a component that isn't listed here without first adding it to the mapping.</p>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
     </div>
   </section>
 </main>

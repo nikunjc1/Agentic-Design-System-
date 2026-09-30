@@ -58,6 +58,30 @@
     var strokeSelect = document.querySelector('[data-role="icon-stroke"]');
     var cornerSelect = document.querySelector('[data-role="icon-corner"]');
     var previewRow = document.querySelector('[data-role="icon-preview"]');
+    var styleMachineJson = document.querySelector('[data-role="iconstyle-machine-json"]');
+    var configMachineJson = document.querySelector('[data-role="iconconfig-machine-json"]');
+    var byoMachineJson = document.querySelector('[data-role="iconbyo-machine-json"]');
+
+    function updateMachineViews(){
+      if (styleMachineJson){
+        styleMachineJson.textContent = JSON.stringify({ selected: getActiveSystem() }, null, 2);
+      }
+      if (configMachineJson){
+        configMachineJson.textContent = JSON.stringify({
+          size: Number(sizeSelect.value),
+          stroke: Number(strokeSelect.value),
+          corner: cornerSelect.value
+        }, null, 2);
+      }
+      if (byoMachineJson){
+        var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
+        var thumbs = document.querySelectorAll('.icon-upload-thumb span');
+        byoMachineJson.textContent = JSON.stringify({
+          library: libraryRadio ? libraryRadio.value : null,
+          uploadedFiles: Array.prototype.map.call(thumbs, function(s){ return s.textContent; })
+        }, null, 2);
+      }
+    }
 
     function renderPreview(){
       var mode = getActiveSystem();
@@ -75,6 +99,7 @@
         }).join("");
       }
       previewRow.innerHTML = html;
+      updateMachineViews();
     }
 
     function selectSystem(key){
@@ -116,8 +141,13 @@
       }
 
       renderPreview();
+      updateMachineViews();
     }
     loadIcons();
+
+    document.querySelectorAll('[data-role="library-radio"]').forEach(function(radio){
+      radio.addEventListener("change", updateMachineViews);
+    });
 
     var saveBtn = document.getElementById("saveIconsBtn");
     var saveStatus = document.getElementById("iconsSaveStatus");
@@ -168,6 +198,7 @@
       thumb.appendChild(img);
       thumb.appendChild(name);
       uploadGrid.appendChild(thumb);
+      updateMachineViews();
     }
 
     function handleFiles(files){

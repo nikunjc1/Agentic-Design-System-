@@ -264,7 +264,45 @@
     const summary = $('#profileSummary'); if (!summary) return;
     summary.textContent = storageError || (profile ? `${profile.project} · ${profile.name} · ${profile.designation} · ${profile.role}` : 'No project setup saved yet.');
   }
-  function init() { shared(); setupForm(); exportPage(); settings(); }
+  // Machine View for a reference-only .component-guide section (a static
+  // usage-hierarchy table or stat grid, not live user input) - derived
+  // straight from its own Human View markup so no per-page JS is needed.
+  // A page that DOES need live/custom JSON marks its <code> with a
+  // data-role (see foundations.js, grid-layout.js) and is skipped here.
+  function autoMachineViews() {
+    document.querySelectorAll('.component-guide').forEach(guide => {
+      const code = guide.querySelector('.guide-view-panel[data-view-panel="machine"] pre.guide-machine-json code');
+      if (!code || code.hasAttribute('data-role')) return;
+      if (code.textContent.trim() !== '{}') return;
+      const human = guide.querySelector('.guide-view-panel[data-view-panel="human"]');
+      if (!human) return;
+      const data = {};
+      const rows = human.querySelectorAll('.usage-row');
+      if (rows.length) {
+        data.items = Array.from(rows).map(row => {
+          const label = row.querySelector('.usage-label');
+          const values = row.querySelector('.usage-values');
+          const desc = row.querySelector('.usage-desc');
+          const obj = {};
+          if (label) obj.label = label.textContent.trim();
+          if (values) obj.values = values.textContent.trim();
+          if (desc) obj.description = desc.textContent.trim();
+          return obj;
+        });
+      }
+      const tiles = human.querySelectorAll('.stat-tile');
+      if (tiles.length) {
+        data.stats = Array.from(tiles).map(tile => {
+          const label = tile.querySelector('.stat-label');
+          const value = tile.querySelector('.stat-value');
+          return { label: label ? label.textContent.trim() : null, value: value ? value.textContent.trim() : null };
+        });
+      }
+      if (!Object.keys(data).length) return;
+      code.textContent = JSON.stringify(data, null, 2);
+    });
+  }
+  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
