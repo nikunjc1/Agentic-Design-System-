@@ -955,6 +955,18 @@ Added `justify-content: center` to `.card-copy-row`. The row itself is still `wi
 
 Verified: measured each card's own horizontal center against the button row's center on Add-on, Number, Tabs, Modal and Card - 0.0px difference on every one; screenshotted Add-on and Tabs to confirm visually; clicked Copy code on Add-on to confirm it still copies. Swept card/row centering across all 64 pages: 0 mismatches. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - two real double-spacing bugs, found via direct measurement not assumption
+
+Reported with a screenshot of Cascader's card showing clearly oversized gaps in multiple places. Measured every child element's exact bounding box and computed margin/gap rather than guessing which token looked "off": found two separate instances of the same anti-pattern - a flex `gap` added to a container at some point, without zeroing an individual `margin-top` that already existed on a child from before the gap was introduced, so the two stack.
+
+**Bug 1**: `.button-type-demo` for ~55 "needs more room for its preview" components (Cascader, Tabs, Modal, Table, Card, Autocomplete, Date Picker, and ~48 others) is `display:flex` with `gap:20px` - but its `.dualicon-card-label` child ("System Generated X") also carries its own `margin-top:12px`, stacking to a real 32px gap where 20px (the value the gap was actually tuned for) was intended.
+
+**Bug 2**: every listing card's injected "Configure and view guide" link (`.component-open-link`, appended by `experience.js` to any `[data-detail-href]` card) carries `margin-top:16px`, but its parent `.system-card` already has its own `gap:8px` applying between every child uniformly - stacking to 24px where 16px was intended. This one is sitewide, not limited to the 55-component "wide" set.
+
+Fixed both by removing the redundant margin rather than fighting the gap: zeroed `.dualicon-card-label`'s margin-top specifically within the 55 wide-card selectors (left completely untouched for every other card, where `.button-type-demo` is plain block flow and that margin is the correct, sole spacing mechanism); reduced `.component-open-link`'s margin-top from 16px to 8px sitewide, so `gap:8px + margin:8px` restores the original 16px total instead of compounding past it.
+
+Verified: measured both gaps directly on Cascader (32px → 20px, 24px → 16px), screenshotted the card to confirm it now reads as a tight, correctly-rhythmed card; clicked Copy prompt (still copies) and the Configure link (still navigates to cascader-default.html) to confirm nothing was broken structurally. Swept both bugs across every page that could possibly have them - 62 pages for the label gap, 62 for the link gap - 0 remaining issues on any page. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
