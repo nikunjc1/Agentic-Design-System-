@@ -506,6 +506,10 @@
         payload.levels[level] = rowControllers[level].getState();
       });
       localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      // Applies the new font family sitewide immediately (shell.js already
+      // does this on boot/cross-tab; this page's own text needs it too,
+      // without waiting for a reload).
+      if (window.ADS_applySavedTypographyFont) window.ADS_applySavedTypographyFont();
     }
 
     var saveBtn = document.getElementById("saveTypographyBtn");
@@ -552,6 +556,7 @@
       });
       suppressPersist = false;
       updateMachineViews();
+      if (window.ADS_applySavedTypographyFont) window.ADS_applySavedTypographyFont();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";

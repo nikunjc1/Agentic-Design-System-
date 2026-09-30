@@ -106,6 +106,10 @@
     // same note in grid-layout.js.
     function persistRadius(){
       localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), philosophy: getActiveSystem() }));
+      // Applies the new philosophy sitewide immediately (shell.js already
+      // does this on boot/cross-tab; this page's own nav/buttons need it
+      // too, without waiting for a reload).
+      if (window.ADS_applySavedRadius) window.ADS_applySavedRadius();
     }
 
     productCards.forEach(function(card){
@@ -154,6 +158,7 @@
       productCards.forEach(function(c){ c.classList.remove("is-active"); });
       callout.hidden = true;
       selectSystem("balanced");
+      if (window.ADS_applySavedRadius) window.ADS_applySavedRadius();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";

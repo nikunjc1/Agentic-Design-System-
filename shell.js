@@ -118,6 +118,78 @@
   }
   window.ADS_updateBrandColorDotTitle = updateBrandColorDotTitle;
 
+  // Radius philosophy and Typography font family - sitewide, theme-
+  // independent (unlike colors, no light/dark split), same "the <head>
+  // boot script only reads localStorage once, at load" gap as colors -
+  // an already-open OTHER tab needs the storage-event listener below to
+  // pick up a change made in this one, live, no reload.
+  // Explicit per-slot values (not a positional index into each
+  // philosophy's own scale list) - a first attempt at the latter happened
+  // to put --radius-md (the single most-used slot, 102 sites) at 8px for
+  // both Balanced and Sharp, so buttons never visibly changed. Every
+  // value below is still one already on that philosophy's own documented
+  // scale, just chosen so md in particular reads as a clearly different,
+  // sensible "typical" value at each step (4/6/8/12/16 - Sharp through
+  // Expressive). Kept identical to theme-init.js's own copy - duplicated
+  // rather than shared, since the boot script must stay dependency-free.
+  const RADIUS_PHILOSOPHY_TOKENS = {
+    sharp:      { "2":0, sm:2, "6":2, md:4,  "12":4,  "16":8,  "24":8  },
+    compact:    { "2":2, sm:2, "6":4, md:6,  "12":8,  "16":12, "24":12 },
+    balanced:   { "2":2, sm:4, "6":6, md:8,  "12":12, "16":16, "24":24 },
+    soft:       { "2":4, sm:4, "6":8, md:12, "12":16, "16":20, "24":24 },
+    expressive: { "2":4, sm:8, "6":8, md:16, "12":24, "16":32, "24":40 }
+  };
+  const RADIUS_SLOTS = ["2","sm","6","md","12","16","24"];
+  function applySavedRadius() {
+    const root = document.documentElement.style;
+    try {
+      const saved = JSON.parse(localStorage.getItem("ads:radius") || "null");
+      const tokens = saved && RADIUS_PHILOSOPHY_TOKENS[saved.philosophy];
+      if (tokens) {
+        RADIUS_SLOTS.forEach((slot) => root.setProperty(`--radius-${slot}`, `${tokens[slot]}px`));
+      } else {
+        RADIUS_SLOTS.forEach((slot) => root.removeProperty(`--radius-${slot}`));
+      }
+    } catch {}
+  }
+
+  const injectedFontHrefs = {};
+  function injectFontLink(href) {
+    if (!href || injectedFontHrefs[href] || document.querySelector(`link[href="${href}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+    injectedFontHrefs[href] = true;
+  }
+  function applySavedTypographyFont() {
+    const root = document.documentElement.style;
+    try {
+      const saved = JSON.parse(localStorage.getItem("ads:typography") || "null");
+      const primary = saved && saved.primaryFont;
+      const secondary = saved && saved.secondaryFont;
+      if (primary && primary.family) {
+        if (primary.linkHref) injectFontLink(primary.linkHref);
+        root.setProperty("--font-display", `"${primary.family}", ui-sans-serif, system-ui, sans-serif`);
+      } else {
+        root.removeProperty("--font-display");
+      }
+      if (secondary && secondary.family) {
+        if (secondary.linkHref) injectFontLink(secondary.linkHref);
+        root.setProperty("--font-body", `"${secondary.family}", ui-sans-serif, system-ui, sans-serif`);
+      } else {
+        root.removeProperty("--font-body");
+      }
+    } catch {}
+  }
+  applySavedRadius();
+  applySavedTypographyFont();
+  // Exposed so radius.js/typography.js's own Save/auto-persist can apply a
+  // change to the current page immediately too, not only on next load -
+  // same reason window.ADS_updateBrandColorDotTitle exists for colors.
+  window.ADS_applySavedRadius = applySavedRadius;
+  window.ADS_applySavedTypographyFont = applySavedTypographyFont;
+
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     applySavedColorsForTheme(theme);
@@ -212,6 +284,14 @@
     }
     if (COLOR_STORAGE_KEYS.includes(e.key)) {
       applySavedColorsForTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+      return;
+    }
+    if (e.key === "ads:radius") {
+      applySavedRadius();
+      return;
+    }
+    if (e.key === "ads:typography") {
+      applySavedTypographyFont();
     }
   });
 

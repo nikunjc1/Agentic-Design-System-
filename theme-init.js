@@ -90,4 +90,69 @@
       if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
     }
   }catch(e){}
+
+  // Radius philosophy - sitewide, theme-independent (unlike colors above,
+  // there's no light/dark split here). --radius-md alone is referenced
+  // 100+ times across shell.css by nearly every component's default
+  // corner treatment, so overriding the 7 non-fixed steps here has the
+  // same broad, coherent reach --red-500 does for brand color.
+  // --radius-none/-full are deliberately left alone in every philosophy -
+  // "no radius" and "fully round/pill" are absolute concepts, not part of
+  // the scale a philosophy ramps between.
+  try{
+    // Explicit per-slot values (not a positional index into each
+    // philosophy's own scale list) - a first attempt at the latter
+    // happened to put --radius-md (the single most-used slot, 102 sites)
+    // at 8px for both Balanced and Sharp, so buttons never visibly
+    // changed. Every value below is still one already on that
+    // philosophy's own documented scale, just chosen so md in particular
+    // reads as a clearly different, sensible "typical" value at each step
+    // (4/6/8/12/16 - Sharp through Expressive).
+    var RADIUS_PHILOSOPHY_TOKENS = {
+      sharp:      { "2":0, "sm":2, "6":2, "md":4,  "12":4,  "16":8,  "24":8  },
+      compact:    { "2":2, "sm":2, "6":4, "md":6,  "12":8,  "16":12, "24":12 },
+      balanced:   { "2":2, "sm":4, "6":6, "md":8,  "12":12, "16":16, "24":24 },
+      soft:       { "2":4, "sm":4, "6":8, "md":12, "12":16, "16":20, "24":24 },
+      expressive: { "2":4, "sm":8, "6":8, "md":16, "12":24, "16":32, "24":40 }
+    };
+    var savedRadius = JSON.parse(localStorage.getItem("ads:radius") || "null");
+    var radiusTokens = savedRadius && RADIUS_PHILOSOPHY_TOKENS[savedRadius.philosophy];
+    if (radiusTokens){
+      var radRoot = document.documentElement.style;
+      Object.keys(radiusTokens).forEach(function(slot){
+        radRoot.setProperty("--radius-" + slot, radiusTokens[slot] + "px");
+      });
+    }
+  }catch(e){}
+
+  // Typography font family - sitewide, theme-independent. --font-display/
+  // --font-body back every single non-monospace font-family declaration
+  // in shell.css (verified: 0 hardcoded font stacks outside var(--font-*)),
+  // so this is as clean a lever as brand color. An uploaded custom font
+  // file can't be restored here (the file itself was never persisted,
+  // only its name) - same pre-existing limit as reloading typography.html
+  // itself after an upload.
+  try{
+    var savedTypo = JSON.parse(localStorage.getItem("ads:typography") || "null");
+    if (savedTypo){
+      var typoRoot = document.documentElement.style;
+      var injectedFontHrefs = {};
+      var injectFontLink = function(href){
+        if (!href || injectedFontHrefs[href]) return;
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+        injectedFontHrefs[href] = true;
+      };
+      if (savedTypo.primaryFont && savedTypo.primaryFont.family){
+        if (savedTypo.primaryFont.linkHref) injectFontLink(savedTypo.primaryFont.linkHref);
+        typoRoot.setProperty("--font-display", '"' + savedTypo.primaryFont.family + '", ui-sans-serif, system-ui, sans-serif');
+      }
+      if (savedTypo.secondaryFont && savedTypo.secondaryFont.family){
+        if (savedTypo.secondaryFont.linkHref) injectFontLink(savedTypo.secondaryFont.linkHref);
+        typoRoot.setProperty("--font-body", '"' + savedTypo.secondaryFont.family + '", ui-sans-serif, system-ui, sans-serif');
+      }
+    }
+  }catch(e){}
 })();
