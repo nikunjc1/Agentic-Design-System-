@@ -846,6 +846,14 @@ Added a "Spacing tokens - Markdown export" section: selected product (plus its r
 
 Verified via Playwright: correct placeholder before any selection, updates on product pick, updates again after manually overriding the spacing system independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
 
+## Radius - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Radius. Read the page and radius.js first: same product/system-card pattern as Grid & Layout and Spacing - "What are you building?" and "Radius philosophy" are the two real editable choices; "Recommended global model," "Radius by component role" and "Component defaults" are fixed reference content (the three sections split out of one combined `<section>` during the earlier Human/Machine View pass), excluded for the same reason as every other page's static sections so far.
+
+Added a "Radius tokens - Markdown export" section: selected product (plus its recommended philosophy/core radius/container radius), and the selected radius philosophy (plus its tagline, description and full scale) - regenerated inside the same `updateMachineViews()` already called after every card click, load and reset. Copy button matches the other four pages.
+
+Verified via Playwright: correct placeholder before any selection, updates on product pick, updates again after manually overriding the radius philosophy independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
