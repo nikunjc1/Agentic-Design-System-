@@ -822,6 +822,14 @@ Added a new "Color tokens - Markdown export" section at the bottom of the Colors
 
 Verified via Playwright: the Markdown renders correctly on load, updates immediately when Brand's hex is edited, correctly reflects a newly-enabled Dark override on Status colors, and the Copy button places the exact current Markdown on the clipboard with a "Copied to clipboard" confirmation. Full 157-page sweep: 0 console errors.
 
+## Grid & Layout - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Grid & Layout. Read the page fully first rather than assuming it mirrors Colors: only 2 of its 5 sections are actually editable state (What are you building? / Grid type) - Breakpoints, Layout patterns and How this page fits together are fixed reference content with their own static Machine View JSON already, not user selections that need synchronizing anywhere. So the Markdown here covers only the 2 real choices, same as how Colors' export didn't include its own static "Light & dark theme behavior" section either.
+
+Added a "Grid & Layout tokens - Markdown export" section: selected product type (plus its recommended grid type/columns/gutter) and the currently-selected grid type (plus its description) - regenerated inside the same `updateMachineViews()` already called after every card click, load and reset, with a Copy button matching Colors'.
+
+Verified via Playwright: renders correctly before any selection ("No product type selected yet"), updates after picking a product card, updates again after manually overriding Grid type independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

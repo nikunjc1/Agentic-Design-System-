@@ -19,6 +19,36 @@
     var buildingMachineJson = document.querySelector('[data-role="building-machine-json"]');
     var gridtypeMachineJson = document.querySelector('[data-role="gridtype-machine-json"]');
 
+    var markdownOutput = document.querySelector('[data-role="gridlayout-markdown-output"]');
+
+    // Same "MD file" pattern added to Colors: one consolidated Markdown
+    // snapshot of this page's editable state (not the 3 static reference
+    // sections, which already have their own fixed Machine View JSON),
+    // regenerated on every real change so it's always current.
+    function renderMarkdown(){
+      if (!markdownOutput) return;
+      var productCard = document.querySelector(".product-card.is-active");
+      var systemCard = document.querySelector(".system-card.is-active");
+      var systemKey = systemCard ? systemCard.dataset.system : null;
+      var systemDesc = systemCard ? (systemCard.querySelector(".system-card-desc") || {}).textContent : null;
+
+      var lines = ["# Grid & Layout", ""];
+      lines.push("## What are you building?", "");
+      if (productCard){
+        lines.push("- Selected product: `" + productCard.dataset.product + "`");
+        lines.push("- Recommended grid type: `" + (GRID_TYPE_NAMES[productCard.dataset.system] || productCard.dataset.system) + "`");
+        lines.push("- Recommended columns: `" + productCard.dataset.columns + "`");
+        lines.push("- Recommended gutter: `" + productCard.dataset.gutter + "px`");
+      } else {
+        lines.push("- No product type selected yet");
+      }
+      lines.push("", "## Grid type", "");
+      lines.push("- Selected: `" + (GRID_TYPE_NAMES[systemKey] || systemKey) + "`");
+      if (systemDesc) lines.push("- " + systemDesc.trim());
+
+      markdownOutput.textContent = lines.join("\n").trim();
+    }
+
     function updateMachineViews(){
       if (buildingMachineJson){
         var activeCard = document.querySelector(".product-card.is-active");
@@ -37,6 +67,7 @@
           label: key ? (GRID_TYPE_NAMES[key] || key) : null
         }, null, 2);
       }
+      renderMarkdown();
     }
 
     function selectSystem(key){
@@ -132,5 +163,26 @@
       saveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ saveStatus.hidden = true; }, 2500);
     });
+
+    var copyMarkdownBtn = document.getElementById("copyGridLayoutMarkdownBtn");
+    var markdownStatus = document.getElementById("gridLayoutMarkdownStatus");
+    if (copyMarkdownBtn){
+      copyMarkdownBtn.addEventListener("click", function(){
+        var text = markdownOutput ? markdownOutput.textContent : "";
+        function done(){
+          markdownStatus.hidden = false;
+          markdownStatus.textContent = "Copied to clipboard";
+          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            markdownStatus.hidden = false;
+            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+          });
+        } else {
+          done();
+        }
+      });
+    }
   });
 })();
