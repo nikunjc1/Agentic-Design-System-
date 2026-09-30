@@ -141,30 +141,86 @@
 
     var presetsMachineJson = document.querySelector('[data-role="borderpresets-machine-json"]');
     var configMachineJson = document.querySelector('[data-role="borderconfig-machine-json"]');
+    var markdownOutput = document.querySelector('[data-role="borders-markdown-output"]');
+
+    // Same "MD file" pattern added to Colors, Grid & Layout, Typography,
+    // Spacing and Radius: one consolidated Markdown snapshot of this
+    // page's editable state (Border presets, Configure your border, Border
+    // states) - Component guidance is fixed reference content (just Card
+    // and Table's real values), excluded for the same reason as every
+    // other page's static sections so far. Called from all three Machine
+    // View update functions below so it always reflects whichever part of
+    // the page last changed.
+    function renderMarkdown(){
+      if (!markdownOutput) return;
+      var presetCard = document.querySelector(".system-card.is-active");
+      var lines = ["# Borders", ""];
+
+      lines.push("## Border presets", "");
+      if (presetCard){
+        lines.push("- Selected: `" + presetCard.dataset.system + "`");
+        lines.push("- Width: `" + presetCard.dataset.width + "px`");
+        lines.push("- Color: `" + presetCard.dataset.color + "`");
+        lines.push("- Opacity: `" + presetCard.dataset.opacity + "%`");
+        lines.push("- Style: `" + presetCard.dataset.style + "`");
+      }
+
+      lines.push("", "## Configure your border", "");
+      lines.push("- Width: `" + widthSelect.value + "px`");
+      lines.push("- Style: " + styleSelect.options[styleSelect.selectedIndex].textContent);
+      lines.push("- Sides: " + sidesSelect.options[sidesSelect.selectedIndex].textContent);
+      lines.push("- Opacity: `" + opacityInput.value + "%`");
+      lines.push("- Color (Light): `#" + colorHex.value + "`");
+      lines.push("- Color (Dark): `#" + darkColorHex.value + "`" + (darkAuto ? " (auto-generated)" : ""));
+
+      // stateRows/stateDarkAuto are assigned further down this same
+      // DOMContentLoaded callback (the per-state-colors block) - renderMarkdown
+      // can be called earlier than that, via loadBorder()'s own call chain
+      // (loadBorder -> selectSystem -> updatePresetsMachineView), while
+      // they're still the hoisted `undefined` from their `var` declaration.
+      if (stateRows){
+        lines.push("", "## Border states", "");
+        stateRows.forEach(function(row){
+          var label = (row.querySelector(".usage-label") || {}).textContent || row.dataset.state;
+          var key = row.dataset.state;
+          lines.push("### " + label, "");
+          lines.push("- Width: `" + row.dataset.width + "px` &middot; Opacity: `" + row.dataset.opacity + "%` &middot; Style: `" + row.dataset.style + "`");
+          lines.push("- Color (Light): `#" + row.querySelector('[data-role="state-hex"]').value + "`");
+          lines.push("- Color (Dark): `#" + row.querySelector('[data-role="state-hex-dark"]').value + "`" + (stateDarkAuto[key] ? " (auto-generated)" : ""));
+          lines.push("");
+        });
+      }
+
+      markdownOutput.textContent = lines.join("\n").trim();
+    }
 
     function updatePresetsMachineView(){
-      if (!presetsMachineJson) return;
-      var active = document.querySelector(".system-card.is-active");
-      presetsMachineJson.textContent = JSON.stringify({
-        selected: active ? active.dataset.system : null,
-        width: active ? Number(active.dataset.width) : null,
-        color: active ? active.dataset.color : null,
-        opacity: active ? Number(active.dataset.opacity) : null,
-        style: active ? active.dataset.style : null
-      }, null, 2);
+      if (presetsMachineJson){
+        var active = document.querySelector(".system-card.is-active");
+        presetsMachineJson.textContent = JSON.stringify({
+          selected: active ? active.dataset.system : null,
+          width: active ? Number(active.dataset.width) : null,
+          color: active ? active.dataset.color : null,
+          opacity: active ? Number(active.dataset.opacity) : null,
+          style: active ? active.dataset.style : null
+        }, null, 2);
+      }
+      renderMarkdown();
     }
 
     function updateConfigMachineView(){
-      if (!configMachineJson) return;
-      configMachineJson.textContent = JSON.stringify({
-        width: Number(widthSelect.value),
-        color: "#" + colorHex.value,
-        colorDark: "#" + darkColorHex.value,
-        colorDarkAuto: darkAuto,
-        opacity: Number(opacityInput.value),
-        style: styleSelect.value,
-        sides: sidesSelect.value
-      }, null, 2);
+      if (configMachineJson){
+        configMachineJson.textContent = JSON.stringify({
+          width: Number(widthSelect.value),
+          color: "#" + colorHex.value,
+          colorDark: "#" + darkColorHex.value,
+          colorDarkAuto: darkAuto,
+          opacity: Number(opacityInput.value),
+          style: styleSelect.value,
+          sides: sidesSelect.value
+        }, null, 2);
+      }
+      renderMarkdown();
     }
 
     function selectSystem(key){
@@ -324,20 +380,22 @@
     var statesMachineJson = document.querySelector('[data-role="borderstates-machine-json"]');
 
     function updateStatesMachineView(){
-      if (!statesMachineJson) return;
-      var states = Array.prototype.map.call(stateRows, function(row){
-        var key = row.dataset.state;
-        return {
-          state: key,
-          width: Number(row.dataset.width),
-          opacity: Number(row.dataset.opacity),
-          style: row.dataset.style,
-          light: "#" + row.querySelector('[data-role="state-hex"]').value,
-          dark: "#" + row.querySelector('[data-role="state-hex-dark"]').value,
-          darkAuto: !!stateDarkAuto[key]
-        };
-      });
-      statesMachineJson.textContent = JSON.stringify({ states: states }, null, 2);
+      if (statesMachineJson){
+        var states = Array.prototype.map.call(stateRows, function(row){
+          var key = row.dataset.state;
+          return {
+            state: key,
+            width: Number(row.dataset.width),
+            opacity: Number(row.dataset.opacity),
+            style: row.dataset.style,
+            light: "#" + row.querySelector('[data-role="state-hex"]').value,
+            dark: "#" + row.querySelector('[data-role="state-hex-dark"]').value,
+            darkAuto: !!stateDarkAuto[key]
+          };
+        });
+        statesMachineJson.textContent = JSON.stringify({ states: states }, null, 2);
+      }
+      renderMarkdown();
     }
 
     function applyStateSwatch(row, isDark, hex){
@@ -465,5 +523,26 @@
       statesSaveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ statesSaveStatus.hidden = true; }, 2500);
     });
+
+    var copyMarkdownBtn = document.getElementById("copyBordersMarkdownBtn");
+    var markdownStatus = document.getElementById("bordersMarkdownStatus");
+    if (copyMarkdownBtn){
+      copyMarkdownBtn.addEventListener("click", function(){
+        var text = markdownOutput ? markdownOutput.textContent : "";
+        function done(){
+          markdownStatus.hidden = false;
+          markdownStatus.textContent = "Copied to clipboard";
+          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            markdownStatus.hidden = false;
+            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+          });
+        } else {
+          done();
+        }
+      });
+    }
   });
 })();

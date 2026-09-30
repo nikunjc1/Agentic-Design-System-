@@ -854,6 +854,14 @@ Added a "Radius tokens - Markdown export" section: selected product (plus its re
 
 Verified via Playwright: correct placeholder before any selection, updates on product pick, updates again after manually overriding the radius philosophy independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
 
+## Borders - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Borders. Read the page and borders.js first: 3 of its 4 sections are real editable state, not 1 or 2 like the previous pages - Border presets (a system-card picker), Configure your border (width/color/opacity/style/sides live config) and Border states (10 per-state light/dark color rows) all persist to localStorage; only Component guidance (Card and Table's fixed values) is static reference, excluded for the same reason as every other page's static sections so far.
+
+Added a "Border tokens - Markdown export" section covering all 3 editable parts, called from all three of this page's existing Machine View update functions (`updatePresetsMachineView`, `updateConfigMachineView`, `updateStatesMachineView`) so it stays current regardless of which one last ran. One real bug caught before it shipped: `renderMarkdown()` reads `stateRows`/`stateDarkAuto`, but those aren't assigned until later in the same script, and `loadBorder()`'s own call chain reaches `updatePresetsMachineView()` (and therefore `renderMarkdown()`) before that point - would have thrown "Cannot read properties of undefined" on every page load. Fixed with a truthiness guard around the Border states section specifically.
+
+Verified via Playwright: picking a preset updates both Border presets and Configure your border sections, changing Sides updates just that field, editing a state's hex updates just that row, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
