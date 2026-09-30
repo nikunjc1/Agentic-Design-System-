@@ -42,6 +42,25 @@
     { value: "9999", label: "Full - Pill" }
   ];
 
+  // Corner radius default now tracks the sitewide Radius foundation's
+  // current philosophy (theme-init.js/shell.js keep --radius-md live)
+  // instead of a fixed literal - snaps to whichever of this component's
+  // own preset options is closest, so a philosophy step this component
+  // doesn't offer as an exact preset still lands on a sensible neighbor
+  // instead of silently ignoring the sitewide setting.
+  function liveRadiusDefault(fallback){
+    var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
+    var num = parseFloat(raw);
+    if (!isFinite(num)) return fallback;
+    var closest = null, closestDiff = Infinity;
+    RADIUS_OPTIONS.forEach(function(opt){
+      var val = Number(opt.value);
+      var diff = Math.abs(val - num);
+      if (diff < closestDiff){ closestDiff = diff; closest = opt.value; }
+    });
+    return closest !== null ? closest : fallback;
+  }
+
   // Literal pixel dimensions per aspect ratio - not derived by CSS
   // aspect-ratio math, matching this codebase's SIZE_SCALE convention of
   // hand-tuned lookups over formulas, so Copy Code reproduces exactly what
@@ -54,7 +73,7 @@
   var ASPECT_KEYS = ["square", "landscape", "portrait"];
 
   var FALLBACK_DEFAULTS = {
-    radius: "8",
+    radius: liveRadiusDefault("8"),
     aspectKey: "square",
     caption: "Product photo"
   };

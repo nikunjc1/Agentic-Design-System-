@@ -40,6 +40,25 @@
     { value: "12", label: "12px - Soft" },
     { value: "9999", label: "Full - Pill" }
   ];
+
+  // Corner radius default now tracks the sitewide Radius foundation's
+  // current philosophy (theme-init.js/shell.js keep --radius-md live)
+  // instead of a fixed literal - snaps to whichever of this component's
+  // own preset options is closest, so a philosophy step this component
+  // doesn't offer as an exact preset still lands on a sensible neighbor
+  // instead of silently ignoring the sitewide setting.
+  function liveRadiusDefault(fallback){
+    var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
+    var num = parseFloat(raw);
+    if (!isFinite(num)) return fallback;
+    var closest = null, closestDiff = Infinity;
+    RADIUS_OPTIONS.forEach(function(opt){
+      var val = Number(opt.value);
+      var diff = Math.abs(val - num);
+      if (diff < closestDiff){ closestDiff = diff; closest = opt.value; }
+    });
+    return closest !== null ? closest : fallback;
+  }
   // Size (3) - Ant documents Small/Default/Large, scaling row padding and
   // avatar diameter together rather than font-size, the same "rhythm
   // changes, type scale mostly doesn't" rule this system already applies
@@ -50,7 +69,7 @@
     { value: "large", label: "Large" }
   ];
   var FALLBACK_DEFAULTS = {
-    radius: "8",
+    radius: liveRadiusDefault("8"),
     size: "default",
     showDividers: true
   };
