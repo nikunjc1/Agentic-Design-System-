@@ -967,6 +967,12 @@ Fixed both by removing the redundant margin rather than fighting the gap: zeroed
 
 Verified: measured both gaps directly on Cascader (32px → 20px, 24px → 16px), screenshotted the card to confirm it now reads as a tight, correctly-rhythmed card; clicked Copy prompt (still copies) and the Configure link (still navigates to cascader-default.html) to confirm nothing was broken structurally. Swept both bugs across every page that could possibly have them - 62 pages for the label gap, 62 for the link gap - 0 remaining issues on any page. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - moved the divider above Copy prompt/Copy code
+
+Asked to move the separator line so it sits above Copy prompt/Copy code instead of above "Configure and view guide". Moved the `border-top` (plus its `padding-top:12px`) from `.component-open-link` to `.card-copy-row`, so the divider now separates the demo/label section above from the two copy buttons below, and "Configure and view guide" sits underneath with no divider of its own.
+
+Verified: screenshotted Cascader, Number and Add-on to confirm the divider now reads above the buttons on every card size; swept all 62 `[data-detail-href]` pages - every `.card-copy-row` has the border, every `.component-open-link` no longer does, 0 exceptions; clicked Copy code (still copies) and the Configure link (still navigates to the detail page) to confirm nothing broke structurally. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

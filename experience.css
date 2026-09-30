@@ -57,8 +57,10 @@
    which already carries its own gap:8px between every child. Left at 16px,
    the two stack into a real 24px gap instead of the 16px the value was
    actually tuned for; 8px here restores that same 16px total instead of
-   fighting the parent's gap. */
-.component-open-link{display:block;margin-top:8px;padding:12px;border-top:1px solid var(--line);font-size:14px;font-weight:600;text-align:center;color:var(--text-hi)}
+   fighting the parent's gap. The divider (border-top) moved to
+   .card-copy-row, so it separates the demo/label above from Copy prompt/
+   Copy code below instead of sitting above this link. */
+.component-open-link{display:block;margin-top:8px;padding:12px;font-size:14px;font-weight:600;text-align:center;color:var(--text-hi)}
 .component-open-link:hover{background:var(--red-tint)}
 .setup-notice h2{font-size:16px;margin:0 0 8px}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}

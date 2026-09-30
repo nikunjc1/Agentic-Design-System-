@@ -5063,6 +5063,8 @@ a.system-card{ text-decoration: none; color: inherit; }
   justify-content: center;
   gap: 8px;
   margin-top: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
 }
 /* flex:1 (the previous rule here) stretched each button to fill whatever
    width .card-copy-row itself resolved to - every *-type-card rule sets
