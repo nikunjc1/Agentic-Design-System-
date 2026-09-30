@@ -814,6 +814,14 @@ The one real subtlety: persisting had to be wired to genuine user edits specific
 
 Verified via Playwright: edited one field on each of the 8 pages with no Save click anywhere, then opened MD Export fresh - all 8 categories present with the exact edited values. Separately confirmed Reset still leaves `localStorage` fully empty (not just at documented defaults) on grid-layout, typography and borders. Full 157-page sweep: 0 console errors.
 
+## Colors - added the missing MD file, not just a JSON Machine View
+
+Checked against a pasted product spec for the Colors detail page. Every described interaction already existed (Light/Dark per section, auto-derived Dark with manual override, Brand's derived scale, per-section Save) except one real gap the spec called out explicitly: "there is no MD file available in the final output that users can copy." True - the Machine View toggle added earlier gives each section its own JSON, but nothing on the page produces an actual Markdown block, and nothing consolidates all 5 sections into one document.
+
+Added a new "Color tokens - Markdown export" section at the bottom of the Colors tab: one Markdown document covering Brand, Background & surface elevation, Semantic & status, Neutral scale and Text colors (Light values, plus Dark values for whichever sections have their dark override enabled), with a Copy button. Reused the exact same field-reading logic the Machine View JSON already had (`collectTheme()` in `initColorMachineViews()`) rather than writing a second parallel reader, and hooked the Markdown render into the same sitewide input/change listener that JSON already uses - so it updates on every edit, not only after a Save click (the spec asked for "on save," this is a superset of that).
+
+Verified via Playwright: the Markdown renders correctly on load, updates immediately when Brand's hex is edited, correctly reflects a newly-enabled Dark override on Status colors, and the Copy button places the exact current Markdown on the clipboard with a "Copied to clipboard" confirmation. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

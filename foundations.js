@@ -1125,6 +1125,21 @@
     function initColorMachineViews(){
       var sections = ["brand", "bg", "status", "neutral", "text"];
 
+      var SECTION_TITLES = {
+        brand: "Brand Color",
+        bg: "Background & Surface Elevation",
+        status: "Semantic & Status Colors",
+        neutral: "Neutral Scale",
+        text: "Text Colors"
+      };
+      var FIELD_LABELS = {
+        brand: { value: "Primary" },
+        bg: { primary: "Primary", secondary: "Secondary", tertiary: "Tertiary" },
+        status: { success: "Success", warning: "Warning", danger: "Danger", info: "Info" },
+        neutral: { c800: "C800", c700: "C700", c600: "C600", c500: "C500", border: "Border" },
+        text: { hi: "Hi", mid: "Mid", dim: "Dim" }
+      };
+
       function collectTheme(prefix, theme){
         var out = {};
         var stripPrefix = prefix + "-" + theme + "-";
@@ -1141,6 +1156,35 @@
         return out;
       }
 
+      // Renders the same light/dark values every section's Machine View
+      // JSON already reads, as one consolidated Markdown document instead -
+      // this is the "MD file" the Colors tab itself was missing: a single,
+      // always-current, copyable snapshot of every section, not a JSON
+      // blob buried inside each section's own toggle.
+      function renderMarkdown(){
+        var mdEl = document.querySelector('[data-role="colors-markdown-output"]');
+        if (!mdEl) return;
+        var lines = ["# Color Tokens", ""];
+        sections.forEach(function(prefix){
+          var light = collectTheme(prefix, "light");
+          var enableInput = document.querySelector('[data-role="' + prefix + '-dark-enable"]');
+          var darkEnabled = !!(enableInput && enableInput.checked);
+          var dark = darkEnabled ? collectTheme(prefix, "dark") : null;
+          var labels = FIELD_LABELS[prefix] || {};
+          lines.push("## " + SECTION_TITLES[prefix], "");
+          Object.keys(light).forEach(function(key){
+            lines.push("- " + (labels[key] || key) + " (Light): `" + light[key] + "`");
+          });
+          if (dark){
+            Object.keys(dark).forEach(function(key){
+              lines.push("- " + (labels[key] || key) + " (Dark): `" + dark[key] + "`");
+            });
+          }
+          lines.push("");
+        });
+        mdEl.textContent = lines.join("\n").trim();
+      }
+
       function recompute(){
         sections.forEach(function(prefix){
           var code = document.querySelector('[data-role="' + prefix + '-machine-json"]');
@@ -1155,11 +1199,33 @@
           };
           code.textContent = JSON.stringify(data, null, 2);
         });
+        renderMarkdown();
       }
 
       document.querySelector("main").addEventListener("input", recompute);
       document.querySelector("main").addEventListener("change", recompute);
       recompute();
+
+      var copyBtn = document.getElementById("copyColorsMarkdownBtn");
+      var copyStatus = document.getElementById("colorsMarkdownStatus");
+      if (copyBtn){
+        copyBtn.addEventListener("click", function(){
+          var text = document.querySelector('[data-role="colors-markdown-output"]').textContent;
+          function done(){
+            copyStatus.hidden = false;
+            copyStatus.textContent = "Copied to clipboard";
+            setTimeout(function(){ copyStatus.hidden = true; }, 2500);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(done).catch(function(){
+              copyStatus.hidden = false;
+              copyStatus.textContent = "Copy failed - select the text above and copy manually.";
+            });
+          } else {
+            done();
+          }
+        });
+      }
     }
     initColorMachineViews();
 
