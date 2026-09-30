@@ -52,16 +52,17 @@
 .checkbox-demo-field,.radio-demo-field{position:relative}
 .app-main h1{overflow-wrap:anywhere}
 .get-library-copy,.guide-body-text,.guide-list{overflow-wrap:anywhere}
-/* margin-top is 8px, not the original standalone 16px - this link is
-   always appended as a direct child of .system-card (see experience.js),
-   which already carries its own gap:8px between every child. Left at 16px,
-   the two stack into a real 24px gap instead of the 16px the value was
-   actually tuned for; 8px here restores that same 16px total instead of
-   fighting the parent's gap. The divider (border-top) moved to
-   .card-copy-row, so it separates the demo/label above from Copy prompt/
-   Copy code below instead of sitting above this link. */
-.component-open-link{display:block;margin-top:8px;padding:12px;font-size:14px;font-weight:600;text-align:center;color:var(--text-hi)}
-.component-open-link:hover{background:var(--red-tint)}
+/* Font/color/background/padding now come from the real .btn.btn-primary
+   classes experience.js applies alongside this one (this link is the
+   card's actual primary action - the whole card already navigates here
+   on click - so it gets the same treatment as any other primary CTA,
+   not a one-off style). This rule only handles what .btn doesn't:
+   full-width layout, and the divider separating it from the demo/label
+   above. margin-top is 8px, not a "clean" 16px, because this link is
+   always a direct child of .system-card (see experience.js), which
+   already carries its own gap:8px between every child - 8+8 restores
+   the original intended 16px total instead of stacking past it. */
+.component-open-link{display:block;box-sizing:border-box;width:100%;text-align:center;border-top:1px solid var(--line);margin-top:8px;padding-top:20px}
 .setup-notice h2{font-size:16px;margin:0 0 8px}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}
 @media(max-width:900px){.setup-layout{grid-template-columns:1fr}.setup-layout>aside{order:2}}

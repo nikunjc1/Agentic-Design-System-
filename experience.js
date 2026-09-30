@@ -85,9 +85,15 @@
     requestAnimationFrame(() => {
       main.querySelectorAll('[data-detail-href]').forEach(card => {
         card.removeAttribute('role'); card.removeAttribute('tabindex');
-        const link = el('a', 'Configure and view guide →', 'component-open-link');
+        // Real Button classes, not a one-off style - this is the card's
+        // actual primary action (the whole card already navigates here on
+        // click), so it gets the same .btn-primary treatment as any other
+        // primary CTA, placed before the secondary Copy prompt/Copy code
+        // utility actions rather than after them.
+        const link = el('a', 'Configure and view guide →', 'btn btn-primary component-open-link');
         link.href = card.dataset.detailHref;
-        card.append(link);
+        const copyRow = card.querySelector('.card-copy-row');
+        if (copyRow) copyRow.before(link); else card.append(link);
       });
       main.querySelectorAll('.button-matrix-wrap').forEach(region => {
         region.tabIndex = 0;

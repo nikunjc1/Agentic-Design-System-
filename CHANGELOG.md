@@ -973,6 +973,14 @@ Asked to move the separator line so it sits above Copy prompt/Copy code instead 
 
 Verified: screenshotted Cascader, Number and Add-on to confirm the divider now reads above the buttons on every card size; swept all 62 `[data-detail-href]` pages - every `.card-copy-row` has the border, every `.component-open-link` no longer does, 0 exceptions; clicked Copy code (still copies) and the Configure link (still navigates to the detail page) to confirm nothing broke structurally. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - corrected information architecture, primary action first
+
+Asked to fix the card's information architecture. The problem: "Configure and view guide" is the card's actual primary action - the whole card already navigates there on click - yet it was rendered last, below Copy prompt/Copy code, styled as a plain text link with no visual weight. Two secondary utility actions were reading as more important than the real destination. Asked which reordering was wanted rather than guess at a subjective hierarchy call across 62+ pages; confirmed direction: primary action first, made visually stronger.
+
+Reordered to Preview → label → divider → "Configure and view guide" (now a real `.btn.btn-primary`, full-width, matching the same primary-button treatment used elsewhere in the system rather than a one-off style) → Copy prompt/Copy code below it as secondary actions. Moved the divider back to sit above the link (it separates the demo/label section from the actions below, and the link is first among actions again). Removed the link's now-redundant one-off font/color/padding, superseded by the `.btn.btn-primary` classes, and removed a stale hover rule that would otherwise have overridden the button's real hover state with a leftover text-link tint.
+
+Verified: swept all 62 `[data-detail-href]` pages (65 cards) - every card has the link before `.card-copy-row` in DOM order, every link carries the real `.btn.btn-primary` classes, every link has the divider border and spans the card's full content width, every `.card-copy-row` no longer has one, 0 exceptions. Screenshotted Cascader, Number, Add-on, Tabs and Modal (the wide-card variant) to confirm the new hierarchy reads correctly. Clicked Copy prompt (still copies) and the Configure link (still navigates to the correct detail page) to confirm nothing broke functionally. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
