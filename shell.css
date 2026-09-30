@@ -2355,8 +2355,15 @@ button{ font-family: inherit; }
    this box's available width with no slack; taking any of that width
    away pushes them past the card's edge. .system-card's own 16px
    padding already gives this section its horizontal inset, so only
-   top/bottom padding is needed for breathing room above/below content. */
-.button-type-demo{ margin-top: 12px; background: #fff; border-radius: var(--radius-md); padding: 16px 0; }
+   top/bottom padding is needed for breathing room above/below content.
+   align-self:stretch is explicit, not inherited, because ~24 component
+   types (Tree Select, Badge, Table, Card and others - see the
+   min-height:220px/align-items:center rule below) set align-items:center
+   on .system-card itself, to center THEIR narrower preview content. That
+   makes this box shrink to its own content width and center instead of
+   filling the card - invisible before it had a background, but a real
+   gap on both sides now that it's a visible white panel. */
+.button-type-demo{ margin-top: 12px; background: #fff; border-radius: var(--radius-md); padding: 16px 0; align-self: stretch; width: 100%; box-sizing: border-box; }
 
 .button-type-card,
 .group-type-card,
