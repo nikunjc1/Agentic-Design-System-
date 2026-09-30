@@ -981,6 +981,14 @@ Reordered to Preview → label → divider → "Configure and view guide" (now a
 
 Verified: swept all 62 `[data-detail-href]` pages (65 cards) - every card has the link before `.card-copy-row` in DOM order, every link carries the real `.btn.btn-primary` classes, every link has the divider border and spans the card's full content width, every `.card-copy-row` no longer has one, 0 exceptions. Screenshotted Cascader, Number, Add-on, Tabs and Modal (the wide-card variant) to confirm the new hierarchy reads correctly. Clicked Copy prompt (still copies) and the Configure link (still navigates to the correct detail page) to confirm nothing broke functionally. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - reworded the primary button's label
+
+Asked to change the UX writing on the primary action button. "Configure and view guide" packed two verbs into one label and didn't clearly say what clicking it does - the destination is a detail page built around a single component's guide, not a configuration screen. Offered a few concrete rewrites rather than guess at a subjective copy call across 62+ pages; label changed to "View component guide", which names the actual destination in one clear verb phrase.
+
+Changed the single string in `experience.js` where the link is injected (`shared()`, appended to every `[data-detail-href]` card) - no other file references this label as live UI copy.
+
+Verified: swept all 62 `[data-detail-href]` pages (65 links) - every link now reads "View component guide →", 0 exceptions. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

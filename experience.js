@@ -90,7 +90,7 @@
         // click), so it gets the same .btn-primary treatment as any other
         // primary CTA, placed before the secondary Copy prompt/Copy code
         // utility actions rather than after them.
-        const link = el('a', 'Configure and view guide →', 'btn btn-primary component-open-link');
+        const link = el('a', 'View component guide →', 'btn btn-primary component-open-link');
         link.href = card.dataset.detailHref;
         const copyRow = card.querySelector('.card-copy-row');
         if (copyRow) copyRow.before(link); else card.append(link);
