@@ -796,6 +796,14 @@ The other half - product/system card pickers (What are you building?, Grid type,
 
 Verified via Playwright across all 7 pages: all 28 toggles switch panels, all 28 Machine View blocks parse as valid non-empty JSON, and spot-checked live updates (clicking a product card, editing a border state's hex, changing a type-scale size, picking an icon library) all reflect immediately in their JSON. Full 157-page sweep: 0 console errors.
 
+## MD Export - Grid & Layout and Icons never made it into the exported Markdown
+
+Reported: the exported Markdown's "Saved foundation values" block was missing Grid & Layout and Icons entirely, no matter what. Root cause: `experience.js`'s `TOKEN_KEYS` list - the fixed set of localStorage keys the export reads back - was `['colors','bg-colors','status-colors','neutral-colors','text-colors','typography','spacing','radius','border','border-states','shadow']`. Grid & Layout and Icons save to `ads:grid-layout` and `ads:icons` respectively (confirmed in grid-layout.js/icons.js), but neither key was ever in that list, so their saved data was silently dropped even after clicking each page's own Save button - not a display bug, the values genuinely never reached the export.
+
+Added `'grid-layout'` and `'icons'` to `TOKEN_KEYS`. Verified by scripting a save on all 8 Foundations pages' Save buttons in one Playwright session, then checking the exported JSON block: all 8 now appear (previously 6 of 8). Full 157-page sweep: 0 console errors.
+
+Worth noting for the other 6 (Colors, Typography, Spacing, Radius, Borders, Shadows): these were already correct, but only appear in the export once that page's own Save button has actually been clicked - unsaved edits fall back to "documented defaults," by the export's own existing disclaimer. That part of the behavior is unchanged.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -204,7 +204,7 @@
     });
   }
 
-  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','text-colors','typography','spacing','radius','border','border-states','shadow'];
+  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','text-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons'];
   function savedTokens() {
     const values = {};
     for (const key of TOKEN_KEYS) {
