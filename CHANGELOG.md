@@ -997,6 +997,14 @@ Removed the `→` from the label string in `experience.js`. Removed the `padding
 
 Verified: swept all 62 `[data-detail-href]` pages (65 links) - every link reads "View component guide" with no arrow, every one has matching top/bottom padding (8px/8px), 0 exceptions. Screenshotted Cascader and Modal (the wide-card variant) to confirm the label now sits centered in the button. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - gave the preview section its own white background
+
+Asked to change the card's preview area (the component control plus its "System Generated X" label) from sitting directly on the card's off-white background to a distinct white section. Added `background: #fff` and `border-radius: var(--radius-md)` to the shared `.button-type-demo` rule in `shell.css`, so it now reads as a recessed white panel against the card's `rgb(246,246,244)` background instead of blending into it.
+
+Added vertical padding (`16px 0`) for breathing room above/below the preview content, but deliberately left horizontal padding at 0: `.system-card` already gives this section its horizontal inset via its own 16px padding, and one demo - Transfer's two-column layout - already sizes itself to exactly 100% of that available width with zero slack. Tried 16px all around first and caught the regression directly: Transfer's content overflowed the card by 32px, pushed past its rounded border on both sides. Vertical-only padding removes zero width from any demo's content, so every demo keeps exactly the layout space it had before.
+
+Verified: swept all 62 `[data-detail-href]` pages (65 demos) - every `.button-type-demo` has the white background, 0 still overflow their card, 0 exceptions (including Transfer, re-checked after the fix). Screenshotted Tree Select, Cascader, Modal, Number, Avatar, Progress, Skeleton, Empty, Table and Card to confirm the panel looks correct across both the plain and "wide" card layouts and doesn't clash with components that already have their own dark or bordered preview chrome (e.g. Modal's dialog mockup still reads with proper contrast). Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
