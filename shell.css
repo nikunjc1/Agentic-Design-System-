@@ -4992,6 +4992,7 @@ a.system-card{ text-decoration: none; color: inherit; }
 
 .card-copy-row{
   display: flex;
+  justify-content: center;
   gap: 8px;
   margin-top: 4px;
 }

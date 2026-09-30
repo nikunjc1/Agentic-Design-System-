@@ -947,6 +947,14 @@ Removed the stretch entirely instead of continuing to bound it: `flex: 0 0 auto;
 
 Verified: measured buttons on narrow (Number), medium (Add-on/Card/Table) and the previously-oversized wide (Tabs/Modal/Tree) pages directly - every single one now renders at exactly 110px, not just "closer than before"; screenshotted Add-on, Tabs and Number side by side to confirm all three now look like the same small, appropriately-sized action row; clicked Copy prompt on Add-on to confirm it still copies correctly. Swept the actual button width (not the row's, which was the wrong thing to measure once it stopped mattering) across all 64 pages and 150 button instances: 100% land on exactly 110px, zero exceptions. Full 157-page regression sweep: 0 console errors.
 
+## Copy prompt / Copy code CTAs - centered within the card
+
+Follow-up to the fixed-width fix: once the two buttons stopped stretching to fill `.card-copy-row` (still `width:100%` of its own card via the 55+ `*-type-card` rules), they sat left-aligned by flexbox's own default, leaving unused space to the right on any card wider than the buttons' own ~228px - asked to center them instead.
+
+Added `justify-content: center` to `.card-copy-row`. The row itself is still `width:100%` of its card (untouched, and harmless now that it's just an invisible flex container), so centering its own two non-growing children centers them relative to the card.
+
+Verified: measured each card's own horizontal center against the button row's center on Add-on, Number, Tabs, Modal and Card - 0.0px difference on every one; screenshotted Add-on and Tabs to confirm visually; clicked Copy code on Add-on to confirm it still copies. Swept card/row centering across all 64 pages: 0 mismatches. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
