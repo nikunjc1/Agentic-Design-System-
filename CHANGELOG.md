@@ -862,6 +862,14 @@ Added a "Border tokens - Markdown export" section covering all 3 editable parts,
 
 Verified via Playwright: picking a preset updates both Border presets and Configure your border sections, changing Sides updates just that field, editing a state's hex updates just that row, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
 
+## Icons - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Icons, the last of the 8 Foundations pages. Read the page and icons.js first: Icon style (system-card), Configure your icon system (size/stroke/corner selects) and Bring your own icons (library radio pick + session-only uploaded reference icons) are the editable parts; Icon states is fixed reference content, excluded for the same reason as every other page's static sections. One wrinkle specific to this page: uploaded file names were never part of the persisted `ads:icons` payload (only the library choice is) - included them in the Markdown anyway, same as the existing Machine View JSON already does, since they're real current-session state even though they don't survive a reload.
+
+Added an "Icon tokens - Markdown export" section covering all 3 editable parts, using each select's own descriptive option text ("24px - standard default," "1.8px - medium") rather than raw values. Regenerated inside the same `updateMachineViews()` already called after every card click, select change, library pick and upload.
+
+Verified via Playwright: updates on an icon style pick, updates again on a stroke-width change, correctly reflects a library pick, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors. Shadows is the one Foundations page still without this - not done here, since it wasn't asked for.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

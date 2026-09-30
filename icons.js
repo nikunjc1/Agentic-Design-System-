@@ -62,6 +62,34 @@
     var configMachineJson = document.querySelector('[data-role="iconconfig-machine-json"]');
     var byoMachineJson = document.querySelector('[data-role="iconbyo-machine-json"]');
 
+    var markdownOutput = document.querySelector('[data-role="icons-markdown-output"]');
+
+    // Same "MD file" pattern added to the other Foundations pages: one
+    // consolidated Markdown snapshot of this page's editable state (Icon
+    // style, Configure your icon system, Bring your own icons) - Icon
+    // states is fixed reference content, excluded for the same reason as
+    // every other page's static sections so far.
+    function renderMarkdown(){
+      if (!markdownOutput) return;
+      var lines = ["# Icons", ""];
+
+      lines.push("## Icon style", "");
+      lines.push("- Selected: `" + getActiveSystem() + "`");
+
+      lines.push("", "## Configure your icon system", "");
+      lines.push("- Grid size: " + sizeSelect.options[sizeSelect.selectedIndex].textContent);
+      lines.push("- Stroke width: " + strokeSelect.options[strokeSelect.selectedIndex].textContent);
+      lines.push("- Corner treatment: " + cornerSelect.options[cornerSelect.selectedIndex].textContent);
+
+      var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
+      var thumbs = document.querySelectorAll('.icon-upload-thumb span');
+      lines.push("", "## Bring your own icons", "");
+      lines.push("- Library: " + (libraryRadio ? libraryRadio.value : "None selected"));
+      lines.push("- Uploaded reference icons: " + (thumbs.length ? Array.prototype.map.call(thumbs, function(s){ return s.textContent; }).join(", ") : "None"));
+
+      markdownOutput.textContent = lines.join("\n").trim();
+    }
+
     function updateMachineViews(){
       if (styleMachineJson){
         styleMachineJson.textContent = JSON.stringify({ selected: getActiveSystem() }, null, 2);
@@ -81,6 +109,7 @@
           uploadedFiles: Array.prototype.map.call(thumbs, function(s){ return s.textContent; })
         }, null, 2);
       }
+      renderMarkdown();
     }
 
     function renderPreview(){
@@ -227,5 +256,26 @@
       uploadDrop.classList.remove("is-dragover");
       handleFiles(e.dataTransfer.files);
     });
+
+    var copyMarkdownBtn = document.getElementById("copyIconsMarkdownBtn");
+    var markdownStatus = document.getElementById("iconsMarkdownStatus");
+    if (copyMarkdownBtn){
+      copyMarkdownBtn.addEventListener("click", function(){
+        var text = markdownOutput ? markdownOutput.textContent : "";
+        function done(){
+          markdownStatus.hidden = false;
+          markdownStatus.textContent = "Copied to clipboard";
+          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            markdownStatus.hidden = false;
+            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+          });
+        } else {
+          done();
+        }
+      });
+    }
   });
 })();
