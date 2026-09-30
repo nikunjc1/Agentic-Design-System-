@@ -39,15 +39,28 @@
     // fragile) - instead it tracks the simpler, equivalent fact: the fields
     // start in sync with storage right after a load or a save, and go out
     // of sync the moment any field in the section actually changes.
-    function wireSaveState(section, btn){
+    // persistFn (optional) auto-persists the section's current values to
+    // localStorage on every edit, not only on an explicit Save click - so a
+    // Markdown export always reflects what's on screen right now instead of
+    // requiring a separate "remember to click Save on all 8 pages first"
+    // step. The button's own Save/Saved label still tracks live-vs-saved
+    // for a beat (it flips to "Save ..." the instant a field changes, then
+    // back to "Saved ..." once persistFn's write completes just after) -
+    // kept rather than removed since it's still a truthful, if now
+    // near-instant, signal.
+    function wireSaveState(section, btn, persistFn){
       var unsavedLabel = btn.textContent.trim();
       var savedLabel = unsavedLabel.replace(/^Save\b/, "Saved");
       function setSaved(isSaved){
         btn.textContent = isSaved ? savedLabel : unsavedLabel;
         btn.classList.toggle("is-saved", isSaved);
       }
-      section.addEventListener("input", function(){ setSaved(false); });
-      section.addEventListener("change", function(){ setSaved(false); });
+      function handleEdit(){
+        setSaved(false);
+        if (persistFn) { persistFn(); setSaved(true); }
+      }
+      section.addEventListener("input", handleEdit);
+      section.addEventListener("change", handleEdit);
       return setSaved;
     }
 
@@ -405,7 +418,15 @@
     });
 
     var saveBrandBtn = document.getElementById("saveBrandBtn");
-    var setBrandSaved = wireSaveState(saveBrandBtn.closest(".color-foundation"), saveBrandBtn);
+    function persistBrand(){
+      var lightHex = normalizeHex(brandLightHex.value);
+      if (!lightHex) return;
+      var payload = { light: { primary: { hex: "#" + lightHex } } };
+      var darkHex = normalizeHex(brandDarkHex.value);
+      if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto };
+      localStorage.setItem(BRAND_KEY, JSON.stringify(payload));
+    }
+    var setBrandSaved = wireSaveState(saveBrandBtn.closest(".color-foundation"), saveBrandBtn, persistBrand);
 
     function loadBrand(){
       var saved;
@@ -463,18 +484,8 @@
 
     var brandSaveStatus = document.getElementById("brandSaveStatus");
     saveBrandBtn.addEventListener("click", function(){
-      var lightHex = normalizeHex(brandLightHex.value);
-      if (!lightHex) return;
-      var payload = { light: { primary: { hex: "#" + lightHex } } };
-      // Always persist a dark value (auto-generated when the user hasn't
-      // customized it) - previously this was only saved when brandDarkEnable
-      // was checked, so a plain light-color save left no "dark" key in
-      // localStorage at all, and every other page's bootstrap script (which
-      // reads saved[theme] directly) found nothing for dark theme and fell
-      // back to the site default red instead of this brand color.
-      var darkHex = normalizeHex(brandDarkHex.value);
-      if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto };
-      localStorage.setItem(BRAND_KEY, JSON.stringify(payload));
+      if (!normalizeHex(brandLightHex.value)) return;
+      persistBrand();
       applyBrandLiveForActiveTheme();
       setBrandSaved(true);
 
@@ -609,7 +620,20 @@
     });
 
     var saveBgBtn = document.getElementById("saveBgBtn");
-    var setBgSaved = wireSaveState(saveBgBtn.closest(".color-foundation"), saveBgBtn);
+    function persistBg(){
+      var saved;
+      try{ saved = JSON.parse(localStorage.getItem(BG_KEY) || "null") || {}; }catch(e){ saved = {}; }
+      saved.light = readTriple(bgLightFields);
+      if (bgDarkEnable.checked){
+        var dark = readTriple(bgDarkFields);
+        dark.auto = bgDarkAuto;
+        saved.dark = dark;
+      } else {
+        delete saved.dark;
+      }
+      localStorage.setItem(BG_KEY, JSON.stringify(saved));
+    }
+    var setBgSaved = wireSaveState(saveBgBtn.closest(".color-foundation"), saveBgBtn, persistBg);
 
     function loadBg(){
       var saved;
@@ -653,18 +677,7 @@
 
     var bgSaveStatus = document.getElementById("bgSaveStatus");
     saveBgBtn.addEventListener("click", function(){
-      var saved;
-      try{ saved = JSON.parse(localStorage.getItem(BG_KEY) || "null") || {}; }catch(e){ saved = {}; }
-
-      saved.light = readTriple(bgLightFields);
-      if (bgDarkEnable.checked){
-        var dark = readTriple(bgDarkFields);
-        dark.auto = bgDarkAuto;
-        saved.dark = dark;
-      } else {
-        delete saved.dark;
-      }
-      localStorage.setItem(BG_KEY, JSON.stringify(saved));
+      persistBg();
       applyBgLiveForActiveTheme();
       setBgSaved(true);
 
@@ -719,7 +732,16 @@
     });
 
     var saveStatusBtn = document.getElementById("saveStatusBtn");
-    var setStatusSaved = wireSaveState(saveStatusBtn.closest(".color-foundation"), saveStatusBtn);
+    function persistStatus(){
+      var payload = { light: statusSection.readLight() };
+      if (statusDarkEnable.checked){
+        var dark = statusSection.readDark();
+        dark.auto = statusSection.isAuto();
+        payload.dark = dark;
+      }
+      localStorage.setItem(STATUS_KEY, JSON.stringify(payload));
+    }
+    var setStatusSaved = wireSaveState(saveStatusBtn.closest(".color-foundation"), saveStatusBtn, persistStatus);
 
     function loadStatus(){
       var saved;
@@ -763,13 +785,7 @@
 
     var statusSaveStatus = document.getElementById("statusSaveStatus");
     saveStatusBtn.addEventListener("click", function(){
-      var payload = { light: statusSection.readLight() };
-      if (statusDarkEnable.checked){
-        var dark = statusSection.readDark();
-        dark.auto = statusSection.isAuto();
-        payload.dark = dark;
-      }
-      localStorage.setItem(STATUS_KEY, JSON.stringify(payload));
+      persistStatus();
       applyStatusLiveForActiveTheme();
       setStatusSaved(true);
 
@@ -827,7 +843,16 @@
     });
 
     var saveNeutralBtn = document.getElementById("saveNeutralBtn");
-    var setNeutralSaved = wireSaveState(saveNeutralBtn.closest(".color-foundation"), saveNeutralBtn);
+    function persistNeutral(){
+      var payload = { light: neutralSection.readLight() };
+      if (neutralDarkEnable.checked){
+        var dark = neutralSection.readDark();
+        dark.auto = neutralSection.isAuto();
+        payload.dark = dark;
+      }
+      localStorage.setItem(NEUTRAL_KEY, JSON.stringify(payload));
+    }
+    var setNeutralSaved = wireSaveState(saveNeutralBtn.closest(".color-foundation"), saveNeutralBtn, persistNeutral);
 
     function loadNeutral(){
       var saved;
@@ -868,13 +893,7 @@
 
     var neutralSaveStatus = document.getElementById("neutralSaveStatus");
     saveNeutralBtn.addEventListener("click", function(){
-      var payload = { light: neutralSection.readLight() };
-      if (neutralDarkEnable.checked){
-        var dark = neutralSection.readDark();
-        dark.auto = neutralSection.isAuto();
-        payload.dark = dark;
-      }
-      localStorage.setItem(NEUTRAL_KEY, JSON.stringify(payload));
+      persistNeutral();
       applyNeutralLiveForActiveTheme();
       setNeutralSaved(true);
 
@@ -931,7 +950,16 @@
     });
 
     var saveTextBtn = document.getElementById("saveTextBtn");
-    var setTextSaved = wireSaveState(saveTextBtn.closest(".color-foundation"), saveTextBtn);
+    function persistText(){
+      var payload = { light: textSection.readLight() };
+      if (textDarkEnable.checked){
+        var dark = textSection.readDark();
+        dark.auto = textSection.isAuto();
+        payload.dark = dark;
+      }
+      localStorage.setItem(TEXT_KEY, JSON.stringify(payload));
+    }
+    var setTextSaved = wireSaveState(saveTextBtn.closest(".color-foundation"), saveTextBtn, persistText);
 
     function loadText(){
       var saved;
@@ -968,13 +996,7 @@
 
     var textSaveStatus = document.getElementById("textSaveStatus");
     saveTextBtn.addEventListener("click", function(){
-      var payload = { light: textSection.readLight() };
-      if (textDarkEnable.checked){
-        var dark = textSection.readDark();
-        dark.auto = textSection.isAuto();
-        payload.dark = dark;
-      }
-      localStorage.setItem(TEXT_KEY, JSON.stringify(payload));
+      persistText();
       applyTextLiveForActiveTheme();
       setTextSaved(true);
 

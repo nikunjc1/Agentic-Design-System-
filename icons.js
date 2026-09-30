@@ -109,22 +109,37 @@
       renderPreview();
     }
 
+    function getActiveSystem(){
+      var active = document.querySelector(".system-card.is-active");
+      return active ? active.dataset.system : "duotone";
+    }
+
+    // Persists on every real edit (style pick, config change, library
+    // pick), not from loadIcons()'s own programmatic restore or Reset -
+    // see the same note in grid-layout.js.
+    function persistIcons(){
+      var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        system: getActiveSystem(),
+        size: sizeSelect.value,
+        stroke: strokeSelect.value,
+        corner: cornerSelect.value,
+        library: libraryRadio ? libraryRadio.value : null
+      }));
+    }
+
     systemCards.forEach(function(card){
       card.addEventListener("click", function(e){
         var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]");
         if (hit && hit !== card) return;
         selectSystem(card.dataset.system);
+        persistIcons();
       });
     });
 
-    sizeSelect.addEventListener("change", renderPreview);
-    strokeSelect.addEventListener("change", renderPreview);
-    cornerSelect.addEventListener("change", renderPreview);
-
-    function getActiveSystem(){
-      var active = document.querySelector(".system-card.is-active");
-      return active ? active.dataset.system : "duotone";
-    }
+    sizeSelect.addEventListener("change", function(){ renderPreview(); persistIcons(); });
+    strokeSelect.addEventListener("change", function(){ renderPreview(); persistIcons(); });
+    cornerSelect.addEventListener("change", function(){ renderPreview(); persistIcons(); });
 
     function loadIcons(){
       var saved;
@@ -146,21 +161,13 @@
     loadIcons();
 
     document.querySelectorAll('[data-role="library-radio"]').forEach(function(radio){
-      radio.addEventListener("change", updateMachineViews);
+      radio.addEventListener("change", function(){ updateMachineViews(); persistIcons(); });
     });
 
     var saveBtn = document.getElementById("saveIconsBtn");
     var saveStatus = document.getElementById("iconsSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
-      var payload = {
-        system: getActiveSystem(),
-        size: sizeSelect.value,
-        stroke: strokeSelect.value,
-        corner: cornerSelect.value,
-        library: libraryRadio ? libraryRadio.value : null
-      };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistIcons();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";

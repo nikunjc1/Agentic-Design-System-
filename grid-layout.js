@@ -63,15 +63,6 @@
       updateMachineViews();
     }
 
-    productCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectProduct(card); });
-    });
-    systemCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
-    });
-
     function getActiveProduct(){
       var active = document.querySelector(".product-card.is-active");
       return active ? active.dataset.product : null;
@@ -80,6 +71,31 @@
       var active = document.querySelector(".system-card.is-active");
       return active ? active.dataset.system : "columns";
     }
+
+    // Persists on every real click (not on the load/reset paths, which
+    // programmatically call selectProduct/selectSystem too - persisting
+    // there would immediately write the just-reset defaults back over the
+    // localStorage entry Reset just removed) - so the Markdown export
+    // always reflects the current on-screen choice without a separate
+    // "click Save" step.
+    function persistGrid(){
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), system: getActiveSystem() }));
+    }
+
+    productCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectProduct(card);
+        persistGrid();
+      });
+    });
+    systemCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectSystem(card.dataset.system);
+        persistGrid();
+      });
+    });
 
     function loadGrid(){
       var saved;
@@ -98,11 +114,7 @@
     var saveBtn = document.getElementById("saveGridBtn");
     var saveStatus = document.getElementById("gridSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var payload = {
-        product: getActiveProduct(),
-        system: getActiveSystem()
-      };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistGrid();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";

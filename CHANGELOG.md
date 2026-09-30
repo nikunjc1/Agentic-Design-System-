@@ -804,6 +804,16 @@ Added `'grid-layout'` and `'icons'` to `TOKEN_KEYS`. Verified by scripting a sav
 
 Worth noting for the other 6 (Colors, Typography, Spacing, Radius, Borders, Shadows): these were already correct, but only appear in the export once that page's own Save button has actually been clicked - unsaved edits fall back to "documented defaults," by the export's own existing disclaimer. That part of the behavior is unchanged.
 
+## All 8 Foundations pages now auto-save, so MD Export always reflects current values
+
+Follow-up to the MD Export fix above: even with Grid & Layout and Icons added to `TOKEN_KEYS`, the export's "Saved foundation values" JSON stayed empty (`{}`) for anyone who had edited a Foundations page but never clicked that page's own Save button - by design, `savedTokens()` only reads what was explicitly saved. Asked to change that: the export should reflect what's actually on screen, not require a separate "click Save on all 8 pages" step.
+
+Added a `persistX()` function to each of the 8 pages (foundations.js's 5 sections, plus grid-layout/typography/spacing/radius/borders/shadows/icons.js) that writes the exact same payload shape the Save button already wrote, called on every real edit - a card pick, a select change, a hex input, a checkbox - not only on Save's click. The explicit Save/Reset buttons are unchanged and still work exactly as before; auto-save just means there's no longer a gap between what you see and what's stored.
+
+The one real subtlety: persisting had to be wired to genuine user edits specifically, not to the shared render/select functions those edits call - those same functions also run during page load (restoring a previous save) and Reset (restoring defaults), and persisting there would immediately overwrite Reset's own `localStorage.removeItem()` with the just-reset default values. Typography's Reset button surfaced a sharper version of this: its font-picker reset internally fires a *synthetic* click (`defaultBtn.click()`) that bubbles through the same page-wide listener used for auto-persist, mid-reset, before the row-level fields were back to their defaults - caught via a direct before/after localStorage read in Playwright, not just eyeballing the UI. Fixed by pairing `e.stopPropagation()` (blocks Reset's own click from bubbling) with a `suppressPersist` flag (blocks the nested synthetic click too) for the duration of Reset's handler.
+
+Verified via Playwright: edited one field on each of the 8 pages with no Save click anywhere, then opened MD Export fresh - all 8 categories present with the exact edited values. Separately confirmed Reset still leaves `localStorage` fully empty (not just at documented defaults) on grid-layout, typography and borders. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -189,39 +189,47 @@
 
     systemCards.forEach(function(card){
       card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectSystem(card.dataset.system);
+        persistBorder();
+      });
     });
 
-    widthSelect.addEventListener("change", applyPreview);
-    styleSelect.addEventListener("change", applyPreview);
-    sidesSelect.addEventListener("change", applyPreview);
-    opacityInput.addEventListener("input", applyPreview);
+    widthSelect.addEventListener("change", function(){ applyPreview(); persistBorder(); });
+    styleSelect.addEventListener("change", function(){ applyPreview(); persistBorder(); });
+    sidesSelect.addEventListener("change", function(){ applyPreview(); persistBorder(); });
+    opacityInput.addEventListener("input", function(){ applyPreview(); persistBorder(); });
     colorHex.addEventListener("input", function(){
       var hex = colorHex.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
       if (hex.length === 6) colorPicker.value = "#" + hex;
       if (darkAuto) regenerateDark();
       applyPreview();
+      persistBorder();
     });
     colorPicker.addEventListener("input", function(){
       colorHex.value = colorPicker.value.replace("#", "").toUpperCase();
       if (darkAuto) regenerateDark();
       applyPreview();
+      persistBorder();
     });
     darkColorHex.addEventListener("input", function(){
       var hex = darkColorHex.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
       if (hex.length === 6) darkColorPicker.value = "#" + hex;
       darkAuto = false;
       applyPreview();
+      persistBorder();
     });
     darkColorPicker.addEventListener("input", function(){
       darkColorHex.value = darkColorPicker.value.replace("#", "").toUpperCase();
       darkAuto = false;
       applyPreview();
+      persistBorder();
     });
 
     var regenerateDarkBtn = document.getElementById("regenerateBorderDarkBtn");
     regenerateDarkBtn.addEventListener("click", function(){
       regenerateDark();
+      persistBorder();
       saveStatus.hidden = false;
       saveStatus.textContent = "Dark color regenerated from Light";
       setTimeout(function(){ saveStatus.hidden = true; }, 2500);
@@ -236,6 +244,22 @@
     function getActiveSystem(){
       var active = document.querySelector(".system-card.is-active");
       return active ? active.dataset.system : "standard";
+    }
+
+    // Persists on every real edit (preset pick, field change), not from
+    // applyPreview()'s own programmatic callers (load, theme toggle) or
+    // from Reset - see the same note in grid-layout.js.
+    function persistBorder(){
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        system: getActiveSystem(),
+        width: widthSelect.value,
+        color: colorHex.value,
+        darkColor: darkColorHex.value,
+        darkColorAuto: darkAuto,
+        opacity: opacityInput.value,
+        style: styleSelect.value,
+        sides: sidesSelect.value
+      }));
     }
 
     function loadBorder(){
@@ -270,17 +294,7 @@
     var saveBtn = document.getElementById("saveBorderBtn");
     var saveStatus = document.getElementById("borderSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var payload = {
-        system: getActiveSystem(),
-        width: widthSelect.value,
-        color: colorHex.value,
-        darkColor: darkColorHex.value,
-        darkColorAuto: darkAuto,
-        opacity: opacityInput.value,
-        style: styleSelect.value,
-        sides: sidesSelect.value
-      };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistBorder();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
@@ -360,22 +374,41 @@
         if (hex.length !== 6) return;
         applyStateSwatch(row, false, hex);
         if (stateDarkAuto[key]) regenerateStateDark(row);
+        persistStates();
       });
       swatch.addEventListener("input", function(){
         applyStateSwatch(row, false, swatch.value.replace("#", ""));
         if (stateDarkAuto[key]) regenerateStateDark(row);
+        persistStates();
       });
       darkHexField.addEventListener("input", function(){
         var hex = darkHexField.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
         if (hex.length !== 6) return;
         applyStateSwatch(row, true, hex);
         stateDarkAuto[key] = false;
+        persistStates();
       });
       darkSwatch.addEventListener("input", function(){
         applyStateSwatch(row, true, darkSwatch.value.replace("#", ""));
         stateDarkAuto[key] = false;
+        persistStates();
       });
     });
+
+    // Persists on every real per-row edit, not from loadStates()'s own
+    // programmatic restore or Reset - see the same note in grid-layout.js.
+    function persistStates(){
+      var payload = {};
+      stateRows.forEach(function(row){
+        var key = row.dataset.state;
+        payload[key] = {
+          light: row.querySelector('[data-role="state-hex"]').value,
+          dark: row.querySelector('[data-role="state-hex-dark"]').value,
+          darkAuto: stateDarkAuto[key]
+        };
+      });
+      localStorage.setItem(STATES_KEY, JSON.stringify(payload));
+    }
 
     function loadStates(){
       var saved;
@@ -402,16 +435,7 @@
     var regenerateStatesDarkBtn = document.getElementById("regenerateStatesDarkBtn");
     var statesSaveStatus = document.getElementById("statesSaveStatus");
     saveStatesBtn.addEventListener("click", function(){
-      var payload = {};
-      stateRows.forEach(function(row){
-        var key = row.dataset.state;
-        payload[key] = {
-          light: row.querySelector('[data-role="state-hex"]').value,
-          dark: row.querySelector('[data-role="state-hex-dark"]').value,
-          darkAuto: stateDarkAuto[key]
-        };
-      });
-      localStorage.setItem(STATES_KEY, JSON.stringify(payload));
+      persistStates();
 
       statesSaveStatus.hidden = false;
       statesSaveStatus.textContent = "Saved just now";
@@ -420,6 +444,7 @@
 
     regenerateStatesDarkBtn.addEventListener("click", function(){
       stateRows.forEach(function(row){ regenerateStateDark(row); });
+      persistStates();
 
       statesSaveStatus.hidden = false;
       statesSaveStatus.textContent = "Dark colors regenerated from Light";

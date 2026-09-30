@@ -23,15 +23,24 @@
       updateMachineView();
     }
 
-    systemCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
-    });
-
     function getActiveSystem(){
       var active = document.querySelector(".system-card.is-active");
       return active ? active.dataset.system : "balanced";
     }
+
+    // Persists on every real click, not on the load/reset paths - see the
+    // same note in grid-layout.js.
+    function persistShadow(){
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ philosophy: getActiveSystem() }));
+    }
+
+    systemCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectSystem(card.dataset.system);
+        persistShadow();
+      });
+    });
 
     function loadShadow(){
       var saved;
@@ -46,8 +55,7 @@
     var saveBtn = document.getElementById("saveShadowBtn");
     var saveStatus = document.getElementById("shadowSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var payload = { philosophy: getActiveSystem() };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistShadow();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";

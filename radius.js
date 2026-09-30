@@ -56,16 +56,6 @@
       updateMachineViews();
     }
 
-    productCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectProduct(card); });
-    });
-
-    systemCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
-    });
-
     function getActiveProduct(){
       var active = document.querySelector(".product-card.is-active");
       return active ? active.dataset.product : null;
@@ -74,6 +64,28 @@
       var active = document.querySelector(".system-card.is-active");
       return active ? active.dataset.system : "balanced";
     }
+
+    // Persists on every real click, not on the load/reset paths - see the
+    // same note in grid-layout.js.
+    function persistRadius(){
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), philosophy: getActiveSystem() }));
+    }
+
+    productCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectProduct(card);
+        persistRadius();
+      });
+    });
+
+    systemCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectSystem(card.dataset.system);
+        persistRadius();
+      });
+    });
 
     function loadRadius(){
       var saved;
@@ -92,8 +104,7 @@
     var saveBtn = document.getElementById("saveRadiusBtn");
     var saveStatus = document.getElementById("radiusSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var payload = { product: getActiveProduct(), philosophy: getActiveSystem() };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistRadius();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";

@@ -57,16 +57,6 @@
       updateMachineViews();
     }
 
-    productCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectProduct(card); });
-    });
-
-    systemCards.forEach(function(card){
-      card.addEventListener("click", function(e){
-        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return; selectSystem(card.dataset.system); });
-    });
-
     function getActiveProduct(){
       var active = document.querySelector(".product-card.is-active");
       return active ? active.dataset.product : null;
@@ -75,6 +65,29 @@
       var active = document.querySelector(".system-card.is-active");
       return active ? active.dataset.system : "4px";
     }
+
+    // Persists on every real click, not on the load/reset paths which
+    // programmatically call selectProduct/selectSystem too - see the same
+    // note in grid-layout.js.
+    function persistSpacing(){
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), system: getActiveSystem() }));
+    }
+
+    productCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectProduct(card);
+        persistSpacing();
+      });
+    });
+
+    systemCards.forEach(function(card){
+      card.addEventListener("click", function(e){
+        var hit = e.target.closest("button, input, select, textarea, a, [role=combobox]"); if (hit && hit !== card) return;
+        selectSystem(card.dataset.system);
+        persistSpacing();
+      });
+    });
 
     function loadSpacing(){
       var saved;
@@ -93,8 +106,7 @@
     var saveBtn = document.getElementById("saveSpacingBtn");
     var saveStatus = document.getElementById("spacingSaveStatus");
     saveBtn.addEventListener("click", function(){
-      var payload = { product: getActiveProduct(), system: getActiveSystem() };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      persistSpacing();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";

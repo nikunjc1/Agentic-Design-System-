@@ -389,9 +389,23 @@
         typeScaleMachineJson.textContent = JSON.stringify({ levels: levels }, null, 2);
       }
     }
-    document.querySelector("main").addEventListener("input", updateMachineViews);
-    document.querySelector("main").addEventListener("change", updateMachineViews);
-    document.querySelector("main").addEventListener("click", updateMachineViews);
+    // Persists on every real edit, alongside the Machine View recompute
+    // above, so a Markdown export always reflects what's on screen without
+    // a separate "click Save" step. suppressPersist guards the Reset
+    // handler below: primaryPicker.reset()/secondaryPicker.reset() each do
+    // a synthetic defaultBtn.click() internally, which also bubbles here -
+    // without the guard, that click would fire mid-reset (before the type
+    // rows below it are reset back to defaults) and re-persist a stale mix
+    // of new font + still-old row values right over the localStorage entry
+    // Reset just removed.
+    var suppressPersist = false;
+    function handleInteraction(){
+      updateMachineViews();
+      if (!suppressPersist) persistTypography();
+    }
+    document.querySelector("main").addEventListener("input", handleInteraction);
+    document.querySelector("main").addEventListener("change", handleInteraction);
+    document.querySelector("main").addEventListener("click", handleInteraction);
 
     var platformChips = document.querySelectorAll(".platform-chips .chip");
     platformChips.forEach(function(chip){
@@ -429,9 +443,7 @@
     loadTypography();
     updateMachineViews();
 
-    var saveBtn = document.getElementById("saveTypographyBtn");
-    var saveStatus = document.getElementById("typoSaveStatus");
-    saveBtn.addEventListener("click", function(){
+    function persistTypography(){
       var activeChip = document.querySelector(".platform-chips .chip.is-active");
       var payload = {
         primaryFont: primaryPicker.getState(),
@@ -443,6 +455,12 @@
         payload.levels[level] = rowControllers[level].getState();
       });
       localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+    }
+
+    var saveBtn = document.getElementById("saveTypographyBtn");
+    var saveStatus = document.getElementById("typoSaveStatus");
+    saveBtn.addEventListener("click", function(){
+      persistTypography();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
@@ -454,6 +472,7 @@
       Object.keys(rowControllers).forEach(function(level){
         rowControllers[level].regenerateDark();
       });
+      persistTypography();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Dark colors regenerated from Light";
@@ -461,7 +480,16 @@
     });
 
     var resetBtn = document.getElementById("resetTypographyBtn");
-    resetBtn.addEventListener("click", function(){
+    resetBtn.addEventListener("click", function(e){
+      // stopPropagation blocks this click's own bubble to main's listener;
+      // suppressPersist additionally covers the nested synthetic clicks
+      // primaryPicker.reset()/secondaryPicker.reset() fire internally,
+      // which are separate click events that bubble immediately (target
+      // phase runs fully, including resetting suppressPersist back to
+      // false, before the browser even starts this event's own bubble
+      // phase - so stopPropagation alone doesn't reach those inner clicks).
+      e.stopPropagation();
+      suppressPersist = true;
       localStorage.removeItem(SAVE_KEY);
 
       primaryPicker.reset();
@@ -471,6 +499,8 @@
       Object.keys(rowControllers).forEach(function(level){
         rowControllers[level].setState(ROW_DEFAULTS[level]);
       });
+      suppressPersist = false;
+      updateMachineViews();
 
       saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";
