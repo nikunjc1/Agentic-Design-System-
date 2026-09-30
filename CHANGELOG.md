@@ -870,6 +870,16 @@ Added an "Icon tokens - Markdown export" section covering all 3 editable parts, 
 
 Verified via Playwright: updates on an icon style pick, updates again on a stroke-width change, correctly reflects a library pick, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors. Shadows is the one Foundations page still without this - not done here, since it wasn't asked for.
 
+## Guidelines pages - the same Markdown export, adapted for pages with no editable state
+
+Asked to do the same for Design Principles, Component Guidelines, Copywriting, Data Format and Accessibility. Checked first: none of these 5 have a dedicated JS file or any localStorage-backed state at all - they're pure reference/documentation pages, unlike every Foundations page so far. "Export current editable values" doesn't apply here; there's nothing to select or save.
+
+Adapted the pattern instead of forcing it: added a generic `initPageMarkdownExport()` to experience.js (only activates on a page that actually has the new button+output element) that exports the page's own real content as Markdown - mirroring the exact heading/paragraph/list-item conversion `tools/audit_pages.py` already uses to build `docs-catalog.js` (the source the sitewide MD Export page's per-page export already draws from), just run client-side against the live rendered DOM instead of raw HTML source. This gives each page its own local Copy Markdown button without loading the 500KB+ sitewide catalog file just to read one page's own entry, and without duplicating a second, differently-behaved extraction implementation.
+
+One correctness detail worth calling out: an extractor that only reads text inside `<h1>`-`<h3>`/`<li>`/`<p>` would silently drop most of these pages' actual content, since Do/Don't examples, usage-row tables and similar structures hold their text in bare `<span>`s, not `<p>`. Matched audit_pages.py's own approach instead: walk every text node in document order and use tag boundaries only to insert structural breaks (heading markers, newlines, bullet prefixes), so nothing between two headings is skipped. The injected outline nav and setup-notice banner, plus the export panel's own placeholder text, are explicitly excluded so they don't pollute the output.
+
+Verified via Playwright on all 5 pages: each renders substantial, correctly-structured Markdown (2-6KB) with real headings and body text, Copy places the exact same text on the clipboard, and the export panel confirmed absent from its own output. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

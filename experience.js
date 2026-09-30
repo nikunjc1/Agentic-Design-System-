@@ -302,7 +302,61 @@
       code.textContent = JSON.stringify(data, null, 2);
     });
   }
-  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); }
+  // Same "Copy Markdown" pattern added to every Foundations page, applied
+  // here to plain reference/documentation pages (Design Principles,
+  // Component Guidelines, Copywriting, Data Format, Accessibility) that
+  // have no editable state of their own to snapshot - so instead of a
+  // data snapshot, this exports the page's own actual content as
+  // Markdown, mirroring the exact heading/paragraph/list-item conversion
+  // tools/audit_pages.py already uses to build docs-catalog.js (the
+  // source the sitewide MD Export page's own per-page export draws from),
+  // just run client-side against the live DOM instead of raw HTML source
+  // - so a local button gives the same result without loading that
+  // 500KB+ sitewide catalog file just to read one page's own entry. Only
+  // activates on a page that actually has the button + output element.
+  function initPageMarkdownExport() {
+    const output = $('[data-role="page-markdown-output"]');
+    const copyBtn = $('#copyPageMarkdownBtn');
+    const main = $('main');
+    if (!output || !copyBtn || !main) return;
+
+    const SKIP_TAGS = new Set(['script', 'style']);
+    const BLOCK_TAGS = new Set(['p', 'section', 'div', 'pre', 'br']);
+
+    function extract(root) {
+      const parts = [];
+      function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) { parts.push(node.textContent); return; }
+        if (node.nodeType !== Node.ELEMENT_NODE) return;
+        const tag = node.tagName.toLowerCase();
+        if (SKIP_TAGS.has(tag)) return;
+        if (node.classList && (node.classList.contains('md-export-panel') || node.classList.contains('page-outline') || node.classList.contains('setup-notice'))) return;
+        if (/^h[1-3]$/.test(tag)) parts.push('\n\n' + '#'.repeat(Number(tag[1])) + ' ');
+        else if (tag === 'li') parts.push('\n- ');
+        else if (BLOCK_TAGS.has(tag)) parts.push('\n');
+        node.childNodes.forEach(walk);
+      }
+      walk(root);
+      return parts.join('')
+        .replace(/[ \t]+/g, ' ')
+        .replace(/ *\n */g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    }
+
+    output.textContent = extract(main);
+
+    copyBtn.addEventListener('click', () => {
+      const status = $('#pageMarkdownStatus');
+      const done = () => { status.hidden = false; status.textContent = 'Copied to clipboard'; setTimeout(() => { status.hidden = true; }, 2500); };
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(output.textContent).then(done).catch(() => {
+          status.hidden = false; status.textContent = 'Copy failed - select the text above and copy manually.';
+        });
+      } else done();
+    });
+  }
+  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); initPageMarkdownExport(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
