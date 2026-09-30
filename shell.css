@@ -6007,6 +6007,40 @@ a.system-card{ text-decoration: none; color: inherit; }
 .dropdown-demo-trigger--filled:focus-visible, .dropdown-demo-trigger--filled.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .dropdown-demo-trigger--filled:disabled, .dropdown-demo-trigger--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; }
 
+/* Interactive Example (dropdown-default.html) - a real, working instance
+   alongside the static Rest/Hover/Open/Focused/Disabled comparison
+   matrix above, so the Component Guide's keyboard/ARIA claims are
+   actually demonstrable, not just documented. */
+.dropdown-demo-interactive-wrap{ position: relative; display: inline-block; }
+.dropdown-demo-menu{
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+  min-width: 180px;
+  z-index: 30;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--graphite-900);
+  border: var(--border-width-1) solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.dropdown-demo-menu[hidden]{ display: none; }
+.dropdown-demo-menuitem{
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-hi);
+  cursor: pointer;
+}
+.dropdown-demo-menuitem:hover, .dropdown-demo-menuitem:focus{ background: var(--graphite-800); }
+.dropdown-demo-menuitem:focus{ outline: 2px solid var(--color-focus-ring); outline-offset: -2px; }
+.dropdown-demo-menuitem.is-destructive{ color: var(--danger-500); }
+.dropdown-demo-interactive-status{ margin-top: 12px; font-size: 13px; color: var(--text-mid); min-height: 20px; }
+
 /* ---------- Pagination demo (pagination.html / pagination-default.html) ---------- */
 .pagination-demo-bar{
   display: inline-flex;

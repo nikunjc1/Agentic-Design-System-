@@ -424,6 +424,116 @@
     var radiusMount = document.querySelector('[data-role="dropdown-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
+    var interactiveMount = document.querySelector('[data-role="dropdown-interactive-mount"]');
+    var interactiveStatus = document.querySelector('[data-role="dropdown-interactive-status"]');
+
+    // Real, working instance - the matrix above is a static Rest/Hover/
+    // Open/Focused/Disabled comparison grid (same pattern every component
+    // on this site uses), which can only ever show what each state looks
+    // like, never prove the Component Guide's own keyboard/ARIA claims
+    // ("arrow keys, Enter to activate, Escape to close... focus returns to
+    // the trigger") are actually true. This is a real menu button
+    // (WAI-ARIA menu pattern: role="menu"/"menuitem", real DOM focus
+    // moving between items via a roving tabindex - not aria-activedescendant,
+    // which is the listbox/combobox pattern Select uses instead), reusing
+    // the exact open/close/Escape/click-outside shape buildCopyControl
+    // above already establishes.
+    var MENU_ITEMS = ["Rename", "Duplicate", "Archive", "Delete"];
+    function renderInteractiveExample(size, radius, label){
+      if (!interactiveMount) return;
+      if (interactiveMount._cleanup){ interactiveMount._cleanup(); interactiveMount._cleanup = null; }
+
+      var triggerClasses = "dropdown-demo-trigger dropdown-demo-trigger--outlined dropdown-demo-trigger--h" + size;
+      var itemsHtml = MENU_ITEMS.map(function(item, i){
+        var destructiveClass = item === "Delete" ? " is-destructive" : "";
+        return '<li role="menuitem" tabindex="-1" class="dropdown-demo-menuitem' + destructiveClass + '" data-item-index="' + i + '">' + escapeHtml(item) + "</li>";
+      }).join("");
+
+      interactiveMount.innerHTML =
+        '<button type="button" class="' + triggerClasses + '" style="border-radius:' + radiusCssFor(radius) + '" aria-haspopup="true" aria-expanded="false" id="dropdownInteractiveTrigger">' +
+          escapeHtml(label) +
+          '<span class="dropdown-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>" +
+        "</button>" +
+        '<ul class="dropdown-demo-menu" role="menu" aria-labelledby="dropdownInteractiveTrigger" hidden></ul>';
+      interactiveMount.querySelector(".dropdown-demo-menu").innerHTML = itemsHtml;
+
+      var trigger = interactiveMount.querySelector("#dropdownInteractiveTrigger");
+      var menu = interactiveMount.querySelector(".dropdown-demo-menu");
+      var items = Array.prototype.slice.call(menu.querySelectorAll('[role="menuitem"]'));
+
+      function focusItem(index){
+        items.forEach(function(it){ it.tabIndex = -1; });
+        items[index].tabIndex = 0;
+        items[index].focus();
+      }
+
+      function onDocClick(e){
+        if (interactiveMount.contains(e.target)) return;
+        closeMenu();
+      }
+      function onKeydown(e){
+        var currentIndex = items.indexOf(document.activeElement);
+        if (e.key === "Escape"){
+          e.preventDefault();
+          closeMenu();
+          trigger.focus();
+        } else if (e.key === "ArrowDown"){
+          e.preventDefault();
+          focusItem(currentIndex < items.length - 1 ? currentIndex + 1 : 0);
+        } else if (e.key === "ArrowUp"){
+          e.preventDefault();
+          focusItem(currentIndex > 0 ? currentIndex - 1 : items.length - 1);
+        } else if (e.key === "Home"){
+          e.preventDefault();
+          focusItem(0);
+        } else if (e.key === "End"){
+          e.preventDefault();
+          focusItem(items.length - 1);
+        } else if (e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          if (currentIndex !== -1) chooseItem(currentIndex);
+        } else if (e.key === "Tab"){
+          closeMenu();
+        }
+      }
+
+      function chooseItem(index){
+        if (interactiveStatus) interactiveStatus.textContent = "Selected: " + MENU_ITEMS[index];
+        closeMenu();
+        trigger.focus();
+      }
+
+      function closeMenu(){
+        menu.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.classList.remove("is-open");
+        document.removeEventListener("click", onDocClick, false);
+        document.removeEventListener("keydown", onKeydown, false);
+      }
+      function openMenu(){
+        menu.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        trigger.classList.add("is-open");
+        document.addEventListener("click", onDocClick, false);
+        document.addEventListener("keydown", onKeydown, false);
+        focusItem(0);
+      }
+
+      trigger.addEventListener("click", function(){
+        if (menu.hidden) openMenu(); else closeMenu();
+      });
+      trigger.addEventListener("keydown", function(e){
+        if (e.key === "ArrowDown" && menu.hidden){
+          e.preventDefault();
+          openMenu();
+        }
+      });
+      items.forEach(function(item, i){
+        item.addEventListener("click", function(){ chooseItem(i); });
+      });
+
+      interactiveMount._cleanup = closeMenu;
+    }
 
     function buildDropdownTrigger(typeKey, stateKey, stateCls, size, radius, label){
       var isDisabled = stateKey === "disabled";
@@ -489,6 +599,7 @@
 
       buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.fieldLabel); });
       buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.fieldLabel); });
+      renderInteractiveExample(sizes[0], radii[0], label);
     }
 
     var propertyMultiSelects = {};
