@@ -921,6 +921,14 @@ Rather than touch that established matrix pattern, added a new "Interactive Exam
 
 Verified via Playwright, checking every claim in the docs directly against live DOM state rather than assuming the new code was correct: `aria-haspopup="true"`/`aria-expanded` toggles correctly; opening moves focus to the first item; ArrowDown/ArrowUp move focus between items; Escape closes the menu and returns focus to the trigger; a click outside closes it; arrowing to "Delete" and pressing Enter selects it, shows "Selected: Delete" in a live region, closes the menu, and returns focus to the trigger. Also confirmed the Label property control updates the interactive trigger's own text live. Full 157-page sweep: 0 console errors.
 
+## Copy prompt / Copy code CTAs - unequal widths on 2 of 64 pages
+
+Reported: Copy prompt and Copy code buttons aren't equal width, inconsistent across listing pages. Checked all 64 pages that have this button pair before touching anything: 62 already wrap them in `.card-copy-row` (`display:flex` + `.btn{flex:1}`, giving equal width by construction regardless of label length) - measured and confirmed genuinely equal there. Only `patterns.html` and `templates.html` (5 button pairs each, 10 total) used a one-off inline `style="display:flex;gap:8px;margin-top:12px;"` instead of the class, so they never got the `flex:1` rule - measured the real gap directly: "Copy prompt" rendered at 103.5px, "Copy code" at 89.4px.
+
+Fixed by replacing the inline style with `class="card-copy-row"` on all 10 instances, matching the other 62 pages exactly rather than inventing a new rule - both pages verified their tag balance stayed correct (`section`/`div` counts) after the scripted find-replace.
+
+Followed the requested process per page: fixed patterns.html, then verified 3 ways (measured both buttons now render at an identical 439px, screenshotted a row to confirm visually, clicked Copy prompt and confirmed the clipboard still populates correctly - the class swap doesn't touch the `data-role` attributes the JS wiring keys off) before moving to templates.html and repeating all three checks there. Finished with a sitewide sweep across all 64 pages (not just the 2 fixed): 0 width mismatches, 0 Copy prompt/Copy code buttons found outside `.card-copy-row` anywhere. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
