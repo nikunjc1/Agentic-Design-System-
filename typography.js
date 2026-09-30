@@ -374,6 +374,56 @@
 
     var fontFamilyMachineJson = document.querySelector('[data-role="fontfamily-machine-json"]');
     var typeScaleMachineJson = document.querySelector('[data-role="typescale-machine-json"]');
+    var markdownOutput = document.querySelector('[data-role="typography-markdown-output"]');
+    var typeRows = document.querySelectorAll(".type-row");
+
+    // Same "MD file" pattern added to Colors and Grid & Layout: one
+    // consolidated Markdown snapshot of this page's editable state (Font
+    // families + every Type scale row) - Additional semantic levels isn't
+    // included, same as Colors/Grid & Layout leaving their own static
+    // reference sections out, since it's fixed guidance text, not a user
+    // selection to keep in sync.
+    function renderMarkdown(){
+      if (!markdownOutput) return;
+      var lines = ["# Typography", ""];
+
+      lines.push("## Font families", "");
+      var primaryState = primaryPicker.getState();
+      var secondaryState = secondaryPicker.getState();
+      lines.push("- Primary: " + (primaryState.family || "Not selected") + (primaryState.source ? " (" + primaryState.source + ")" : ""));
+      lines.push("- Secondary: " + (secondaryState.family || "Not selected") + (secondaryState.source ? " (" + secondaryState.source + ")" : ""));
+
+      var activePlatform = document.querySelector(".platform-chips .chip.is-active");
+      if (activePlatform){
+        lines.push("", "## Platform preset", "");
+        lines.push("- Selected: " + activePlatform.textContent.trim());
+      }
+
+      lines.push("", "## Type scale", "");
+      typeRows.forEach(function(row){
+        var level = (row.querySelector(".type-level-name") || {}).textContent || row.dataset.level;
+        var familySel = row.querySelector('[data-role="family"]');
+        var sizeSel = row.querySelector('[data-role="size"]');
+        var weightSel = row.querySelector('[data-role="weight"]');
+        var lhInput = row.querySelector('[data-role="line-height-pct"]');
+        var italicChk = row.querySelector('[data-role="italic"]');
+        var colorHex = row.querySelector('[data-role="color-hex"]');
+        var darkColorHex = row.querySelector('[data-role="color-hex-dark"]');
+
+        lines.push("### " + level, "");
+        lines.push("- Family: " + familySel.options[familySel.selectedIndex].textContent);
+        lines.push("- Size: " + sizeSel.options[sizeSel.selectedIndex].textContent);
+        lines.push("- Line height: " + lhInput.value + "%");
+        lines.push("- Weight: " + weightSel.options[weightSel.selectedIndex].textContent);
+        lines.push("- Italic: " + (italicChk.checked ? "Yes" : "No"));
+        lines.push("- Color (Light): `#" + colorHex.value + "`");
+        lines.push("- Color (Dark): `#" + darkColorHex.value + "`");
+        lines.push("");
+      });
+
+      markdownOutput.textContent = lines.join("\n").trim();
+    }
+
     function updateMachineViews(){
       if (fontFamilyMachineJson){
         fontFamilyMachineJson.textContent = JSON.stringify({
@@ -388,6 +438,7 @@
         });
         typeScaleMachineJson.textContent = JSON.stringify({ levels: levels }, null, 2);
       }
+      renderMarkdown();
     }
     // Persists on every real edit, alongside the Machine View recompute
     // above, so a Markdown export always reflects what's on screen without
@@ -506,5 +557,26 @@
       saveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ saveStatus.hidden = true; }, 2500);
     });
+
+    var copyMarkdownBtn = document.getElementById("copyTypographyMarkdownBtn");
+    var markdownStatus = document.getElementById("typographyMarkdownStatus");
+    if (copyMarkdownBtn){
+      copyMarkdownBtn.addEventListener("click", function(){
+        var text = markdownOutput ? markdownOutput.textContent : "";
+        function done(){
+          markdownStatus.hidden = false;
+          markdownStatus.textContent = "Copied to clipboard";
+          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            markdownStatus.hidden = false;
+            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+          });
+        } else {
+          done();
+        }
+      });
+    }
   });
 })();

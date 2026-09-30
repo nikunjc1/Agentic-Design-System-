@@ -830,6 +830,14 @@ Added a "Grid & Layout tokens - Markdown export" section: selected product type 
 
 Verified via Playwright: renders correctly before any selection ("No product type selected yet"), updates after picking a product card, updates again after manually overriding Grid type independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
 
+## Typography - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Typography. Read the page and typography.js fully first: Font families (Primary/Secondary pickers) and Type scale (16 rows - H1-H6, Body, Paragraph, Caption, Active, Selected, Disabled, Error, Warning, Success, Info, each with family/size/line-height/weight/italic/color/dark color) are the real editable state; Additional semantic levels is fixed reference text with its own static Machine View JSON already, same category as Colors' "Light & dark theme behavior" and Grid & Layout's 3 static sections - left out for the same reason.
+
+Added a "Typography tokens - Markdown export" section: Font families, the active platform preset (if any), then every Type scale row with its real option-list labels (e.g. "Extrabold", "Display LG - 48/60px") pulled straight from each row's own `<select>` rather than the raw numeric/token values Machine View's JSON uses - more useful to read as prose. Regenerated inside the same `updateMachineViews()` already wired to every input/change/click on the page, with a Copy button matching Colors and Grid & Layout.
+
+Verified via Playwright: updates immediately when a row's weight changes, correctly adds a "Platform preset" section once one is picked, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
