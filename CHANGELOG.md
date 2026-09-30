@@ -838,6 +838,14 @@ Added a "Typography tokens - Markdown export" section: Font families, the active
 
 Verified via Playwright: updates immediately when a row's weight changes, correctly adds a "Platform preset" section once one is picked, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
 
+## Spacing - same Markdown export added, after reading what this page actually saves
+
+Asked to do the same MD-file fix for Spacing. Read the page and spacing.js first: structurally identical to Grid & Layout's own product/system-card pattern - "What are you building?" and "Spacing system" are the two real editable choices; "Recommended global model" and "Component defaults" are fixed reference content (stat tiles and usage rows, already auto-populated as static Machine View JSON), left out for the same reason as every other page's static sections so far.
+
+Added a "Spacing tokens - Markdown export" section: selected product (plus its recommended primary/secondary unit), and the selected spacing system (plus its tagline, description and full scale) - regenerated inside the same `updateMachineViews()` already called after every card click, load and reset. Copy button matches the other three pages.
+
+Verified via Playwright: correct placeholder before any selection, updates on product pick, updates again after manually overriding the spacing system independent of the product's recommendation, and Copy places the exact current Markdown on the clipboard. Full 157-page sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

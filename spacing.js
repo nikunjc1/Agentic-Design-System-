@@ -11,6 +11,40 @@
     var buildingMachineJson = document.querySelector('[data-role="building-machine-json"]');
     var systemMachineJson = document.querySelector('[data-role="spacingsystem-machine-json"]');
 
+    var markdownOutput = document.querySelector('[data-role="spacing-markdown-output"]');
+
+    // Same "MD file" pattern added to Colors, Grid & Layout and Typography:
+    // one consolidated Markdown snapshot of this page's editable state
+    // (What are you building? + Spacing system) - Recommended global model
+    // and Component defaults are fixed reference content, same category as
+    // the other pages' excluded static sections.
+    function renderMarkdown(){
+      if (!markdownOutput) return;
+      var productCard = document.querySelector(".product-card.is-active");
+      var systemCard = document.querySelector(".system-card.is-active");
+      var systemDesc = systemCard ? (systemCard.querySelector(".system-card-desc") || {}).textContent : null;
+      var systemScale = systemCard ? (systemCard.querySelector('[data-role="scale"]') || {}).textContent : null;
+      var systemTagline = systemCard ? (systemCard.querySelector(".system-card-tagline") || {}).textContent : null;
+
+      var lines = ["# Spacing", ""];
+      lines.push("## What are you building?", "");
+      if (productCard){
+        lines.push("- Selected product: `" + productCard.dataset.product + "`");
+        lines.push("- Recommended primary unit: `" + productCard.dataset.primary + "`");
+        lines.push("- Recommended secondary unit: `" + productCard.dataset.secondary + "`");
+      } else {
+        lines.push("- No product type selected yet");
+      }
+      lines.push("", "## Spacing system", "");
+      if (systemCard){
+        lines.push("- Selected: `" + systemCard.dataset.system + "`" + (systemTagline ? " (" + systemTagline.trim() + ")" : ""));
+        if (systemDesc) lines.push("- " + systemDesc.trim());
+        if (systemScale) lines.push("- Scale: `" + systemScale.trim() + "`");
+      }
+
+      markdownOutput.textContent = lines.join("\n").trim();
+    }
+
     function updateMachineViews(){
       if (buildingMachineJson){
         var activeCard = document.querySelector(".product-card.is-active");
@@ -27,6 +61,7 @@
           scale: activeSystem ? (activeSystem.querySelector('[data-role="scale"]') || {}).textContent || null : null
         }, null, 2);
       }
+      renderMarkdown();
     }
 
     function selectSystem(key){
@@ -124,5 +159,26 @@
       saveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ saveStatus.hidden = true; }, 2500);
     });
+
+    var copyMarkdownBtn = document.getElementById("copySpacingMarkdownBtn");
+    var markdownStatus = document.getElementById("spacingMarkdownStatus");
+    if (copyMarkdownBtn){
+      copyMarkdownBtn.addEventListener("click", function(){
+        var text = markdownOutput ? markdownOutput.textContent : "";
+        function done(){
+          markdownStatus.hidden = false;
+          markdownStatus.textContent = "Copied to clipboard";
+          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            markdownStatus.hidden = false;
+            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+          });
+        } else {
+          done();
+        }
+      });
+    }
   });
 })();
