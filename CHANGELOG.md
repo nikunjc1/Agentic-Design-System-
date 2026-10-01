@@ -1037,6 +1037,18 @@ Removed `btn-sm` from the two copy buttons specifically - matched on `data-role=
 
 Verified: confirmed exactly 130 copy buttons changed (65 Copy prompt + 65 Copy code, matching the known card count) and the other 26 `.btn-sm` buttons sitewide untouched. Measured Cascader directly - all three buttons now 34px tall, 12px text, 0px difference. Swept all 62 pages (65 copy rows) for wrapping or overflow now that the buttons are wider - 0 exceptions, including the two-button rows on narrower "wide" cards like Modal. Confirmed Copy prompt's click handler still copies correctly (clipboard matched the expected prompt text). Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - found a real double-spacing bug between the label and the CTA, via direct measurement
+
+Asked to check the spacing between the "System Generated X" label and the CTA below it - no screenshot this time, so measured directly rather than eyeballing it. On Cascader, the gap from the label's own bottom edge to the white panel's bottom edge measured 27px, not the 16px the panel's padding-bottom declares. Same 27px showed up on cards with no flex-centering at all (Affix, Splitter), ruling out centering slack as the cause and pointing at the label itself.
+
+Root cause: `.dualicon-card-label` is a `<p>` tag. The authored CSS only sets `margin-top: 12px` - it never touches `margin-bottom`, so the browser's default paragraph margin (`1em 0`, ~11px at this font-size) was still in effect on the bottom edge, stacking with the panel's deliberate 16px padding-bottom to produce 27px. This was never an authored value; it was a default nobody had reset, present on every card since `.dualicon-card-label` is used identically everywhere.
+
+Fixed by adding `margin-bottom: 0` to `.dualicon-card-label`, the explicit reset the rule was missing.
+
+Verified: re-measured Cascader, Affix, Splitter and Modal - all four now show exactly 16px from label to panel bottom and a clean 32px total to the CTA (16px padding + 8px card gap + 8px CTA margin-top), where all four previously showed 27px/43px. Swept all 62 pages (65 cards) confirming `margin-bottom: 0` computed correctly everywhere. Full 157-page regression sweep: 0 console errors.
+
+While sweeping, found a second, separate issue on a handful of cards (Tree, Steps, Progress and others) where the gap is still much larger than 16px - not a margin bug, but `justify-content: center` distributing real leftover space when a card's enforced `min-height: 220px` is much taller than its actual preview content needs. Tree's gap measured 62.5px this way. Left this alone and is flagging it separately rather than folding it into this fix, since the right answer (shrink min-height for short-content cards? change how the extra space distributes?) is a different, more judgment-call kind of decision than resetting an unintended default.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

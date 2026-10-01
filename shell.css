@@ -2643,6 +2643,7 @@ button{ font-family: inherit; }
   letter-spacing: var(--tracking-6);
   color: var(--text-dim);
   margin-top: 12px;
+  margin-bottom: 0;
 }
 
 .button-type-states-preview{
