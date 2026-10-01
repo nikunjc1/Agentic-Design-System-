@@ -169,6 +169,16 @@
 <div class="setup-layout"><section class="setup-panel"><h2>Choose your export</h2>
 <label class="setup-field">What should the file include?<select id="exportScope"><option value="context">Project brief and saved foundations</option><option value="components">Brief + all component detail guides</option><option value="all">Brief + complete documentation</option></select></label>
 <p class="setup-help">The brief contains your product context, platform guidance and saved foundation values. Larger exports include the source documentation, with planned features labelled.</p>
+<fieldset class="setup-platforms"><legend>Which foundation sections should be included?</legend><div class="setup-options">
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="colors" checked>Colors</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="grid-layout" checked>Grid &amp; Layout</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="typography" checked>Typography</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="spacing" checked>Spacing</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="radius" checked>Radius</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="borders" checked>Borders</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="shadows" checked>Shadows</label>
+<label class="setup-option"><input type="checkbox" class="export-foundation-check" value="icons" checked>Icons</label>
+</div></fieldset>
 <label class="setup-option"><input type="checkbox" id="includeIdentity">Include my name, email and designation</label>
 <label class="setup-field" for="markdownPreview" style="margin-top:20px">Markdown preview</label><textarea class="export-preview" id="markdownPreview" readonly spellcheck="false"></textarea>
 <div class="setup-actions"><button class="btn btn-primary" id="downloadMarkdown" type="button" disabled>Download .md</button><button class="btn btn-ghost" id="copyMarkdown" type="button" disabled>Copy Markdown</button><button class="btn btn-ghost" id="refreshMarkdown" type="button">Refresh preview</button></div>

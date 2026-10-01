@@ -1075,6 +1075,16 @@ Asked to start acting on the findings in a usability/QA audit report the user ha
 
 **Not started this round, flagged for a direction conversation:** UQA-001 (the Create flow not producing a real generated/publishable output), UQA-002 (single fixed storage key overwriting the only saved project), UQA-005 (auto-save silently contradicting the visible Save button), UQA-006 (destructive Reset with no confirm/undo), UQA-007/008 (140 unlabeled controls plus visual-only selection state - large and mechanical, but sizable enough to want a confirmed scope before starting), UQA-003/004/009/010/011/012/015/016/018/019/020, UQA-022. These remain exactly as the report described them.
 
+## MD Export - per-foundation-tab selection instead of all-or-nothing
+
+Asked for a checkbox-based selection on MD Export so the user can pick exactly which Foundations sections go into the exported file, rather than the existing scope dropdown's all-or-nothing behavior - any saved foundation value got bundled into every export regardless of scope, since `M.markdown()` was always handed the complete `savedTokens()` object. Scoped to Foundations for this round, not every exportable area.
+
+Added 8 checkboxes - one per Foundations sidebar tab (Colors, Grid & Layout, Typography, Spacing, Radius, Borders, Shadows, Icons), all checked by default so existing export behavior is unchanged unless the user deselects something - using the same `.setup-platforms`/`.setup-option` fieldset pattern already used for New Project's platform picker, not a new one-off style.
+
+Colors and Borders each map to more than one `localStorage` key (Colors alone covers its own value plus the bg/status/neutral/text themed panels; Borders covers both border and border-states), so added a `FOUNDATION_TOKEN_MAP` in `experience.js` translating each checkbox to the actual key(s) it should pull in, and changed `savedTokens()` to accept an optional allow-list instead of always reading all 13 keys. Each checkbox triggers the same live-preview regeneration as the existing scope dropdown and identity checkbox, and the status line now reports how many of the 8 sections are included alongside the existing page count and file size.
+
+Verified: loaded the page with seeded Colors/Typography/Spacing values, confirmed all 8 checkboxes render and default to checked, confirmed the generated Markdown includes all three by default, then unchecked Colors and Typography and confirmed they disappeared from the regenerated JSON while Spacing remained - status line updated to "6/8 foundation sections" correctly. `node --check` passed. All 10 existing unit tests still pass (the Markdown-generation test exercises `M.markdown()` directly with its own token object, unaffected by the `experience.js`-side filtering). Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
