@@ -233,12 +233,24 @@
     }
     return values;
   }
+  // docs-catalog.js has no literal "category" field - every component
+  // Detail doc's own markdown starts with the same breadcrumb its real
+  // page shows ("Components · Forms · Add-on"), so the category is
+  // parsed from that instead of changing the generated catalog file.
+  // Listing/Tab-kind docs don't have this breadcrumb at all and return
+  // null, which callers treat as "not a component, don't filter it."
+  const COMPONENT_CATEGORY_PATTERN = /^Components · ([^·\n]+) · /;
+  function docCategory(doc) {
+    const m = COMPONENT_CATEGORY_PATTERN.exec(doc.markdown);
+    return m ? m[1].trim() : null;
+  }
   function exportPage() {
     const preview = $('#markdownPreview'); if (!preview) return;
     let busy = false;
     const status = $('#exportStatus'), download = $('#downloadMarkdown'), copy = $('#copyMarkdown');
     const selector = $('#exportScope'), identity = $('#includeIdentity');
     const foundationChecks = Array.from(document.querySelectorAll('.export-foundation-check'));
+    const categoryChecks = Array.from(document.querySelectorAll('.export-category-check'));
     const requestedPage = new URLSearchParams(location.search).get('page');
     if (requestedPage && /^[a-z0-9-]+\.html$/.test(requestedPage)) {
       const option = el('option', 'Brief + the selected page guide'); option.value = 'page';
@@ -247,7 +259,7 @@
     async function generate() {
       if (busy) return;
       busy = true; download.disabled = true; copy.disabled = true; selector.disabled = true; identity.disabled = true;
-      foundationChecks.forEach(c => c.disabled = true);
+      foundationChecks.forEach(c => c.disabled = true); categoryChecks.forEach(c => c.disabled = true);
       status.textContent = 'Preparing your Markdown…';
       try {
         let docs = [];
@@ -261,6 +273,13 @@
           if (!Array.isArray(window.ADSDocsCatalog)) throw new Error('Documentation catalog is unavailable. Retry, or choose "Project brief and saved foundations."');
           docs = window.ADSDocsCatalog.filter(d => selector.value === 'page' ? d.file === requestedPage : selector.value === 'all' || d.kind === 'Detail');
           if (!docs.length) throw new Error('The selected guide was not found. Choose another export scope.');
+          // Category selection only narrows component guides - a doc with
+          // no parseable category (a Listing/Tab page, included only under
+          // the "all" scope) isn't a component and always passes through,
+          // so unchecking every category can't silently drop unrelated
+          // documentation the user didn't ask to exclude.
+          const allowedCategories = new Set(categoryChecks.filter(c => c.checked).map(c => c.value));
+          docs = docs.filter(d => { const cat = docCategory(d); return cat === null || allowedCategories.has(cat); });
         }
         // Each checkbox picks a whole Foundations tab (e.g. "colors" also
         // pulls in the bg/status/neutral/text theme-pair values saved
@@ -272,13 +291,16 @@
         preview.value = M.markdown(profile, tokens, docs, identity.checked);
         const includedCount = foundationChecks.filter(c => c.checked).length;
         const foundationSummary = foundationChecks.length ? `${includedCount}/${foundationChecks.length} foundation sections · ` : '';
-        status.textContent = `${foundationSummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
+        const includedCategoryCount = categoryChecks.filter(c => c.checked).length;
+        const categorySummary = (selector.value !== 'context' && categoryChecks.length) ? `${includedCategoryCount}/${categoryChecks.length} component categories · ` : '';
+        status.textContent = `${foundationSummary}${categorySummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
         download.disabled = false; copy.disabled = false;
       } catch (error) { preview.value = ''; status.textContent = error.message; }
-      finally { busy = false; selector.disabled = false; identity.disabled = false; foundationChecks.forEach(c => c.disabled = false); }
+      finally { busy = false; selector.disabled = false; identity.disabled = false; foundationChecks.forEach(c => c.disabled = false); categoryChecks.forEach(c => c.disabled = false); }
     }
     $('#refreshMarkdown').addEventListener('click', generate);
     selector.addEventListener('change', generate); identity.addEventListener('change', generate);
+    categoryChecks.forEach(c => c.addEventListener('change', generate));
     foundationChecks.forEach(c => c.addEventListener('change', generate));
     download.addEventListener('click', () => {
       const url = URL.createObjectURL(new Blob([preview.value], {type:'text/markdown;charset=utf-8'}));
