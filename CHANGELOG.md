@@ -1029,6 +1029,14 @@ That surfaced a second, pre-existing bug while verifying: with real padding fina
 
 Verified: wrote a deeper sweep that checks not just whether each `.button-type-demo` box reaches its card's edges, but whether any of its children overflow that box - caught both Transfer (33px) and Calendar (3px) this way after the padding change, confirmed both at 0px overflow after their fixes, and reran it clean across all 62 pages (65 demos) afterward, 0 exceptions. Screenshotted Transfer to confirm "Target 2 items" now renders in full, and Tree Select, Calendar, Cascader and Modal to confirm the new matching padding looks even and correct across plain and "wide" card layouts. Full 157-page regression sweep: 0 console errors.
 
+## Listing cards - Copy prompt/Copy code were visibly smaller than View component guide
+
+Asked to fix the size difference between the primary CTA and the two copy buttons below it. Copy prompt/Copy code used `.btn-ghost.btn-sm` (11px text, 28px tall) while View component guide used the base `.btn-primary` size (12px text, 34px tall) - a real, deliberate choice from the earlier "primary action first" reorder, meant to make the primary action read as visually stronger. Asked specifically which way to resolve it rather than assume, since reversing part of a previous explicit decision needed a real answer, not a guess; chosen direction: make the copy buttons full-size rather than shrink the CTA or split the difference, so all three buttons share one consistent size and the remaining distinction is color (filled red vs ghost) rather than size.
+
+Removed `btn-sm` from the two copy buttons specifically - matched on `data-role="copy-prompt-*"` / `data-role="copy-code-*"` rather than a blanket find-replace of the class string, since `.btn-ghost.btn-sm` is also used by 13 unrelated buttons elsewhere (icon upload trigger, the four "Regenerate from Light" buttons) that weren't part of this request and needed to stay untouched.
+
+Verified: confirmed exactly 130 copy buttons changed (65 Copy prompt + 65 Copy code, matching the known card count) and the other 26 `.btn-sm` buttons sitewide untouched. Measured Cascader directly - all three buttons now 34px tall, 12px text, 0px difference. Swept all 62 pages (65 copy rows) for wrapping or overflow now that the buttons are wider - 0 exceptions, including the two-button rows on narrower "wide" cards like Modal. Confirmed Copy prompt's click handler still copies correctly (clipboard matched the expected prompt text). Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
