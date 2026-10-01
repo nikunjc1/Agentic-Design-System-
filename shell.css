@@ -4839,7 +4839,17 @@ button{ font-family: inherit; }
 .progress-demo-circular .progress-demo-label{ position: relative; z-index: 1; text-align: center; min-width: 0; }
 
 /* ---------- Result (full-panel outcome screen) ---------- */
-.result-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; width: 260px; padding: 28px 20px; }
+/* padding-bottom is 0, not the matching 28px top - this panel has no
+   visible background/border of its own (it's invisible whitespace on
+   the shared white preview panel), so its own symmetric padding wasn't
+   doing any visual work beyond adding to what comes after it. .button-
+   type-demo's 20px flex gap already separates this panel from the
+   "System Generated X" label below; with 28px of padding still inside
+   the panel on top of that, the button sat 48px from the label while
+   the description sat only 20px above the button, on the only decision
+   the panel's own gap/margin controls. padding-bottom:0 makes both
+   actually equal. */
+.result-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; width: 260px; padding: 28px 20px 0; }
 .result-demo-icon{ width: 48px; height: 48px; margin-bottom: 4px; }
 .result-demo-panel--info .result-demo-icon{ color: var(--blue-500); }
 .result-demo-panel--success .result-demo-icon{ color: var(--green-500); }

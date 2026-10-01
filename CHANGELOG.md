@@ -1049,6 +1049,16 @@ Verified: re-measured Cascader, Affix, Splitter and Modal - all four now show ex
 
 While sweeping, found a second, separate issue on a handful of cards (Tree, Steps, Progress and others) where the gap is still much larger than 16px - not a margin bug, but `justify-content: center` distributing real leftover space when a card's enforced `min-height: 220px` is much taller than its actual preview content needs. Tree's gap measured 62.5px this way. Left this alone and is flagging it separately rather than folding it into this fix, since the right answer (shrink min-height for short-content cards? change how the extra space distributes?) is a different, more judgment-call kind of decision than resetting an unintended default.
 
+## Result's "Done" button sat 48px from the label below but only 20px from the description above
+
+Reported with a screenshot of the Result card's "Payment successful" demo, with the uneven space above and below "Done" highlighted. Measured directly rather than going by the screenshot alone: 20px between the description and the button, 48px between the button and the "System Generated X" label - a real, visually obvious asymmetry, not the same `justify-content:center`-on-short-content issue flagged in the previous entry (confirmed separately: the gap from the label to the panel's own bottom edge was already a correct 16px here).
+
+Root cause: `.result-demo-panel` (the box holding the icon, title, description and button) has a symmetric `padding: 28px 20px` of its own, wrapped inside `.button-type-demo`'s outer 20px flex gap to the label. The button sits 28px from the *panel's* bottom edge (the panel's own padding), then another 20px of outer gap to the label - 48px total. The description-to-button gap, by contrast, is purely internal to the panel (its own 8px gap plus the actions row's 12px margin-top) and never crosses that outer-gap boundary, so it never picked up the extra 28px.
+
+Fixed by zeroing just the panel's `padding-bottom` (top stays 28px, since nothing above it was reported as uneven) - the panel has no visible background or border of its own, so that padding was invisible whitespace doing no visual job beyond adding to whatever came after it. With it at 0, the button is now exactly as far from the label (20px, the outer gap alone) as the description is from the button.
+
+Verified: re-measured both gaps on Result directly - 20px and 20px, where they were 20px and 48px before. Screenshotted the card to confirm the layout now reads as evenly spaced. Confirmed `.result-demo-panel` has only this one instance on the listing page, so no other variant needed the same fix. Full 157-page regression sweep: 0 console errors.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
