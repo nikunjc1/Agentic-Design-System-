@@ -2350,12 +2350,11 @@ button{ font-family: inherit; }
 .btn-demo--reject:focus-visible, .btn-demo--reject.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
 .btn-demo--reject:disabled, .btn-demo--reject.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
-/* Horizontal padding stays 0, not 16px - some demos (e.g. Transfer's
-   two-column layout) already size their content to exactly 100% of
-   this box's available width with no slack; taking any of that width
-   away pushes them past the card's edge. .system-card's own 16px
-   padding already gives this section its horizontal inset, so only
-   top/bottom padding is needed for breathing room above/below content.
+/* 16px on all four sides, matching - Transfer's two-column layout is the
+   one demo that sizes its content to exactly 100% of this box's available
+   width with no slack, so it gets its horizontal padding zeroed back out
+   below (.transfer-type-card .button-type-demo) rather than every demo
+   losing its matching inset for one component's sake.
    align-self:stretch is explicit, not inherited, because ~24 component
    types (Tree Select, Badge, Table, Card and others - see the
    min-height:220px/align-items:center rule below) set align-items:center
@@ -2363,7 +2362,19 @@ button{ font-family: inherit; }
    makes this box shrink to its own content width and center instead of
    filling the card - invisible before it had a background, but a real
    gap on both sides now that it's a visible white panel. */
-.button-type-demo{ margin-top: 12px; background: #fff; border-radius: var(--radius-md); padding: 16px 0; align-self: stretch; width: 100%; box-sizing: border-box; }
+.button-type-demo{ margin-top: 12px; background: #fff; border-radius: var(--radius-md); padding: 16px; align-self: stretch; width: 100%; box-sizing: border-box; }
+/* Transfer's two columns and Calendar's grid both size themselves to
+   exactly 100% of this box's available width with no slack - adding
+   16px back on their left/right pushed Transfer's content 49px past
+   its own box (visibly truncating "Target 2 items") and Calendar's
+   grid 3px past (a subtle clip at the edge). Zeroing just their own
+   horizontal padding keeps the 16px-all-around match for every other
+   demo without re-breaking the one layout that needs the full width. */
+.transfer-type-card .button-type-demo,
+.calendar-type-card .button-type-demo{
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .button-type-card,
 .group-type-card,
@@ -3916,7 +3927,14 @@ button{ font-family: inherit; }
 .transfer-demo-panel{ display: flex; align-items: stretch; gap: 8px; }
 .transfer-demo-panel.is-disabled{ opacity: 0.4; pointer-events: none; }
 
-.transfer-demo-column{ flex: 1 1 0; min-width: 140px; display: flex; flex-direction: column; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); overflow: hidden; }
+/* min-width was 140px (280px for both columns + 36px arrows + 16px gaps
+   = 332px minimum) - that's the card's full outer width, not its 298.65px
+   content-box width inside the card's own 16px padding. The columns were
+   silently overflowing into that padding whitespace the whole time; it
+   was only ever invisible because nothing drew a visible edge there.
+   120px keeps both columns legible while fitting inside the real,
+   padded content width. */
+.transfer-demo-column{ flex: 1 1 0; min-width: 120px; display: flex; flex-direction: column; background: var(--graphite-900); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-md); overflow: hidden; }
 .transfer-demo-column-title{ display: flex; justify-content: space-between; padding: 8px 12px; font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--text-hi); background: var(--graphite-800); border-bottom: var(--border-width-1) solid var(--line); }
 .transfer-demo-search{ margin: 8px; padding: 6px 8px; font-family: var(--font-body); font-size: 12px; background: var(--graphite-800); border: var(--border-width-1) solid var(--line-strong); border-radius: var(--radius-sm); color: var(--text-hi); }
 .transfer-demo-list{ flex: 1 1 auto; overflow-y: auto; padding: 4px; display: flex; flex-direction: column; gap: 2px; }
