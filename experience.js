@@ -245,6 +245,17 @@
     return m ? m[1].trim() : null;
   }
   const CATEGORY_ORDER = ['Actions', 'Forms', 'Navigation', 'Feedback', 'Data Display'];
+  // Every category's catalog docs match its real sidebar/listing items
+  // 1:1, except Actions: Button alone has 8 separate style-variant pages
+  // crawled into the catalog (button-primary.html, button-ghost.html...)
+  // that only ever appear as ONE item, "Button", in the actual sidebar
+  // and on components.html's own listing cards. Without this, the export
+  // picker would offer 8 "components" a user has never navigated to
+  // individually. Grouped files are matched by filename prefix, not
+  // hand-listed, so a future button-*.html page is grouped automatically.
+  const COMPONENT_GROUPS = {
+    Actions: [{ label: 'Button', match: file => file.startsWith('button-') }],
+  };
   // One collapsed <details> per category, built from the catalog itself
   // (not hand-written) so this can't drift out of sync with it - each
   // summary carries its own "select whole category" checkbox next to the
@@ -260,19 +271,30 @@
     const componentChecks = [];
     for (const [category, docs] of byCategory) {
       if (!docs.length) continue;
+      // Collapse any defined groups (e.g. Button's 8 variants) into one
+      // item each; every doc not claimed by a group stays its own item,
+      // which is every doc in every category except Actions.
+      const claimed = new Set();
+      const items = (COMPONENT_GROUPS[category] || []).map(group => {
+        const files = docs.filter(d => group.match(d.file)).map(d => d.file);
+        files.forEach(f => claimed.add(f));
+        return { label: group.label, files };
+      }).filter(item => item.files.length);
+      for (const doc of docs) if (!claimed.has(doc.file)) items.push({ label: doc.title, files: [doc.file] });
+
       const details = el('details', '', 'export-category-details');
       const summary = el('summary', '', 'export-category-summary');
       const selectAllLabel = el('label', '', 'setup-option');
       const selectAll = el('input'); selectAll.type = 'checkbox'; selectAll.checked = true;
       selectAllLabel.append(selectAll, document.createTextNode(category));
-      summary.append(selectAllLabel, el('span', `(${docs.length})`, 'export-category-count'));
+      summary.append(selectAllLabel, el('span', `(${items.length})`, 'export-category-count'));
       details.append(summary);
       const options = el('div', '', 'export-category-options');
-      const checks = docs.map(doc => {
+      const checks = items.map(item => {
         const label = el('label', '', 'export-component-option');
         const input = el('input'); input.type = 'checkbox'; input.className = 'export-component-check';
-        input.dataset.file = doc.file; input.checked = true;
-        label.append(input, document.createTextNode(doc.title));
+        input.dataset.files = JSON.stringify(item.files); input.checked = true;
+        label.append(input, document.createTextNode(item.label));
         options.append(label);
         componentChecks.push(input);
         return input;
@@ -324,7 +346,7 @@
           // the "all" scope) isn't a component and always passes through,
           // so clearing every component checkbox can't silently drop
           // unrelated documentation the user didn't ask to exclude.
-          const allowedFiles = new Set(componentChecks.filter(c => c.checked).map(c => c.dataset.file));
+          const allowedFiles = new Set(componentChecks.filter(c => c.checked).flatMap(c => JSON.parse(c.dataset.files)));
           docs = docs.filter(d => docCategory(d) === null || allowedFiles.has(d.file));
         }
         // Each checkbox picks a whole Foundations tab (e.g. "colors" also
