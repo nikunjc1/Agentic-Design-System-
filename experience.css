@@ -44,7 +44,11 @@
 .export-category-groups{display:flex;flex-direction:column;gap:8px;margin:12px 0 20px}
 .export-category-details{border:1px solid var(--line-strong);border-radius:8px;padding:0 14px}
 .export-category-details[open]{padding-bottom:14px}
-.export-category-summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;font-size:14px;font-weight:600;list-style:revert}
+.export-category-summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;font-size:14px;font-weight:600;list-style:none}
+.export-category-summary::-webkit-details-marker{display:none}
+.export-category-summary .export-category-count{margin-right:auto}
+.export-category-summary .chev{color:var(--text-dim);transform:rotate(-90deg)}
+.export-category-details[open]>.export-category-summary .chev{transform:rotate(0deg)}
 .export-category-summary .setup-option{padding:0;border:0;font-weight:600}
 .export-category-summary .setup-option:has(:checked){background:none}
 .export-category-count{font-weight:400;color:var(--text-mid)}

@@ -287,7 +287,16 @@
       const selectAllLabel = el('label', '', 'setup-option');
       const selectAll = el('input'); selectAll.type = 'checkbox'; selectAll.checked = true;
       selectAllLabel.append(selectAll, document.createTextNode(category));
-      summary.append(selectAllLabel, el('span', `(${items.length})`, 'export-category-count'));
+      // display:flex on <summary> (needed to lay the checkbox, label and
+      // count out in a row) overrides the browser's default
+      // display:list-item rendering a <summary> normally gets - that's
+      // what draws the native disclosure triangle, so flex silently
+      // removes it. Same .chev SVG the sidebar's own collapsible group
+      // toggles use, rotated the same way (pointing right collapsed,
+      // down open), instead of trying to recover the native marker.
+      const chev = el('span', '', 'chev');
+      chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      summary.append(selectAllLabel, el('span', `(${items.length})`, 'export-category-count'), chev);
       details.append(summary);
       const options = el('div', '', 'export-category-options');
       const checks = items.map(item => {

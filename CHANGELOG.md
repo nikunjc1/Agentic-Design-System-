@@ -1111,6 +1111,14 @@ Fixed by grouping: added a `COMPONENT_GROUPS` map (currently just `Actions: [{ l
 
 Verified: Actions now renders exactly 3 items (Button, Float Button Stable, Group Button Stable), matching the sidebar precisely; the other 4 categories' counts are untouched (22/8/12/17, confirmed unchanged). Unchecking "Button" drops exactly 8 documents from the export (69 → 61) while Float Button and Group Button remain present in the regenerated Markdown, confirming the grouping doesn't also catch its siblings. Total selectable items dropped from 69 to 62 (3+22+8+12+17), but all 69 underlying files are still reachable - checking everything still produces the full 69-document export, same as before this fix. Full 157-page regression sweep: 0 console errors. All 10 existing unit tests still pass.
 
+## MD Export - category dropdowns had no visible arrow
+
+Reported that the dropdown arrow wasn't showing on the category `<details>` added two rounds ago. Root cause: `.export-category-summary{display:flex}` - needed to lay the select-all checkbox, category name and count out in a row - silently removes the browser's native disclosure triangle, because that triangle comes from `<summary>`'s default `display:list-item` rendering, which `display:flex` overrides. Confirmed directly (`getComputedStyle(summary).display` read back `"flex"`), not assumed.
+
+Fixed by adding a real chevron instead of trying to recover the native one: reused the exact same `.chev` SVG markup and rotation convention the sidebar's own collapsible group toggles already use (pointing right collapsed, down when open), rather than inventing a new icon. Also added `list-style:none` and `::-webkit-details-marker{display:none}` on the summary so no browser can show a native marker *and* the new chevron at once, and gave the count span `margin-right:auto` so the chevron sits pinned to the right edge of the row instead of immediately after the count.
+
+Verified: all 5 category summaries now render exactly one `.chev` each (5 total). Confirmed it rotates correctly on open/close by screenshotting both states. Re-confirmed the select-all checkbox's `stopPropagation()` still works with the chevron present (clicking it toggles children without opening the panel), and that clicking the chevron itself does open the panel, as a real disclosure control should. `node --check` passed. Full 157-page regression sweep: 0 console errors. All 10 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
