@@ -36,6 +36,22 @@
 .setup-option{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line-strong);border-radius:8px;font-size:14px;cursor:pointer}
 .setup-option:has(:checked){border-color:var(--red-500);background:var(--red-tint)}
 .setup-option input{width:18px;height:18px;accent-color:var(--red-500)}
+/* One <details> per component category on MD Export - collapsed by
+   default so 69 individual checkboxes don't all render open at once;
+   each summary carries its own "select whole category" checkbox
+   alongside the native disclosure triangle, kept in sync (including
+   indeterminate state) with its category's individual checkboxes. */
+.export-category-groups{display:flex;flex-direction:column;gap:8px;margin:12px 0 20px}
+.export-category-details{border:1px solid var(--line-strong);border-radius:8px;padding:0 14px}
+.export-category-details[open]{padding-bottom:14px}
+.export-category-summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;font-size:14px;font-weight:600;list-style:revert}
+.export-category-summary .setup-option{padding:0;border:0;font-weight:600}
+.export-category-summary .setup-option:has(:checked){background:none}
+.export-category-count{font-weight:400;color:var(--text-mid)}
+.export-category-options{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.export-component-option{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:6px;font-size:13px;cursor:pointer}
+.export-component-option:hover{background:var(--graphite-900)}
+.export-component-option input{width:16px;height:16px;accent-color:var(--red-500)}
 .setup-help{font-size:13px;color:var(--text-mid);line-height:1.6}
 .setup-review{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px;margin:24px 0}
 .setup-review dt{color:var(--text-mid)}

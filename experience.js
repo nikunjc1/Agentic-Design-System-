@@ -244,13 +244,59 @@
     const m = COMPONENT_CATEGORY_PATTERN.exec(doc.markdown);
     return m ? m[1].trim() : null;
   }
+  const CATEGORY_ORDER = ['Actions', 'Forms', 'Navigation', 'Feedback', 'Data Display'];
+  // One collapsed <details> per category, built from the catalog itself
+  // (not hand-written) so this can't drift out of sync with it - each
+  // summary carries its own "select whole category" checkbox next to the
+  // native disclosure triangle, and individual per-component checkboxes
+  // sit inside, letting the user pick components one at a time instead of
+  // only ever including or excluding a whole category.
+  function buildComponentCategoryGroups(container, onChange) {
+    const byCategory = new Map(CATEGORY_ORDER.map(c => [c, []]));
+    for (const doc of window.ADSDocsCatalog || []) {
+      const cat = docCategory(doc);
+      if (cat && byCategory.has(cat)) byCategory.get(cat).push(doc);
+    }
+    const componentChecks = [];
+    for (const [category, docs] of byCategory) {
+      if (!docs.length) continue;
+      const details = el('details', '', 'export-category-details');
+      const summary = el('summary', '', 'export-category-summary');
+      const selectAllLabel = el('label', '', 'setup-option');
+      const selectAll = el('input'); selectAll.type = 'checkbox'; selectAll.checked = true;
+      selectAllLabel.append(selectAll, document.createTextNode(category));
+      summary.append(selectAllLabel, el('span', `(${docs.length})`, 'export-category-count'));
+      details.append(summary);
+      const options = el('div', '', 'export-category-options');
+      const checks = docs.map(doc => {
+        const label = el('label', '', 'export-component-option');
+        const input = el('input'); input.type = 'checkbox'; input.className = 'export-component-check';
+        input.dataset.file = doc.file; input.checked = true;
+        label.append(input, document.createTextNode(doc.title));
+        options.append(label);
+        componentChecks.push(input);
+        return input;
+      });
+      details.append(options);
+      container.append(details);
+      const syncSelectAll = () => {
+        const checkedCount = checks.filter(c => c.checked).length;
+        selectAll.checked = checkedCount === checks.length;
+        selectAll.indeterminate = checkedCount > 0 && checkedCount < checks.length;
+      };
+      selectAll.addEventListener('click', (e) => e.stopPropagation());
+      selectAll.addEventListener('change', () => { checks.forEach(c => c.checked = selectAll.checked); onChange(); });
+      checks.forEach(c => c.addEventListener('change', () => { syncSelectAll(); onChange(); }));
+    }
+    return componentChecks;
+  }
   function exportPage() {
     const preview = $('#markdownPreview'); if (!preview) return;
     let busy = false;
     const status = $('#exportStatus'), download = $('#downloadMarkdown'), copy = $('#copyMarkdown');
     const selector = $('#exportScope'), identity = $('#includeIdentity');
     const foundationChecks = Array.from(document.querySelectorAll('.export-foundation-check'));
-    const categoryChecks = Array.from(document.querySelectorAll('.export-category-check'));
+    const componentChecks = buildComponentCategoryGroups($('#exportComponentGroups'), () => generate());
     const requestedPage = new URLSearchParams(location.search).get('page');
     if (requestedPage && /^[a-z0-9-]+\.html$/.test(requestedPage)) {
       const option = el('option', 'Brief + the selected page guide'); option.value = 'page';
@@ -259,7 +305,7 @@
     async function generate() {
       if (busy) return;
       busy = true; download.disabled = true; copy.disabled = true; selector.disabled = true; identity.disabled = true;
-      foundationChecks.forEach(c => c.disabled = true); categoryChecks.forEach(c => c.disabled = true);
+      foundationChecks.forEach(c => c.disabled = true); componentChecks.forEach(c => c.disabled = true);
       status.textContent = 'Preparing your Markdown…';
       try {
         let docs = [];
@@ -273,13 +319,13 @@
           if (!Array.isArray(window.ADSDocsCatalog)) throw new Error('Documentation catalog is unavailable. Retry, or choose "Project brief and saved foundations."');
           docs = window.ADSDocsCatalog.filter(d => selector.value === 'page' ? d.file === requestedPage : selector.value === 'all' || d.kind === 'Detail');
           if (!docs.length) throw new Error('The selected guide was not found. Choose another export scope.');
-          // Category selection only narrows component guides - a doc with
+          // Component selection only narrows component guides - a doc with
           // no parseable category (a Listing/Tab page, included only under
           // the "all" scope) isn't a component and always passes through,
-          // so unchecking every category can't silently drop unrelated
-          // documentation the user didn't ask to exclude.
-          const allowedCategories = new Set(categoryChecks.filter(c => c.checked).map(c => c.value));
-          docs = docs.filter(d => { const cat = docCategory(d); return cat === null || allowedCategories.has(cat); });
+          // so clearing every component checkbox can't silently drop
+          // unrelated documentation the user didn't ask to exclude.
+          const allowedFiles = new Set(componentChecks.filter(c => c.checked).map(c => c.dataset.file));
+          docs = docs.filter(d => docCategory(d) === null || allowedFiles.has(d.file));
         }
         // Each checkbox picks a whole Foundations tab (e.g. "colors" also
         // pulls in the bg/status/neutral/text theme-pair values saved
@@ -291,16 +337,15 @@
         preview.value = M.markdown(profile, tokens, docs, identity.checked);
         const includedCount = foundationChecks.filter(c => c.checked).length;
         const foundationSummary = foundationChecks.length ? `${includedCount}/${foundationChecks.length} foundation sections · ` : '';
-        const includedCategoryCount = categoryChecks.filter(c => c.checked).length;
-        const categorySummary = (selector.value !== 'context' && categoryChecks.length) ? `${includedCategoryCount}/${categoryChecks.length} component categories · ` : '';
-        status.textContent = `${foundationSummary}${categorySummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
+        const includedComponentCount = componentChecks.filter(c => c.checked).length;
+        const componentSummary = (selector.value !== 'context' && componentChecks.length) ? `${includedComponentCount}/${componentChecks.length} components · ` : '';
+        status.textContent = `${foundationSummary}${componentSummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
         download.disabled = false; copy.disabled = false;
       } catch (error) { preview.value = ''; status.textContent = error.message; }
-      finally { busy = false; selector.disabled = false; identity.disabled = false; foundationChecks.forEach(c => c.disabled = false); categoryChecks.forEach(c => c.disabled = false); }
+      finally { busy = false; selector.disabled = false; identity.disabled = false; foundationChecks.forEach(c => c.disabled = false); componentChecks.forEach(c => c.disabled = false); }
     }
     $('#refreshMarkdown').addEventListener('click', generate);
     selector.addEventListener('change', generate); identity.addEventListener('change', generate);
-    categoryChecks.forEach(c => c.addEventListener('change', generate));
     foundationChecks.forEach(c => c.addEventListener('change', generate));
     download.addEventListener('click', () => {
       const url = URL.createObjectURL(new Blob([preview.value], {type:'text/markdown;charset=utf-8'}));

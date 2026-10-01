@@ -179,13 +179,8 @@
 <label class="setup-option"><input type="checkbox" class="export-foundation-check" value="shadows" checked>Shadows</label>
 <label class="setup-option"><input type="checkbox" class="export-foundation-check" value="icons" checked>Icons</label>
 </div></fieldset>
-<fieldset class="setup-platforms"><legend>Which component categories should be included? (applies when the file includes component guides)</legend><div class="setup-options">
-<label class="setup-option"><input type="checkbox" class="export-category-check" value="Actions" checked>Actions</label>
-<label class="setup-option"><input type="checkbox" class="export-category-check" value="Forms" checked>Forms</label>
-<label class="setup-option"><input type="checkbox" class="export-category-check" value="Navigation" checked>Navigation</label>
-<label class="setup-option"><input type="checkbox" class="export-category-check" value="Feedback" checked>Feedback</label>
-<label class="setup-option"><input type="checkbox" class="export-category-check" value="Data Display" checked>Data Display</label>
-</div></fieldset>
+<div class="setup-field" style="margin-top:4px">Which components should be included? (applies when the file includes component guides) <span class="setup-help" style="display:block;margin-top:2px;font-weight:400">Open a category to choose individual components, or use its own checkbox to select the whole category at once.</span></div>
+<div id="exportComponentGroups" class="export-category-groups"></div>
 <label class="setup-option"><input type="checkbox" id="includeIdentity">Include my name, email and designation</label>
 <label class="setup-field" for="markdownPreview" style="margin-top:20px">Markdown preview</label><textarea class="export-preview" id="markdownPreview" readonly spellcheck="false"></textarea>
 <div class="setup-actions"><button class="btn btn-primary" id="downloadMarkdown" type="button" disabled>Download .md</button><button class="btn btn-ghost" id="copyMarkdown" type="button" disabled>Copy Markdown</button><button class="btn btn-ghost" id="refreshMarkdown" type="button">Refresh preview</button></div>
