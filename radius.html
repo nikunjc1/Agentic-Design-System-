@@ -24,7 +24,7 @@
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
   </div>
 </header>
 
@@ -33,7 +33,7 @@
     <div class="sidebar-search-sticky">
       <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
         <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Filter navigation&hellip;" aria-label="Filter navigation" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -463,7 +463,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveRadiusBtn" type="button">Save radius</button>
       <button class="btn btn-ghost" id="resetRadiusBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="radiusSaveStatus" hidden></span>
+      <span class="save-status" id="radiusSaveStatus" role="status" aria-live="polite"></span>
     </div>
 
     <p class="get-library-copy" style="margin-top:16px;">Nested corners: an inner element only needs a SMALLER radius than its container when the gap between them is tighter than the container's own radius - the rule is <code>inner radius = max(0, outer radius - padding to the inner element)</code>. Card's 16px body padding is already wider than Card's own 12px radius, so a Button (8px) sitting inside one needs no adjustment at all; something sitting flush against an edge with little or no padding is the case this formula is actually for.</p>
@@ -484,7 +484,7 @@
     <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="radius-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyRadiusMarkdownBtn" type="button">Copy Markdown</button>
-      <span class="save-status" id="radiusMarkdownStatus" hidden></span>
+      <span class="save-status" id="radiusMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
 </main>

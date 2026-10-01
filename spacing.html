@@ -24,7 +24,7 @@
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
   </div>
 </header>
 
@@ -33,7 +33,7 @@
     <div class="sidebar-search-sticky">
       <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
         <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Filter navigation&hellip;" aria-label="Filter navigation" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -336,7 +336,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveSpacingBtn" type="button">Save spacing</button>
       <button class="btn btn-ghost" id="resetSpacingBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="spacingSaveStatus" hidden></span>
+      <span class="save-status" id="spacingSaveStatus" role="status" aria-live="polite"></span>
     </div>
 
     <div class="ai-rule-callout">
@@ -399,7 +399,7 @@
     <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="spacing-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copySpacingMarkdownBtn" type="button">Copy Markdown</button>
-      <span class="save-status" id="spacingMarkdownStatus" hidden></span>
+      <span class="save-status" id="spacingMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
 </main>

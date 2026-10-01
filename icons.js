@@ -198,9 +198,8 @@
     saveBtn.addEventListener("click", function(){
       persistIcons();
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetIconsBtn");
@@ -212,9 +211,8 @@
       document.querySelectorAll('[data-role="library-radio"]').forEach(function(r){ r.checked = false; });
       selectSystem("duotone");
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     // ---------- upload reference icons ----------
@@ -263,13 +261,11 @@
       copyMarkdownBtn.addEventListener("click", function(){
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
-          markdownStatus.hidden = false;
           markdownStatus.textContent = "Copied to clipboard";
-          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+          setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
         if (navigator.clipboard && navigator.clipboard.writeText){
           navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.hidden = false;
             markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
           });
         } else {

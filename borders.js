@@ -286,9 +286,8 @@
     regenerateDarkBtn.addEventListener("click", function(){
       regenerateDark();
       persistBorder();
-      saveStatus.hidden = false;
       saveStatus.textContent = "Dark color regenerated from Light";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     // A theme change can come from this page's own toggle click, another
@@ -352,9 +351,8 @@
     saveBtn.addEventListener("click", function(){
       persistBorder();
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetBorderBtn");
@@ -362,9 +360,8 @@
       localStorage.removeItem(SAVE_KEY);
       selectSystem("standard");
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     // ---------- per-state border colors ----------
@@ -495,18 +492,16 @@
     saveStatesBtn.addEventListener("click", function(){
       persistStates();
 
-      statesSaveStatus.hidden = false;
       statesSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ statesSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ statesSaveStatus.textContent = ''; }, 2500);
     });
 
     regenerateStatesDarkBtn.addEventListener("click", function(){
       stateRows.forEach(function(row){ regenerateStateDark(row); });
       persistStates();
 
-      statesSaveStatus.hidden = false;
       statesSaveStatus.textContent = "Dark colors regenerated from Light";
-      setTimeout(function(){ statesSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ statesSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetStatesBtn = document.getElementById("resetStatesBtn");
@@ -519,9 +514,8 @@
         stateDarkAuto[key] = true;
       });
 
-      statesSaveStatus.hidden = false;
       statesSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ statesSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ statesSaveStatus.textContent = ''; }, 2500);
     });
 
     var copyMarkdownBtn = document.getElementById("copyBordersMarkdownBtn");
@@ -530,13 +524,11 @@
       copyMarkdownBtn.addEventListener("click", function(){
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
-          markdownStatus.hidden = false;
           markdownStatus.textContent = "Copied to clipboard";
-          setTimeout(function(){ markdownStatus.hidden = true; }, 2500);
+          setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
         if (navigator.clipboard && navigator.clipboard.writeText){
           navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.hidden = false;
             markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
           });
         } else {

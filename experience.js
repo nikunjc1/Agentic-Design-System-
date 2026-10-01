@@ -354,10 +354,10 @@
 
     copyBtn.addEventListener('click', () => {
       const status = $('#pageMarkdownStatus');
-      const done = () => { status.hidden = false; status.textContent = 'Copied to clipboard'; setTimeout(() => { status.hidden = true; }, 2500); };
+      const done = () => { status.textContent = 'Copied to clipboard'; setTimeout(() => { status.textContent = ''; }, 2500); };
       if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(output.textContent).then(done).catch(() => {
-          status.hidden = false; status.textContent = 'Copy failed - select the text above and copy manually.';
+          status.textContent = 'Copy failed - select the text above and copy manually.';
         });
       } else done();
     });

@@ -57,9 +57,8 @@
     saveBtn.addEventListener("click", function(){
       persistShadow();
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Saved just now";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetShadowBtn");
@@ -67,9 +66,8 @@
       localStorage.removeItem(SAVE_KEY);
       selectSystem("balanced");
 
-      saveStatus.hidden = false;
       saveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ saveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
   });
 })();

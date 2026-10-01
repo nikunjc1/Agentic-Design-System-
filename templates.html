@@ -24,7 +24,7 @@
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
   </div>
 </header>
 
@@ -33,7 +33,7 @@
     <div class="sidebar-search-sticky">
       <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
         <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Filter navigation&hellip;" aria-label="Filter navigation" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -186,7 +186,7 @@
   <section class="panel spacing-model-panel">
     <p class="panel-title">Record detail</p>
     <p class="get-library-copy">Where the record sits (Breadcrumb), which facet of it is showing (Tabs), then its fixed fields laid out for reading (Description) - orientation before content, every time.</p>
-    <div class="guide-dodont-demo" data-role="template-demo-record-detail" style="justify-content:flex-start;min-height:auto;padding:20px;overflow-x:auto;"><div style="display:flex;flex-direction:column;gap:10px;width:280px;"><div class="breadcrumb-demo-trail breadcrumb-demo-trail--28 breadcrumb-demo-trail--chevron"><a href="#" class="breadcrumb-demo-link">Invoices</a><span class="breadcrumb-demo-divider">&rsaquo;</span><span class="breadcrumb-demo-current">#4021</span></div><div class="tabs-demo-bar tabs-demo-bar--underline"><button type="button" class="tabs-demo-trigger tabs-demo-trigger--h32 is-active" tabindex="-1">Details</button><button type="button" class="tabs-demo-trigger tabs-demo-trigger--h32" tabindex="-1">Activity</button></div><div class="description-demo-panel description-demo-panel--bordered"><div class="description-demo-grid"><div class="description-demo-item"><span class="description-demo-label">Status</span><span class="description-demo-value">Paid</span></div><div class="description-demo-item"><span class="description-demo-label">Amount</span><span class="description-demo-value">$1,240.00</span></div></div></div></div></div>
+    <div class="guide-dodont-demo" data-role="template-demo-record-detail" style="justify-content:flex-start;min-height:auto;padding:20px;overflow-x:auto;"><div style="display:flex;flex-direction:column;gap:10px;width:280px;"><div class="breadcrumb-demo-trail breadcrumb-demo-trail--28 breadcrumb-demo-trail--chevron"><a class="breadcrumb-demo-link">Invoices</a><span class="breadcrumb-demo-divider">&rsaquo;</span><span class="breadcrumb-demo-current">#4021</span></div><div class="tabs-demo-bar tabs-demo-bar--underline"><button type="button" class="tabs-demo-trigger tabs-demo-trigger--h32 is-active" tabindex="-1">Details</button><button type="button" class="tabs-demo-trigger tabs-demo-trigger--h32" tabindex="-1">Activity</button></div><div class="description-demo-panel description-demo-panel--bordered"><div class="description-demo-grid"><div class="description-demo-item"><span class="description-demo-label">Status</span><span class="description-demo-value">Paid</span></div><div class="description-demo-item"><span class="description-demo-label">Amount</span><span class="description-demo-value">$1,240.00</span></div></div></div></div></div>
     <p class="guide-dodont-note" style="margin-top:8px;">Built from: Breadcrumb, Tabs, Description</p>
     <div class="card-copy-row"><button class="btn btn-ghost btn-sm" type="button" data-role="copy-prompt-record-detail">Copy prompt</button><button class="btn btn-ghost btn-sm" type="button" data-role="copy-code-record-detail">Copy code</button></div>
   </section>

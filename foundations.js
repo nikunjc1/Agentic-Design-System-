@@ -489,9 +489,8 @@
       applyBrandLiveForActiveTheme();
       setBrandSaved(true);
 
-      brandSaveStatus.hidden = false;
       brandSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ brandSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ brandSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetBrandBtn = document.getElementById("resetBrandBtn");
@@ -508,9 +507,8 @@
       document.documentElement.style.removeProperty("--red-glow");
       setBrandSaved(false);
 
-      brandSaveStatus.hidden = false;
       brandSaveStatus.textContent = "Reset to default";
-      setTimeout(function(){ brandSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ brandSaveStatus.textContent = ''; }, 2500);
     });
 
     // ============================================================
@@ -681,9 +679,8 @@
       applyBgLiveForActiveTheme();
       setBgSaved(true);
 
-      bgSaveStatus.hidden = false;
       bgSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ bgSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ bgSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetBgBtn = document.getElementById("resetBgBtn");
@@ -699,9 +696,8 @@
       document.documentElement.style.removeProperty("--graphite-900");
       document.documentElement.style.removeProperty("--graphite-850");
 
-      bgSaveStatus.hidden = false;
       bgSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ bgSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ bgSaveStatus.textContent = ''; }, 2500);
     });
 
     // ============================================================
@@ -789,9 +785,8 @@
       applyStatusLiveForActiveTheme();
       setStatusSaved(true);
 
-      statusSaveStatus.hidden = false;
       statusSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ statusSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ statusSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetStatusBtn = document.getElementById("resetStatusBtn");
@@ -809,9 +804,8 @@
       document.documentElement.style.removeProperty("--danger-400");
       setStatusSaved(false);
 
-      statusSaveStatus.hidden = false;
       statusSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ statusSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ statusSaveStatus.textContent = ''; }, 2500);
     });
 
     // ============================================================
@@ -897,9 +891,8 @@
       applyNeutralLiveForActiveTheme();
       setNeutralSaved(true);
 
-      neutralSaveStatus.hidden = false;
       neutralSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ neutralSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetNeutralBtn = document.getElementById("resetNeutralBtn");
@@ -916,9 +909,8 @@
       document.documentElement.style.removeProperty("--control-border");
       setNeutralSaved(false);
 
-      neutralSaveStatus.hidden = false;
       neutralSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ neutralSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 
     // ============================================================
@@ -1000,9 +992,8 @@
       applyTextLiveForActiveTheme();
       setTextSaved(true);
 
-      textSaveStatus.hidden = false;
       textSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ textSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ textSaveStatus.textContent = ''; }, 2500);
     });
 
     var resetTextBtn = document.getElementById("resetTextBtn");
@@ -1017,9 +1008,8 @@
       document.documentElement.style.removeProperty("--text-dim");
       setTextSaved(false);
 
-      textSaveStatus.hidden = false;
       textSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ textSaveStatus.hidden = true; }, 2500);
+      setTimeout(function(){ textSaveStatus.textContent = ''; }, 2500);
     });
 
     // AA/AAA contrast badge under every color swatch's hex field - checked
@@ -1212,13 +1202,11 @@
         copyBtn.addEventListener("click", function(){
           var text = document.querySelector('[data-role="colors-markdown-output"]').textContent;
           function done(){
-            copyStatus.hidden = false;
             copyStatus.textContent = "Copied to clipboard";
-            setTimeout(function(){ copyStatus.hidden = true; }, 2500);
+            setTimeout(function(){ copyStatus.textContent = ''; }, 2500);
           }
           if (navigator.clipboard && navigator.clipboard.writeText){
             navigator.clipboard.writeText(text).then(done).catch(function(){
-              copyStatus.hidden = false;
               copyStatus.textContent = "Copy failed - select the text above and copy manually.";
             });
           } else {

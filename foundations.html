@@ -24,7 +24,7 @@
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
   </div>
 </header>
 
@@ -33,7 +33,7 @@
     <div class="sidebar-search-sticky">
       <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
         <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Search components, tokens, docs&hellip;" aria-label="Search components, tokens, docs" autocomplete="off" spellcheck="false" />
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Filter navigation&hellip;" aria-label="Filter navigation" autocomplete="off" spellcheck="false" />
         <span class="kbd">/</span>
       </div>
     </div>
@@ -236,7 +236,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveBrandBtn" type="button">Save brand color</button>
       <button class="btn btn-ghost" id="resetBrandBtn" type="button">Reset to default</button>
-      <span class="save-status" id="brandSaveStatus" hidden></span>
+      <span class="save-status" id="brandSaveStatus" role="status" aria-live="polite"></span>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -349,7 +349,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveBgBtn" type="button">Save surface colors</button>
       <button class="btn btn-ghost" id="resetBgBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="bgSaveStatus" hidden></span>
+      <span class="save-status" id="bgSaveStatus" role="status" aria-live="polite"></span>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -467,7 +467,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveStatusBtn" type="button">Save status colors</button>
       <button class="btn btn-ghost" id="resetStatusBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="statusSaveStatus" hidden></span>
+      <span class="save-status" id="statusSaveStatus" role="status" aria-live="polite"></span>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -596,7 +596,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveNeutralBtn" type="button">Save neutral scale</button>
       <button class="btn btn-ghost" id="resetNeutralBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="neutralSaveStatus" hidden></span>
+      <span class="save-status" id="neutralSaveStatus" role="status" aria-live="polite"></span>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -693,7 +693,7 @@
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveTextBtn" type="button">Save text colors</button>
       <button class="btn btn-ghost" id="resetTextBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="textSaveStatus" hidden></span>
+      <span class="save-status" id="textSaveStatus" role="status" aria-live="polite"></span>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -729,7 +729,7 @@
     <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="colors-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyColorsMarkdownBtn" type="button">Copy Markdown</button>
-      <span class="save-status" id="colorsMarkdownStatus" hidden></span>
+      <span class="save-status" id="colorsMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
 </main>
