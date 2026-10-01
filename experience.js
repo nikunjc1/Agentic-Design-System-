@@ -245,17 +245,33 @@
     return m ? m[1].trim() : null;
   }
   const CATEGORY_ORDER = ['Actions', 'Forms', 'Navigation', 'Feedback', 'Data Display'];
-  // Every category's catalog docs match its real sidebar/listing items
-  // 1:1, except Actions: Button alone has 8 separate style-variant pages
-  // crawled into the catalog (button-primary.html, button-ghost.html...)
-  // that only ever appear as ONE item, "Button", in the actual sidebar
-  // and on components.html's own listing cards. Without this, the export
-  // picker would offer 8 "components" a user has never navigated to
-  // individually. Grouped files are matched by filename prefix, not
-  // hand-listed, so a future button-*.html page is grouped automatically.
+  // Every category's catalog docs match its real listing screen (a
+  // .system-card grid with a "View component guide" CTA) 1:1, except
+  // Actions. Button has 8 style-variant pages crawled into the catalog,
+  // but components.html's own Button section only ever shows 2 cards -
+  // data-system="primary" -> button-primary.html and
+  // data-system="primary-icon" -> button-primary-icon.html - so those
+  // are Button's real two options, relabeled here to match what the
+  // card itself is called rather than the catalog's generic doc title.
   const COMPONENT_GROUPS = {
-    Actions: [{ label: 'Button', match: file => file.startsWith('button-') }],
+    Actions: [
+      { label: 'Primary', match: file => file === 'button-primary.html' },
+      { label: 'Primary Icon', match: file => file === 'button-primary-icon.html' },
+    ],
   };
+  // The other 6 button-*.html files (ghost, link, neutral, secondary,
+  // tertiary, destructive) are real, full pages, not stubs - but none of
+  // them has a listing-screen card anywhere. Two (ghost, link) have zero
+  // inbound links on the whole site; the other four are linked only from
+  // guidelines.html's own reference table, a documentation page, not a
+  // listing screen. Excluded from this picker for the same reason the
+  // other 8-Button-items weren't offered individually: nothing here
+  // should be selectable that a user can't actually reach from a real
+  // listing screen.
+  const EXCLUDED_FILES = new Set([
+    'button-ghost.html', 'button-link.html', 'button-neutral.html',
+    'button-secondary.html', 'button-tertiary.html', 'button-destructive.html',
+  ]);
   // One collapsed <details> per category, built from the catalog itself
   // (not hand-written) so this can't drift out of sync with it - each
   // summary carries its own "select whole category" checkbox next to the
@@ -271,16 +287,17 @@
     const componentChecks = [];
     for (const [category, docs] of byCategory) {
       if (!docs.length) continue;
-      // Collapse any defined groups (e.g. Button's 8 variants) into one
-      // item each; every doc not claimed by a group stays its own item,
-      // which is every doc in every category except Actions.
+      // Collapse any defined groups (e.g. Button's 2 real options) into
+      // one item each; every doc not claimed by a group and not excluded
+      // stays its own item, which is every doc in every category except
+      // Actions.
       const claimed = new Set();
       const items = (COMPONENT_GROUPS[category] || []).map(group => {
         const files = docs.filter(d => group.match(d.file)).map(d => d.file);
         files.forEach(f => claimed.add(f));
         return { label: group.label, files };
       }).filter(item => item.files.length);
-      for (const doc of docs) if (!claimed.has(doc.file)) items.push({ label: doc.title, files: [doc.file] });
+      for (const doc of docs) if (!claimed.has(doc.file) && !EXCLUDED_FILES.has(doc.file)) items.push({ label: doc.title, files: [doc.file] });
 
       const details = el('details', '', 'export-category-details');
       const summary = el('summary', '', 'export-category-summary');
