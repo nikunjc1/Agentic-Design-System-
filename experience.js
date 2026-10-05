@@ -194,6 +194,32 @@
     });
     // A resumed draft starts at the first step so required fields are always reviewable.
     history.replaceState(null,'','#step-1'); show(1,false);
+    // Every role beyond the 2 that already routed somewhere real now also
+    // gets its own concrete first task, pointed at a page that genuinely
+    // answers it (the release contract/known-gaps sections added to
+    // accessibility.html are real content, not invented for this).
+    const ROLE_NEXT = {
+      'Developer': ['components.html', 'Explore components', 'Compare a component’s Machine View against its saved Foundation tokens before wiring it up - names and values should match exactly.'],
+      'Product Manager': ['templates.html', 'Explore templates', 'Check Grid & Layout’s Breakpoints tab for what "responsive" concretely means in this system before writing it into a requirement.'],
+      'Design System Lead': ['accessibility.html', 'Review the release contract', 'Read the Foundation release contract (Accessibility page) for this system’s compatibility and deprecation rules before changing any token.'],
+      'QA / Accessibility': ['accessibility.html', 'Review known gaps', 'Start with the Accessibility guide’s "Known gaps - not yet done" section - these are the areas still needing verification.'],
+      'Designer': ['foundations.html#colors', 'Customize foundations', 'Start with Colors and Typography - your brand color and type scale drive every other Foundation’s defaults.']
+    };
+    const DEFAULT_NEXT = ['foundations.html#colors', 'Customize foundations', 'Explore the Foundation pages and customize what applies to your product - every value stays editable afterward.'];
+    // Informational readiness, not a gate - every Foundation page already
+    // lets Save/export happen at any completion state, and this list
+    // follows that same rule rather than inventing a new blocking one.
+    const FOUNDATION_SECTIONS = [['colors','Colors'], ['grid-layout','Grid & Layout'], ['typography','Typography'], ['spacing','Spacing'], ['radius','Radius'], ['borders','Borders'], ['shadows','Shadows'], ['icons','Icons']];
+    function renderReadiness() {
+      const list = $('#foundationReadiness'); if (!list) return;
+      list.replaceChildren();
+      FOUNDATION_SECTIONS.forEach(([key, label]) => {
+        const configured = FOUNDATION_TOKEN_MAP[key].some(tokenKey => localStorage.getItem('ads:' + tokenKey) !== null);
+        const li = el('li'); li.dataset.done = String(configured);
+        li.append(el('span','','readiness-dot'), document.createTextNode(label + ' – ' + (configured ? 'Configured' : 'Default')));
+        list.append(li);
+      });
+    }
     form.addEventListener('submit', e => {
       e.preventDefault();
       if (!validate(step === 1 ? firstKeys : secondKeys)) return;
@@ -204,8 +230,10 @@
       form.hidden = true; $('.setup-steps').hidden = true;
       const done = $('#setupDone'); done.hidden = false;
       $('#savedProjectName').textContent = profile.project;
-      const next = profile.role === 'Developer' ? ['components.html','Explore components'] : profile.role === 'Product Manager' ? ['templates.html','Explore templates'] : ['foundations.html#colors','Customize foundations'];
-      $('#recommendedNext').href = next[0]; $('#recommendedNext').textContent = next[1];
+      const [href, label, task] = ROLE_NEXT[profile.role] || DEFAULT_NEXT;
+      $('#recommendedNext').href = href; $('#recommendedNext').textContent = label;
+      $('#roleTaskText').textContent = task;
+      renderReadiness();
       done.querySelector('h2').focus();
     });
   }

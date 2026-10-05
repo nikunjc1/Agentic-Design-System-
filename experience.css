@@ -76,6 +76,14 @@
 .setup-review dd{margin:0;overflow-wrap:anywhere}
 .export-preview{min-height:320px;resize:vertical;font-family:var(--font-mono);font-size:12px;line-height:1.6;margin:16px 0}
 .setup-panel .setup-status{min-height:24px;margin:16px 0;font-size:14px;line-height:1.6}
+/* Informational only (see the help text right below the buttons it sits
+   above) - never a gate, consistent with every other Foundation page
+   letting Save/export happen at any completion state. */
+.setup-readiness{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.setup-readiness li{display:flex;align-items:center;gap:8px;color:var(--text-mid)}
+.setup-readiness li[data-done="true"]{color:var(--text-hi)}
+.setup-readiness .readiness-dot{flex:none;width:8px;height:8px;border-radius:var(--radius-full);background:var(--line-strong)}
+.setup-readiness li[data-done="true"] .readiness-dot{background:var(--red-500)}
 .platform-guidance{margin-block:24px}
 .platform-guidance summary{cursor:pointer;padding:14px 0;font-weight:600}
 .platform-guidance p{font-size:14px;line-height:1.6;color:var(--text-mid)}
