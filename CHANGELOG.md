@@ -1408,6 +1408,18 @@ Added four categories that were simply missing, each checked against its real co
 
 Verified: screenshotted the updated table - renders cleanly with no horizontal overflow, every value reads clearly including the two-part scrim/content splits. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit S07 (P2) - a literal off-scale value, an undocumented fluid exception, and a real RTL bug
+
+Finding from the 5 October 2026 Foundation audit: "No interpolated spacing rule; New Project uses clamp(20px,3vw,32px); first-party literals persist... Implementation contradicts rule," pointing at `experience.css` specifically - the AI Rule on Spacing's own page says every margin/padding/gap must be a scale step, never interpolated between two, yet `.setup-panel` uses exactly that.
+
+Audited every margin/padding/gap literal in `experience.css` (the evidence file) against all four spacing systems' own scales (2px/4px "Balanced"/8px/Adaptive). Found one genuine, if minor, violation: `.skip-link{padding:12px 18px}` - 18px isn't a step on any of the four scales. Changed to 16px (the nearest real step, visually near-identical). Everything else in the file was already on-scale.
+
+The `clamp(20px, 3vw, 32px)` on `.setup-panel` turned out not to be a bug to remove, but a real gap in the written rule: both 20 and 32 are themselves valid Balanced-scale steps, and fluid interpolation between two approved endpoints for a container's own outer padding is a legitimate, common responsive pattern - the AI Rule just never said so. Extended the AI Rule text on `spacing.html` to document this as the one approved exception (container-level outer padding only, both clamp endpoints must themselves be real scale steps, never for a component's internal spacing), using the system's own real example as the citation instead of inventing a hypothetical one.
+
+Found a real bug while checking "logical/native spacing lacks explicit policy": `.export-category-summary .export-category-count{margin-right:auto}` uses a physical direction property, not a logical one - reproduced visually in RTL mode (`md-export.html`, `dir="rtl"`) and confirmed it renders backwards, with the chevron stuck on the physical left and the count/checkbox pushed right, the wrong sides for RTL. Changed to `margin-inline-end:auto`. Added one sentence to the AI Rule stating logical properties are required wherever spacing differs by writing direction.
+
+Verified: screenshotted the category row in both LTR (checkbox+label on the left, count+chevron on the right, unchanged) and RTL (now correctly mirrored - chevron on the left/"end," count next to the checkbox and label on the right/"start") after the fix. Confirmed the extended AI Rule text renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
