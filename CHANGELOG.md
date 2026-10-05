@@ -1562,6 +1562,18 @@ The one real gap that WAS missing entirely: uploaded "reference" icons have no p
 
 Verified: screenshotted the page - no horizontal overflow from either addition. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit A10 (P2) - attribution only modeled a binary AI-or-not, no mixed authorship or evidence rules
+
+Finding from the 5 October 2026 Foundation audit: "No mixed human/AI authorship, source history, multi-agent contribution, redacted/missing/private evidence or verification rules," the last P2 finding in this pass.
+
+AI & Agents' "Attribution" section had exactly one example: a single "AI-generated" badge, with no model at all for the more common real cases - content an AI drafted that a person then edited, or a result produced by more than one agent/tool pass. Added two more worked examples using the same existing `.badge-ai` treatment, just with different text ("AI-generated, human-edited," "Multiple agents") - the marker now names the actual mix instead of forcing every real scenario into a binary label.
+
+Added the verification/evidence rule this whole audit itself has been operating under all day, stated as a standing principle rather than left implicit: a claim an agent presents as fact must be checked against its real, current source before display, and an unverified claim gets labeled as a suggestion to check, not presented with verified-level confidence. Added a distinct, deliberately neutral (not the cheerful violet AI badge) "Evidence unavailable" state for when the real evidence is redacted or genuinely inaccessible - saying so directly instead of silently dropping the citation, which would otherwise read as "nothing needed checking" rather than "something exists but isn't shown here."
+
+Verified: screenshotted the updated Attribution section - all three badge examples and the evidence-unavailable state render with clear visual distinction and no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
+This completes every P2 finding from the 5 October 2026 Foundation audit (31 of 31). Continuing with the P1 findings next.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
