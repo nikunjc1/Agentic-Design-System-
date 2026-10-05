@@ -16,6 +16,69 @@
   function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
   function writePreference(key, value) { try { localStorage.setItem(key, value); } catch {} }
 
+  // Foundation audit X06 - every Foundation editor (Colors, Spacing, Radius,
+  // Grid & Layout, Borders, Shadows, Icons, Typography) used to call
+  // localStorage.setItem/JSON.parse directly, each editor silently defaulting
+  // on its own if a read came back corrupt and simply throwing, uncaught, if
+  // a write failed (quota exceeded, storage unavailable in private browsing,
+  // etc.) - after the on-screen selection had already visually changed. One
+  // shared, fail-safe path for every Foundation write/read, so a storage
+  // failure always surfaces instead of silently looking like success, and an
+  // old, valid value is never overwritten by a write that didn't actually
+  // complete (the browser itself already leaves the prior value in place
+  // when setItem throws - this only makes that failure visible instead of
+  // silent). See the "Foundation editor state model" section on
+  // accessibility.html for the full recovery matrix this implements.
+  let storageNoticeEl = null;
+  let storageNoticeTimer = null;
+  function showStorageNotice(message) {
+    if (!storageNoticeEl) {
+      storageNoticeEl = document.createElement("div");
+      storageNoticeEl.className = "ads-storage-notice";
+      storageNoticeEl.setAttribute("role", "status");
+      storageNoticeEl.setAttribute("aria-live", "polite");
+      (document.body || document.documentElement).appendChild(storageNoticeEl);
+    }
+    storageNoticeEl.textContent = message;
+    storageNoticeEl.classList.add("is-visible");
+    clearTimeout(storageNoticeTimer);
+    storageNoticeTimer = setTimeout(() => storageNoticeEl.classList.remove("is-visible"), 6000);
+  }
+  window.ADSStorage = {
+    // Returns true/false instead of throwing, so a caller's own visual
+    // selection and its persisted state never silently disagree.
+    safeSet(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        console.warn(`ADS storage: write to "${key}" failed - the previous saved value, if any, is unchanged.`, e);
+        showStorageNotice("Your last change couldn't be saved (storage is full or unavailable) - it's still shown here, but may not persist. Try freeing up space or a different browser.");
+        return false;
+      }
+    },
+    // Returns the parsed value, or null for "nothing saved" AND for "storage
+    // unavailable"/"corrupt JSON" alike - callers already treat null as
+    // "use the documented default," so a corrupt record degrades the same
+    // way a missing one always did, it just no longer does so silently.
+    safeGet(key) {
+      let raw;
+      try { raw = localStorage.getItem(key); }
+      catch (e) {
+        console.warn(`ADS storage: read of "${key}" failed - showing this section's default instead.`, e);
+        showStorageNotice("Saved settings couldn't be read from storage right now - showing this section's defaults instead.");
+        return null;
+      }
+      if (raw === null || raw === undefined) return null;
+      try { return JSON.parse(raw); }
+      catch (e) {
+        console.warn(`ADS storage: value for "${key}" was corrupt JSON - reset to default instead of guessed at.`, e);
+        showStorageNotice("A saved value looked corrupted, so it was reset to its default instead of being guessed at.");
+        return null;
+      }
+    },
+  };
+
   // Brand and surface colors can now be set independently per theme
   // (foundations.html), so switching theme live has to re-read and
   // re-apply that theme's saved values - the <head> boot script only runs

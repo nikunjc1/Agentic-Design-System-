@@ -342,7 +342,7 @@
     // applyPreview()'s own programmatic callers (load, theme toggle) or
     // from Reset - see the same note in grid-layout.js.
     function persistBorder(){
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
+      window.ADSStorage.safeSet(SAVE_KEY, {
         system: getActiveSystem(),
         width: widthSelect.value,
         color: colorHex.value,
@@ -351,12 +351,11 @@
         opacity: opacityInput.value,
         style: styleSelect.value,
         sides: sidesSelect.value
-      }));
+      });
     }
 
     function loadBorder(){
-      var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      var saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved){ regenerateDark(); applyPreview(); return; }
 
       if (saved.system) selectSystem(saved.system);
@@ -499,12 +498,11 @@
           darkAuto: stateDarkAuto[key]
         };
       });
-      localStorage.setItem(STATES_KEY, JSON.stringify(payload));
+      window.ADSStorage.safeSet(STATES_KEY, payload);
     }
 
     function loadStates(){
-      var saved;
-      try{ saved = JSON.parse(localStorage.getItem(STATES_KEY) || "null"); }catch(e){ saved = null; }
+      var saved = window.ADSStorage.safeGet(STATES_KEY);
       if (!saved) return;
 
       stateRows.forEach(function(row){

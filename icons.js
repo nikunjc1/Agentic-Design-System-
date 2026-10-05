@@ -164,13 +164,13 @@
     // see the same note in grid-layout.js.
     function persistIcons(){
       var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
+      window.ADSStorage.safeSet(SAVE_KEY, {
         system: getActiveSystem(),
         size: sizeSelect.value,
         stroke: strokeSelect.value,
         corner: cornerSelect.value,
         library: libraryRadio ? libraryRadio.value : null
-      }));
+      });
     }
 
     systemCards.forEach(function(card){
@@ -188,7 +188,7 @@
 
     function loadIcons(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved){ updateStrokeControlsAvailability(getActiveSystem()); renderPreview(); return; }
 
       if (saved.system) selectSystem(saved.system);

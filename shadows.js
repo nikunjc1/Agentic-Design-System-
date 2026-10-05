@@ -32,7 +32,7 @@
     // Persists on every real click, not on the load/reset paths - see the
     // same note in grid-layout.js.
     function persistShadow(){
-      localStorage.setItem(SAVE_KEY, JSON.stringify({ philosophy: getActiveSystem() }));
+      window.ADSStorage.safeSet(SAVE_KEY, { philosophy: getActiveSystem() });
     }
 
     systemCards.forEach(function(card){
@@ -45,7 +45,7 @@
 
     function loadShadow(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved) return;
 
       if (saved.philosophy) selectSystem(saved.philosophy);

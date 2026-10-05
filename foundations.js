@@ -454,13 +454,13 @@
       var payload = { light: { primary: { hex: "#" + lightHex } } };
       var darkHex = normalizeHex(brandDarkHex.value);
       if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto };
-      localStorage.setItem(BRAND_KEY, JSON.stringify(payload));
+      window.ADSStorage.safeSet(BRAND_KEY, payload);
     }
     var setBrandSaved = wireSaveState(saveBrandBtn.closest(".color-foundation"), saveBrandBtn, persistBrand);
 
     function loadBrand(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(BRAND_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(BRAND_KEY);
 
       var lightHex = (saved && saved.light && saved.light.primary && saved.light.primary.hex) ? saved.light.primary.hex.replace("#", "") : BRAND_LIGHT_DEFAULT;
       setBrandLightFields(lightHex);
@@ -676,8 +676,7 @@
 
     var saveBgBtn = document.getElementById("saveBgBtn");
     function persistBg(){
-      var saved;
-      try{ saved = JSON.parse(localStorage.getItem(BG_KEY) || "null") || {}; }catch(e){ saved = {}; }
+      var saved = window.ADSStorage.safeGet(BG_KEY) || {};
       saved.light = readTriple(bgLightFields);
       if (bgDarkEnable.checked){
         var dark = readTriple(bgDarkFields);
@@ -686,13 +685,13 @@
       } else {
         delete saved.dark;
       }
-      localStorage.setItem(BG_KEY, JSON.stringify(saved));
+      window.ADSStorage.safeSet(BG_KEY, saved);
     }
     var setBgSaved = wireSaveState(saveBgBtn.closest(".color-foundation"), saveBgBtn, persistBg);
 
     function loadBg(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(BG_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(BG_KEY);
 
       var light = (saved && saved.light) ? saved.light : BG_DEFAULTS.light;
       setTripleFields(bgLightFields, light);
@@ -791,13 +790,13 @@
         dark.auto = statusSection.isAuto();
         payload.dark = dark;
       }
-      localStorage.setItem(STATUS_KEY, JSON.stringify(payload));
+      window.ADSStorage.safeSet(STATUS_KEY, payload);
     }
     var setStatusSaved = wireSaveState(saveStatusBtn.closest(".color-foundation"), saveStatusBtn, persistStatus);
 
     function loadStatus(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(STATUS_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(STATUS_KEY);
       statusSection.setLight((saved && saved.light) || STATUS_DEFAULTS.light);
       if (saved && saved.dark){
         statusDarkEnable.checked = true;
@@ -899,13 +898,13 @@
         dark.auto = neutralSection.isAuto();
         payload.dark = dark;
       }
-      localStorage.setItem(NEUTRAL_KEY, JSON.stringify(payload));
+      window.ADSStorage.safeSet(NEUTRAL_KEY, payload);
     }
     var setNeutralSaved = wireSaveState(saveNeutralBtn.closest(".color-foundation"), saveNeutralBtn, persistNeutral);
 
     function loadNeutral(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(NEUTRAL_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(NEUTRAL_KEY);
       neutralSection.setLight((saved && saved.light) || NEUTRAL_DEFAULTS.light);
       if (saved && saved.dark){
         neutralDarkEnable.checked = true;

@@ -7130,3 +7130,31 @@ a.system-card{ text-decoration: none; color: inherit; }
     animation-iteration-count: infinite !important;
   }
 }
+
+/* Foundation audit X06 - the one shared, systemwide surface for a storage
+   write/read failure (see window.ADSStorage in shell.js). Hidden until a
+   real failure happens, so it never competes with everyday "Saved"/"Applied"
+   feedback - this only ever appears when storage itself is the problem. */
+.ads-storage-notice{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 12px 18px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--danger-600, #7a1120);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 9999;
+}
+.ads-storage-notice.is-visible{
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}

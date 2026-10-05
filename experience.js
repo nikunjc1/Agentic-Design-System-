@@ -385,13 +385,15 @@
   function savedTokens(allowedKeys = TOKEN_KEYS, profile = null) {
     const values = {};
     for (const key of allowedKeys) {
-      const raw = localStorage.getItem('ads:' + key);
       // A saved record always wins if one exists, even a partial-looking
       // one - this is still the real, current state of that page, not a
       // fallback candidate. Only a genuinely untouched key (never saved
-      // at all) resolves to the project's own contextual recommendation,
-      // or the plain documented default if nothing maps.
-      values[key] = raw !== null ? JSON.parse(raw) : contextualDefault(key, profile);
+      // at all), or one that came back corrupt (Foundation audit X06 -
+      // window.ADSStorage.safeGet returns null rather than throwing, so one
+      // bad record can't crash the whole export), resolves to the project's
+      // own contextual recommendation, or the plain documented default.
+      const saved = window.ADSStorage.safeGet('ads:' + key);
+      values[key] = saved !== null ? saved : contextualDefault(key, profile);
     }
     return values;
   }

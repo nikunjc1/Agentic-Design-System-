@@ -279,6 +279,24 @@
       </div>
     </div>
     <p class="get-library-copy">Rollback: every section above its own list has a "Reset to defaults" button that clears its localStorage key and, for the auto-apply and click-to-apply tiers, removes the live CSS override too - there's no separate undo-last-edit, resetting is the one rollback path everywhere.</p>
+    <p class="get-library-copy">Storage recovery matrix: all 8 editors' auto-save now goes through one shared <code>window.ADSStorage</code> (shell.js) instead of calling <code>localStorage</code> directly, so every failure mode below behaves the same way everywhere instead of depending on which section you're on:</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Write fails (quota exceeded, storage unavailable)</span>
+        <span class="usage-desc">The error is caught instead of thrown uncaught mid-click - your on-screen selection can still change, but a visible banner says the change may not have persisted, and the field's previous saved value (if any) is left exactly as it was, since a failed write never reaches localStorage at all.</span>
+        <span class="usage-values">Caught, reported, old value kept</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Read fails or the record is corrupt JSON</span>
+        <span class="usage-desc">Falls back to this section's own documented default - same as "nothing was ever saved" - but now says so with a visible banner, instead of silently defaulting with no sign your prior save was lost.</span>
+        <span class="usage-values">Falls back, reported</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Record from a future/unrecognized schema</span>
+        <span class="usage-desc">Named gap, not yet built: unlike the project profile (project-model.js, which already rejects a newer app version instead of misreading it), these 8 editors' own saved shapes carry no version stamp today - none has changed shape since it was introduced, so there's no real migration to demonstrate yet. Tracked as its own follow-up, not papered over here.</span>
+        <span class="usage-values">Not yet versioned</span>
+      </div>
+    </div>
   </section>
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">

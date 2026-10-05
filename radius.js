@@ -109,7 +109,7 @@
     // Persists on every real click, not on the load/reset paths - see the
     // same note in grid-layout.js.
     function persistRadius(){
-      localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), philosophy: getActiveSystem() }));
+      window.ADSStorage.safeSet(SAVE_KEY, { product: getActiveProduct(), philosophy: getActiveSystem() });
       // Applies the new philosophy sitewide immediately (shell.js already
       // does this on boot/cross-tab; this page's own nav/buttons need it
       // too, without waiting for a reload).
@@ -191,7 +191,7 @@
 
     function loadRadius(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved){
         applyUnsavedState();
         return;

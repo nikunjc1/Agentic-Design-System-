@@ -114,7 +114,7 @@
     // always reflects the current on-screen choice without a separate
     // "click Save" step.
     function persistGrid(){
-      localStorage.setItem(SAVE_KEY, JSON.stringify({ product: getActiveProduct(), system: getActiveSystem() }));
+      window.ADSStorage.safeSet(SAVE_KEY, { product: getActiveProduct(), system: getActiveSystem() });
     }
 
     productCards.forEach(function(card){
@@ -175,7 +175,7 @@
 
     function loadGrid(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved){
         var mapped = productFromProjectProfile();
         if (mapped){

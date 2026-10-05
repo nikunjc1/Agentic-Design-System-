@@ -552,7 +552,7 @@
 
     function loadTypography(){
       var saved;
-      try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
+      saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved) return;
 
       if (saved.primaryFont && saved.primaryFont.family){
@@ -584,7 +584,7 @@
       Object.keys(rowControllers).forEach(function(level){
         payload.levels[level] = rowControllers[level].getState();
       });
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+      window.ADSStorage.safeSet(SAVE_KEY, payload);
       // Applies the new font family sitewide immediately (shell.js already
       // does this on boot/cross-tab; this page's own text needs it too,
       // without waiting for a reload).
