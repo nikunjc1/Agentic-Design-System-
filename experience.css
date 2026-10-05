@@ -14,12 +14,12 @@
 .page-outline .group-btn-segment.is-selected{background:var(--red-500);color:#fff}
 .page-outline .group-btn-segment:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:-3px}
 .app-main :is(h2,h3,section[id]){scroll-margin-top:24px}
-.setup-notice{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;margin-bottom:24px;border:1px solid var(--line-strong);border-radius:12px;background:var(--graphite-900)}
+.setup-notice{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;margin-bottom:24px;border:1px solid var(--line-strong);border-radius:var(--radius-12);background:var(--graphite-900)}
 .setup-notice p{margin:0;max-width:65ch;font-size:14px;line-height:1.6}
 .setup-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .setup-actions a:not(.btn),.setup-help a{text-decoration:underline;text-underline-offset:3px}
 .setup-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:24px;align-items:start}
-.setup-panel{padding:clamp(20px,3vw,32px);border:1px solid var(--line);border-radius:16px;background:var(--graphite-900);min-width:0}
+.setup-panel{padding:clamp(20px,3vw,32px);border:1px solid var(--line);border-radius:var(--radius-16);background:var(--graphite-900);min-width:0}
 .setup-panel h2{font-size:20px;margin:0 0 12px}
 /* margin reset to 0, not left as the browser's default <p> margin
    (1em, ~16px here) - that default was never actually in this rule,
@@ -32,11 +32,11 @@
    was visibly wrong there too. */
 .setup-panel p{line-height:1.6;color:var(--text-mid);margin:0}
 .setup-steps{display:flex;list-style:none;padding:0;gap:12px;flex-wrap:wrap;margin:24px 0}
-.setup-steps li{padding:8px 14px;border:1px solid var(--line);border-radius:24px;font-size:13px;color:var(--text-mid)}
+.setup-steps li{padding:8px 14px;border:1px solid var(--line);border-radius:var(--radius-24);font-size:13px;color:var(--text-mid)}
 .setup-steps [aria-current=step]{border-color:var(--red-500);background:var(--red-tint);color:var(--text-hi)}
 .setup-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:24px 0}
 .setup-field{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:500}
-.setup-field input,.setup-field select,.export-preview{width:100%;min-height:44px;padding:10px 12px;color:var(--text-hi);background:var(--graphite-950);border:1px solid var(--line-strong);border-radius:8px;font:inherit}
+.setup-field input,.setup-field select,.export-preview{width:100%;min-height:44px;padding:10px 12px;color:var(--text-hi);background:var(--graphite-950);border:1px solid var(--line-strong);border-radius:var(--radius-md);font:inherit}
 .setup-field input[aria-invalid=true],.setup-field select[aria-invalid=true]{border-color:var(--danger-500)}
 .setup-error{font-weight:400;font-size:13px;color:var(--danger-500);min-height:0}
 .setup-platforms{border:0;padding:0;margin:24px 0}
@@ -56,7 +56,7 @@
    alongside the native disclosure triangle, kept in sync (including
    indeterminate state) with its category's individual checkboxes. */
 .export-category-groups{display:flex;flex-direction:column;gap:8px;margin:12px 0 20px}
-.export-category-details{border:1px solid var(--line-strong);border-radius:8px;padding:0 14px}
+.export-category-details{border:1px solid var(--line-strong);border-radius:var(--radius-md);padding:0 14px}
 .export-category-details[open]{padding-bottom:14px}
 .export-category-summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;font-size:14px;font-weight:600;list-style:none}
 .export-category-summary::-webkit-details-marker{display:none}
@@ -67,7 +67,7 @@
 .export-category-summary .setup-option:has(:checked){background:none}
 .export-category-count{font-weight:400;color:var(--text-mid)}
 .export-category-options{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-.export-component-option{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:6px;font-size:13px;cursor:pointer}
+.export-component-option{display:flex;gap:10px;align-items:center;padding:8px 6px;border-radius:var(--radius-6);font-size:13px;cursor:pointer}
 .export-component-option:hover{background:var(--graphite-900)}
 .export-component-option input{width:16px;height:16px;accent-color:var(--red-500)}
 .setup-help{font-size:13px;color:var(--text-mid);line-height:1.6}
