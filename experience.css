@@ -21,7 +21,16 @@
 .setup-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:24px;align-items:start}
 .setup-panel{padding:clamp(20px,3vw,32px);border:1px solid var(--line);border-radius:16px;background:var(--graphite-900);min-width:0}
 .setup-panel h2{font-size:20px;margin:0 0 12px}
-.setup-panel p{line-height:1.6;color:var(--text-mid)}
+/* margin reset to 0, not left as the browser's default <p> margin
+   (1em, ~16px here) - that default was never actually in this rule,
+   so it was competing with (and winning over, since adjacent margins
+   collapse to the larger one) the h2's own authored 12px margin-bottom
+   above it: the gap rendered as 16px, not the 12px the heading's own
+   rule actually says. Below, .setup-fields already has its own
+   deliberate margin-top:24px, which was already winning that
+   collapse regardless - zeroed for the same reason, not because it
+   was visibly wrong there too. */
+.setup-panel p{line-height:1.6;color:var(--text-mid);margin:0}
 .setup-steps{display:flex;list-style:none;padding:0;gap:12px;flex-wrap:wrap;margin:24px 0}
 .setup-steps li{padding:8px 14px;border:1px solid var(--line);border-radius:24px;font-size:13px;color:var(--text-mid)}
 .setup-steps [aria-current=step]{border-color:var(--red-500);background:var(--red-tint);color:var(--text-hi)}

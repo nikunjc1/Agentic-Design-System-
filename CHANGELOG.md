@@ -1191,6 +1191,14 @@ Checked where else this class is used before shipping: `.setup-platforms` also a
 
 Verified: computed `font-size`/`font-weight`/`line-height` for the label and the legend are now identical (14px/500/normal, matching exactly) on New Project. Screenshotted both New Project and MD Export to confirm all the affected headers now read at the same size and weight. Full 157-page regression sweep: 0 console errors. All 5 project-model unit tests and all 6 overview-model unit tests still pass.
 
+## New Project - heading-to-body gap was 16px, not the 12px the heading's own rule says
+
+Reported too much space between "Your product and platforms" and the paragraph below it. Measured directly rather than assumed: the gap rendered as 16px, even though `.setup-panel h2{margin:0 0 12px}` explicitly says 12px. Root cause: `.setup-panel p` never set its own `margin` at all, so it fell back to the browser's default `<p>` margin (`1em`, 16px at this font-size) on both sides. Adjacent vertical margins collapse to the larger of the two, not the sum, so the heading's own authored 12px was silently losing to the paragraph's unset default every time - the rule said 12px, but a value that was never actually written anywhere was the one actually winning.
+
+Fixed by giving `.setup-panel p` an explicit `margin:0`, so the heading's `margin-bottom:12px` is the sole, intended mechanism above it, and `.setup-fields`'s own deliberate `margin-top:24px` is the sole mechanism below it (that one was already winning the collapse regardless, zeroed for the same reason - consistency, not because it was visibly wrong there too).
+
+Verified: measured both gaps directly - heading-to-body now exactly 12px (matching the heading's own rule for the first time), body-to-fields exactly 24px (matching `.setup-fields`'s own rule). Confirmed Step 2 ("About you") shows the same correct 12px after actually navigating to it (a hidden step reads 0px for any rect-based measurement, so checked it visible, not hidden). Checked `.setup-panel p` isn't used in a conflicting way on the other two pages that share `.setup-panel` (`md-export.html`, `settings.html`) - screenshotted both, no regression, since neither has this exact `h2` immediately followed by `p` pattern in the same way. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
