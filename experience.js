@@ -338,15 +338,60 @@
     'grid-layout': { product: null, system: 'columns' },
     icons: { system: 'duotone', size: '24', stroke: '1.8', corner: 'round', library: null }
   };
-  function savedTokens(allowedKeys = TOKEN_KEYS) {
+  // Spacing/Radius/Grid & Layout each auto-select a recommendation on
+  // their own first visit based on the saved project's product type
+  // (see each page's own productFromProjectProfile()) - a "resolved
+  // default" that ignores this and always falls back to the generic
+  // global default (Balanced/4px/Columns) isn't actually resolved, it's
+  // just a different flat placeholder: a Data-Heavy Application project
+  // would export generic 4px/Balanced/Columns here while the live pages
+  // themselves would show 2px/Sharp/Columns+Rows - the exact "AI invents
+  // defaults, recipient can't reconstruct the system" failure X02 was
+  // about, just moved one level down. Mirrors each page's own real
+  // product-card data (not estimated), same accepted cross-file
+  // duplication as PROJECT_PRODUCT_TYPE_MAP itself.
+  const PROJECT_PRODUCT_TYPE_MAP = {
+    'SaaS': 'saas', 'Enterprise SaaS': 'enterprise-saas', 'Web Application': 'web-app',
+    'Dashboard': 'dashboard', 'Data-Heavy Application': 'data-heavy', 'Marketing Website': 'marketing',
+    'Consumer App': 'consumer-app', 'AI Product': 'ai-product', 'Cross-Platform': 'cross-platform'
+  };
+  const SPACING_BY_PRODUCT = {
+    saas: ['4px','8px'], 'enterprise-saas': ['4px','2px'], 'web-app': ['4px','8px'], 'desktop-web': ['8px','4px'],
+    'mobile-web': ['4px','8px'], 'mobile-app': ['4px','8px'], marketing: ['8px','4px'], dashboard: ['4px','8px'],
+    'data-heavy': ['2px','4px'], 'consumer-app': ['4px','8px'], 'ai-product': ['4px','8px'], 'cross-platform': ['4px','2px + 8px']
+  };
+  const RADIUS_BY_PRODUCT = {
+    saas: 'balanced', 'enterprise-saas': 'compact', 'web-app': 'balanced', 'desktop-web': 'compact',
+    'mobile-web': 'soft', 'mobile-app': 'soft', dashboard: 'compact', 'data-heavy': 'sharp',
+    marketing: 'expressive', 'consumer-app': 'soft', 'ai-product': 'balanced', 'cross-platform': 'balanced'
+  };
+  const GRID_BY_PRODUCT = {
+    saas: 'columns', 'enterprise-saas': 'columns', 'web-app': 'columns', 'desktop-web': 'columns',
+    'mobile-web': 'columns', 'mobile-app': 'columns', dashboard: 'columns-rows', 'data-heavy': 'columns-rows',
+    marketing: 'rows', 'consumer-app': 'columns', 'ai-product': 'rows', 'cross-platform': 'columns'
+  };
+  function contextualDefault(key, profile) {
+    const slug = profile && PROJECT_PRODUCT_TYPE_MAP[profile.productType];
+    if (!slug) return RESOLVED_DEFAULTS[key];
+    if (key === 'spacing' && SPACING_BY_PRODUCT[slug]) {
+      const [primary, secondary] = SPACING_BY_PRODUCT[slug];
+      const system = primary === '2px' || primary === '8px' || primary === '4px' ? primary : 'adaptive';
+      return { product: slug, system };
+    }
+    if (key === 'radius' && RADIUS_BY_PRODUCT[slug]) return { product: slug, philosophy: RADIUS_BY_PRODUCT[slug] };
+    if (key === 'grid-layout' && GRID_BY_PRODUCT[slug]) return { product: slug, system: GRID_BY_PRODUCT[slug] };
+    return RESOLVED_DEFAULTS[key];
+  }
+  function savedTokens(allowedKeys = TOKEN_KEYS, profile = null) {
     const values = {};
     for (const key of allowedKeys) {
       const raw = localStorage.getItem('ads:' + key);
       // A saved record always wins if one exists, even a partial-looking
       // one - this is still the real, current state of that page, not a
       // fallback candidate. Only a genuinely untouched key (never saved
-      // at all) resolves to the documented default instead.
-      values[key] = raw !== null ? JSON.parse(raw) : RESOLVED_DEFAULTS[key];
+      // at all) resolves to the project's own contextual recommendation,
+      // or the plain documented default if nothing maps.
+      values[key] = raw !== null ? JSON.parse(raw) : contextualDefault(key, profile);
     }
     return values;
   }
@@ -498,7 +543,7 @@
         // storage key, so the selection matches what the user actually
         // sees as one unit in the Foundations sidebar.
         const allowedKeys = foundationChecks.filter(c => c.checked).flatMap(c => FOUNDATION_TOKEN_MAP[c.value] || []);
-        const tokens = savedTokens(allowedKeys);
+        const tokens = savedTokens(allowedKeys, profile);
         const defaultedKeys = allowedKeys.filter(key => localStorage.getItem('ads:' + key) === null);
         preview.value = M.markdown(profile, tokens, docs, identity.checked, defaultedKeys);
         const includedCount = foundationChecks.filter(c => c.checked).length;
