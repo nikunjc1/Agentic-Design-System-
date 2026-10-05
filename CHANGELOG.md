@@ -1430,6 +1430,18 @@ Checked the second half against the real mechanism rather than assuming: "Radius
 
 Verified: screenshotted both the "Radius philosophy" and "Radius by component role" sections - both new paragraphs render with no horizontal overflow, and the worked Sharp/`md` example (8px -> 4px) is cited from the real token map, not invented. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit R04 (P2) - the nested-corner formula contradicted its own worked example
+
+Finding from the 5 October 2026 Foundation audit: "Formula max(0, outer-padding) alongside independent Button-in-Card exemption... Formula can accidentally square all children," worried the stated rule and its own example disagreed.
+
+Confirmed by just doing the arithmetic the page itself provides: Card's radius is 12px, its body padding is 16px. The stated formula, `inner radius = max(0, outer radius - padding)`, literally computes `max(0, 12-16) = 0` - a fully square corner. But the very same paragraph says a Button inside one "needs no adjustment at all," i.e. keeps its own 8px. The formula and its own example gave two different answers for the identical numbers - not a hypothetical risk, an actual contradiction on the page as written.
+
+Rewrote the rule to state what the example actually implies: the formula is a *cap*, only in effect while the gap is tighter than the outer radius. The moment the gap meets or exceeds the outer radius, the formula stops applying entirely and the inner element keeps its own independent radius unchanged - a result of `max(0, ...)` reaching 0 under this formula never means "therefore square the child," it means the constraint has gone irrelevant. Added a second worked example in the regime where the cap *does* bite (a tab strip inset 4px inside a 12px container caps at 8px, genuinely smaller than its own default), so both directions of the rule now have a concrete number attached, not just one side.
+
+Also addressed "borders/asymmetric insets/radii omitted": added a sentence that the real gap for this formula is the padding minus any border width sitting in between (a border visually eats into the gap too), and that asymmetric padding means applying this per corner independently rather than one page-wide number.
+
+Verified: screenshotted the updated section - renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
