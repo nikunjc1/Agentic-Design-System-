@@ -1221,6 +1221,14 @@ Fixed by raising `.setup-status`'s selector to `.setup-panel .setup-status` (two
 
 Verified: triggered the real "Draft saved on this browser." status (by editing the Project name field, not just reading the source) and measured computed margin as `16px 0px`, with actual rendered gaps of 16px above and below the status line, on both New Project and MD Export. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
 
+## Grid & Layout - the page's own small diagram graphics didn't follow the 4px spacing rule
+
+Asked to make Grid & Layout follow "the 4px rule" - Spacing Foundation's own documented base unit, where every real spacing token in the system is a multiple of 4 (4, 8, 12, 16, 20, 24...). Audited every CSS rule actually used by this page's own content (not the shared shell chrome, which many other pages also depend on and wasn't in scope) for a spacing value that breaks that scale, rather than the whole 6,700-line stylesheet - most of shell.css's other odd-numbered paddings (6px/10px/14px/18px) belong to other pages' own component-demo visuals, out of scope here.
+
+Found 5 real offenders, all specific to this page: the 4 small grid-type diagrams (`.grid-demo-columns`/`-rows`/`-cellgrid`/`-baseline`, the little red boxes inside the Columns/Rows/Columns+Rows/Baseline Grid cards) and the 8 layout-pattern diagrams (`.pattern-diagram`, inside Single Column/Two Column/Dashboard/etc.) all used `padding: 6px` - not on the 4px scale. Changed all 5 to `padding: 8px`, the nearest real token.
+
+Verified: computed padding on both `.grid-demo-columns` and `.pattern-diagram` now reads `8px`. Screenshotted the Grid type and Layout patterns sections - all 12 diagrams render with proportionally more breathing room and no clipping or overlap (each diagram box has a fixed height with `box-sizing:border-box`, so the extra 2px per side simply tightens the visible content area slightly, nothing broke). Confirmed via `grep -rl` that `.grid-demo-*` and `.pattern-diagram` are used only on this page, so no other page is affected. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

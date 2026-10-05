@@ -2078,16 +2078,16 @@ button{ font-family: inherit; }
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
-.grid-demo-columns{ display: flex; gap: 4px; padding: 6px; }
+.grid-demo-columns{ display: flex; gap: 4px; padding: 8px; }
 .grid-demo-col{ flex: 1; background: var(--red-tint); border: var(--border-width-1) solid var(--red-500); border-radius: var(--radius-2); }
 
-.grid-demo-rows{ display: flex; flex-direction: column; gap: 4px; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-rows{ display: flex; flex-direction: column; gap: 4px; padding: 8px; height: 100%; box-sizing: border-box; }
 .grid-demo-row-line{ flex: 1; background: var(--red-tint); border: var(--border-width-1) solid var(--red-500); border-radius: var(--radius-2); }
 
-.grid-demo-cellgrid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-cellgrid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 8px; height: 100%; box-sizing: border-box; }
 .grid-demo-cell{ background: var(--red-tint); border: var(--border-width-1) solid var(--red-500); border-radius: var(--radius-2); }
 
-.grid-demo-baseline{ display: flex; flex-direction: column; justify-content: space-between; padding: 6px; height: 100%; box-sizing: border-box; }
+.grid-demo-baseline{ display: flex; flex-direction: column; justify-content: space-between; padding: 8px; height: 100%; box-sizing: border-box; }
 .grid-demo-baseline-line{ height: 1px; background: var(--red-500); opacity: 0.6; }
 
 .grid-demo-custom{
@@ -2160,7 +2160,7 @@ button{ font-family: inherit; }
   height: 84px;
   border: var(--border-width-1) solid var(--line-strong);
   border-radius: var(--radius-sm);
-  padding: 6px;
+  padding: 8px;
   box-sizing: border-box;
   overflow: hidden;
 }
