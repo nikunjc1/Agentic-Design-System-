@@ -1728,6 +1728,23 @@ Scope boundary, stated plainly: this reconciliation only fires for the product-c
 
 Verified with Playwright across all 3 pages: a profile with a single `mobile-app` platform correctly selects the Mobile Application card regardless of product type; a profile with two platforms falls back to the product-type mapping; a saved choice that was following the recommendation shows the reconciliation notice with a working "Apply" button once the profile's context changes, and the notice correctly disappears once reconciled; a saved choice that deliberately overrode the recommendation shows the calmer explanatory note with no action button; a pre-existing record with no `recommendedAtSave` shows no notice at all. Regenerated `docs-catalog.json` (3 HTML files changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit NP03 (P1) - draft silently overrode a saved profile, with no way back and no migration
+
+Finding from the 5 October 2026 Foundation audit: "A draft silently takes precedence over profile; autosaved on input and removed on successful save... No Resume/Discard/restore-saved control or timestamp exists; stale/partial drafts mask profiles; legacy draft product values are unmigrated... Users need a clear recovery route."
+
+Confirmed three distinct, concrete gaps at the cited area (experience.js, the draft/profile load path):
+1. `const initial = draft || profile` picked the draft over a saved profile with zero explanation and no timestamp - if you'd started editing on a different day and forgot, Project setup would silently show stale, half-finished text instead of your real saved project, with nothing telling you that's what happened.
+2. The legacy product-type migration (`LEGACY_PRODUCT_MAP`, e.g. "Internal tool" → "Dashboard") only ran for the saved profile (`key === KEY`), never for a draft - a draft saved under an old product-type name would set the `<select>` to a value with no matching `<option>`, silently appearing as if the product type had never been chosen.
+3. Genuinely corrupt JSON in either a draft or a profile leaked a raw native `SyntaxError` message ("Expected property name or '}' in JSON at position 1...") straight to the status line - technically accurate, meaningless to someone trying to resume their work.
+
+Implemented all three parts of the recommended improvement ("Show draft/profile provenance; offer resume/discard; validate/migrate both and retain saved baseline"):
+- Draft saves now stamp `updatedAt` (matching the pattern `M.save()` already uses for the real profile), giving the provenance notice something concrete to say.
+- When a draft and a saved profile both exist and genuinely differ, a new notice names both: "You have an unsaved draft from X that differs from your saved project (\"Y\")," with **Resume draft** (dismiss, keep editing the draft - today's default behavior, now an explicit choice instead of a silent one) and **Discard draft** (clears the draft and repopulates the form from the saved profile instead). If they don't actually differ, no notice appears - there's nothing to choose between.
+- Removed the `key === KEY` gate on the legacy product-type migration in `project-model.js`'s `read()` - a legacy name is equally invalid in a draft as in a saved profile, so it migrates in both now.
+- Wrapped `JSON.parse` in `read()` itself in a try/catch that produces the same friendly "Saved setup could not be read. Your saved data has not been changed." message for genuinely malformed JSON as already existed for the right-type-wrong-shape case, instead of a raw parser exception leaking through.
+
+Verified with Playwright: a differing draft+profile pair shows the notice with the correct relative timestamp ("5 minutes ago"); clicking Discard clears the draft and repopulates the saved profile's values; clicking Resume dismisses the notice and preserves the draft untouched; a draft saved under a legacy product-type name ("Internal tool") now correctly shows "Dashboard" in the select instead of appearing unset; corrupt draft JSON now shows the friendly message with zero uncaught page errors. Regenerated `docs-catalog.json` (new-project.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

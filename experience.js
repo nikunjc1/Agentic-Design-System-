@@ -4,6 +4,17 @@
   const file = location.pathname.split('/').pop() || 'overview.html';
   const $ = selector => document.querySelector(selector);
   const el = (tag, text, cls) => { const n = document.createElement(tag); if (text) n.textContent = text; if (cls) n.className = cls; return n; };
+  // Foundation audit NP03 - lets the draft/profile provenance notice say
+  // how stale a resumed draft is, not just that it exists.
+  const relativeTime = date => {
+    const mins = Math.round((Date.now() - date.getTime()) / 60000);
+    if (mins < 1) return 'moments ago';
+    if (mins < 60) return mins + ' minute' + (mins === 1 ? '' : 's') + ' ago';
+    const hours = Math.round(mins / 60);
+    if (hours < 24) return hours + ' hour' + (hours === 1 ? '' : 's') + ' ago';
+    const days = Math.round(hours / 24);
+    return days + ' day' + (days === 1 ? '' : 's') + ' ago';
+  };
   let profile = null, storageError = '';
   try { profile = M.read(localStorage); } catch (error) { storageError = error.message; }
 
@@ -145,6 +156,32 @@
       existingNotice.hidden = false;
       existingNotice.textContent = `You already have a saved project ("${profile.project}"). Continuing will replace its details - Foundation values (Colors, Spacing, Typography, etc.) are shared across this workspace and are not reset by this.`;
     }
+    // Foundation audit NP03 - "A draft silently takes precedence over
+    // profile... no Resume/Discard/restore-saved control or timestamp
+    // exists." Only relevant when a draft AND a saved profile both exist
+    // and genuinely differ - if they already match, there's nothing to
+    // choose between.
+    const draftNotice = $('#draftProvenanceNotice');
+    if (draftNotice && draft && profile) {
+      const compareKeys = ['project','productType','productOther','name','email','designation','role','roleOther','platforms'];
+      const differs = compareKeys.some(k => JSON.stringify(draft[k] ?? null) !== JSON.stringify(profile[k] ?? null));
+      if (differs) {
+        const when = draft.updatedAt ? new Date(draft.updatedAt) : null;
+        const whenText = when && !isNaN(when) ? relativeTime(when) : 'an unknown time';
+        draftNotice.innerHTML = `You have an unsaved draft from ${whenText} that differs from your saved project ("${profile.project}"). ` +
+          `<button type="button" class="btn btn-ghost" id="resumeDraftBtn">Resume draft</button> ` +
+          `<button type="button" class="btn btn-ghost" id="discardDraftBtn">Discard draft</button>`;
+        draftNotice.hidden = false;
+        $('#resumeDraftBtn').addEventListener('click', () => { draftNotice.hidden = true; });
+        $('#discardDraftBtn').addEventListener('click', () => {
+          try { localStorage.removeItem(M.DRAFT); } catch {}
+          for (const key of ['project','productType','productOther','name','email','designation','role','roleOther']) field(key).value = typeof profile[key] === 'string' ? profile[key] : '';
+          form.querySelectorAll('[name=platforms]').forEach(n => { n.checked = Array.isArray(profile.platforms) && profile.platforms.includes(n.value); });
+          conditional();
+          draftNotice.hidden = true;
+        });
+      }
+    }
     if (initial) {
       for (const key of ['project', 'productType', 'productOther', 'name', 'email', 'designation', 'role', 'roleOther']) if (typeof initial[key] === 'string') field(key).value = initial[key];
       form.querySelectorAll('[name=platforms]').forEach(n => { n.checked = Array.isArray(initial.platforms) && initial.platforms.includes(n.value); });
@@ -196,7 +233,10 @@
     conditional();
     form.addEventListener('input', () => {
       conditional();
-      try { localStorage.setItem(M.DRAFT, JSON.stringify(collect())); status.textContent = 'Draft saved on this browser.'; }
+      // Foundation audit NP03 - a timestamp here is what lets the
+      // draft/profile provenance notice below say how stale a resumed
+      // draft actually is, instead of just that one exists.
+      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(), updatedAt: new Date().toISOString()})); status.textContent = 'Draft saved on this browser.'; }
       catch { status.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
     });
     $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });

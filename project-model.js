@@ -76,10 +76,23 @@
   function read(storage, key = KEY) {
     const raw = storage.getItem(key);
     if (!raw) return null;
-    const p = JSON.parse(raw);
+    // Foundation audit NP03 - genuinely malformed JSON (not just a wrong
+    // shape) used to leak a raw native SyntaxError message straight to the
+    // status line ("Expected property name or '}'...") - technically
+    // accurate, meaningless to someone trying to resume a draft. Same
+    // friendly message as the "right shape, wrong content" case below.
+    let p;
+    try { p = JSON.parse(raw); }
+    catch { throw new Error('Saved setup could not be read. Your saved data has not been changed.'); }
     if (!p || typeof p !== 'object' || Array.isArray(p)) throw new Error('Saved setup could not be read. Your saved data has not been changed.');
     if (key === KEY && typeof p.version === 'number' && p.version > SUPPORTED_VERSION) throw new Error('Saved setup was created by a newer version of this app and can’t be read here. Update the app, or start a new setup.');
-    if (key === KEY && LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
+    // Foundation audit NP03 - this migration used to run only for the real
+    // profile (key === KEY), so a draft saved under an old product-type name
+    // silently lost its selection instead of migrating forward: the <select>
+    // has no option for the legacy string, so setting it has no effect and
+    // the field reads as unset. A legacy name is equally invalid in a draft
+    // as in a saved profile, so the migration applies to both unconditionally.
+    if (LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
     if (key === KEY && Object.keys(validate(p)).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;
   }
