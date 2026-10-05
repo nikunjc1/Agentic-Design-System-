@@ -1181,6 +1181,16 @@ Removed `'Desktop Web (D-Web)'`, `'Mobile Web (M-Web)'` and `'Mobile Application
 
 Verified: New Project's dropdown now renders exactly 11 options (10 real categories + Other), confirmed live. Set a profile to each of the three removed values directly in storage and confirmed `M.read()` migrates all three correctly with no thrown error. Re-ran the 3-page sync matrix for the remaining 9 categories - still exactly as before (7 sync everywhere, Consumer App/AI Product still correctly no-op on Spacing only). Full 157-page regression sweep: 0 console errors. All 5 unit tests still pass.
 
+## New Project - the three field questions had mismatched font size, weight and line height
+
+Reported that "Project name", "What type of product are you creating?" and "Where will your product be used? Select all that apply." didn't match in size/weight/line height. Confirmed via computed styles, not just a visual guess: the first two are plain text inside `<label class="setup-field">` (14px, weight 500), but the third is a `<legend>` inside `<fieldset class="setup-platforms">` - `.setup-platforms legend` set `font-weight:600` but never set a `font-size` at all, so it fell back to the browser's default `<legend>` size (16px). Different element, different rule, nothing forcing the two to agree - confirmed computed values were genuinely 14px/500 vs 16px/600 before touching anything.
+
+Added `font-size:14px` and changed `font-weight` from `600` to `500` on `.setup-platforms legend`, matching `.setup-field` exactly rather than picking a third value - the two existing field labels were the majority style on this form (2 of the eventual 3), so the legend was the one that needed to conform.
+
+Checked where else this class is used before shipping: `.setup-platforms` also appears on `md-export.html`'s "Which foundation sections should be included?" legend, where this exact same mismatch existed against a *different* nearby header ("Which components should be included?", a later addition built as a plain `.setup-field` div rather than a legend) - this fix resolves that latent inconsistency too, not just the one reported.
+
+Verified: computed `font-size`/`font-weight`/`line-height` for the label and the legend are now identical (14px/500/normal, matching exactly) on New Project. Screenshotted both New Project and MD Export to confirm all the affected headers now read at the same size and weight. Full 157-page regression sweep: 0 console errors. All 5 project-model unit tests and all 6 overview-model unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

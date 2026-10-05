@@ -31,7 +31,13 @@
 .setup-field input[aria-invalid=true],.setup-field select[aria-invalid=true]{border-color:var(--danger-500)}
 .setup-error{font-weight:400;font-size:13px;color:var(--danger-500);min-height:0}
 .setup-platforms{border:0;padding:0;margin:24px 0}
-.setup-platforms legend{font-weight:600;margin-bottom:12px}
+/* font-size/weight matched to .setup-field's label (14px/500) - this
+   legend had neither explicitly set, falling back to the browser's
+   default <legend> size (~16px) and an authored 600 weight, so "Where
+   will your product be used?" rendered visibly larger and heavier than
+   "Project name"/"What type of product are you creating?" right above
+   it, despite all three being the same kind of field question. */
+.setup-platforms legend{font-size:14px;font-weight:500;margin-bottom:12px}
 .setup-options{display:flex;flex-wrap:wrap;gap:12px}
 .setup-option{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line-strong);border-radius:8px;font-size:14px;cursor:pointer}
 .setup-option:has(:checked){border-color:var(--red-500);background:var(--red-tint)}
