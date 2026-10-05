@@ -246,69 +246,69 @@
     <p class="get-library-copy">Pick the product type closest to yours and the recommended column count and gutter below update to match - every value stays fully editable afterward.</p>
     <p class="setup-help" data-role="product-fallback-notice" hidden></p>
 
-    <div class="product-card-grid" data-role="product-grid">
-      <button class="product-card" data-product="saas" data-system="columns" data-columns="12" data-gutter="24" type="button">
+    <div class="product-card-grid" data-role="product-grid" role="group" aria-label="What are you building?">
+      <button class="product-card" data-product="saas" data-system="columns" data-columns="12" data-gutter="24" aria-pressed="false" type="button">
         <span class="product-card-name">SaaS</span>
         <span class="product-card-rec">12-col &middot; 24px gutter</span>
       </button>
 
-      <button class="product-card" data-product="enterprise-saas" data-system="columns" data-columns="12" data-gutter="20" type="button">
+      <button class="product-card" data-product="enterprise-saas" data-system="columns" data-columns="12" data-gutter="20" aria-pressed="false" type="button">
         <span class="product-card-name">Enterprise SaaS</span>
         <span class="product-card-rec">12-col &middot; 20px gutter</span>
       </button>
 
-      <button class="product-card" data-product="web-app" data-system="columns" data-columns="12" data-gutter="24" type="button">
+      <button class="product-card" data-product="web-app" data-system="columns" data-columns="12" data-gutter="24" aria-pressed="false" type="button">
         <span class="product-card-name">Web Application</span>
         <span class="product-card-rec">12-col &middot; 24px gutter</span>
       </button>
 
-      <button class="product-card" data-product="desktop-web" data-system="columns" data-columns="12" data-gutter="24" type="button">
+      <button class="product-card" data-product="desktop-web" data-system="columns" data-columns="12" data-gutter="24" aria-pressed="false" type="button">
         <span class="product-card-name">Desktop Web (D-Web)</span>
         <span class="product-card-rec">12-col &middot; 24px gutter</span>
       </button>
 
-      <button class="product-card" data-product="mobile-web" data-system="columns" data-columns="4" data-gutter="16" type="button">
+      <button class="product-card" data-product="mobile-web" data-system="columns" data-columns="4" data-gutter="16" aria-pressed="false" type="button">
         <span class="product-card-name">Mobile Web (M-Web)</span>
         <span class="product-card-rec">4-col &middot; 16px gutter</span>
       </button>
 
-      <button class="product-card" data-product="mobile-app" data-system="columns" data-columns="4" data-gutter="16" type="button">
+      <button class="product-card" data-product="mobile-app" data-system="columns" data-columns="4" data-gutter="16" aria-pressed="false" type="button">
         <span class="product-card-name">Mobile Application</span>
         <span class="product-card-rec">4-col &middot; 16px gutter</span>
       </button>
 
-      <button class="product-card" data-product="dashboard" data-system="columns-rows" data-columns="12" data-gutter="16" type="button">
+      <button class="product-card" data-product="dashboard" data-system="columns-rows" data-columns="12" data-gutter="16" aria-pressed="false" type="button">
         <span class="product-card-name">Dashboard</span>
         <span class="product-card-rec">12-col &middot; 16px gutter</span>
       </button>
 
-      <button class="product-card" data-product="data-heavy" data-system="columns-rows" data-columns="16" data-gutter="12" type="button">
+      <button class="product-card" data-product="data-heavy" data-system="columns-rows" data-columns="16" data-gutter="12" aria-pressed="false" type="button">
         <span class="product-card-name">Data-Heavy Application</span>
         <span class="product-card-rec">16-col &middot; 12px gutter</span>
       </button>
 
-      <button class="product-card" data-product="marketing" data-system="rows" data-columns="12" data-gutter="32" type="button">
+      <button class="product-card" data-product="marketing" data-system="rows" data-columns="12" data-gutter="32" aria-pressed="false" type="button">
         <span class="product-card-name">Marketing Website</span>
         <span class="product-card-rec">12-col &middot; 32px gutter</span>
       </button>
 
-      <button class="product-card" data-product="consumer-app" data-system="columns" data-columns="4" data-gutter="16" type="button">
+      <button class="product-card" data-product="consumer-app" data-system="columns" data-columns="4" data-gutter="16" aria-pressed="false" type="button">
         <span class="product-card-name">Consumer App</span>
         <span class="product-card-rec">4-col &middot; 16px gutter</span>
       </button>
 
-      <button class="product-card" data-product="ai-product" data-system="rows" data-columns="12" data-gutter="24" type="button">
+      <button class="product-card" data-product="ai-product" data-system="rows" data-columns="12" data-gutter="24" aria-pressed="false" type="button">
         <span class="product-card-name">AI Product</span>
         <span class="product-card-rec">12-col &middot; 24px gutter</span>
       </button>
 
-      <button class="product-card" data-product="cross-platform" data-system="columns" data-columns="8" data-gutter="20" type="button">
+      <button class="product-card" data-product="cross-platform" data-system="columns" data-columns="8" data-gutter="20" aria-pressed="false" type="button">
         <span class="product-card-name">Cross-Platform</span>
         <span class="product-card-rec">8-col &middot; 20px gutter</span>
       </button>
     </div>
 
-    <div class="recommendation-callout" id="recommendationCallout" hidden>
+    <div class="recommendation-callout" id="recommendationCallout" role="status" aria-live="polite" hidden>
       <p class="empty-eyebrow">Recommended</p>
       <p class="recommendation-text" id="recommendationText"></p>
     </div>
@@ -329,8 +329,8 @@
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Structure defines composition; this decides how content is placed before any spacing or component rules apply.</p>
 
-    <div class="system-card-grid" data-role="system-grid">
-      <button class="system-card" data-system="custom" type="button">
+    <div class="system-card-grid" data-role="system-grid" role="group" aria-label="Grid type">
+      <button class="system-card" data-system="custom" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Custom</span>
 
@@ -339,7 +339,7 @@
         <div class="grid-demo grid-demo-custom">Custom</div>
       </button>
 
-      <button class="system-card is-active" data-system="columns" type="button">
+      <button class="system-card is-active" data-system="columns" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Columns</span>
           <span class="badge badge-required">Recommended</span>
@@ -348,7 +348,7 @@
         <div class="grid-demo grid-demo-columns"><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span></div>
       </button>
 
-      <button class="system-card" data-system="rows" type="button">
+      <button class="system-card" data-system="rows" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Rows</span>
           
@@ -357,7 +357,7 @@
         <div class="grid-demo grid-demo-rows"><span class="grid-demo-row-line"></span><span class="grid-demo-row-line"></span><span class="grid-demo-row-line"></span><span class="grid-demo-row-line"></span></div>
       </button>
 
-      <button class="system-card" data-system="columns-rows" type="button">
+      <button class="system-card" data-system="columns-rows" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Columns + Rows</span>
           
@@ -366,7 +366,7 @@
         <div class="grid-demo grid-demo-cellgrid"><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span></div>
       </button>
 
-      <button class="system-card" data-system="baseline" type="button">
+      <button class="system-card" data-system="baseline" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Baseline Grid</span>
           

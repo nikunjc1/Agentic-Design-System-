@@ -12,11 +12,12 @@
       "Color contrast",
       "Localization and preferences",
       "Known gaps - not yet done",
+      "Foundation editor state model",
       "Foundation release contract",
       "Accessibility - Markdown export"
     ],
     "issues": [],
-    "bytes": 22168
+    "bytes": 28615
   },
   {
     "file": "add-on-default.html",
@@ -237,7 +238,7 @@
       "Border tokens - Markdown export"
     ],
     "issues": [],
-    "bytes": 40895
+    "bytes": 41061
   },
   {
     "file": "breadcrumb-default.html",
@@ -826,7 +827,7 @@
       "Grid & Layout tokens - Markdown export"
     ],
     "issues": [],
-    "bytes": 32157
+    "bytes": 32631
   },
   {
     "file": "group-button-default.html",
@@ -900,7 +901,7 @@
       "Icon tokens - Markdown export"
     ],
     "issues": [],
-    "bytes": 31133
+    "bytes": 31316
   },
   {
     "file": "image-default.html",
@@ -1362,7 +1363,7 @@
       "Radius tokens - Markdown export"
     ],
     "issues": [],
-    "bytes": 35225
+    "bytes": 35707
   },
   {
     "file": "rating-default.html",
@@ -1492,7 +1493,7 @@
       "Shadows and interaction states"
     ],
     "issues": [],
-    "bytes": 28134
+    "bytes": 28282
   },
   {
     "file": "skeleton-default.html",
@@ -1558,7 +1559,7 @@
       "Spacing tokens - Markdown export"
     ],
     "issues": [],
-    "bytes": 28443
+    "bytes": 28901
   },
   {
     "file": "spin-default.html",

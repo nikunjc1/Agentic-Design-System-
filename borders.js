@@ -262,7 +262,9 @@
 
     function selectSystem(key){
       systemCards.forEach(function(card){
-        card.classList.toggle("is-active", card.dataset.system === key);
+        var active = card.dataset.system === key;
+        card.classList.toggle("is-active", active);
+        card.setAttribute("aria-pressed", active ? "true" : "false");
       });
       var card = document.querySelector('.system-card[data-system="' + key + '"]');
       if (!card){ updatePresetsMachineView(); return; }

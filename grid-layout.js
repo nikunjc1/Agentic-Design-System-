@@ -74,14 +74,17 @@
 
     function selectSystem(key){
       systemCards.forEach(function(card){
-        card.classList.toggle("is-active", card.dataset.system === key);
+        var active = card.dataset.system === key;
+        card.classList.toggle("is-active", active);
+        card.setAttribute("aria-pressed", active ? "true" : "false");
       });
       updateMachineViews();
     }
 
     function selectProduct(card){
-      productCards.forEach(function(c){ c.classList.remove("is-active"); });
+      productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       card.classList.add("is-active");
+      card.setAttribute("aria-pressed", "true");
       var fallbackNotice = document.querySelector('[data-role="product-fallback-notice"]');
       if (fallbackNotice) fallbackNotice.hidden = true;
 
@@ -208,7 +211,7 @@
     var resetBtn = document.getElementById("resetGridBtn");
     resetBtn.addEventListener("click", function(){
       localStorage.removeItem(SAVE_KEY);
-      productCards.forEach(function(c){ c.classList.remove("is-active"); });
+      productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       callout.hidden = true;
       selectSystem("columns");
 

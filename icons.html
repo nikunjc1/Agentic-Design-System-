@@ -178,8 +178,8 @@
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">How every icon is constructed - stroke, fill, or a layered combination of both. Duotone is the global default unless your product needs something bolder or more restrained.</p>
 
-    <div class="system-card-grid" data-role="system-grid">
-      <button class="system-card" data-system="line" type="button">
+    <div class="system-card-grid" data-role="system-grid" role="group" aria-label="Icon style">
+      <button class="system-card" data-system="line" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Line</span>
 
@@ -188,7 +188,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/></g></svg></div>
       </button>
 
-      <button class="system-card" data-system="dashed" type="button">
+      <button class="system-card" data-system="dashed" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Dashed</span>
 
@@ -197,7 +197,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 2.6"><circle cx="12" cy="12" r="8"/></g></svg></div>
       </button>
 
-      <button class="system-card" data-system="flat" type="button">
+      <button class="system-card" data-system="flat" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Flat</span>
 
@@ -206,7 +206,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="8"/></g></svg></div>
       </button>
 
-      <button class="system-card is-active" data-system="duotone" type="button">
+      <button class="system-card is-active" data-system="duotone" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Duotone</span>
           <span class="badge badge-required">Recommended</span>
@@ -215,7 +215,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="currentColor" opacity="0.32"><circle cx="12" cy="12" r="8"/></g><g fill="currentColor" transform="translate(12 12) scale(0.55) translate(-12 -12)"><circle cx="12" cy="12" r="8"/></g></svg></div>
       </button>
 
-      <button class="system-card" data-system="twotone" type="button">
+      <button class="system-card" data-system="twotone" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Two-tone</span>
 
@@ -224,7 +224,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/></g><g fill="currentColor" opacity="0.9" transform="translate(12 12) scale(0.48) translate(-12 -12)"><circle cx="12" cy="12" r="8"/></g></svg></div>
       </button>
 
-      <button class="system-card" data-system="isometric" type="button">
+      <button class="system-card" data-system="isometric" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Isometric</span>
 
@@ -233,7 +233,7 @@
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32"><polygon points="16,3 28,9.5 16,16 4,9.5" fill="currentColor" opacity="0.55"/><polygon points="4,9.5 16,16 16,29 4,22.5" fill="currentColor" opacity="0.85"/><polygon points="28,9.5 16,16 16,29 28,22.5" fill="currentColor" opacity="0.7"/></svg></div>
       </button>
 
-      <button class="system-card" data-system="3d" type="button">
+      <button class="system-card" data-system="3d" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">3D</span>
 

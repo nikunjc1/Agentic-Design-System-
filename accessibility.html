@@ -297,6 +297,7 @@
         <span class="usage-values">Not yet versioned</span>
       </div>
     </div>
+    <p class="get-library-copy">Selection semantics: a product/system "card" is a native <code>&lt;button&gt;</code> - its <code>is-active</code> class is what you see, but until now nothing told assistive technology which one was actually chosen. Every product-card-grid/system-card-grid is now a labelled toggle group (<code>role="group"</code> with an <code>aria-label</code> naming the choice, e.g. "Spacing system" or "What are you building?"), and every card's <code>aria-pressed</code> is kept in sync with <code>is-active</code> on every selection, reset, and page load - never just one or the other. Where picking a card also surfaces a recommendation (Spacing/Radius/Grid &amp; Layout's "Recommended" callout), that callout is now <code>role="status" aria-live="polite"</code>, so the outcome is announced the moment it appears, not only discoverable by navigating to it afterward. Verified via DOM assertions (exactly one <code>aria-pressed="true"</code> per group at all times, correct role/label/live-region attributes) rather than a physical screen reader - a real AT pass (VoiceOver/NVDA) remains a legitimate, separate follow-up.</p>
   </section>
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
