@@ -1398,6 +1398,16 @@ The one part X09 didn't cover: when New Project's product type is "Other" (free 
 
 Verified: with a profile whose `productType` is `"Other"` and `productOther: "A bespoke internal CRM"`, all three pages show the notice quoting that exact text; clicking any card hides it immediately. Confirmed a normally-mapped product type (SaaS) shows no notice on any of the three pages, and confirmed no profile at all still shows nothing (the correct "nothing to explain" case). Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit S05 (P2) - Spacing's Component defaults table was missing categories and had one genuinely ambiguous row
+
+Finding from the 5 October 2026 Foundation audit: "Exact label/helper/error/group/list/toolbar/empty/wrapped spacing incomplete; scrim versus content padding ambiguous."
+
+Checked the real CSS behind the existing Modal/Drawer rows before writing anything, and found the ambiguity was real, not just a wording nitpick: `.modal-demo-scrim{padding: var(--space-24)}` and `.modal-demo-body{padding: 16px 20px}` are two genuinely different paddings - the scrim's padding keeps the dialog off the viewport edge, the dialog's own padding is its internal content spacing - but the table listed only "24px" with "padding around the dialog within its scrim," which reads as one value when it's actually two. Split both the Modal and Drawer rows into their real scrim vs. content numbers.
+
+Added four categories that were simply missing, each checked against its real component CSS rather than invented: Form field (`.input-demo-field{gap: 6px}` - label, control and helper/error text all share one consistent gap, not a different value per pair), List (`.list-demo-row` - 10px padding/10px gap at Middle density, 6px/8px Small, 14px/12px Large), Empty state (`.empty-demo-panel` - 24px padding, 10px gap). Checked checkbox/radio group spacing and Toolbar too, and found neither has a formalized real value - there's no dedicated grouped-checkbox component class, and Toolbar isn't a distinct component in this library at all - said so plainly in a closing note instead of inventing numbers to fill the row, the same discipline applied to C09's data-series gap earlier today.
+
+Verified: screenshotted the updated table - renders cleanly with no horizontal overflow, every value reads clearly including the two-part scrim/content splits. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

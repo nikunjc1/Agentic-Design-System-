@@ -384,20 +384,36 @@
       </div>
       <div class="usage-row">
         <span class="usage-label">Modal</span>
-        <span class="usage-desc">Padding around the dialog within its scrim</span>
-        <span class="usage-values">24px</span>
+        <span class="usage-desc">Two different paddings, not one: the scrim's own padding keeps the dialog off the viewport edge; the dialog's internal content padding is separate and smaller</span>
+        <span class="usage-values">24px scrim &middot; 16px/20px content</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Drawer</span>
-        <span class="usage-desc">Padding around the panel within its scrim</span>
-        <span class="usage-values">16px</span>
+        <span class="usage-desc">Same scrim-vs-content split as Modal: scrim padding keeps the panel off the viewport edge; the panel's own content padding is the same value Modal's dialog content uses</span>
+        <span class="usage-values">16px scrim &middot; 16px/20px content</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Panel / Card container</span>
         <span class="usage-desc">Internal padding; Compact density (Settings &rarr; Density) steps down to 16px</span>
         <span class="usage-values">24px</span>
       </div>
+      <div class="usage-row">
+        <span class="usage-label">Form field</span>
+        <span class="usage-desc">Vertical gap between label, control and helper/error text - all three in one column, one consistent gap, not a different value per pair</span>
+        <span class="usage-values">6px gap</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">List</span>
+        <span class="usage-desc">Row padding and icon/text gap (Middle density); Small steps down to 6px/8px, Large up to 14px/12px</span>
+        <span class="usage-values">10px padding &middot; 10px gap</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Empty state</span>
+        <span class="usage-desc">Panel padding and the gap between icon, heading and body text</span>
+        <span class="usage-values">24px padding &middot; 10px gap</span>
+      </div>
     </div>
+    <p class="get-library-copy">Said plainly, not invented to fill a row: a checkbox/radio group and a toolbar don't have their own formalized spacing value yet - the closest real analog today is Form field's 6px for a checkbox/radio group, and a toolbar isn't a distinct component in this library at all (compose it from Button + the Layout spacing scale above). Wrapped/long content in any of these follows the component's own reflow behavior, not a separate spacing rule.</p>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
       <pre class="guide-machine-json"><code>{}</code></pre>
