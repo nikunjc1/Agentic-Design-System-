@@ -124,10 +124,45 @@
       });
     });
 
+    // New Project's own "What type of product are you creating?" uses a
+    // different, broader taxonomy (SaaS, Enterprise portal, Customer
+    // portal, Internal tool, Commerce, Content website, Other) than this
+    // page's own product cards (SaaS, Enterprise SaaS, Web Application,
+    // Dashboard, Marketing Website, Consumer App, etc.) - there's no exact
+    // match for most of them, so this maps each to the closest real card
+    // rather than leaving the whole picker unselected until the user
+    // visits this page and chooses one themselves. Only used the first
+    // time this page loads with nothing of its own saved yet - once the
+    // user picks (or changes) a card here, their own choice always wins.
+    var PROJECT_PRODUCT_TYPE_MAP = {
+      "SaaS": "saas",
+      "Enterprise portal": "enterprise-saas",
+      "Customer portal": "consumer-app",
+      "Internal tool": "dashboard",
+      "Commerce": "web-app",
+      "Content website": "marketing"
+      // "Other" has no reasonable default - the user described their own
+      // product type in free text, which none of these cards represent.
+    };
+    function productFromProjectProfile(){
+      if (!window.ADSProject) return null;
+      var profile;
+      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return null; }
+      if (!profile) return null;
+      return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+    }
+
     function loadSpacing(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
-      if (!saved) return;
+      if (!saved){
+        var mapped = productFromProjectProfile();
+        if (mapped){
+          var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
+          if (mappedCard) selectProduct(mappedCard);
+        }
+        return;
+      }
 
       if (saved.product){
         var card = document.querySelector('.product-card[data-product="' + saved.product + '"]');

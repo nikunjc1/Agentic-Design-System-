@@ -128,10 +128,38 @@
       });
     });
 
+    // Same mapping and reasoning as spacing.js/radius.js - New Project's
+    // own product-type taxonomy doesn't match this page's cards 1:1, so
+    // this maps each to the closest real card, only on this page's
+    // first-ever load before the user has made their own choice here
+    // (which always wins afterward).
+    var PROJECT_PRODUCT_TYPE_MAP = {
+      "SaaS": "saas",
+      "Enterprise portal": "enterprise-saas",
+      "Customer portal": "consumer-app",
+      "Internal tool": "dashboard",
+      "Commerce": "web-app",
+      "Content website": "marketing"
+    };
+    function productFromProjectProfile(){
+      if (!window.ADSProject) return null;
+      var profile;
+      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return null; }
+      if (!profile) return null;
+      return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+    }
+
     function loadGrid(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
-      if (!saved) return;
+      if (!saved){
+        var mapped = productFromProjectProfile();
+        if (mapped){
+          var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
+          if (mappedCard) selectProduct(mappedCard);
+        }
+        return;
+      }
 
       if (saved.product){
         var card = document.querySelector('.product-card[data-product="' + saved.product + '"]');
