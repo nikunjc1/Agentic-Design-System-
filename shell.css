@@ -4237,8 +4237,20 @@ button{ font-family: inherit; }
 /* ---------- Card demo (card-default.html) ---------- */
 .card-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; width: 240px; background: var(--card-surface); border: 1.5px solid var(--card-border-color); overflow: hidden; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard); }
 .card-demo-panel.card-demo-shadow{ box-shadow: var(--card-shadow-rest); }
-.card-demo-panel:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: var(--card-shadow-hover); }
-.card-demo-panel:active, .card-demo-panel.is-pressed{ box-shadow: var(--card-shadow-pressed); }
+/* Real mouse hover/press (the bare :hover/:active pseudo-classes) only
+   elevates a card that's actually interactive - a real <a>/<button>, or
+   explicitly marked --interactive on a div used as a custom click
+   target - never a plain static <div> just because it shares this
+   class, which would otherwise read as clickable to a sighted mouse
+   user with nothing behind that cue (confirmed: this page's own Card
+   guidance already says a truly clickable card must be a real link or
+   button, not "a div with only a visual hover style"). The .is-hover/
+   .is-pressed force-state classes stay unscoped on purpose - the Live
+   Preview matrix uses them to illustrate every state side by side
+   without requiring actual pointer interaction, regardless of the
+   underlying tag. */
+a.card-demo-panel:hover, button.card-demo-panel:hover, .card-demo-panel--interactive:hover, .card-demo-panel.is-hover{ border-color: var(--text-dim); box-shadow: var(--card-shadow-hover); }
+a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--interactive:active, .card-demo-panel.is-pressed{ box-shadow: var(--card-shadow-pressed); }
 .card-demo-panel.is-selected{ border-color: var(--red-500); box-shadow: 0 0 0 1px var(--red-500); }
 .card-demo-panel.is-disabled{ opacity: 0.4; pointer-events: none; }
 .card-demo-panel.is-loading{ pointer-events: none; cursor: wait; }

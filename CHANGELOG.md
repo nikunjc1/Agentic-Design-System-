@@ -1512,6 +1512,16 @@ Addressed "native/print/forced-colors absent" honestly rather than inventing unt
 
 Verified: selected Start with the page in LTR - computed `border-left-width` was `1px`, `border-right-width` was `0px`. Switched `dir` to `rtl` with no other change - confirmed it flipped automatically (`border-right-width` became `1px`, left became `0px`), no JS re-run needed. Switched to Top only afterward and confirmed both `border-left-width` and `border-right-width` correctly returned to `0px` (the stale-inline-border bug fixed, not just the new options added). Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit H05 (P2) - a static card could gain hover elevation it had no action behind
+
+Finding from the 5 October 2026 Foundation audit: "rest CSS only shadow variant but hover applies all panels... inert cards can gain interactive elevation cues," worried a non-clickable card could visually cue clickability it didn't have.
+
+Confirmed directly: `.card-demo-panel:hover{box-shadow: var(--card-shadow-hover)}` in `shell.css` applied to every element with that class unconditionally - a bare pseudo-class selector with no check for whether the element is actually interactive. Checked Card's own existing guidance (`card-default.html`): "When a whole card is clickable, it's implemented as a real link or button, not a div with only a visual hover style" - a rule the CSS itself didn't follow. Checked every real `.card-demo-panel` usage sitewide and found all of them are plain `<div>`s (two Do/Don't illustrations on `card-default.html`), none a real `<a>`/`<button>` - meaning every card on the site today would have shown a false hover-elevation cue purely from a mouse passing over it.
+
+Scoped the bare `:hover`/`:active` pseudo-class rules to only fire on a real `<a>`/`<button>` tag or an explicit `.card-demo-panel--interactive` modifier, leaving the `.is-hover`/`.is-pressed` force-state classes completely unscoped on purpose - the Live Preview matrix uses those to illustrate every state side by side regardless of tag, a different, deliberate use case from real pointer interaction. Split Shadows' single "Card" row into "Card (static)" and "Card (interactive)" with their own distinct elevation behavior, instead of one row describing two different things.
+
+Verified: hovered the real static `.card-demo-panel` div on `card-default.html` and confirmed its `box-shadow` is now identical before and after hover (previously would have changed). Confirmed `card-detail.html` loads with no console errors and its own Live Preview matrix is unaffected (no current usage of the unscoped `.is-hover` class was broken - there wasn't one). Screenshotted the updated Shadows section - no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
