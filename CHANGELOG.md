@@ -1253,6 +1253,18 @@ Verified: `spacing.html` now renders 12 product cards (confirmed via live DOM, n
 
 Known follow-up, not in scope here: `docs-catalog.json`/`docs-catalog.js` still reference the old "Data-Heavy Enterprise" label (part of the broader stale-catalog gap tracked separately as audit finding X01); will be caught up when that finding is addressed.
 
+## Foundation audit X10 (P2) - no per-Foundation release/governance contract existed
+
+Finding from the 5 October 2026 Foundation audit: the shared Accessibility guide's "Known gaps - not yet done" section honestly flags unverified zoom/reflow and text-spacing checks, but nothing combined that with a release contract per Foundation section - no documented compatibility/deprecation rule, no acceptance checklist, no stated ownership.
+
+Added a new "Foundation release contract" section to `accessibility.html`, one row per Foundation section (Colors, Grid & Layout, Typography, Spacing, Radius, Borders, Shadows, Icons, AI & Agents), each stating: what counts as an additive vs. breaking change to that section's own tokens, specifically (not generic boilerplate - Colors' breaking change is a renamed CSS custom property, Icons' is an uploaded reference no longer resolving, Typography's is a renamed font-size token, etc.), how a breaking change gets deprecated instead of silently breaking a saved project (grounded in patterns this system already uses elsewhere - e.g. `PROJECT_PRODUCT_TYPE_MAP`'s slug aliasing, `project-model.js`'s `LEGACY_PRODUCT_MAP` migration-on-read), and what evidence makes a change in that section release-ready. Stated ownership once, plainly: one team owns all nine sections today, a legitimate choice at this system's size (already an established, deliberate decision noted elsewhere in this changelog), not restated as a gap per row.
+
+Built it using the same `.component-guide` + `.usage-row` pattern as the "Known gaps" section directly above it, which meant it automatically gets a real, versioned Machine View for free via the X08 fix shipped earlier today - no separate JSON to hand-author or keep in sync.
+
+Caught and fixed a real layout bug while building this: `.usage-row`'s CSS (`shell.css`) gives its `values` column a fixed 190px, `white-space:nowrap` fixed-width treatment meant for short tags like "Unverified" - my first draft put full-sentence compatibility rules there, which overflowed the row horizontally. Fixed by swapping which column carries which content: the long compatibility/deprecation/acceptance prose now lives in `desc` (the column that actually wraps), and `values` carries a short 2-4 word tag per row (e.g. "Alias, don't remove", "Migrate on read").
+
+Verified: screenshotted the new section and confirmed no horizontal overflow and correct text wrapping after the column swap. Opened Machine View and confirmed `$schema: "ads.machine-view.v1"` plus all 9 section entries extract correctly with `label`/`values`/`description` populated. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

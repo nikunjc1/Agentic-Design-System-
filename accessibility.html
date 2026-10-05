@@ -256,6 +256,69 @@
     </div>
   </section>
 
+  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
+    <div class="panel-title-row">
+      <p class="panel-title">Foundation release contract</p>
+      <div class="guide-view-toggle" role="group" aria-label="View mode">
+        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
+        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
+      </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="human">
+    <p class="get-library-copy">The checks above are shared across every Foundation. This is the section-specific half: what counts as a compatible vs. breaking change to that section's own tokens, how a removed/renamed value gets deprecated instead of silently breaking saved projects, and what evidence closes a change as release-ready. One team (Design System Team) owns all nine sections today - a legitimate choice at this system's current size, not a gap - so "owner" isn't repeated per row below.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Colors</span>
+        <span class="usage-desc">Additive: a new semantic alias. Breaking: a renamed/removed CSS custom property - deprecate by keeping the old variable as an alias for one release instead, noted in CHANGELOG.md. Release-ready when: contrast badges recompute correctly, Dark Mode sync holds across all 4 sections, and the full-site regression sweep is clean.</span>
+        <span class="usage-values">Alias, don't remove</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Grid &amp; Layout</span>
+        <span class="usage-desc">Additive: a new product card or layout pattern. Breaking: a changed data-product slug or grid-type key - deprecate by keeping the old slug as an entry in PROJECT_PRODUCT_TYPE_MAP rather than deleting it outright. Release-ready when: the New Project to Spacing/Radius/Grid &amp; Layout sync matrix passes for every category and the regression sweep is clean.</span>
+        <span class="usage-values">Keep slug mapped</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Typography</span>
+        <span class="usage-desc">Additive: a new semantic level or platform preset. Breaking: a renamed font-size/weight token - deprecate by migrating a saved profile's per-level state on read, the same pattern project-model.js already uses for product-type migration. Release-ready when: a profile saved under the prior shape still loads and renders without error.</span>
+        <span class="usage-values">Migrate on read</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Spacing</span>
+        <span class="usage-desc">Additive: a new product card. Breaking: a renamed system key (2px/4px/8px/Adaptive) or data-product slug - deprecate by aliasing the old slug/key rather than removing it. Release-ready when: the same 3-page product/platform sync matrix as Grid &amp; Layout passes.</span>
+        <span class="usage-values">Alias, don't remove</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Radius</span>
+        <span class="usage-desc">Additive: a new philosophy. Breaking: a numeric token's meaning changing without its name changing - deprecate by renaming rather than reassigning a numeric token's value, since a token name must keep meaning the same thing. Release-ready when: a section's Machine View value matches the live computed CSS custom property it claims to represent.</span>
+        <span class="usage-values">Rename, don't reassign</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Borders</span>
+        <span class="usage-desc">Additive: a new preset. Breaking: a state's property becoming fixed after being advertised as editable - deprecate an editable property by relabeling it fixed in the same release the UI control is removed, not after. Release-ready when: every input the Config panel exposes actually changes what Save persists.</span>
+        <span class="usage-values">Relabel same release</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Shadows</span>
+        <span class="usage-desc">Additive: a new elevation layer. Breaking: a philosophy's resolved recipe changing without its name changing - deprecate a philosophy by keeping its name mapped to a new recipe only with a CHANGELOG note, never silently. Release-ready when: a Machine View's resolved value matches the live rendered box-shadow.</span>
+        <span class="usage-values">Note recipe changes</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Icons</span>
+        <span class="usage-desc">Additive: a new library. Breaking: an uploaded/custom icon reference no longer resolving - deprecate a library by keeping its id resolvable even once no longer offered as a default choice. Release-ready when: an uploaded icon still resolves after a reload, not only within the same session (tracked separately as a known gap today).</span>
+        <span class="usage-values">Keep id resolvable</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">AI &amp; Agents</span>
+        <span class="usage-desc">Additive: a new rule or example. Breaking: a demo's cited evidence no longer matching its named source - deprecate an example by removing it in the same release its citation stops matching, not leaving a stale one live. Release-ready when: every citation in this section has been re-checked against the real file/line it names.</span>
+        <span class="usage-values">Re-check citations</span>
+      </div>
+    </div>
+    </div>
+    <div class="guide-view-panel" data-view-panel="machine" hidden>
+      <pre class="guide-machine-json"><code>{}</code></pre>
+    </div>
+  </section>
+
   <section class="panel spacing-model-panel md-export-panel">
     <p class="panel-title">Accessibility - Markdown export</p>
     <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
