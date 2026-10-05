@@ -1442,6 +1442,16 @@ Also addressed "borders/asymmetric insets/radii omitted": added a sentence that 
 
 Verified: screenshotted the updated section - renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit R05 (P2) - attached/full-screen/circle rules were scattered or implied, never stated on Radius itself
+
+Finding from the 5 October 2026 Foundation audit: "Roles round overlays; Shadows says viewport-touching edge unrounded; equal-size circle rule exists... No consolidated attached/full-screen/pill/circle/responsive rules."
+
+Confirmed the cross-page gap: Shadows' own text ("edge touching the viewport stays unrounded, not unshadowed") only exists to clarify *shadow* behavior for an attached drawer/sheet - Radius's own "Floating / overlay" role never states the same attached-edge exception at all, so a reader of Radius alone would reasonably round all four corners of a side drawer or bottom sheet, including the one flush against the screen. Added a paragraph stating the Radius half of that same rule directly: an attached surface only rounds its free corners, via CSS's own per-corner `border-radius` (e.g. a bottom sheet: `border-radius: 12px 12px 0 0`), with an explicit cross-reference back to Shadows for the companion rule rather than leaving the connection implicit. Also covered full-screen surfaces (no visible corner at all, so radius is moot, not a deliberate 0).
+
+Also generalized the existing "Circular only when width equals height" note (currently scoped to one row - Avatar/Icon Button/Toggle) into this system's one standalone rule for the `Full` value: the same token is a true circle or a stadium/pill shape purely based on the element's own aspect ratio, never by choosing a different radius value - a rule any future circular/pill component should be able to find stated once, not rediscover per-component.
+
+Verified: screenshotted the "Radius by component role" section - both new paragraphs render with no horizontal overflow, directly below the existing role table. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
