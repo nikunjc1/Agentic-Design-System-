@@ -497,8 +497,7 @@
     resetBrandBtn.addEventListener("click", function(){
       localStorage.removeItem(BRAND_KEY);
       setBrandLightFields(BRAND_LIGHT_DEFAULT);
-      brandDarkEnable.checked = false;
-      brandDarkCol.hidden = true;
+      syncColorsDarkMode(false);
       regenerateBrandDark();
       document.documentElement.style.removeProperty("--red-500");
       document.documentElement.style.removeProperty("--red-600");
@@ -688,8 +687,7 @@
       localStorage.removeItem(BG_KEY);
       setTripleFields(bgLightFields, BG_DEFAULTS.light);
       renderElevation(elevationLight, readTriple(bgLightFields));
-      bgDarkEnable.checked = false;
-      bgDarkCol.hidden = true;
+      syncColorsDarkMode(false);
       regenerateBgDark();
       setBgSaved(false);
       document.documentElement.style.removeProperty("--graphite-950");
@@ -793,8 +791,7 @@
     resetStatusBtn.addEventListener("click", function(){
       localStorage.removeItem(STATUS_KEY);
       statusSection.setLight(STATUS_DEFAULTS.light);
-      statusDarkEnable.checked = false;
-      statusDarkCol.hidden = true;
+      syncColorsDarkMode(false);
       statusSection.regenerateAll();
       document.documentElement.style.removeProperty("--green-500");
       document.documentElement.style.removeProperty("--amber-500");
@@ -899,8 +896,7 @@
     resetNeutralBtn.addEventListener("click", function(){
       localStorage.removeItem(NEUTRAL_KEY);
       neutralSection.setLight(NEUTRAL_DEFAULTS.light);
-      neutralDarkEnable.checked = false;
-      neutralDarkCol.hidden = true;
+      syncColorsDarkMode(false);
       neutralSection.regenerateAll();
       document.documentElement.style.removeProperty("--graphite-800");
       document.documentElement.style.removeProperty("--graphite-700");
@@ -1000,8 +996,7 @@
     resetTextBtn.addEventListener("click", function(){
       localStorage.removeItem(TEXT_KEY);
       textSection.setLight(TEXT_DEFAULTS.light);
-      textDarkEnable.checked = false;
-      textDarkCol.hidden = true;
+      syncColorsDarkMode(false);
       textSection.regenerateAll();
       document.documentElement.style.removeProperty("--text-hi");
       document.documentElement.style.removeProperty("--text-mid");
@@ -1011,6 +1006,32 @@
       textSaveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ textSaveStatus.textContent = ''; }, 2500);
     });
+
+    // Dark Mode, as one setting across every Color Foundation section, not
+    // five independent per-section opt-ins. Reported as inconsistent:
+    // enabling/disabling "dark theme" in one section (e.g. Brand) had no
+    // effect on the other four, since each only ever read its own saved
+    // data. The actual dark VALUES stay per-section - each section's own
+    // Save still persists its own dark hex values independently - only
+    // the enable/show state is unified here.
+    var colorDarkEnableCheckboxes = [brandDarkEnable, bgDarkEnable, statusDarkEnable, neutralDarkEnable, textDarkEnable];
+    var colorDarkEnableCols = [brandDarkCol, bgDarkCol, statusDarkCol, neutralDarkCol, textDarkCol];
+    function syncColorsDarkMode(enabled){
+      colorDarkEnableCheckboxes.forEach(function(cb, i){
+        cb.checked = enabled;
+        colorDarkEnableCols[i].hidden = !enabled;
+      });
+    }
+    colorDarkEnableCheckboxes.forEach(function(cb){
+      cb.addEventListener("change", function(){ syncColorsDarkMode(cb.checked); });
+    });
+    // Each section above loaded its enable state from its own saved data
+    // independently; reconcile that into one consistent state now instead
+    // of leaving sections that happened to save dark values out of sync
+    // with the ones that didn't - if any section was already enabled,
+    // Dark Mode reads as enabled everywhere, matching what a user who
+    // customized dark colors before this fix shipped would expect.
+    syncColorsDarkMode(colorDarkEnableCheckboxes.some(function(cb){ return cb.checked; }));
 
     // AA/AAA contrast badge under every color swatch's hex field - checked
     // against that swatch's own theme's Page (Primary) background, which is
