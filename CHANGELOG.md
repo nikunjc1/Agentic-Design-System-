@@ -1542,6 +1542,16 @@ Added `updateStrokeControlsAvailability()`, called from `selectSystem()`: both c
 
 Verified: on a fresh page load (Duotone active by default), both controls are correctly disabled immediately. Selecting Line re-enables them; selecting Isometric disables them again. Restoring a saved profile with `system: "flat"` also correctly loads with both disabled. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit I08 (P2) - direction/motion rules existed in CSS but were never stated on the Icons page
+
+Finding from the 5 October 2026 Foundation audit: "State motion tokens mentioned; shell mirrors particular directional SVGs... Icon guide does not specify which mirror/invariant, localized meaning or reduced-motion alternatives."
+
+Checked what already exists in code before writing any new rule: `shell.css` already has a real, deliberately curated `[dir="rtl"] ... { transform: scaleX(-1); }` list - breadcrumb dividers, cascader/treeselect chevrons, tree toggles, transfer arrows, pagination arrows, date-range arrows, anchor icons - but none of this was ever stated on the Icons Foundation page itself, so a developer adding a new directional icon had no principle to follow, only an existing list to notice (or miss) by accident. Added a "Icon direction and motion" section documenting the real underlying distinction: navigation icons (chevrons, pagination, back/forward) mirror because "forward" is relative to reading direction; trend/value icons (a stock up/down arrow) never mirror, since a value trend means the same thing regardless of reading direction; physical/symbolic icons (search, trash, a checkmark) never mirror either, for the same reason a photo of a real object wouldn't flip.
+
+Also checked the reduced-motion claim rather than assuming a gap existed where there wasn't one: `shell.css` already has a deliberate per-component override - Spin and every button/select/form spinner slows to a real 3-second rotation under `prefers-reduced-motion: reduce` instead of being frozen by the sitewide near-zero-duration default, with its own comment explaining why ("freezing it would read as a hung interface"). This was already correct, just undocumented on the Icons page - added a paragraph stating it plainly instead of re-implementing something that already worked.
+
+Verified: screenshotted the new section - renders cleanly with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

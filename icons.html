@@ -358,6 +358,29 @@
     </div>
   </section>
 
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Icon direction and motion</p>
+    <p class="get-library-copy">Not every directional icon means the same kind of "direction," so not every one mirrors in RTL - three real categories, not one blanket rule:</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Navigation (chevrons, carets, back/forward, pagination)</span>
+        <span class="usage-desc">Mirrors in RTL - "forward" is relative to reading direction, confirmed: this shell's own breadcrumb/cascader/tree/transfer/pagination/date-range/anchor icons already flip via <code>[dir="rtl"] ... { transform: scaleX(-1); }</code></span>
+        <span class="usage-values">Mirrors</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Trend / value (stock up/down, a progress arrow)</span>
+        <span class="usage-desc">Never mirrors - an upward trend means the same thing in every reading direction, since it encodes a value changing, not a reading-order position</span>
+        <span class="usage-values">Invariant</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Physical / symbolic (search, trash, checkmark, a real-world object)</span>
+        <span class="usage-desc">Never mirrors - represents a fixed thing or action, not a position relative to reading direction, the same reason a photo of a physical object wouldn't flip either</span>
+        <span class="usage-values">Invariant</span>
+      </div>
+    </div>
+    <p class="get-library-copy">Loading/motion: a looping icon (Spin, a button's own spinner) is slowed to a real 3-second rotation under <code>prefers-reduced-motion: reduce</code>, not frozen outright and not left at its normal speed - freezing it would read as a hung interface, since the rotation itself is the only signal that work is still happening. This is a deliberate per-component exception to the sitewide "near-zero duration" reduced-motion default (confirmed in <code>shell.css</code>), not an oversight that reduced motion forgot to cover.</p>
+  </section>
+
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
       <p class="panel-title">Bring your own icons</p>
