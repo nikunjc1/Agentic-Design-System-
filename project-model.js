@@ -6,7 +6,25 @@
   'use strict';
   const KEY = 'ads:project-profile:v1';
   const DRAFT = 'ads:project-draft:v1';
-  const PRODUCTS = ['SaaS', 'Enterprise portal', 'Customer portal', 'Internal tool', 'Commerce', 'Content website', 'Other'];
+  // Matches the exact product-card taxonomy already used on Spacing,
+  // Radius and Grid & Layout's own "What are you building?" pickers
+  // (see their data-product values), so New Project's own product-type
+  // choice can drive those pages' recommended defaults directly instead
+  // of needing a fuzzy, partially-guessed mapping between two different
+  // vocabularies.
+  const PRODUCTS = ['SaaS', 'Enterprise SaaS', 'Web Application', 'Desktop Web (D-Web)', 'Mobile Web (M-Web)', 'Mobile Application', 'Dashboard', 'Data-Heavy Application', 'Marketing Website', 'Consumer App', 'AI Product', 'Cross-Platform', 'Other'];
+  // Old product-type values this field used to offer, before it was
+  // aligned with Spacing/Radius/Grid & Layout's own taxonomy - mapped
+  // forward so a profile saved under the old list keeps working ("Saved
+  // setup is incomplete" would otherwise fire for every existing saved
+  // project) instead of silently failing validation.
+  const LEGACY_PRODUCT_MAP = {
+    'Enterprise portal': 'Enterprise SaaS',
+    'Customer portal': 'Consumer App',
+    'Internal tool': 'Dashboard',
+    'Commerce': 'Web Application',
+    'Content website': 'Marketing Website'
+  };
   const ROLES = ['Designer', 'Developer', 'Product Manager', 'Design System Lead', 'QA / Accessibility', 'Other'];
   const PLATFORMS = {
     'desktop-web': {label: 'Desktop web', guidance: 'Use responsive grids, keyboard navigation, visible focus, and appropriately dense data views. Keep primary actions discoverable at browser zoom.'},
@@ -34,6 +52,7 @@
     if (!raw) return null;
     const p = JSON.parse(raw);
     if (!p || typeof p !== 'object' || Array.isArray(p)) throw new Error('Saved setup could not be read. Your saved data has not been changed.');
+    if (key === KEY && LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
     if (key === KEY && Object.keys(validate(p)).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;
   }

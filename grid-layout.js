@@ -128,18 +128,27 @@
       });
     });
 
-    // Same mapping and reasoning as spacing.js/radius.js - New Project's
-    // own product-type taxonomy doesn't match this page's cards 1:1, so
-    // this maps each to the closest real card, only on this page's
-    // first-ever load before the user has made their own choice here
-    // (which always wins afterward).
+    // Same mapping as spacing.js/radius.js - New Project's own "What type
+    // of product are you creating?" now uses the exact same 12 categories
+    // as this page's product cards (names match 1:1 - see
+    // project-model.js's PRODUCTS), just needs converting to this page's
+    // data-product slug. Only used the first time this page loads with
+    // nothing of its own saved yet - the user's own choice here always
+    // wins afterward.
     var PROJECT_PRODUCT_TYPE_MAP = {
       "SaaS": "saas",
-      "Enterprise portal": "enterprise-saas",
-      "Customer portal": "consumer-app",
-      "Internal tool": "dashboard",
-      "Commerce": "web-app",
-      "Content website": "marketing"
+      "Enterprise SaaS": "enterprise-saas",
+      "Web Application": "web-app",
+      "Desktop Web (D-Web)": "desktop-web",
+      "Mobile Web (M-Web)": "mobile-web",
+      "Mobile Application": "mobile-app",
+      "Dashboard": "dashboard",
+      "Data-Heavy Application": "data-heavy",
+      "Marketing Website": "marketing",
+      "Consumer App": "consumer-app",
+      "AI Product": "ai-product",
+      "Cross-Platform": "cross-platform"
+      // "Other" has no reasonable default - free text, no equivalent card.
     };
     function productFromProjectProfile(){
       if (!window.ADSProject) return null;

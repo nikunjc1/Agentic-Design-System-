@@ -124,25 +124,30 @@
       });
     });
 
-    // New Project's own "What type of product are you creating?" uses a
-    // different, broader taxonomy (SaaS, Enterprise portal, Customer
-    // portal, Internal tool, Commerce, Content website, Other) than this
-    // page's own product cards (SaaS, Enterprise SaaS, Web Application,
-    // Dashboard, Marketing Website, Consumer App, etc.) - there's no exact
-    // match for most of them, so this maps each to the closest real card
-    // rather than leaving the whole picker unselected until the user
-    // visits this page and chooses one themselves. Only used the first
-    // time this page loads with nothing of its own saved yet - once the
-    // user picks (or changes) a card here, their own choice always wins.
+    // New Project's own "What type of product are you creating?" now uses
+    // the exact same 12 categories as this page's product cards (names
+    // match 1:1 - see project-model.js's PRODUCTS), just needs converting
+    // to this page's data-product slug. Only used the first time this
+    // page loads with nothing of its own saved yet - once the user picks
+    // (or changes) a card here, their own choice always wins.
     var PROJECT_PRODUCT_TYPE_MAP = {
       "SaaS": "saas",
-      "Enterprise portal": "enterprise-saas",
-      "Customer portal": "consumer-app",
-      "Internal tool": "dashboard",
-      "Commerce": "web-app",
-      "Content website": "marketing"
+      "Enterprise SaaS": "enterprise-saas",
+      "Web Application": "web-app",
+      "Desktop Web (D-Web)": "desktop-web",
+      "Mobile Web (M-Web)": "mobile-web",
+      "Mobile Application": "mobile-app",
+      "Dashboard": "dashboard",
+      "Data-Heavy Application": "data-heavy",
+      "Marketing Website": "marketing",
+      "Consumer App": "consumer-app",
+      "AI Product": "ai-product",
+      "Cross-Platform": "cross-platform"
       // "Other" has no reasonable default - the user described their own
       // product type in free text, which none of these cards represent.
+      // Consumer App and AI Product have no matching card on this page
+      // specifically (its own set is 10, not Radius/Grid & Layout's 12),
+      // so those two safely resolve to no selection here only.
     };
     function productFromProjectProfile(){
       if (!window.ADSProject) return null;

@@ -1,7 +1,7 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const M = require('../project-model.js');
-const profile = {project:'Claims',productType:'Enterprise portal',platforms:['desktop-web','mobile-web'],name:'Sample User',email:'sample@example.com',designation:'UX Lead',role:'Designer'};
+const profile = {project:'Claims',productType:'Enterprise SaaS',platforms:['desktop-web','mobile-web'],name:'Sample User',email:'sample@example.com',designation:'UX Lead',role:'Designer'};
 const store = () => { const m = new Map(); return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v)}; };
 test('requires all five requested answers and a valid delivery platform', () => {
   assert.deepEqual(M.validate(profile),{});
@@ -16,6 +16,11 @@ test('profile survives reload and malformed storage is not overwritten', () => {
   const s = store(); M.save(s,profile); assert.equal(M.read(s).name,profile.name);
   s.setItem(M.KEY,'broken'); assert.throws(()=>M.read(s)); assert.equal(s.getItem(M.KEY),'broken');
   assert.throws(()=>M.save(s,{...profile,email:'bad'})); assert.equal(s.getItem(M.KEY),'broken');
+});
+test('a profile saved under the old product-type list still reads back, remapped', () => {
+  const s = store();
+  s.setItem(M.KEY, JSON.stringify({...profile, productType:'Customer portal', version:1, updatedAt:new Date().toISOString()}));
+  assert.equal(M.read(s).productType, 'Consumer App');
 });
 test('Markdown contains saved tokens, selected platforms and source guides; identity is opt-in', () => {
   const tokens = {colors:{light:{primary:{hex:'#123456'}}}};
