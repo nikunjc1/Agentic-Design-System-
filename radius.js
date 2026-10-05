@@ -174,17 +174,26 @@
       notice.hidden = false;
     }
 
+    // What "nothing of my own saved" actually looks like - shared by the
+    // initial load AND Reset, so Reset's own immediate result is the same
+    // state a reload would show right after, instead of Reset showing
+    // Balanced only for a real reload to then flip to the project's own
+    // recommended philosophy a moment later (previously: Reset hardcoded
+    // Balanced regardless of what the project profile actually maps to).
+    function applyUnsavedState(){
+      var mapped = productFromProjectProfile();
+      if (mapped){
+        var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
+        if (mappedCard) { selectProduct(mappedCard); return; }
+      }
+      showProductFallbackNotice();
+    }
+
     function loadRadius(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
       if (!saved){
-        var mapped = productFromProjectProfile();
-        if (mapped){
-          var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
-          if (mappedCard) selectProduct(mappedCard);
-        } else {
-          showProductFallbackNotice();
-        }
+        applyUnsavedState();
         return;
       }
 
@@ -212,6 +221,7 @@
       productCards.forEach(function(c){ c.classList.remove("is-active"); });
       callout.hidden = true;
       selectSystem("balanced");
+      applyUnsavedState();
       if (window.ADS_applySavedRadius) window.ADS_applySavedRadius();
 
       saveStatus.textContent = "Reset to defaults";

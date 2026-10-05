@@ -1462,6 +1462,16 @@ Checked the overflow-clipping risk concretely rather than asserting it: `.card-d
 
 Verified: screenshotted the page - renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit R08 (P2) - Reset showed Balanced, then flipped to a different philosophy on reload
+
+Finding from the 5 October 2026 Foundation audit: "Reset removes record and selects Balanced; later load with no record inherits product recommendation... Reset can show Balanced then different philosophy on reload."
+
+Reproduced exactly: set a project profile to "Marketing Website" (maps to the Expressive philosophy), loaded `radius.html` fresh - correctly showed Expressive. Clicked "Reset to defaults" - showed Balanced, as the button's handler hardcoded. Reloaded the page - it silently became Expressive again, since Reset only cleared Radius's own saved record, and the next load's "nothing saved" branch re-ran the exact same project-recommendation mapping that had applied the first time. Reset's own immediate result and what the page actually settles on a moment later disagreed - it looked like Reset hadn't stuck.
+
+Extracted the "nothing of my own saved" logic (try the project's recommended philosophy, else fall back to the page's own Balanced default) into one `applyUnsavedState()` function, now called from both the initial page load *and* the Reset button - so Reset's own immediate result is now provably the same state a reload shows right after, instead of two different paths computing two different answers for the same question.
+
+Verified: with the Marketing Website profile, Reset now shows Expressive immediately (not Balanced) and a reload afterward still shows Expressive - no more flip. With no project profile at all, Reset still correctly shows Balanced both immediately and after a reload - confirmed no regression on the plain case. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
