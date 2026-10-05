@@ -604,103 +604,6 @@
     </div>
   </section>
 
-  <section class="panel color-foundation component-guide" data-role="component-guide">
-    <div class="panel-title-row">
-    <p class="panel-title">Text colors</p>
-      <div class="guide-view-toggle" role="group" aria-label="View mode">
-        <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
-        <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
-      </div>
-    </div>
-    <div class="guide-view-panel" data-view-panel="human">
-    <p class="get-library-copy">Three fixed steps of text emphasis rather than picking grays ad hoc. Border color and opacity are their own topic with their own controls on the <a href="borders.html">Borders</a> page - not duplicated here.</p>
-
-    <label class="optional-toggle">
-      <input type="checkbox" data-role="text-dark-enable" />
-      <span>Also set separate text colors for dark theme</span>
-    </label>
-
-    <div class="theme-pair-grid" style="margin-top:16px;">
-      <div class="theme-pair-col">
-        <div class="theme-pair-label-row">
-          <p class="theme-pair-label">Light theme</p>
-        </div>
-        <div class="color-field-grid">
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - HIGH</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-light-hi-picker" value="#15171a" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-light-hi-hex" maxlength="6" value="15171A" />
-            </span>
-          </div>
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - MID</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-light-mid-picker" value="#53565c" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-light-mid-hex" maxlength="6" value="53565C" />
-            </span>
-          </div>
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - DIM</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-light-dim-picker" value="#85888d" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-light-dim-hex" maxlength="6" value="85888D" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="theme-pair-col" data-role="text-dark-col" hidden>
-        <div class="theme-pair-label-row">
-          <p class="theme-pair-label">Dark theme</p>
-          <div class="theme-pair-actions">
-            <span class="badge badge-auto" data-role="text-dark-status">Auto-generated</span>
-            <button class="btn btn-ghost btn-sm" data-role="text-dark-regenerate" type="button">Regenerate from Light</button>
-          </div>
-        </div>
-        <div class="color-field-grid">
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - HIGH</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-dark-hi-picker" value="#f3f2ef" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-dark-hi-hex" maxlength="6" value="F3F2EF" />
-            </span>
-          </div>
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - MID</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-dark-mid-picker" value="#a7abb2" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-dark-mid-hex" maxlength="6" value="A7ABB2" />
-            </span>
-          </div>
-          <div class="color-field">
-            <div class="color-field-head"><span class="color-field-label">TEXT - DIM</span></div>
-            <span class="hex-input-wrap type-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="text-dark-dim-picker" value="#64686f" />
-              <span class="hex-prefix">#</span>
-              <input type="text" data-role="text-dark-dim-hex" maxlength="6" value="64686F" />
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel-footer-row">
-      <button class="btn btn-primary" id="saveTextBtn" type="button">Save text colors</button>
-      <button class="btn btn-ghost" id="resetTextBtn" type="button">Reset to defaults</button>
-      <span class="save-status" id="textSaveStatus" role="status" aria-live="polite"></span>
-    </div>
-    </div>
-    <div class="guide-view-panel" data-view-panel="machine" hidden>
-      <pre class="guide-machine-json"><code data-role="text-machine-json">{}</code></pre>
-    </div>
-  </section>
-
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
       <p class="panel-title">Light &amp; dark theme behavior</p>
@@ -718,7 +621,7 @@
   "light": "set directly by the user, always the base value",
   "dark": "optional per section; auto-generated from light the moment it is enabled, then fully independent once edited",
   "darkDisabled": "falls back to each token's built-in default dark value, not to light",
-  "appliesTo": ["brand", "background-surface", "semantic-status", "neutral-scale", "text-colors"]
+  "appliesTo": ["brand", "background-surface", "semantic-status", "neutral-scale"]
 }</code></pre>
     </div>
   </section>

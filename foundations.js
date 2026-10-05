@@ -5,7 +5,6 @@
   var BG_KEY = "ads:bg-colors";
   var STATUS_KEY = "ads:status-colors";
   var NEUTRAL_KEY = "ads:neutral-colors";
-  var TEXT_KEY = "ads:text-colors";
   var BRAND_LIGHT_DEFAULT = "FF031A";
   var BG_DEFAULTS = {
     light: { primary: "F6F6F4", secondary: "FFFFFF", tertiary: "FBFBFA" },
@@ -18,6 +17,10 @@
     light: { c800: "F1F1EE", c700: "E3E3DF", c600: "C7C7C1", c500: "8F918C", border: "85888D" },
     dark: { c800: "1C1F23", c700: "262A2F", c600: "383D44", c500: "565C64", border: "72767E" }
   };
+  // Text colors no longer has its own editable section on this page
+  // (removed - Typography's per-level colors are the one place for text
+  // color now); .hi stays here only as the fixed reference value the
+  // contrast badges check Background swatches against.
   var TEXT_DEFAULTS = {
     light: { hi: "15171A", mid: "53565C", dim: "85888D" },
     dark: { hi: "F3F2EF", mid: "A7ABB2", dim: "64686F" }
@@ -909,113 +912,15 @@
       setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 
-    // ============================================================
-    // Text colors (Hi/Mid/Dim) - Light (always on) + Dark (opt-in,
-    // auto-generated). Border color/opacity is its own topic with its
-    // own controls on borders.html - not duplicated here.
-    // ============================================================
-    var textDarkEnable = document.querySelector('[data-role="text-dark-enable"]');
-    var textDarkCol = document.querySelector('[data-role="text-dark-col"]');
-    var textDarkStatus = document.querySelector('[data-role="text-dark-status"]');
-
-    var textSection = createHexPairSection({
-      darkEnable: textDarkEnable,
-      darkCol: textDarkCol,
-      darkStatus: textDarkStatus,
-      regenerateBtn: document.querySelector('[data-role="text-dark-regenerate"]'),
-      fields: ["hi", "mid", "dim"].map(function(key){
-        return {
-          key: key,
-          lightPicker: document.querySelector('[data-role="text-light-' + key + '-picker"]'),
-          lightHex: document.querySelector('[data-role="text-light-' + key + '-hex"]'),
-          darkPicker: document.querySelector('[data-role="text-dark-' + key + '-picker"]'),
-          darkHex: document.querySelector('[data-role="text-dark-' + key + '-hex"]'),
-          lightDefault: TEXT_DEFAULTS.light[key],
-          darkDefault: TEXT_DEFAULTS.dark[key],
-          suggest: function(lightHex, k){ return suggestDarkFromDefault(lightHex, TEXT_DEFAULTS.light[k], TEXT_DEFAULTS.dark[k], 20); }
-        };
-      })
-    });
-
-    var saveTextBtn = document.getElementById("saveTextBtn");
-    function persistText(){
-      var payload = { light: textSection.readLight() };
-      if (textDarkEnable.checked){
-        var dark = textSection.readDark();
-        dark.auto = textSection.isAuto();
-        payload.dark = dark;
-      }
-      localStorage.setItem(TEXT_KEY, JSON.stringify(payload));
-    }
-    var setTextSaved = wireSaveState(saveTextBtn.closest(".color-foundation"), saveTextBtn, persistText);
-
-    function loadText(){
-      var saved;
-      try{ saved = JSON.parse(localStorage.getItem(TEXT_KEY) || "null"); }catch(e){ saved = null; }
-      textSection.setLight((saved && saved.light) || TEXT_DEFAULTS.light);
-      if (saved && saved.dark){
-        textDarkEnable.checked = true;
-        textDarkCol.hidden = false;
-        textSection.setDark(saved.dark);
-        textSection.mark(saved.dark.auto !== false);
-      } else {
-        textDarkEnable.checked = false;
-        textDarkCol.hidden = true;
-        textSection.regenerateAll();
-      }
-      setTextSaved(!!saved);
-    }
-    loadText();
-
-    function applyTextLiveForActiveTheme(){
-      var theme = currentTheme();
-      var set = theme === "dark" ? (textDarkEnable.checked ? textSection.readDark() : null) : textSection.readLight();
-      var root = document.documentElement.style;
-      if (set){
-        root.setProperty("--text-hi", "#" + set.hi);
-        root.setProperty("--text-mid", "#" + set.mid);
-        root.setProperty("--text-dim", "#" + set.dim);
-      } else {
-        root.removeProperty("--text-hi");
-        root.removeProperty("--text-mid");
-        root.removeProperty("--text-dim");
-      }
-    }
-
-    var textSaveStatus = document.getElementById("textSaveStatus");
-    saveTextBtn.addEventListener("click", function(){
-      persistText();
-      applyTextLiveForActiveTheme();
-      setTextSaved(true);
-
-      textSaveStatus.textContent = "Saved just now";
-      setTimeout(function(){ textSaveStatus.textContent = ''; }, 2500);
-    });
-
-    var resetTextBtn = document.getElementById("resetTextBtn");
-    resetTextBtn.addEventListener("click", function(){
-      localStorage.removeItem(TEXT_KEY);
-      textSection.setLight(TEXT_DEFAULTS.light);
-      syncColorsDarkMode(false);
-      textSection.regenerateAll();
-      document.documentElement.style.removeProperty("--text-hi");
-      document.documentElement.style.removeProperty("--text-mid");
-      document.documentElement.style.removeProperty("--text-dim");
-      setTextSaved(false);
-
-      textSaveStatus.textContent = "Reset to defaults";
-      setTimeout(function(){ textSaveStatus.textContent = ''; }, 2500);
-    });
-
     // Dark Mode, as one setting across every Color Foundation section, not
-    // five independent per-section opt-ins. Reported as inconsistent:
+    // four independent per-section opt-ins. Reported as inconsistent:
     // enabling/disabling "dark theme" in one section (e.g. Brand) had no
-    // effect on the other four, since each only ever read its own saved
+    // effect on the others, since each only ever read its own saved
     // data. The actual dark VALUES stay per-section - each section's own
     // Save still persists its own dark hex values independently - only
     // the enable/show state is unified here.
-    var colorDarkEnableCheckboxes = [brandDarkEnable, bgDarkEnable, statusDarkEnable, neutralDarkEnable, textDarkEnable];
-    var colorDarkEnableCols = [brandDarkCol, bgDarkCol, statusDarkCol, neutralDarkCol, textDarkCol];
+    var colorDarkEnableCheckboxes = [brandDarkEnable, bgDarkEnable, statusDarkEnable, neutralDarkEnable];
+    var colorDarkEnableCols = [brandDarkCol, bgDarkCol, statusDarkCol, neutralDarkCol];
     function syncColorsDarkMode(enabled){
       colorDarkEnableCheckboxes.forEach(function(cb, i){
         cb.checked = enabled;
@@ -1059,8 +964,6 @@
 
       var lightBgHexInput = document.querySelector('[data-role="bg-light-primary-hex"]');
       var darkBgHexInput = document.querySelector('[data-role="bg-dark-primary-hex"]');
-      var lightTextHiHexInput = document.querySelector('[data-role="text-light-hi-hex"]');
-      var darkTextHiHexInput = document.querySelector('[data-role="text-dark-hi-hex"]');
 
       // Shared with the custom color-picker popover below, so the live
       // readout inside an open picker always matches the badge under the
@@ -1073,8 +976,12 @@
         var isDark = /Dark/i.test(label);
         var lightBg = normalizeHex(lightBgHexInput.value) || BG_DEFAULTS.light.primary;
         var darkBg = normalizeHex(darkBgHexInput.value) || BG_DEFAULTS.dark.primary;
-        var lightTextHi = normalizeHex(lightTextHiHexInput.value) || TEXT_DEFAULTS.light.hi;
-        var darkTextHi = normalizeHex(darkTextHiHexInput.value) || TEXT_DEFAULTS.dark.hi;
+        // Text colors no longer has its own editable section (removed -
+        // Typography's per-level colors are the one place for text color
+        // now), so "primary text" for this check is just the fixed
+        // default Hi value rather than a live, user-editable input.
+        var lightTextHi = TEXT_DEFAULTS.light.hi;
+        var darkTextHi = TEXT_DEFAULTS.dark.hi;
         // Background's own swatches (Page/Panel/Raised) ARE the page
         // background, so checking them against "page background" is
         // checking a color against itself - always ~1:1, never useful.
@@ -1128,27 +1035,25 @@
     }
     var contrastHelpers = initContrastBadges();
 
-    // Machine View for the 5 editable color sections above - unlike a
+    // Machine View for the 4 editable color sections above - unlike a
     // component page's Machine View (static usage docs), these fields are
     // live-editable, so its JSON has to be the live current token values,
     // not a fixed spec. Recomputes on the same delegated input/change
     // listener pattern initContrastBadges already uses.
     function initColorMachineViews(){
-      var sections = ["brand", "bg", "status", "neutral", "text"];
+      var sections = ["brand", "bg", "status", "neutral"];
 
       var SECTION_TITLES = {
         brand: "Brand Color",
         bg: "Background & Surface Elevation",
         status: "Semantic & Status Colors",
-        neutral: "Neutral Scale",
-        text: "Text Colors"
+        neutral: "Neutral Scale"
       };
       var FIELD_LABELS = {
         brand: { value: "Primary" },
         bg: { primary: "Primary", secondary: "Secondary", tertiary: "Tertiary" },
         status: { success: "Success", warning: "Warning", danger: "Danger", info: "Info" },
-        neutral: { c800: "C800", c700: "C700", c600: "C600", c500: "C500", border: "Border" },
-        text: { hi: "Hi", mid: "Mid", dim: "Dim" }
+        neutral: { c800: "C800", c700: "C700", c600: "C600", c500: "C500", border: "Border" }
       };
 
       function collectTheme(prefix, theme){

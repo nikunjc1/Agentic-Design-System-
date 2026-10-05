@@ -210,13 +210,15 @@
     });
   }
 
-  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','text-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons'];
+  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons'];
   // Maps each Foundations sidebar tab to the token key(s) its editor saves
-  // under - Colors alone covers 5 keys (its own light-mode value plus the
-  // 4 themed Foundations panels), the rest are 1:1 except Borders (border
+  // under - Colors alone covers 4 keys (its own light-mode value plus the
+  // other 3 themed Foundations panels; Text colors was removed as its own
+  // editable section - Typography's per-level colors are the one place
+  // for text color now), the rest are 1:1 except Borders (border
   // + its separate border-states values).
   const FOUNDATION_TOKEN_MAP = {
-    colors: ['colors','bg-colors','status-colors','neutral-colors','text-colors'],
+    colors: ['colors','bg-colors','status-colors','neutral-colors'],
     'grid-layout': ['grid-layout'],
     typography: ['typography'],
     spacing: ['spacing'],
