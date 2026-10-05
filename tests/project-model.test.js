@@ -46,6 +46,15 @@ test('Markdown contains saved tokens, selected platforms and source guides; iden
   assert.ok(md.includes('Use a visible label.')); assert.ok(!md.includes(profile.email)); assert.ok(!md.includes(profile.name)); assert.ok(!md.includes(profile.designation));
   const privateMd=M.markdown(profile,tokens,[],true); assert.ok(privateMd.includes(profile.email)); assert.ok(privateMd.includes(profile.designation));
 });
+test('Markdown states provenance - which keys are a real save versus a documented default', () => {
+  const tokens = {colors:{light:{primary:{hex:'#123456'}}}, spacing:{product:null,system:'4px'}};
+  const noneDefaulted = M.markdown(profile,tokens,[],false,[]);
+  assert.ok(noneDefaulted.includes('every key above reflects an explicit save'));
+  const someDefaulted = M.markdown(profile,tokens,[],false,['spacing']);
+  assert.ok(someDefaulted.includes('`spacing` is this system\'s own documented default'));
+  const multiDefaulted = M.markdown(profile,tokens,[],false,['spacing','radius']);
+  assert.ok(multiDefaulted.includes('`spacing`, `radius` are this system\'s own documented default'));
+});
 test('metadata quotes punctuation and newlines, and project filenames have safe fallbacks', () => {
   const md=M.markdown({...profile,project:'A: "B"\n---'},{});
   assert.ok(md.includes('project: "A: \\"B\\"\\n---"'));

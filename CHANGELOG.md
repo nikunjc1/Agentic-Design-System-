@@ -1584,6 +1584,22 @@ Addressed "Missing: Version/hash metadata, completeness manifest, page/rule pari
 
 Verified: `--check` correctly reports `fresh` immediately after regenerating. Made a trivial change to a page's HTML and confirmed `--check` then correctly reports `STALE` and exits with code 1; reverted the change and regenerated, confirmed it returns to `fresh`. Confirmed `md-export.html` still loads `window.ADSDocsCatalog` with all 157 entries and no console errors. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit X02 (P1) - a fresh project exported an empty token object with no real defaults
+
+Finding from the 5 October 2026 Foundation audit: "Fresh setup can export an empty token object; default values, semantic aliases and effective component mappings are not resolved... Offline recipients cannot reconstruct the system deterministically. AI: invents defaults."
+
+Confirmed directly: `savedTokens()` in `experience.js` only ever included a key if `localStorage.getItem('ads:'+key)` was non-null - a brand-new project that hasn't touched a single Foundation page exported `{}` for every included section, with the Markdown's own closing line ("Values not saved by the user use the documented defaults") offering no actual values to use. An AI or developer reading that brief had nothing concrete to build from and no way to discover this system's real defaults except manually visiting all 9 Foundation pages.
+
+Added `RESOLVED_DEFAULTS`, one entry per `TOKEN_KEYS` key, each shaped identically to what that key's own page actually persists - gathered from the real source, not estimated: every color default read directly from `foundations.js`'s `BG_DEFAULTS`/`STATUS_DEFAULTS`/`NEUTRAL_DEFAULTS` and the Brand hex input's own HTML `value`; Typography's 12 levels copied from `typography.js`'s own `ROW_DEFAULTS`; Spacing/Radius/Grid & Layout/Shadows/Icons/Borders (including all 10 border states) read from each page's own default `<input value>`/`is-active` card. `savedTokens()` now resolves each key to its real saved value if one exists, or this documented default otherwise - never an empty placeholder.
+
+Addressed "provenance... mode values" concretely: added a `defaultedKeys` parameter to `project-model.js`'s `markdown()`, computed in `experience.js` as exactly the keys with nothing in `localStorage`. The exported Markdown now ends with a `Provenance:` line naming precisely which keys (if any) are this system's own documented default versus an explicit save, instead of one blanket disclaimer applying unevenly to a mix of real and placeholder values.
+
+Scope boundary, stated plainly: these defaults are duplicated directly in `experience.js` rather than sourced live from each Foundation page's own script, since `md-export.html` doesn't load `foundations.js`/`typography.js`/etc. and there's no shared-script path to read from instead - the same accepted limitation `PROJECT_PRODUCT_TYPE_MAP` already has, duplicated across 3 files for the same structural reason. If a page's own default value changes later, this copy needs updating alongside it.
+
+Added a new unit test confirming the provenance line correctly states "every key... reflects an explicit save" when nothing is defaulted, and correctly names specific defaulted keys (singular and plural phrasing) when some are.
+
+Verified: cleared storage, saved only a project profile (no Foundation customization at all), and generated the real Markdown on `md-export.html` - confirmed all 12 keys now resolve to complete, concrete values (e.g. `colors: {"light":{"primary":{"hex":"#FF031A"}}}`, not `{}`) and the Provenance line correctly lists all 12 as defaults. Saved a custom Brand color and regenerated - confirmed `colors` correctly dropped out of the defaulted list while the other 11 stayed. Full 157-page regression sweep: 0 console errors. All 15 unit tests pass (9 in `project-model.test.js`, 6 in `overview-model.test.cjs`).
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -90,13 +90,22 @@
     return profile;
   }
   const safe = value => String(value || '').replace(/[\r\n]+/g, ' ').replace(/[\\`*_{}\[\]<>#]/g, '\\$&');
-  function markdown(profile, tokens, docs = [], includeIdentity = false) {
+  function markdown(profile, tokens, docs = [], includeIdentity = false, defaultedKeys = []) {
     const p = profile || {};
     const lines = ['---', 'project: ' + JSON.stringify(p.project || 'Damco design system'), 'version: "3.4.0-local-draft"', 'generated: ' + JSON.stringify(new Date().toISOString()), 'scope: ' + JSON.stringify(docs.length ? 'documentation-and-context' : 'project-context'), '---', '', '# ' + safe(p.project || 'Damco design system'), '', '## Product context', '', '- Product: ' + safe(p.productType === 'Other' ? p.productOther : p.productType || 'Not configured'), '- Delivery role: ' + safe(p.role === 'Other' ? p.roleOther : p.role || 'Not configured')];
     if (includeIdentity) lines.push('- Owner: ' + safe(p.name), '- Email: ' + safe(p.email), '- Designation: ' + safe(p.designation));
     lines.push('', '## Target platforms', '');
     for (const key of p.platforms || []) if (PLATFORMS[key]) lines.push('### ' + PLATFORMS[key].label, '', PLATFORMS[key].guidance, '');
-    lines.push('## Agent instructions', '', '- Use the saved foundation values below. Reuse documented components and semantic tokens.', '- Keep accessible names, keyboard behavior, focus management, and loading, empty, error and success states explicit.', '- Support reduced motion, text resizing, localization and touch input.', '- Treat demo states as illustrations; verify interactive behavior in the implementation.', '- Native mobile and desktop targets require platform-specific component implementations.', '- This is a local working snapshot. It does not imply a published npm package, authenticated account, or backend service.', '', '## Saved foundation values', '', '```json', JSON.stringify(tokens, null, 2), '```', '', 'Values not saved by the user use the documented defaults.');
+    lines.push('## Agent instructions', '', '- Use the saved foundation values below. Reuse documented components and semantic tokens.', '- Keep accessible names, keyboard behavior, focus management, and loading, empty, error and success states explicit.', '- Support reduced motion, text resizing, localization and touch input.', '- Treat demo states as illustrations; verify interactive behavior in the implementation.', '- Native mobile and desktop targets require platform-specific component implementations.', '- This is a local working snapshot. It does not imply a published npm package, authenticated account, or backend service.', '', '## Saved foundation values', '', '```json', JSON.stringify(tokens, null, 2), '```', '');
+    // Every key above is a complete, concrete value either way - defaulted
+    // keys are the documented default itself (not a placeholder), not an
+    // "invent something reasonable" instruction. Named explicitly so a
+    // recipient knows which values reflect a real choice versus which are
+    // this system's own stated default, rather than treating all of them
+    // as equally customized.
+    lines.push(defaultedKeys.length
+      ? 'Provenance: ' + defaultedKeys.map(k => '`' + k + '`').join(', ') + (defaultedKeys.length === 1 ? ' is' : ' are') + ' this system\'s own documented default - everything else above reflects an explicit save.'
+      : 'Provenance: every key above reflects an explicit save - nothing here is a documented default standing in for an unset value.');
     for (const doc of docs) lines.push('', '---', '', '## ' + safe(doc.title), '', 'Source: ' + doc.file + ' · Status: ' + doc.status, '', doc.markdown);
     return lines.join('\n');
   }

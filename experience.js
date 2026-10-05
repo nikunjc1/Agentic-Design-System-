@@ -278,11 +278,75 @@
     shadows: ['shadow'],
     icons: ['icons'],
   };
+  // Resolved documented defaults, one entry per TOKEN_KEYS key, each
+  // shaped identically to what that key's own page actually persists
+  // (confirmed against every real persistX() function and every real
+  // default <input value>/is-active card, not guessed) - so a fresh
+  // project with nothing customized still exports a complete, concrete
+  // snapshot instead of an empty object and a "use the documented
+  // defaults" hand-wave an AI would have to go invent values for.
+  // Mirrors defaults authored in foundations.js/typography.js/spacing.js/
+  // radius.js/borders.js/shadows.js/icons.js and their own HTML; keep in
+  // sync if any of those change (the same accepted limitation as
+  // PROJECT_PRODUCT_TYPE_MAP already being duplicated across 3 files -
+  // there is no shared-script path between md-export.html and those
+  // pages to source this from live instead).
+  const RESOLVED_DEFAULTS = {
+    colors: { light: { primary: { hex: '#FF031A' } } },
+    'bg-colors': { light: { primary: '#F6F6F4', secondary: '#FFFFFF', tertiary: '#FBFBFA' } },
+    'status-colors': { light: { success: '#2FBF6E', warning: '#E6A53A', danger: '#FF031A', info: '#4F8FE6' } },
+    'neutral-colors': { light: { c800: '#F1F1EE', c700: '#E3E3DF', c600: '#C7C7C1', c500: '#8F918C', border: '#85888D' } },
+    typography: {
+      primaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
+      secondaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
+      platform: null,
+      levels: {
+        h1: { family: 'primary', size: 'display-lg', lineHeightPct: '125', weight: '700', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        h2: { family: 'primary', size: 'display-md', lineHeightPct: '122', weight: '700', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        h3: { family: 'primary', size: 'display-sm', lineHeightPct: '127', weight: '600', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        h4: { family: 'primary', size: 'display-xs', lineHeightPct: '133', weight: '600', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        h5: { family: 'primary', size: 'text-xl', lineHeightPct: '150', weight: '500', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        h6: { family: 'primary', size: 'text-lg', lineHeightPct: '156', weight: '500', italic: false, color: '#111827', darkColor: '#D8DFEE' },
+        body: { family: 'secondary', size: 'text-md', lineHeightPct: '150', weight: '400', italic: false, color: '#4B5563', darkColor: '#9CA6B4' },
+        paragraph: { family: 'secondary', size: 'text-md', lineHeightPct: '150', weight: '400', italic: false, color: '#4B5563', darkColor: '#9CA6B4' },
+        caption: { family: 'secondary', size: 'text-xs', lineHeightPct: '150', weight: '400', italic: false, color: '#6B7280', darkColor: '#7F8694' },
+        active: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#FF031A', darkColor: '#F74858' },
+        selected: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '600', italic: false, color: '#FF031A', darkColor: '#F74858' },
+        disabled: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '400', italic: false, color: '#9CA3AF', darkColor: '#505763' },
+        error: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#FF3F4F', darkColor: '#FA818B' },
+        warning: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#E6A53A', darkColor: '#E6BC77' },
+        success: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#2FBF6E', darkColor: '#5ECD8F' },
+        info: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#4F8FE6', darkColor: '#8AB2E8' }
+      }
+    },
+    spacing: { product: null, system: '4px' },
+    radius: { product: null, philosophy: 'balanced' },
+    border: { system: 'standard', width: '1', color: '9A9A95', darkColor: '6A6A65', darkColorAuto: true, opacity: '85', style: 'solid', sides: 'all' },
+    'border-states': {
+      default: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
+      hover: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
+      focus: { light: '4F8FE6', dark: '8AB2E8', darkAuto: true },
+      active: { light: 'D80016', dark: 'D80016', darkAuto: true },
+      selected: { light: 'FF031A', dark: 'F74858', darkAuto: true },
+      disabled: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
+      error: { light: 'FF3F4F', dark: 'FA818B', darkAuto: true },
+      warning: { light: 'E6A53A', dark: 'E6BC77', darkAuto: true },
+      success: { light: '2FBF6E', dark: '5ECD8F', darkAuto: true },
+      info: { light: '4F8FE6', dark: '8AB2E8', darkAuto: true }
+    },
+    shadow: { philosophy: 'balanced' },
+    'grid-layout': { product: null, system: 'columns' },
+    icons: { system: 'duotone', size: '24', stroke: '1.8', corner: 'round', library: null }
+  };
   function savedTokens(allowedKeys = TOKEN_KEYS) {
     const values = {};
     for (const key of allowedKeys) {
       const raw = localStorage.getItem('ads:' + key);
-      if (raw !== null) values[key] = JSON.parse(raw);
+      // A saved record always wins if one exists, even a partial-looking
+      // one - this is still the real, current state of that page, not a
+      // fallback candidate. Only a genuinely untouched key (never saved
+      // at all) resolves to the documented default instead.
+      values[key] = raw !== null ? JSON.parse(raw) : RESOLVED_DEFAULTS[key];
     }
     return values;
   }
@@ -435,7 +499,8 @@
         // sees as one unit in the Foundations sidebar.
         const allowedKeys = foundationChecks.filter(c => c.checked).flatMap(c => FOUNDATION_TOKEN_MAP[c.value] || []);
         const tokens = savedTokens(allowedKeys);
-        preview.value = M.markdown(profile, tokens, docs, identity.checked);
+        const defaultedKeys = allowedKeys.filter(key => localStorage.getItem('ads:' + key) === null);
+        preview.value = M.markdown(profile, tokens, docs, identity.checked, defaultedKeys);
         const includedCount = foundationChecks.filter(c => c.checked).length;
         const foundationSummary = foundationChecks.length ? `${includedCount}/${foundationChecks.length} foundation sections · ` : '';
         const includedComponentCount = componentChecks.filter(c => c.checked).length;
