@@ -117,7 +117,16 @@
     // always reflects the current on-screen choice without a separate
     // "click Save" step.
     function persistGrid(){
-      window.ADSStorage.safeSet(SAVE_KEY, { product: getActiveProduct(), system: getActiveSystem() });
+      // recommendedAtSave - Foundation audit NP02's provenance field: what
+      // this page would have recommended for the project, at the moment of
+      // this save, regardless of what was actually picked. Comparing it to
+      // the live recommendation on a later load is what tells reconciliation
+      // apart from a deliberate override - see showContextChangeNotice().
+      window.ADSStorage.safeSet(SAVE_KEY, {
+        product: getActiveProduct(),
+        system: getActiveSystem(),
+        recommendedAtSave: computeRecommendedProduct(currentProfile())
+      });
     }
 
     productCards.forEach(function(card){
@@ -156,12 +165,29 @@
       "Cross-Platform": "cross-platform"
       // "Other" has no reasonable default - free text, no equivalent card.
     };
-    function productFromProjectProfile(){
+    // Foundation audit NP02 - the 3 slugs below exist as real product cards
+    // specifically so platform can drive the default (see the comment above
+    // this map) - but nothing ever actually read profile.platforms, only
+    // profile.productType, so a project whose only platform was "Mobile app"
+    // still got a desktop-shaped grid by default. Platform only overrides
+    // product type when it resolves unambiguously - exactly one platform,
+    // and it's one of these 3 - since a project with several platforms has
+    // no single "the" platform to prefer over its stated product type.
+    var PLATFORM_ONLY_PRODUCT_MAP = { "desktop-web": "desktop-web", "mobile-web": "mobile-web", "mobile-app": "mobile-app" };
+    function currentProfile(){
       if (!window.ADSProject) return null;
-      var profile;
-      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return null; }
+      try{ return window.ADSProject.read(localStorage); }catch(e){ return null; }
+    }
+    function computeRecommendedProduct(profile){
       if (!profile) return null;
+      if (Array.isArray(profile.platforms) && profile.platforms.length === 1){
+        var platformProduct = PLATFORM_ONLY_PRODUCT_MAP[profile.platforms[0]];
+        if (platformProduct) return platformProduct;
+      }
       return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+    }
+    function productFromProjectProfile(){
+      return computeRecommendedProduct(currentProfile());
     }
     // Same fallback-notice pattern as spacing.js/radius.js - the one case
     // productFromProjectProfile() can't map is New Project's "Other",
@@ -195,6 +221,42 @@
         if (card) selectProduct(card);
       }
       if (saved.system) selectSystem(saved.system);
+      showContextChangeNotice(saved);
+    }
+
+    // Foundation audit NP02 - "review affected choices after context edits."
+    // Only speaks up for records that carry recommendedAtSave (saved after
+    // this fix shipped) - older records have no recorded provenance, so
+    // silence, not a guessed-at claim, is the honest choice for those.
+    function showContextChangeNotice(saved){
+      var notice = document.querySelector('[data-role="context-changed-notice"]');
+      if (!notice) return;
+      notice.hidden = true;
+      notice.innerHTML = "";
+      if (!saved.product || saved.recommendedAtSave === undefined) return;
+      var currentRecommendation = computeRecommendedProduct(currentProfile());
+      if (!currentRecommendation) return;
+      var nameOf = function(slug){
+        var c = document.querySelector('.product-card[data-product="' + slug + '"]');
+        return c ? c.querySelector(".product-card-name").textContent : slug;
+      };
+      var wasFollowingRecommendation = saved.recommendedAtSave === saved.product;
+      if (wasFollowingRecommendation){
+        if (currentRecommendation === saved.product) return;
+        notice.innerHTML = "Your project's context changed since this was saved - the recommended product is now <strong>" +
+          nameOf(currentRecommendation) + "</strong> (was " + nameOf(saved.product) +
+          ", which is still active). <button type=\"button\" class=\"btn btn-ghost\" id=\"applyUpdatedRecBtn\">Apply updated recommendation</button>";
+        notice.hidden = false;
+        document.getElementById("applyUpdatedRecBtn").addEventListener("click", function(){
+          var targetCard = document.querySelector('.product-card[data-product="' + currentRecommendation + '"]');
+          if (targetCard){ selectProduct(targetCard); persistGrid(); }
+          notice.hidden = true;
+        });
+      } else if (saved.recommendedAtSave) {
+        notice.textContent = "You chose " + nameOf(saved.product) + " here, overriding this page's own recommendation (" +
+          nameOf(saved.recommendedAtSave) + " at the time) - kept exactly as you set it.";
+        notice.hidden = false;
+      }
     }
     loadGrid();
     updateMachineViews();
@@ -213,6 +275,8 @@
       localStorage.removeItem(SAVE_KEY);
       productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       callout.hidden = true;
+      var contextNotice = document.querySelector('[data-role="context-changed-notice"]');
+      if (contextNotice) contextNotice.hidden = true;
       selectSystem("columns");
 
       saveStatus.textContent = "Reset to defaults";

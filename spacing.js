@@ -112,7 +112,15 @@
     // programmatically call selectProduct/selectSystem too - see the same
     // note in grid-layout.js.
     function persistSpacing(){
-      window.ADSStorage.safeSet(SAVE_KEY, { product: getActiveProduct(), system: getActiveSystem() });
+      // recommendedAtSave - Foundation audit NP02's provenance field, same
+      // as grid-layout.js: what this page would have recommended at the
+      // moment of this save, so a later load can tell a context change
+      // apart from a deliberate override. See showContextChangeNotice().
+      window.ADSStorage.safeSet(SAVE_KEY, {
+        product: getActiveProduct(),
+        system: getActiveSystem(),
+        recommendedAtSave: computeRecommendedProduct(currentProfile())
+      });
     }
 
     productCards.forEach(function(card){
@@ -155,12 +163,24 @@
       // "Other" has no reasonable default - the user described their own
       // product type in free text, which none of these cards represent.
     };
-    function productFromProjectProfile(){
+    // Foundation audit NP02 - same platform-resolves-unambiguously rule as
+    // grid-layout.js: platform only overrides product type when the profile
+    // has exactly one platform and it's one of these 3 product-card slugs.
+    var PLATFORM_ONLY_PRODUCT_MAP = { "desktop-web": "desktop-web", "mobile-web": "mobile-web", "mobile-app": "mobile-app" };
+    function currentProfile(){
       if (!window.ADSProject) return null;
-      var profile;
-      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return null; }
+      try{ return window.ADSProject.read(localStorage); }catch(e){ return null; }
+    }
+    function computeRecommendedProduct(profile){
       if (!profile) return null;
+      if (Array.isArray(profile.platforms) && profile.platforms.length === 1){
+        var platformProduct = PLATFORM_ONLY_PRODUCT_MAP[profile.platforms[0]];
+        if (platformProduct) return platformProduct;
+      }
       return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+    }
+    function productFromProjectProfile(){
+      return computeRecommendedProduct(currentProfile());
     }
     // The one remaining case productFromProjectProfile() can't map: the
     // user described their own product type as "Other" in New Project.
@@ -196,6 +216,41 @@
         if (card) selectProduct(card);
       }
       if (saved.system) selectSystem(saved.system);
+      showContextChangeNotice(saved);
+    }
+
+    // Foundation audit NP02 - "review affected choices after context edits."
+    // Same logic as grid-layout.js's showContextChangeNotice(): stays silent
+    // for records with no recorded provenance (saved before this fix).
+    function showContextChangeNotice(saved){
+      var notice = document.querySelector('[data-role="context-changed-notice"]');
+      if (!notice) return;
+      notice.hidden = true;
+      notice.innerHTML = "";
+      if (!saved.product || saved.recommendedAtSave === undefined) return;
+      var currentRecommendation = computeRecommendedProduct(currentProfile());
+      if (!currentRecommendation) return;
+      var nameOf = function(slug){
+        var c = document.querySelector('.product-card[data-product="' + slug + '"]');
+        return c ? c.querySelector(".product-card-name").textContent : slug;
+      };
+      var wasFollowingRecommendation = saved.recommendedAtSave === saved.product;
+      if (wasFollowingRecommendation){
+        if (currentRecommendation === saved.product) return;
+        notice.innerHTML = "Your project's context changed since this was saved - the recommended product is now <strong>" +
+          nameOf(currentRecommendation) + "</strong> (was " + nameOf(saved.product) +
+          ", which is still active). <button type=\"button\" class=\"btn btn-ghost\" id=\"applyUpdatedRecBtn\">Apply updated recommendation</button>";
+        notice.hidden = false;
+        document.getElementById("applyUpdatedRecBtn").addEventListener("click", function(){
+          var targetCard = document.querySelector('.product-card[data-product="' + currentRecommendation + '"]');
+          if (targetCard){ selectProduct(targetCard); persistSpacing(); }
+          notice.hidden = true;
+        });
+      } else if (saved.recommendedAtSave) {
+        notice.textContent = "You chose " + nameOf(saved.product) + " here, overriding this page's own recommendation (" +
+          nameOf(saved.recommendedAtSave) + " at the time) - kept exactly as you set it.";
+        notice.hidden = false;
+      }
     }
     loadSpacing();
     updateMachineViews();
@@ -214,6 +269,8 @@
       localStorage.removeItem(SAVE_KEY);
       productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       callout.hidden = true;
+      var contextNotice = document.querySelector('[data-role="context-changed-notice"]');
+      if (contextNotice) contextNotice.hidden = true;
       selectSystem("4px");
 
       saveStatus.textContent = "Reset to defaults";

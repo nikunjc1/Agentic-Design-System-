@@ -75,6 +75,12 @@
    profile, so this notice needs to read as a real consequence, not routine
    help text like the rest of .setup-help. */
 #existingProfileNotice{font-size:13px;line-height:1.6;color:var(--amber-500);background:rgba(230,165,58,0.12);border:1px solid rgba(230,165,58,0.3);border-radius:var(--radius-6);padding:10px 14px;margin:12px 0}
+/* Foundation audit NP02 - a project-context reconciliation notice (changed
+   recommendation, or an explained override) reads as informational, not a
+   warning like #existingProfileNotice above - blue, matching this system's
+   existing info-banner convention (see .alert-demo-banner--info). */
+[data-role="context-changed-notice"]{font-size:13px;line-height:1.6;color:var(--blue-500);background:rgba(79,143,230,0.1);border-inline-start:3px solid var(--blue-500);border-radius:var(--radius-6);padding:10px 14px;margin-top:12px}
+[data-role="context-changed-notice"] .btn{margin-inline-start:8px}
 .setup-review{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:12px;margin:24px 0}
 .setup-review dt{color:var(--text-mid)}
 .setup-review dd{margin:0;overflow-wrap:anywhere}
