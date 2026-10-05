@@ -1532,6 +1532,16 @@ Checked reduced-motion and performance rather than leaving either unaddressed: c
 
 Verified: screenshotted the new section - renders cleanly with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit I04 (P2) - stroke width/corner controls stayed editable with no effect on fill-based styles
+
+Finding from the 5 October 2026 Foundation audit: "Line/Dashed/Flat/Duotone/Two-tone/Isometric/3D share selector; irrelevant stroke/corner controls remain... unsupported controls/library combinations not signposted."
+
+The page already said in prose that "Grid size and stroke weight apply to Line, Dashed and Two-tone," but the actual Stroke width and Corner treatment `<select>` controls stayed fully enabled regardless - confirmed in `icons.js`'s `iconSvg()` that Flat/Duotone/Isometric/3D never read either value at all, so picking Bold or Sharp while Duotone (the default style) is active changes nothing, with no indication why.
+
+Added `updateStrokeControlsAvailability()`, called from `selectSystem()`: both controls now get a real `disabled` attribute (plus a dimmed `.is-disabled` label) whenever the active style isn't Line/Dashed/Two-tone, and re-enable immediately when switching back to one that is. Wired into all three places a style can become active - a fresh page load (previously skipped calling `selectSystem()` entirely, so Duotone's default state never disabled the controls at all), the saved-profile restore path, and a live click - so there's no path that leaves the controls incorrectly enabled. Rewrote the explanatory sentence to state the disabling behavior directly instead of just the underlying rule.
+
+Verified: on a fresh page load (Duotone active by default), both controls are correctly disabled immediately. Selecting Line re-enables them; selecting Isometric disables them again. Restoring a saved profile with `system: "flat"` also correctly loads with both disabled. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

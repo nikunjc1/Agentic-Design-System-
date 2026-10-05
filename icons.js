@@ -133,10 +133,24 @@
       updateMachineViews();
     }
 
+    // Stroke width and corner treatment only ever affect Line/Dashed/
+    // Two-tone (confirmed: iconSvg() below never reads either for Flat/
+    // Duotone/Isometric/3D) - disabling both the rest of the time means
+    // they can't be mistaken for doing something they don't, instead of
+    // relying on a prose sentence above them to say so.
+    var STROKE_BASED_STYLES = ["line", "dashed", "twotone"];
+    function updateStrokeControlsAvailability(key){
+      var applies = STROKE_BASED_STYLES.indexOf(key) !== -1;
+      strokeSelect.disabled = !applies;
+      cornerSelect.disabled = !applies;
+      strokeSelect.closest(".type-control").classList.toggle("is-disabled", !applies);
+      cornerSelect.closest(".type-control").classList.toggle("is-disabled", !applies);
+    }
     function selectSystem(key){
       systemCards.forEach(function(card){
         card.classList.toggle("is-active", card.dataset.system === key);
       });
+      updateStrokeControlsAvailability(key);
       renderPreview();
     }
 
@@ -175,7 +189,7 @@
     function loadIcons(){
       var saved;
       try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
-      if (!saved){ renderPreview(); return; }
+      if (!saved){ updateStrokeControlsAvailability(getActiveSystem()); renderPreview(); return; }
 
       if (saved.system) selectSystem(saved.system);
       if (saved.size) sizeSelect.value = saved.size;

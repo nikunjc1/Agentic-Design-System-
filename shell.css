@@ -1121,6 +1121,10 @@ button{ font-family: inherit; }
   letter-spacing: var(--tracking-5);
   color: var(--text-dim);
 }
+/* A control's own label dims along with its (disabled) select - the
+   select alone graying out doesn't make clear the whole control, label
+   included, is currently inapplicable rather than just empty/unset. */
+.type-control.is-disabled{ opacity: 0.45; }
 
 .type-control-level{ flex: none; width: 104px; }
 .type-control-family{ flex: 1 1 130px; }
