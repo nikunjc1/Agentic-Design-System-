@@ -111,15 +111,49 @@
     "Display": ["Bricolage Grotesque", "Unbounded", "Archivo Black"],
     "Handwritten": ["Caveat", "Kalam", "Patrick Hand"]
   };
+  // A failed Google Fonts load used to fall through to a hardcoded
+  // sans-serif stack regardless of the chosen font's own category -
+  // a failed Serif/Monospace/Handwritten pick silently became sans-serif,
+  // not just a different face in the same category. One matching CSS
+  // generic family per category (no true generic exists for Display,
+  // so it shares Sans-serif's).
+  var CATEGORY_FALLBACKS = {
+    "Sans-serif": "ui-sans-serif, system-ui, sans-serif",
+    "Serif": "ui-serif, Georgia, serif",
+    "Monospace": "ui-monospace, SFMono-Regular, monospace",
+    "Display": "ui-sans-serif, system-ui, sans-serif",
+    "Handwritten": "cursive"
+  };
+  // setFamily's own "source" is already the lowercase category name for a
+  // curated pick (see the option-click handler below) - this recovers the
+  // matching fallback stack on restore (loadTypography) without having to
+  // separately persist it.
+  var CATEGORY_FALLBACKS_BY_SOURCE = {};
+  Object.keys(CATEGORY_FALLBACKS).forEach(function(cat){ CATEGORY_FALLBACKS_BY_SOURCE[cat.toLowerCase()] = CATEGORY_FALLBACKS[cat]; });
+  function fallbackForSource(source){
+    return CATEGORY_FALLBACKS_BY_SOURCE[(source || "").toLowerCase()] || CATEGORY_FALLBACKS["Sans-serif"];
+  }
 
+  // Caches a Promise<boolean success> per href, not just a "was this
+  // requested" flag - a <link> fires a real error event on a genuine
+  // fetch failure (offline, blocked, 404), unlike document.fonts.load(),
+  // which can't tell "this family was never declared because its
+  // stylesheet failed" apart from "this name just isn't a registered
+  // webfont" - both resolve as a trivial, unhelpful success.
   var injectedHrefs = {};
   function injectLink(href){
-    if (!href || injectedHrefs[href]) return;
-    var link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    document.head.appendChild(link);
-    injectedHrefs[href] = true;
+    if (!href) return Promise.resolve(false);
+    if (injectedHrefs[href]) return injectedHrefs[href];
+    var promise = new Promise(function(resolve){
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      link.onload = function(){ resolve(true); };
+      link.onerror = function(){ resolve(false); };
+      document.head.appendChild(link);
+    });
+    injectedHrefs[href] = promise;
+    return promise;
   }
 
   function googleFontUrl(name){
@@ -155,10 +189,21 @@
       state.family = name;
       state.source = source || null;
       state.linkHref = linkHref || null;
-      var cssFamily = '"' + name + '", ui-sans-serif, system-ui, sans-serif';
+      var cssFamily = '"' + name + '", ' + fallbackForSource(source);
       previewHeading.style.fontFamily = cssFamily;
       previewBody.style.fontFamily = cssFamily;
       previewMeta.textContent = "Using " + name + (source ? " (" + source + ")" : "");
+      // injectLink's own promise reports a REAL stylesheet fetch failure
+      // (offline, blocked, 404) via the <link>'s error event - this used
+      // to claim "Using X" unconditionally with no way to ever find out
+      // the request failed.
+      if (linkHref){
+        var requested = name;
+        injectLink(linkHref).then(function(loaded){
+          if (state.family !== requested) return;
+          if (!loaded) previewMeta.textContent = name + " didn’t load (offline, blocked, or unavailable) - showing the " + (source || "fallback") + " fallback instead.";
+        });
+      }
     }
 
     uploadDrop.addEventListener("click", function(){ uploadInput.click(); });
