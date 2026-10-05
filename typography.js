@@ -63,6 +63,16 @@
   // get more room; mobile web / marketing desktop sites lean on bigger
   // display sizes for impact. Every value still maps to one of the 11
   // standard Size tokens - this only decides which one each level starts at.
+  // Deliberately a separate, smaller taxonomy from New Project's 10-category
+  // PRODUCTS list (project-model.js) or Spacing/Radius/Grid & Layout's own
+  // 12 data-product cards: a type-scale starting point is really a function
+  // of device/viewport context (how much room a heading has), not product
+  // category, and 4 real starting points cover that distinction without
+  // inventing a speculative size recommendation for every product category
+  // that has no typographic basis to differ from one of these 4. Not synced
+  // from New Project's saved product type for the same reason Spacing/
+  // Radius/Grid & Layout's own sync doesn't apply here: there is no 1:1
+  // mapping from "what you're building" to "how much room a heading has."
   var PLATFORM_PRESETS = {
     "saas": { h1: "display-xs", h2: "text-xl", h3: "text-lg", h4: "text-md", h5: "text-sm", h6: "text-xs", body: "text-sm", paragraph: "text-sm", caption: "text-xs" },
     "mobile-app": { h1: "display-sm", h2: "display-xs", h3: "text-xl", h4: "text-lg", h5: "text-md", h6: "text-sm", body: "text-md", paragraph: "text-md", caption: "text-xs" },

@@ -132,7 +132,9 @@
     // Web, Mobile Application - were deliberately left off New Project's
     // list since that form already asks platform separately via "Where
     // will your product be used?"), just needs converting to this page's
-    // data-product slug. Only used the first time this page loads with
+    // data-product slug - this page's own card set now matches Radius and
+    // Grid & Layout's full 12 (Consumer App and AI Product added, see
+    // spacing.html). Only used the first time this page loads with
     // nothing of its own saved yet - once the user picks (or changes) a
     // card here, their own choice always wins.
     var PROJECT_PRODUCT_TYPE_MAP = {
@@ -147,9 +149,6 @@
       "Cross-Platform": "cross-platform"
       // "Other" has no reasonable default - the user described their own
       // product type in free text, which none of these cards represent.
-      // Consumer App and AI Product have no matching card on this page
-      // specifically (its own set is 10, not Radius/Grid & Layout's 12),
-      // so those two safely resolve to no selection here only.
     };
     function productFromProjectProfile(){
       if (!window.ADSProject) return null;
