@@ -48,7 +48,7 @@
    it, despite all three being the same kind of field question. */
 .setup-platforms legend{font-size:14px;font-weight:500;margin-bottom:12px}
 .setup-options{display:flex;flex-wrap:wrap;gap:12px}
-.setup-option{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line-strong);border-radius:8px;font-size:14px;cursor:pointer}
+.setup-option{display:flex;gap:10px;align-items:center;padding:12px 14px;font-size:14px;cursor:pointer}
 .setup-option input{width:18px;height:18px;accent-color:var(--red-500)}
 /* One <details> per component category on MD Export - collapsed by
    default so 69 individual checkboxes don't all render open at once;

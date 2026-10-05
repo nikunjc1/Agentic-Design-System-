@@ -1207,6 +1207,12 @@ Removed the `.setup-option:has(:checked)` rule entirely from `experience.css`, s
 
 Verified: computed `border-color`/`background-color` on a checked `.setup-option` now exactly match the unchecked default (`rgba(15, 15, 10, 0.15)` border, transparent background) on both `new-project.html` and `md-export.html`. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
 
+## New Project / MD Export - removed the box outline around each platform/export checkbox entirely
+
+Follow-up to the previous checked-state color fix: asked to remove the outline/stroke entirely, showing just the checkbox itself rather than a bordered box around it. Removed `border:1px solid var(--line-strong)` and `border-radius:8px` from `.setup-option` in `experience.css` - the only two declarations that drew the box - leaving the checkbox and its label as plain inline content with no surrounding shape. Same shared class as the previous fix, so this applies identically to New Project's platform picker and MD Export's Foundations/Component-category checkboxes.
+
+Verified: computed style on `.setup-option` now shows `border: 0px none`, `border-radius: 0px`, no background - screenshotted both New Project's "Where will your product be used?" and MD Export's "Which foundation sections should be included?" and confirmed both now read as a plain checkbox list with no box around either. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
