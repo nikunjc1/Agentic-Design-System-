@@ -6,24 +6,30 @@
   'use strict';
   const KEY = 'ads:project-profile:v1';
   const DRAFT = 'ads:project-draft:v1';
-  // Matches the exact product-card taxonomy already used on Spacing,
-  // Radius and Grid & Layout's own "What are you building?" pickers
-  // (see their data-product values), so New Project's own product-type
-  // choice can drive those pages' recommended defaults directly instead
-  // of needing a fuzzy, partially-guessed mapping between two different
-  // vocabularies.
-  const PRODUCTS = ['SaaS', 'Enterprise SaaS', 'Web Application', 'Desktop Web (D-Web)', 'Mobile Web (M-Web)', 'Mobile Application', 'Dashboard', 'Data-Heavy Application', 'Marketing Website', 'Consumer App', 'AI Product', 'Cross-Platform', 'Other'];
+  // Matches the product-card taxonomy already used on Spacing, Radius
+  // and Grid & Layout's own "What are you building?" pickers (see their
+  // data-product values), minus the three that duplicate this same
+  // form's separate "Where will your product be used?" platform question
+  // (Desktop Web/Mobile Web/Mobile Application vs Desktop web/Mobile
+  // web/Mobile app) - those two questions cover different dimensions
+  // (what the product is vs. where it runs), so asking the platform
+  // dimension twice under two different names was the actual duplicate.
+  const PRODUCTS = ['SaaS', 'Enterprise SaaS', 'Web Application', 'Dashboard', 'Data-Heavy Application', 'Marketing Website', 'Consumer App', 'AI Product', 'Cross-Platform', 'Other'];
   // Old product-type values this field used to offer, before it was
-  // aligned with Spacing/Radius/Grid & Layout's own taxonomy - mapped
-  // forward so a profile saved under the old list keeps working ("Saved
-  // setup is incomplete" would otherwise fire for every existing saved
-  // project) instead of silently failing validation.
+  // aligned with Spacing/Radius/Grid & Layout's own taxonomy (and before
+  // the three platform-duplicate categories below were removed again) -
+  // mapped forward so a profile saved under either prior list keeps
+  // working ("Saved setup is incomplete" would otherwise fire for every
+  // existing saved project) instead of silently failing validation.
   const LEGACY_PRODUCT_MAP = {
     'Enterprise portal': 'Enterprise SaaS',
     'Customer portal': 'Consumer App',
     'Internal tool': 'Dashboard',
     'Commerce': 'Web Application',
-    'Content website': 'Marketing Website'
+    'Content website': 'Marketing Website',
+    'Desktop Web (D-Web)': 'Web Application',
+    'Mobile Web (M-Web)': 'Web Application',
+    'Mobile Application': 'Consumer App'
   };
   const ROLES = ['Designer', 'Developer', 'Product Manager', 'Design System Lead', 'QA / Accessibility', 'Other'];
   const PLATFORMS = {

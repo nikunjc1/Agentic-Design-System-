@@ -124,19 +124,19 @@
       });
     });
 
-    // New Project's own "What type of product are you creating?" now uses
-    // the exact same 12 categories as this page's product cards (names
-    // match 1:1 - see project-model.js's PRODUCTS), just needs converting
-    // to this page's data-product slug. Only used the first time this
-    // page loads with nothing of its own saved yet - once the user picks
-    // (or changes) a card here, their own choice always wins.
+    // New Project's own "What type of product are you creating?" uses 9 of
+    // this page's own 12-category taxonomy (names match 1:1 for those 9 -
+    // see project-model.js's PRODUCTS; the other 3 - Desktop Web, Mobile
+    // Web, Mobile Application - were deliberately left off New Project's
+    // list since that form already asks platform separately via "Where
+    // will your product be used?"), just needs converting to this page's
+    // data-product slug. Only used the first time this page loads with
+    // nothing of its own saved yet - once the user picks (or changes) a
+    // card here, their own choice always wins.
     var PROJECT_PRODUCT_TYPE_MAP = {
       "SaaS": "saas",
       "Enterprise SaaS": "enterprise-saas",
       "Web Application": "web-app",
-      "Desktop Web (D-Web)": "desktop-web",
-      "Mobile Web (M-Web)": "mobile-web",
-      "Mobile Application": "mobile-app",
       "Dashboard": "dashboard",
       "Data-Heavy Application": "data-heavy",
       "Marketing Website": "marketing",
