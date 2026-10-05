@@ -79,6 +79,8 @@
     function selectProduct(card){
       productCards.forEach(function(c){ c.classList.remove("is-active"); });
       card.classList.add("is-active");
+      var fallbackNotice = document.querySelector('[data-role="product-fallback-notice"]');
+      if (fallbackNotice) fallbackNotice.hidden = true;
 
       var name = card.querySelector(".product-card-name").textContent;
       var core = card.dataset.core;
@@ -159,6 +161,18 @@
       if (!profile) return null;
       return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
     }
+    // Same fallback-notice pattern as spacing.js - the one case
+    // productFromProjectProfile() can't map is New Project's "Other",
+    // where the user described their own product type in free text.
+    function showProductFallbackNotice(){
+      var notice = document.querySelector('[data-role="product-fallback-notice"]');
+      if (!notice || !window.ADSProject) return;
+      var profile;
+      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return; }
+      if (!profile || profile.productType !== "Other") return;
+      notice.textContent = "Your project describes its product type as “" + profile.productOther + "”, which doesn't map to one of these cards - pick whichever is closest; it won't change what you entered in New Project.";
+      notice.hidden = false;
+    }
 
     function loadRadius(){
       var saved;
@@ -168,6 +182,8 @@
         if (mapped){
           var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
           if (mappedCard) selectProduct(mappedCard);
+        } else {
+          showProductFallbackNotice();
         }
         return;
       }

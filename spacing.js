@@ -76,6 +76,8 @@
     function selectProduct(card){
       productCards.forEach(function(c){ c.classList.remove("is-active"); });
       card.classList.add("is-active");
+      var fallbackNotice = document.querySelector('[data-role="product-fallback-notice"]');
+      if (fallbackNotice) fallbackNotice.hidden = true;
 
       var name = card.querySelector(".product-card-name").textContent;
       var primary = card.dataset.primary;
@@ -157,6 +159,20 @@
       if (!profile) return null;
       return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
     }
+    // The one remaining case productFromProjectProfile() can't map: the
+    // user described their own product type as "Other" in New Project.
+    // That's not a bug to silently swallow - say so, so picking a card
+    // here reads as a deliberate choice instead of this page looking like
+    // it just ignored the saved project.
+    function showProductFallbackNotice(){
+      var notice = document.querySelector('[data-role="product-fallback-notice"]');
+      if (!notice || !window.ADSProject) return;
+      var profile;
+      try{ profile = window.ADSProject.read(localStorage); }catch(e){ return; }
+      if (!profile || profile.productType !== "Other") return;
+      notice.textContent = "Your project describes its product type as “" + profile.productOther + "”, which doesn't map to one of these cards - pick whichever is closest; it won't change what you entered in New Project.";
+      notice.hidden = false;
+    }
 
     function loadSpacing(){
       var saved;
@@ -166,6 +182,8 @@
         if (mapped){
           var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
           if (mappedCard) selectProduct(mappedCard);
+        } else {
+          showProductFallbackNotice();
         }
         return;
       }

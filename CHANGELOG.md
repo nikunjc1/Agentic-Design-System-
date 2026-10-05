@@ -1388,6 +1388,16 @@ Separately, reproduced the preset-divergence claim directly: picking the "SaaS" 
 
 Verified: clicking the Machine View toggle and Copy Markdown on a freshly-cleared profile left `localStorage.getItem('ads:typography')` at `null` both times, while picking an actual font still correctly wrote a non-null value. Picked "SaaS," confirmed its chip read active, manually changed the H1 row's size, and confirmed the chip's `is-active` class was removed immediately. Confirmed Reset and Regenerate dark colors (both genuine data-changing clicks, unaffected by the new filter) still work with no console errors. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit S04 (P2) - Consumer App/AI Product cards and an unexplained silent fallback
+
+Finding from the 5 October 2026 Foundation audit: "Consumer/AI mapped but cards absent; safely leaves no product selected; labels differ... Common setup types silently fall back," asking for a canonical taxonomy and an explained fallback.
+
+Most of this was already resolved earlier today as part of audit finding X09 (same evidence file, `spacing.js`): Consumer App and AI Product cards now exist on `spacing.html` (were missing entirely), and the "Data-Heavy Enterprise"/"Data-Heavy Application" label mismatch is fixed. Verified both are still correct and didn't regress.
+
+The one part X09 didn't cover: when New Project's product type is "Other" (free text, genuinely unmappable to any card), Spacing/Radius/Grid & Layout all silently left nothing selected with zero explanation - indistinguishable from the page just ignoring the saved project entirely, exactly the "setup ignored" risk the finding names. Added `showProductFallbackNotice()` to all three pages' shared `loadX()` pattern: when nothing auto-selects specifically because the saved product type is "Other" (not because no project exists at all - that case correctly shows nothing, there's nothing to explain), a small notice now names the user's own free-text product description and says to pick whichever card is closest, making clear this is a deliberate "can't map this" rather than a broken auto-select. The notice hides itself the moment the user picks any card.
+
+Verified: with a profile whose `productType` is `"Other"` and `productOther: "A bespoke internal CRM"`, all three pages show the notice quoting that exact text; clicking any card hides it immediately. Confirmed a normally-mapped product type (SaaS) shows no notice on any of the three pages, and confirmed no profile at all still shows nothing (the correct "nothing to explain" case). Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
