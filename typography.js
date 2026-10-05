@@ -506,7 +506,30 @@
     // of new font + still-old row values right over the localStorage entry
     // Reset just removed.
     var suppressPersist = false;
-    function handleInteraction(){
+    // Clicking a view toggle, a method tab, a category filter chip or
+    // Copy Markdown never changes any actual Typography value - only the
+    // "click" listener below needs this filter (input/change only ever
+    // fire on a real form control in the first place, so every value
+    // change is already covered without it).
+    var NON_DATA_CLICK = ".guide-toggle-btn, .font-method-tabs .copy-tab, .font-category-chips, #copyTypographyMarkdownBtn";
+    // A platform preset chip stays "is-active" only while every level it
+    // sets still matches that preset's own values - editing even one row
+    // afterward is a real divergence, not still "Serif" or "SaaS" (the
+    // preset's own identity no longer describes the actual configuration).
+    function clearPresetIfDiverged(){
+      var activeChip = document.querySelector(".platform-chips .chip.is-active");
+      if (!activeChip) return;
+      var preset = PLATFORM_PRESETS[activeChip.dataset.platform];
+      if (!preset) return;
+      var matches = Object.keys(preset).every(function(level){
+        return rowControllers[level] && rowControllers[level].getState().size === preset[level];
+      });
+      if (!matches) activeChip.classList.remove("is-active");
+    }
+    function handleInteraction(e){
+      if (e && e.type === "click" && e.target.closest(NON_DATA_CLICK)) return;
+      var isPresetClick = e && e.type === "click" && e.target.closest(".platform-chips .chip");
+      if (!isPresetClick) clearPresetIfDiverged();
       updateMachineViews();
       if (!suppressPersist) persistTypography();
     }
