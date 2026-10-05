@@ -102,7 +102,25 @@
     // The Live Preview represents this site's actual UI, so it follows
     // whichever theme the site is currently in - not a fixed choice - and
     // re-renders live if the theme is toggled while this page is open.
+    // A preset chip stays "is-active" only while every field it set still
+    // matches - editing even one afterward is a real divergence (the same
+    // preset-identity rule already applied to Typography's platform
+    // chips). applyPreview() is only ever called by a manual field edit
+    // (clicking a system-card itself goes through selectSystem(), which
+    // never calls this), so no extra guard is needed here to avoid
+    // clearing a chip the instant it's freshly selected.
+    function clearPresetIfDiverged(){
+      var activeChip = document.querySelector(".system-card.is-active");
+      if (!activeChip) return;
+      var opacity = Math.max(0, Math.min(100, parseInt(opacityInput.value, 10) || 0));
+      var matches = Number(activeChip.dataset.width) === Number(widthSelect.value)
+        && activeChip.dataset.color.replace("#", "").toUpperCase() === colorHex.value.toUpperCase()
+        && Number(activeChip.dataset.opacity) === opacity
+        && activeChip.dataset.style === styleSelect.value;
+      if (!matches) activeChip.classList.remove("is-active");
+    }
     function applyPreview(){
+      clearPresetIfDiverged();
       var width = widthSelect.value;
       var style = styleSelect.value;
       var opacity = Math.max(0, Math.min(100, parseInt(opacityInput.value, 10) || 0));
@@ -163,6 +181,8 @@
         lines.push("- Color: `" + presetCard.dataset.color + "`");
         lines.push("- Opacity: `" + presetCard.dataset.opacity + "%`");
         lines.push("- Style: `" + presetCard.dataset.style + "`");
+      } else {
+        lines.push("- Selected: `Custom` (the values below no longer match any preset's own seed values - see Configure your border for the effective result)");
       }
 
       lines.push("", "## Configure your border", "");

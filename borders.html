@@ -417,6 +417,7 @@
     </div>
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Each state below can independently vary width, color, opacity and style - none of them should ever be the only signal for what's happening.</p>
+    <p class="get-library-copy">This "Default" row (70% opacity) and "Standard" in Border presets above (85%) are not the same number disagreeing with itself - they answer two different questions. Border presets is a starting point for configuring a custom border system from scratch; Border states documents the resting value a component already has before anything else happens to it, independent of whichever preset (if any) you've configured above. Neither one is what a shipped component actually renders today, either - real components currently reference the fixed <code>--line-strong</code> token directly (confirmed in source), not a value from this page; wiring this page's saved configuration into real components sitewide is tracked separately.</p>
 
     <div class="usage-hierarchy" id="stateRows">
       <div class="usage-row" data-role="state-row" data-state="default" data-width="1" data-opacity="70" data-style="solid">
