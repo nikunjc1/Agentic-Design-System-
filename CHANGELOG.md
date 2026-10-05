@@ -1452,6 +1452,16 @@ Also generalized the existing "Circular only when width equals height" note (cur
 
 Verified: screenshotted the "Radius by component role" section - both new paragraphs render with no horizontal overflow, directly below the existing role table. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit R06 (P2) - radius invariance across states and overflow-clipping risk were never stated
+
+Finding from the 5 October 2026 Foundation audit: "No radius invariance across focus/error/selected or overflow-focus clipping guidance... Rounded containers can obscure indicators."
+
+Checked whether the invariance already holds before documenting it as fact: grepped every `.is-focus`/`.is-error`/`:focus-within` rule in `shell.css` and confirmed none of them touch `border-radius` - hover/focus/error/selected already only ever change color, border and background, never the shape. Documented this as an explicit rule rather than an implicit accident, since a future component could easily break it without anyone noticing it was ever a rule.
+
+Checked the overflow-clipping risk concretely rather than asserting it: `.card-demo-panel` does use `overflow: hidden`, and the Input focus state uses `outline-offset: 2px` (meaning the focus ring draws outside the element's own border box) - a genuine real combination where clipping is structurally possible. Checked whether it's currently visible: Card's own content padding is 14px (10px at Small size), comfortably past the ~4px a focus outline needs, so today's real Card is safe. Documented this as a constraint to check explicitly on any new rounded-plus-`overflow:hidden` container, not a guarantee the invariance rule above provides by itself - an honest "safe today, not automatic" note rather than either overstating a live bug or silently ignoring the real risk.
+
+Verified: screenshotted the page - renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
