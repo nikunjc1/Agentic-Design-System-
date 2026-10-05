@@ -142,11 +142,38 @@
     // same move most dark-theme brand palettes make (Material's dark theme
     // guidance included) - a pure hue-preserving copy of a saturated light
     // accent tends to read as too harsh once the surface goes dark.
-    function suggestDarkAccent(lightHex){
+    //
+    // A single fixed +12 lightness step was a blind heuristic, not a
+    // guarantee - measured directly: a navy (#1A2A6C), a forest green
+    // (#0A4D2E), a maroon (#6B1E3C) and a few other real hues all landed
+    // under 3:1 against the default dark background, nowhere near AA
+    // (4.5:1) let alone AAA (7:1). Suggested dark colors must actually
+    // pass, not just plausibly look dark-theme-appropriate, so this now
+    // searches upward in lightness - preserving the light color's own
+    // hue and the same -8 saturation move as before - for the darkest
+    // (least washed-out) value that clears AAA against whichever dark
+    // background is actually active right now (custom if one is saved,
+    // the documented default otherwise - the same background the
+    // contrast badges already check against, so the two never disagree).
+    // Falls back to the best ratio found if AAA genuinely isn't
+    // reachable at this hue (vanishingly rare against a near-black
+    // background, but never left unhandled).
+    function currentDarkBgHex(){
+      var input = document.querySelector('[data-role="bg-dark-primary-hex"]');
+      return (input && normalizeHex(input.value)) || BG_DEFAULTS.dark.primary;
+    }
+    function suggestDarkAccent(lightHex, targetBgHex){
       var hsl = hexToHsl(lightHex);
       var s = clamp(hsl.s - 8, 35, 100);
-      var l = clamp(hsl.l + 12, 0, 78);
-      return hslToHex(hsl.h, s, l);
+      var bg = "#" + (targetBgHex || currentDarkBgHex()).replace("#", "");
+      var best = null;
+      for (var l = 10; l <= 97; l += 1){
+        var candidate = hslToHex(hsl.h, s, l);
+        var ratio = contrastRatio(candidate, bg);
+        if (!best || ratio > best.ratio) best = { hex: candidate, ratio: ratio };
+        if (ratio >= 7) return candidate;
+      }
+      return best.hex;
     }
 
     function rgbToHex(r, g, b){

@@ -1616,6 +1616,18 @@ Added the same freshness-check pattern as X01's docs-catalog fix, applied to thi
 
 Verified: confirmed `--radius-none` still resolves to `0px` in a real loaded page (the comment fix didn't break real CSS parsing, only the Python tool's). `--check` reports `fresh` immediately after regenerating. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Colors - dark-theme brand/status/neutral suggestions now guarantee AA/AAA, not just a plausible shift
+
+Requested: auto-generated Dark Mode colors should always be AA- and AAA-compliant against the dark background, based on the selected primary color, and should keep regenerating correctly once a separate dark-theme brand color is chosen.
+
+Investigated before changing anything: `suggestDarkAccent()` (used by Brand, and shared by Status and Neutral's own dark-mode suggestions) was a blind heuristic - lighten by a fixed 12 points, desaturate by 8, clamp, done - with no contrast check at all. Tested it directly against 7 real hues (navy, forest green, maroon, indigo, this system's own default red, a bright yellow, a deep blue): 5 of the 7 landed under 3:1 against the default dark background, nowhere near AA (4.5:1) - including the navy at a mere 2.14:1. Even this system's own default brand red only reached AA (5.51:1), never AAA.
+
+Rewrote `suggestDarkAccent()` to search upward in lightness (keeping the same hue and the same -8 saturation move as before) for the darkest - least washed-out - value that clears AAA (7:1) against whichever dark background is actually active (a custom one if saved, the documented default otherwise, read via a new `currentDarkBgHex()` helper) - the same background the existing contrast badges already check against, so the suggestion and the badge can never disagree. Falls back to the best ratio found if AAA genuinely isn't reachable at a given hue (not observed in testing, but never left unhandled).
+
+Checked the second half of the request against the actual code before assuming it needed building: manually editing the dark-theme brand hex (text input or color picker) already correctly calls `renderScaleChips()` with that edited value, regenerating the 400/500/600/tint/glow derived scale from the real dark color, not a stale light-derived one - confirmed already correct, nothing to add there.
+
+Verified: re-ran the same 7-hex test after the fix - all 7 now land between 7.0:1 and 7.3:1, passing both AA and AAA, including this system's own default red (now 7.03:1, up from 5.51:1). Confirmed Status's danger color (which shares the same `suggestDarkAccent()`) produces the identical, correct result for the same input hue. Screenshotted Brand's Light/Dark columns side by side - the auto-generated dark coral reads as a clear, undistorted member of the same red family, not washed out or unrelated. Confirmed the pre-existing, separately-tracked Light theme contrast issue (the default red against the light background, ~3.68:1, failing AA - tracked as its own audit finding) is unaffected by this change either way. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
