@@ -92,10 +92,11 @@
 
     function updateMachineViews(){
       if (styleMachineJson){
-        styleMachineJson.textContent = JSON.stringify({ selected: getActiveSystem() }, null, 2);
+        styleMachineJson.textContent = JSON.stringify({ $schema: window.ADS_MACHINE_VIEW_SCHEMA, selected: getActiveSystem() }, null, 2);
       }
       if (configMachineJson){
         configMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           size: Number(sizeSelect.value),
           stroke: Number(strokeSelect.value),
           corner: cornerSelect.value
@@ -105,6 +106,7 @@
         var libraryRadio = document.querySelector('[data-role="library-radio"]:checked');
         var thumbs = document.querySelectorAll('.icon-upload-thumb span');
         byoMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           library: libraryRadio ? libraryRadio.value : null,
           uploadedFiles: Array.prototype.map.call(thumbs, function(s){ return s.textContent; })
         }, null, 2);

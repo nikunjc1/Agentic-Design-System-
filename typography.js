@@ -427,6 +427,7 @@
     function updateMachineViews(){
       if (fontFamilyMachineJson){
         fontFamilyMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           primary: primaryPicker.getState(),
           secondary: secondaryPicker.getState()
         }, null, 2);
@@ -436,7 +437,7 @@
         Object.keys(rowControllers).forEach(function(level){
           levels[level] = rowControllers[level].getState();
         });
-        typeScaleMachineJson.textContent = JSON.stringify({ levels: levels }, null, 2);
+        typeScaleMachineJson.textContent = JSON.stringify({ $schema: window.ADS_MACHINE_VIEW_SCHEMA, levels: levels }, null, 2);
       }
       renderMarkdown();
     }

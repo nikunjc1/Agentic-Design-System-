@@ -11,6 +11,7 @@
       if (!machineJson) return;
       var active = document.querySelector(".system-card.is-active");
       machineJson.textContent = JSON.stringify({
+        $schema: window.ADS_MACHINE_VIEW_SCHEMA,
         selected: active ? active.dataset.system : null,
         scale: active ? (active.querySelector('[data-role="scale"]') || {}).textContent || null : null
       }, null, 2);

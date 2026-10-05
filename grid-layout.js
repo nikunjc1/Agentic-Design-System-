@@ -53,6 +53,7 @@
       if (buildingMachineJson){
         var activeCard = document.querySelector(".product-card.is-active");
         buildingMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: activeCard ? activeCard.dataset.product : null,
           recommendedSystem: activeCard ? activeCard.dataset.system : null,
           recommendedColumns: activeCard ? Number(activeCard.dataset.columns) : null,
@@ -63,6 +64,7 @@
         var activeSystem = document.querySelector(".system-card.is-active");
         var key = activeSystem ? activeSystem.dataset.system : null;
         gridtypeMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: key,
           label: key ? (GRID_TYPE_NAMES[key] || key) : null
         }, null, 2);

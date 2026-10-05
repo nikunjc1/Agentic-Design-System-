@@ -1108,6 +1108,7 @@
           var enableInput = document.querySelector('[data-role="' + prefix + '-dark-enable"]');
           var darkEnabled = !!(enableInput && enableInput.checked);
           var data = {
+            $schema: window.ADS_MACHINE_VIEW_SCHEMA,
             token: prefix,
             light: collectTheme(prefix, "light"),
             darkOverrideEnabled: darkEnabled,

@@ -51,6 +51,7 @@
       if (buildingMachineJson){
         var activeCard = document.querySelector(".product-card.is-active");
         buildingMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: activeCard ? activeCard.dataset.product : null,
           recommendedPhilosophy: activeCard ? activeCard.dataset.philosophy : null,
           recommendedCore: activeCard ? activeCard.dataset.core : null,
@@ -60,6 +61,7 @@
       if (systemMachineJson){
         var activeSystem = document.querySelector(".system-card.is-active");
         systemMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: activeSystem ? activeSystem.dataset.system : null,
           scale: activeSystem ? (activeSystem.querySelector('[data-role="scale"]') || {}).textContent || null : null
         }, null, 2);

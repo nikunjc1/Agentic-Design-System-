@@ -198,6 +198,7 @@
       if (presetsMachineJson){
         var active = document.querySelector(".system-card.is-active");
         presetsMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: active ? active.dataset.system : null,
           width: active ? Number(active.dataset.width) : null,
           color: active ? active.dataset.color : null,
@@ -211,6 +212,7 @@
     function updateConfigMachineView(){
       if (configMachineJson){
         configMachineJson.textContent = JSON.stringify({
+          $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           width: Number(widthSelect.value),
           color: "#" + colorHex.value,
           colorDark: "#" + darkColorHex.value,
@@ -390,7 +392,7 @@
             darkAuto: !!stateDarkAuto[key]
           };
         });
-        statesMachineJson.textContent = JSON.stringify({ states: states }, null, 2);
+        statesMachineJson.textContent = JSON.stringify({ $schema: window.ADS_MACHINE_VIEW_SCHEMA, states: states }, null, 2);
       }
       renderMarkdown();
     }

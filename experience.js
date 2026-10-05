@@ -413,6 +413,26 @@
     const summary = $('#profileSummary'); if (!summary) return;
     summary.textContent = storageError || (profile ? `${profile.project} · ${profile.name} · ${profile.designation} · ${profile.role}` : 'No project setup saved yet.');
   }
+  // Machine View schema contract (systemwide, every page's Machine View -
+  // static auto-generated ones below and every page-specific dynamic one
+  // in foundations.js/grid-layout.js/spacing.js/radius.js/typography.js/
+  // borders.js/shadows.js/icons.js): every object's first key is always
+  // $schema, a version string ("ads.machine-view.v1") that changes only
+  // on a breaking shape change to that page's own fields - a consumer
+  // (AI agent or script) can branch on it instead of guessing the shape.
+  // Null policy: a key is only ever present when its value is known: an
+  // unset/not-yet-chosen value omits the key entirely rather than writing
+  // null, so `"foo" in data` is itself the "is this configured" check.
+  // Allowed shapes: a static reference page emits {items:[...]} and/or
+  // {stats:[...]} (below); a dynamic page defines its own fields beyond
+  // $schema (documented at its own call site), never both patterns mixed
+  // in one object.
+  const MACHINE_VIEW_SCHEMA = 'ads.machine-view.v1';
+  // Exposed so every page-specific dynamic generator (foundations.js,
+  // grid-layout.js, spacing.js, radius.js, typography.js, borders.js,
+  // shadows.js, icons.js) stamps the exact same version string instead of
+  // each hardcoding its own copy that could silently drift out of sync.
+  window.ADS_MACHINE_VIEW_SCHEMA = MACHINE_VIEW_SCHEMA;
   // Machine View for a reference-only .component-guide section (a static
   // usage-hierarchy table or stat grid, not live user input) - derived
   // straight from its own Human View markup so no per-page JS is needed.
@@ -425,7 +445,7 @@
       if (code.textContent.trim() !== '{}') return;
       const human = guide.querySelector('.guide-view-panel[data-view-panel="human"]');
       if (!human) return;
-      const data = {};
+      const data = { $schema: MACHINE_VIEW_SCHEMA };
       const rows = human.querySelectorAll('.usage-row');
       if (rows.length) {
         data.items = Array.from(rows).map(row => {
@@ -444,10 +464,13 @@
         data.stats = Array.from(tiles).map(tile => {
           const label = tile.querySelector('.stat-label');
           const value = tile.querySelector('.stat-value');
-          return { label: label ? label.textContent.trim() : null, value: value ? value.textContent.trim() : null };
+          const obj = {};
+          if (label) obj.label = label.textContent.trim();
+          if (value) obj.value = value.textContent.trim();
+          return obj;
         });
       }
-      if (!Object.keys(data).length) return;
+      if (!data.items && !data.stats) return;
       code.textContent = JSON.stringify(data, null, 2);
     });
   }
