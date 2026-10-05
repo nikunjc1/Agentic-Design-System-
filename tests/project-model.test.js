@@ -3,14 +3,19 @@ const assert = require('node:assert/strict');
 const M = require('../project-model.js');
 const profile = {project:'Claims',productType:'Enterprise SaaS',platforms:['desktop-web','mobile-web'],name:'Sample User',email:'sample@example.com',designation:'UX Lead',role:'Designer'};
 const store = () => { const m = new Map(); return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v)}; };
-test('requires all five requested answers and a valid delivery platform', () => {
+test('requires project, product type, role and a valid delivery platform', () => {
   assert.deepEqual(M.validate(profile),{});
-  for (const key of ['name','email','designation','role','productType']) assert.ok(M.validate({...profile,[key]:''})[key]);
-  assert.ok(M.validate({...profile,email:'bad'})['email']);
+  for (const key of ['project','role','productType']) assert.ok(M.validate({...profile,[key]:''})[key]);
   assert.ok(M.validate({...profile,platforms:['unknown']}).platforms);
   assert.ok(M.validate({...profile,platforms:[]}).platforms);
   assert.ok(M.validate({...profile,productType:'Other'}).productOther);
   assert.ok(M.validate({...profile,role:'Other'}).roleOther);
+});
+test('name, email and designation are optional, but still validated when provided', () => {
+  assert.deepEqual(M.validate({...profile,name:'',email:'',designation:''}),{});
+  assert.ok(M.validate({...profile,email:'bad'})['email']);
+  assert.ok(M.validate({...profile,name:'x'.repeat(101)})['name']);
+  assert.ok(M.validate({...profile,designation:'x'.repeat(101)})['designation']);
 });
 test('profile survives reload and malformed storage is not overwritten', () => {
   const s = store(); M.save(s,profile); assert.equal(M.read(s).name,profile.name);

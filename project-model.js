@@ -45,23 +45,30 @@
   // older or missing one, which existing saved projects legitimately have
   // and which LEGACY_PRODUCT_MAP above already knows how to migrate.
   const SUPPORTED_VERSION = 1;
-  // Same 1-100 character, string-typed, trimmed bound the two other free-
-  // text fields (Project name, Your name, Designation) already enforce,
-  // and the same bound their own <input maxlength="100"> already shows in
-  // the UI - this just makes the model itself the authority on that bound
-  // instead of leaving it to "the browser happened to enforce the inputs",
-  // so a value restored or imported some other way can't bypass it.
+  // Same 1-100 character, string-typed, trimmed bound Project name already
+  // enforces, and the same bound its own <input maxlength="100"> already
+  // shows in the UI - this just makes the model itself the authority on
+  // that bound instead of leaving it to "the browser happened to enforce
+  // the inputs", so a value restored or imported some other way can't
+  // bypass it.
   const isBoundedText = value => typeof value === 'string' && value.trim().length >= 1 && value.trim().length <= 100;
+  // Your name/Email/Designation are identity, not configuration - nothing
+  // downstream requires them (no account, no email sent, role alone
+  // drives the post-save routing) and Markdown only ever includes them
+  // when the user separately opts in on MD Export. Required would be
+  // friction with no stated purpose, so each is optional but still bound/
+  // type-checked *if* provided, the same as every other free-text field.
   function validate(p) {
     const e = {};
-    for (const [key, label] of [['project','Project name'], ['name','Your name'], ['designation','Designation']]) {
-      if (!isBoundedText(p[key])) e[key] = label + ' must contain 1–100 characters.';
+    if (!isBoundedText(p.project)) e.project = 'Project name must contain 1–100 characters.';
+    for (const [key, label] of [['name','Your name'], ['designation','Designation']]) {
+      if (p[key] && !isBoundedText(p[key])) e[key] = label + ' must contain 1–100 characters if provided.';
     }
     if (!PRODUCTS.includes(p.productType)) e.productType = 'Choose the type of product you are creating.';
     if (p.productType === 'Other' && !isBoundedText(p.productOther)) e.productOther = 'Describe your product type in 1–100 characters.';
     if (!ROLES.includes(p.role)) e.role = 'Choose your role in this project.';
     if (p.role === 'Other' && !isBoundedText(p.roleOther)) e.roleOther = 'Describe your role in 1–100 characters.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email || '') || p.email.length > 254) e.email = 'Enter a valid email address.';
+    if (p.email && (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email) || p.email.length > 254)) e.email = 'Enter a valid email address, or leave it blank.';
     if (!Array.isArray(p.platforms) || !p.platforms.length || p.platforms.some(k => !PLATFORMS[k])) e.platforms = 'Select at least one target platform.';
     return e;
   }

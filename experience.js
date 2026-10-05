@@ -120,7 +120,11 @@
     if (!form) return;
     const status = $('#setupStatus');
     const done = $('#setupDone');
-    form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { input.required = true; });
+    // Your name/Email/Designation are optional (see project-model.js's
+    // validate() for why - no account or email service uses them), so
+    // they're deliberately excluded from this blanket required=true pass.
+    const OPTIONAL_FIELDS = ['name','email','designation'];
+    form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { if (!OPTIONAL_FIELDS.includes(input.name)) input.required = true; });
     const field = key => form.elements.namedItem(key);
     const populate = (id, values) => values.forEach(value => { const o = el('option', value); o.value = value; $(id).append(o); });
     populate('#productType', M.PRODUCTS); populate('#role', M.ROLES);
@@ -163,7 +167,7 @@
     }
     function review() {
       const p = collect(), dl = $('#setupReview'); dl.replaceChildren();
-      for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name], ['Email',p.email], ['Designation',p.designation], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
+      for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name || 'Not provided'], ['Email',p.email || 'Not provided'], ['Designation',p.designation || 'Not provided'], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
     }
     function validate(keys) {
       const errors = M.validate(collect());
@@ -458,7 +462,10 @@
   }
   function settings() {
     const summary = $('#profileSummary'); if (!summary) return;
-    summary.textContent = storageError || (profile ? `${profile.project} · ${profile.name} · ${profile.designation} · ${profile.role}` : 'No project setup saved yet.');
+    // name/designation are optional (see project-model.js's validate()) -
+    // joined with filter(Boolean) so a blank one collapses away instead of
+    // leaving a stray " · · " gap.
+    summary.textContent = storageError || (profile ? [profile.project, profile.name, profile.designation, profile.role].filter(Boolean).join(' · ') : 'No project setup saved yet.');
   }
   // Machine View schema contract (systemwide, every page's Machine View -
   // static auto-generated ones below and every page-specific dynamic one
