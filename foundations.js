@@ -534,12 +534,14 @@
     var elevationLight = {
       primary: document.querySelector('[data-role="elevation-light-primary"]'),
       secondary: document.querySelector('[data-role="elevation-light-secondary"]'),
-      tertiary: document.querySelector('[data-role="elevation-light-tertiary"]')
+      tertiary: document.querySelector('[data-role="elevation-light-tertiary"]'),
+      warning: document.querySelector('[data-role="elevation-light-warning"]')
     };
     var elevationDark = {
       primary: document.querySelector('[data-role="elevation-dark-primary"]'),
       secondary: document.querySelector('[data-role="elevation-dark-secondary"]'),
-      tertiary: document.querySelector('[data-role="elevation-dark-tertiary"]')
+      tertiary: document.querySelector('[data-role="elevation-dark-tertiary"]'),
+      warning: document.querySelector('[data-role="elevation-dark-warning"]')
     };
 
     var bgDarkAuto = true;
@@ -558,10 +560,36 @@
         fields[key].hex.value = hex;
       });
     }
+    // Page/Panel/Raised only read as 3 distinct elevation steps if each
+    // pair is far enough apart in lightness to actually look different
+    // next to each other - order alone doesn't guarantee that (and this
+    // system's own light-theme defaults aren't even monotonic: Panel
+    // (pure white, 100% L) is lighter than both Page (96.1%) and Raised
+    // (98.2%), by design, so a strict "increasing" rule would be wrong).
+    // 1.2 points is comfortably below the smallest real gap in either
+    // theme's own defaults (~1.76 light, ~1.96 dark), so neither default
+    // ever triggers this - only a genuinely collapsed custom choice does.
+    var MIN_ELEVATION_GAP = 1.2;
+    function checkElevationHierarchy(set){
+      var l = { primary: hexToHsl(set.primary).l, secondary: hexToHsl(set.secondary).l, tertiary: hexToHsl(set.tertiary).l };
+      var gaps = [
+        ["Page","Panel", Math.abs(l.primary - l.secondary)],
+        ["Panel","Raised", Math.abs(l.secondary - l.tertiary)],
+        ["Page","Raised", Math.abs(l.primary - l.tertiary)]
+      ];
+      var tooClose = gaps.filter(function(g){ return g[2] < MIN_ELEVATION_GAP; });
+      if (!tooClose.length) return null;
+      return tooClose.map(function(g){ return g[0] + " and " + g[1]; }).join(", ") + " are too close in lightness to read as separate elevation steps - consider spacing them further apart.";
+    }
     function renderElevation(layers, set){
       layers.primary.style.background = "#" + set.primary;
       layers.secondary.style.background = "#" + set.secondary;
       layers.tertiary.style.background = "#" + set.tertiary;
+      if (layers.warning){
+        var warning = checkElevationHierarchy(set);
+        layers.warning.textContent = warning || "";
+        layers.warning.hidden = !warning;
+      }
     }
     function markBgDarkStatus(auto){
       bgDarkAuto = auto;

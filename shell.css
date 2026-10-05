@@ -1008,6 +1008,12 @@ button{ font-family: inherit; }
 .elevation-demo-layer.is-primary{ background: var(--graphite-950); }
 .elevation-demo-layer.is-secondary{ background: var(--graphite-900); }
 .elevation-demo-layer.is-tertiary{ background: var(--graphite-850); padding: 20px 28px; }
+/* Advisory, not a blocking error - Page/Panel/Raised too close in
+   lightness to read as distinct elevation steps (see foundations.js's
+   checkElevationHierarchy()). Amber, the same real warning token used
+   sitewide, not setup-help's plain muted gray, since this one actually
+   needs to be noticed rather than just informational. */
+.elevation-hierarchy-warning{ margin-top:12px; font-size:13px; line-height:1.5; color:var(--amber-500); }
 
 /* ---------- typography: font family pickers ---------- */
 .font-family-panel{ margin-bottom: 24px; }

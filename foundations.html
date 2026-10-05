@@ -299,6 +299,7 @@
             </div>
           </div>
         </div>
+        <p class="elevation-hierarchy-warning" data-role="elevation-light-warning" hidden></p>
       </div>
 
       <div class="theme-pair-col" data-role="bg-dark-col" hidden>
@@ -343,6 +344,7 @@
             </div>
           </div>
         </div>
+        <p class="elevation-hierarchy-warning" data-role="elevation-dark-warning" hidden></p>
       </div>
     </div>
 
@@ -614,6 +616,7 @@
     </div>
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Every section on this page now follows the same rule: light is the value you set directly, dark is optional, auto-generated as a starting point the moment you turn it on, and fully independent the moment you touch it. Leave dark off anywhere and that piece simply keeps using its built-in default when the site is in dark theme - nothing breaks, nothing needs configuring twice.</p>
+    <p class="get-library-copy">The auto-generated starting point is a suggestion, not a guarantee - two different formulas, both reversible by editing the result directly. Brand's accent color lightens by 12 points and desaturates by 8 (clamped to stay in a readable range), the same move most dark-theme brand palettes make so a saturated light accent doesn't vibrate against a near-black surface. Background's three surfaces (Page/Panel/Raised) each carry your light color's own offset from its own light default onto the matching dark default, so an untouched field reproduces the tuned dark default exactly - Background additionally checks that the three stay at least 1.2 lightness points apart after any edit, live, and shows a warning if a custom choice collapses them too close to read as separate elevation steps.</p>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
       <pre class="guide-machine-json"><code>{
@@ -621,7 +624,11 @@
   "light": "set directly by the user, always the base value",
   "dark": "optional per section; auto-generated from light the moment it is enabled, then fully independent once edited",
   "darkDisabled": "falls back to each token's built-in default dark value, not to light",
-  "appliesTo": ["brand", "background-surface", "semantic-status", "neutral-scale"]
+  "appliesTo": ["brand", "background-surface", "semantic-status", "neutral-scale"],
+  "formulaVersion": 1,
+  "darkAccentFormula": { "appliesTo": "brand", "method": "HSL", "saturationDelta": -8, "saturationRange": [35, 100], "lightnessDelta": 12, "lightnessRange": [0, 78] },
+  "darkSurfaceFormula": { "appliesTo": "background-surface (page/panel/raised independently)", "method": "RGB offset from each role's own light/dark default, factor 0.4", "lightnessClamp": [2, 20] },
+  "elevationHierarchyCheck": { "appliesTo": "background-surface", "minPairwiseLightnessGap": 1.2, "roles": ["page", "panel", "raised"], "note": "order is not required to be monotonic - this system's own light-theme defaults aren't (Panel is lightest) - only mutual distinguishability is checked" }
 }</code></pre>
     </div>
   </section>
