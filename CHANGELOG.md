@@ -1600,6 +1600,22 @@ Added a new unit test confirming the provenance line correctly states "every key
 
 Verified: cleared storage, saved only a project profile (no Foundation customization at all), and generated the real Markdown on `md-export.html` - confirmed all 12 keys now resolve to complete, concrete values (e.g. `colors: {"light":{"primary":{"hex":"#FF031A"}}}`, not `{}`) and the Provenance line correctly lists all 12 as defaults. Saved a custom Brand color and regenerated - confirmed `colors` correctly dropped out of the defaulted list while the other 11 stayed. Full 157-page regression sweep: 0 console errors. All 15 unit tests pass (9 in `project-model.test.js`, 6 in `overview-model.test.cjs`).
 
+## Foundation audit X03 (P1) - design-tokens.json was stale, and the generator had a real comment-truncation bug
+
+Finding from the 5 October 2026 Foundation audit: "Artifact omits current border/opacity/tracking/radius/component/AI tokens; exported monospace is Inter while current CSS uses JetBrains Mono... A generated artifact must stay aligned with its source."
+
+Confirmed the font mismatch directly (`font-mono`'s `$value` was `["Inter", ...]`, while `theme.css` has used JetBrains Mono for most of this session). Ran `tools/generate_tokens.py` to regenerate - but hit a real, separate generator bug while verifying the output: `--radius-none` was silently missing from the result.
+
+Tracked it down to a malformed comment in `theme.css` - and recognized it immediately, since it's the exact gotcha already in this project's own memory notes from an earlier session: a comment reading `--space-*/--shadow-*` contains a literal `*/` partway through (the `-*` of "space" immediately followed by `/`), which closes that `/* */` comment early. Everything after it, up through the real closing `*/`, became unstripped text sitting in front of the very next real declaration (`--radius-none: 0px;`) - `generate_tokens.py`'s own `parse_root_block()` splits on `;` and requires each chunk to start with `--`, so that one corrupted chunk silently failed the check and `--radius-none` was dropped. Confirmed by reproducing with a debug script before touching anything - not inferred from the comment alone.
+
+Fixed the comment to describe the same thing in prose rather than symbols, explicitly to avoid retriggering the exact bug it now documents (an easy trap: my own first fix attempt re-quoted the broken symbol pattern inside the explanation and reproduced the identical truncation in the new comment - caught by re-running the generator and seeing `--radius-none` still missing, fixed by removing the literal pattern from the comment entirely). Verified no other `*/`-inside-comment occurrences exist by counting real closing markers in the fixed block.
+
+Regenerated `design-tokens.json`: confirmed `radius-none` now present (9 radius tokens, up from 8), `font-mono` correctly reads `["JetBrains Mono", ...]`, and spot-checked border/opacity/tracking/AI/agent/component-tier token coverage (`border-width-1-5`, `color-ai-*`, `color-agent-success`/`-failure`, `table-cell-padding-y-default`, etc.) - all present and current, including every token added across today's earlier P2 fixes.
+
+Added the same freshness-check pattern as X01's docs-catalog fix, applied to this artifact: `design-tokens-manifest.json` (source hash of `theme.css`, timestamp, token count) and a `--check` mode on `generate_tokens.py` that fails with a clear message if the artifact is stale relative to the current `theme.css` - the "fail release on stale/missing sections" mechanism this finding also asked for, not just a one-time regeneration.
+
+Verified: confirmed `--radius-none` still resolves to `0px` in a real loaded page (the comment fix didn't break real CSS parsing, only the Python tool's). `--check` reports `fresh` immediately after regenerating. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

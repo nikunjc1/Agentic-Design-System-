@@ -5,11 +5,14 @@ tokens as data instead of copying literal values out of a page's
 prose. theme.css stays the single source of truth; this script only
 reads it, it never needs to be edited by hand alongside it.
 """
+import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+MANIFEST_PATH = ROOT / "design-tokens-manifest.json"
 
 # CSS keyword easings, expressed as the cubic-bezier control points they
 # are defined to mean - not invented, these are the standard CSS values.
@@ -141,7 +144,26 @@ def build_token(name, dark_value, light_value):
     return token
 
 
+def check():
+    """Fails (exit 1) if design-tokens.json is stale relative to the
+    current theme.css - mirrors tools/audit_pages.py --check for the
+    docs catalog (Foundation audit X01), applied to the token artifact
+    (X03)."""
+    css = (ROOT / "theme.css").read_text()
+    current_hash = hashlib.sha256(css.encode()).hexdigest()
+    if not MANIFEST_PATH.exists():
+        print("STALE: no design-tokens-manifest.json - run `python3 tools/generate_tokens.py` to generate one.")
+        return 1
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    if manifest.get("sourceHash") != current_hash:
+        print("STALE: design-tokens.json does not match the current theme.css - re-run `python3 tools/generate_tokens.py`.")
+        return 1
+    print(json.dumps({"status": "fresh", "generatedAt": manifest.get("generatedAt"), "tokenCount": manifest.get("tokenCount")}, indent=2))
+    return 0
+
+
 def run():
+    import datetime
     css = (ROOT / "theme.css").read_text()
     dark = parse_root_block(css, ":root")
     light = parse_root_block(css, ':root[data-theme="light"]')
@@ -158,8 +180,17 @@ def run():
     }
     (ROOT / "design-tokens.json").write_text(json.dumps(out, indent=2) + "\n")
     counts = {group: len(t) for group, t in tokens.items()}
-    print(json.dumps({"tokens_written": sum(counts.values()), "by_group": counts}, indent=2))
+    total = sum(counts.values())
+    manifest = {
+        "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "sourceHash": hashlib.sha256(css.encode()).hexdigest(),
+        "tokenCount": total,
+    }
+    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2) + "\n")
+    print(json.dumps({"tokens_written": total, "by_group": counts}, indent=2))
 
 
 if __name__ == "__main__":
+    if "--check" in sys.argv:
+        sys.exit(check())
     run()

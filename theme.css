@@ -146,8 +146,16 @@
   /* Named tokens (sm/md) predate this pass and are consumed ~40 times
      already - kept as-is rather than renamed. The rest of the documented
      Balanced scale (radius.html) follows the same value-suffixed
-     convention as --space-*/--shadow-*, since there's no clean semantic
-     ladder that fits all 9 steps without colliding with sm/md. */
+     convention as the space and shadow token families below, since
+     there's no clean semantic ladder that fits all 9 steps without
+     colliding with sm/md. (A prior version of this comment wrote those
+     two token-family names back to back with a wildcard and a slash
+     between them, which closed this very comment early - asterisk then
+     slash ends a CSS comment, no matter what's inside one - and silently
+     dropped --radius-none from every tool that strips comments before
+     parsing, generate_tokens.py included. Fixed as part of Foundation
+     audit X03/X04 - said in prose here on purpose, not symbols, so this
+     exact comment can't retrigger the same bug it's describing.) */
   --radius-none: 0px;
   --radius-2: 2px;
   --radius-sm: 4px;
