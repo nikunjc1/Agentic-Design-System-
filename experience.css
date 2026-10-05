@@ -75,7 +75,7 @@
 .setup-review dt{color:var(--text-mid)}
 .setup-review dd{margin:0;overflow-wrap:anywhere}
 .export-preview{min-height:320px;resize:vertical;font-family:var(--font-mono);font-size:12px;line-height:1.6;margin:16px 0}
-.setup-status{min-height:24px;margin:16px 0;font-size:14px;line-height:1.6}
+.setup-panel .setup-status{min-height:24px;margin:16px 0;font-size:14px;line-height:1.6}
 .platform-guidance{margin-block:24px}
 .platform-guidance summary{cursor:pointer;padding:14px 0;font-weight:600}
 .platform-guidance p{font-size:14px;line-height:1.6;color:var(--text-mid)}

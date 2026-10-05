@@ -1213,6 +1213,14 @@ Follow-up to the previous checked-state color fix: asked to remove the outline/s
 
 Verified: computed style on `.setup-option` now shows `border: 0px none`, `border-radius: 0px`, no background - screenshotted both New Project's "Where will your product be used?" and MD Export's "Which foundation sections should be included?" and confirmed both now read as a plain checkbox list with no box around either. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
 
+## New Project / MD Export - the Draft-saved status message and help paragraph had collapsed to zero spacing
+
+Reported too little space between the Continue/Browse without setup button row, the "Draft saved on this browser." status message, and the help paragraph below it (screenshotted on New Project's step 1). Measured directly rather than trusting the source: `.setup-status{margin:16px 0}` is the rule meant to give this element its own breathing room, but it was computing to `margin: 0px` on the live page - a genuine regression from the earlier "heading-to-body gap" fix. That fix added `.setup-panel p{margin:0}` to stop a `<p>`'s unset default margin from fighting an adjacent heading's margin, but `.setup-panel p` (class + type selector) is *more specific* than `.setup-status` (a single class), so it silently won the cascade and zeroed out `.setup-status`'s own explicit 16px margin too - an unintended side effect on a different element sharing the same tag, not something the original fix's own verification pass would have caught since the status message is only populated after a real edit, not on a fresh page load.
+
+Fixed by raising `.setup-status`'s selector to `.setup-panel .setup-status` (two classes), which now outranks `.setup-panel p`'s class+type specificity and restores its intended 16px top/bottom margin without touching the general `<p>` reset that fixed the original heading-gap bug. `.setup-status`/`#exportStatus` is shared by both New Project's setup form and MD Export's export panel, both nested inside `.setup-panel`, so this applies identically to both.
+
+Verified: triggered the real "Draft saved on this browser." status (by editing the Project name field, not just reading the source) and measured computed margin as `16px 0px`, with actual rendered gaps of 16px above and below the status line, on both New Project and MD Export. Full 157-page regression sweep: 0 console errors. All 11 existing unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
