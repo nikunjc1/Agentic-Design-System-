@@ -256,6 +256,31 @@
     </div>
   </section>
 
+  <section class="panel spacing-model-panel component-guide" data-role="editor-state-model">
+    <div class="panel-title-row">
+      <p class="panel-title">Foundation editor state model</p>
+    </div>
+    <p class="get-library-copy">Every Foundation editor uses the same words - saved, previewed, applied, exported - but what each one actually does differs by section; this is the one place that distinction is written down. <strong>Draft</strong>: what's in the field right now, not yet written anywhere. <strong>Preview</strong>: this page's own swatches/sample text updating instantly from the draft value alone, e.g. <code>renderScaleChips()</code> (foundations.js:339) re-rendering Brand's scale on every keystroke - true on every editor, independent of save or apply. <strong>Auto-save</strong>: written to localStorage the moment a field changes (<code>input</code>/<code>change</code>), independent of any button - see <code>wireSaveState</code>'s <code>handleEdit</code> (foundations.js:54). <strong>Apply</strong>: the saved value actually changing what the current tab renders right now, instead of only taking effect on the next page load. <strong>Export</strong>: what Markdown/token export reads - always the latest auto-saved value, whether or not Apply has run.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Radius, Typography (font)</span>
+        <span class="usage-desc">Auto-saves AND auto-applies sitewide on every edit - <code>window.ADS_applySavedRadius</code> / <code>window.ADS_applySavedTypographyFont</code> (shell.js:190-191) run immediately. Its Save button is a confirmation, not a gate: nothing is withheld if you never click it.</span>
+        <span class="usage-values">Auto-save + auto-apply</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Colors (Brand, Surface, Status, Neutral)</span>
+        <span class="usage-desc">Auto-saves on every edit (same <code>wireSaveState</code> mechanism), but Apply to the <em>current tab</em> only runs when you click "Save ... color/scale" - other already-open tabs and the next reload pick up your edit regardless of whether you clicked it. The status line under each button now says "Applied to this page" instead of "Saved just now" so it can't be read as the save itself.</span>
+        <span class="usage-values">Auto-save, click-to-apply</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Spacing, Grid &amp; Layout, Borders, Shadows, Icons</span>
+        <span class="usage-desc">Auto-saves on every edit, but has no live-apply path at all today - shell.js exposes no <code>window.ADS_apply*</code> for these sections, so a saved value only ever surfaces in this page's own preview, Machine View and Markdown/token export, never in how the rest of the site actually renders. Tracked as a known gap, not hidden behind "Save" language that implies otherwise.</span>
+        <span class="usage-values">Auto-save, export-only</span>
+      </div>
+    </div>
+    <p class="get-library-copy">Rollback: every section above its own list has a "Reset to defaults" button that clears its localStorage key and, for the auto-apply and click-to-apply tiers, removes the live CSS override too - there's no separate undo-last-edit, resetting is the one rollback path everywhere.</p>
+  </section>
+
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
       <p class="panel-title">Foundation release contract</p>

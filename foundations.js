@@ -519,7 +519,7 @@
       applyBrandLiveForActiveTheme();
       setBrandSaved(true);
 
-      brandSaveStatus.textContent = "Saved just now";
+      brandSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
       setTimeout(function(){ brandSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -736,7 +736,7 @@
       applyBgLiveForActiveTheme();
       setBgSaved(true);
 
-      bgSaveStatus.textContent = "Saved just now";
+      bgSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
       setTimeout(function(){ bgSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -841,7 +841,7 @@
       applyStatusLiveForActiveTheme();
       setStatusSaved(true);
 
-      statusSaveStatus.textContent = "Saved just now";
+      statusSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
       setTimeout(function(){ statusSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -946,7 +946,7 @@
       applyNeutralLiveForActiveTheme();
       setNeutralSaved(true);
 
-      neutralSaveStatus.textContent = "Saved just now";
+      neutralSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
       setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 

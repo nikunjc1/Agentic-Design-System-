@@ -1654,6 +1654,21 @@ Also independently checked two other claims from that same review before decidin
 
 Verified: a Data-Heavy Application project now exports `spacing: {product: "data-heavy", system: "2px"}`, `radius: {product: "data-heavy", philosophy: "sharp"}`, `grid-layout: {product: "data-heavy", system: "columns-rows"}` - matching the live pages exactly. Re-confirmed the original SaaS fresh-export test still resolves correctly (`product: "saas"`, not `null`). Confirmed an `"Other"` product type still correctly falls back to the flat global default. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit X05 (P1) - "Saved, previewed, applied and exported have different meanings across sections"
+
+Finding from the 5 October 2026 Foundation audit: Colors auto-persists but mainly applies CSS on Save; Radius/Typography can apply immediately; other editors save metadata only - "Saved," "previewed," "applied" and "exported" meant different things depending which tab you were on, with no single place explaining which.
+
+Traced the real mechanism behind each editor's "Save" button before touching anything, since the prior behavior wasn't obvious from the button labels alone: all 8 Foundation editors auto-persist to localStorage on every field edit via the shared `wireSaveState()`/`handleEdit()` helper (foundations.js:54) - the Save button is never actually gating *persistence*, regardless of section. What differs by section is what else, if anything, happens live:
+- **Radius, Typography (font)** auto-apply sitewide immediately on every edit too, via `window.ADS_applySavedRadius`/`window.ADS_applySavedTypographyFont` (shell.js:190-191) - their Save button is pure confirmation.
+- **Colors** (Brand, Surface, Status, Neutral) only apply to the *current tab's own rendering* when their Save button is clicked (`applyBrandLiveForActiveTheme()` and its 3 siblings) - a reload, or another open tab, already shows the typed value regardless, since it was auto-saved the moment it was typed. The click's real, narrow job is "make this tab catch up right now."
+- **Spacing, Grid & Layout, Borders, Shadows, Icons** auto-save but have no live-apply path in shell.js at all - a saved value only ever shows up in that page's own preview, Machine View and Markdown/token export, never in how the rest of the site renders. A real, separate gap (also tracked as its own follow-up below), not something this finding's own scope covers fixing.
+
+Addressed both halves the finding's "Recommended improvement" named ("clearly separate auto-save from Apply" and the missing "editor state diagram, feedback vocabulary, rollback/reset rules"):
+- Replaced all 4 Colors sections' post-save status text - previously `"Saved just now"`, which read as if the click were the save - with `"Applied to this page - your edits auto-save as you type"`, naming the real distinction instead of implying a save that already happened seconds earlier.
+- Added a new "Foundation editor state model" section to accessibility.html, directly grounded in the citations above: a five-term vocabulary (Draft/Preview/Auto-save/Apply/Export - the finding's own Issue/Gap text named "saved, previewed, applied and exported," so Preview got its own definition too, tied to `renderScaleChips()` (foundations.js:339) re-rendering swatches from the draft value alone on every keystroke, independent of save or apply), the three real tiers with their exact code citations, and the rollback rule (every section's own "Reset to defaults" button is the one undo path everywhere - confirmed present on all 8 editors by grep, not assumed).
+
+Verified: Playwright confirmed the new accessibility.html section renders with all 3 tier rows present, and that editing and saving Brand's hex now shows the new "Applied to this page..." text instead of the old one. Re-verified after adding the Preview term: full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
