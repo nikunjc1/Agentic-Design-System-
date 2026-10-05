@@ -425,7 +425,7 @@
 
       <div class="pattern-card">
         <span class="pattern-card-name">Split View</span>
-        <p class="pattern-card-desc">Two equally-weighted panes, e.g. a live preview beside an editor.</p>
+        <p class="pattern-card-desc">Two equally-weighted panes, e.g. a live preview beside an editor - a static starting ratio, not a resizable one. The moment a user should be able to drag the divider, this is Splitter's layout, not a plain CSS split: Splitter already enforces sensible minimum sizes on both panes and makes the divider keyboard-operable (arrow keys), so don't reimplement either rule here. Equal weighting is a default, not a rule - when one side's content is reliably more important (e.g. the editor over its own live preview), give it the larger share instead of forcing 50/50. If either pane needs something pinned while its own content scrolls (a toolbar, a header), see Affix's own guidance on accounting for overlap so the pinned element never permanently covers content beneath it.</p>
         <div class="pattern-diagram pattern-cols-2"><span class="pattern-block">Preview</span><span class="pattern-block">Editor</span></div>
       </div>
 
@@ -443,7 +443,7 @@
 
       <div class="pattern-card">
         <span class="pattern-card-name">Master-Detail</span>
-        <p class="pattern-card-desc">A scannable list drives which record's full detail shows beside it - email, settings, a record browser. Looks like Sidebar + Content, but the narrow pane is selectable content, not persistent app navigation.</p>
+        <p class="pattern-card-desc">A scannable list drives which record's full detail shows beside it - email, settings, a record browser. Looks like Sidebar + Content, but the narrow pane is selectable content, not persistent app navigation. If the list pane should be resizable rather than a fixed width, that's Splitter's layout underneath this pattern, with the same minimum-size and keyboard-resize rules as Split View above - not a separate set of rules to invent here.</p>
         <div class="pattern-diagram pattern-sidebar"><span class="pattern-block pattern-narrow">List</span><span class="pattern-block">Detail</span></div>
       </div>
     </div>

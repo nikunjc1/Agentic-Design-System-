@@ -1355,6 +1355,18 @@ Added two paragraphs to Colors' "Semantic & status colors" section: the four rea
 
 Verified: screenshotted the updated section - renders cleanly with no overflow, all four recipes and the two exclusions read clearly below the existing explanatory copy. Confirmed the selection-uses-Brand claim against the actual CSS (`--red-500`/`--brand-500`, not `--danger-500`) and the danger-vs-brand separation claim already documented just above it in the same section. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit G07 (P2) - Split View/Master-Detail never linked to Splitter's already-documented resize rules
+
+Finding from the 5 October 2026 Foundation audit: "Resizable/minimum panes, persisted widths, sticky/overlay collision and content priority unspecified" for Grid & Layout's Split View pattern, recommending it link Splitter/Affix/Table rather than leaving pane behavior undefined.
+
+Checked what Splitter and Affix already document before writing anything new, rather than assuming the gap meant nothing existed: `splitter-default.html` already states real rules - "Enforce sensible minimum sizes on both panels" and "The divider is keyboard-operable (arrow keys), not mouse-only" - and `affix-default.html` already covers overlap ("Account for the affixed element's height when it overlaps content below it"). The actual gap was narrower than it first looked: Grid & Layout's Split View pattern card never told anyone these rules existed, so a reader could easily reinvent (or skip) minimum-size and keyboard-resize behavior Splitter already solved.
+
+Extended Split View's description to state plainly that a resizable version of this pattern *is* Splitter's own layout (not a plain CSS split), cite its already-documented minimum-size and keyboard-resize rules by name instead of repeating or reinventing them, note that equal weighting is a default rather than a rule (favor the pane with reliably more important content), and point to Affix's overlap guidance for anything pinned inside a pane. Extended Master-Detail's description the same way, since it's the same underlying resizable-pane pattern with a narrow list pane instead of an even split.
+
+Scope boundary, stated plainly: persisting a user's manually-dragged split ratio across reloads is genuinely undocumented too, but that gap lives in Splitter's own component page, not in Grid & Layout's pattern card (this finding's own evidence citation) - rewriting Splitter's documentation is a separate task, not attempted here.
+
+Verified: screenshotted the full Layout patterns section after the edit - both cards render with no horizontal overflow and no text clipping, just visibly denser cards than their grid-mates (a density trade-off, not a defect). Confirmed the minimum-size/keyboard-resize claims cited are real, current text already on `splitter-default.html`, not invented. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
