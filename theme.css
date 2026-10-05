@@ -73,6 +73,27 @@
   --red-600: #d80016;
   --red-glow: rgba(255,3,26,0.35);
   --red-tint: rgba(255,3,26,0.1);
+  /* Semantic aliases for the above - "red" is this system's own current
+     default, but Brand (foundations.html) is editable to any hue, so a
+     --red-* reference silently keeps that literal name even once its
+     value is, say, blue. Reference --brand-* instead in anything new;
+     --red-* stays exactly as-is underneath (nothing downstream breaks)
+     since these are pure var() aliases, re-resolved live against
+     whatever --red-* currently holds, light or dark theme alike. */
+  --brand-500: var(--red-500);
+  --brand-400: var(--red-400);
+  --brand-600: var(--red-600);
+  --brand-glow: var(--red-glow);
+  --brand-tint: var(--red-tint);
+  /* Same reasoning for the 3 user-editable surface steps (Background &
+     surface elevation) - "graphite" doesn't say which of the 3 is the
+     page background vs. a raised card. --graphite-800/700/600/500 (the
+     Neutral scale's hover-fill/resting-fill/disabled/placeholder steps)
+     aren't included here - that's a separate Foundation with its own
+     already-descriptive labels, not part of this specific gap. */
+  --surface-page: var(--graphite-950);
+  --surface-panel: var(--graphite-900);
+  --surface-raised: var(--graphite-850);
 
   /* Status accents (semantic, separate from brand red) */
   --green-500: #2fbf6e;
