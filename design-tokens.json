@@ -1,5 +1,5 @@
 {
-  "$description": "Agentic Design System tokens, generated from theme.css by tools/generate_tokens.py - do not hand-edit, regenerate instead. Follows the W3C Design Tokens Community Group format (https://tr.designtokens.org/format/). Tokens that differ between themes carry both values under $extensions['com.agentic-design-system.mode']; $value is always the dark-theme (default) value.",
+  "$description": "Agentic Design System tokens, generated from theme.css by tools/generate_tokens.py - do not hand-edit, regenerate instead. Follows the Design Tokens Community Group Format Module, version 2025.10 (https://tr.designtokens.org/format/2025.10/) - a Community Group specification, not a W3C Recommendation. dimension/duration values are typed {value, unit} objects per spec, not raw CSS strings; a token whose source is a CSS var() reference to another token is emitted as a DTCG alias ({group.key}) instead of a repeated literal. Tokens that differ between themes carry both values under $extensions['com.agentic-design-system.mode']; $value is always the dark-theme (default) value.",
   "color": {
     "graphite-950": {
       "$type": "color",
@@ -177,6 +177,38 @@
         }
       }
     },
+    "brand-500": {
+      "$type": "color",
+      "$value": "{color.red-500}"
+    },
+    "brand-400": {
+      "$type": "color",
+      "$value": "{color.red-400}"
+    },
+    "brand-600": {
+      "$type": "color",
+      "$value": "{color.red-600}"
+    },
+    "brand-glow": {
+      "$type": "color",
+      "$value": "{color.red-glow}"
+    },
+    "brand-tint": {
+      "$type": "color",
+      "$value": "{color.red-tint}"
+    },
+    "surface-page": {
+      "$type": "color",
+      "$value": "{color.graphite-950}"
+    },
+    "surface-panel": {
+      "$type": "color",
+      "$value": "{color.graphite-900}"
+    },
+    "surface-raised": {
+      "$type": "color",
+      "$value": "{color.graphite-850}"
+    },
     "green-500": {
       "$type": "color",
       "$value": "#2fbf6e"
@@ -240,44 +272,12 @@
       "$value": "0.5"
     },
     "color-focus-ring": {
-      "$type": "other",
-      "$value": "var(--red-400)"
+      "$type": "color",
+      "$value": "{color.red-400}"
     },
     "color-on-brand": {
       "$type": "other",
       "$value": "#fff"
-    },
-    "brand-500": {
-      "$type": "other",
-      "$value": "var(--red-500)"
-    },
-    "brand-400": {
-      "$type": "other",
-      "$value": "var(--red-400)"
-    },
-    "brand-600": {
-      "$type": "other",
-      "$value": "var(--red-600)"
-    },
-    "brand-glow": {
-      "$type": "other",
-      "$value": "var(--red-glow)"
-    },
-    "brand-tint": {
-      "$type": "other",
-      "$value": "var(--red-tint)"
-    },
-    "surface-page": {
-      "$type": "other",
-      "$value": "var(--graphite-950)"
-    },
-    "surface-panel": {
-      "$type": "other",
-      "$value": "var(--graphite-900)"
-    },
-    "surface-raised": {
-      "$type": "other",
-      "$value": "var(--graphite-850)"
     },
     "tracking-tight": {
       "$type": "other",
@@ -324,24 +324,24 @@
       "$value": "tabular-nums"
     },
     "button-primary-bg-default": {
-      "$type": "other",
-      "$value": "var(--red-500)"
+      "$type": "color",
+      "$value": "{color.red-500}"
     },
     "button-primary-bg-hover": {
-      "$type": "other",
-      "$value": "var(--red-400)"
+      "$type": "color",
+      "$value": "{color.red-400}"
     },
     "button-primary-bg-active": {
-      "$type": "other",
-      "$value": "var(--red-600)"
+      "$type": "color",
+      "$value": "{color.red-600}"
     },
     "button-primary-text": {
       "$type": "other",
-      "$value": "var(--color-on-brand)"
+      "$value": "{other.color-on-brand}"
     },
     "button-primary-focus-ring": {
       "$type": "other",
-      "$value": "var(--color-focus-ring)"
+      "$value": "{other.color-focus-ring}"
     },
     "button-primary-disabled-opacity": {
       "$type": "other",
@@ -349,55 +349,55 @@
     },
     "table-cell-padding-y-default": {
       "$type": "other",
-      "$value": "var(--space-8)"
+      "$value": "{space.space-8}"
     },
     "table-cell-padding-y-compact": {
       "$type": "other",
-      "$value": "var(--space-4)"
+      "$value": "{space.space-4}"
     },
     "table-header-text": {
-      "$type": "other",
-      "$value": "var(--text-dim)"
+      "$type": "color",
+      "$value": "{color.text-dim}"
     },
     "table-border-color": {
-      "$type": "other",
-      "$value": "var(--line)"
+      "$type": "color",
+      "$value": "{color.line}"
     },
     "modal-scrim": {
-      "$type": "other",
-      "$value": "var(--overlay-scrim)"
+      "$type": "color",
+      "$value": "{color.overlay-scrim}"
     },
     "modal-surface": {
-      "$type": "other",
-      "$value": "var(--graphite-900)"
+      "$type": "color",
+      "$value": "{color.graphite-900}"
     },
     "modal-shadow": {
       "$type": "other",
-      "$value": "var(--shadow-xl)"
+      "$value": "{shadow.shadow-xl}"
     },
     "modal-border-color": {
-      "$type": "other",
-      "$value": "var(--line-strong)"
+      "$type": "color",
+      "$value": "{color.line-strong}"
     },
     "card-surface": {
-      "$type": "other",
-      "$value": "var(--graphite-900)"
+      "$type": "color",
+      "$value": "{color.graphite-900}"
     },
     "card-border-color": {
-      "$type": "other",
-      "$value": "var(--line-strong)"
+      "$type": "color",
+      "$value": "{color.line-strong}"
     },
     "card-shadow-rest": {
       "$type": "other",
-      "$value": "var(--shadow-sm)"
+      "$value": "{shadow.shadow-sm}"
     },
     "card-shadow-hover": {
       "$type": "other",
-      "$value": "var(--shadow-md)"
+      "$value": "{shadow.shadow-md}"
     },
     "card-shadow-pressed": {
       "$type": "other",
-      "$value": "var(--shadow-xs)"
+      "$value": "{shadow.shadow-xs}"
     },
     "color-ai-accent": {
       "$type": "other",
@@ -412,24 +412,24 @@
       "$value": "rgba(139,92,246,0.12)"
     },
     "color-ai-confidence-high": {
-      "$type": "other",
-      "$value": "var(--green-500)"
+      "$type": "color",
+      "$value": "{color.green-500}"
     },
     "color-ai-confidence-medium": {
-      "$type": "other",
-      "$value": "var(--amber-500)"
+      "$type": "color",
+      "$value": "{color.amber-500}"
     },
     "color-ai-confidence-low": {
-      "$type": "other",
-      "$value": "var(--danger-500)"
+      "$type": "color",
+      "$value": "{color.danger-500}"
     },
     "color-agent-success": {
-      "$type": "other",
-      "$value": "var(--green-500)"
+      "$type": "color",
+      "$value": "{color.green-500}"
     },
     "color-agent-failure": {
-      "$type": "other",
-      "$value": "var(--danger-500)"
+      "$type": "color",
+      "$value": "{color.danger-500}"
     }
   },
   "font": {
@@ -464,109 +464,187 @@
   "radius": {
     "radius-none": {
       "$type": "dimension",
-      "$value": "0px"
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
     },
     "radius-2": {
       "$type": "dimension",
-      "$value": "2px"
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
     },
     "radius-sm": {
       "$type": "dimension",
-      "$value": "4px"
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
     },
     "radius-6": {
       "$type": "dimension",
-      "$value": "6px"
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
     },
     "radius-md": {
       "$type": "dimension",
-      "$value": "8px"
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
     },
     "radius-12": {
       "$type": "dimension",
-      "$value": "12px"
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
     },
     "radius-16": {
       "$type": "dimension",
-      "$value": "16px"
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
     },
     "radius-24": {
       "$type": "dimension",
-      "$value": "24px"
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
     },
     "radius-full": {
       "$type": "dimension",
-      "$value": "9999px"
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
     }
   },
   "space": {
     "space-4": {
       "$type": "dimension",
-      "$value": "4px"
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
     },
     "space-8": {
       "$type": "dimension",
-      "$value": "8px"
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
     },
     "space-12": {
       "$type": "dimension",
-      "$value": "12px"
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
     },
     "space-16": {
       "$type": "dimension",
-      "$value": "16px"
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
     },
     "space-20": {
       "$type": "dimension",
-      "$value": "20px"
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
     },
     "space-24": {
       "$type": "dimension",
-      "$value": "24px"
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
     },
     "space-28": {
       "$type": "dimension",
-      "$value": "28px"
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
     },
     "space-32": {
       "$type": "dimension",
-      "$value": "32px"
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
     },
     "space-40": {
       "$type": "dimension",
-      "$value": "40px"
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
     },
     "space-48": {
       "$type": "dimension",
-      "$value": "48px"
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
     },
     "space-56": {
       "$type": "dimension",
-      "$value": "56px"
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
     },
     "space-64": {
       "$type": "dimension",
-      "$value": "64px"
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
     },
     "space-72": {
       "$type": "dimension",
-      "$value": "72px"
+      "$value": {
+        "value": 72,
+        "unit": "px"
+      }
     },
     "space-80": {
       "$type": "dimension",
-      "$value": "80px"
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
     },
     "space-96": {
       "$type": "dimension",
-      "$value": "96px"
+      "$value": {
+        "value": 96,
+        "unit": "px"
+      }
     },
     "space-112": {
       "$type": "dimension",
-      "$value": "112px"
+      "$value": {
+        "value": 112,
+        "unit": "px"
+      }
     },
     "space-128": {
       "$type": "dimension",
-      "$value": "128px"
+      "$value": {
+        "value": 128,
+        "unit": "px"
+      }
     }
   },
   "shadow": {
@@ -578,79 +656,163 @@
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.06)",
-        "offsetX": "0px",
-        "offsetY": "1px",
-        "blur": "2px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 1,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 2,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     },
     "shadow-sm": {
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.08)",
-        "offsetX": "0px",
-        "offsetY": "1px",
-        "blur": "4px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 1,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 4,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     },
     "shadow-md": {
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.10)",
-        "offsetX": "0px",
-        "offsetY": "4px",
-        "blur": "8px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 4,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 8,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     },
     "shadow-lg": {
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.12)",
-        "offsetX": "0px",
-        "offsetY": "8px",
-        "blur": "16px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 8,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 16,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     },
     "shadow-xl": {
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.14)",
-        "offsetX": "0px",
-        "offsetY": "12px",
-        "blur": "24px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 12,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 24,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     },
     "shadow-2xl": {
       "$type": "shadow",
       "$value": {
         "color": "rgba(0,0,0,0.16)",
-        "offsetX": "0px",
-        "offsetY": "16px",
-        "blur": "32px",
-        "spread": "0px"
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 16,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 32,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
       }
     }
   },
   "motion": {
     "duration-fast": {
       "$type": "duration",
-      "$value": "120ms"
+      "$value": {
+        "value": 120,
+        "unit": "ms"
+      }
     },
     "duration-base": {
       "$type": "duration",
-      "$value": "150ms"
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      }
     },
     "duration-slow": {
       "$type": "duration",
-      "$value": "800ms"
+      "$value": {
+        "value": 800,
+        "unit": "ms"
+      }
     },
     "duration-shimmer": {
       "$type": "duration",
-      "$value": "1500ms"
+      "$value": {
+        "value": 1500,
+        "unit": "ms"
+      }
     },
     "ease-standard": {
       "$type": "cubicBezier",

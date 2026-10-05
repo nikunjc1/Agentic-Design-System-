@@ -27,7 +27,16 @@ EASE_KEYWORDS = {
 COLOR_PREFIXES = (
     "graphite", "control-border", "line", "text-hi", "text-mid", "text-dim",
     "overlay-invert", "overlay-scrim", "red", "green", "amber", "danger", "blue",
+    "brand", "surface",
 )
+
+# Published DTCG version this generator targets - pinned explicitly so
+# the interoperability claim in $description is actually testable
+# against one real spec revision, not an unversioned moving target.
+DTCG_VERSION = "2025.10"
+
+DIMENSION_RE = re.compile(r"^(-?[0-9.]+)(px|rem|em)$")
+ALIAS_RE = re.compile(r"^var\((--[a-z0-9-]+)\)$")
 
 
 def strip_comments(css):
@@ -87,14 +96,15 @@ def parse_shadow(value):
     if not match:
         return {"$type": "other", "$value": value}
     offset_x, offset_y, blur, color = match.groups()
+    dim = lambda n: {"value": float(n) if "." in n else int(n), "unit": "px"}
     return {
         "$type": "shadow",
         "$value": {
             "color": color,
-            "offsetX": f"{offset_x}px",
-            "offsetY": f"{offset_y}px",
-            "blur": f"{blur}px",
-            "spread": "0px",
+            "offsetX": dim(offset_x),
+            "offsetY": dim(offset_y),
+            "blur": dim(blur),
+            "spread": dim("0"),
         },
     }
 
@@ -104,13 +114,27 @@ def parse_font_family(value):
     return {"$type": "fontFamily", "$value": parts}
 
 
+# DTCG's real duration/dimension types are typed {value, unit} objects
+# (https://tr.designtokens.org/format/2025.10/#duration, #dimension) -
+# not a bare CSS string. A string like "200ms" or "4px" passes a quick
+# glance but fails any consumer that actually validates against the
+# published schema, which was the whole point of claiming this format.
 def parse_duration(value):
     value = value.strip()
     if value.endswith("ms"):
-        return {"$type": "duration", "$value": value}
+        return {"$type": "duration", "$value": {"value": float(value[:-2]) if "." in value[:-2] else int(value[:-2]), "unit": "ms"}}
     if value.endswith("s"):
-        return {"$type": "duration", "$value": f"{float(value[:-1]) * 1000:g}ms"}
-    return {"$type": "duration", "$value": value}
+        ms = float(value[:-1]) * 1000
+        return {"$type": "duration", "$value": {"value": ms if ms % 1 else int(ms), "unit": "ms"}}
+    return {"$type": "other", "$value": value}
+
+
+def parse_dimension(value):
+    match = DIMENSION_RE.match(value.strip())
+    if not match:
+        return {"$type": "other", "$value": value}
+    num, unit = match.groups()
+    return {"$type": "dimension", "$value": {"value": float(num) if "." in num else int(num), "unit": unit}}
 
 
 def parse_ease(value):
@@ -120,12 +144,31 @@ def parse_ease(value):
     return {"$type": "other", "$value": value}
 
 
+def alias_reference(value, dark):
+    """A token whose own value is var(--other-token) is an alias, not a
+    literal - DTCG's reference syntax ({group.key}) points at the other
+    token instead of repeating its value, so the two can never drift
+    silently out of sync in anything that actually resolves references
+    (this JSON file, read in isolation, cannot - a real DTCG resolver
+    is what makes the link live)."""
+    match = ALIAS_RE.match(value.strip())
+    if not match:
+        return None
+    ref_name = match.group(1)[2:]  # strip leading "--"
+    ref_group = token_group(ref_name)
+    return ref_group, f"{{{ref_group}.{ref_name}}}"
+
+
 def build_token(name, dark_value, light_value):
     group = token_group(name)
-    if group == "color":
+    alias = alias_reference(dark_value, dark_value)
+    if alias:
+        ref_group, ref_path = alias
+        token = {"$type": "color" if ref_group == "color" else group, "$value": ref_path}
+    elif group == "color":
         token = {"$type": "color", "$value": dark_value}
     elif group == "space" or group == "radius":
-        token = {"$type": "dimension", "$value": dark_value}
+        token = parse_dimension(dark_value)
     elif group == "shadow":
         token = parse_shadow(dark_value)
     elif group == "font":
@@ -138,8 +181,12 @@ def build_token(name, dark_value, light_value):
         token = {"$type": "other", "$value": dark_value}
 
     if light_value is not None and light_value != dark_value:
+        light_alias = alias_reference(light_value, light_value)
         token["$extensions"] = {
-            "com.agentic-design-system.mode": {"dark": dark_value, "light": light_value}
+            "com.agentic-design-system.mode": {
+                "dark": alias[1] if alias else dark_value,
+                "light": light_alias[1] if light_alias else light_value,
+            }
         }
     return token
 
@@ -175,7 +222,15 @@ def run():
         tokens.setdefault(group, {})[key] = build_token(key, dark_value, light.get(name))
 
     out = {
-        "$description": "Agentic Design System tokens, generated from theme.css by tools/generate_tokens.py - do not hand-edit, regenerate instead. Follows the W3C Design Tokens Community Group format (https://tr.designtokens.org/format/). Tokens that differ between themes carry both values under $extensions['com.agentic-design-system.mode']; $value is always the dark-theme (default) value.",
+        "$description": (
+            f"Agentic Design System tokens, generated from theme.css by tools/generate_tokens.py - do not hand-edit, "
+            f"regenerate instead. Follows the Design Tokens Community Group Format Module, version {DTCG_VERSION} "
+            f"(https://tr.designtokens.org/format/{DTCG_VERSION}/) - a Community Group specification, not a W3C "
+            f"Recommendation. dimension/duration values are typed {{value, unit}} objects per spec, not raw CSS "
+            f"strings; a token whose source is a CSS var() reference to another token is emitted as a DTCG alias "
+            f"({{group.key}}) instead of a repeated literal. Tokens that differ between themes carry both values "
+            f"under $extensions['com.agentic-design-system.mode']; $value is always the dark-theme (default) value."
+        ),
         **tokens,
     }
     (ROOT / "design-tokens.json").write_text(json.dumps(out, indent=2) + "\n")
