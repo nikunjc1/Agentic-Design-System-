@@ -1574,6 +1574,16 @@ Verified: screenshotted the updated Attribution section - all three badge exampl
 
 This completes every P2 finding from the 5 October 2026 Foundation audit (31 of 31). Continuing with the P1 findings next.
 
+## Foundation audit X01 (P1) - the docs catalog was stale, and there was no way to detect that automatically
+
+Finding from the 5 October 2026 Foundation audit: "Catalog retains removed Text colors, lacks newer Spacing defaults, Typography roles, Radius Navigation and Grid Master-Detail, and has no AI & Agents entry... Export must convey the same system as the portal."
+
+Ran `tools/audit_pages.py` to regenerate `docs-catalog.json`/`docs-catalog.js` against the current HTML sources - confirmed the stale "Text colors" content (removed from `foundations.html` itself earlier this session, but never caught up in the exported catalog) is gone, and new content added throughout today's P2 fixes (Consumer App/AI Product cards, Grid & Layout's Master-Detail pattern, AI & Agents' own page) now appears correctly. Also regenerated `audit/page-inventory.json`/`.md`.
+
+Addressed "Missing: Version/hash metadata, completeness manifest, page/rule parity checks" concretely rather than leaving it as a one-time regeneration: added `source_hash()` (one SHA-256 over every page's raw HTML, in sorted order, so it changes the moment any page's content does) and a `docs-catalog-manifest.json` sidecar recording that hash, a timestamp and the page count on every generation. Added a `--check` mode to the same script - compares the current sources' hash against the manifest and exits non-zero with a clear "STALE: re-run..." message if they disagree, instead of silently trusting whatever's on disk. This is the actual "fail release on stale/missing sections" mechanism the finding asked for, not just a manual regeneration this one time.
+
+Verified: `--check` correctly reports `fresh` immediately after regenerating. Made a trivial change to a page's HTML and confirmed `--check` then correctly reports `STALE` and exits with code 1; reverted the change and regenerated, confirmed it returns to `fresh`. Confirmed `md-export.html` still loads `window.ADSDocsCatalog` with all 157 entries and no console errors. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

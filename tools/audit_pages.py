@@ -1,12 +1,15 @@
 """Rebuild the local documentation catalog and repeatable static page audit."""
+import hashlib
 import json
 import re
+import sys
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parent.parent
+MANIFEST_PATH = ROOT / 'docs-catalog-manifest.json'
 
 
 class Page(HTMLParser):
@@ -64,8 +67,44 @@ class Page(HTMLParser):
                 self.heading.append(text)
 
 
+def source_hash(sources):
+    """One hash over every page's raw HTML, in a stable (sorted) order -
+    changes the moment any page's content changes, regardless of which
+    one. Used to detect a stale catalog: regenerate, then compare the old
+    manifest's hash against this to know whether anything actually
+    changed, rather than eyeballing a diff."""
+    h = hashlib.sha256()
+    for name in sorted(sources):
+        h.update(name.encode())
+        h.update(sources[name].encode())
+    return h.hexdigest()
+
+
+def check():
+    """Fails (exit 1) if docs-catalog.json is stale relative to the current
+    HTML sources - the "fail release on stale/missing sections" check this
+    generator didn't have before. Run this in CI/pre-release, not instead
+    of regenerating; it only detects staleness, it doesn't fix it."""
+    sources = {p.name: p.read_text() for p in sorted(ROOT.glob('*.html'))}
+    current_hash = source_hash(sources)
+    if not MANIFEST_PATH.exists():
+        print('STALE: no docs-catalog-manifest.json - run `python3 tools/audit_pages.py` to generate one.')
+        return 1
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    if manifest.get('sourceHash') != current_hash:
+        print('STALE: docs-catalog.json does not match the current HTML sources - re-run `python3 tools/audit_pages.py`.')
+        return 1
+    if manifest.get('pageCount') != len(sources):
+        print(f"STALE: manifest page count ({manifest.get('pageCount')}) does not match current page count ({len(sources)}).")
+        return 1
+    print(json.dumps({'status': 'fresh', 'generatedAt': manifest.get('generatedAt'), 'pageCount': manifest.get('pageCount')}, indent=2))
+    return 0
+
+
 def run():
-    pages = {p.name: Page(p.read_text()) for p in sorted(ROOT.glob('*.html'))}
+    import datetime
+    pages_raw = {p.name: p.read_text() for p in sorted(ROOT.glob('*.html'))}
+    pages = {name: Page(src) for name, src in pages_raw.items()}
     catalog, report = [], []
     for name, page in pages.items():
         source = (ROOT / name).read_text()
@@ -103,8 +142,16 @@ def run():
     for r in report:
         lines.append(f"| [{r['file']}](../{r['file']}) | {r['kind']} | {r['status']} | {'; '.join(r['issues']) or 'Source checks passed'} |")
     (ROOT / 'audit' / 'page-inventory.md').write_text('\n'.join(lines) + '\n')
+    manifest = {
+        'generatedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'sourceHash': source_hash(pages_raw),
+        'pageCount': len(pages_raw),
+    }
+    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2) + '\n')
     print(json.dumps({'pages': len(pages), 'kinds': dict(Counter(r['kind'] for r in report)), 'pagesWithSourceIssues': sum(bool(r['issues']) for r in report)}, indent=2))
 
 
 if __name__ == '__main__':
+    if '--check' in sys.argv:
+        sys.exit(check())
     run()
