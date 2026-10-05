@@ -1420,6 +1420,16 @@ Found a real bug while checking "logical/native spacing lacks explicit policy": 
 
 Verified: screenshotted the category row in both LTR (checkbox+label on the left, count+chevron on the right, unchanged) and RTL (now correctly mirrored - chevron on the left/"end," count next to the checkbox and label on the right/"start") after the fix. Confirmed the extended AI Rule text renders with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit R03 (P2) - Radius's taglines, full scales and role table looked contradictory, undocumented
+
+Finding from the 5 October 2026 Foundation audit: "Sharp 0-4 includes 6/8; Balanced 4-16 includes 24/Full; roles allow values absent from some scales... Designers cannot infer prohibition/preference."
+
+Confirmed the first half directly: Sharp's own tagline says "0-4px" but its listed scale is "0, 2, 4, 6, 8" - genuinely goes past the tagline, and the same pattern holds across all 5 philosophies (Compact "2-8px" vs. scale to 12; Balanced "4-16px" vs. scale to 24/Full; etc.) - not a typo, a consistent, unexplained design choice repeated 5 times. Added a paragraph clarifying the tagline names the *characteristic core range* while the scale additionally always includes `0` (square-corner exceptions every philosophy still needs) and a generous top/`Full` value (circular/pill elements, which exist under every philosophy) - neither is a contradiction, the tagline was never describing those two anyway.
+
+Checked the second half against the real mechanism rather than assuming: "Radius by component role"'s table (e.g. "Interactive components: 4, 6, 8px") looked like it could list a value absent from a given philosophy's scale - checked `shell.js`'s `RADIUS_PHILOSOPHY_TOKENS` and confirmed every philosophy actually defines a value for every one of the 7 named slots (`2`/`sm`/`6`/`md`/`12`/`16`/`24`) - nothing is ever literally absent. The real situation is subtler and more interesting: real components reference the slot by name (`var(--radius-md)`, confirmed against `shell.css` - never a literal `8px`), so the role table's numbers are Balanced's own resolved values for each slot, not a cross-philosophy literal promise. Added a paragraph explaining this with the system's own real numbers: picking Sharp doesn't drop Interactive components below their intended size tier, it reinterprets what the `md` slot resolves to under Sharp instead (4px, not 8px) - the role stays the same, only the philosophy's numbers behind it change.
+
+Verified: screenshotted both the "Radius philosophy" and "Radius by component role" sections - both new paragraphs render with no horizontal overflow, and the worked Sharp/`md` example (8px -> 4px) is cited from the real token map, not invented. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
