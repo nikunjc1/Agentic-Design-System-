@@ -1484,6 +1484,22 @@ Investigated "Standard85 versus Default70" rather than assuming it was a typo: B
 
 Verified: manually diverging a preset's opacity now clears its `is-active` class immediately and the generated Markdown shows `Custom` with the real current values, not a contradictory mix of seed and edited numbers. Confirmed clicking a preset still correctly shows it active (no regression) and that Reset/other fields still work. Screenshotted the page - no horizontal overflow from the new paragraphs. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit B06 (P2) - audited the border-width drift a code comment had only acknowledged
+
+Finding from the 5 October 2026 Foundation audit: "Picker 0/1/2/3/4; CSS comments acknowledge 1.5/2.5/5; Card 1.5 disclosed... Scale/consumer width drift lacks governed exceptions," asking for an actual audit, not just the existing comment's bare acknowledgment that a mismatch exists.
+
+Resolved each of the three off-scale values individually rather than leaving them bundled as one unexamined "drift" note:
+
+- **1.5px** - grepped every real usage: dozens of them, across Card's own border and every outlined/underlined form control's resting state. Pervasive and deliberate, not a stray mistake. Promoted to a real token, `--border-width-1-5`, since this is a justified semantic/optical exception (Card's own documentation already explains why: "a card's border is its primary edge, no shadow backs it up"), not drift to migrate away.
+- **2.5px** - exactly one real usage: Spin's default-size loading ring, deliberately between its own Small (2px) and Large (3px) variants to keep 3 visually distinct stroke weights proportional to 3 different ring diameters. A narrow, component-specific exception, documented as such in a code comment rather than promoted to a general token or flagged as an error.
+- **5px "border"** - turned out not to be a border-width candidate at all: both real occurrences (`.info-tip::before`, `.dynamic-tooltip::after`) are the CSS transparent-border triangle technique that draws a tooltip's arrow/caret shape, an unrelated geometric trick that happens to use the `border` property. Documented this explicitly so a future reader doesn't mistake it for a 4th drifted width.
+
+Replaced `theme.css`'s bare acknowledgment comment with the full audit above. Added a brief cross-reference to Card's own existing 1.5px disclosure on `borders.html` confirming it's a real, tokenized, sitewide-shared value now, not unique or accidental.
+
+Scope boundary, stated plainly: didn't mass-migrate the dozens of existing literal `1.5px` CSS declarations to reference the new `var(--border-width-1-5)` token - that's a much larger, separate mechanical refactor than this documentation-audit finding warrants, and changing dozens of working component rules carries real regression risk disproportionate to a P2 finding. The token now exists and is documented as the canonical name for that value; adopting it in existing rules can happen incrementally.
+
+Verified: confirmed `--border-width-1-5` resolves to `1.5px` via computed style. Screenshotted the updated Component defaults section - no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

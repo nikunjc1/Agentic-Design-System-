@@ -18,17 +18,30 @@
   --line: rgba(255,255,255,0.08);
   --line-strong: rgba(255,255,255,0.16);
 
-  /* Border widths actually used sitewide (1px/1.5px/2px/2.5px/5px) don't
-     fully match borders.html's own documented preset scale (0/1/2/3/4px)
-     - that mismatch is a real, separate drift, not something to paper
-     over by inventing a token for a value that was never actually
-     supposed to exist. Only the values that DO match the documented
-     scale get a token here; --border-color-* state tokens (focus/error/
-     success/etc, each already backed by an existing semantic color) are
-     left for the same pass as component-tier tokens, not invented here
-     in isolation. */
+  /* Audited (Foundation audit B06): sitewide border widths beyond the
+     documented 0/1/2/3/4px preset scale, resolved one by one rather than
+     left as one unexamined "drift" note.
+     - 1.5px: pervasive and deliberate (Card's own primary-edge weight,
+       every outlined/underlined form control's resting border - dozens
+       of real uses, not a stray mistake) - promoted to a real token
+       below, since this is a justified semantic/optical exception, not
+       drift to migrate away.
+     - 2.5px: exactly one use (Spin's default-size loading ring,
+       shell.css), deliberately between its own Small (2px) and Large
+       (3px) variants to keep 3 visually distinct stroke weights
+       proportional to 3 different ring diameters - a narrow,
+       component-specific exception, not promoted to a general token.
+     - 5px "border": not a border-width token candidate at all - it's
+       the CSS transparent-border triangle technique drawing a tooltip's
+       arrow/caret shape (.info-tip::before, .dynamic-tooltip::after),
+       an unrelated geometric trick that happens to use the `border`
+       property, not a visible stroke weight.
+     --border-color-* state tokens (focus/error/success/etc, each already
+     backed by an existing semantic color) are left for the same pass as
+     component-tier tokens, not invented here in isolation. */
   --border-width-0: 0px;
   --border-width-1: 1px;
+  --border-width-1-5: 1.5px;
   --border-width-2: 2px;
   --border-width-3: 3px;
   --border-width-4: 4px;
