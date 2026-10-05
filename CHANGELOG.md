@@ -1552,6 +1552,16 @@ Also checked the reduced-motion claim rather than assuming a gap existed where t
 
 Verified: screenshotted the new section - renders cleanly with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit I09 (P2) - "teach Claude or Gemini" had nothing concrete behind it
+
+Finding from the 5 October 2026 Foundation audit: "Promises teaching generators from selected style/references/library... No bounded agent prompt/schema, accepted SVGs/rejection criteria, provenance or verified license/version manifest."
+
+Confirmed: the page's own lede promises to "teach Claude or Gemini to keep generating more icons that match," but `icons.html` had zero `ai-rule-callout` anywhere, unlike Spacing and Radius, which both already have one. Added a real one: a generated icon must use the page's own currently saved configuration (style, grid size as its `viewBox`, stroke width/corner if stroke-based), `currentColor` only (confirmed: every real icon on this page already follows this), named for the concept/action it represents rather than its literal shape (the same convention the page's own Lucide/Feather library picks already use), reviewed by a human before shipping (the same standing rule AI & Agents already states for AI-suggested content generally - this page doesn't get a silent exception), and sourced only from the libraries listed on the page, each already showing its own real license (Lucide/ISC, Feather/MIT, etc.) - confirmed that part was already correctly implemented.
+
+The one real gap that WAS missing entirely: uploaded "reference" icons have no provenance or license tracking of any kind - confirmed nothing in `icons.js` records where an uploaded file came from. Rather than building a new tracking feature for what's explicitly a lightweight, session-only style-reference tool (uploads aren't even persisted across reloads today), added a plain disclaimer stating uploads are reference-only, unverified for reuse, and that the actual right to use each one needs checking separately - honest about the real limitation instead of either building unwarranted new scope or leaving the gap unstated.
+
+Verified: screenshotted the page - no horizontal overflow from either addition. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

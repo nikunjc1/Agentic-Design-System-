@@ -293,6 +293,11 @@
     <p class="empty-eyebrow" style="margin-top:24px;">Live preview</p>
     <div class="icon-live-preview" data-role="icon-preview"></div>
 
+    <div class="ai-rule-callout">
+      <p class="ai-rule-eyebrow">AI Rule</p>
+      <p class="ai-rule-text">A generated icon must use this page's own currently saved configuration, not its own judgment: the saved style (stroke vs. fill vs. illustrative), the saved grid size as its <code>viewBox</code> (e.g. 24x24 for 24px), and the saved stroke width/corner treatment if the style is stroke-based - never a hardcoded color (<code>currentColor</code> only, confirmed: every icon on this page already follows this). Name it for the concept or action it represents ("delete," "notification"), never its literal shape ("trash-can," "bell-outline") - the same convention this page's own library picks (Lucide, Feather) already use. A generated or AI-suggested icon needs human review before shipping, same as this system's AI & Agents foundation already requires for any AI-suggested content generally - this page doesn't get a silent exception. Only the libraries listed below (each with its own stated license) are approved reuse sources; an icon from anywhere else needs its own license checked before use, the same as any other third-party asset.</p>
+    </div>
+
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveIconsBtn" type="button">Save icon system</button>
       <button class="btn btn-ghost" id="resetIconsBtn" type="button">Reset to defaults</button>
@@ -391,6 +396,7 @@
     </div>
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Upload a handful of reference icons to establish your own visual style, or start from an existing open-source set instead of designing from scratch.</p>
+    <p class="get-library-copy">Uploaded files are style reference only, not verified for reuse - this page doesn't check or record where they came from or what license covers them. Verify you actually have the right to use each one (or trace it back to one of the approved libraries below) before it, or anything generated to match it, ships in a real product.</p>
 
     <div class="icon-upload-row">
       <label class="upload-dropzone icon-upload-drop" data-role="icon-upload-drop">
