@@ -4,7 +4,7 @@
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>New Project - Agentic Design System</title>
+<title>Project setup - Agentic Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -42,7 +42,7 @@
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
       <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link is-active" href="new-project.html">New Project</a>
+      <a class="nav-link is-active" href="new-project.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -167,6 +167,7 @@
 <p class="page-eyebrow">Your design system</p>
 <h1 class="page-title">Let’s build around your product</h1>
 <p class="page-lede">Tell us what you’re creating and how you work. Get a tailored brief, customize your foundations, and export Markdown for your team or AI tool.</p>
+<p class="setup-help" id="existingProfileNotice" role="status" hidden></p>
 <ol class="setup-steps" aria-label="Setup progress"><li aria-current="step">1. Your product</li><li>2. About you</li><li>3. Review</li></ol>
 <div class="setup-layout"><section class="setup-panel">
 <form id="projectSetup" novalidate>
@@ -180,7 +181,7 @@
 <p class="setup-help">Your draft and profile stay in this browser. No account is created and no email is sent. Contact details are excluded from Markdown unless you choose to include them.</p>
 </form>
 <div id="setupDone" hidden><h2 tabindex="-1">Your setup is ready</h2><p><strong id="savedProjectName"></strong> now has a tailored product brief and platform guidance.</p><p class="setup-help" id="roleTaskText" style="margin-top:8px"></p><p class="setup-field" id="readinessLabel" style="margin-top:20px">Foundation readiness</p><ul class="setup-readiness" id="foundationReadiness"></ul><div class="setup-actions" style="margin-top:20px"><a class="btn btn-primary" id="recommendedNext" href="foundations.html#colors">Customize foundations</a><a class="btn btn-ghost" href="md-export.html">Export Markdown</a></div><p class="setup-help">You can export immediately, even with every Foundation still at its default - the readiness list above is informational, not a requirement.</p></div>
-</section><aside class="setup-panel" aria-label="What happens next"><h2>From idea to implementation</h2><p><strong>1. Set your context</strong><br>Product, platforms and role guide your handoff.</p><p><strong>2. Make it yours</strong><br>Save your brand colors and foundation values.</p><p><strong>3. Take it with you</strong><br>Export a brief or the documentation as Markdown.</p><p class="setup-help">One active setup per browser. Editing setup updates the current profile; foundation values are shared across this local workspace.</p></aside></div>
+</section><aside class="setup-panel" aria-label="What happens next"><h2>From idea to implementation</h2><p><strong>1. Set your context</strong><br>Product, platforms and role guide your handoff.</p><p><strong>2. Make it yours</strong><br>Save your brand colors and foundation values.</p><p><strong>3. Take it with you</strong><br>Export a brief or the documentation as Markdown.</p><p class="setup-help">One active project per browser, not a list: there's no separate create, switch or duplicate here - saving this form always edits and replaces that same one profile, it never creates an isolated second one alongside it. Foundation values (Colors, Spacing, Typography, etc.) are owned by this workspace as a whole, not by any one project - they're shared and unaffected by what you save here, in either direction.</p></aside></div>
 </main>
 
 <script src="shell.js"></script>

@@ -42,7 +42,7 @@
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
       <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link" href="new-project.html">New Project</a>
+      <a class="nav-link" href="new-project.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -352,7 +352,7 @@
 
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
-      <p class="ai-rule-text">Generated interfaces must use a value from this page's Micro / Component / Layout scale for every margin, padding and gap - never an arbitrary pixel value, and never a value interpolated between two scale steps to arrive at a novel spacing. One documented exception: a container's own outer padding (a page shell, a setup panel - not a component's internal spacing) may use <code>clamp(a, Nvw, b)</code> where both <code>a</code> and <code>b</code> are themselves real scale steps, letting that one padding breathe between two approved values across viewport widths instead of jumping between them at a breakpoint - this system's own New Project setup panel does exactly this (<code>clamp(20px, 3vw, 32px)</code>, both ends on the Balanced scale). Logical properties (<code>margin-inline-end</code>, not <code>margin-right</code>) are required wherever spacing differs by writing direction, so RTL doesn't need a separate rule restated per component.</p>
+      <p class="ai-rule-text">Generated interfaces must use a value from this page's Micro / Component / Layout scale for every margin, padding and gap - never an arbitrary pixel value, and never a value interpolated between two scale steps to arrive at a novel spacing. One documented exception: a container's own outer padding (a page shell, a setup panel - not a component's internal spacing) may use <code>clamp(a, Nvw, b)</code> where both <code>a</code> and <code>b</code> are themselves real scale steps, letting that one padding breathe between two approved values across viewport widths instead of jumping between them at a breakpoint - this system's own Project setup panel does exactly this (<code>clamp(20px, 3vw, 32px)</code>, both ends on the Balanced scale). Logical properties (<code>margin-inline-end</code>, not <code>margin-right</code>) are required wherever spacing differs by writing direction, so RTL doesn't need a separate rule restated per component.</p>
     </div>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>

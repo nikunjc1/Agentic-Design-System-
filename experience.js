@@ -136,6 +136,15 @@
     let draft = null;
     try { draft = M.read(localStorage, M.DRAFT); } catch (e) { storageError = e.message; }
     const initial = draft || profile;
+    // Foundation audit NP01 - this page overwrites the one existing project
+    // profile, it does not create an isolated new one, and Foundation values
+    // (Colors, Spacing, etc.) are shared sitewide regardless - saying so here
+    // up front, not only in the sidebar's smaller print further down.
+    const existingNotice = $('#existingProfileNotice');
+    if (existingNotice && profile && typeof profile.project === 'string') {
+      existingNotice.hidden = false;
+      existingNotice.textContent = `You already have a saved project ("${profile.project}"). Continuing will replace its details - Foundation values (Colors, Spacing, Typography, etc.) are shared across this workspace and are not reset by this.`;
+    }
     if (initial) {
       for (const key of ['project', 'productType', 'productOther', 'name', 'email', 'designation', 'role', 'roleOther']) if (typeof initial[key] === 'string') field(key).value = initial[key];
       form.querySelectorAll('[name=platforms]').forEach(n => { n.checked = Array.isArray(initial.platforms) && initial.platforms.includes(n.value); });
