@@ -39,15 +39,28 @@
     'tablet': {label: 'Tablet', guidance: 'Support portrait and landscape, touch and keyboard, split-screen resizing, and adaptive master-detail layouts. Do not rely on hover.'},
     'desktop-app': {label: 'Desktop app', guidance: 'Support window resizing, keyboard shortcuts with visible alternatives, focus restoration, and platform menus. Adapt web components to the chosen desktop framework.'}
   };
+  // The schema version save() stamps on every write. read() rejects a
+  // STRICTLY GREATER version outright (data written by a newer copy of
+  // this app, whose fields this code can't safely interpret) - never an
+  // older or missing one, which existing saved projects legitimately have
+  // and which LEGACY_PRODUCT_MAP above already knows how to migrate.
+  const SUPPORTED_VERSION = 1;
+  // Same 1-100 character, string-typed, trimmed bound the two other free-
+  // text fields (Project name, Your name, Designation) already enforce,
+  // and the same bound their own <input maxlength="100"> already shows in
+  // the UI - this just makes the model itself the authority on that bound
+  // instead of leaving it to "the browser happened to enforce the inputs",
+  // so a value restored or imported some other way can't bypass it.
+  const isBoundedText = value => typeof value === 'string' && value.trim().length >= 1 && value.trim().length <= 100;
   function validate(p) {
     const e = {};
     for (const [key, label] of [['project','Project name'], ['name','Your name'], ['designation','Designation']]) {
-      if (typeof p[key] !== 'string' || !p[key].trim() || p[key].trim().length > 100) e[key] = label + ' must contain 1–100 characters.';
+      if (!isBoundedText(p[key])) e[key] = label + ' must contain 1–100 characters.';
     }
     if (!PRODUCTS.includes(p.productType)) e.productType = 'Choose the type of product you are creating.';
-    if (p.productType === 'Other' && !p.productOther?.trim()) e.productOther = 'Describe your product type.';
+    if (p.productType === 'Other' && !isBoundedText(p.productOther)) e.productOther = 'Describe your product type in 1–100 characters.';
     if (!ROLES.includes(p.role)) e.role = 'Choose your role in this project.';
-    if (p.role === 'Other' && !p.roleOther?.trim()) e.roleOther = 'Describe your role.';
+    if (p.role === 'Other' && !isBoundedText(p.roleOther)) e.roleOther = 'Describe your role in 1–100 characters.';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email || '') || p.email.length > 254) e.email = 'Enter a valid email address.';
     if (!Array.isArray(p.platforms) || !p.platforms.length || p.platforms.some(k => !PLATFORMS[k])) e.platforms = 'Select at least one target platform.';
     return e;
@@ -58,6 +71,7 @@
     if (!raw) return null;
     const p = JSON.parse(raw);
     if (!p || typeof p !== 'object' || Array.isArray(p)) throw new Error('Saved setup could not be read. Your saved data has not been changed.');
+    if (key === KEY && typeof p.version === 'number' && p.version > SUPPORTED_VERSION) throw new Error('Saved setup was created by a newer version of this app and can’t be read here. Update the app, or start a new setup.');
     if (key === KEY && LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
     if (key === KEY && Object.keys(validate(p)).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;

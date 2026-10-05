@@ -22,6 +22,17 @@ test('a profile saved under the old product-type list still reads back, remapped
   s.setItem(M.KEY, JSON.stringify({...profile, productType:'Customer portal', version:1, updatedAt:new Date().toISOString()}));
   assert.equal(M.read(s).productType, 'Consumer App');
 });
+test('Other descriptions are bounded and type-checked like the other free-text fields', () => {
+  assert.ok(M.validate({...profile,productType:'Other',productOther:'x'.repeat(101)}).productOther);
+  assert.ok(M.validate({...profile,productType:'Other',productOther:12345}).productOther);
+  assert.ok(M.validate({...profile,role:'Other',roleOther:'x'.repeat(101)}).roleOther);
+  assert.deepEqual(M.validate({...profile,productType:'Other',productOther:'Something specific'}),{});
+});
+test('a profile saved by a newer app version is rejected, not silently misread', () => {
+  const s = store();
+  s.setItem(M.KEY, JSON.stringify({...profile, version:999, updatedAt:new Date().toISOString()}));
+  assert.throws(()=>M.read(s), /newer version/);
+});
 test('Markdown contains saved tokens, selected platforms and source guides; identity is opt-in', () => {
   const tokens = {colors:{light:{primary:{hex:'#123456'}}}};
   const docs = [{file:'input-text-field.html',title:'Input',status:'Available',markdown:'Use a visible label.'}];
