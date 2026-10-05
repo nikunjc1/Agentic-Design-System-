@@ -384,6 +384,30 @@
       <pre class="guide-machine-json"><code>{}</code></pre>
     </div>
   </section>
+
+  <section class="panel spacing-model-panel">
+    <p class="panel-title">Shadows and interaction states</p>
+    <p class="get-library-copy">"Never shadow alone" needs a concrete second signal per state, not just the principle - here's what this system actually uses for each, with the real rule behind it:</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Focus</span>
+        <span class="usage-desc">A visible outline/ring, never elevation - confirmed: every real input's focus state uses <code>outline: 2px solid var(--color-focus-ring)</code>, not a box-shadow change</span>
+        <span class="usage-values">Outline</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Selected</span>
+        <span class="usage-desc">Border color change, plus a solid (not blurred) box-shadow ring used as an outline substitute, not elevation - confirmed: Card's own <code>.is-selected</code> pairs <code>border-color</code> with <code>box-shadow: 0 0 0 1px</code>, a flat ring, not a soft elevation shadow</span>
+        <span class="usage-values">Border + solid ring</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Pressed</span>
+        <span class="usage-desc">Background color change on <code>:active</code>, confirmed across every real Button type - <code>:active</code> fires reliably on touch (press-and-hold), unlike <code>:hover</code>, which doesn't fire at all on most touch devices and shouldn't be the only pressed cue</span>
+        <span class="usage-values">Background</span>
+      </div>
+    </div>
+    <p class="get-library-copy">Reduced motion is already handled sitewide, not per-shadow: a global <code>@media (prefers-reduced-motion: reduce)</code> rule collapses every transition and animation duration to near-zero - a shadow's own hover/press transition inherits this automatically, no separate opt-out needed per component.</p>
+    <p class="get-library-copy">Performance: a <code>box-shadow</code> transition repaints the shadow itself every frame - it isn't compositor-accelerated the way <code>transform</code>/<code>opacity</code> are. Keep shadow transitions short and triggered only by a real state change (hover, press, a panel opening) - never continuous, looping or scroll-linked, which is where an animated box-shadow's real cost shows up.</p>
+  </section>
 </main>
 
 <script src="shell.js"></script>

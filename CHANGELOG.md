@@ -1522,6 +1522,16 @@ Scoped the bare `:hover`/`:active` pseudo-class rules to only fire on a real `<a
 
 Verified: hovered the real static `.card-demo-panel` div on `card-default.html` and confirmed its `box-shadow` is now identical before and after hover (previously would have changed). Confirmed `card-detail.html` loads with no console errors and its own Live Preview matrix is unaffected (no current usage of the unscoped `.is-hover` class was broken - there wasn't one). Screenshotted the updated Shadows section - no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit H06 (P2) - "never shadow alone" had no concrete per-state recipe
+
+Finding from the 5 October 2026 Foundation audit: "Correct shadow-alone prohibition; button/sticky recommendations... No concrete keyboard/touch/reduced-motion state recipes/performance guidance," asking the existing principle ("never rely on shadow alone for focus, selection or state") get real worked examples, not just the one-sentence rule.
+
+Added a new "Shadows and interaction states" section, grounded in this system's own real CSS rather than invented recipes: Focus uses a visible `outline` (confirmed: every real input's focus state), Selected uses a border-color change plus a flat, non-blurred `box-shadow: 0 0 0 1px` ring used as an outline substitute - not elevation (confirmed: Card's own `.is-selected`), and Pressed uses a background-color change on `:active` (confirmed: every real Button type) - called out specifically because `:active` fires reliably on touch (press-and-hold) while `:hover` mostly doesn't fire on touch devices at all, so a hover-only cue silently drops on mobile.
+
+Checked reduced-motion and performance rather than leaving either unaddressed: confirmed a global `@media (prefers-reduced-motion: reduce)` rule already collapses every transition/animation duration sitewide, so a shadow's own hover/press transition inherits this automatically with no separate per-component work needed - stated as an existing fact, not a new rule to add. Added standard, well-established performance guidance for `box-shadow` transitions specifically (not compositor-accelerated like `transform`/`opacity`, so keep them short and state-triggered, never continuous or scroll-linked).
+
+Verified: screenshotted the new section - renders cleanly with no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
