@@ -1345,6 +1345,16 @@ Documented the mapping in two places per the finding's "show them in all views":
 
 Verified: computed `--brand-500` equals `--red-500` by default (`#ff031a`), and after saving a custom pure-blue Brand color and custom Background surface colors, both `--brand-500`/`--surface-page` live-tracked the new values (`#0000FF`/`#223344`) exactly matching their primitives - confirmed in the same page load, no reload-order dependency. Confirmed the extended Machine View JSON still parses as valid JSON. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit C09 (P2) - no documented status-color recipe, no selection/data-series exclusion
+
+Finding from the 5 October 2026 Foundation audit: "No exact foreground/background/icon triplets or component examples; warning/error/info/selection/data-series distinctions incomplete," worried that without a documented recipe, each component would end up inventing its own.
+
+Checked what real components actually do before writing anything, rather than inventing a single universal recipe: Alert (`shell.css`'s `.alert-demo-banner--*`) uses a 3px status-colored left border plus a status-colored icon, with the banner's own neutral background and default body text left alone. Badge's status dot and Table's status cell (`table.html`'s real markup) both use a plain solid status-colored dot next to default-colored text, no tint or border at all. Tag's status variant is the one place that *does* tint the background (~12% opacity) with full-strength status-colored text. Form validation text (`.setup-error`) uses plain danger-colored text with no icon or background. Four genuinely different recipes, not one - documenting a single invented triplet would have been wrong.
+
+Added two paragraphs to Colors' "Semantic & status colors" section: the four real recipes above, and an explicit exclusion - a selected row/card/option uses Brand (confirmed: `.product-card.is-active`/`.group-btn-segment.is-selected` both use `--red-500`/`--brand-500`, never `--danger-500`), since selection isn't a severity judgment and reusing Danger's red there would misread as an error state. Also confirmed there is no chart/data-visualization component in this system at all today (grepped for one; none exists), so documented that a future one should get its own hue set rather than reusing Success/Warning/Danger/Info, instead of inventing a speculative data-series palette now for a component that doesn't exist yet.
+
+Verified: screenshotted the updated section - renders cleanly with no overflow, all four recipes and the two exclusions read clearly below the existing explanatory copy. Confirmed the selection-uses-Brand claim against the actual CSS (`--red-500`/`--brand-500`, not `--danger-500`) and the danger-vs-brand separation claim already documented just above it in the same section. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
