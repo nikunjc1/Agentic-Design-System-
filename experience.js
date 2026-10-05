@@ -119,6 +119,7 @@
     const form = $('#projectSetup');
     if (!form) return;
     const status = $('#setupStatus');
+    const done = $('#setupDone');
     form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { input.required = true; });
     const field = key => form.elements.namedItem(key);
     const populate = (id, values) => values.forEach(value => { const o = el('option', value); o.value = value; $(id).append(o); });
@@ -187,6 +188,13 @@
     });
     $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });
     window.addEventListener('hashchange', () => {
+      // Back/forward after a completed save used to leave the success
+      // screen visible while the step indicator above it silently moved -
+      // two different states on screen at once. Treat any step hash as a
+      // real request to resume editing: the field values are all still
+      // sitting in the (merely hidden) form, so this is a genuine re-show,
+      // not a reset.
+      if (!done.hidden) { done.hidden = true; form.hidden = false; $('.setup-steps').hidden = false; }
       const requested = Number(location.hash.match(/^#step-([123])$/)?.[1] || 1);
       if (requested > 1 && !validate(firstKeys)) { show(1,false); history.replaceState(null,'','#step-1'); return; }
       if (requested > 2 && !validate(secondKeys)) { show(2,false); history.replaceState(null,'','#step-2'); return; }
@@ -222,13 +230,24 @@
     }
     form.addEventListener('submit', e => {
       e.preventDefault();
-      if (!validate(step === 1 ? firstKeys : secondKeys)) return;
-      if (step < 3) { location.hash = 'step-' + (step + 1); return; }
+      if (step < 3) {
+        if (!validate(step === 1 ? firstKeys : secondKeys)) return;
+        location.hash = 'step-' + (step + 1); return;
+      }
+      // Final submit re-checks BOTH steps' keys, not just this step's own
+      // (secondKeys) - reaching step 3 only proves firstKeys passed at
+      // whatever earlier moment the hash first advanced past step 1, not
+      // that it still does now. M.save() would catch a stale firstKeys
+      // failure anyway (it validates everything), but only this routes
+      // the user back to the actual invalid step instead of a generic
+      // "Could not save" message pointing at nothing on screen.
+      if (!validate(firstKeys)) { location.hash = 'step-1'; return; }
+      if (!validate(secondKeys)) { location.hash = 'step-2'; return; }
       try { profile = M.save(localStorage, collect()); }
       catch (error) { status.textContent = 'Could not save: ' + error.message + ' Your entries are still available here.'; return; }
       try { localStorage.removeItem(M.DRAFT); localStorage.setItem('ads:welcome-seen','1'); } catch {}
       form.hidden = true; $('.setup-steps').hidden = true;
-      const done = $('#setupDone'); done.hidden = false;
+      done.hidden = false;
       $('#savedProjectName').textContent = profile.project;
       const [href, label, task] = ROLE_NEXT[profile.role] || DEFAULT_NEXT;
       $('#recommendedNext').href = href; $('#recommendedNext').textContent = label;
