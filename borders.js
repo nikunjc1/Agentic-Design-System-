@@ -87,12 +87,25 @@
       return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     }
 
+    // Start/End are logical (border-inline-start/-end) - the browser
+    // itself flips which physical side that resolves to based on the
+    // page's own text direction, no extra JS needed. Left/Right/Vertical
+    // stay physical on purpose (an exception worth keeping deliberate,
+    // not an oversight): a divider between two fixed-position columns,
+    // for instance, should stay on its own physical side regardless of
+    // reading direction, same as a map pin doesn't move when you change
+    // language. Top/Bottom/Horizontal have no direction-dependent
+    // equivalent (block-direction logical properties exist too, but this
+    // system's layouts don't flip vertically, so physical is correct and
+    // sufficient here).
     function sidesToProps(sides){
       switch(sides){
         case "top": return ["border-top"];
         case "right": return ["border-right"];
         case "bottom": return ["border-bottom"];
         case "left": return ["border-left"];
+        case "start": return ["border-inline-start"];
+        case "end": return ["border-inline-end"];
         case "horizontal": return ["border-top", "border-bottom"];
         case "vertical": return ["border-left", "border-right"];
         default: return ["border"];
@@ -136,6 +149,8 @@
         el.style.borderRight = "";
         el.style.borderBottom = "";
         el.style.borderLeft = "";
+        el.style.borderInlineStart = "";
+        el.style.borderInlineEnd = "";
         props.forEach(function(prop){
           var camel = prop.replace(/-([a-z])/g, function(_, c){ return c.toUpperCase(); });
           el.style[camel] = value;

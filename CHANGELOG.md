@@ -1500,6 +1500,18 @@ Scope boundary, stated plainly: didn't mass-migrate the dozens of existing liter
 
 Verified: confirmed `--border-width-1-5` resolves to `1.5px` via computed style. Screenshotted the updated Component defaults section - no horizontal overflow. Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
 
+## Foundation audit B08 (P2) - the border configurator had no logical (RTL-aware) side option
+
+Finding from the 5 October 2026 Foundation audit: "Physical top/right/bottom/left used... Logical start/end unavailable... native density/print/forced-color translations absent."
+
+Confirmed: `sidesToProps()` in `borders.js` only ever returned physical properties (`border-left`/`border-right`), and the "Which sides" picker only offered Top/Right/Bottom/Left/Horizontal/Vertical - no way to configure or preview a direction-aware single-side border at all, even though a real shipped component (Alert, confirmed in its own CSS) already correctly uses `border-inline-start`. Added "Start only"/"End only" options using real CSS logical properties - the browser itself flips which physical side they resolve to based on `dir`, no JS direction-detection needed. Kept Left/Right/Vertical as deliberately physical options too (not replaced), labeled "stays put in RTL," since a fixed-position-relative border is a legitimate, different intent from a reading-direction-relative one - both needed to exist side by side, not one replacing the other.
+
+Caught a real bug while wiring this in: `applyPreview()`'s own clearing step reset `border`/`borderTop`/`borderRight`/`borderBottom`/`borderLeft` before applying the new selection, but never cleared `borderInlineStart`/`borderInlineEnd` - switching from Start/End to any other option would have left a stale inline border rendering alongside the new one. Fixed by clearing both logical properties too.
+
+Addressed "native/print/forced-colors absent" honestly rather than inventing untested rules for any of the three: grepped for `forced-colors`/`@media print` sitewide and confirmed neither exists anywhere in this codebase today. Added a paragraph stating this plainly - a native implementation needs its own platform border APIs, print needs its own stylesheet, and forced-colors mode overrides border color/style with OS-level system colors by design (which this page's opacity/color choices can't override) - rather than silently leaving the gap unaddressed or fabricating rules for capabilities this system doesn't have yet.
+
+Verified: selected Start with the page in LTR - computed `border-left-width` was `1px`, `border-right-width` was `0px`. Switched `dir` to `rtl` with no other change - confirmed it flipped automatically (`border-right-width` became `1px`, left became `0px`), no JS re-run needed. Switched to Top only afterward and confirmed both `border-left-width` and `border-right-width` correctly returned to `0px` (the stale-inline-border bug fixed, not just the new options added). Full 157-page regression sweep: 0 console errors. All 14 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

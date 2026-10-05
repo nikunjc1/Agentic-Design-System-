@@ -255,6 +255,7 @@
     </div>
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Width, color, opacity, style and which sides carry it - independently controlled, composited live. Radius / shape is configured separately on the Radius page.</p>
+    <p class="get-library-copy">Sides: Start/End are logical (<code>border-inline-start</code>/<code>-end</code>) and flip automatically with this site's own RTL toggle - the right choice whenever "the side closest to where content starts" is the actual intent (a form field's leading accent, for example). Left/Right/Vertical stay physical on purpose, for the opposite case: something tied to a fixed position regardless of reading direction. Native, print and forced-colors (Windows High Contrast Mode) translation isn't implemented in this system yet - said plainly rather than left silently unaddressed: a native implementation would need its own platform-specific border APIs, print needs its own stylesheet, and forced-colors mode overrides border color/style with OS-level system colors by design, which custom opacity/color choices here can't override.</p>
 
     <div class="border-config-grid">
       <label class="type-control">
@@ -292,11 +293,13 @@
         <select data-role="border-sides">
           <option value="all" selected>All sides</option>
           <option value="top">Top only</option>
-          <option value="right">Right only</option>
           <option value="bottom">Bottom only</option>
-          <option value="left">Left only</option>
           <option value="horizontal">Horizontal (top + bottom)</option>
-          <option value="vertical">Vertical (left + right)</option>
+          <option value="start">Start only (logical - flips with direction)</option>
+          <option value="end">End only (logical - flips with direction)</option>
+          <option value="left">Left only (physical - stays put in RTL)</option>
+          <option value="right">Right only (physical - stays put in RTL)</option>
+          <option value="vertical">Vertical (left + right, physical)</option>
         </select>
       </label>
     </div>
