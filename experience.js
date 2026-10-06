@@ -142,6 +142,12 @@
     for (const [key, p] of Object.entries(M.PLATFORMS)) {
       const label = el('label', '', 'setup-option');
       const input = el('input'); input.type = 'checkbox'; input.name = 'platforms'; input.value = key;
+      // Foundation audit NP05 - the fieldset itself carries
+      // aria-describedby="error-platforms", but a screen reader focusing
+      // one specific checkbox doesn't reliably re-announce the group's own
+      // description on every focus - each checkbox needs its own direct
+      // link to the error text, not just the group's.
+      input.setAttribute('aria-describedby', 'error-platforms');
       label.append(input, document.createTextNode(p.label)); $('#platformOptions').append(label);
     }
     let draft = null;
@@ -215,29 +221,42 @@
       const p = collect(), dl = $('#setupReview'); dl.replaceChildren();
       for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name || 'Not provided'], ['Email',p.email || 'Not provided'], ['Designation',p.designation || 'Not provided'], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
     }
+    // Foundation audit NP05 - "add a summary" of what actually needs fixing,
+    // not just a generic "highlighted fields" pointer.
+    const FIELD_LABELS = { project: 'Project name', productType: 'Product type', productOther: 'Product description', platforms: 'Platforms', name: 'Your name', email: 'Email ID', designation: 'Designation', role: 'Your role', roleOther: 'Role description' };
     function validate(keys) {
       const errors = M.validate(collect());
       form.querySelectorAll('[data-error]').forEach(n => { n.textContent = ''; });
       form.querySelectorAll('[aria-invalid]').forEach(n => n.removeAttribute('aria-invalid'));
       let first = null;
+      const invalidLabels = [];
       for (const key of keys) if (errors[key]) {
         form.querySelector(`[data-error="${key}"]`).textContent = errors[key];
         const input = key === 'platforms' ? form.querySelector('[name=platforms]') : field(key);
         input.setAttribute('aria-invalid','true'); first ||= input;
+        invalidLabels.push(FIELD_LABELS[key] || key);
       }
-      if (first) { status.textContent = 'Please review the highlighted fields.'; first.focus(); return false; }
+      if (first) { status.textContent = `Please review: ${invalidLabels.join(', ')}.`; first.focus(); return false; }
       status.textContent = ''; return true;
     }
     const firstKeys = ['project','productType','productOther','platforms'];
     const secondKeys = ['name','email','designation','role','roleOther'];
     conditional();
+    // Foundation audit NP05 - "draft-save messages replace error status
+    // while typing": this used to write to the same #setupStatus element
+    // validate() uses, so correcting one invalid field immediately wiped
+    // out the "please review" guidance for every other still-invalid field
+    // the moment any input event fired. A separate element for save
+    // feedback keeps validation guidance on screen until it's actually
+    // resolved by a real validate() pass, not merely overwritten by typing.
+    const draftStatus = $('#draftSaveStatus');
     form.addEventListener('input', () => {
       conditional();
       // Foundation audit NP03 - a timestamp here is what lets the
       // draft/profile provenance notice below say how stale a resumed
       // draft actually is, instead of just that one exists.
-      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(), updatedAt: new Date().toISOString()})); status.textContent = 'Draft saved on this browser.'; }
-      catch { status.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
+      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(), updatedAt: new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
+      catch { draftStatus.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
     });
     $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });
     window.addEventListener('hashchange', () => {

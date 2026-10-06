@@ -1745,6 +1745,24 @@ Implemented all three parts of the recommended improvement ("Show draft/profile 
 
 Verified with Playwright: a differing draft+profile pair shows the notice with the correct relative timestamp ("5 minutes ago"); clicking Discard clears the draft and repopulates the saved profile's values; clicking Resume dismisses the notice and preserves the draft untouched; a draft saved under a legacy product-type name ("Internal tool") now correctly shows "Dashboard" in the select instead of appearing unset; corrupt draft JSON now shows the friendly message with zero uncaught page errors. Regenerated `docs-catalog.json` (new-project.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit NP05 (P1) - error feedback and requirement marking in Project setup
+
+Finding from the 5 October 2026 Foundation audit: "Focused checkbox lacks direct error association; required status is less clear in step 1; draft-save messages replace error status while typing... Correction guidance should persist and be discoverable."
+
+Confirmed all four parts of the "Recommended improvement" ("Associate group error with focused controls, add a summary, mark requirements consistently and separate save feedback from validation") as real, distinct gaps:
+1. **Draft-save messages replacing error status**: the form's `input` listener wrote "Draft saved on this browser." to the exact same `#setupStatus` element `validate()` uses for "Please review the highlighted fields" - so correcting one invalid field immediately erased the guidance for every *other* still-invalid field, the moment any keystroke fired, regardless of whether that field was actually fixed yet.
+2. **No error summary**: the validation message only ever said the generic "Please review the highlighted fields," never which fields.
+3. **Focused checkbox lacks direct error association**: the platforms `<fieldset>` carried `aria-describedby="error-platforms"`, but the individual checkbox inputs inside it didn't - screen reader behavior around re-announcing a fieldset's own description on each child's focus varies by AT/browser, so the error wasn't reliably discoverable from the actual focused control.
+4. **Required status unclear in step 1**: step 2 marks its three optional fields with an "Optional" badge, making the rest implicitly required by contrast - step 1 has no such badge at all, so nothing visually or programmatically marks any of its fields as required beyond the native `required` attribute alone.
+
+Fixed all four directly:
+- Added a separate `#draftSaveStatus` element for "Draft saved on this browser" / storage-unavailable messages, so `#setupStatus` is now used exclusively for validation feedback and is never overwritten by routine autosave activity.
+- `validate()` now builds a real summary from the actual invalid keys ("Please review: Project name, Product type, Platforms.") instead of a generic pointer.
+- Every platform checkbox now carries its own `aria-describedby="error-platforms"` directly, in addition to the fieldset's.
+- Added `<span class="badge badge-required">Required</span>` (the system's own existing, already-used-elsewhere convention - see foundations.html, npm-package.html) to Project name, Product type and the platforms fieldset's legend.
+
+Verified with Playwright: all 3 step-1 required badges render; all 5 platform checkboxes carry the direct `aria-describedby`; submitting an empty form shows "Please review: Project name, Product type, Platforms."; typing to fix one field no longer erases that summary in `#setupStatus`, while `#draftSaveStatus` correctly shows "Draft saved on this browser." in its own, separate element. Regenerated `docs-catalog.json` (new-project.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
