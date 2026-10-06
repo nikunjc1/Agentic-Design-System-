@@ -455,7 +455,9 @@
       </div>
     </div>
 
-    <p class="get-library-copy" style="margin-top:16px;">Overflow: when content exceeds the space a pattern gives it, the default is to scroll that one region (the way this shell's own sidebar and main content each scroll independently, never the whole page) - reach for truncation with an explicit "show more," or collapsing a secondary pane, only when scrolling that region isn't itself the answer (e.g. a fixed-height dashboard KPI row, or List's items in Master-Detail once virtualization is warranted per Table's own paginationAndVirtualization guidance).</p>
+    <p class="get-library-copy" style="margin-top:16px;">Overflow (Foundation audit G05 - this used to say "scroll that one region" as the across-the-board default, too broad for forms, reflow or nested regions): <strong>reflow first</strong> - let the whole page scroll, the normal web default, for anything without a structural reason to be fixed-height: a long form, a settings page, any section that's just "more content than fits." A region only gets its own independent scroll when it has a genuine structural reason to stay a fixed size while its content varies - this shell's own sidebar+main split (both fixed-height, both scroll independently of each other, by design) and bounded data regions like a dashboard KPI row or List's items in Master-Detail (once virtualization is warranted per Table's own paginationAndVirtualization guidance) are the real, named cases, not a blanket rule for every overflow.</p>
+    <p class="get-library-copy">A region that does get its own scroll needs: a name (an accessible label identifying what it is, e.g. <code>aria-label="Resource list"</code>, not just an anonymous scrollable div), keyboard operability (focusable and Page-Up/Down/arrow-operable - native for a plain overflow region, but verify it if the region also contains its own focusable children), a visible affordance (a real scrollbar or fade/shadow edge - never <code>overflow:auto</code> with nothing hinting there's more), and any fixed action inside it (a toolbar, a "Save" button) staying reachable without first scrolling past unrelated content to find it. Two of these nested inside each other (a scrollable region inside another scrollable region) is close to always wrong - it's the specific anti-pattern a blanket "just scroll it" rule tends to produce.</p>
+    <p class="get-library-copy">Two cases the old rule didn't address at all: a <strong>virtual keyboard</strong> opening on mobile shrinks the viewport - a nested scroll region sized against the viewport's original height can end up clipped behind the keyboard with no way to reach what's now off-screen; reflow (letting the real page scroll) sidesteps this automatically, which is one more reason to prefer it. And <strong>truncation</strong> (text-overflow ellipsis, a collapsed pane) is only a complete pattern paired with real recovery - an explicit, keyboard-reachable "Show more" control that reveals the rest, not silently-clipped text with no way back to it.</p>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
       <pre class="guide-machine-json"><code>{
@@ -463,7 +465,14 @@
     "Single Column", "Two Column", "Sidebar + Content", "Dashboard",
     "Split View", "Card Grid", "Hero + Content", "Master-Detail"
   ],
-  "overflowRule": "scroll the one region that overflowed, independent of the rest of the page; reach for truncation or a collapsing pane only when scrolling isn't itself the answer"
+  "overflowRule": {
+    "default": "reflow - let the whole page scroll, for anything without a structural reason to be a fixed size",
+    "independentScrollJustifiedFor": ["persistent structural chrome (sidebar+main, each fixed-height by design)", "bounded data regions (dashboard KPI row, Master-Detail's list pane once virtualized)"],
+    "requirementsForAnyScrollRegion": ["accessible name/label", "keyboard operability (verify if it contains its own focusable children)", "visible scroll affordance, never silent overflow:auto", "fixed actions stay reachable without scrolling past unrelated content first"],
+    "avoid": "nested scroll-in-scroll regions - close to always the wrong result of applying the old blanket rule",
+    "virtualKeyboard": "a nested region sized against the original viewport height can end up clipped behind an opened mobile keyboard; reflow avoids this since the real page resizes naturally",
+    "truncationRequiresRecovery": "an explicit, keyboard-reachable Show more control, not silently-clipped text with no way back to it"
+  }
 }</code></pre>
     </div>
   </section>
