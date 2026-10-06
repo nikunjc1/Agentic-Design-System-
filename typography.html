@@ -284,6 +284,7 @@
     <p class="get-library-copy">Family comes from Primary (headings) or Secondary (supporting text) above - set the weight, style and color for each level to match your brand guideline. Each level carries its own Light and Dark color - Dark starts auto-generated from Light and stays in sync until you edit it directly; "Regenerate dark colors" below resets any you've customized back to that suggestion.</p>
     <p class="get-library-copy">Responsive step-down: below 640px (the same mobile threshold documented on Grid &amp; Layout), a page's H1 drops one full step on this scale - display-sm (30/38) to display-xs (24/32) - rather than shrinking uniformly or staying fixed at a size built for a wide viewport. Body/supporting text stays at its base size at every width.</p>
     <p class="get-library-copy">Tabular figures: Table's cells and Statistic's headline value both use tabular (fixed-width) digits, so a column of numbers lines up instead of drifting as digit shapes vary - reserved for actual numeric data, not applied to running body text.</p>
+    <p class="get-library-copy">Foundation audit T04 - H1-H6 here are visual sizes, not an HTML heading-rank mandate: pick whichever level's size reads right for a given piece of text, then choose its actual <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code> tag from the page's own real document structure (one visible <code>&lt;h1&gt;</code> per page, ranks nested without skipping) - the two are independent decisions. A page's main heading might need H3's smaller size while still correctly being marked up as the page's one real <code>&lt;h1&gt;</code>; a visually prominent H1-styled pull-quote is still just a <code>&lt;p&gt;</code> or <code>&lt;blockquote&gt;</code>, not a second page heading.</p>
 
     <div class="chip-row platform-chips" data-role="platform-chips">
       <button class="chip chip-select" data-platform="saas" type="button">SaaS</button>
@@ -815,6 +816,9 @@
       </div>
     </div>
 
+    <p class="empty-eyebrow" style="margin:20px 0 4px;">Running text</p>
+    <p class="get-library-copy" style="margin:0 0 16px;">Foundation audit T04 - Body and Paragraph share the same default size/weight/color on purpose, not by oversight: they're the same visual style, distinguished by where each applies, not by how either looks. Use Body for a single line or short run of supporting text outside a real <code>&lt;p&gt;</code> (a card's description line, a table cell, a button's helper text); use Paragraph specifically for actual <code>&lt;p&gt;</code>-tagged prose, so a page with several paragraphs of running text still gets real paragraph markup (and whatever margin/spacing between them that implies) rather than a string of unrelated one-off text elements. Customize either independently if a real need ever calls for it - staying identical is the default, not a constraint.</p>
+
     <div class="type-row" data-level="body" data-family-role="secondary">
       <div class="type-row-controls">
         <div class="type-control type-control-level">
@@ -1077,6 +1081,7 @@
     </div>
 
     <p class="empty-eyebrow" style="margin:20px 0 4px;">State colors</p>
+    <p class="get-library-copy" style="margin:0 0 16px;">Foundation audit T04 - "Interaction states treated as independent type levels; visual style confused with semantic hierarchy." These 7 rows (Active/Selected/Disabled/Error/Warning/Success/Info) aren't peers of H1-H6/Body/Paragraph/Caption above in a hierarchy - they're a different axis entirely: a color modifier meant to apply on top of whatever role's own size/weight is already in use (a nav link using Caption's size, recolored when Active; a form label using Body's size, recolored when Disabled). Every one of them ships at the same default size and line height (Text SM, 143%) specifically so changing state never changes layout - size/weight/line-height/italic controls are still here for real edge cases, but the default, recommended pattern is to leave them alone and change color only; independently resizing one breaks visual consistency with whatever base role it's actually modifying.</p>
 
     <div class="type-row" data-level="active" data-family-role="secondary">
       <div class="type-row-controls">
