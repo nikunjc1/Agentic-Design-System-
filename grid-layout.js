@@ -7,13 +7,16 @@
     columns: "Columns",
     rows: "Rows",
     "columns-rows": "Columns + Rows",
-    baseline: "Baseline Grid",
     custom: "Custom"
   };
 
   document.addEventListener("DOMContentLoaded", function(){
     var productCards = document.querySelectorAll(".product-card");
-    var systemCards = document.querySelectorAll(".system-card");
+    // Foundation audit G04 - scoped to the exclusive group specifically;
+    // the Baseline toggle below also carries the .system-card class (for
+    // matching visual treatment) but isn't part of this exclusive set.
+    var systemCards = document.querySelectorAll(".system-card-grid .system-card");
+    var baselineEnable = document.querySelector('[data-role="baseline-enable"]');
     var callout = document.getElementById("recommendationCallout");
     var calloutText = document.getElementById("recommendationText");
     var buildingMachineJson = document.querySelector('[data-role="building-machine-json"]');
@@ -72,6 +75,9 @@
       if (systemDesc) lines.push("- " + systemDesc.trim());
       lines.push("- Effective columns: `" + (effectiveColumns() === null ? "not set" : effectiveColumns()) + "`");
       lines.push("- Effective gutter: `" + (effectiveGutter() === null ? "not set" : effectiveGutter() + "px") + "`");
+      // Foundation audit G04 - independent of the structural type above,
+      // not a 5th value it could be confused with.
+      lines.push("- Baseline rhythm overlay: `" + (baselineEnable.checked ? "on (4/8px, layered under the grid above)" : "off") + "`");
 
       markdownOutput.textContent = lines.join("\n").trim();
     }
@@ -95,7 +101,10 @@
           selected: key,
           label: key ? (GRID_TYPE_NAMES[key] || key) : null,
           effectiveColumns: effectiveColumns(),
-          effectiveGutter: effectiveGutter()
+          effectiveGutter: effectiveGutter(),
+          // Foundation audit G04 - a real, independent field now, not a 5th
+          // mutually-exclusive "selected" value it could be confused with.
+          baselineOverlay: baselineEnable.checked
         }, null, 2);
       }
       renderMarkdown();
@@ -177,6 +186,10 @@
         system: getActiveSystem(),
         columns: effectiveColumns() !== null ? effectiveColumns() : (prior.columns != null ? prior.columns : null),
         gutter: effectiveGutter() !== null ? effectiveGutter() : (prior.gutter != null ? prior.gutter : null),
+        // Foundation audit G04 - independent of system now; layering a
+        // baseline rhythm under Columns is a different saved fact than
+        // choosing Columns itself, not a 5th mutually-exclusive value.
+        baseline: baselineEnable.checked,
         recommendedAtSave: computeRecommendedProduct(currentProfile())
       });
     }
@@ -185,6 +198,7 @@
     // edited and persisted, not just displayed as a static recommendation.
     columnsInput.addEventListener("input", function(){ validateGridValues(); updateMachineViews(); persistGrid(); });
     gutterInput.addEventListener("input", function(){ validateGridValues(); updateMachineViews(); persistGrid(); });
+    baselineEnable.addEventListener("change", function(){ updateMachineViews(); persistGrid(); });
 
     productCards.forEach(function(card){
       card.addEventListener("click", function(e){
@@ -332,6 +346,7 @@
       // from) isn't silently overwritten by the recommendation on load.
       if (saved.columns !== undefined && saved.columns !== null) columnsInput.value = saved.columns;
       if (saved.gutter !== undefined && saved.gutter !== null) gutterInput.value = saved.gutter;
+      baselineEnable.checked = !!saved.baseline;
       validateGridValues();
       showContextChangeNotice(saved);
     }
@@ -401,6 +416,7 @@
       if (contextNotice) contextNotice.hidden = true;
       columnsInput.value = "12";
       gutterInput.value = "24";
+      baselineEnable.checked = false;
       selectSystem("columns");
 
       saveStatus.textContent = "Reset to defaults";

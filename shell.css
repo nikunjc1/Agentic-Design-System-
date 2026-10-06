@@ -1555,6 +1555,12 @@ button{ font-family: inherit; }
 }
 .system-card:hover{ border-color: var(--red-500); }
 .system-card.is-active{ border-color: var(--red-500); background: var(--red-tint); }
+/* Foundation audit G04 - Baseline Grid is an independent on/off overlay
+   now, not a 5th mutually-exclusive option, so it gets a real checkbox
+   instead of is-active/aria-pressed like its 4 structural siblings. */
+.system-card-toggle{ position: relative; }
+.system-card-toggle input[type="checkbox"]{ position: absolute; top: 16px; inset-inline-end: 16px; width: 18px; height: 18px; accent-color: var(--red-500); margin: 0; }
+.system-card-toggle:has(input:checked){ border-color: var(--red-500); background: var(--red-tint); }
 .system-card-head{ display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .system-card-unit{ font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text-hi); }
 .system-card-tagline{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }

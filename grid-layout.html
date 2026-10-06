@@ -359,16 +359,23 @@
         <div class="grid-demo grid-demo-cellgrid"><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span><span class="grid-demo-cell"></span></div>
       </button>
 
-      <button class="system-card" data-system="baseline" aria-pressed="false" type="button">
-        <div class="system-card-head">
-          <span class="system-card-unit">Baseline Grid</span>
-          
-        </div>
-        <p class="system-card-desc">An optional 4/8px vertical rhythm layered under the layout - never forced.</p>
-        <div class="grid-demo grid-demo-baseline"><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span></div>
-      </button>
-
     </div>
+
+    <!-- Foundation audit G04 - "Baseline described as overlay but selected
+         as replacement": its own description already said "layered under
+         the layout - never forced," but it lived inside the mutually-
+         exclusive system-card-grid above, so selecting it silently replaced
+         whichever structural type (Columns/Rows/Columns+Rows/Custom) was
+         active instead of layering onto it. Pulled out as its own
+         independent toggle, matching what the description always claimed. -->
+    <label class="system-card system-card-toggle" data-role="baseline-toggle">
+      <input type="checkbox" data-role="baseline-enable">
+      <div class="system-card-head">
+        <span class="system-card-unit">Baseline Grid</span>
+      </div>
+      <p class="system-card-desc">An optional 4/8px vertical rhythm layered under the layout - never forced. Independent of Columns/Rows/Columns+Rows/Custom above; toggle it on with any of them.</p>
+      <div class="grid-demo grid-demo-baseline"><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span></div>
+    </label>
 
     <div class="setup-fields" style="margin-top:16px;">
       <label class="setup-field">Columns<input type="number" data-role="grid-columns-input" min="1" max="24" step="1"><span class="setup-error" data-role="grid-columns-error"></span></label>
