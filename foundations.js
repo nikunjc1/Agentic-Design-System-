@@ -527,7 +527,8 @@
     resetBrandBtn.addEventListener("click", function(){
       localStorage.removeItem(BRAND_KEY);
       setBrandLightFields(BRAND_LIGHT_DEFAULT);
-      syncColorsDarkMode(false);
+      brandDarkEnable.checked = false;
+      brandDarkCol.hidden = true;
       regenerateBrandDark();
       document.documentElement.style.removeProperty("--red-500");
       document.documentElement.style.removeProperty("--red-600");
@@ -744,7 +745,8 @@
       localStorage.removeItem(BG_KEY);
       setTripleFields(bgLightFields, BG_DEFAULTS.light);
       renderElevation(elevationLight, readTriple(bgLightFields));
-      syncColorsDarkMode(false);
+      bgDarkEnable.checked = false;
+      bgDarkCol.hidden = true;
       regenerateBgDark();
       setBgSaved(false);
       document.documentElement.style.removeProperty("--graphite-950");
@@ -848,7 +850,8 @@
     resetStatusBtn.addEventListener("click", function(){
       localStorage.removeItem(STATUS_KEY);
       statusSection.setLight(STATUS_DEFAULTS.light);
-      syncColorsDarkMode(false);
+      statusDarkEnable.checked = false;
+      statusDarkCol.hidden = true;
       statusSection.regenerateAll();
       document.documentElement.style.removeProperty("--green-500");
       document.documentElement.style.removeProperty("--amber-500");
@@ -953,7 +956,8 @@
     resetNeutralBtn.addEventListener("click", function(){
       localStorage.removeItem(NEUTRAL_KEY);
       neutralSection.setLight(NEUTRAL_DEFAULTS.light);
-      syncColorsDarkMode(false);
+      neutralDarkEnable.checked = false;
+      neutralDarkCol.hidden = true;
       neutralSection.regenerateAll();
       document.documentElement.style.removeProperty("--graphite-800");
       document.documentElement.style.removeProperty("--graphite-700");
@@ -966,31 +970,51 @@
       setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 
+    // Foundation audit C02 - "provide separate all-colors reset/undo." A
+    // deliberate, correctly-scoped all-4 action, replacing what the removed
+    // cross-wiring bug used to look like by accident (and never actually
+    // did - that bug only ever changed checkboxes, never real saved data).
+    // Reuses each section's own already-correct reset click handler rather
+    // than duplicating their logic.
+    var resetAllColorsBtn = document.getElementById("resetAllColorsBtn");
+    if (resetAllColorsBtn){
+      resetAllColorsBtn.addEventListener("click", function(){
+        resetBrandBtn.click();
+        resetBgBtn.click();
+        resetStatusBtn.click();
+        resetNeutralBtn.click();
+        var resetAllStatus = document.getElementById("resetAllColorsStatus");
+        if (resetAllStatus){
+          resetAllStatus.textContent = "All colors reset to defaults";
+          setTimeout(function(){ resetAllStatus.textContent = ''; }, 2500);
+        }
+      });
+    }
+
     // Dark Mode, as one setting across every Color Foundation section, not
     // four independent per-section opt-ins. Reported as inconsistent:
     // enabling/disabling "dark theme" in one section (e.g. Brand) had no
     // effect on the others, since each only ever read its own saved
     // data. The actual dark VALUES stay per-section - each section's own
-    // Save still persists its own dark hex values independently - only
-    // the enable/show state is unified here.
-    var colorDarkEnableCheckboxes = [brandDarkEnable, bgDarkEnable, statusDarkEnable, neutralDarkEnable];
-    var colorDarkEnableCols = [brandDarkCol, bgDarkCol, statusDarkCol, neutralDarkCol];
-    function syncColorsDarkMode(enabled){
-      colorDarkEnableCheckboxes.forEach(function(cb, i){
-        cb.checked = enabled;
-        colorDarkEnableCols[i].hidden = !enabled;
-      });
-    }
-    colorDarkEnableCheckboxes.forEach(function(cb){
-      cb.addEventListener("change", function(){ syncColorsDarkMode(cb.checked); });
-    });
-    // Each section above loaded its enable state from its own saved data
-    // independently; reconcile that into one consistent state now instead
-    // of leaving sections that happened to save dark values out of sync
-    // with the ones that didn't - if any section was already enabled,
-    // Dark Mode reads as enabled everywhere, matching what a user who
-    // customized dark colors before this fix shipped would expect.
-    syncColorsDarkMode(colorDarkEnableCheckboxes.some(function(cb){ return cb.checked; }));
+    // Foundation audit C02 - this used to force all 4 checkboxes/columns to
+    // the same state the moment any one changed, on load, AND treat "any one
+    // section has dark data" as "show all 4 as enabled." That only ever
+    // changed what was on screen, though: each section's own persist
+    // function is bound to that section's own input/change events (see
+    // wireSaveState/createHexPairSection), so a checkbox flipped by this
+    // shared code (a direct .checked assignment, not a real user interaction
+    // with that checkbox) never dispatched a change event there and never
+    // actually persisted - only the section the user really clicked did.
+    // That produced exactly the "toggle/reset undone" bug this finding
+    // named: 3 sections LOOKED reconfigured but their storage never changed,
+    // so reloading reverted what the UI had shown. Brand, Background (via
+    // their own inline listener above) and Status/Neutral (via
+    // createHexPairSection's own internal listener) already each correctly
+    // show/hide their own column from their own checkbox alone - this
+    // shared layer was pure redundant cross-wiring on top of code that
+    // already worked correctly per section. Removed entirely; each
+    // section's dark customization is now genuinely its own, matching what
+    // 4 separate checkboxes in 4 separate sections actually implies.
 
     // AA/AAA contrast badge under every color swatch's hex field - checked
     // against that swatch's own theme's Page (Primary) background, which is
