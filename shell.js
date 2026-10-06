@@ -48,12 +48,33 @@
     // Returns true/false instead of throwing, so a caller's own visual
     // selection and its persisted state never silently disagree.
     safeSet(key, value) {
+      if (!window.ADSFoundationModel.validRecord(key, value)) {
+        this.lastWriteSucceeded = false;
+        showStorageNotice('Complete the invalid settings before saving. Your previous saved values are still active.');
+        return false;
+      }
       try {
         localStorage.setItem(key, JSON.stringify(value));
+        this.lastWriteSucceeded = true;
+        window.dispatchEvent(new CustomEvent('ads:foundation-change', { detail:{key,value} }));
         return true;
       } catch (e) {
         console.warn(`ADS storage: write to "${key}" failed - the previous saved value, if any, is unchanged.`, e);
         showStorageNotice("Your last change couldn't be saved (storage is full or unavailable) - it's still shown here, but may not persist. Try freeing up space or a different browser.");
+        this.lastWriteSucceeded = false;
+        window.dispatchEvent(new CustomEvent('ads:foundation-change', { detail:{key,value,unsaved:true} }));
+        return false;
+      }
+    },
+    safeRemove(key) {
+      try {
+        localStorage.removeItem(key);
+        this.lastWriteSucceeded = true;
+        window.dispatchEvent(new CustomEvent('ads:foundation-change', {detail:{key,removed:true}}));
+        return true;
+      } catch {
+        this.lastWriteSucceeded = false;
+        showStorageNotice("Reset couldn't be saved. Your previous settings are still active.");
         return false;
       }
     },
@@ -70,7 +91,11 @@
         return null;
       }
       if (raw === null || raw === undefined) return null;
-      try { return JSON.parse(raw); }
+      try {
+        const value = JSON.parse(raw);
+        if (!window.ADSFoundationModel.validRecord(key, value)) throw new Error('Invalid saved settings');
+        return value;
+      }
       catch (e) {
         console.warn(`ADS storage: value for "${key}" was corrupt JSON - reset to default instead of guessed at.`, e);
         showStorageNotice("A saved value looked corrupted, so it was reset to its default instead of being guessed at.");
@@ -83,94 +108,8 @@
   // (foundations.html), so switching theme live has to re-read and
   // re-apply that theme's saved values - the <head> boot script only runs
   // once, at load, for whichever theme was active then.
-  function applySavedColorsForTheme(theme) {
-    const root = document.documentElement.style;
-    try {
-      const saved = JSON.parse(localStorage.getItem("ads:colors") || "null");
-      // Older saved state may have no "dark" entry at all (saved before a
-      // separate dark override existed, or before it was enabled) - fall back
-      // to the light entry rather than silently dropping the brand color in
-      // dark theme, matching foundations.js's own always-persist-dark fix.
-      const themeColors = (saved && saved[theme]) || (theme === "dark" && saved && saved.light);
-      const hex = themeColors && themeColors.primary && themeColors.primary.hex;
-      if (hex && /^#[0-9a-f]{6}$/i.test(hex)) {
-        const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-        const mix = (c, target, amt) => Math.round(c + (target - c) * amt);
-        const toHex = (rr, gg, bb) => "#" + [rr, gg, bb].map((v) => { const h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
-        const red600 = toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18));
-        const red400 = toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25));
-        root.setProperty("--red-500", hex);
-        root.setProperty("--red-600", red600);
-        root.setProperty("--red-400", red400);
-        root.setProperty("--red-tint", `rgba(${r},${g},${b},0.08)`);
-        root.setProperty("--red-glow", `rgba(${r},${g},${b},0.35)`);
-        // Foundation audit C05 - same resolveOnBrandText() logic as
-        // foundations.js, duplicated here so a boot-time page load (one
-        // that never visits foundations.html) still gets the correct
-        // on-brand text color, not just the editor page itself.
-        const relLum = (hx) => {
-          const toLin = (c) => { c = c / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
-          const rr = parseInt(hx.slice(1, 3), 16), gg = parseInt(hx.slice(3, 5), 16), bb = parseInt(hx.slice(5, 7), 16);
-          return 0.2126 * toLin(rr) + 0.7152 * toLin(gg) + 0.0722 * toLin(bb);
-        };
-        const ratio = (a, b) => { const la = relLum(a), lb = relLum(b); const hi = Math.max(la, lb), lo = Math.min(la, lb); return (hi + 0.05) / (lo + 0.05); };
-        const worstDark = Math.min(ratio("#15171A", hex), ratio("#15171A", red400), ratio("#15171A", red600));
-        const worstLight = Math.min(ratio("#FFFFFF", hex), ratio("#FFFFFF", red400), ratio("#FFFFFF", red600));
-        root.setProperty("--on-brand-text", worstDark >= worstLight ? "#15171A" : "#FFFFFF");
-      } else {
-        root.removeProperty("--red-500");
-        root.removeProperty("--red-600");
-        root.removeProperty("--red-400");
-        root.removeProperty("--red-tint");
-        root.removeProperty("--red-glow");
-        root.removeProperty("--on-brand-text");
-      }
-    } catch {}
-
-    const hexProp = (value, prop) => {
-      if (value && /^#[0-9a-f]{6}$/i.test(value)) root.setProperty(prop, value);
-      else root.removeProperty(prop);
-    };
-
-    try {
-      const savedBg = JSON.parse(localStorage.getItem("ads:bg-colors") || "null");
-      const bgSet = savedBg && savedBg[theme];
-      hexProp(bgSet && bgSet.primary, "--graphite-950");
-      hexProp(bgSet && bgSet.secondary, "--graphite-900");
-      hexProp(bgSet && bgSet.tertiary, "--graphite-850");
-    } catch {}
-
-    try {
-      const savedStatus = JSON.parse(localStorage.getItem("ads:status-colors") || "null");
-      const statusSet = savedStatus && savedStatus[theme];
-      hexProp(statusSet && statusSet.success, "--green-500");
-      hexProp(statusSet && statusSet.warning, "--amber-500");
-      hexProp(statusSet && statusSet.info, "--blue-500");
-      const danger = statusSet && statusSet.danger;
-      if (danger && /^#[0-9a-f]{6}$/i.test(danger)) {
-        const r = parseInt(danger.slice(1, 3), 16), g = parseInt(danger.slice(3, 5), 16), b = parseInt(danger.slice(5, 7), 16);
-        const mix = (c, target, amt) => Math.round(c + (target - c) * amt);
-        const toHex = (rr, gg, bb) => "#" + [rr, gg, bb].map((v) => { const h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
-        root.setProperty("--danger-500", danger);
-        root.setProperty("--danger-600", toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18)));
-        root.setProperty("--danger-400", toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25)));
-      } else {
-        root.removeProperty("--danger-500");
-        root.removeProperty("--danger-600");
-        root.removeProperty("--danger-400");
-      }
-    } catch {}
-
-    try {
-      const savedNeutral = JSON.parse(localStorage.getItem("ads:neutral-colors") || "null");
-      const neutralSet = savedNeutral && savedNeutral[theme];
-      hexProp(neutralSet && neutralSet.c800, "--graphite-800");
-      hexProp(neutralSet && neutralSet.c700, "--graphite-700");
-      hexProp(neutralSet && neutralSet.c600, "--graphite-600");
-      hexProp(neutralSet && neutralSet.c500, "--graphite-500");
-      hexProp(neutralSet && neutralSet.border, "--control-border");
-    } catch {}
-
+  function applySavedColorsForTheme() {
+    window.ADSFoundation.apply();
     updateBrandColorDotTitle();
   }
 
@@ -189,77 +128,10 @@
   }
   window.ADS_updateBrandColorDotTitle = updateBrandColorDotTitle;
 
-  // Radius philosophy and Typography font family - sitewide, theme-
-  // independent (unlike colors, no light/dark split), same "the <head>
-  // boot script only reads localStorage once, at load" gap as colors -
-  // an already-open OTHER tab needs the storage-event listener below to
-  // pick up a change made in this one, live, no reload.
-  // Explicit per-slot values (not a positional index into each
-  // philosophy's own scale list) - a first attempt at the latter happened
-  // to put --radius-md (the single most-used slot, 102 sites) at 8px for
-  // both Balanced and Sharp, so buttons never visibly changed. Every
-  // value below is still one already on that philosophy's own documented
-  // scale, just chosen so md in particular reads as a clearly different,
-  // sensible "typical" value at each step (4/6/8/12/16 - Sharp through
-  // Expressive). Kept identical to theme-init.js's own copy - duplicated
-  // rather than shared, since the boot script must stay dependency-free.
-  const RADIUS_PHILOSOPHY_TOKENS = {
-    sharp:      { "2":0, sm:2, "6":2, md:4,  "12":4,  "16":8,  "24":8  },
-    compact:    { "2":2, sm:2, "6":4, md:6,  "12":8,  "16":12, "24":12 },
-    balanced:   { "2":2, sm:4, "6":6, md:8,  "12":12, "16":16, "24":24 },
-    soft:       { "2":4, sm:4, "6":8, md:12, "12":16, "16":20, "24":24 },
-    expressive: { "2":4, sm:8, "6":8, md:16, "12":24, "16":32, "24":40 }
-  };
-  const RADIUS_SLOTS = ["2","sm","6","md","12","16","24"];
-  function applySavedRadius() {
-    const root = document.documentElement.style;
-    try {
-      const saved = JSON.parse(localStorage.getItem("ads:radius") || "null");
-      const tokens = saved && RADIUS_PHILOSOPHY_TOKENS[saved.philosophy];
-      if (tokens) {
-        RADIUS_SLOTS.forEach((slot) => root.setProperty(`--radius-${slot}`, `${tokens[slot]}px`));
-      } else {
-        RADIUS_SLOTS.forEach((slot) => root.removeProperty(`--radius-${slot}`));
-      }
-    } catch {}
-  }
-
-  const injectedFontHrefs = {};
-  function injectFontLink(href) {
-    if (!href || injectedFontHrefs[href] || document.querySelector(`link[href="${href}"]`)) return;
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    document.head.appendChild(link);
-    injectedFontHrefs[href] = true;
-  }
-  function applySavedTypographyFont() {
-    const root = document.documentElement.style;
-    try {
-      const saved = JSON.parse(localStorage.getItem("ads:typography") || "null");
-      const primary = saved && saved.primaryFont;
-      const secondary = saved && saved.secondaryFont;
-      if (primary && primary.family) {
-        if (primary.linkHref) injectFontLink(primary.linkHref);
-        root.setProperty("--font-display", `"${primary.family}", ui-sans-serif, system-ui, sans-serif`);
-      } else {
-        root.removeProperty("--font-display");
-      }
-      if (secondary && secondary.family) {
-        if (secondary.linkHref) injectFontLink(secondary.linkHref);
-        root.setProperty("--font-body", `"${secondary.family}", ui-sans-serif, system-ui, sans-serif`);
-      } else {
-        root.removeProperty("--font-body");
-      }
-    } catch {}
-  }
-  applySavedRadius();
-  applySavedTypographyFont();
-  // Exposed so radius.js/typography.js's own Save/auto-persist can apply a
-  // change to the current page immediately too, not only on next load -
-  // same reason window.ADS_updateBrandColorDotTitle exists for colors.
-  window.ADS_applySavedRadius = applySavedRadius;
-  window.ADS_applySavedTypographyFont = applySavedTypographyFont;
+  window.ADS_applySavedRadius = () => window.ADSFoundation.apply();
+  window.ADS_applySavedTypographyFont = () => window.ADSFoundation.apply();
+  function applySavedRadius() { window.ADSFoundation.apply(); }
+  function applySavedTypographyFont() { window.ADSFoundation.apply(); }
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);

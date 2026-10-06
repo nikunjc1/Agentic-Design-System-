@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, title, body text and the close button are properties of the same component, not separate panels glued together - change them below to check this drawer's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control" title="Controls the panel's width.">
         <span>Size</span>
         <select data-role="drawer-size-select">
@@ -215,13 +218,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 4 placements compared side by side, each in all 3 structural states, at the chosen Size, title and body text - Size controls width on Left/Right and height on Top/Bottom. One full matrix is rendered per selected Corner radius.</p>
     <div class="button-matrix-wrap" data-role="drawer-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any moment that needs more room than a Modal but shouldn't fully interrupt the page layout behind it.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Edit-in-place panel</span>
@@ -233,7 +236,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -269,12 +272,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="drawer-demo-scrim" style="height:170px;"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small" role="dialog" aria-modal="true" aria-labelledby="drawer-demo-title-do"><div class="modal-demo-header"><span class="modal-demo-title" id="drawer-demo-title-do">Filters</span></div><div class="modal-demo-body"><p style="margin:0;">Status, owner and date range - applied to the list still visible behind.</p></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="drawer-demo-scrim" style="height:var(--dimension-170);"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small" role="dialog" aria-modal="true" aria-labelledby="drawer-demo-title-do"><div class="modal-demo-header"><span class="modal-demo-title" id="drawer-demo-title-do">Filters</span></div><div class="modal-demo-body"><p style="margin:0;">Status, owner and date range - applied to the list still visible behind.</p></div></div></div></div>
           <p class="guide-dodont-note">A side task with enough substance to fill the panel, kept beside the list it acts on rather than covering it.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="drawer-demo-scrim" style="height:170px;"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small" role="dialog" aria-modal="true" aria-labelledby="drawer-demo-title-dont"><div class="modal-demo-header"><span class="modal-demo-title" id="drawer-demo-title-dont">Discard draft?</span></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Discard</button></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="drawer-demo-scrim" style="height:var(--dimension-170);"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small" role="dialog" aria-modal="true" aria-labelledby="drawer-demo-title-dont"><div class="modal-demo-header"><span class="modal-demo-title" id="drawer-demo-title-dont">Discard draft?</span></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Discard</button></div></div></div></div>
           <p class="guide-dodont-note">A one-line confirmation leaves most of the panel empty and still blocks the page to slide in. Use Modal or Pop Confirm when there is only a question to ask.</p>
         </div>
       </div>

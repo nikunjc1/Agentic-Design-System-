@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Calendar has no hover/focus/disabled states - it is not interactive. Month label and First day of week are properties of the same component, not a separate grid - change them below to check every size and content state in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Month label</span>
         <input type="text" value="September 2026" data-role="calendar-month-label" />
@@ -196,13 +199,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both sizes compared side by side, each in 3 content states - Default, With events and Range preview. One matrix is rendered at the chosen Month label and First day of week.</p>
     <div class="button-matrix-wrap" data-role="calendar-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any place someone needs to browse or scan a full month at once, rather than pick a single date from a compact popup.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Booking/scheduling view</span>
@@ -214,7 +217,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -250,12 +253,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="calendar-demo-grid calendar-demo-grid--full" style="width:220px;"><div class="calendar-demo-header">March 2026</div><div class="calendar-demo-weekdays"><span class="calendar-demo-weekday">Mo</span><span class="calendar-demo-weekday">Tu</span><span class="calendar-demo-weekday">We</span><span class="calendar-demo-weekday">Th</span><span class="calendar-demo-weekday">Fr</span><span class="calendar-demo-weekday">Sa</span><span class="calendar-demo-weekday">Su</span></div><div class="calendar-demo-days"><span class="calendar-demo-day" style="opacity:.35;">29</span><span class="calendar-demo-day">1</span><span class="calendar-demo-day">2</span><span class="calendar-demo-day" style="background:var(--red-500);color:#fff;border-radius:999px;">3</span></div></div></div>
+          <div class="guide-dodont-demo"><div class="calendar-demo-grid calendar-demo-grid--full" style="width:var(--dimension-220);"><div class="calendar-demo-header">March 2026</div><div class="calendar-demo-weekdays"><span class="calendar-demo-weekday">Mo</span><span class="calendar-demo-weekday">Tu</span><span class="calendar-demo-weekday">We</span><span class="calendar-demo-weekday">Th</span><span class="calendar-demo-weekday">Fr</span><span class="calendar-demo-weekday">Sa</span><span class="calendar-demo-weekday">Su</span></div><div class="calendar-demo-days"><span class="calendar-demo-day" style="opacity:.35;">29</span><span class="calendar-demo-day">1</span><span class="calendar-demo-day">2</span><span class="calendar-demo-day" style="background:var(--red-500);color:#fff;border-radius:var(--radius-full);">3</span></div></div></div>
           <p class="guide-dodont-note">Leading days from the previous month are shown dimmed rather than hidden, so the grid never looks like a broken week with cells missing.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="calendar-demo-grid calendar-demo-grid--full" style="width:220px;"><div class="calendar-demo-header">March 2026</div><div class="calendar-demo-weekdays"><span class="calendar-demo-weekday">Mo</span><span class="calendar-demo-weekday">Tu</span><span class="calendar-demo-weekday">We</span></div><div class="calendar-demo-days"><span class="calendar-demo-day">1</span><span class="calendar-demo-day">2</span><span class="calendar-demo-day">3</span></div></div></div>
+          <div class="guide-dodont-demo"><div class="calendar-demo-grid calendar-demo-grid--full" style="width:var(--dimension-220);"><div class="calendar-demo-header">March 2026</div><div class="calendar-demo-weekdays"><span class="calendar-demo-weekday">Mo</span><span class="calendar-demo-weekday">Tu</span><span class="calendar-demo-weekday">We</span></div><div class="calendar-demo-days"><span class="calendar-demo-day">1</span><span class="calendar-demo-day">2</span><span class="calendar-demo-day">3</span></div></div></div>
           <p class="guide-dodont-note">Starting the grid at day 1 with no leading blanks makes every week after the first misalign with its weekday header.</p>
         </div>
       </div>

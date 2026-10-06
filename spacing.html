@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-product-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">What are you building?</p>
+      <h2 class="panel-title">What are you building?</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -254,7 +257,7 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Spacing system</p>
+      <h2 class="panel-title">Spacing system</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -266,32 +269,32 @@
     <div class="system-card-grid" data-role="system-grid" role="group" aria-label="Spacing system">
       <button class="system-card" data-system="2px" aria-pressed="false" type="button">
         <div class="system-card-head">
-          <span class="system-card-unit">2px</span>
+          <span class="system-card-unit" data-dimension-value="2">2px</span>
           <span class="system-card-tagline">Precision</span>
           
         </div>
         <p class="system-card-desc">Best for dense enterprise interfaces, data-heavy dashboards and fine micro-adjustments.</p>
-        <p class="system-card-scale" data-role="scale">2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:2px"></span><span class="gap-demo-block" style="margin-right:4px"></span><span class="gap-demo-block" style="margin-right:6px"></span><span class="gap-demo-block"></span></div>
+        <p class="system-card-scale" data-role="scale">2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-2);"></span><span class="gap-demo-block" style="margin-right:var(--space-4);"></span><span class="gap-demo-block" style="margin-right:var(--space-6);"></span><span class="gap-demo-block"></span></div>
       </button>
 
       <button class="system-card is-active" data-system="4px" aria-pressed="true" type="button">
         <div class="system-card-head">
-          <span class="system-card-unit">4px</span>
+          <span class="system-card-unit" data-dimension-value="4">4px</span>
           <span class="system-card-tagline">Balanced</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">Best for SaaS, responsive applications, mobile, web and cross-platform systems.</p>
-        <p class="system-card-scale" data-role="scale">4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72, 80, 96, 112, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:4px"></span><span class="gap-demo-block" style="margin-right:8px"></span><span class="gap-demo-block" style="margin-right:16px"></span><span class="gap-demo-block"></span></div>
+        <p class="system-card-scale" data-role="scale">4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72, 80, 96, 112, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-4);"></span><span class="gap-demo-block" style="margin-right:var(--space-8);"></span><span class="gap-demo-block" style="margin-right:var(--space-16);"></span><span class="gap-demo-block"></span></div>
       </button>
 
       <button class="system-card" data-system="8px" aria-pressed="false" type="button">
         <div class="system-card-head">
-          <span class="system-card-unit">8px</span>
+          <span class="system-card-unit" data-dimension-value="8">8px</span>
           <span class="system-card-tagline">Structured</span>
           
         </div>
         <p class="system-card-desc">Best for desktop-first products, marketing sites and spacious layouts.</p>
-        <p class="system-card-scale" data-role="scale">8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:8px"></span><span class="gap-demo-block" style="margin-right:16px"></span><span class="gap-demo-block"></span></div>
+        <p class="system-card-scale" data-role="scale">8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-8);"></span><span class="gap-demo-block" style="margin-right:var(--space-16);"></span><span class="gap-demo-block"></span></div>
       </button>
 
       <button class="system-card" data-system="adaptive" aria-pressed="false" type="button">
@@ -301,7 +304,7 @@
           
         </div>
         <p class="system-card-desc">Combines 2px precision, 4px component and 8px structural spacing automatically by context.</p>
-        <p class="system-card-scale" data-role="scale">2 &middot; 4 &middot; 6 &middot; 8 &middot; 12 &middot; 16 &middot; 24 &middot; 32 &middot; 48 &middot; 64 &middot; 96 &middot; 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:2px"></span><span class="gap-demo-block" style="margin-right:8px"></span><span class="gap-demo-block" style="margin-right:24px"></span><span class="gap-demo-block"></span></div>
+        <p class="system-card-scale" data-role="scale">2 &middot; 4 &middot; 6 &middot; 8 &middot; 12 &middot; 16 &middot; 24 &middot; 32 &middot; 48 &middot; 64 &middot; 96 &middot; 128</p><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-2);"></span><span class="gap-demo-block" style="margin-right:var(--space-8);"></span><span class="gap-demo-block" style="margin-right:var(--space-24);"></span><span class="gap-demo-block"></span></div>
       </button>
     </div>
     </div>
@@ -312,7 +315,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Recommended global model</p>
+      <h2 class="panel-title">Recommended global model</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -331,17 +334,17 @@
       <div class="usage-row">
         <span class="usage-label">Micro spacing</span>
         <span class="usage-desc">Icon-to-text, badge internals, compact controls, fine alignment</span>
-        <span class="usage-values">2, 4, 6, 8px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:2px"></span><span class="gap-demo-block" style="margin-right:4px"></span><span class="gap-demo-block" style="margin-right:6px"></span><span class="gap-demo-block"></span></div>
+        <span class="usage-values">2, 4, 6, 8px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-2);"></span><span class="gap-demo-block" style="margin-right:var(--space-4);"></span><span class="gap-demo-block" style="margin-right:var(--space-6);"></span><span class="gap-demo-block"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Component spacing</span>
         <span class="usage-desc">Button/input padding, card content, form fields, label-to-input</span>
-        <span class="usage-values">8, 12, 16, 20, 24, 32px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:8px"></span><span class="gap-demo-block" style="margin-right:16px"></span><span class="gap-demo-block" style="margin-right:24px"></span><span class="gap-demo-block"></span></div>
+        <span class="usage-values">8, 12, 16, 20, 24, 32px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-8);"></span><span class="gap-demo-block" style="margin-right:var(--space-16);"></span><span class="gap-demo-block" style="margin-right:var(--space-24);"></span><span class="gap-demo-block"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Layout spacing</span>
         <span class="usage-desc">Sections, containers, page-level spacing, major content blocks</span>
-        <span class="usage-values">24, 32, 40, 48, 64, 80, 96, 128px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:16px"></span><span class="gap-demo-block" style="margin-right:24px"></span><span class="gap-demo-block" style="margin-right:32px"></span><span class="gap-demo-block"></span></div>
+        <span class="usage-values">24, 32, 40, 48, 64, 80, 96, 128px</span><div class="gap-demo-row"><span class="gap-demo-block" style="margin-right:var(--space-16);"></span><span class="gap-demo-block" style="margin-right:var(--space-24);"></span><span class="gap-demo-block" style="margin-right:var(--space-32);"></span><span class="gap-demo-block"></span></div>
       </div>
     </div>
 
@@ -363,7 +366,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component defaults</p>
+      <h2 class="panel-title">Component defaults</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -381,7 +384,7 @@
       <div class="usage-row">
         <span class="usage-label">Table</span>
         <span class="usage-desc">Cell vertical padding (Large); Middle/Small densities step down to 6px and 4px</span>
-        <span class="usage-values">8px</span>
+        <span class="usage-values" data-dimension-value="8">8px</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Modal</span>
@@ -396,7 +399,7 @@
       <div class="usage-row">
         <span class="usage-label">Panel / Card container</span>
         <span class="usage-desc">Internal padding; Compact density (Settings &rarr; Density) steps down to 16px</span>
-        <span class="usage-values">24px</span>
+        <span class="usage-values" data-dimension-value="24">24px</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Form field</span>
@@ -422,9 +425,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Spacing tokens - Markdown export</p>
+    <h2 class="panel-title">Spacing tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of your current product type and spacing system choices above - regenerates live as you pick, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="spacing-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="spacing-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copySpacingMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="spacingMarkdownStatus" role="status" aria-live="polite"></span>

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,7 +171,7 @@
   <p class="page-lede">How this system writes to the user - tone, grammar and the specific rules that make an error message actually useful instead of just accurate.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Voice</p>
+    <h2 class="panel-title">Voice</h2>
     <p class="get-library-copy">Write from what the user can now do, not from what the product did. Explain the result and the next step, never just the failure.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -200,24 +203,24 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Error messages</p>
+    <h2 class="panel-title">Error messages</h2>
     <p class="get-library-copy">An error message has one job: get the user unstuck. A message that only reports failure without a cause or a next step has not done that job.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);">Card declined. Try a different card, or contact your bank to confirm the charge went through.</span></div>
+        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Card declined. Try a different card, or contact your bank to confirm the charge went through.</span></div>
         <p class="guide-dodont-note">Names the cause and gives two concrete next steps - the user can act immediately.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);">Payment failed. Please try again.</span></div>
+        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Payment failed. Please try again.</span></div>
         <p class="guide-dodont-note">Restates the failure with no cause and a retry that's likely to fail the same way again.</p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Capitalization and punctuation</p>
+    <h2 class="panel-title">Capitalization and punctuation</h2>
     <p class="get-library-copy">Small, mechanical rules that matter precisely because they're invisible when followed and distracting the moment they're not - inconsistent casing or stray punctuation reads as carelessness even when the content itself is correct.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -249,9 +252,9 @@
   </section>
 
   <section class="panel spacing-model-panel md-export-panel">
-    <p class="panel-title">Copywriting - Markdown export</p>
+    <h2 class="panel-title">Copywriting - Markdown export</h2>
     <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="page-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>

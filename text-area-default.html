@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Description" data-default-placeholder="Tell us more...">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label, placeholder and rows are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="textarea-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="textarea-size-mount"></div>
@@ -215,13 +218,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 3 types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="textarea-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any form field that collects multiple lines of free-form text - comments, feedback, a bio, a description, or a message.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Comments</span>
@@ -233,10 +236,10 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Text Area's validation is mostly about length - a live counter that warns before it blocks, plus the same required-on-blur handling as any other text field.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - mark a required Text Area the same way as any other required field in this system (asterisk after the label, or "(required)" if the form spells it out), and validate emptiness on blur or submit, same as Input.</li>
+      <li><strong>Required marking</strong> - mark a required Text Area the same way as any other required field in this system (red asterisk after the label), and validate emptiness on blur or submit, same as Input.</li>
       <li><strong>Character counter</strong> - show a live, non-error counter ("420 / 500") that only switches to a warning color once the value is near or over the limit. Prefer this over a hard block at the limit: stopping keystrokes outright feels broken to a user who doesn't notice why the field stopped responding, whereas a counter that turns red still lets them see the overage and fix it themselves.</li>
       <li><strong>Error message</strong> - state the specific shortfall or overage: "Add at least 20 characters" or "You're 40 characters over the limit," never a generic "Invalid input."</li>
     </ul>
@@ -244,7 +247,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

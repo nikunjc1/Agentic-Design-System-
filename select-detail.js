@@ -46,13 +46,18 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Same 4-variant color logic as input-detail.js's Outlined/Filled/
   // Borderless/Underlined - Select is a picker, not editable text, but the
   // field chrome is identical.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textDim = getCssVar("--text-dim", "#64686F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -139,7 +144,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -161,7 +166,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as Input:
@@ -256,12 +261,12 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Select component (all types, states, sizes) */");
-    lines.push(".select-field{ display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.select-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
-    lines.push(".select-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".select-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.select-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
+    lines.push(".select-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.select-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
-    lines.push(".select-control-icon{ margin-inline-start:auto; flex:none; width:16px; height:16px; }");
-    lines.push('.select-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
+    lines.push(".select-control-icon{ margin-inline-start:auto; flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
+    lines.push('.select-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -295,13 +300,13 @@
     lines.push("");
     lines.push("/* Open - the real options panel, not just an aria-expanded claim */");
     lines.push(".select-field{ position:relative; }");
-    lines.push(".select-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:2px; margin:0; padding:4px; list-style:none; background:" + getCssVar("--graphite-900", "#15171A") + "; border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); }");
-    lines.push(".select-option{ box-sizing:border-box; padding:8px 10px; border-radius:6px; font-size:14px; cursor:default; }");
+    lines.push(".select-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); margin:0; padding:var(--space-4); list-style:none; background:" + getCssVar("--graphite-900", "#15171A") + "; border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); }");
+    lines.push(".select-option{ box-sizing:border-box; padding:var(--space-8) var(--space-10); border-radius:6px; font-size:var(--type-body-size); cursor:default; }");
     lines.push(".select-option[aria-selected=\"true\"]{ background:" + getCssVar("--red-tint", "rgba(255,3,26,0.08)") + "; color:" + getCssVar("--red-400", "#FF3F4F") + "; font-weight:600; }");
     lines.push("");
     lines.push("/* Loading - trailing icon replaced by a spinner, not interactive */");
     lines.push(".select-control.is-loading{ cursor:wait; }");
-    lines.push(".select-spinner{ width:14px; height:14px; box-sizing:border-box; border-radius:9999px; border:1.5px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-top-color:" + getCssVar("--text-dim", "#64686F") + "; animation:spin 0.8s linear infinite; }");
+    lines.push(".select-spinner{ width:var(--dimension-14); height:var(--dimension-14); box-sizing:border-box; border-radius:9999px; border:1.5px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-top-color:" + getCssVar("--text-dim", "#64686F") + "; animation:spin 0.8s linear infinite; }");
     lines.push("@keyframes spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
@@ -315,7 +320,7 @@
     lines.push("");
     lines.push("<!-- Open state - the real options panel -->");
     lines.push(exampleMarkupFor(TYPES[0].key, sizeClass, radiusClassAttr, "Country", "Select a country", true));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

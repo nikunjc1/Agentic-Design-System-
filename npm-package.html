@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
   <p class="page-lede"><em>Generating</em> build artefacts and <em>publishing</em> them to a registry are different operations with different risk profiles - publishing is effectively irreversible. This page keeps them visually and functionally separate at every step.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">State machine</p>
+    <h2 class="panel-title">State machine</h2>
     <div class="chip-row">
       <span class="component-status is-not-configured">Not configured</span>
       <span class="component-status is-draft">Configured</span>
@@ -178,7 +181,7 @@
       <span class="component-status is-published">Published</span>
       <span class="component-status is-failed">Failed</span>
     </div>
-    <p class="get-library-copy" style="margin-top:12px;">Failed is reachable from Building or Publishing, never skipped past. <strong>The install command is shown only in the Published state</strong> - offering <code>npm install</code> for an unbuilt or unpublished package produces a failed command and an immediate loss of trust.</p>
+    <p class="get-library-copy" style="margin-top:var(--space-12);">Failed is reachable from Building or Publishing, never skipped past. <strong>The install command is shown only in the Published state</strong> - offering <code>npm install</code> for an unbuilt or unpublished package produces a failed command and an immediate loss of trust.</p>
     <div class="usage-hierarchy">
       <div class="usage-row"><span class="usage-label">Not configured</span><span class="usage-desc">No registry, scope, or auth</span><span class="usage-values">Set up</span></div>
       <div class="usage-row"><span class="usage-label">Configured</span><span class="usage-desc">Target known, nothing built</span><span class="usage-values">Build package</span></div>
@@ -190,15 +193,15 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Configuration</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:20px;">
-      <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:480px;">
+    <h2 class="panel-title">Configuration</h2>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-20);">
+      <div style="display:flex;flex-direction:column;gap:var(--space-12);width:100%;max-width:var(--dimension-480);">
         <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Registry</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="npmjs.com" readonly tabindex="-1" /></div></div>
-        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Scope <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="@company" readonly tabindex="-1" /></div><p class="input-demo-note" style="color:var(--green-500);">&#10003; scope available</p></div>
-        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Package name <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="insureedge-design-system" readonly tabindex="-1" /></div><p class="input-demo-note">&rarr; @company/insureedge-design-system</p><p class="input-demo-note" style="color:var(--green-500);">&#10003; available on npmjs.com</p></div>
-        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Access token <span class="badge badge-required">Required</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" readonly tabindex="-1" /></div><p class="input-demo-note">Stored encrypted &middot; never displayed again</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Scope <span class="ads-required" aria-label="Required">*</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="@company" readonly tabindex="-1" /></div><p class="input-demo-note" style="color:var(--green-500);">&#10003; scope available</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Package name <span class="ads-required" aria-label="Required">*</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" value="insureedge-design-system" readonly tabindex="-1" /></div><p class="input-demo-note">&rarr; @company/insureedge-design-system</p><p class="input-demo-note" style="color:var(--green-500);">&#10003; available on npmjs.com</p></div>
+        <div class="input-demo-field" style="width:100%;"><label class="input-demo-label">Access token <span class="ads-required" aria-label="Required">*</span></label><div class="input-demo-control input-demo-control--outlined input-demo-control--h40"><input class="input-demo-input" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" readonly tabindex="-1" /></div><p class="input-demo-note">Stored encrypted &middot; never displayed again</p></div>
         <div>
-          <p style="margin:0 0 6px;font-size:12px;font-weight:600;color:var(--text-hi);">Package contents</p>
+          <p style="margin:0 0 var(--space-6);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Package contents</p>
           <div class="chip-row"><span class="chip">Design tokens</span><span class="chip">Icons</span><span class="chip" style="opacity:0.5;">Components (React / TS / Tailwind)</span><span class="chip" style="opacity:0.5;">Themes</span></div>
         </div>
       </div>
@@ -210,35 +213,35 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Published state</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:20px;">
-      <div style="width:100%;max-width:480px;">
-        <p style="margin:0 0 8px;font-weight:600;color:var(--text-hi);">@company/insureedge-design-system <span class="component-status is-published">Published</span></p>
+    <h2 class="panel-title">Published state</h2>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-20);">
+      <div style="width:100%;max-width:var(--dimension-480);">
+        <p style="margin:0 0 var(--space-8);font-weight:600;color:var(--text-hi);">@company/insureedge-design-system <span class="component-status is-published">Published</span></p>
         <div class="usage-hierarchy" style="margin:0;">
           <div class="usage-row"><span class="usage-label">Package version</span><span class="usage-desc">3.2.0 &middot; design system 3.2.0</span><span class="usage-values" style="color:var(--green-500);">&#10003; in sync</span></div>
           <div class="usage-row"><span class="usage-label">Published</span><span class="usage-desc">23 Sep 2026, 14:20 by Nikunj</span><span class="usage-values"></span></div>
           <div class="usage-row"><span class="usage-label">Size</span><span class="usage-desc">412 KB unpacked &middot; 86 KB tarball</span><span class="usage-values"></span></div>
         </div>
-        <p style="margin:12px 0 0;font-family:var(--font-mono);font-size:12px;background:var(--graphite-900);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px 12px;">npm install @company/insureedge-design-system</p>
+        <p style="margin:var(--space-12) 0 0;background:var(--graphite-900);border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-sm);padding:var(--space-8) var(--space-12);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">npm install @company/insureedge-design-system</p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <div class="panel-title-row"><p class="panel-title">Version drift</p></div>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;">
-      <div style="width:100%;max-width:480px;">
-        <p style="margin:0 0 8px;color:var(--amber-500);font-weight:600;">&#9888; Package is 2 versions behind</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--text-mid);">Design system 3.4.0 &middot; Package 3.2.0</p>
-        <p style="margin:0 0 8px;font-size:12px;color:var(--text-mid);">Unpublished changes: 8 components, 14 tokens, 1 breaking change</p>
-        <p style="margin:0;font-size:12px;color:var(--danger-500);">Publishing 3.4.0 is a MAJOR release (token color.primary.hover was removed).</p>
+    <div class="panel-title-row"><h2 class="panel-title">Version drift</h2></div>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
+      <div style="width:100%;max-width:var(--dimension-480);">
+        <p style="margin:0 0 var(--space-8);color:var(--amber-500);font-weight:600;">&#9888; Package is 2 versions behind</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Design system 3.4.0 &middot; Package 3.2.0</p>
+        <p style="margin:0 0 var(--space-8);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Unpublished changes: 8 components, 14 tokens, 1 breaking change</p>
+        <p style="margin:0;color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Publishing 3.4.0 is a MAJOR release (token color.primary.hover was removed).</p>
       </div>
     </div>
     <p class="get-library-copy">Version drift is shown plainly, never hidden - package and system versions drift, and hiding that produces the worst class of bug.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Publish safety</p>
+    <h2 class="panel-title">Publish safety</h2>
     <ul class="guide-list">
       <li><strong>Dry run first</strong> - the exact file manifest, size, and semver bump are shown before any publish, with a diff of what changed since the last published version.</li>
       <li><strong>Breaking-change gate</strong> - a removed or renamed token forces a MAJOR bump and requires typed confirmation of the version number.</li>
@@ -246,10 +249,10 @@
       <li><strong>Audit</strong> - every build and publish writes to the <a href="history.html">History</a> Activity log with actor, version, and outcome.</li>
       <li><strong>Failure handling</strong> - the registry's actual error is surfaced (401 auth, 403 scope, 409 version exists, network) with a specific remedy, never a generic "failed".</li>
     </ul>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;margin-top:8px;">
-      <div style="width:100%;max-width:480px;">
-        <p style="margin:0 0 6px;color:var(--danger-500);font-weight:600;">&#10007; Couldn't publish to npmjs.com</p>
-        <p style="margin:0;font-size:12px;color:var(--text-mid);">Version 3.2.0 already exists on the registry. npm does not allow republishing an existing version. Publish as 3.2.1, or change the version.</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);margin-top:var(--space-8);">
+      <div style="width:100%;max-width:var(--dimension-480);">
+        <p style="margin:0 0 var(--space-6);color:var(--danger-500);font-weight:600;">&#10007; Couldn't publish to npmjs.com</p>
+        <p style="margin:0;color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Version 3.2.0 already exists on the registry. npm does not allow republishing an existing version. Publish as 3.2.1, or change the version.</p>
       </div>
     </div>
   </section>

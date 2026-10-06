@@ -34,7 +34,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Theme-aware live color reads for the item states + the automatic
@@ -106,7 +106,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -129,7 +129,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function parseLabels(raw){
@@ -214,9 +214,9 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Menu (floating panel) component */");
-    lines.push(".menu-demo-panel{ display:flex; flex-direction:column; gap:2px; box-sizing:border-box; padding:6px; " + css.panel + " }");
-    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:8px; width:100%; border:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; text-align: start; border-radius:4px; cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
-    lines.push(".menu-demo-item svg{ width:16px; height:16px; flex:none; }");
+    lines.push(".menu-demo-panel{ display:flex; flex-direction:column; gap:var(--space-2); box-sizing:border-box; padding:var(--space-6); " + css.panel + " }");
+    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); width:100%; border:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; text-align: start; border-radius:4px; cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
+    lines.push(".menu-demo-item svg{ width:var(--dimension-16); height:var(--dimension-16); flex:none; }");
     lines.push(".menu-demo-item:hover, .menu-demo-item.is-hover{ " + css.hover + " }");
     lines.push(".menu-demo-item:focus-visible, .menu-demo-item.is-focus{ " + css.focus + " }");
     lines.push(".menu-demo-item:disabled, .menu-demo-item.is-disabled{ " + css.disabled + " }");
@@ -254,7 +254,7 @@
       });
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

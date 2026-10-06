@@ -36,7 +36,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Same color logic as Input's/Select's Outlined/Filled types - Time is a
@@ -44,6 +44,11 @@
   // identical, only the fixed trailing icon and the "filled" content (a
   // formatted time instead of free text) differ.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textDim = getCssVar("--text-dim", "#64686F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -114,7 +119,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -136,7 +141,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as
@@ -222,12 +227,12 @@
     var lines = [];
     lines.push("/* Agentic Design System - Time component (all types, states, sizes) */");
     lines.push("/* Trigger field only - the time-selection popup panel is a separate concern. */");
-    lines.push(".time-field{ display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.time-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
-    lines.push(".time-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".time-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.time-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
+    lines.push(".time-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.time-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
-    lines.push(".time-control-icon{ margin-inline-start:auto; flex:none; width:16px; height:16px; }");
-    lines.push('.time-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; }');
+    lines.push(".time-control-icon{ margin-inline-start:auto; flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
+    lines.push('.time-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -267,7 +272,7 @@
     TYPES.forEach(function(t){
       lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Meeting time", "Select a time"));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

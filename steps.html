@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Steps type</p>
+      <h2 class="panel-title">Steps type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
@@ -178,9 +181,9 @@
         <div class="button-type-demo">
           <div class="steps-demo-row steps-demo-row--numbered">
             <div class="steps-demo-step steps-demo-step--h32 is-completed"><span class="steps-demo-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="steps-demo-label">Details</span></div>
-            <span class="steps-demo-connector is-upcoming" style="margin-top:15px"></span>
+            <span class="steps-demo-connector is-upcoming" style="margin-top:var(--space-15);"></span>
             <div class="steps-demo-step steps-demo-step--h32 is-current"><span class="steps-demo-circle">2</span><span class="steps-demo-label">Shipping</span></div>
-            <span class="steps-demo-connector is-upcoming" style="margin-top:15px"></span>
+            <span class="steps-demo-connector is-upcoming" style="margin-top:var(--space-15);"></span>
             <div class="steps-demo-step steps-demo-step--h32 is-upcoming"><span class="steps-demo-circle">3</span><span class="steps-demo-label">Payment</span></div>
           </div>
           <p class="dualicon-card-label">System Generated Steps</p>
@@ -195,9 +198,9 @@
         <div class="button-type-demo">
           <div class="steps-demo-row steps-demo-row--numbered steps-demo-row--vertical">
             <div class="steps-demo-step steps-demo-step--h32 is-completed"><span class="steps-demo-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="steps-demo-label">Details</span></div>
-            <span class="steps-demo-connector is-upcoming" style="margin-inline-start:15px"></span>
+            <span class="steps-demo-connector is-upcoming" style="margin-inline-start:var(--space-15);"></span>
             <div class="steps-demo-step steps-demo-step--h32 is-current"><span class="steps-demo-circle">2</span><span class="steps-demo-label">Shipping</span></div>
-            <span class="steps-demo-connector is-upcoming" style="margin-inline-start:15px"></span>
+            <span class="steps-demo-connector is-upcoming" style="margin-inline-start:var(--space-15);"></span>
             <div class="steps-demo-step steps-demo-step--h32 is-upcoming"><span class="steps-demo-circle">3</span><span class="steps-demo-label">Payment</span></div>
           </div>
           <p class="dualicon-card-label">System Generated Vertical Steps</p>

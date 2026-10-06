@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,17 +172,17 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Transfer type</p>
+      <h2 class="panel-title">Transfer type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="transfer-system-grid">
       <div class="system-card transfer-type-card" data-system="default" data-detail-href="transfer-default.html">
         <div class="button-type-demo">
-          <div class="transfer-demo-panel" style="width:100%;max-width:360px;">
+          <div class="transfer-demo-panel" style="width:100%;max-width:var(--dimension-360);">
             <div class="transfer-demo-column">
               <div class="transfer-demo-column-title"><span>Source</span><span>1/3</span></div>
-              <div class="transfer-demo-list" style="height:110px;">
+              <div class="transfer-demo-list" style="height:var(--dimension-110);">
                 <label class="transfer-demo-item"><input type="checkbox" class="transfer-demo-checkbox-input" checked aria-label="Alice" /><span class="transfer-demo-checkbox is-checked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span>Alice</span></label>
                 <label class="transfer-demo-item"><input type="checkbox" class="transfer-demo-checkbox-input" aria-label="Bob" /><span class="transfer-demo-checkbox"></span><span>Bob</span></label>
                 <label class="transfer-demo-item"><input type="checkbox" class="transfer-demo-checkbox-input" aria-label="Carol" /><span class="transfer-demo-checkbox"></span><span>Carol</span></label>
@@ -191,7 +194,7 @@
             </div>
             <div class="transfer-demo-column">
               <div class="transfer-demo-column-title"><span>Target</span><span>2 items</span></div>
-              <div class="transfer-demo-list" style="height:110px;">
+              <div class="transfer-demo-list" style="height:var(--dimension-110);">
                 <label class="transfer-demo-item"><input type="checkbox" class="transfer-demo-checkbox-input" aria-label="Eve" /><span class="transfer-demo-checkbox"></span><span>Eve</span></label>
                 <label class="transfer-demo-item"><input type="checkbox" class="transfer-demo-checkbox-input" aria-label="Frank" /><span class="transfer-demo-checkbox"></span><span>Frank</span></label>
               </div>

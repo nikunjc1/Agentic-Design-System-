@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-button-type="primary-icon" data-default-label="Save">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, content and label apply to all 8 columns below, including the CTA With Dropdown - they are properties of one shared panel, not separate buttons. 36px / 4px radius is the spec default. "CTA leading icon" is the one exception: it only shows or hides the chevron icon on the CTA With Dropdown's main action and has no effect on the other 7 types.</p>
 
-    <div class="border-config-grid" style="grid-template-columns: repeat(5, 1fr); gap: 16px;">
+    <div class="border-config-grid" style="grid-template-columns: repeat(5, 1fr); gap:var(--space-16);">
       <div class="type-control">
         <span id="dualicon-size-label">Size</span>
         <div class="multiselect" data-role="dualicon-size-mount"></div>
@@ -211,13 +214,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 7 types plus the CTA With Dropdown compared side by side, each in all 6 states, arranged with Rest first. One full matrix is rendered per selected combination of Size, Corner radius and Content - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="dualicon-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use Primary</p>
+    <h2 class="panel-title">When to use Primary</h2>
     <p class="get-library-copy">The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Save</span>
@@ -228,7 +231,7 @@
     </div>
   </section>  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

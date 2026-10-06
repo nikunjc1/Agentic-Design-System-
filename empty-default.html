@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Title, description and action label are properties of the same component, not separate placeholders - change them below to check both icon styles and all 3 states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Title</span>
         <input type="text" data-role="empty-title" value="No projects yet" />
@@ -198,13 +201,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both icon styles compared side by side, each in all 3 states - Title only, With description, and With description and an action button. The action button only appears in the With action state, using the current Action label.</p>
     <div class="button-matrix-wrap" data-role="empty-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any time a list, table, or search has nothing to show, so the space never looks broken or blank.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Empty search results</span>
@@ -216,7 +219,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

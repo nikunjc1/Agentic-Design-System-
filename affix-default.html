@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Content label and offset are properties of the same component, not separate bars - change them below to check both types and every state in the Live Preview. Affixed and Disabled are simulated here as static snapshots, since real Affix behavior only triggers on an actual scroll event.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Content label</span>
         <input type="text" data-role="affix-label" value="Filter toolbar" />
@@ -187,25 +190,25 @@
 
       <label class="type-control" title="Distance in pixels from the edge once affixed.">
         <span>Offset (px)</span>
-        <input type="number" min="0" value="8" data-role="affix-offset" />
+        <input type="number" min="0" value="8" data-role="affix-offset" data-dimension />
       </label>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in 3 states - Rest (in normal flow), Affixed (pinned to its edge with a shadow) and Disabled (sticky behavior turned off). One preview is rendered at the chosen Content label and Offset.</p>
     <div class="button-matrix-wrap" data-role="affix-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Try it</p>
+    <h2 class="panel-title">Try it</h2>
     <p class="get-library-copy">Affix is defined by a scroll threshold, which a fixed matrix cell can only approximate. Scroll inside this frame and the bar pins itself for real once it reaches the top, then releases on the way back.</p>
     <div class="interactive-demo" data-role="affix-interactive"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any element that needs to stay reachable once the user scrolls past its original position.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Sticky filter/toolbar</span>
@@ -218,7 +221,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -254,12 +257,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="affix-demo-bar"><span class="affix-demo-badge">Sticky</span><span style="font-size:12px;color:var(--text-mid);">Save bar - pins once its normal position scrolls out of view</span></div></div>
+          <div class="guide-dodont-demo"><div class="affix-demo-bar"><span class="affix-demo-badge">Sticky</span><span style="color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Save bar - pins once its normal position scrolls out of view</span></div></div>
           <p class="guide-dodont-note">Pins a short, persistently-useful action bar, and only once the page has scrolled past where it would normally sit.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="affix-demo-bar"><span class="affix-demo-badge affix-demo-badge--muted">Sticky</span><span style="font-size:12px;color:var(--text-mid);">Full article text - pinned for the entire length of the page</span></div></div>
+          <div class="guide-dodont-demo"><div class="affix-demo-bar"><span class="affix-demo-badge affix-demo-badge--muted">Sticky</span><span style="color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Full article text - pinned for the entire length of the page</span></div></div>
           <p class="guide-dodont-note">Pinning a large block of content for the whole scroll permanently eats screen space the reader needs for the content moving underneath it.</p>
         </div>
       </div>

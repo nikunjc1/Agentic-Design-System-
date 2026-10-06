@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Assignee team" data-default-placeholder="Select a team">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="treeselect-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="treeselect-size-mount"></div>
@@ -211,19 +214,19 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="treeselect-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Multiple selection + Search</p>
+    <h2 class="panel-title">Multiple selection + Search</h2>
     <p class="get-library-copy">Two documented Ant TreeSelect features the matrix above can't show, since it's single-select with no search: typing narrows the tree to matching nodes (highlighted inline, ancestors kept visible for context), and a checkbox per node - parents included - lets more than one node be picked across different branches at once.</p>
     <div data-role="treeselect-multi-search-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any form field that needs to pick a single node from hierarchical, nested data, where the option set is too deep or too structured for a flat Select or Cascader's linked columns.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Org chart picker</span>
@@ -234,10 +237,10 @@
     </div>
   </section>
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">In checkbox mode, a parent node can show an indeterminate mark purely because some of its children are checked, without the parent itself being a selected value - required validation needs to look past that indeterminate state to whether any concrete node is actually checked.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - the asterisk or "Required" text sits on the field label, same as Select, independent of how many nodes end up checked.</li>
+      <li><strong>Required marking</strong> - the red asterisk sits on the field label, same as Select, independent of how many nodes end up checked.</li>
       <li><strong>Validation timing</strong> - validate on blur (closing the tree panel with nothing checked) and again on submit.</li>
       <li><strong>Error message</strong> - "Choose at least one option," not "This field is required" - specific enough to point back at the tree rather than the form in general.</li>
       <li><strong>Recovery</strong> - an indeterminate-only state (a parent showing a dash because some, not all, descendants are checked, with no node explicitly checked by the user) does not satisfy a required rule on its own - require at least one concrete leaf or node to be explicitly checked, and reopen the tree with that branch expanded so the user can see why it's still flagged.</li>
@@ -246,7 +249,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -282,12 +285,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Design / Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Logos</div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Design / Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:var(--space-26);">Icons</div><div class="treeselect-demo-node" style="padding-inline-start:var(--space-26);">Logos</div></div></div></div></div>
           <p class="guide-dodont-note">The control shows the whole path, so "Icons" is never confused with another folder of the same name elsewhere in the tree.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:26px;">Icons</div><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Marketing</div><div class="treeselect-demo-node" style="padding-inline-start:26px;">Icons</div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="treeselect-demo-field"><label class="treeselect-demo-label">Destination folder</label><div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40"><span class="treeselect-demo-input">Icons</span><span class="treeselect-demo-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="treeselect-demo-panel"><div class="treeselect-demo-tree"><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Design</div><div class="treeselect-demo-node is-active" style="padding-inline-start:var(--space-26);">Icons</div><div class="treeselect-demo-node"><span class="treeselect-demo-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>Marketing</div><div class="treeselect-demo-node" style="padding-inline-start:var(--space-26);">Icons</div></div></div></div></div>
           <p class="guide-dodont-note">Showing only the leaf name makes two different folders look like the same choice once the panel is closed.</p>
         </div>
       </div>

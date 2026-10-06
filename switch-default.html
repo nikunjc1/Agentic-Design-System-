@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Enable notifications">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size and label are properties of the same component, not separate switches - change them below to check this control's states in the Live Preview. Switches are always fully pill-shaped, so there is no corner-radius property.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="switch-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="switch-size-mount"></div>
@@ -193,13 +196,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states - Hover, Focused and Disabled are demonstrated on top of the Off visual, since a switch is only ever fully Off or fully On; Loading is shown On, since that's the more common case of a setting mid-save. One full matrix is rendered per selected Size.</p>
     <div class="button-matrix-wrap" data-role="switch-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any single setting that takes effect immediately when flipped, with no need to confirm or submit.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Notification toggle</span>
@@ -210,7 +213,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Switch applies instantly with no submit step, so the usual required/validate-on-submit pattern doesn't apply the way it does to Checkbox - most switches have no "wrong" state to validate.</p>
     <ul class="guide-list">
       <li><strong>Required marking</strong> - only add one when a Switch sits inside a form and a specific state must be true before submission, such as a compliance or eligibility toggle - mark it the same way as a required checkbox, not with a separate convention.</li>
@@ -221,7 +224,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

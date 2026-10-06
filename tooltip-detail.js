@@ -128,7 +128,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Tooltip component */");
-    lines.push(".tooltip-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:8px; }");
+    lines.push(".tooltip-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); }");
     lines.push("/* DOM order is always bubble, arrow, trigger - flex-direction alone");
     lines.push("   decides which side the bubble visually lands on per placement. */");
     lines.push(".tooltip-demo-wrap--top, .tooltip-demo-wrap--bottom{ flex-direction:column; }");
@@ -136,7 +136,7 @@
     lines.push(".tooltip-demo-wrap--left{ flex-direction:row; }");
     lines.push(".tooltip-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".tooltip-demo-trigger{ flex:none; width:28px; height:28px; border-radius:9999px; background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-dim); display:flex; align-items:center; justify-content:center; font-size:13px; cursor:default; }");
+    lines.push(".tooltip-demo-trigger{ flex:none; width:var(--dimension-28); height:var(--dimension-28); border-radius:9999px; background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-dim); display:flex; align-items:center; justify-content:center; font-size:var(--type-body-size); cursor:default; }");
     lines.push("");
     lines.push("/* Size - explicitly chosen: " + sizeLabel(sizeKey) + " */");
     lines.push("/* Inverted against the page on purpose - near-black in light theme,");
@@ -149,12 +149,12 @@
     lines.push("   hold the same default values but are never touched by that");
     lines.push("   customization, so the tooltip stays correctly inverted regardless. */");
     lines.push(".tooltip-demo-bubble{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); color:var(--overlay-invert-text); border-radius:var(--radius-sm); font-family:var(--font-body); white-space:nowrap; padding:" + size.pad + "; font-size:" + size.font + "px; }");
-    lines.push(".tooltip-demo-bubble.is-long-text{ white-space:normal; max-width:180px; }");
-    lines.push(".tooltip-demo-title{ display:block; font-weight:600; font-size:inherit; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tooltip-demo-bubble.is-long-text{ white-space:normal; max-width:var(--dimension-180); }");
+    lines.push(".tooltip-demo-title{ display:block; font-weight:600; font-size:inherit; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("/* Mixed toward the bubble's own background, not var(--text-mid) -");
     lines.push("   that token is calibrated for normal surfaces and reads too low-");
     lines.push("   contrast against this inverted one. */");
-    lines.push(".tooltip-demo-description{ display:block; font-size:11px; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); max-width:260px; overflow-wrap:anywhere; }");
+    lines.push(".tooltip-demo-description{ display:block; font-size:var(--type-body-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); max-width:var(--dimension-260); overflow-wrap:anywhere; }");
     if (showArrow){
       lines.push("");
       lines.push("/* Arrow - a rotated square, so only half of it should ever show; the");
@@ -170,7 +170,7 @@
       lines.push("   order is always bubble/arrow/trigger regardless of placement (only");
       lines.push("   flex-direction changes which side is visually which), so which");
       lines.push("   physical margin swaps between top/bottom and between left/right. */");
-      lines.push(".tooltip-demo-arrow{ position:relative; z-index:1; flex:none; width:8px; height:8px; background:var(--overlay-invert-bg); transform:rotate(45deg); }");
+      lines.push(".tooltip-demo-arrow{ position:relative; z-index:1; flex:none; width:var(--dimension-8); height:var(--dimension-8); background:var(--overlay-invert-bg); transform:rotate(45deg); }");
       lines.push(".tooltip-demo-wrap--top .tooltip-demo-arrow{ margin:-12px auto -4px; }");
       lines.push(".tooltip-demo-wrap--bottom .tooltip-demo-arrow{ margin:-4px auto -12px; }");
       lines.push(".tooltip-demo-wrap--left .tooltip-demo-arrow{ margin:auto -4px auto -12px; }");
@@ -181,7 +181,7 @@
     TYPES.forEach(function(t){
       lines.push(buildTooltipField(t.key, "plain", sizeKey, text, showArrow));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

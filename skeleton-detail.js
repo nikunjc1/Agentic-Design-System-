@@ -84,14 +84,14 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Skeleton component */");
-    lines.push(".skeleton-demo-line{ height:10px; border-radius:4px; background:var(--graphite-700); width:100%; }");
-    lines.push(".skeleton-demo-line + .skeleton-demo-line{ margin-top:8px; }");
+    lines.push(".skeleton-demo-line{ height:var(--dimension-10); border-radius:4px; background:var(--graphite-700); width:100%; }");
+    lines.push(".skeleton-demo-line + .skeleton-demo-line{ margin-top:var(--space-8); }");
     lines.push(".skeleton-demo-line--short{ width:60%; }");
-    lines.push(".skeleton-demo-avatar{ width:40px; height:40px; border-radius:9999px; background:var(--graphite-700); flex:none; }");
-    lines.push(".skeleton-demo-media{ width:100%; height:100px; border-radius:var(--radius-md); background:var(--graphite-700); margin-bottom:10px; }");
-    lines.push(".skeleton-demo-row{ display:flex; gap:12px; align-items:flex-start; }");
+    lines.push(".skeleton-demo-avatar{ width:var(--dimension-40); height:var(--dimension-40); border-radius:9999px; background:var(--graphite-700); flex:none; }");
+    lines.push(".skeleton-demo-media{ width:100%; height:var(--dimension-100); border-radius:var(--radius-md); background:var(--graphite-700); margin-bottom:var(--space-10); }");
+    lines.push(".skeleton-demo-row{ display:flex; gap:var(--space-12); align-items:flex-start; }");
     lines.push(".skeleton-demo-col{ flex:1 1 auto; min-width:0; }");
-    lines.push(".skeleton-demo-text, .skeleton-demo-card{ display:flex; flex-direction:column; width:200px; }");
+    lines.push(".skeleton-demo-text, .skeleton-demo-card{ display:flex; flex-direction:column; width:var(--dimension-200); }");
     lines.push(".skeleton-demo-line.is-animated, .skeleton-demo-avatar.is-animated, .skeleton-demo-media.is-animated{ background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }");
     lines.push("/* The shimmer is decorative - the skeleton's shape already says \"loading\" - so it switches off entirely when reduced motion is requested. */");
     lines.push("@media (prefers-reduced-motion: reduce){ .skeleton-demo-line.is-animated, .skeleton-demo-avatar.is-animated, .skeleton-demo-media.is-animated{ animation:none; background:var(--graphite-700); } }");
@@ -110,7 +110,7 @@
     lines.push("");
     lines.push("<!-- Example usage - Card layout, Reduced motion state -->");
     lines.push(buildSkeletonField("card", "reduced-motion", rows));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

@@ -42,13 +42,18 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // The card itself is always a solid, neutral, elevated surface - only the
   // left accent border (and the icon) change color per type. Same
   // convention as Toast/Alert's own semantic icon + accent mapping.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     var amber500 = getCssVar("--amber-500", "#E6A53A");
@@ -100,15 +105,15 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Notification component */");
-    lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:10px; width:260px; padding:12px 14px; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:0 8px 24px rgba(0,0,0,0.35); position:relative; }");
-    lines.push(".notification-demo-icon{ flex:none; width:18px; height:18px; margin-top:1px; }");
+    lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:var(--space-10); width:var(--dimension-260); padding:var(--space-12) var(--space-14); background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:0 8px 24px rgba(0,0,0,0.35); position:relative; }");
+    lines.push(".notification-demo-icon{ flex:none; width:var(--dimension-18); height:var(--dimension-18); margin-top:var(--space-1); }");
     lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align: start; }");
-    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); margin-top:2px; margin-bottom:0; line-height:1.5; max-width:260px; overflow-wrap:anywhere; }');
-    lines.push(".notification-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px; line-height:1; padding:0; }");
-    lines.push('.notification-demo-action{ margin-top:8px; font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align: start; }');
-    lines.push(".notification-demo-stack{ position:relative; width:268px; padding-bottom:8px; }");
-    lines.push(".notification-demo-stack .notification-demo-card{ width:260px; }");
+    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-mid); margin-top:var(--space-2); margin-bottom:0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
+    lines.push(".notification-demo-close{ flex:none; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:var(--type-body-size); line-height:1; padding:0; }");
+    lines.push('.notification-demo-action{ margin-top:var(--space-8); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align: start; }');
+    lines.push(".notification-demo-stack{ position:relative; width:var(--dimension-268); padding-bottom:var(--space-8); }");
+    lines.push(".notification-demo-stack .notification-demo-card{ width:var(--dimension-260); }");
     lines.push(".notification-demo-stack .notification-demo-card:not(.is-behind){ position:relative; z-index:1; }");
     lines.push(".notification-demo-stack .notification-demo-card.is-behind{ position:absolute; top:8px; left:8px; opacity:0.55; z-index:0; }");
     lines.push("");
@@ -130,7 +135,7 @@
       lines.push('  <button type="button" class="notification-demo-close">&times;</button>');
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code fully resolved for the current Title/Description

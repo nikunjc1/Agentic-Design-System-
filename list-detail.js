@@ -26,7 +26,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Corner radius option list - same value scale as the Button and Group
@@ -49,7 +49,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -89,7 +89,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -158,25 +158,25 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - List component */");
-    lines.push(".list-demo-panel{ display:flex; flex-direction:column; width:260px; background:var(--graphite-900); }");
+    lines.push(".list-demo-panel{ display:flex; flex-direction:column; width:var(--dimension-260); background:var(--graphite-900); }");
     lines.push(".list-demo-panel--default{ background:transparent; }");
     lines.push(".list-demo-panel--bordered{ border:1px solid var(--line-strong); overflow:hidden; }");
-    lines.push(".list-demo-row{ box-sizing:border-box; display:flex; align-items:center; gap:10px; padding:10px 12px; }");
+    lines.push(".list-demo-row{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-10); padding:var(--space-10) var(--space-12); }");
     lines.push(".list-demo-row--divided{ border-bottom:1px solid var(--line); }");
     lines.push(".list-demo-panel--bordered .list-demo-row--divided{ border-bottom-color:var(--line-strong); }");
     lines.push("/* Leading avatar reuses the Avatar component's own .avatar-demo-circle/.avatar-demo-circle--initials/.avatar-demo-circle--h32 classes directly - no separate box or font-size rules. */");
-    lines.push(".list-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; text-align: start; }");
-    lines.push('.list-demo-title{ margin:0; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.list-demo-description{ margin:0; font-family:var(--font-body); font-size:12px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push(".list-demo-action{ flex:none; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; }");
+    lines.push(".list-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-2); text-align: start; }");
+    lines.push('.list-demo-title{ margin:0; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.list-demo-description{ margin:0; font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push(".list-demo-action{ flex:none; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; }");
     lines.push("");
     lines.push("/* Size (3) - row padding scales with size; avatar diameter reuses Avatar's own h24/h32/h40 classes (picked per size in markup, not redefined here) */");
-    lines.push(".list-demo-panel--sz-small .list-demo-row{ padding:6px 10px; gap:8px; }");
-    lines.push(".list-demo-panel--sz-small .list-demo-title{ font-size:12px; }");
-    lines.push(".list-demo-panel--sz-small .list-demo-description{ font-size:11px; }");
-    lines.push(".list-demo-panel--sz-large .list-demo-row{ padding:14px 16px; gap:12px; }");
-    lines.push(".list-demo-panel--sz-large .list-demo-title{ font-size:14px; }");
-    lines.push(".list-demo-panel--sz-large .list-demo-description{ font-size:13px; }");
+    lines.push(".list-demo-panel--sz-small .list-demo-row{ padding:var(--space-6) var(--space-10); gap:var(--space-8); }");
+    lines.push(".list-demo-panel--sz-small .list-demo-title{ font-size:var(--type-caption-size); }");
+    lines.push(".list-demo-panel--sz-small .list-demo-description{ font-size:var(--type-body-size); }");
+    lines.push(".list-demo-panel--sz-large .list-demo-row{ padding:var(--space-14) var(--space-16); gap:var(--space-12); }");
+    lines.push(".list-demo-panel--sz-large .list-demo-title{ font-size:var(--type-body-size); }");
+    lines.push(".list-demo-panel--sz-large .list-demo-description{ font-size:var(--type-body-size); }");
     return lines.join("\n");
   }
 
@@ -198,8 +198,8 @@
         return '<div class="list-demo-row' + dividedCls + '" aria-hidden="true">' +
           '<span class="skeleton-demo-avatar is-animated" style="width:' + avatarH + 'px;height:' + avatarH + 'px;border-radius:50%;"></span>' +
           '<div class="list-demo-body">' +
-          '<span class="skeleton-demo-line is-animated" style="width:45%;height:12px;"></span>' +
-          '<span class="skeleton-demo-line is-animated" style="width:70%;margin-top:6px;"></span>' +
+          '<span class="skeleton-demo-line is-animated" style="width:45%;height:var(--dimension-12);"></span>' +
+          '<span class="skeleton-demo-line is-animated" style="width:70%;margin-top:var(--space-6);"></span>' +
           "</div></div>";
       }).join("");
       return '<div class="list-demo-panel list-demo-panel--' + typeKey + sizeCls + '"' + styleAttr + ' aria-busy="true" aria-live="polite">' + loadingRowsHtml + "</div>";
@@ -239,7 +239,7 @@
     lines.push(buildListField("default", exampleRadius, info.showDividers, "default", exampleSize));
     lines.push(buildListField("default", exampleRadius, info.showDividers, "with-avatars", exampleSize));
     lines.push(buildListField("default", exampleRadius, info.showDividers, "loading", exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius x Size combination,

@@ -42,7 +42,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Returns the type's accent color only - used for the icon, the title
@@ -50,6 +50,11 @@
   // --graphite-800 background, so only the icon/title/border ever carry
   // the semantic color, keeping the banner itself visually calm.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     var amber500 = getCssVar("--amber-500", "#E6A53A");
@@ -78,7 +83,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -101,7 +106,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -173,21 +178,21 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Alert component */");
-    lines.push(".alert-demo-banner{ box-sizing:border-box; display:flex; align-items:flex-start; gap:12px; padding:14px 16px; background:var(--graphite-800); max-width:420px; }");
+    lines.push(".alert-demo-banner{ box-sizing:border-box; display:flex; align-items:flex-start; gap:var(--space-12); padding:var(--space-14) var(--space-16); background:var(--graphite-800); max-width:var(--dimension-420); }");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       lines.push(".alert-demo-banner--" + t.key + "{ border-inline-start:3px solid " + css.accent + "; }");
     });
-    lines.push(".alert-demo-icon{ flex:none; width:20px; height:20px; margin-top:1px; }");
+    lines.push(".alert-demo-icon{ flex:none; width:var(--dimension-20); height:var(--dimension-20); margin-top:var(--space-1); }");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       lines.push(".alert-demo-banner--" + t.key + " .alert-demo-icon{ color:" + css.accent + "; }");
     });
-    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; text-align: start; }");
-    lines.push('.alert-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.alert-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; max-width:260px; overflow-wrap:anywhere; }');
-    lines.push(".alert-demo-close{ flex:none; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; margin-inline-start:auto; }");
-    lines.push('.alert-demo-action{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:2px; }');
+    lines.push(".alert-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-4); text-align: start; }");
+    lines.push('.alert-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.alert-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
+    lines.push(".alert-demo-close{ flex:none; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; margin-inline-start:auto; }");
+    lines.push('.alert-demo-action{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:var(--space-2); }');
     return lines.join("\n");
   }
 
@@ -208,7 +213,7 @@
     lines.push(buildAlertField("info", "dismissible", exampleRadius, info.title, info.description, info.showIcon));
     lines.push(buildAlertField("info", "with-action", exampleRadius, info.title, info.description, info.showIcon));
     lines.push(buildAlertField("info", "title-only", exampleRadius, info.title, info.description, info.showIcon));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Renders one .alert-demo-banner - icon (optional), title + description

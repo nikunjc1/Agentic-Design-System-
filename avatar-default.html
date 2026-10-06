@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, shape and initials text are properties of the same component, not separate avatars - change them below to check this avatar's types and presence states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Size</span>
         <select data-role="avatar-size-select">
@@ -206,16 +209,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 3 content types compared side by side, each in all 4 presence states - Initials, Icon and Image placeholder, with no status dot, or an Online, Away or Offline dot in the bottom-right corner, at the chosen Size and Shape.</p>
     <div class="button-matrix-wrap" data-role="avatar-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Avatar.Group</p>
+    <h2 class="panel-title">Avatar.Group</h2>
     <p class="get-library-copy">A short overlapping stack for a list of people at a glance - a comment thread's participants, a document's collaborators. Once the set exceeds a max count, the last tile becomes a real avatar-shaped "+N" instead of growing the row further; hover it to see who's hidden.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Show as</span>
         <select data-role="avatar-group-view-select">
@@ -229,7 +232,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Anywhere a person needs a compact, recognizable visual identifier.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">User profile menu</span>
@@ -241,7 +244,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -282,7 +285,7 @@
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40" style="font-size:9px;">JOHNATHAN</span></div>
+          <div class="guide-dodont-demo"><span class="avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--square avatar-demo-circle--h40" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">JOHNATHAN</span></div>
           <p class="guide-dodont-note">A full name crammed into a 40px circle is unreadable at any size. Avatars carry one or two initials - use a name label beside it for the rest.</p>
         </div>
       </div>

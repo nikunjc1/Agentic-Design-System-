@@ -76,20 +76,20 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Affix component */");
-    lines.push(".affix-demo-viewport{ position:relative; width:220px; height:140px; overflow:hidden; box-sizing:border-box; border:1px solid var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); padding:8px; display:flex; flex-direction:column; gap:8px; }");
-    lines.push(".affix-demo-content-line{ flex:none; height:10px; border-radius:4px; background:var(--graphite-800); }");
+    lines.push(".affix-demo-viewport{ position:relative; width:var(--dimension-220); height:var(--dimension-140); overflow:hidden; box-sizing:border-box; border:1px solid var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); padding:var(--space-8); display:flex; flex-direction:column; gap:var(--space-8); }");
+    lines.push(".affix-demo-content-line{ flex:none; height:var(--dimension-10); border-radius:4px; background:var(--graphite-800); }");
     lines.push(".affix-demo-content-line--short{ width:60%; }");
-    lines.push('.affix-demo-bar{ flex:none; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--text-hi); }');
+    lines.push('.affix-demo-bar{ flex:none; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; color:var(--text-hi); }');
     lines.push(".affix-demo-bar.is-affixed{ position:absolute; left:8px; right:8px; background:var(--graphite-700); border-color:var(--red-500); box-shadow:0 4px 12px rgba(0,0,0,0.4); z-index:1; }");
     lines.push(".affix-demo-bar.is-disabled{ opacity:0.4; }");
-    lines.push('.affix-demo-badge{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--red-400); flex:none; }');
+    lines.push('.affix-demo-badge{ font-family:var(--font-mono); font-size:var(--type-body-size); letter-spacing:0.05em; text-transform:uppercase; color:var(--red-400); flex:none; }');
     lines.push(".affix-demo-badge--muted{ color:var(--text-dim); }");
     lines.push("");
     lines.push("<!-- Example usage - one per type, Rest state, at the chosen Content label/Offset -->");
     TYPES.forEach(function(t){
       lines.push(buildAffixField(t.key, "rest", label, offset));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

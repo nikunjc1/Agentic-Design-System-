@@ -28,7 +28,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function radioCoreCss(){
@@ -143,8 +143,8 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Radio component */");
-    lines.push(".radio-demo-field{ display:inline-flex; align-items:center; gap:8px; cursor:pointer; }");
-    lines.push('.radio-demo-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }');
+    lines.push(".radio-demo-field{ display:inline-flex; align-items:center; gap:var(--space-8); cursor:pointer; }");
+    lines.push('.radio-demo-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }');
     lines.push(".radio-demo-circle{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; flex:none; border-radius:50%; border:1.5px solid " + lineStrong + "; background:transparent; transition:border-color .15s ease, background-color .15s ease, outline-color .15s ease; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -170,10 +170,10 @@
     lines.push("/* Disabled - real :disabled combined with .is-disabled */");
     lines.push(".radio-demo-input:disabled + .radio-demo-circle, .radio-demo-circle.is-disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("");
-    lines.push(".radio-demo-label{ font-size:14px; color:" + textHi + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".radio-demo-label{ font-size:var(--type-body-size); color:" + textHi + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Card type - the whole row highlights once its radio is checked */");
-    lines.push(".radio-demo-card{ display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid " + lineStrong + "; border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".radio-demo-card{ display:flex; align-items:center; gap:var(--space-10); padding:var(--space-10) var(--space-14); border:1.5px solid " + lineStrong + "; border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
     lines.push(".radio-demo-card.is-checked{ background:" + redTint + "; border-color:" + red500 + "; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
@@ -186,7 +186,7 @@
       '</label>';
       lines.push(t.key === "card" ? '<div class="radio-demo-card is-checked">' + field + '</div>' : field);
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size, fully resolved (never "ask

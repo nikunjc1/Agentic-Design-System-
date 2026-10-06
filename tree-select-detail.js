@@ -53,10 +53,15 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textDim = getCssVar("--text-dim", "#64686F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -124,7 +129,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -146,7 +151,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -241,11 +246,11 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Tree Select component (all types, states, sizes) */");
-    lines.push(".treeselect-field{ position:relative; display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.treeselect-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
-    lines.push(".treeselect-control{ box-sizing:border-box; display:flex; align-items:center; gap:8px; border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".treeselect-field{ position:relative; display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.treeselect-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
+    lines.push(".treeselect-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.treeselect-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
-    lines.push(".treeselect-chevron{ flex:none; width:16px; height:16px; }");
+    lines.push(".treeselect-chevron{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -287,11 +292,11 @@
     lines.push("   Cascader, the multi-select dropdowns): graphite background, 1px line-strong border,");
     lines.push("   rounded corners and a soft drop shadow - a single column of rows, each row's");
     lines.push("   left padding set inline per node to show its depth (16px per level). */");
-    lines.push(".treeselect-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:4px; overflow:hidden; }");
-    lines.push(".treeselect-tree{ display:flex; flex-direction:column; gap:2px; }");
-    lines.push('.treeselect-node{ box-sizing:border-box; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; cursor:default; user-select:none; }');
+    lines.push(".treeselect-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-4); overflow:hidden; }");
+    lines.push(".treeselect-tree{ display:flex; flex-direction:column; gap:var(--space-2); }");
+    lines.push('.treeselect-node{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-10); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); cursor:default; user-select:none; }');
     lines.push(".treeselect-node.is-active{ background:" + optionActiveBg + "; color:" + red400 + "; }");
-    lines.push(".treeselect-caret{ flex:none; width:12px; height:12px; } /* left empty on leaf nodes - a same-width spacer so labels still align */");
+    lines.push(".treeselect-caret{ flex:none; width:var(--dimension-12); height:var(--dimension-12); } /* left empty on leaf nodes - a same-width spacer so labels still align */");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
@@ -301,7 +306,7 @@
     TYPES.forEach(function(t){
       lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Assignee team", "Select a team"));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

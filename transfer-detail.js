@@ -102,30 +102,30 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Transfer component */");
-    lines.push(".transfer-demo-panel{ display:flex; align-items:stretch; gap:8px; }");
+    lines.push(".transfer-demo-panel{ display:flex; align-items:stretch; gap:var(--space-8); }");
     lines.push(".transfer-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push("");
-    lines.push(".transfer-demo-column{ flex:1 1 0; min-width:140px; display:flex; flex-direction:column; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; }");
-    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:8px 12px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; font-weight:600; color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.transfer-demo-search{ margin:8px; padding:6px 8px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:12px; background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); color:var(--text-hi); }');
+    lines.push(".transfer-demo-column{ flex:1 1 0; min-width:var(--dimension-140); display:flex; flex-direction:column; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; }");
+    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:var(--space-8) var(--space-12); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); font-weight:600; color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.transfer-demo-search{ margin:var(--space-8); padding:var(--space-6) var(--space-8); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); color:var(--text-hi); }');
     lines.push("");
     lines.push("/* Size (3 options) - controls each panel's list height */");
     SIZE_OPTIONS.forEach(function(o){
       lines.push(".transfer-demo-list--" + o.value + "{ height:" + SIZE_MAP[o.value] + "px; }");
     });
-    lines.push(".transfer-demo-list{ flex:1 1 auto; overflow-y:auto; padding:4px; display:flex; flex-direction:column; gap:2px; }");
+    lines.push(".transfer-demo-list{ flex:1 1 auto; overflow-y:auto; padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2); }");
     lines.push("");
-    lines.push('.transfer-demo-item{ display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; color:var(--text-hi); cursor:pointer; }');
+    lines.push('.transfer-demo-item{ display:flex; align-items:center; gap:var(--space-8); padding:var(--space-6) var(--space-8); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:var(--text-hi); cursor:pointer; }');
     lines.push(".transfer-demo-item:hover, .transfer-demo-item.is-hover{ background:var(--graphite-800); }");
     lines.push("");
-    lines.push(".transfer-demo-checkbox-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
-    lines.push(".transfer-demo-checkbox{ flex:none; width:16px; height:16px; border-radius:4px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; }");
+    lines.push(".transfer-demo-checkbox-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
+    lines.push(".transfer-demo-checkbox{ flex:none; width:var(--dimension-16); height:var(--dimension-16); border-radius:4px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; }");
     lines.push(".transfer-demo-checkbox-input:checked + .transfer-demo-checkbox{ background:var(--red-500); border-color:var(--red-500); }");
     lines.push(".transfer-demo-checkbox-input:focus-visible + .transfer-demo-checkbox{ outline:2px solid var(--red-400); outline-offset:2px; }");
-    lines.push(".transfer-demo-checkbox svg{ width:11px; height:11px; color:#FFFFFF; }");
+    lines.push(".transfer-demo-checkbox svg{ width:var(--dimension-11); height:var(--dimension-11); color:#FFFFFF; }");
     lines.push("");
-    lines.push(".transfer-demo-arrows{ flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:0 4px; }");
-    lines.push(".transfer-demo-arrow-btn{ width:28px; height:28px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); display:flex; align-items:center; justify-content:center; cursor:pointer; }");
+    lines.push(".transfer-demo-arrows{ flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-8); padding:0 var(--space-4); }");
+    lines.push(".transfer-demo-arrow-btn{ width:var(--dimension-28); height:var(--dimension-28); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); display:flex; align-items:center; justify-content:center; cursor:pointer; }");
     lines.push(".transfer-demo-arrow-btn:hover{ background:var(--graphite-700); }");
     lines.push(".transfer-demo-arrow-btn:focus-visible, .transfer-demo-arrow-btn.is-focus{ outline:2px solid var(--red-400); outline-offset:2px; }");
     lines.push(".transfer-demo-arrow-btn:disabled{ opacity:0.5; cursor:not-allowed; }");
@@ -161,7 +161,7 @@
       lines.push('  </div>');
       lines.push('</div>');
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds a single .transfer-demo-panel at the given type/state/size, with

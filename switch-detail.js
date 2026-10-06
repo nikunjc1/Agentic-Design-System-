@@ -21,7 +21,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(){
@@ -145,11 +145,11 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Switch (toggle) component */");
-    lines.push('.switch-demo-field{ position:relative; display:inline-flex; align-items:center; gap:10px; cursor:pointer; }');
-    lines.push('.switch-demo-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }');
-    lines.push('.switch-demo-track{ position:relative; display:inline-flex; align-items:center; box-sizing:border-box; border-radius:999px; background:' + graphite700 + '; padding:0 2px; cursor:pointer; flex:none; transition:background-color .15s ease, outline-color .15s ease; }');
+    lines.push('.switch-demo-field{ position:relative; display:inline-flex; align-items:center; gap:var(--space-10); cursor:pointer; }');
+    lines.push('.switch-demo-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }');
+    lines.push('.switch-demo-track{ position:relative; display:inline-flex; align-items:center; box-sizing:border-box; border-radius:999px; background:' + graphite700 + '; padding:0 var(--space-2); cursor:pointer; flex:none; transition:background-color .15s ease, outline-color .15s ease; }');
     lines.push('.switch-demo-thumb{ border-radius:50%; background:#FFFFFF; transform:translateX(0); transition:transform .15s ease; flex:none; }');
-    lines.push('.switch-demo-label{ font-size:14px; color:' + textHi + '; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.switch-demo-label{ font-size:var(--type-body-size); color:' + textHi + '; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -178,7 +178,7 @@
       if (showLabel) lines.push('  <span class="switch-demo-label">' + DEFAULT_LABEL + '</span>');
       lines.push('</label>');
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size, fully resolved (never

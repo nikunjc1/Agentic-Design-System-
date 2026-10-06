@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Icon size, label and selected count are properties of the same component, not separate icons - change them below to check this control's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="rating-size-dropdown-label">Icon size</span>
         <div class="multiselect" data-role="rating-size-mount"></div>
@@ -205,13 +208,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both icon types compared side by side, each in all 4 states. Rest, Hover and Disabled always show the icon's unrated appearance (0 filled) - Hover additionally previews the first 3 icons in a lighter tint to suggest a live hover interaction - while Selected fills in the chosen number of icons. One full matrix is rendered per selected Icon size, at the chosen Label and Selected count.</p>
     <div class="button-matrix-wrap" data-role="rating-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any place someone scores something on a simple, bounded scale, from zero up to a small fixed maximum.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Product review</span>
@@ -222,10 +225,10 @@
     </div>
   </section>
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">A rating scale has no natural "empty" glyph distinct from "empty because unanswered" - for a typical 1-5 icon row with nothing clicked, zero filled icons and a required-but-missing answer look identical, so the required state has to be carried by the label and the error, not by the icons themselves.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - put the asterisk or "Required" text next to the label, same as any other required field, since the icon row itself can't show it.</li>
+      <li><strong>Required marking</strong> - put the red asterisk next to the label, same as any other required field, since the icon row itself can't show it.</li>
       <li><strong>Validation timing</strong> - validate on submit, not on blur - there's no natural blur moment for a row of icon buttons the way there is for a text field, and validating after every hover/click would flag the field before the user has finished deciding.</li>
       <li><strong>Error message</strong> - "Choose a rating before submitting," not "This field is required" - the message should name the action (choose a rating) instead of describing the field abstractly.</li>
       <li><strong>Recovery</strong> - focus the first icon and keep the error visible next to the label until a value is picked - clicking any icon should clear it immediately, since a single click is a complete, valid answer.</li>
@@ -234,7 +237,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

@@ -93,16 +93,16 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Empty component */");
-    lines.push(".empty-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:24px; width:220px; }");
+    lines.push(".empty-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-10); padding:var(--space-24); width:var(--dimension-220); }");
     lines.push(".empty-demo-icon-wrap{ display:flex; align-items:center; justify-content:center; color:var(--text-dim); }");
-    lines.push(".empty-demo-icon-wrap--default{ width:56px; height:56px; border-radius:9999px; background:var(--graphite-800); }");
-    lines.push(".empty-demo-icon-wrap--default svg{ width:28px; height:28px; }");
-    lines.push(".empty-demo-icon-wrap--simple{ width:40px; height:40px; }");
-    lines.push(".empty-demo-icon-wrap--simple svg{ width:36px; height:36px; }");
-    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; }');
-    lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); line-height:1.5; margin:0; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push(".empty-demo-icon-wrap--default{ width:var(--dimension-56); height:var(--dimension-56); border-radius:9999px; background:var(--graphite-800); }");
+    lines.push(".empty-demo-icon-wrap--default svg{ width:var(--dimension-28); height:var(--dimension-28); }");
+    lines.push(".empty-demo-icon-wrap--simple{ width:var(--dimension-40); height:var(--dimension-40); }");
+    lines.push(".empty-demo-icon-wrap--simple svg{ width:var(--dimension-36); height:var(--dimension-36); }");
+    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; }');
+    lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("/* Action button reuses Modal's own .modal-demo-btn/.modal-demo-btn--primary classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent, and this panel isn't inside one. */");
-    lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); margin-top:4px; }");
+    lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); margin-top:var(--space-4); }");
     return lines.join("\n");
   }
 
@@ -120,7 +120,7 @@
     lines.push("<!-- Example usage - the other 2 states (Default icon style) -->");
     lines.push(buildEmptyField("default", "title-only", info.title, info.description, info.actionLabel));
     lines.push(buildEmptyField("default", "with-description", info.title, info.description, info.actionLabel));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

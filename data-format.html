@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,7 +171,7 @@
   <p class="page-lede">How numbers, dates, currency and missing values are written for display - one rule per case, so the same value never renders two different ways on two different screens.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Numbers and currency</p>
+    <h2 class="panel-title">Numbers and currency</h2>
     <p class="get-library-copy">The same number should read exactly the same way in a table, a card and an export - never spelled out in one place and abbreviated in another for no reason tied to the content.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -200,7 +203,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Dates and times</p>
+    <h2 class="panel-title">Dates and times</h2>
     <p class="get-library-copy">One format per case, chosen for how it's actually read - unambiguous across locales, precise only when precision is asked for, and never a bare time with no time zone for anyone outside it.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -237,7 +240,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Missing and sensitive data</p>
+    <h2 class="panel-title">Missing and sensitive data</h2>
     <p class="get-library-copy">A missing value, a still-loading value and a deliberately redacted value are three different situations - the rendering should make it obvious which one a reader is looking at, never one generic placeholder standing in for all three.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -264,26 +267,26 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Empty vs. missing vs. loading</p>
+    <h2 class="panel-title">Empty vs. missing vs. loading</h2>
     <p class="get-library-copy">These are three different states and need three different treatments - collapsing them into one blank cell or one generic label hides which one the user is looking at.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);">Renewal date: &ndash;</span></div>
+        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Renewal date: &ndash;</span></div>
         <p class="guide-dodont-note">An en dash reads unambiguously as "no value exists" - distinct from a still-loading skeleton and from a genuinely empty list.</p>
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span style="font-size:13px;color:var(--text-hi);">Renewal date: [blank cell]</span></div>
+        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Renewal date: [blank cell]</span></div>
         <p class="guide-dodont-note">A blank cell is indistinguishable from a rendering bug or a value still in flight - the user can't tell if something is wrong.</p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel md-export-panel">
-    <p class="panel-title">Data Format - Markdown export</p>
+    <h2 class="panel-title">Data Format - Markdown export</h2>
     <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="page-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>
@@ -295,5 +298,6 @@
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
+<script src="data-format.js"></script>
 </body>
 </html>

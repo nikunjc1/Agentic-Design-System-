@@ -41,12 +41,17 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Only the icon color changes per type - same convention as
   // Notification's own accent/icon mapping.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     var amber500 = getCssVar("--amber-500", "#E6A53A");
@@ -96,8 +101,8 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Result component */");
-    lines.push(".result-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; width:260px; padding:28px 20px; }");
-    lines.push(".result-demo-icon{ width:48px; height:48px; margin-bottom:4px; }");
+    lines.push(".result-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-8); width:var(--dimension-260); padding:var(--space-28) var(--space-20); }");
+    lines.push(".result-demo-icon{ width:var(--dimension-48); height:var(--dimension-48); margin-bottom:var(--space-4); }");
     lines.push("");
     lines.push("/* Types (4) - color the icon only, same tokens as Notification */");
     TYPES.forEach(function(t){
@@ -105,18 +110,18 @@
       lines.push(".result-demo-panel--" + t.key + " .result-demo-icon{ " + css.icon + " }");
     });
     lines.push("");
-    lines.push('.result-demo-title{ font-family:var(--font-body); font-size:16px; font-weight:700; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.result-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); line-height:1.5; margin:0; max-width:260px; overflow-wrap:anywhere; }');
-    lines.push(".result-demo-actions{ display:flex; gap:8px; margin-top:12px; justify-content:center; }");
-    lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:8px 16px; border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
+    lines.push('.result-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:700; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.result-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
+    lines.push(".result-demo-actions{ display:flex; gap:var(--space-8); margin-top:var(--space-12); justify-content:center; }");
+    lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
     lines.push(".result-demo-btn--primary{ background:var(--red-500); color:#FFFFFF; }");
     lines.push(".result-demo-btn--secondary{ background:transparent; border-color:var(--line-strong); color:var(--text-hi); }");
     lines.push("");
     lines.push("/* Compact - smaller icon, tighter spacing, for inline use within a card */");
-    lines.push(".result-demo-panel--compact{ padding:16px 14px; gap:4px; }");
-    lines.push(".result-demo-panel--compact .result-demo-icon{ width:32px; height:32px; margin-bottom:2px; }");
-    lines.push(".result-demo-panel--compact .result-demo-title{ font-size:14px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".result-demo-panel--compact .result-demo-description{ font-size:12px; max-width:260px; overflow-wrap:anywhere; }");
+    lines.push(".result-demo-panel--compact{ padding:var(--space-16) var(--space-14); gap:var(--space-4); }");
+    lines.push(".result-demo-panel--compact .result-demo-icon{ width:var(--dimension-32); height:var(--dimension-32); margin-bottom:var(--space-2); }");
+    lines.push(".result-demo-panel--compact .result-demo-title{ font-size:var(--type-body-size); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".result-demo-panel--compact .result-demo-description{ font-size:var(--type-caption-size); max-width:var(--dimension-260); overflow-wrap:anywhere; }");
     lines.push("");
     lines.push("<!-- Example usage - one per type, Default state -->");
     TYPES.forEach(function(t){
@@ -129,7 +134,7 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code fully resolved for the current Title/Description

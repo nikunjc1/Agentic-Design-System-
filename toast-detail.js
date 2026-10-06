@@ -43,7 +43,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // The card itself is always a solid, neutral, elevated surface - only the
@@ -51,6 +51,11 @@
   // per type. This is what keeps a Toast reading as "elevated above the
   // page" rather than tinted like Alert's inline banner.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     var amber500 = getCssVar("--amber-500", "#E6A53A");
@@ -82,7 +87,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -106,7 +111,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -178,14 +183,14 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Toast (floating notification) component */");
-    lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:12px; padding:14px 16px; width:340px; background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
-    lines.push(".toast-demo-icon{ flex:none; width:20px; height:20px; margin-top:1px; }");
-    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:4px; padding-inline-end:16px; text-align: start; }");
-    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; max-width:260px; overflow-wrap:anywhere; }');
-    lines.push(".toast-demo-close{ position:absolute; top:10px; right:10px; width:16px; height:16px; background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");
-    lines.push('.toast-demo-action{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:2px; }');
-    lines.push(".toast-demo-progress{ position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--graphite-700); }");
+    lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:var(--space-12); padding:var(--space-14) var(--space-16); width:var(--dimension-340); background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
+    lines.push(".toast-demo-icon{ flex:none; width:var(--dimension-20); height:var(--dimension-20); margin-top:var(--space-1); }");
+    lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-4); padding-inline-end:var(--space-16); text-align: start; }");
+    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
+    lines.push(".toast-demo-close{ position:absolute; top:10px; right:10px; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");
+    lines.push('.toast-demo-action{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:var(--space-2); }');
+    lines.push(".toast-demo-progress{ position:absolute; left:0; right:0; bottom:0; height:var(--dimension-3); background:var(--graphite-700); }");
     lines.push(".toast-demo-progress-fill{ height:100%; background:currentColor; }");
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
@@ -214,7 +219,7 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value, fully

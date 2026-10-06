@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,15 +172,15 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Search type</p>
+      <h2 class="panel-title">Search type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="search-system-grid">
       <div class="system-card search-type-card" data-system="default" data-detail-href="search-default.html">
         <div class="button-type-demo">
-          <div class="search-demo-field" style="width:180px;">
-            <div class="search-demo-control search-demo-control--outlined search-demo-control--h40" style="border-radius:8px;">
+          <div class="search-demo-field" style="width:var(--dimension-180);">
+            <div class="search-demo-control search-demo-control--outlined search-demo-control--h40" style="border-radius:var(--radius-md);">
               <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
               <input type="search" class="search-demo-input" placeholder="Search..." />
             </div>

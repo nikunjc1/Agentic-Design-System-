@@ -191,35 +191,35 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Tree component */");
-    lines.push(".tree-demo-wrap{ width:220px; font-family:var(--font-body); font-size:13px; }");
+    lines.push(".tree-demo-wrap{ width:var(--dimension-220); font-family:var(--font-body); font-size:var(--type-body-size); }");
     lines.push(".tree-demo-wrap.is-disabled{ opacity:0.4; pointer-events:none; }");
-    lines.push('.tree-demo-root{ margin:0 0 6px; font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push(".tree-demo-row{ display:flex; align-items:center; gap:4px; padding:4px 6px; border-radius:var(--radius-sm); color:var(--text-hi); cursor:pointer; }");
+    lines.push('.tree-demo-root{ margin:0 0 var(--space-6); font-family:var(--font-mono); font-size:var(--type-body-size); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push(".tree-demo-row{ display:flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-6); border-radius:var(--radius-sm); color:var(--text-hi); cursor:pointer; }");
     lines.push(".tree-demo-row:hover{ background:var(--graphite-800); }");
     lines.push(".tree-demo-row.is-selected{ background:var(--red-tint); color:var(--red-400); }");
-    lines.push(".tree-demo-toggle{ width:14px; height:14px; flex:none; display:flex; align-items:center; justify-content:center; color:var(--text-dim); transition:transform .15s ease; }");
+    lines.push(".tree-demo-toggle{ width:var(--dimension-14); height:var(--dimension-14); flex:none; display:flex; align-items:center; justify-content:center; color:var(--text-dim); transition:transform .15s ease; }");
     lines.push(".tree-demo-toggle.is-expanded{ transform:rotate(90deg); }");
-    lines.push(".tree-demo-toggle-spacer{ width:14px; flex:none; }");
-    lines.push(".tree-demo-toggle svg, .tree-demo-checkbox svg, .tree-demo-icon svg{ width:14px; height:14px; }");
-    lines.push(".tree-demo-checkbox{ width:14px; height:14px; flex:none; border-radius:3px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; color:#FFFFFF; }");
+    lines.push(".tree-demo-toggle-spacer{ width:var(--dimension-14); flex:none; }");
+    lines.push(".tree-demo-toggle svg, .tree-demo-checkbox svg, .tree-demo-icon svg{ width:var(--dimension-14); height:var(--dimension-14); }");
+    lines.push(".tree-demo-checkbox{ width:var(--dimension-14); height:var(--dimension-14); flex:none; border-radius:3px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; color:#FFFFFF; }");
     lines.push(".tree-demo-checkbox.is-checked, .tree-demo-checkbox.is-indeterminate{ background:var(--red-500); border-color:var(--red-500); }");
     lines.push("/* Indeterminate is filled like a checked box - the dash vs tick is what separates partial from complete. */");
     lines.push(".tree-demo-icon{ flex:none; color:var(--text-dim); display:flex; }");
     lines.push(".tree-demo-label{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".tree-demo-children{ padding-inline-start:18px; }");
+    lines.push(".tree-demo-children{ padding-inline-start:var(--space-18); }");
     lines.push("");
     lines.push("/* Metatext type (SLDS-accurate) - a second, smaller, muted line under the label, with the toggle/icon top-aligned against the taller two-line row instead of centered */");
     lines.push(".tree-demo-wrap--lines .tree-demo-row{ align-items:flex-start; }");
-    lines.push(".tree-demo-wrap--lines .tree-demo-toggle, .tree-demo-wrap--lines .tree-demo-toggle-spacer, .tree-demo-wrap--lines .tree-demo-checkbox, .tree-demo-wrap--lines .tree-demo-icon{ margin-top:1px; }");
-    lines.push(".tree-demo-label-group{ display:flex; flex-direction:column; gap:1px; min-width:0; }");
-    lines.push(".tree-demo-meta{ font-size:11px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tree-demo-wrap--lines .tree-demo-toggle, .tree-demo-wrap--lines .tree-demo-toggle-spacer, .tree-demo-wrap--lines .tree-demo-checkbox, .tree-demo-wrap--lines .tree-demo-icon{ margin-top:var(--space-1); }");
+    lines.push(".tree-demo-label-group{ display:flex; flex-direction:column; gap:var(--space-1); min-width:0; }");
+    lines.push(".tree-demo-meta{ font-size:var(--type-body-size); color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     var typesToRender = typeFilter ? TYPES.filter(function(t){ return t.key === typeFilter; }) : TYPES;
     lines.push("<!-- Example usage - " + (typeFilter ? "the " + (typesToRender[0] ? typesToRender[0].label : typeFilter) + " type only" : "one per type") + ", Expanded state, at the chosen Root label/Show icons -->");
     typesToRender.forEach(function(t){
       lines.push(buildTreeField(t.key, "expanded", rootLabel, showIcons));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

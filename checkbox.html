@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Checkbox type</p>
+      <h2 class="panel-title">Checkbox type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
@@ -178,7 +181,7 @@
         <div class="button-type-demo">
           <label class="checkbox-demo-field checkbox-demo-field--standard">
             <input type="checkbox" class="checkbox-demo-input" checked tabindex="-1" />
-            <span class="checkbox-demo-box checkbox-demo-box--h20" style="border-radius:4px;">
+            <span class="checkbox-demo-box checkbox-demo-box--h20" style="border-radius:var(--radius-sm);">
               <span class="checkbox-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
             </span>
             <span class="checkbox-demo-label">I agree to the terms</span>

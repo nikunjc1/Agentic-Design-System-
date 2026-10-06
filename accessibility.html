@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,7 +171,7 @@
   <p class="page-lede">What this system already does for you on every page, without being asked - and, just as importantly, what it doesn't do yet. WCAG 2.2 AA is the baseline referenced throughout.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Automatic on every page</p>
+    <h2 class="panel-title">Automatic on every page</h2>
     <p class="get-library-copy">Injected sitewide by experience.js - a page doesn't opt in, and can't opt out.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -210,32 +213,32 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Focus</p>
+    <h2 class="panel-title">Focus</h2>
     <p class="get-library-copy">A single semantic token, --color-focus-ring (Colors), backs the sitewide focus-visible convention - 76 of 82 focus outlines sitewide use it directly; the other 6 (destructive/success/info contexts) deliberately use that context's own color instead. Keyboard-only focus (:focus-visible), not every mouse click, is what triggers it.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Motion</p>
+    <h2 class="panel-title">Motion</h2>
     <p class="get-library-copy">Every transition and animation sitewide resolves to one of six shared motion tokens (Motion isn't yet its own Foundation page, but the tokens exist in theme.css). Under prefers-reduced-motion, animation and transition durations sitewide collapse to near-zero - a user who has asked their OS to reduce motion gets that everywhere in this system, not page-by-page.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Touch targets</p>
+    <h2 class="panel-title">Touch targets</h2>
     <p class="get-library-copy">Icon buttons and nav links are 32px by default (already above WCAG 2.2's 24px AA minimum) and grow to 44px automatically on a coarse pointer (touch), meeting the AAA-level target size as well wherever it actually matters - a touch device, not a mouse.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Color contrast</p>
+    <h2 class="panel-title">Color contrast</h2>
     <p class="get-library-copy">Every one of the 32 color swatches on Colors carries a live, real WCAG contrast badge - AA/AAA (4.5:1 / 7:1) for anything used as text, and a separate 3:1 Non-text check (WCAG 1.4.11) for Control Border, which isn't text and was never correctly held to the text thresholds. Opening any swatch's picker also previews it under protanopia, deuteranopia and tritanopia (a standard simplified simulation, not a clinical-grade one) - a color choice that only works when swatches otherwise differ can be caught before it ships, not after. See Colors for the live checker itself.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Localization and preferences</p>
+    <h2 class="panel-title">Localization and preferences</h2>
     <p class="get-library-copy">Theme, density and direction (RTL) are each a real, live, sitewide toggle (Settings), persisted per browser and synced instantly across any other open tab of this system - not a per-page setting you'd have to repeat.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Known gaps - not yet done</p>
+    <h2 class="panel-title">Known gaps - not yet done</h2>
     <p class="get-library-copy">Said plainly, not glossed over:</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -258,7 +261,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="editor-state-model">
     <div class="panel-title-row">
-      <p class="panel-title">Foundation editor state model</p>
+      <h2 class="panel-title">Foundation editor state model</h2>
     </div>
     <p class="get-library-copy">Every Foundation editor uses the same words - saved, previewed, applied, exported - but what each one actually does differs by section; this is the one place that distinction is written down. <strong>Draft</strong>: what's in the field right now, not yet written anywhere. <strong>Preview</strong>: this page's own swatches/sample text updating instantly from the draft value alone, e.g. <code>renderScaleChips()</code> (foundations.js:339) re-rendering Brand's scale on every keystroke - true on every editor, independent of save or apply. <strong>Auto-save</strong>: written to localStorage the moment a field changes (<code>input</code>/<code>change</code>), independent of any button - see <code>wireSaveState</code>'s <code>handleEdit</code> (foundations.js:54). <strong>Apply</strong>: the saved value actually changing what the current tab renders right now, instead of only taking effect on the next page load. <strong>Export</strong>: what Markdown/token export reads - always the latest auto-saved value, whether or not Apply has run.</p>
     <div class="usage-hierarchy">
@@ -303,7 +306,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Foundation release contract</p>
+      <h2 class="panel-title">Foundation release contract</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -365,9 +368,9 @@
   </section>
 
   <section class="panel spacing-model-panel md-export-panel">
-    <p class="panel-title">Accessibility - Markdown export</p>
+    <h2 class="panel-title">Accessibility - Markdown export</h2>
     <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="page-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>

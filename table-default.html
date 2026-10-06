@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Corner radius, size and the header row are properties of the same component, not separate tables - change them below to check this table's types and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="table-radius-dropdown-label">Corner radius</span>
         <div class="multiselect" data-role="table-radius-mount" title="Only applies to the Bordered type"></div>
@@ -201,13 +204,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 5 states - plain rows, Striped for alternating row backgrounds, Selected showing a checkbox column with one row highlighted, Loading, and Empty. One full matrix is rendered per selected combination of Corner radius and Size, with the current Show header setting applied throughout.</p>
     <div class="button-matrix-wrap" data-role="table-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any time structured data needs to be shown across fixed columns rather than as a list or grid of cards.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Admin data grid</span>
@@ -219,7 +222,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Selection</p>
+    <h2 class="panel-title">Selection</h2>
     <p class="get-library-copy">Row selection is one of three modes per table instance, not a single on/off switch - pick the one that matches what an action needs to operate on.</p>
     <ul class="guide-list">
       <li><strong>None</strong> - rows aren't selectable. No checkbox column, no row highlight on click; a click (if it does anything) navigates or expands the row instead of selecting it.</li>
@@ -230,7 +233,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Sort</p>
+    <h2 class="panel-title">Sort</h2>
     <p class="get-library-copy">Sorting can happen entirely in the browser or round-trip to the server, depending on how much of the dataset is already loaded.</p>
     <ul class="guide-list">
       <li><strong>Client-side sort</strong> - re-orders rows already loaded in memory. Fine for small, fully-loaded datasets where every row is already on the page.</li>
@@ -241,7 +244,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Filter</p>
+    <h2 class="panel-title">Filter</h2>
     <p class="get-library-copy">Filtering narrows which rows show, through either a scoped per-column control or a single global search - and the resulting empty state needs to say which situation it is.</p>
     <ul class="guide-list">
       <li><strong>Per-column filter</strong> - a control scoped to one field, e.g. a status dropdown inside the Status column's header, narrowing on that attribute alone.</li>
@@ -251,7 +254,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Pagination vs. Virtualization</p>
+    <h2 class="panel-title">Pagination vs. Virtualization</h2>
     <p class="get-library-copy">A Table doesn't scale linearly in the DOM as row count grows, so which rendering strategy applies depends on how many rows are in play.</p>
     <ul class="guide-list">
       <li><strong>Below 500 rows</strong> - client-side pagination, or simply rendering every row at once, is fine. The DOM cost is small and bounded.</li>
@@ -260,7 +263,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Density</p>
+    <h2 class="panel-title">Density</h2>
     <p class="get-library-copy">A two-value row-height property, independent of the Size property already shown above in Live Preview.</p>
     <ul class="guide-list">
       <li><strong>Comfortable</strong> - the default row height and cell padding, matching what's shown throughout this page's Live Preview.</li>
@@ -270,14 +273,14 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Required States</p>
+    <h2 class="panel-title">Required States</h2>
     <p class="get-library-copy">A real, data-backed Table has no fallback "shape" the way this page's static demos do - empty, loading and error all need an explicit, intentional rendering, not an accidental one.</p>
 
     <p class="guide-subhead">Empty (no data at all)</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
         <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, no members yet"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:32px;height:32px;"></div><p class="empty-demo-title" style="font-size:13px;">No team members yet</p><p class="empty-demo-description" style="font-size:12px;">Invite someone to get started.</p><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="margin-top:4px;">Invite member</button></div></td></tr></tbody></table></div>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, no members yet"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:var(--space-20);"><div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:var(--dimension-32);height:var(--dimension-32);"></div><p class="empty-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">No team members yet</p><p class="empty-demo-description" style="font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Invite someone to get started.</p><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="margin-top:var(--space-4);">Invite member</button></div></td></tr></tbody></table></div>
         <p class="guide-dodont-note">Reuses the Empty component (icon, title, description) plus a call-to-action that matches the table's content, inside one spanning cell.</p>
       </div>
       <div class="guide-dodont-case is-dont">
@@ -296,7 +299,7 @@
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, loading"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><p class="empty-demo-title" style="font-size:13px;">No results</p></div></td></tr></tbody></table></div>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, loading"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:var(--space-20);"><p class="empty-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">No results</p></div></td></tr></tbody></table></div>
         <p class="guide-dodont-note">Showing the same "No results" empty state while a fetch is still in flight misreports that there's no data - rows popping in a moment later contradicts what was just displayed.</p>
       </div>
     </div>
@@ -310,7 +313,7 @@
       </div>
       <div class="guide-dodont-case is-dont">
         <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, failed to load"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:20px;"><p class="empty-demo-title" style="font-size:13px;">No results</p></div></td></tr></tbody></table></div>
+        <div class="guide-dodont-demo"><table class="table-demo-table table-demo-table--bordered" aria-label="Team table, failed to load"><thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead><tbody><tr class="table-demo-row"><td colspan="2"><div class="empty-demo-panel" style="padding:var(--space-20);"><p class="empty-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">No results</p></div></td></tr></tbody></table></div>
         <p class="guide-dodont-note">A failed request that silently renders the same empty state as a true zero-result answer gives the user no way to tell the two apart, and no path to retry.</p>
       </div>
     </div>
@@ -318,7 +321,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

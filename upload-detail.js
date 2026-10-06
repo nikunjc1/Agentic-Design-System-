@@ -44,7 +44,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Resolved token snapshot used only for the Copy prompt's descriptive
@@ -93,28 +93,28 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Upload (file upload) component */");
-    lines.push(".upload-demo-field{ display:flex; flex-direction:column; gap:10px; width:240px; }");
+    lines.push(".upload-demo-field{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-240); }");
     lines.push("");
-    lines.push(".upload-demo-dropzone{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:20px 16px; border:1.5px dashed var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); text-align:center; }");
-    lines.push(".upload-demo-dropzone svg{ width:24px; height:24px; color:var(--text-dim); }");
-    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.upload-demo-dropzone-helper{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); margin:0; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push(".upload-demo-dropzone{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-6); padding:var(--space-20) var(--space-16); border:1.5px dashed var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); text-align:center; }");
+    lines.push(".upload-demo-dropzone svg{ width:var(--dimension-24); height:var(--dimension-24); color:var(--text-dim); }");
+    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.upload-demo-dropzone-helper{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("");
-    lines.push(".upload-demo-trigger-btn{ display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; cursor:pointer; width:fit-content; }");
+    lines.push(".upload-demo-trigger-btn{ display:inline-flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; cursor:pointer; width:fit-content; }");
     lines.push(".upload-demo-trigger-btn:hover{ background:var(--graphite-700); }");
     lines.push(".upload-demo-trigger-btn:disabled{ opacity:0.5; cursor:not-allowed; }");
     lines.push("");
-    lines.push(".upload-demo-file-list{ display:flex; flex-direction:column; gap:6px; }");
-    lines.push(".upload-demo-file-row{ box-sizing:border-box; display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); }");
-    lines.push(".upload-demo-file-info{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:3px; }");
-    lines.push('.upload-demo-file-name{ font-family:var(--font-body); font-size:12px; font-weight:500; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.upload-demo-file-size{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); }');
-    lines.push(".upload-demo-file-status{ flex:none; width:16px; height:16px; }");
+    lines.push(".upload-demo-file-list{ display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push(".upload-demo-file-row{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); padding:var(--space-8) var(--space-10); background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); }");
+    lines.push(".upload-demo-file-info{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-3); }");
+    lines.push('.upload-demo-file-name{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:500; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.upload-demo-file-size{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); }');
+    lines.push(".upload-demo-file-status{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push(".upload-demo-file-row.is-complete .upload-demo-file-status{ color:var(--green-500); }");
     lines.push(".upload-demo-file-row.is-error .upload-demo-file-status{ color:var(--danger-500); }");
-    lines.push(".upload-demo-file-progress{ width:100%; height:4px; background:var(--graphite-700); border-radius:9999px; overflow:hidden; margin-top:2px; }");
+    lines.push(".upload-demo-file-progress{ width:100%; height:var(--dimension-4); background:var(--graphite-700); border-radius:9999px; overflow:hidden; margin-top:var(--space-2); }");
     lines.push(".upload-demo-file-progress-fill{ height:100%; background:var(--red-500); }");
-    lines.push('.upload-demo-file-error-text{ font-family:var(--font-body); font-size:11px; color:var(--danger-500); margin-top:2px; }');
+    lines.push('.upload-demo-file-error-text{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--danger-500); margin-top:var(--space-2); }');
     lines.push("");
     lines.push("/* Disabled - applies to the whole control, dropzone/button and file list together */");
     lines.push(".upload-demo-field.is-disabled{ opacity:0.4; pointer-events:none; }");
@@ -151,7 +151,7 @@
     lines.push('  <button type="button" class="upload-demo-trigger-btn">' + UPLOAD_ICON + "<span>Upload file</span></button>");
     lines.push('  <p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>");
     lines.push("</div>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Renders one Upload demo (dropzone/button + optional file list) for a
@@ -171,7 +171,7 @@
     } else {
       var disabledAttr = isDisabled ? " disabled" : "";
       controlHtml = '<p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>" +
-        '<button type="button" class="upload-demo-trigger-btn" tabindex="-1"' + disabledAttr + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px;"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg><span>Upload file</span></button>' +
+        '<button type="button" class="upload-demo-trigger-btn" tabindex="-1"' + disabledAttr + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-14);height:var(--dimension-14);"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg><span>Upload file</span></button>' +
         '<p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>";
     }
 
@@ -191,7 +191,7 @@
             '<span class="upload-demo-file-size">' + DEMO_FILE_UPLOADING.size + "</span>" +
             '<div class="upload-demo-file-progress"><div class="upload-demo-file-progress-fill" style="width:' + DEMO_FILE_UPLOADING.percent + '%;"></div></div>' +
           "</div>" +
-          '<span class="upload-demo-file-status" style="width:auto;height:auto;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);">' + DEMO_FILE_UPLOADING.percent + "%</span>" +
+          '<span class="upload-demo-file-status" style="width:auto;height:auto;font-family:var(--font-mono);font-size:var(--type-body-size);color:var(--text-dim);">' + DEMO_FILE_UPLOADING.percent + "%</span>" +
         "</div>" +
       "</div>";
     } else if (stateKey === "error"){

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Shadow philosophy</p>
+      <h2 class="panel-title">Shadow philosophy</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -186,7 +189,7 @@
         </div>
         <p class="system-card-desc">Little or no shadow - separation comes from borders, surface color and spacing instead. Best for: Enterprise / Data-heavy / Financial / Technical products.</p>
         <p class="system-card-scale" data-role="scale">None, XS</p>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span></div>
       </button>
 
       <button class="system-card" data-system="subtle" aria-pressed="false" type="button">
@@ -196,17 +199,17 @@
         </div>
         <p class="system-card-desc">Very restrained elevation for clean, professional interfaces. Best for: Enterprise SaaS / B2B / Dashboards / Productivity tools.</p>
         <p class="system-card-scale" data-role="scale">None, XS, SM, MD, LG</p>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span></div>
       </button>
 
       <button class="system-card is-active" data-system="balanced" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Balanced</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">A controlled elevation hierarchy that works across most products. Best for: SaaS / Web / Mobile / Cross-platform / AI products.</p>
         <p class="system-card-scale" data-role="scale">None, XS, SM, MD, LG, XL</p>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span></div>
       </button>
 
       <button class="system-card" data-system="soft" aria-pressed="false" type="button">
@@ -216,7 +219,7 @@
         </div>
         <p class="system-card-desc">Diffused shadows with larger blur and lower opacity. Best for: Consumer / Mobile / Lifestyle / Healthcare / Customer-facing products.</p>
         <p class="system-card-scale" data-role="scale">None, SM, MD, LG, XL, 2XL</p>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span><span class="shadow-demo-box" style="box-shadow:0 16px 32px rgba(0,0,0,0.16)" title="2xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-2xl);" title="2xl"></span></div>
       </button>
 
       <button class="system-card" data-system="expressive" aria-pressed="false" type="button">
@@ -226,7 +229,7 @@
         </div>
         <p class="system-card-desc">Dramatic elevation and depth for brand-forward experiences. Best for: Marketing / Creative / Consumer brands / Experimental interfaces.</p>
         <p class="system-card-scale" data-role="scale">None, SM, MD, LG, XL, 2XL</p>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span><span class="shadow-demo-box" style="box-shadow:0 16px 32px rgba(0,0,0,0.16)" title="2xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-2xl);" title="2xl"></span></div>
       </button>
     </div>
     </div>
@@ -237,7 +240,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Elevation hierarchy</p>
+      <h2 class="panel-title">Elevation hierarchy</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -257,31 +260,31 @@
         <span class="usage-label">Raised</span>
         <span class="usage-desc">Standard cards, slightly raised controls, sticky elements</span>
         <span class="usage-values">XS &middot; SM</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Dropdown / Popover</span>
         <span class="usage-desc">Clearly elevated above the content beneath - menus, date pickers</span>
         <span class="usage-values">MD</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Floating / Drawer</span>
         <span class="usage-desc">Floating panels, toolbars, side drawers</span>
         <span class="usage-values">LG</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Modal</span>
         <span class="usage-desc">Dialogs and modals - pair with a backdrop and surface contrast, not shadow alone</span>
         <span class="usage-values">XL</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Major overlay</span>
         <span class="usage-desc">Complex overlays and large floating experiences - use sparingly</span>
         <span class="usage-values">2XL</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 16px 32px rgba(0,0,0,0.16)" title="2xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-2xl);" title="2xl"></span></div>
       </div>
     </div>
     </div>
@@ -292,7 +295,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component defaults</p>
+      <h2 class="panel-title">Component defaults</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -304,7 +307,7 @@
         <span class="usage-label">Button</span>
         <span class="usage-desc">Default none &middot; hover XS &middot; pressed none - don't make every button look elevated</span>
         <span class="usage-values">None / XS</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Input</span>
@@ -316,49 +319,49 @@
         <span class="usage-label">Card (static)</span>
         <span class="usage-desc">A plain &lt;div&gt; container for display-only content - SM at rest, and SM stays unchanged on mouse hover. No hover/pressed elevation at all, since there's no action behind it to cue</span>
         <span class="usage-values">SM</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Card (interactive)</span>
         <span class="usage-desc">A real &lt;a&gt;/&lt;button&gt; (or explicitly marked <code>--interactive</code>) - the whole card is one click target, so its elevation should say so: default SM &rarr; hover MD &rarr; pressed XS</span>
         <span class="usage-values">SM &rarr; MD &rarr; XS</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Dropdown / Popover</span>
         <span class="usage-desc">Should clearly appear above the content beneath it</span>
         <span class="usage-values">MD</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Tooltip</span>
         <span class="usage-desc">Stays visually lightweight - never heavier than a card</span>
         <span class="usage-values">SM</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Modal / Dialog</span>
         <span class="usage-desc">Pair with backdrop + surface contrast, not shadow alone</span>
         <span class="usage-values">XL</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Drawer / Bottom sheet</span>
         <span class="usage-desc">Side drawer LG &middot; mobile bottom sheet XL - edge touching the viewport stays unrounded, not unshadowed</span>
         <span class="usage-values">LG / XL</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span><span class="shadow-demo-box" style="box-shadow:0 12px 24px rgba(0,0,0,0.14)" title="xl"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-xl);" title="xl"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Floating action button</span>
         <span class="usage-desc">Default MD &middot; hover LG &middot; pressed SM</span>
         <span class="usage-values">SM / MD / LG</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:0 1px 4px rgba(0,0,0,0.08)" title="sm"></span><span class="shadow-demo-box" style="box-shadow:0 4px 8px rgba(0,0,0,0.10)" title="md"></span><span class="shadow-demo-box" style="box-shadow:0 8px 16px rgba(0,0,0,0.12)" title="lg"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="sm"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-md);" title="md"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-lg);" title="lg"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Sticky header</span>
         <span class="usage-desc">None until scrolled, then XS - never a permanent strong shadow</span>
         <span class="usage-values">None / XS</span>
-        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.06)" title="xs"></span></div>
+        <div class="shadow-demo-row"><span class="shadow-demo-box" style="box-shadow:none" title="none"></span><span class="shadow-demo-box" style="box-shadow:var(--shadow-sm);" title="xs"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Table</span>
@@ -386,7 +389,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Shadows and interaction states</p>
+    <h2 class="panel-title">Shadows and interaction states</h2>
     <p class="get-library-copy">"Never shadow alone" needs a concrete second signal per state, not just the principle - here's what this system actually uses for each, with the real rule behind it:</p>
     <div class="usage-hierarchy">
       <div class="usage-row">

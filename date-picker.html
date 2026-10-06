@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,16 +172,16 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Date Picker type</p>
+      <h2 class="panel-title">Date Picker type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="datepicker-system-grid">
       <div class="system-card datepicker-type-card" data-system="default" data-detail-href="date-picker-default.html">
         <div class="button-type-demo">
-          <div class="datepicker-demo-field" style="width:180px;">
+          <div class="datepicker-demo-field" style="width:var(--dimension-180);">
             <label class="datepicker-demo-label">Date of birth</label>
-            <div class="datepicker-demo-control datepicker-demo-control--outlined datepicker-demo-control--h40" style="border-radius:8px;">
+            <div class="datepicker-demo-control datepicker-demo-control--outlined datepicker-demo-control--h40" style="border-radius:var(--radius-md);">
               <span class="datepicker-demo-value">MM/DD/YYYY</span>
               <span class="datepicker-demo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
             </div>

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -170,7 +173,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">InsureEdge 3.0 &middot; Current version 3.2.0</p>
+      <h2 class="panel-title">InsureEdge 3.0 &middot; Current version 3.2.0</h2>
       <div class="guide-view-toggle" role="group" aria-label="History view">
         <button type="button" class="guide-toggle-btn is-active" data-view="versions" aria-pressed="true">Versions</button>
         <button type="button" class="guide-toggle-btn" data-view="activity" aria-pressed="false">Activity</button>
@@ -192,18 +195,18 @@
           </tbody>
         </table>
       </div>
-      <p class="get-library-copy" style="margin-top:10px;">Checkbox selection on each row drives Compare directly - no separate version-picker screen. Search, status filter, and date range sit above the table; a two-year-old system has hundreds of versions, so this paginates (showing 4 of 27 here). Row menu: View &middot; Export MD &middot; View changelog &middot; Compare with current &middot; Restore &middot; Copy version link.</p>
+      <p class="get-library-copy" style="margin-top:var(--space-10);">Checkbox selection on each row drives Compare directly - no separate version-picker screen. Search, status filter, and date range sit above the table; a two-year-old system has hundreds of versions, so this paginates (showing 4 of 27 here). Row menu: View &middot; Export MD &middot; View changelog &middot; Compare with current &middot; Restore &middot; Copy version link.</p>
 
-      <div style="margin-top:16px;">
-        <p class="panel-title" style="font-size:14px;">Empty state - no published versions yet</p>
-        <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;">
-          <div style="max-width:400px;">
-            <p style="margin:0 0 6px;font-weight:600;color:var(--text-hi);">No published versions yet</p>
-            <p style="margin:0 0 10px;font-size:13px;color:var(--text-mid);">InsureEdge 3.0 is in draft. Your first version will appear here once you publish.</p>
-            <p style="margin:0;font-size:12px;color:var(--text-dim);">Draft changes: 62 components, 9 foundations &middot; [ Publish v1.0.0 ]</p>
+      <div style="margin-top:var(--space-16);">
+        <h2 class="panel-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Empty state - no published versions yet</h2>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
+          <div style="max-width:var(--dimension-400);">
+            <p style="margin:0 0 var(--space-6);font-weight:600;color:var(--text-hi);">No published versions yet</p>
+            <p style="margin:0 0 var(--space-10);color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">InsureEdge 3.0 is in draft. Your first version will appear here once you publish.</p>
+            <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Draft changes: 62 components, 9 foundations &middot; [ Publish v1.0.0 ]</p>
           </div>
         </div>
-        <p class="get-library-copy" style="margin-top:8px;">Not "Create first version" - generation already creates v1.0.0, so a project with a design system always has at least one version. The real empty state is "no <em>published</em> versions yet, draft in progress."</p>
+        <p class="get-library-copy" style="margin-top:var(--space-8);">Not "Create first version" - generation already creates v1.0.0, so a project with a design system always has at least one version. The real empty state is "no <em>published</em> versions yet, draft in progress."</p>
       </div>
     </div>
 
@@ -213,48 +216,48 @@
         <table class="table-demo-table table-demo-table--bordered" style="width:100%;">
           <thead><tr><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Event</th><th scope="col">Detail</th></tr></thead>
           <tbody>
-            <tr class="table-demo-row"><td>23 Sep</td><td>14:20</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:6px;"></span>Version published</td><td>3.2.0</td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>14:18</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:6px;"></span>NPM package published</td><td>3.2.0</td></tr>
-            <tr class="table-demo-row"><td>23 Sep</td><td>14:15</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:6px;"></span>AI context synced</td><td>3.2.0 &middot; 14 changes</td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>11:02</td><td>A. Dev</td><td><span class="badge-demo-status-dot--processing" style="display:inline-block;margin-inline-end:6px;"></span>Component updated</td><td>Button / focus state</td></tr>
-            <tr class="table-demo-row"><td>22 Sep</td><td>16:30</td><td>Claude</td><td><span class="badge-demo-status-dot--warning" style="display:inline-block;margin-inline-end:6px;"></span>AI change proposed</td><td>Button focus (approved)</td></tr>
+            <tr class="table-demo-row"><td>23 Sep</td><td>14:20</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>Version published</td><td>3.2.0</td></tr>
+            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>14:18</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>NPM package published</td><td>3.2.0</td></tr>
+            <tr class="table-demo-row"><td>23 Sep</td><td>14:15</td><td>Nikunj</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>AI context synced</td><td>3.2.0 &middot; 14 changes</td></tr>
+            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>11:02</td><td>A. Dev</td><td><span class="badge-demo-status-dot--processing" style="display:inline-block;margin-inline-end:var(--space-6);"></span>Component updated</td><td>Button / focus state</td></tr>
+            <tr class="table-demo-row"><td>22 Sep</td><td>16:30</td><td>Claude</td><td><span class="badge-demo-status-dot--warning" style="display:inline-block;margin-inline-end:var(--space-6);"></span>AI change proposed</td><td>Button focus (approved)</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="get-library-copy" style="margin-top:10px;">Tracked event groups: Project (created/settings/archived/restored) &middot; System (generated/regenerated/failed) &middot; Content (foundation/component/pattern/template/AI rule/documentation changed) &middot; Outputs (MD/NPM/Figma/AI sync) &middot; Version (published/deprecated/restored/compared) &middot; Governance (proposed/approved/rejected/role changed). Exportable as CSV/JSON. Retention: versions forever, activity events 24 months, then rolled into monthly summaries.</p>
+      <p class="get-library-copy" style="margin-top:var(--space-10);">Tracked event groups: Project (created/settings/archived/restored) &middot; System (generated/regenerated/failed) &middot; Content (foundation/component/pattern/template/AI rule/documentation changed) &middot; Outputs (MD/NPM/Figma/AI sync) &middot; Version (published/deprecated/restored/compared) &middot; Governance (proposed/approved/rejected/role changed). Exportable as CSV/JSON. Retention: versions forever, activity events 24 months, then rolled into monthly summaries.</p>
       <p class="get-library-copy">For a brand-new project's Activity tab: shows the project-creation and generation events - never a blank table.</p>
     </div>
   </section>
 
   <section class="panel spacing-model-panel" id="version-3-2-0">
-    <p class="panel-title">Version detail</p>
+    <h2 class="panel-title">Version detail</h2>
     <p class="get-library-copy">Opens as its own linkable, citable page (<code>/history/3.1.0</code>), never trapped inside a drawer with no URL.</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;">
-      <div style="width:100%;max-width:520px;">
-        <p style="margin:0 0 4px;font-weight:700;color:var(--text-hi);">Version 3.1.0 <span class="component-status is-published">Published</span></p>
-        <p style="margin:0 0 10px;font-size:12px;color:var(--text-dim);">Created 20 Sep 2026, 09:05 by Nikunj &middot; Summary: 8 changes: +2 added, ~6 updated, 0 removed</p>
-        <p style="margin:0 0 6px;font-size:12px;font-weight:600;color:var(--text-hi);">Outputs at this version</p>
-        <div class="chip-row" style="margin-bottom:12px;"><span class="chip">Design system 3.1.0</span><span class="chip">NPM 3.1.0</span><span class="chip">MD 3.1.0</span><span class="chip">Figma 3.1.0</span><span class="chip">AI context 3.1.0</span></div>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--green-500);">+ Date Range (component)</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--green-500);">+ Table pattern &mdash; search, filter, bulk actions</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--amber-500);">~ Button / focus state &mdash; 2px &rarr; 2px + 2px offset (a11y: SC 1.4.11)</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--amber-500);">~ Input / error state &mdash; message position (a11y: SC 3.3.1)</p>
-        <p style="margin:0;font-size:12px;color:var(--text-dim);">None removed</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
+      <div style="width:100%;max-width:var(--dimension-520);">
+        <p style="margin:0 0 var(--space-4);font-weight:700;color:var(--text-hi);">Version 3.1.0 <span class="component-status is-published">Published</span></p>
+        <p style="margin:0 0 var(--space-10);color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Created 20 Sep 2026, 09:05 by Nikunj &middot; Summary: 8 changes: +2 added, ~6 updated, 0 removed</p>
+        <p style="margin:0 0 var(--space-6);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Outputs at this version</p>
+        <div class="chip-row" style="margin-bottom:var(--space-12);"><span class="chip">Design system 3.1.0</span><span class="chip">NPM 3.1.0</span><span class="chip">MD 3.1.0</span><span class="chip">Figma 3.1.0</span><span class="chip">AI context 3.1.0</span></div>
+        <p style="margin:0 0 var(--space-4);color:var(--green-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">+ Date Range (component)</p>
+        <p style="margin:0 0 var(--space-4);color:var(--green-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">+ Table pattern &mdash; search, filter, bulk actions</p>
+        <p style="margin:0 0 var(--space-4);color:var(--amber-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ Button / focus state &mdash; 2px &rarr; 2px + 2px offset (a11y: SC 1.4.11)</p>
+        <p style="margin:0 0 var(--space-4);color:var(--amber-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ Input / error state &mdash; message position (a11y: SC 3.3.1)</p>
+        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">None removed</p>
       </div>
     </div>
     <p class="get-library-copy">Output-version alignment belongs here and on the Overview: when outputs are misaligned, it's shown plainly (e.g. "NPM 3.0.0 &#9888; behind") rather than implying everything moves in lockstep.</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Compare</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;">
-      <div style="width:100%;max-width:520px;">
-        <p style="margin:0 0 10px;font-weight:600;color:var(--text-hi);">3.1.0 &rarr; 3.2.0 &middot; 18 differences</p>
-        <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:var(--text-hi);">Foundations (3)</p>
-        <p style="margin:0 0 8px;font-size:12px;color:var(--text-mid);">Colors ~ color.primary #1D4ED8 &rarr; #1A45B8 (a11y fix) &middot; Typography ~ heading.h3 24px &rarr; 22px &middot; Spacing: no change</p>
-        <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:var(--text-hi);">Components (11)</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--text-mid);">Button ~ height (md) 40px &rarr; 44px, focus ring 2px &rarr; 2px + 2px offset &middot; Date Range + added</p>
-        <p style="margin:0;font-size:12px;color:var(--danger-500);">Transfer &minus; removed &rarr; replaced by Tree Select (migration available)</p>
+    <h2 class="panel-title">Compare</h2>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
+      <div style="width:100%;max-width:var(--dimension-520);">
+        <p style="margin:0 0 var(--space-10);font-weight:600;color:var(--text-hi);">3.1.0 &rarr; 3.2.0 &middot; 18 differences</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Foundations (3)</p>
+        <p style="margin:0 0 var(--space-8);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Colors ~ color.primary #1D4ED8 &rarr; #1A45B8 (a11y fix) &middot; Typography ~ heading.h3 24px &rarr; 22px &middot; Spacing: no change</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Components (11)</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Button ~ height (md) 40px &rarr; 44px, focus ring 2px &rarr; 2px + 2px offset &middot; Date Range + added</p>
+        <p style="margin:0;color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Transfer &minus; removed &rarr; replaced by Tree Select (migration available)</p>
       </div>
     </div>
     <ul class="guide-list">
@@ -266,16 +269,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Restore</p>
+    <h2 class="panel-title">Restore</h2>
     <p class="get-library-copy">Restore creates a new version. It never overwrites - nothing is deleted, and the impact is previewed before confirming.</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:16px;">
-      <div style="width:100%;max-width:520px;">
-        <p style="margin:0 0 8px;font-weight:600;color:var(--text-hi);">Restore version 3.1.0?</p>
-        <p style="margin:0 0 10px;font-size:12px;color:var(--text-mid);">This creates a new version from the 3.1.0 configuration. Nothing is deleted - 3.2.0 remains in your history. Current 3.2.0 &rarr; New version 3.3.0.</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--text-mid);">~ 11 components revert to their 3.1.0 definition</p>
-        <p style="margin:0 0 4px;font-size:12px;color:var(--text-mid);">&minus; Date Range (added in 3.2.0) will be removed</p>
-        <p style="margin:0 0 8px;font-size:12px;color:var(--danger-500);">&#9888; This reintroduces a known contrast failure (SC 1.4.11)</p>
-        <p style="margin:0;font-size:12px;color:var(--text-dim);">Impact: NPM 3.3.0 will be a MAJOR release &middot; AI context requires re-sync &middot; Figma library requires re-push. A written reason is required before confirming.</p>
+    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
+      <div style="width:100%;max-width:var(--dimension-520);">
+        <p style="margin:0 0 var(--space-8);font-weight:600;color:var(--text-hi);">Restore version 3.1.0?</p>
+        <p style="margin:0 0 var(--space-10);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">This creates a new version from the 3.1.0 configuration. Nothing is deleted - 3.2.0 remains in your history. Current 3.2.0 &rarr; New version 3.3.0.</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ 11 components revert to their 3.1.0 definition</p>
+        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&minus; Date Range (added in 3.2.0) will be removed</p>
+        <p style="margin:0 0 var(--space-8);color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&#9888; This reintroduces a known contrast failure (SC 1.4.11)</p>
+        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Impact: NPM 3.3.0 will be a MAJOR release &middot; AI context requires re-sync &middot; Figma library requires re-push. A written reason is required before confirming.</p>
       </div>
     </div>
     <ul class="guide-list">
@@ -286,7 +289,7 @@
   </section>
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
-    <div class="panel-title-row"><p class="panel-title">Component Guide</p></div>
+    <div class="panel-title-row"><h2 class="panel-title">Component Guide</h2></div>
     <p class="guide-subhead">Accessibility</p>
     <ul class="guide-list">
       <li>Proper <code>&lt;th scope="col"&gt;</code>, sort state announced, row actions keyboard-reachable (SC 1.3.1, 4.1.2).</li>

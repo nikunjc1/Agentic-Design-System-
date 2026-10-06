@@ -76,7 +76,7 @@
     link: {
       purpose: "A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.",
       sample: "View Details",
-      css: { rest: "background:transparent;color:#FF3F4F;padding-inline:8px;", hover: "text-decoration:underline;", pressed: "color:#D80016;" }
+      css: { rest: "background:transparent;color:#FF3F4F;padding-inline:var(--space-8);", hover: "text-decoration:underline;", pressed: "color:#D80016;" }
     },
     approve: {
       purpose: "An action that confirms or approves something positive, like approving a request or accepting a change.",
@@ -140,7 +140,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -165,7 +165,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Determines whether a property counts as "configured" for prompt/code
@@ -210,7 +210,7 @@
   // --red-400, so it's read live too.
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
   function liveRedHex(){
     return {
@@ -229,12 +229,17 @@
   // have a light-theme override (see theme.css), so FULL_SPEC's hardcoded
   // values for them are always correct regardless of theme.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var red = liveRedHex();
     if (typeKey === "primary"){
       return { rest: "background:" + red[500] + ";color:#FFFFFF;", hover: "background:" + red[400] + ";", pressed: "background:" + red[600] + ";" };
     }
     if (typeKey === "link"){
-      return { rest: "background:transparent;color:" + red[400] + ";padding-inline:8px;", hover: "text-decoration:underline;", pressed: "color:" + red[600] + ";" };
+      return { rest: "background:transparent;color:" + red[400] + ";padding-inline:var(--space-8);", hover: "text-decoration:underline;", pressed: "color:" + red[600] + ";" };
     }
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var graphite600 = getCssVar("--graphite-600", "#383D44");
@@ -339,10 +344,10 @@
     var lines = [];
     lines.push("/* Agentic Design System - Button component (all types, states, sizes) */");
     lines.push(".btn{");
-    lines.push("  display:inline-flex; align-items:center; justify-content:center; gap:8px;");
+    lines.push("  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-8);");
     lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:600;');
     lines.push("  white-space:nowrap; cursor:pointer; user-select:none;");
-    lines.push("  max-width:320px; overflow:hidden; text-overflow:ellipsis;");
+    lines.push("  max-width:var(--dimension-320); overflow:hidden; text-overflow:ellipsis;");
     lines.push("  border:1.5px solid transparent;");
     lines.push("  transition:background-color .15s ease, border-color .15s ease, color .15s ease;");
     lines.push("}");
@@ -402,7 +407,7 @@
     contentsToShow.forEach(function(contentValue){
       lines.push(exampleMarkupFor(contentValue, exampleSize, sizeClass, radiusClass, "Save"));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Content x Corner radius

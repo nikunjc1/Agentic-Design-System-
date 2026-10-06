@@ -360,6 +360,11 @@
       var saved = window.ADSStorage.safeGet(SAVE_KEY);
       if (!saved){ regenerateDark(); applyPreview(); return; }
 
+      if (saved.system === "focus"){
+        var focus = window.ADSFoundationModel.normalizeFocusState({light:saved.color,dark:saved.darkColor,darkAuto:saved.darkColorAuto});
+        saved = Object.assign({}, saved, {color:focus.light,darkColor:focus.dark});
+      }
+
       if (saved.system) selectSystem(saved.system);
 
       if (saved.width) widthSelect.value = saved.width;
@@ -389,13 +394,13 @@
     saveBtn.addEventListener("click", function(){
       persistBorder();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetBorderBtn");
     resetBtn.addEventListener("click", function(){
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       selectSystem("standard");
 
       saveStatus.textContent = "Reset to defaults";
@@ -511,6 +516,7 @@
         var key = row.dataset.state;
         var rowSaved = saved[key];
         if (!rowSaved) return;
+        if (key === "focus") rowSaved = window.ADSFoundationModel.normalizeFocusState(rowSaved);
         if (rowSaved.light) applyStateSwatch(row, false, rowSaved.light);
         if (rowSaved.dark){
           applyStateSwatch(row, true, rowSaved.dark);
@@ -529,7 +535,7 @@
     saveStatesBtn.addEventListener("click", function(){
       persistStates();
 
-      statesSaveStatus.textContent = "Saved just now";
+      statesSaveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ statesSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -543,7 +549,7 @@
 
     var resetStatesBtn = document.getElementById("resetStatesBtn");
     resetStatesBtn.addEventListener("click", function(){
-      localStorage.removeItem(STATES_KEY);
+      if (!window.ADSStorage.safeRemove(STATES_KEY)) return;
       stateRows.forEach(function(row){
         var key = row.dataset.state;
         applyStateSwatch(row, false, stateDefaults[key].light);

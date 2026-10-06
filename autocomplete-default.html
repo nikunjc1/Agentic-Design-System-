@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="City" data-default-placeholder="Search a city...">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="autocomplete-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="autocomplete-size-mount"></div>
@@ -211,13 +214,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="autocomplete-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any form field that should suggest matching options as the user types instead of requiring a fully free-form value or a closed, no-typing picker.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">City search</span>
@@ -229,10 +232,10 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Autocomplete's suggestions are fetched, not static, so its validation contract covers the dropdown's async states as well as whether a typed value has to match the list.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - mark a required Autocomplete field the same way as any other required field in this system (asterisk after the label, or "(required)" if the form spells it out).</li>
+      <li><strong>Required marking</strong> - mark a required Autocomplete field the same way as any other required field in this system (red asterisk after the label).</li>
       <li><strong>Loading state</strong> - while suggestions are being fetched, show a subtle spinner or skeleton row in the dropdown rather than a blank flash - a blank dropdown reads as "no matches" before the request has even finished.</li>
       <li><strong>No-results state</strong> - if nothing matches, show a specific message like "No matches for '[query]'" rather than silently showing nothing.</li>
       <li><strong>Match requirement</strong> - decide up front whether the field accepts free text not present in the list, or requires an exact match from it. If it requires a match, validate on blur with a message like "Choose an option from the list" or "'[typed value]' isn't a recognized option" - don't let an unmatched value quietly pass through to submit.</li>
@@ -241,7 +244,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

@@ -29,10 +29,15 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textHi = getCssVar("--text-hi", "#F3F2EF");
     var textMid = getCssVar("--text-mid", "#A7ABB2");
@@ -110,7 +115,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -143,7 +148,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -251,9 +256,9 @@
     lines.push("");
     if (fieldLabel || supportingText){
       lines.push("/* Optional field label / supporting text - mirrors the Input component's Label and helper text */");
-      lines.push(".group-btn-field{ display:flex; flex-direction:column; gap:8px; align-items:flex-start; }");
-      lines.push(".group-btn-field-label{ font-size:13px; font-weight:500; color:var(--text-hi); margin:0; }");
-      lines.push(".group-btn-field-note{ font-size:12px; color:var(--text-dim); margin:0; }");
+      lines.push(".group-btn-field{ display:flex; flex-direction:column; gap:var(--space-8); align-items:flex-start; }");
+      lines.push(".group-btn-field-label{ font-size:var(--type-body-size); font-weight:500; color:var(--text-hi); margin:0; }");
+      lines.push(".group-btn-field-note{ font-size:var(--type-caption-size); color:var(--text-dim); margin:0; }");
       lines.push("");
     }
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
@@ -272,7 +277,7 @@
       if (supportingText) lines.push(indent + '<p class="group-btn-field-note">' + supportingText + "</p>");
       if (fieldLabel || supportingText) lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

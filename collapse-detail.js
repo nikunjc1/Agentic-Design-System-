@@ -26,7 +26,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Corner radius option list - same value scale as the Button and Group
@@ -49,7 +49,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -85,7 +85,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -156,27 +156,27 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Collapse component */");
-    lines.push(".collapse-demo-group{ display:flex; flex-direction:column; width:260px; }");
-    lines.push(".collapse-demo-group--bordered{ gap:8px; }");
+    lines.push(".collapse-demo-group{ display:flex; flex-direction:column; width:var(--dimension-260); }");
+    lines.push(".collapse-demo-group--bordered{ gap:var(--space-8); }");
     lines.push(".collapse-demo-group--borderless{ gap:0; }");
     lines.push(".collapse-demo-panel--bordered{ border:1px solid var(--line-strong); background:var(--graphite-900); overflow:hidden; }");
     lines.push(".collapse-demo-panel--borderless{ border-top:1px solid var(--line); }");
     lines.push(".collapse-demo-group--borderless .collapse-demo-panel--borderless:last-child{ border-bottom:1px solid var(--line); }");
-    lines.push('.collapse-demo-header{ box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; cursor:pointer; font-family:var(--font-body); }');
-    lines.push('.collapse-demo-header-text{ font-size:13px; font-weight:600; color:var(--text-hi); text-align: start; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push(".collapse-demo-chevron{ flex:none; width:14px; height:14px; color:var(--text-dim); transition:transform .15s ease; }");
+    lines.push('.collapse-demo-header{ box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); padding:var(--space-12) var(--space-14); cursor:pointer; font-family:var(--font-body); }');
+    lines.push('.collapse-demo-header-text{ font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); text-align: start; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push(".collapse-demo-chevron{ flex:none; width:var(--dimension-14); height:var(--dimension-14); color:var(--text-dim); transition:transform .15s ease; }");
     lines.push(".collapse-demo-chevron.is-open{ transform:rotate(180deg); }");
-    lines.push('.collapse-demo-body{ padding:0 14px 14px; font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align: start; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push('.collapse-demo-body{ padding:0 var(--space-14) var(--space-14); font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); text-align: start; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".collapse-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".collapse-demo-panel.is-disabled .collapse-demo-header{ cursor:not-allowed; }");
     lines.push("");
     lines.push("/* Size (3) - Medium is the default; header/body padding and header text scale, body text stays fixed */");
-    lines.push(".collapse-demo-group--sz-small .collapse-demo-header{ padding:8px 10px; }");
-    lines.push(".collapse-demo-group--sz-small .collapse-demo-header-text{ font-size:12px; }");
-    lines.push(".collapse-demo-group--sz-small .collapse-demo-body{ padding:0 10px 10px; }");
-    lines.push(".collapse-demo-group--sz-large .collapse-demo-header{ padding:16px 18px; }");
-    lines.push(".collapse-demo-group--sz-large .collapse-demo-header-text{ font-size:14px; }");
-    lines.push(".collapse-demo-group--sz-large .collapse-demo-body{ padding:0 18px 18px; }");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-header{ padding:var(--space-8) var(--space-10); }");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-header-text{ font-size:var(--type-caption-size); }");
+    lines.push(".collapse-demo-group--sz-small .collapse-demo-body{ padding:0 var(--space-10) var(--space-10); }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-header{ padding:var(--space-16) var(--space-18); }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-header-text{ font-size:var(--type-body-size); }");
+    lines.push(".collapse-demo-group--sz-large .collapse-demo-body{ padding:0 var(--space-18) var(--space-18); }");
     return lines.join("\n");
   }
 
@@ -198,7 +198,7 @@
     lines.push("<!-- Example usage - the other 2 states (Bordered type) -->");
     lines.push(buildCollapseField("bordered", "collapsed", exampleRadius, info.header, info.body, info.showIcon, exampleSize));
     lines.push(buildCollapseField("bordered", "disabled", exampleRadius, info.header, info.body, info.showIcon, exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   function chevronSvg(isOpen){

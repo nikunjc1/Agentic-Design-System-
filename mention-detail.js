@@ -37,10 +37,15 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textDim = getCssVar("--text-dim", "#64686F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -110,7 +115,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -132,7 +137,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -225,12 +230,12 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Mention component (all types, states, sizes) */");
-    lines.push(".mention-field{ position:relative; display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.mention-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
-    lines.push(".mention-control{ box-sizing:border-box; display:flex; align-items:flex-start; width:100%; min-height:84px; border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".mention-field{ position:relative; display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.mention-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
+    lines.push(".mention-control{ box-sizing:border-box; display:flex; align-items:flex-start; width:100%; min-height:var(--dimension-84); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push('.mention-control[contenteditable]{ outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; line-height:1.5; }');
     lines.push('.mention-control[contenteditable]:empty::before{ content:attr(data-placeholder); color:' + getCssVar("--text-dim", "#64686F") + '; }');
-    lines.push(".mention-chip{ display:inline-block; background:" + getCssVar("--red-tint", "RGBA(255,3,26,0.1)") + "; color:" + getCssVar("--red-400", "#FF3F4F") + "; border-radius:4px; padding:1px 4px; font-weight:500; }");
+    lines.push(".mention-chip{ display:inline-block; background:" + getCssVar("--red-tint", "RGBA(255,3,26,0.1)") + "; color:" + getCssVar("--red-400", "#FF3F4F") + "; border-radius:4px; padding:var(--space-1) var(--space-4); font-weight:500; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -272,10 +277,10 @@
     lines.push("   the multi-select dropdowns): graphite background, 1px line-strong border, rounded");
     lines.push("   corners and a soft drop shadow. Each row is a person: a round initials avatar");
     lines.push("   plus a full name. */");
-    lines.push(".mention-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:2px; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:4px; }");
-    lines.push('.mention-person{ box-sizing:border-box; display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:14px; cursor:default; }');
+    lines.push(".mention-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-4); }");
+    lines.push('.mention-person{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); cursor:default; }');
     lines.push(".mention-person.is-active{ background:" + optionActiveBg + "; }");
-    lines.push('.mention-avatar{ width:22px; height:22px; flex-shrink:0; border-radius:9999px; background:' + avatarBg + '; color:' + getCssVar("--text-hi", "#F5F6F7") + '; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; }');
+    lines.push('.mention-avatar{ width:var(--dimension-22); height:var(--dimension-22); flex-shrink:0; border-radius:9999px; background:' + avatarBg + '; color:' + getCssVar("--text-hi", "#F5F6F7") + '; font-size:var(--type-body-size); font-weight:600; display:flex; align-items:center; justify-content:center; }');
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
@@ -285,7 +290,7 @@
     TYPES.forEach(function(t){
       lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Comment", "Type @ to mention someone"));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

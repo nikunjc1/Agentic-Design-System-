@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Quantity" data-default-placeholder="0">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label, placeholder and the stepper are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="number-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="number-size-mount"></div>
@@ -219,13 +222,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 3 types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="number-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any form field that collects a single numeric value - quantities, ages, prices, or counts.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Quantity</span>
@@ -237,10 +240,10 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Number carries a format contract on top of the usual required-field rules - what counts as a valid character, when an out-of-range value gets flagged, and how the error names the actual constraint.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - mark a required Number field the same way as any other required field in this system (asterisk after the label, or "(required)" if the form spells it out).</li>
+      <li><strong>Required marking</strong> - mark a required Number field the same way as any other required field in this system (red asterisk after the label).</li>
       <li><strong>Validation timing</strong> - reject non-numeric characters at input time, so a letter or symbol never lands in the field to begin with. Min/max/step range checks are different: validate those on blur, not on every keystroke - flagging "5" as too low while the user is still about to type "50" is hostile and simply wrong.</li>
       <li><strong>Error message</strong> - name the actual constraint that failed: "Enter a value between 1 and 100" or "Must be a multiple of 5," never a generic "Invalid number."</li>
       <li><strong>Recovery</strong> - when the stepper is shown, clicking +/- from an out-of-range value snaps it to the nearest valid boundary, giving the user a one-click fix instead of forcing a full retype.</li>
@@ -249,7 +252,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

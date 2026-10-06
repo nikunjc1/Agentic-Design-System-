@@ -40,8 +40,8 @@
     var footerHtml = kind === "confirm"
       ? '<div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">OK</button></div>'
       : '<div class="modal-demo-footer" style="justify-content:flex-end;"><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">OK</button></div>';
-    return '<div class="modal-demo-scrim" style="padding:12px;"><div class="modal-demo-dialog modal-demo-dialog--default" style="max-width:220px;border-radius:8px;">' +
-      '<div class="modal-demo-body" style="padding-top:16px;">' + headerHtml + "</div>" +
+    return '<div class="modal-demo-scrim" style="padding:var(--space-12);"><div class="modal-demo-dialog modal-demo-dialog--default" style="max-width:var(--dimension-220);border-radius:8px;">' +
+      '<div class="modal-demo-body" style="padding-top:var(--space-16);">' + headerHtml + "</div>" +
       footerHtml +
       "</div></div>";
   }
@@ -64,7 +64,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Primary action button color per type - Default uses the brand-customizable
@@ -72,6 +72,11 @@
   // action always reads as red regardless of whatever brand color is saved
   // on the Colors page (same rule Button's own Destructive type follows).
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     if (typeKey === "destructive"){
       return {
         primaryBg: getCssVar("--danger-500", "#FF031A"),
@@ -109,7 +114,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -133,7 +138,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -220,7 +225,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Modal component */");
-    lines.push(".modal-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,0.55); z-index:1000; }");
+    lines.push(".modal-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:var(--space-24); background:rgba(0,0,0,0.55); z-index:1000; }");
     lines.push('.modal-dialog{ box-sizing:border-box; width:100%; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
     lines.push("");
     lines.push("/* Size - controls dialog max-width */");
@@ -236,14 +241,14 @@
       lines.push(".modal-dialog--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
-    lines.push(".modal-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 20px; border-bottom:1px solid " + line + "; }");
-    lines.push('.modal-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:16px; font-weight:600; color:' + textHi + "; margin:0; }");
-    lines.push(".modal-close{ flex:none; width:20px; height:20px; background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
-    lines.push('.modal-body{ padding:16px 20px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:14px; color:' + textMid + "; position:relative; }");
-    lines.push(".modal-body--scrollable{ max-height:64px; overflow:hidden; }");
-    lines.push(".modal-fade{ position:absolute; left:0; right:0; bottom:0; height:32px; background:linear-gradient(to bottom, transparent, " + graphite900 + "); }");
-    lines.push(".modal-footer{ display:flex; justify-content:flex-end; gap:8px; padding:12px 20px; border-top:1px solid " + line + "; }");
-    lines.push('.modal-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:600; padding:8px 16px; border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
+    lines.push(".modal-header{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-12); padding:var(--space-16) var(--space-20); border-bottom:1px solid " + line + "; }");
+    lines.push('.modal-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin:0; }");
+    lines.push(".modal-close{ flex:none; width:var(--dimension-20); height:var(--dimension-20); background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
+    lines.push('.modal-body{ padding:var(--space-16) var(--space-20); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:' + textMid + "; position:relative; }");
+    lines.push(".modal-body--scrollable{ max-height:var(--dimension-64); overflow:hidden; }");
+    lines.push(".modal-fade{ position:absolute; left:0; right:0; bottom:0; height:var(--dimension-32); background:linear-gradient(to bottom, transparent, " + graphite900 + "); }");
+    lines.push(".modal-footer{ display:flex; justify-content:flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top:1px solid " + line + "; }");
+    lines.push('.modal-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
     lines.push(".modal-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
     lines.push(".modal-btn--primary{ color:#FFFFFF; }");
     lines.push("");
@@ -274,7 +279,7 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value (at the
@@ -466,7 +471,7 @@
       if (stateKey === "scrollable"){
         bodyHtml = '<div class="modal-demo-body modal-demo-body--scrollable">' +
           '<p style="margin:0;">' + escapeHtml(body) + "</p>" +
-          '<p style="margin:8px 0 0;">Additional details continue below to demonstrate scrolling behavior within a fixed-height dialog body.</p>' +
+          '<p style="margin:var(--space-8) 0 0;">Additional details continue below to demonstrate scrolling behavior within a fixed-height dialog body.</p>' +
           '<div class="modal-demo-fade"></div>' +
           "</div>";
       } else {

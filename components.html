@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Button type</p>
+      <h2 class="panel-title">Button type</h2>
       <div class="panel-title-actions">
         <button class="btn btn-ghost btn-sm" data-role="icon-upload-trigger" type="button">Upload icon variation</button>
         <input type="file" data-role="button-icon-upload-input" accept=".svg,.png,.jpg,.jpeg" multiple hidden />
@@ -177,7 +180,7 @@
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code for any type - both use this system's own color tokens and Inter, never arbitrary values. Click a card to configure that type in full.</p>
 
-    <label class="type-control" style="max-width:260px;margin-bottom:20px;">
+    <label class="type-control" style="max-width:var(--dimension-260);margin-bottom:var(--space-20);">
       <span>Corner radius - applies to every card</span>
       <select data-role="global-radius-select">
         <option value="0">0px - Sharp</option>

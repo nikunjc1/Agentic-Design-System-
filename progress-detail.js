@@ -99,14 +99,14 @@
   function buildFullCode(percent, showLabel){
     var lines = [];
     lines.push("/* Agentic Design System - Progress component */");
-    lines.push(".progress-demo-linear{ display:flex; align-items:center; gap:10px; width:220px; }");
-    lines.push(".progress-demo-track{ flex:1 1 auto; height:8px; border-radius:0; background:var(--graphite-700); overflow:hidden; }");
+    lines.push(".progress-demo-linear{ display:flex; align-items:center; gap:var(--space-10); width:var(--dimension-220); }");
+    lines.push(".progress-demo-track{ flex:1 1 auto; height:var(--dimension-8); border-radius:0; background:var(--graphite-700); overflow:hidden; }");
     lines.push(".progress-demo-fill{ height:100%; border-radius:0; background:var(--red-500); }");
     lines.push(".progress-demo-fill--success{ background:var(--green-500); }");
     lines.push(".progress-demo-fill--error{ background: repeating-linear-gradient(135deg, var(--danger-600) 0 6px, var(--danger-500) 6px 12px); }");
-    lines.push(".progress-demo-label{ flex:none; font-family:var(--font-mono); font-size:12px; color:var(--text-mid); min-width:36px; text-align: end; }");
+    lines.push(".progress-demo-label{ flex:none; font-family:var(--font-mono); font-size:var(--type-caption-size); color:var(--text-mid); min-width:var(--dimension-36); text-align: end; }");
     lines.push("");
-    lines.push(".progress-demo-circular{ position:relative; width:72px; height:72px; border-radius:9999px; display:flex; align-items:center; justify-content:center; }");
+    lines.push(".progress-demo-circular{ position:relative; width:var(--dimension-72); height:var(--dimension-72); border-radius:9999px; display:flex; align-items:center; justify-content:center; }");
     lines.push(".progress-demo-circular--error{ outline: 2px dashed var(--danger-600); outline-offset: 2px; }");
     lines.push(".progress-demo-circular-inner{ position:absolute; inset:8px; border-radius:9999px; background:var(--graphite-950); }");
     lines.push(".progress-demo-circular .progress-demo-label{ position:relative; z-index:1; text-align:center; min-width:0; }");
@@ -118,7 +118,7 @@
     lines.push("  </div>");
     if (showLabel) lines.push('  <span class="progress-demo-label">' + percent + "%</span>");
     lines.push("</div>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

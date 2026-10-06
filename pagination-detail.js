@@ -22,7 +22,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(){
@@ -87,7 +87,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -109,7 +109,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -185,9 +185,9 @@
     var lines = [];
     lines.push("/* Agentic Design System - Pagination component */");
     lines.push("/* Page numbers/count shown are illustrative reference content, not a configurable property. */");
-    lines.push(".pagination-demo-bar{ display:inline-flex; align-items:center; gap:6px; box-sizing:border-box; }");
+    lines.push(".pagination-demo-bar{ display:inline-flex; align-items:center; gap:var(--space-6); box-sizing:border-box; }");
     lines.push('.pagination-demo-item, .pagination-demo-arrow{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; cursor:pointer; transition:background-color .15s ease, border-color .15s ease, color .15s ease; ' + css.rest + ' }');
-    lines.push(".pagination-demo-arrow svg{ width:16px; height:16px; }");
+    lines.push(".pagination-demo-arrow svg{ width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push(".pagination-demo-item:hover, .pagination-demo-arrow:hover{ " + css.hover + " }");
     lines.push(".pagination-demo-item:focus-visible, .pagination-demo-arrow:focus-visible{ " + css.focus + " }");
     lines.push(".pagination-demo-item:disabled, .pagination-demo-arrow:disabled{ cursor:not-allowed; opacity:0.4; }");
@@ -229,7 +229,7 @@
     lines.push('  <span class="pagination-demo-count">Page 3 of 12</span>');
     lines.push('  <button type="button" class="pagination-demo-arrow pagination-demo-arrow--h' + exampleSize + " " + exampleRadiusCls + '">' + NEXT_SVG + "</button>");
     lines.push("</nav>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

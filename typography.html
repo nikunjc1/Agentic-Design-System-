@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel font-family-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Font families</p>
+      <h2 class="panel-title">Font families</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -182,7 +185,7 @@
   <div class="color-field">
     <div class="color-field-head">
       <span class="color-field-label">Primary font - headings</span>
-      <span class="badge badge-required">Required</span>
+      <span class="ads-required" aria-label="Required">*</span>
     </div>
 
     <div class="font-panel" data-font="primary">
@@ -225,7 +228,6 @@
   <div class="color-field">
     <div class="color-field-head">
       <span class="color-field-label">Secondary font - supporting text</span>
-      <span class="badge badge-optional">Optional</span>
     </div>
 
     <div class="font-panel" data-font="secondary">
@@ -274,7 +276,7 @@
 
   <section class="panel type-scale-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Type scale</p>
+      <h2 class="panel-title">Type scale</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -282,7 +284,10 @@
     </div>
     <div class="guide-view-panel" data-view-panel="human">
     <p class="get-library-copy">Family comes from Primary (headings) or Secondary (supporting text) above - set the weight, style and color for each level to match your brand guideline. Each level carries its own Light and Dark color - Dark starts auto-generated from Light and stays in sync until you edit it directly; "Regenerate dark colors" below resets any you've customized back to that suggestion.</p>
-    <p class="get-library-copy">Responsive step-down: below 640px (the same mobile threshold documented on Grid &amp; Layout), a page's H1 drops one full step on this scale - display-sm (30/38) to display-xs (24/32) - rather than shrinking uniformly or staying fixed at a size built for a wide viewport. Body/supporting text stays at its base size at every width.</p>
+
+
+
+    <p class="get-library-copy">Responsive typography: H1–H6, Body, Paragraph and Caption now apply their exact selected metrics across all pages through Foundation tokens. Small screens wrap headings and stack controls without replacing the chosen sizes. Rem mode respects the browser's root font size; the default conversion uses 16 px. Viewport breakpoints stay fixed so changing typography cannot move the layout thresholds. Per-breakpoint type overrides remain a future capability that would need its own explicit controls.</p>
     <p class="get-library-copy">Tabular figures: Table's cells and Statistic's headline value both use tabular (fixed-width) digits, so a column of numbers lines up instead of drifting as digit shapes vary - reserved for actual numeric data, not applied to running body text.</p>
     <p class="get-library-copy">Foundation audit T04 - H1-H6 here are visual sizes, not an HTML heading-rank mandate: pick whichever level's size reads right for a given piece of text, then choose its actual <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code> tag from the page's own real document structure (one visible <code>&lt;h1&gt;</code> per page, ranks nested without skipping) - the two are independent decisions. A page's main heading might need H3's smaller size while still correctly being marked up as the page's one real <code>&lt;h1&gt;</code>; a visually prominent H1-styled pull-quote is still just a <code>&lt;p&gt;</code> or <code>&lt;blockquote&gt;</code>, not a second page heading.</p>
 
@@ -347,7 +352,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -363,7 +368,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -435,7 +440,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -451,7 +456,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -523,7 +528,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -539,7 +544,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -611,7 +616,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -627,7 +632,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -699,7 +704,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -715,7 +720,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -787,7 +792,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -803,7 +808,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -822,8 +827,8 @@
       </div>
     </div>
 
-    <p class="empty-eyebrow" style="margin:20px 0 4px;">Running text</p>
-    <p class="get-library-copy" style="margin:0 0 16px;">Foundation audit T04 - Body and Paragraph share the same default size/weight/color on purpose, not by oversight: they're the same visual style, distinguished by where each applies, not by how either looks. Use Body for a single line or short run of supporting text outside a real <code>&lt;p&gt;</code> (a card's description line, a table cell, a button's helper text); use Paragraph specifically for actual <code>&lt;p&gt;</code>-tagged prose, so a page with several paragraphs of running text still gets real paragraph markup (and whatever margin/spacing between them that implies) rather than a string of unrelated one-off text elements. Customize either independently if a real need ever calls for it - staying identical is the default, not a constraint.</p>
+    <p class="empty-eyebrow" style="margin:var(--space-20) 0 var(--space-4);">Running text</p>
+    <p class="get-library-copy" style="margin:0 0 var(--space-16);">Foundation audit T04 - Body and Paragraph share the same default size/weight/color on purpose, not by oversight: they're the same visual style, distinguished by where each applies, not by how either looks. Use Body for a single line or short run of supporting text outside a real <code>&lt;p&gt;</code> (a card's description line, a table cell, a button's helper text); use Paragraph specifically for actual <code>&lt;p&gt;</code>-tagged prose, so a page with several paragraphs of running text still gets real paragraph markup (and whatever margin/spacing between them that implies) rather than a string of unrelated one-off text elements. Customize either independently if a real need ever calls for it - staying identical is the default, not a constraint.</p>
 
     <div class="type-row" data-level="body" data-family-role="secondary">
       <div class="type-row-controls">
@@ -878,7 +883,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -894,7 +899,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -966,7 +971,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -982,7 +987,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1054,7 +1059,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1070,7 +1075,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1089,8 +1094,8 @@
       </div>
     </div>
 
-    <p class="empty-eyebrow" style="margin:20px 0 4px;">State colors</p>
-    <p class="get-library-copy" style="margin:0 0 16px;">Foundation audit T04 - "Interaction states treated as independent type levels; visual style confused with semantic hierarchy." These 7 rows (Active/Selected/Disabled/Error/Warning/Success/Info) aren't peers of H1-H6/Body/Paragraph/Caption above in a hierarchy - they're a different axis entirely: a color modifier meant to apply on top of whatever role's own size/weight is already in use (a nav link using Caption's size, recolored when Active; a form label using Body's size, recolored when Disabled). Every one of them ships at the same default size and line height (Text SM, 143%) specifically so changing state never changes layout - size/weight/line-height/italic controls are still here for real edge cases, but the default, recommended pattern is to leave them alone and change color only; independently resizing one breaks visual consistency with whatever base role it's actually modifying.</p>
+    <p class="empty-eyebrow" style="margin:var(--space-20) 0 var(--space-4);">State colors</p>
+    <p class="get-library-copy" style="margin:0 0 var(--space-16);">Foundation audit T04 - "Interaction states treated as independent type levels; visual style confused with semantic hierarchy." These 7 rows (Active/Selected/Disabled/Error/Warning/Success/Info) aren't peers of H1-H6/Body/Paragraph/Caption above in a hierarchy - they're a different axis entirely: a color modifier meant to apply on top of whatever role's own size/weight is already in use (a nav link using Caption's size, recolored when Active; a form label using Body's size, recolored when Disabled). Every one of them ships at the same default size and line height (Text SM, 143%) specifically so changing state never changes layout - size/weight/line-height/italic controls are still here for real edge cases, but the default, recommended pattern is to leave them alone and change color only; independently resizing one breaks visual consistency with whatever base role it's actually modifying.</p>
 
     <div class="type-row" data-level="active" data-family-role="secondary">
       <div class="type-row-controls">
@@ -1145,7 +1150,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1161,7 +1166,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1233,7 +1238,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1249,7 +1254,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1321,7 +1326,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1337,7 +1342,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1409,7 +1414,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1425,7 +1430,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1497,7 +1502,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1513,7 +1518,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1585,7 +1590,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1601,7 +1606,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1673,7 +1678,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:16px;">
+      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1689,7 +1694,7 @@
             </div>
           </div>
         </div>
-      
+
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Dark theme</p>
@@ -1724,7 +1729,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Additional semantic levels</p>
+      <h2 class="panel-title">Additional semantic levels</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -1777,9 +1782,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Typography tokens - Markdown export</p>
+    <h2 class="panel-title">Typography tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of Font families and every Type scale row above - regenerates live as you edit, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="typography-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="typography-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyTypographyMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="typographyMarkdownStatus" role="status" aria-live="polite"></span>

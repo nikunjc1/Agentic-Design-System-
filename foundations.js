@@ -60,7 +60,7 @@
       }
       function handleEdit(){
         setSaved(false);
-        if (persistFn) { persistFn(); setSaved(true); }
+        if (persistFn) { window.ADSStorage.lastWriteSucceeded = false; persistFn(); setSaved(window.ADSStorage.lastWriteSucceeded === true); }
       }
       section.addEventListener("input", handleEdit);
       section.addEventListener("change", handleEdit);
@@ -519,6 +519,7 @@
 
     brandDarkEnable.addEventListener("change", function(){
       brandDarkCol.hidden = !brandDarkEnable.checked;
+      if (!brandDarkEnable.checked) regenerateBrandDark();
     });
 
     var saveBrandBtn = document.getElementById("saveBrandBtn");
@@ -540,8 +541,8 @@
       setBrandLightFields(lightHex);
 
       if (saved && saved.dark && saved.dark.primary && saved.dark.primary.hex){
-        brandDarkEnable.checked = true;
-        brandDarkCol.hidden = false;
+        brandDarkEnable.checked = saved.dark.auto === false;
+        brandDarkCol.hidden = !brandDarkEnable.checked;
         setBrandDarkFields(saved.dark.primary.hex.replace("#", ""));
         markBrandDarkStatus(saved.dark.auto !== false);
       } else {
@@ -600,7 +601,7 @@
       }
       persistBrand();
       applyBrandLiveForActiveTheme();
-      setBrandSaved(true);
+      setBrandSaved(window.ADSStorage.lastWriteSucceeded === true);
 
       brandSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
       setTimeout(function(){ brandSaveStatus.textContent = ''; }, 2500);
@@ -608,7 +609,7 @@
 
     var resetBrandBtn = document.getElementById("resetBrandBtn");
     resetBrandBtn.addEventListener("click", function(){
-      localStorage.removeItem(BRAND_KEY);
+      if (!window.ADSStorage.safeRemove(BRAND_KEY)) return;
       setBrandLightFields(BRAND_LIGHT_DEFAULT);
       brandDarkEnable.checked = false;
       brandDarkCol.hidden = true;
@@ -819,7 +820,7 @@
     saveBgBtn.addEventListener("click", function(){
       persistBg();
       applyBgLiveForActiveTheme();
-      setBgSaved(true);
+      setBgSaved(window.ADSStorage.lastWriteSucceeded === true);
 
       reportHexErrors(saveBgBtn.closest(".color-foundation"), bgSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ bgSaveStatus.textContent = ''; }, 2500);
@@ -827,7 +828,7 @@
 
     var resetBgBtn = document.getElementById("resetBgBtn");
     resetBgBtn.addEventListener("click", function(){
-      localStorage.removeItem(BG_KEY);
+      if (!window.ADSStorage.safeRemove(BG_KEY)) return;
       setTripleFields(bgLightFields, BG_DEFAULTS.light);
       renderElevation(elevationLight, readTriple(bgLightFields));
       bgDarkEnable.checked = false;
@@ -925,7 +926,7 @@
     saveStatusBtn.addEventListener("click", function(){
       persistStatus();
       applyStatusLiveForActiveTheme();
-      setStatusSaved(true);
+      setStatusSaved(window.ADSStorage.lastWriteSucceeded === true);
 
       reportHexErrors(saveStatusBtn.closest(".color-foundation"), statusSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ statusSaveStatus.textContent = ''; }, 2500);
@@ -933,7 +934,7 @@
 
     var resetStatusBtn = document.getElementById("resetStatusBtn");
     resetStatusBtn.addEventListener("click", function(){
-      localStorage.removeItem(STATUS_KEY);
+      if (!window.ADSStorage.safeRemove(STATUS_KEY)) return;
       statusSection.setLight(STATUS_DEFAULTS.light);
       statusDarkEnable.checked = false;
       statusDarkCol.hidden = true;
@@ -1031,7 +1032,7 @@
     saveNeutralBtn.addEventListener("click", function(){
       persistNeutral();
       applyNeutralLiveForActiveTheme();
-      setNeutralSaved(true);
+      setNeutralSaved(window.ADSStorage.lastWriteSucceeded === true);
 
       reportHexErrors(saveNeutralBtn.closest(".color-foundation"), neutralSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
@@ -1039,7 +1040,7 @@
 
     var resetNeutralBtn = document.getElementById("resetNeutralBtn");
     resetNeutralBtn.addEventListener("click", function(){
-      localStorage.removeItem(NEUTRAL_KEY);
+      if (!window.ADSStorage.safeRemove(NEUTRAL_KEY)) return;
       neutralSection.setLight(NEUTRAL_DEFAULTS.light);
       neutralDarkEnable.checked = false;
       neutralDarkCol.hidden = true;

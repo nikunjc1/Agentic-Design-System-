@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,7 +171,7 @@
   <p class="page-lede">This is the Agentic Design System, but until now nothing in it visually distinguished AI-generated content, agent actions, or how sure the system is about either. One accent color, four real components, all built on tokens - not aspirational copy.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">AI status colors</p>
+    <h2 class="panel-title">AI status colors</h2>
     <p class="get-library-copy">One new hue (violet), plus aliases onto the existing semantic status colors for confidence and agent outcome - "high/medium/low confidence" and "succeeded/failed" are already exactly what those tokens mean.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -190,18 +193,18 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Attribution</p>
+    <h2 class="panel-title">Attribution</h2>
     <p class="get-library-copy">Content an AI generated or suggested carries a small, consistent marker - never presented identically to something a person wrote or chose. Real content is rarely purely one or the other, so the marker names the actual mix, not just a binary AI-or-not:</p>
-    <p style="font-size:14px;color:var(--text-hi);">This summary was drafted for you. <span class="badge badge-ai">&#10024; AI-generated</span></p>
-    <p style="font-size:14px;color:var(--text-hi);">This summary was drafted, then edited by Priya. <span class="badge badge-ai">&#10024; AI-generated, human-edited</span></p>
-    <p style="font-size:14px;color:var(--text-hi);">This plan combined a research pass and a writing pass. <span class="badge badge-ai">&#10024; Multiple agents</span></p>
-    <p class="get-library-copy" style="margin-top:16px;">Verification and evidence: a claim an agent presents as fact (a citation, a file/line reference, a "this is already true in the codebase" statement) must be checked against its real, current source before display, the same discipline this project's own commit history already holds itself to - an unverified claim is labeled as a suggestion to check, never presented with the same confidence as a verified one. When the real evidence is redacted (privacy, a permissions boundary) or genuinely unavailable, say so directly - <span class="badge" style="color:var(--text-dim);background:var(--graphite-800);border:1px solid var(--line-strong);">Evidence unavailable</span> - rather than silently omitting the citation, which reads as "no evidence was needed" instead of "evidence exists but isn't shown here."</p>
+    <p style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">This summary was drafted for you. <span class="badge badge-ai">&#10024; AI-generated</span></p>
+    <p style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">This summary was drafted, then edited by Priya. <span class="badge badge-ai">&#10024; AI-generated, human-edited</span></p>
+    <p style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">This plan combined a research pass and a writing pass. <span class="badge badge-ai">&#10024; Multiple agents</span></p>
+    <p class="get-library-copy" style="margin-top:var(--space-16);">Verification and evidence: a claim an agent presents as fact (a citation, a file/line reference, a "this is already true in the codebase" statement) must be checked against its real, current source before display, the same discipline this project's own commit history already holds itself to - an unverified claim is labeled as a suggestion to check, never presented with the same confidence as a verified one. When the real evidence is redacted (privacy, a permissions boundary) or genuinely unavailable, say so directly - <span class="badge" style="color:var(--text-dim);background:var(--graphite-800);border:var(--border-width-1) var(--border-style) var(--line-strong);">Evidence unavailable</span> - rather than silently omitting the citation, which reads as "no evidence was needed" instead of "evidence exists but isn't shown here."</p>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Confidence</p>
+    <h2 class="panel-title">Confidence</h2>
     <p class="get-library-copy">Not a bare percentage - a three-tier signal, color and text together, so it never depends on color alone.</p>
-    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div style="display:flex; gap:var(--space-24); flex-wrap:wrap;">
       <span class="ai-confidence ai-confidence--high"><span class="ai-confidence-dot"></span>High confidence</span>
       <span class="ai-confidence ai-confidence--medium"><span class="ai-confidence-dot"></span>Medium confidence</span>
       <span class="ai-confidence ai-confidence--low"><span class="ai-confidence-dot"></span>Low confidence</span>
@@ -209,34 +212,34 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Streaming content</p>
+    <h2 class="panel-title">Streaming content</h2>
     <p class="get-library-copy">While a response is still generating, its placeholder is tinted with the AI accent - visually distinct from Skeleton's plain gray shimmer, so "this is AI still thinking" doesn't look identical to "this is a normal loading state."</p>
-    <div class="ai-streaming-skeleton" style="width:100%; max-width:420px; height:16px; margin-bottom:8px;"></div>
-    <div class="ai-streaming-skeleton" style="width:70%; max-width:300px; height:16px;"></div>
+    <div class="ai-streaming-skeleton" style="width:100%; max-width:var(--dimension-420); height:var(--dimension-16); margin-bottom:var(--space-8);"></div>
+    <div class="ai-streaming-skeleton" style="width:70%; max-width:var(--dimension-300); height:var(--dimension-16);"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Agent actions: approve, reject, undo</p>
+    <h2 class="panel-title">Agent actions: approve, reject, undo</h2>
     <p class="get-library-copy">An AI suggestion needs a real, equally-visible way to decline it, not just an approve path - and acting on one should stay reversible for a moment, not commit silently and permanently. Try it:</p>
     <div class="ai-agent-demo" data-role="agent-demo">
       <div class="ai-agent-demo-card" data-role="agent-card">
-        <p style="margin:0 0 4px; font-size:13px; color:var(--text-hi);"><span class="badge badge-ai">&#10024; AI-suggested</span></p>
-        <p style="margin:0; font-size:14px; color:var(--text-hi);" data-role="agent-suggestion">Rename this component from "btn-primary" to "button--primary" to match the rest of the library's naming convention.</p>
-        <div class="panel-footer-row" style="margin-top:12px;" data-role="agent-actions">
+        <p style="margin:0 0 var(--space-4);  color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);"><span class="badge badge-ai">&#10024; AI-suggested</span></p>
+        <p style="margin:0;  color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);" data-role="agent-suggestion">Rename this component from "btn-primary" to "button--primary" to match the rest of the library's naming convention.</p>
+        <div class="panel-footer-row" style="margin-top:var(--space-12);" data-role="agent-actions">
           <button class="btn btn-demo btn-demo--approve btn-demo--h36" type="button" data-role="agent-approve">Approve</button>
           <button class="btn btn-demo btn-demo--reject btn-demo--h36" type="button" data-role="agent-reject">Reject</button>
         </div>
         <p class="ai-agent-status" hidden data-role="agent-result">
           <span class="ai-agent-status-dot"></span>
           <span data-role="agent-result-text"></span>
-          <a href="#" data-role="agent-undo" style="margin-inline-start:8px; color:var(--color-focus-ring);">Undo</a>
+          <a href="#" data-role="agent-undo" style="margin-inline-start:var(--space-8); color:var(--color-focus-ring);">Undo</a>
         </p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Explainability</p>
+    <h2 class="panel-title">Explainability</h2>
     <p class="get-library-copy">A suggestion should be able to say why, on demand, without cluttering the default view - a native, keyboard-operable disclosure, not a bespoke tooltip.</p>
     <details class="ai-explain">
       <summary>Why this suggestion?</summary>

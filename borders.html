@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,14 +172,14 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Border presets</p>
+      <h2 class="panel-title">Border presets</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
       </div>
     </div>
     <div class="guide-view-panel" data-view-panel="human">
-    <p class="get-library-copy">Every preset stays fully editable below - picking one just seeds a starting point. Standard is the global default.</p>
+    <p class="get-library-copy">Every preset stays fully editable below - picking one just seeds a starting point. Standard is the global default. The Focus preset affects focus indicators only; resting component borders stay neutral.</p>
 
     <div class="system-card-grid" data-role="system-grid" role="group" aria-label="Border presets">
       <button class="system-card" data-system="subtle" data-width="1" data-color="#9a9a95" data-opacity="50" data-style="solid" aria-pressed="false" type="button">
@@ -186,17 +189,17 @@
         </div>
         <p class="system-card-desc">Barely-there separation for calm, dense interfaces.</p>
         <p class="system-card-scale">1px &middot; 50% &middot; solid</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:1px solid rgba(154,154,149,0.5)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-1) var(--border-style) rgba(154,154,149,0.5)"></span></div>
       </button>
 
       <button class="system-card is-active" data-system="standard" data-width="1" data-color="#9a9a95" data-opacity="85" data-style="solid" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Standard</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">The default - visible, neutral, works everywhere.</p>
         <p class="system-card-scale">1px &middot; 85% &middot; solid</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:1px solid rgba(154,154,149,0.85)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-1) var(--border-style) rgba(154,154,149,0.85)"></span></div>
       </button>
 
       <button class="system-card" data-system="strong" data-width="2" data-color="#9a9a95" data-opacity="100" data-style="solid" aria-pressed="false" type="button">
@@ -206,7 +209,7 @@
         </div>
         <p class="system-card-desc">Clear emphasis for selected or important containers.</p>
         <p class="system-card-scale">2px &middot; 100% &middot; solid</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:2px solid rgba(154,154,149,1.0)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-2) var(--border-style) rgba(154,154,149,1.0)"></span></div>
       </button>
 
       <button class="system-card" data-system="brand" data-width="1" data-color="#ff031a" data-opacity="100" data-style="solid" aria-pressed="false" type="button">
@@ -216,7 +219,7 @@
         </div>
         <p class="system-card-desc">Uses your primary brand color at full strength.</p>
         <p class="system-card-scale">1px &middot; 100% &middot; solid</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:1px solid rgba(255,3,26,1.0)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-1) var(--border-style) color-mix(in srgb, var(--red-500) 100%, transparent)"></span></div>
       </button>
 
       <button class="system-card" data-system="dashed" data-width="1" data-color="#9a9a95" data-opacity="70" data-style="dashed" aria-pressed="false" type="button">
@@ -226,17 +229,17 @@
         </div>
         <p class="system-card-desc">For upload areas, drop zones and empty states.</p>
         <p class="system-card-scale">1px &middot; 70% &middot; dashed</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:1px dashed rgba(154,154,149,0.7)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-1) dashed rgba(154,154,149,0.7)"></span></div>
       </button>
 
-      <button class="system-card" data-system="focus" data-width="2" data-color="#4f8fe6" data-opacity="100" data-style="solid" aria-pressed="false" type="button">
+      <button class="system-card" data-system="focus" data-width="2" data-color="#ff031a" data-opacity="100" data-style="solid" aria-pressed="false" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Focus</span>
           
         </div>
-        <p class="system-card-desc">An accessible, high-contrast focus indicator.</p>
+        <p class="system-card-desc">Brand-colored focus indicator for keyboard navigation. Check contrast against the component surface.</p>
         <p class="system-card-scale">2px &middot; 100% &middot; solid</p>
-        <div class="border-demo-row"><span class="border-demo-box" style="border:2px solid rgba(79,143,230,1.0)"></span></div>
+        <div class="border-demo-row"><span class="border-demo-box" style="border:var(--border-width-2) var(--border-style) color-mix(in srgb, var(--color-focus-ring) 100%, transparent)"></span></div>
       </button>
     </div>
     </div>
@@ -247,7 +250,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Configure your border</p>
+      <h2 class="panel-title">Configure your border</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -304,7 +307,7 @@
       </label>
     </div>
 
-    <div class="theme-pair-grid" style="margin-top:16px;">
+    <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Light theme</p>
@@ -338,7 +341,7 @@
       </div>
     </div>
 
-    <p class="empty-eyebrow" style="margin-top:24px;">Live preview</p>
+    <p class="empty-eyebrow" style="margin-top:var(--space-24);">Live preview</p>
     <p class="get-library-copy">Uses Color - Light or Color - Dark automatically, matching whichever theme this site is currently in - toggle it in the top bar to check the other one.</p>
     <div class="border-preview-row">
       <div class="border-preview-box" data-role="preview-box">Box</div>
@@ -346,7 +349,7 @@
       <div class="border-preview-box border-preview-input" data-role="preview-input">Input field</div>
     </div>
 
-    <p class="empty-eyebrow" style="margin-top:24px;">Dividers &amp; separators</p>
+    <p class="empty-eyebrow" style="margin-top:var(--space-24);">Dividers &amp; separators</p>
     <p class="get-library-copy">Dividers always use just the width, color, opacity and style above - not the Sides setting, since a horizontal divider is inherently a top border and a vertical divider is inherently a left border.</p>
     <div class="divider-demo-row">
       <div class="divider-demo-col">
@@ -383,7 +386,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component guidance</p>
+      <h2 class="panel-title">Component guidance</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -412,7 +415,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Border states</p>
+      <h2 class="panel-title">Border states</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -473,23 +476,23 @@
 
       <div class="usage-row" data-role="state-row" data-state="focus" data-width="2" data-opacity="100" data-style="solid">
         <span class="usage-label">Focus</span>
-        <span class="usage-desc">Never subtle - pair with a visible ring, not color alone</span>
+        <span class="usage-desc">Brand color with a visible ring. Applies only while focused; default borders stay neutral.</span>
         <span class="usage-values" data-role="state-values">2px &middot; 100%</span>
         <span class="state-color-pair">
           <span class="state-color-item">
             <span class="state-color-tag">L</span>
             <span class="hex-input-wrap state-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="state-swatch" value="#4f8fe6" />
+              <input type="color" class="type-color-swatch" data-role="state-swatch" value="#ff031a" />
               <span class="hex-prefix">#</span>
-              <input type="text" class="state-color-hex" data-role="state-hex" maxlength="6" value="4F8FE6" />
+              <input type="text" class="state-color-hex" data-role="state-hex" maxlength="6" value="FF031A" />
             </span>
           </span>
           <span class="state-color-item">
             <span class="state-color-tag">D</span>
             <span class="hex-input-wrap state-color-wrap">
-              <input type="color" class="type-color-swatch" data-role="state-swatch-dark" value="#8AB2E8" />
+              <input type="color" class="type-color-swatch" data-role="state-swatch-dark" value="#FF4253" />
               <span class="hex-prefix">#</span>
-              <input type="text" class="state-color-hex" data-role="state-hex-dark" maxlength="6" value=8AB2E8 />
+              <input type="text" class="state-color-hex" data-role="state-hex-dark" maxlength="6" value=FF4253 />
             </span>
           </span>
         </span>
@@ -671,7 +674,7 @@
       <span class="save-status" id="statesSaveStatus" role="status" aria-live="polite"></span>
     </div>
 
-    <p class="get-library-copy" style="margin-top:16px;">When not to reach for a border: this system's own Background &amp; surface elevation (Colors) separates Page/Panel/Raised using three different background shades, never a border between them - and Shadows gives floating elements (dropdowns, modals) real elevation instead. Reach for a border when two adjacent surfaces are the SAME color and something still needs to visually separate them (a divider, a card on a matching-color page); reach for a background shade or a shadow first when the surfaces can simply differ instead.</p>
+    <p class="get-library-copy" style="margin-top:var(--space-16);">When not to reach for a border: this system's own Background &amp; surface elevation (Colors) separates Page/Panel/Raised using three different background shades, never a border between them - and Shadows gives floating elements (dropdowns, modals) real elevation instead. Reach for a border when two adjacent surfaces are the SAME color and something still needs to visually separate them (a divider, a card on a matching-color page); reach for a background shade or a shadow first when the surfaces can simply differ instead.</p>
 
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
@@ -685,9 +688,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Border tokens - Markdown export</p>
+    <h2 class="panel-title">Border tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of Border presets, Configure your border and Border states above - regenerates live as you edit, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="borders-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="borders-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyBordersMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="bordersMarkdownStatus" role="status" aria-live="polite"></span>

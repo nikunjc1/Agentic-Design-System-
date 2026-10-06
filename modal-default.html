@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, title, body text and the close button are properties of the same component, not separate dialogs glued together - change them below to check this modal's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control" title="Controls the dialog's max-width.">
         <span>Size</span>
         <select data-role="modal-size-select">
@@ -215,19 +218,19 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 2 types compared side by side, each in all 4 structural states, at the chosen Size, title and body text. One full matrix is rendered per selected Corner radius.</p>
     <div class="button-matrix-wrap" data-role="modal-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Confirm-type shortcuts</p>
+    <h2 class="panel-title">Confirm-type shortcuts</h2>
     <p class="get-library-copy">Ant's Modal.info/.success/.warning/.error/.confirm - a pre-built icon-plus-title-plus-single-button shape for the moment a caller just needs to say one thing and move on, without re-declaring the header/footer boilerplate every time. Only Modal.confirm gets a Cancel button; the other four are acknowledge-only.</p>
     <div class="modal-demo-confirm-shortcuts" data-role="modal-confirm-shortcuts-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any moment that needs to block the rest of the page until the user makes a decision or finishes a short, focused task.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Destructive confirmation</span>
@@ -239,7 +242,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -275,12 +278,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="modal-demo-dialog modal-demo-dialog--destructive" style="width:220px;" role="dialog" aria-modal="true" aria-labelledby="modal-demo-title-do"><div class="modal-demo-header"><span class="modal-demo-title" id="modal-demo-title-do">Delete 3 files?</span></div><div class="modal-demo-body"><p style="margin:0;">This cannot be undone.</p></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Delete</button></div></div></div>
+          <div class="guide-dodont-demo"><div class="modal-demo-dialog modal-demo-dialog--destructive" style="width:var(--dimension-220);" role="dialog" aria-modal="true" aria-labelledby="modal-demo-title-do"><div class="modal-demo-header"><span class="modal-demo-title" id="modal-demo-title-do">Delete 3 files?</span></div><div class="modal-demo-body"><p style="margin:0;">This cannot be undone.</p></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Delete</button></div></div></div>
           <p class="guide-dodont-note">One decision, stated with its consequence, and a button that names the action rather than agreeing vaguely.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="modal-demo-dialog modal-demo-dialog--default" style="width:220px;" role="dialog" aria-modal="true" aria-labelledby="modal-demo-title-dont"><div class="modal-demo-header"><span class="modal-demo-title" id="modal-demo-title-dont">Are you sure?</span></div><div class="modal-demo-body"><p style="margin:0;">Please confirm.</p></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">No</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Yes</button></div></div></div>
+          <div class="guide-dodont-demo"><div class="modal-demo-dialog modal-demo-dialog--default" style="width:var(--dimension-220);" role="dialog" aria-modal="true" aria-labelledby="modal-demo-title-dont"><div class="modal-demo-header"><span class="modal-demo-title" id="modal-demo-title-dont">Are you sure?</span></div><div class="modal-demo-body"><p style="margin:0;">Please confirm.</p></div><div class="modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">No</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Yes</button></div></div></div>
           <p class="guide-dodont-note">"Are you sure?" with Yes/No never says what is about to happen, so the user confirms without knowing what they agreed to.</p>
         </div>
       </div>

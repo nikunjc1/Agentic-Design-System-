@@ -84,25 +84,7 @@
   // whatever suggestDarkForTypeColor() below computes from the matching
   // light color, so the two always agree with the live auto-generation
   // logic instead of quietly drifting from it over time.
-  var ROW_DEFAULTS = {
-    h1: { family: "primary", size: "display-lg", lineHeightPct: "125", weight: "700", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    h2: { family: "primary", size: "display-md", lineHeightPct: "122", weight: "700", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    h3: { family: "primary", size: "display-sm", lineHeightPct: "127", weight: "600", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    h4: { family: "primary", size: "display-xs", lineHeightPct: "133", weight: "600", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    h5: { family: "primary", size: "text-xl", lineHeightPct: "150", weight: "500", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    h6: { family: "primary", size: "text-lg", lineHeightPct: "156", weight: "500", italic: false, color: "#111827", darkColor: "#D8DFEE" },
-    body: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563", darkColor: "#9CA6B4" },
-    paragraph: { family: "secondary", size: "text-md", lineHeightPct: "150", weight: "400", italic: false, color: "#4B5563", darkColor: "#9CA6B4" },
-    caption: { family: "secondary", size: "text-xs", lineHeightPct: "150", weight: "400", italic: false, color: "#6B7280", darkColor: "#7F8694" },
-
-    active: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF031A", darkColor: "#F74858" },
-    selected: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "600", italic: false, color: "#FF031A", darkColor: "#F74858" },
-    disabled: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "400", italic: false, color: "#9CA3AF", darkColor: "#505763" },
-    error: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#FF3F4F", darkColor: "#FA818B" },
-    warning: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#E6A53A", darkColor: "#E6BC77" },
-    success: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#2FBF6E", darkColor: "#5ECD8F" },
-    info: { family: "secondary", size: "text-sm", lineHeightPct: "143", weight: "500", italic: false, color: "#4F8FE6", darkColor: "#8AB2E8" }
-  };
+  var ROW_DEFAULTS = window.ADSFoundationModel.typeDefaults;
 
   var CATEGORY_FONTS = {
     "Sans-serif": ["Inter", "Work Sans", "Manrope", "Sora", "Karla"],
@@ -173,7 +155,8 @@
     var previewBody = root.querySelector('[data-role="preview-body"]');
     var previewMeta = root.querySelector('[data-role="preview-meta"]');
 
-    var state = { family: null, source: null, linkHref: null };
+    var state = { family: null, source: null, linkHref: null, dataUrl: null };
+    var fontRequest = 0;
 
     tabs.forEach(function(tab){
       tab.addEventListener("click", function(){
@@ -184,45 +167,19 @@
       });
     });
 
-    function setFamily(name, source, linkHref){
+    function setFamily(name, source, linkHref, dataUrl){
+      fontRequest++;
       if (!name) return;
       state.family = name;
       state.source = source || null;
       state.linkHref = linkHref || null;
+      state.dataUrl = dataUrl || null;
       var cssFamily = '"' + name + '", ' + fallbackForSource(source);
       previewHeading.style.fontFamily = cssFamily;
       previewBody.style.fontFamily = cssFamily;
       previewMeta.textContent = "Using " + name + (source ? " (" + source + ")" : "");
-      // Foundation audit T01 - uploaded font FILES are never actually
-      // saved anywhere (only the family name/source string persists, via
-      // persistTypography() below) - document.fonts only knows about an
-      // upload for the lifetime of the current page. A restored "uploaded
-      // file" record would otherwise claim "Using X" here while silently
-      // rendering the fallback instead, since the real FontFace is gone.
-      // document.fonts.check() is NOT reliable for this - per the CSS Font
-      // Loading API spec it reports whether the given text CAN render at
-      // all (true for literally any family name, since there's always an
-      // implicit fallback), not whether that specific family is actually
-      // registered - confirmed empirically before relying on it: it
-      // returned true even for a name nothing ever registered. Iterating
-      // document.fonts directly for a loaded face with this exact family
-      // is the one correct way to tell "really registered right now" apart
-      // from "was uploaded in some earlier, unrelated session."
-      if (source === "uploaded file"){
-        var stillAvailable = false;
-        try{
-          document.fonts.forEach(function(face){
-            if (face.family.replace(/^["']|["']$/g, "") === name && face.status === "loaded") stillAvailable = true;
-          });
-        }catch(e){}
-        if (!stillAvailable){
-          previewMeta.textContent = "Can't restore \"" + name + "\" - uploaded font files aren't saved between visits, only their name. Showing the " + fallbackForSource(source) + " fallback instead; re-upload the file to preview it again this session.";
-        } else {
-          // Proactive, not just reactive on a later failed restore - the
-          // user should know this won't survive reload or handoff the
-          // moment they pick it, not only discover it after the fact.
-          previewMeta.textContent += " - previews in this browser tab only; the file itself isn't saved, so this reverts to the fallback after reload or for anyone else.";
-        }
+      if (source === "uploaded file") {
+        previewMeta.textContent += dataUrl ? " — font file included in saved Foundation settings" : " — older record has no font file; re-upload to restore it";
       }
       // injectLink's own promise reports a REAL stylesheet fetch failure
       // (offline, blocked, 404) via the <link>'s error event - this used
@@ -241,6 +198,11 @@
     uploadInput.addEventListener("change", function(){
       var file = uploadInput.files && uploadInput.files[0];
       if (!file) return;
+      var request = ++fontRequest;
+      if (!/\.(woff2?|ttf|otf)$/i.test(file.name) || file.size > 2 * 1024 * 1024) {
+        uploadLabel.textContent = 'Choose a WOFF, WOFF2, TTF or OTF file up to 2 MB.';
+        return;
+      }
       var name = uploadName.value.trim() || file.name.replace(/\.[^.]+$/, "");
       uploadLabel.textContent = "Loading " + file.name + "…";
       var reader = new FileReader();
@@ -250,16 +212,19 @@
       // X.ttf…" forever - no error shown, no sign anything had gone wrong,
       // no indication the user could just try picking the file again.
       reader.onerror = function(){
+        if (request !== fontRequest) return;
         uploadLabel.textContent = "Couldn't read " + file.name + " (" + (reader.error && reader.error.name || "read error") + ") - choose the file again to retry.";
       };
       reader.onload = function(){
+        if (request !== fontRequest) return;
         try{
-          var face = new FontFace(name, reader.result);
+          var face = new FontFace(name, 'url("' + reader.result + '")');
           face.load().then(function(loaded){
+            if (request !== fontRequest) return;
             document.fonts.add(loaded);
             uploadName.value = name;
             uploadLabel.textContent = file.name;
-            setFamily(name, "uploaded file", null);
+            setFamily(name, "uploaded file", null, reader.result);
             // Foundation audit T01 - found while verifying the fix above:
             // the native 'change' event this handler is attached to fires
             // synchronously, before this async FileReader/FontFace chain
@@ -279,7 +244,7 @@
           uploadLabel.textContent = "Couldn't read that font file - try a .woff, .woff2, .ttf or .otf.";
         }
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsDataURL(file);
     });
 
     function renderCategory(cat){
@@ -344,7 +309,7 @@
     }
 
     return {
-      getState: function(){ return { family: state.family, source: state.source, linkHref: state.linkHref }; },
+      getState: function(){ return { family: state.family, source: state.source, linkHref: state.linkHref, dataUrl: state.dataUrl }; },
       setFamily: setFamily,
       reset: reset
     };
@@ -364,6 +329,11 @@
     var colorHex = row.querySelector('[data-role="color-hex"]');
     var darkColorPicker = row.querySelector('[data-role="color-picker-dark"]');
     var darkColorHex = row.querySelector('[data-role="color-hex-dark"]');
+    var trackingLabel = document.createElement('label');
+    trackingLabel.className = 'type-control';
+    trackingLabel.innerHTML = '<span>Letter spacing</span><input type="number" data-role="letter-spacing" data-dimension min="-5" max="20" step="0.1" value="0" aria-label="Letter spacing">';
+    row.querySelector('.type-row-controls').appendChild(trackingLabel);
+    var trackingInput = trackingLabel.querySelector('input');
     var sampleEl = row.querySelector('[data-role="sample"]');
 
     // Dark starts auto-generated from Light and stays in sync with it
@@ -393,8 +363,10 @@
       if (!sampleEl) return;
       sampleEl.style.fontFamily = familySel.value === "secondary" ? "var(--font-body)" : "var(--font-display)";
       var opt = sizeSel.options[sizeSel.selectedIndex];
-      sampleEl.style.fontSize = (opt.dataset.size || "16") + "px";
-      sampleEl.style.lineHeight = (parseInt(lhInput.value, 10) || 100) + "%";
+      sampleEl.style.fontSize = window.ADSFoundationModel.dimension(Number(opt.dataset.size || 16), window.ADSFoundation.get().unit);
+      var liveLineHeight = Number(lhInput.value);
+      if (liveLineHeight >= 50 && liveLineHeight <= 300) sampleEl.style.lineHeight = liveLineHeight + "%";
+      sampleEl.style.letterSpacing = window.ADSFoundationModel.dimension(Number(trackingInput.value), window.ADSFoundation.get().unit);
       sampleEl.style.fontWeight = weightSel.value;
       sampleEl.style.fontStyle = italicChk.checked ? "italic" : "normal";
       sampleEl.style.color = currentTheme() === "dark" ? darkColorPicker.value : colorPicker.value;
@@ -444,6 +416,9 @@
       updateSample();
     }
 
+    trackingInput.addEventListener("input", apply);
+    new MutationObserver(apply).observe(document.documentElement, {attributes:true,attributeFilter:["data-theme"]});
+    window.addEventListener("ads:foundation-applied", apply);
     familySel.addEventListener("change", apply);
     sizeSel.addEventListener("change", function(){
       seedLineHeightFromSize();
@@ -453,7 +428,7 @@
       lhInput.value = lhInput.value.replace(/[^0-9]/g, "").slice(0, 3);
       apply();
     });
-    lhInput.addEventListener("blur", commitLineHeight);
+    lhInput.addEventListener("blur", function(){commitLineHeight();lhInput.dispatchEvent(new Event("change", {bubbles:true}));});
     weightSel.addEventListener("change", apply);
     italicChk.addEventListener("change", apply);
     colorPicker.addEventListener("input", function(){
@@ -473,6 +448,7 @@
     darkColorPicker.addEventListener("input", function(){
       darkColorHex.value = darkColorPicker.value.replace("#", "").toUpperCase();
       darkAuto = false;
+      apply();
     });
     darkColorHex.addEventListener("input", function(){
       var v = darkColorHex.value.replace(/[^0-9a-f]/gi, "").toUpperCase().slice(0, 6);
@@ -480,6 +456,7 @@
       if (HEX6_RE.test(v)){
         darkColorPicker.value = "#" + v;
         darkAuto = false;
+        apply();
       }
     });
 
@@ -488,6 +465,7 @@
     return {
       getState: function(){
         return {
+          letterSpacing: Number(trackingInput.value),
           family: familySel.value,
           size: sizeSel.value,
           lineHeightPct: lhInput.value,
@@ -505,6 +483,7 @@
       },
       setState: function(s){
         if (!s) return;
+        trackingInput.value = Number.isFinite(Number(s.letterSpacing)) ? s.letterSpacing : 0;
         if (s.family) familySel.value = s.family;
         if (s.size) sizeSel.value = s.size;
         if (s.lineHeightPct) lhInput.value = s.lineHeightPct;
@@ -565,7 +544,7 @@
       // artifact most likely to leave this page (an AI agent or teammate
       // reading this export has no other way to know the name alone can't
       // be installed/resolved as a real dependency).
-      var uploadNote = function(s){ return s.source === "uploaded file" ? " - **preview-only, no font file travels with this export; the uploaded file itself was never saved, only this name**" : ""; };
+      var uploadNote = function(s){ return s.source === "uploaded file" ? (s.dataUrl ? " - font asset included in Foundation JSON; Markdown names the family" : " - legacy record: re-upload the font asset") : ""; };
       lines.push("- Primary: " + (primaryState.family || "Not selected") + (primaryState.source ? " (" + primaryState.source + ")" : "") + uploadNote(primaryState));
       lines.push("- Secondary: " + (secondaryState.family || "Not selected") + (secondaryState.source ? " (" + secondaryState.source + ")" : "") + uploadNote(secondaryState));
 
@@ -589,11 +568,12 @@
         lines.push("### " + level, "");
         lines.push("- Family: " + familySel.options[familySel.selectedIndex].textContent);
         lines.push("- Size: " + sizeSel.options[sizeSel.selectedIndex].textContent);
+        lines.push("- Letter spacing: " + window.ADSFoundationModel.dimension(Number(row.querySelector('[data-role="letter-spacing"]').value), window.ADSFoundation.get().unit));
         lines.push("- Line height: " + lhInput.value + "%");
         lines.push("- Weight: " + weightSel.options[weightSel.selectedIndex].textContent);
         lines.push("- Italic: " + (italicChk.checked ? "Yes" : "No"));
-        lines.push("- Color (Light): `#" + colorHex.value + "`");
-        lines.push("- Color (Dark): `#" + darkColorHex.value + "`");
+        lines.push("- Color (Light): `" + rowControllers[row.dataset.level].getState().color + "`");
+        lines.push("- Color (Dark): `" + rowControllers[row.dataset.level].getState().darkColor + "`");
         lines.push("");
       });
 
@@ -605,7 +585,7 @@
         // Foundation audit T01 - durable: false names the real limitation
         // machine-readably too, not just in the human-facing preview text
         // and Markdown export.
-        var withDurability = function(s){ return { family: s.family, source: s.source, linkHref: s.linkHref, durable: s.source !== "uploaded file" }; };
+        var withDurability = function(s){ return { family: s.family, source: s.source, linkHref: s.linkHref, durable: s.source !== "uploaded file" || !!s.dataUrl }; };
         fontFamilyMachineJson.textContent = JSON.stringify({
           $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           primary: withDurability(primaryPicker.getState()),
@@ -636,7 +616,7 @@
     // "click" listener below needs this filter (input/change only ever
     // fire on a real form control in the first place, so every value
     // change is already covered without it).
-    var NON_DATA_CLICK = ".guide-toggle-btn, .font-method-tabs .copy-tab, .font-category-chips, #copyTypographyMarkdownBtn";
+    var NON_DATA_CLICK = ".guide-toggle-btn, .font-method-tabs .copy-tab, .font-category-chips, #copyTypographyMarkdownBtn, .ads-read-more, .ads-foundation-toolbar";
     // A platform preset chip stays "is-active" only while every level it
     // sets still matches that preset's own values - editing even one row
     // afterward is a real divergence, not still "Serif" or "SaaS" (the
@@ -682,11 +662,11 @@
 
       if (saved.primaryFont && saved.primaryFont.family){
         if (saved.primaryFont.linkHref) injectLink(saved.primaryFont.linkHref);
-        primaryPicker.setFamily(saved.primaryFont.family, saved.primaryFont.source, saved.primaryFont.linkHref);
+        primaryPicker.setFamily(saved.primaryFont.family, saved.primaryFont.source, saved.primaryFont.linkHref, saved.primaryFont.dataUrl);
       }
       if (saved.secondaryFont && saved.secondaryFont.family){
         if (saved.secondaryFont.linkHref) injectLink(saved.secondaryFont.linkHref);
-        secondaryPicker.setFamily(saved.secondaryFont.family, saved.secondaryFont.source, saved.secondaryFont.linkHref);
+        secondaryPicker.setFamily(saved.secondaryFont.family, saved.secondaryFont.source, saved.secondaryFont.linkHref, saved.secondaryFont.dataUrl);
       }
       Object.keys(saved.levels || {}).forEach(function(level){
         if (rowControllers[level]) rowControllers[level].setState(saved.levels[level]);
@@ -709,11 +689,12 @@
       Object.keys(rowControllers).forEach(function(level){
         payload.levels[level] = rowControllers[level].getState();
       });
-      window.ADSStorage.safeSet(SAVE_KEY, payload);
+      var success = window.ADSStorage.safeSet(SAVE_KEY, payload);
       // Applies the new font family sitewide immediately (shell.js already
       // does this on boot/cross-tab; this page's own text needs it too,
       // without waiting for a reload).
       if (window.ADS_applySavedTypographyFont) window.ADS_applySavedTypographyFont();
+      return success;
     }
 
     var saveBtn = document.getElementById("saveTypographyBtn");
@@ -721,7 +702,7 @@
     saveBtn.addEventListener("click", function(){
       persistTypography();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
@@ -747,7 +728,7 @@
       // phase - so stopPropagation alone doesn't reach those inner clicks).
       e.stopPropagation();
       suppressPersist = true;
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
 
       primaryPicker.reset();
       secondaryPicker.reset();

@@ -46,7 +46,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Unfilled/filled/preview colors are identical across both icon types -
@@ -151,10 +151,10 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Rating component */");
-    lines.push(".rating-demo-field{ display:flex; flex-direction:column; gap:8px; }");
-    lines.push(".rating-demo-label{ font-size:13px; font-weight:500; color:var(--text-hi); margin:0; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".rating-demo-row{ display:flex; align-items:center; gap:4px; }");
-    lines.push(".rating-demo-icon{ flex:none; display:flex; align-items:center; justify-content:center; background:none; border:none; padding:2px; cursor:pointer; color:var(--text-dim); transition:color .15s ease; }");
+    lines.push(".rating-demo-field{ display:flex; flex-direction:column; gap:var(--space-8); }");
+    lines.push(".rating-demo-label{ font-size:var(--type-body-size); font-weight:500; color:var(--text-hi); margin:0; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".rating-demo-row{ display:flex; align-items:center; gap:var(--space-4); }");
+    lines.push(".rating-demo-icon{ flex:none; display:flex; align-items:center; justify-content:center; background:none; border:none; padding:var(--space-2); cursor:pointer; color:var(--text-dim); transition:color .15s ease; }");
     lines.push(".rating-demo-icon svg{ display:block; }");
     lines.push(".rating-demo-icon.is-filled{ color:var(--red-500); }");
     lines.push(".rating-demo-icon.is-preview{ color:var(--red-400); opacity:0.6; }");
@@ -177,7 +177,7 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Icon size, fully resolved (never

@@ -122,18 +122,18 @@
   function buildFullCode(showIcons){
     var lines = [];
     lines.push("/* Agentic Design System - Timeline component */");
-    lines.push(".timeline-demo-list{ display:flex; flex-direction:column; width:240px; }");
-    lines.push(".timeline-demo-item{ display:flex; gap:12px; }");
-    lines.push(".timeline-demo-marker{ flex:none; display:flex; flex-direction:column; align-items:center; width:16px; }");
-    lines.push(".timeline-demo-dot{ width:10px; height:10px; border-radius:9999px; background:var(--graphite-600); border:2px solid var(--graphite-900); flex:none; }");
+    lines.push(".timeline-demo-list{ display:flex; flex-direction:column; width:var(--dimension-240); }");
+    lines.push(".timeline-demo-item{ display:flex; gap:var(--space-12); }");
+    lines.push(".timeline-demo-marker{ flex:none; display:flex; flex-direction:column; align-items:center; width:var(--dimension-16); }");
+    lines.push(".timeline-demo-dot{ width:var(--dimension-10); height:var(--dimension-10); border-radius:9999px; background:var(--graphite-600); border:2px solid var(--graphite-900); flex:none; }");
     lines.push(".timeline-demo-dot.is-current{ background:var(--red-500); }");
     lines.push(".timeline-demo-dot.is-pending{ background:var(--graphite-700); }");
-    lines.push(".timeline-demo-connector{ width:2px; flex:1 1 auto; min-height:24px; background:var(--line-strong); }");
+    lines.push(".timeline-demo-connector{ width:var(--dimension-2); flex:1 1 auto; min-height:var(--dimension-24); background:var(--line-strong); }");
     lines.push(".timeline-demo-connector.is-pending{ background:repeating-linear-gradient(to bottom, var(--line-strong) 0 3px, transparent 3px 6px); }");
-    lines.push(".timeline-demo-content{ padding-bottom:16px; }");
-    lines.push(".timeline-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); margin:0; }");
+    lines.push(".timeline-demo-content{ padding-bottom:var(--space-16); }");
+    lines.push(".timeline-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; }");
     lines.push(".timeline-demo-title.is-current{ color:var(--red-400); }");
-    lines.push(".timeline-demo-time{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); margin:2px 0 0; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".timeline-demo-time{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); margin:var(--space-2) 0 0; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Alternate layout - a 3-column grid keeps the marker in a fixed center");
     lines.push("   column so the connecting line stays continuous; only the content column");
@@ -142,7 +142,7 @@
     lines.push("   content (column 1, placed after the marker's column 2 in DOM order)");
     lines.push("   silently wraps to row 2 under CSS Grid's sparse auto-placement, since it");
     lines.push("   can't place \"backward\" of the marker within the same row. */");
-    lines.push(".timeline-demo-list--alternate .timeline-demo-item{ display:grid; grid-template-columns:1fr 16px 1fr; column-gap:12px; align-items:start; }");
+    lines.push(".timeline-demo-list--alternate .timeline-demo-item{ display:grid; grid-template-columns:1fr 16px 1fr; column-gap:var(--space-12); align-items:start; }");
     lines.push(".timeline-demo-list--alternate .timeline-demo-marker{ grid-column:2; grid-row:1; }");
     lines.push(".timeline-demo-list--alternate .timeline-demo-content{ grid-column:3; grid-row:1; text-align: start; }");
     lines.push(".timeline-demo-list--alternate .timeline-demo-item--left .timeline-demo-content{ grid-column:1; text-align: end; }");
@@ -157,12 +157,12 @@
     lines.push("   padding-top:10px below, so without this override the connector-to-");
     lines.push("   heading gap would be 22px instead of the intended 10px. */");
     lines.push(".timeline-demo-list--horizontal{ flex-direction:row; width:auto; }");
-    lines.push(".timeline-demo-list--horizontal .timeline-demo-item{ flex:1 1 0; flex-direction:column; align-items:center; min-width:72px; gap:0; }");
-    lines.push(".timeline-demo-list--horizontal .timeline-demo-marker{ position:relative; flex-direction:row; justify-content:center; width:100%; height:16px; }");
-    lines.push(".timeline-demo-list--horizontal .timeline-demo-connector{ position:absolute; top:50%; left:50%; width:100%; height:2px; min-height:0; transform:translateY(-50%); }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-item{ flex:1 1 0; flex-direction:column; align-items:center; min-width:var(--dimension-72); gap:0; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-marker{ position:relative; flex-direction:row; justify-content:center; width:100%; height:var(--dimension-16); }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-connector{ position:absolute; top:50%; left:50%; width:100%; height:var(--dimension-2); min-height:0; transform:translateY(-50%); }");
     lines.push(".timeline-demo-list--horizontal .timeline-demo-dot,");
     lines.push(".timeline-demo-list--horizontal .timeline-demo-icon{ position:relative; }");
-    lines.push(".timeline-demo-list--horizontal .timeline-demo-content{ padding-bottom:0; padding-top:10px; text-align:center; }");
+    lines.push(".timeline-demo-list--horizontal .timeline-demo-content{ padding-bottom:0; padding-top:var(--space-10); text-align:center; }");
     if (showIcons){
       lines.push("");
       lines.push("/* Show icons - replaces the plain dot with a small checkmark-in-circle status icon */");
@@ -191,7 +191,7 @@
       lines.push('  </div>');
     });
     lines.push('</div>');
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

@@ -74,7 +74,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Corner radius option list - same value scale as every other system in
@@ -97,7 +97,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -137,7 +137,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -219,15 +219,15 @@
     lines.push("   (\"jordan.lee@company.com\" alone needs ~165px) or they'd squeeze");
     lines.push("   Name/Role into wrapping onto a second line, same as the checkbox");
     lines.push("   column did before table-demo-table--has-checkbox existed. */");
-    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:13px; color:var(--text-hi); width:630px; }");
-    lines.push(".table-demo-table th{ text-align: start; padding:8px 10px; font-size:11px; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:1.5px solid var(--line-strong); }");
-    lines.push(".table-demo-table td{ padding:8px 10px; border-bottom:1px solid var(--line); text-align: start; }");
+    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); width:var(--dimension-630); }");
+    lines.push(".table-demo-table th{ text-align: start; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:1.5px solid var(--line-strong); }");
+    lines.push(".table-demo-table td{ padding:var(--space-8) var(--space-10); border-bottom:1px solid var(--line); text-align: start; }");
     lines.push(".table-demo-table--bordered{ border:1px solid var(--line-strong); overflow:hidden; }");
     lines.push(".table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end:1px solid var(--line); }");
     lines.push(".table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end:none; }");
     lines.push(".table-demo-row--striped{ background:var(--graphite-850); }");
     lines.push(".table-demo-row--selected{ background:var(--red-tint); }");
-    lines.push(".table-demo-status-cell{ display:flex; align-items:center; gap:6px; }");
+    lines.push(".table-demo-status-cell{ display:flex; align-items:center; gap:var(--space-6); }");
     lines.push("/* Status dot reuses the Badge component's own .badge-demo-status-dot--success/--warning classes directly - no separate dot styling defined here. */");
     lines.push("");
     lines.push("/* Email/Mobile render as real mailto:/tel: links styled in this");
@@ -242,11 +242,11 @@
     lines.push("/* Selection adds a leading checkbox column - width grows by that");
     lines.push("   column's own need (~40px) so Name/Role keep their normal widths");
     lines.push("   instead of being squeezed into wrapping onto a second line. */");
-    lines.push(".table-demo-table--has-checkbox{ width:670px; }");
+    lines.push(".table-demo-table--has-checkbox{ width:var(--dimension-670); }");
     lines.push("");
     lines.push("/* Size (3) - Large is the default (the base th/td padding above); Middle and Small only tighten padding, font-size stays fixed at every size. */");
-    lines.push(".table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding:6px 8px; }");
-    lines.push(".table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding:4px 6px; }");
+    lines.push(".table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding:var(--space-6) var(--space-8); }");
+    lines.push(".table-demo-table--sz-small th, .table-demo-table--sz-small td{ padding:var(--space-4) var(--space-6); }");
     lines.push("");
     lines.push("/* Interaction contract (implement in the data layer, not shown in the CSS above): */");
     lines.push("/* Selection: none / single-row / multi-row with checkbox column - header checkbox goes indeterminate when some-not-all rows are checked; Space toggles a focused row. */");
@@ -309,10 +309,10 @@
       // visual language - a zero-row table and an empty list should look
       // like the same idea.
       var emptyHtml = '<tr class="table-demo-row"><td colspan="5">' +
-        '<div class="empty-demo-panel" style="padding:20px;">' +
-        '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:32px;height:32px;"></div>' +
-        '<p class="empty-demo-title" style="font-size:13px;">No results</p>' +
-        '<p class="empty-demo-description" style="font-size:12px;">Try a different search or filter.</p>' +
+        '<div class="empty-demo-panel" style="padding:var(--space-20);">' +
+        '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:var(--dimension-32);height:var(--dimension-32);"></div>' +
+        '<p class="empty-demo-title" style="font-size:var(--type-body-size);">No results</p>' +
+        '<p class="empty-demo-description" style="font-size:var(--type-caption-size);">Try a different search or filter.</p>' +
         "</div></td></tr>";
       return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + "<tbody>" + emptyHtml + "</tbody></table>";
     }
@@ -356,7 +356,7 @@
     lines.push(buildTableField("default", "striped", exampleRadius, info.showHeader, exampleSize));
     lines.push(buildTableField("default", "loading", exampleRadius, info.showHeader, exampleSize));
     lines.push(buildTableField("default", "empty", exampleRadius, info.showHeader, exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius x Size combination,

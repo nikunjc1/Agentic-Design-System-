@@ -34,7 +34,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function linkStateCss(){
@@ -174,8 +174,8 @@
     });
     lines.push("");
     lines.push("/* Types (2) - the divider differs, link/current treatment is shared */");
-    lines.push(".breadcrumb--chevron .breadcrumb-divider{ display:inline-flex; align-items:center; margin:0 6px; color:" + divider.color + "; }");
-    lines.push(".breadcrumb--slash .breadcrumb-divider{ margin:0 8px; color:" + divider.color + "; }");
+    lines.push(".breadcrumb--chevron .breadcrumb-divider{ display:inline-flex; align-items:center; margin:0 var(--space-6); color:" + divider.color + "; }");
+    lines.push(".breadcrumb--slash .breadcrumb-divider{ margin:0 var(--space-8); color:" + divider.color + "; }");
     lines.push("");
     lines.push("/* Link states (apply to the first link only) - real pseudo-classes combined with static classes so the Live Preview can force each state */");
     lines.push(".breadcrumb-link{ " + link.rest + " text-decoration:none; cursor:pointer; transition:color .15s ease; }");
@@ -201,7 +201,7 @@
       });
       lines.push("</nav>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size, fully resolved (never

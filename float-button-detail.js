@@ -29,10 +29,15 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textHi = getCssVar("--text-hi", "#F3F2EF");
     var graphite800 = getCssVar("--graphite-800", "#1C1F23");
@@ -147,7 +152,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Float Button component */");
-    lines.push(".floatbutton-demo-wrap{ display:inline-flex; flex-direction:column; align-items:center; gap:6px; }");
+    lines.push(".floatbutton-demo-wrap{ display:inline-flex; flex-direction:column; align-items:center; gap:var(--space-6); }");
     lines.push(".floatbutton-demo-btn{ box-sizing:border-box; border-radius:9999px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; position:relative; transition:background-color .15s ease; }");
     lines.push(".floatbutton-demo-btn--square{ border-radius:var(--radius-md); }");
     lines.push(".floatbutton-demo-btn:disabled{ opacity:0.4; cursor:not-allowed; }");
@@ -172,10 +177,10 @@
     });
     lines.push("");
     lines.push("/* Badge dot - optional, for unread counts or notifications */");
-    lines.push(".floatbutton-demo-badge{ position:absolute; top:-2px; right:-2px; width:10px; height:10px; border-radius:9999px; background:var(--danger-500); border:2px solid var(--graphite-950); }");
+    lines.push(".floatbutton-demo-badge{ position:absolute; top:-2px; right:-2px; width:var(--dimension-10); height:var(--dimension-10); border-radius:9999px; background:var(--danger-500); border:2px solid var(--graphite-950); }");
     lines.push("");
     lines.push("/* Tooltip label - a simple caption near the button, not a floating tooltip bubble */");
-    lines.push(".floatbutton-demo-tooltip-label{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); text-align:center; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".floatbutton-demo-tooltip-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); text-align:center; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " - position:fixed to a screen corner in real usage -->");
@@ -188,7 +193,7 @@
       if (tooltip) lines.push('  <p class="floatbutton-demo-tooltip-label">' + tooltip + '</p>');
       lines.push('</div>');
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size (fully resolved, never "ask

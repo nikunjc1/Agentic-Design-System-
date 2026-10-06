@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, and the left/right panel titles are properties of the same component, not two unrelated lists - change them below to check this widget's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Size</span>
         <select data-role="transfer-size-select">
@@ -202,13 +205,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 4 states - Hover shows a static hover background on the first source item, Focus shows a focus ring on the right-arrow button, and Disabled dims the whole widget. One matrix is rendered at the chosen Size, with the panel titles shown as configured above.</p>
     <div class="button-matrix-wrap" data-role="transfer-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any time a user needs to pick a subset of items out of a larger pool, and seeing both the available and chosen items side by side helps them decide.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Permission assignment</span>
@@ -219,10 +222,10 @@
     </div>
   </section>
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Both panels are always visibly populated - the left panel starts full of options - so a required Transfer isn't about the widget looking "empty," it's specifically about nothing having been moved into the right/target panel yet.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - place the asterisk or "Required" text on the target panel's own title ("Granted *"), not on the widget as a whole, since that's the panel whose emptiness actually matters.</li>
+      <li><strong>Required marking</strong> - place the red asterisk on the target panel's own title ("Granted *"), not on the widget as a whole, since that's the panel whose emptiness actually matters.</li>
       <li><strong>Validation timing</strong> - validate on submit - there's no meaningful blur point for a widget built around repeated multi-item moves, and flagging it after every single move would fire while the user is still mid-selection.</li>
       <li><strong>Error message</strong> - "Move at least one item to the right to continue," not "This field is required" - name the action (move an item) and the direction, since the source panel being full can otherwise read as the field already being satisfied.</li>
       <li><strong>Recovery</strong> - anchor the error under the target panel's header and clear it the moment an item lands there, so the fix is visibly tied to the panel that caused it.</li>
@@ -231,7 +234,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

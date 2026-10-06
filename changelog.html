@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,12 +171,12 @@
   <p class="page-lede">The real, working history of this system - generated straight from CHANGELOG.md (tools/generate_changelog.py), the same file every session's work has actually been recorded in. This replaces "Changelog: not yet tracked" on every component page with a real link here.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title" id="changelogCount">Entries</p>
+    <h2 class="panel-title" id="changelogCount">Entries</h2>
     <div id="changelogList"></div>
   </section>
 
   <section class="panel spacing-model-panel" id="knownGapsSection" hidden>
-    <p class="panel-title">Known gaps</p>
+    <h2 class="panel-title">Known gaps</h2>
     <p class="get-library-copy" id="knownGapsBody"></p>
   </section>
 

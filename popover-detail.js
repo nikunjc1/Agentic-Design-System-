@@ -89,7 +89,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Popover component */");
-    lines.push(".popover-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:8px; }");
+    lines.push(".popover-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); }");
     lines.push("/* DOM order is always bubble, arrow, trigger - flex-direction alone");
     lines.push("   decides which side the bubble visually lands on per placement. */");
     lines.push(".popover-demo-wrap--top, .popover-demo-wrap--bottom{ flex-direction:column; }");
@@ -97,7 +97,7 @@
     lines.push(".popover-demo-wrap--left{ flex-direction:row; }");
     lines.push(".popover-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".popover-demo-trigger{ padding:8px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; cursor:pointer; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popover-demo-trigger{ padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; cursor:pointer; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".popover-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
     lines.push("/* Inverted-overlay treatment, same as Tooltip/Tour/Pop Confirm's bubble -");
@@ -114,10 +114,10 @@
     lines.push("   positioned (so it never reserves layout space itself) - the :has() rule");
     lines.push("   reserves a small gutter for it only when one actually exists, instead");
     lines.push("   of permanently upsizing every bubble the way the old min-width did. */");
-    lines.push(".popover-demo-bubble{ box-sizing:border-box; position:relative; z-index:2; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:10px 12px; border-radius:var(--radius-md); max-width:220px; text-align: start; }");
-    lines.push(".popover-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".popover-demo-body{ font-family:var(--font-body); font-size:12px; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin:4px 0 0; line-height:1.5; max-width:260px; overflow-wrap:anywhere; }");
-    lines.push(".popover-demo-close{ position:absolute; top:6px; right:6px; width:16px; height:16px; background:none; border:none; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); cursor:pointer; padding:0; }");
+    lines.push(".popover-demo-bubble{ box-sizing:border-box; position:relative; z-index:2; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-10) var(--space-12); border-radius:var(--radius-md); max-width:var(--dimension-220); text-align: start; }");
+    lines.push(".popover-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popover-demo-body{ font-family:var(--font-body); font-size:var(--type-caption-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin:var(--space-4) 0 0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
+    lines.push(".popover-demo-close{ position:absolute; top:6px; right:6px; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); cursor:pointer; padding:0; }");
     lines.push("/* padding-right alone doesn't work here: overflow:hidden/text-overflow:");
     lines.push("   ellipsis (from the shared 260px-truncation rule) clip at the box's own");
     lines.push("   outer edge, not its content edge, so truncated text can still render");
@@ -131,7 +131,7 @@
     lines.push("   after the bubble in DOM order), and the bubble-side margin (-12px)");
     lines.push("   pulls the arrow's center, not just its tip, to the bubble's edge -");
     lines.push("   same technique as Tooltip's arrow (see .tooltip-demo-arrow). */");
-    lines.push(".popover-demo-arrow{ position:relative; z-index:1; flex:none; width:8px; height:8px; background:var(--overlay-invert-bg); transform:rotate(45deg); }");
+    lines.push(".popover-demo-arrow{ position:relative; z-index:1; flex:none; width:var(--dimension-8); height:var(--dimension-8); background:var(--overlay-invert-bg); transform:rotate(45deg); }");
     lines.push(".popover-demo-wrap--top .popover-demo-arrow{ margin:-12px auto -4px; }");
     lines.push(".popover-demo-wrap--bottom .popover-demo-arrow{ margin:-4px auto -12px; }");
     lines.push(".popover-demo-wrap--left .popover-demo-arrow{ margin:auto -4px auto -12px; }");
@@ -141,7 +141,7 @@
     TYPES.forEach(function(t){
       lines.push(buildPopoverField(t.key, "with-body", triggerLabel, title, body));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

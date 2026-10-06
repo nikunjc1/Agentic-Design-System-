@@ -165,7 +165,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -280,7 +280,7 @@
     lines.push("/* Dual Icon Button system - all 7 types */");
     lines.push(".dualicon-btn{");
     lines.push("  display:inline-flex; align-items:center; justify-content:center;");
-    lines.push("  width:auto; max-width:320px; border:none;");
+    lines.push("  width:auto; max-width:var(--dimension-320); border:none;");
     lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500;');
     lines.push("  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer;");
     lines.push("}");
@@ -323,7 +323,7 @@
     lines.push(exampleMarkup(exampleSize, radiusClassSuffix(exampleRadius), exampleContent));
     lines.push("");
     lines.push(buildSplitCode());
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius x Content
@@ -409,10 +409,10 @@
   function buildSplitCode(){
     var lines = [];
     lines.push("/* CTA With Dropdown - split button */");
-    lines.push(".splitcta{ display:inline-flex; align-items:stretch; width:141px; height:36px; border-radius:4px; overflow:hidden; box-sizing:border-box; }");
-    lines.push(".splitcta-main{ display:inline-flex; align-items:center; gap:8px; width:105px; padding:0 16px; border:none; background:transparent; color:inherit; font-weight:500; font-size:14px; line-height:20px; cursor:pointer; }");
-    lines.push(".splitcta-divider{ width:1px; }");
-    lines.push(".splitcta-trigger{ display:flex; align-items:center; justify-content:center; width:36px; padding:8px; border:none; background:transparent; color:inherit; cursor:pointer; }");
+    lines.push(".splitcta{ display:inline-flex; align-items:stretch; width:var(--dimension-141); height:var(--dimension-36); border-radius:4px; overflow:hidden; box-sizing:border-box; }");
+    lines.push(".splitcta-main{ display:inline-flex; align-items:center; gap:var(--space-8); width:var(--dimension-105); padding:0 var(--space-16); border:none; background:transparent; color:inherit; font-weight:500; font-size:var(--type-body-size); line-height:20px; cursor:pointer; }");
+    lines.push(".splitcta-divider{ width:var(--dimension-1); }");
+    lines.push(".splitcta-trigger{ display:flex; align-items:center; justify-content:center; width:var(--dimension-36); padding:var(--space-8); border:none; background:transparent; color:inherit; cursor:pointer; }");
     lines.push("");
     Object.keys(SPLIT_STATES).forEach(function(key){
       var spec = SPLIT_STATES[key];

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Corner radius, aspect ratio and caption are properties of the same component, not separate markup - change them below to check this frame's states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="image-radius-dropdown-label">Corner radius</span>
         <div class="multiselect" data-role="image-radius-mount"></div>
@@ -202,13 +205,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 4 states - Loaded, Loading, Error and Hover. One full matrix is rendered per selected Corner radius, at the chosen aspect ratio, with the caption shown beneath the With caption type.</p>
     <div class="button-matrix-wrap" data-role="image-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any place a photo or graphic needs to display with graceful loading, error and hover-preview behavior instead of a bare unstyled &lt;img&gt; tag.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Product gallery</span>
@@ -220,7 +223,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -256,12 +259,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="image-demo-wrap" style="width:160px;"><div class="image-demo-frame" style="height:110px;background:var(--graphite-700);"></div><p class="image-demo-caption">Warehouse floor plan, Level 2</p></div></div>
+          <div class="guide-dodont-demo"><div class="image-demo-wrap" style="width:var(--dimension-160);"><div class="image-demo-frame" style="height:var(--dimension-110);background:var(--graphite-700);"></div><p class="image-demo-caption">Warehouse floor plan, Level 2</p></div></div>
           <p class="guide-dodont-note">A caption that says what the image actually is, useful the moment the picture itself fails to load.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="image-demo-wrap" style="width:160px;"><div class="image-demo-frame image-demo-frame--error" style="height:110px;"><div class="image-demo-error"><span class="image-demo-error-text">Image</span></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="image-demo-wrap" style="width:var(--dimension-160);"><div class="image-demo-frame image-demo-frame--error" style="height:var(--dimension-110);"><div class="image-demo-error"><span class="image-demo-error-text">Image</span></div></div></div></div>
           <p class="guide-dodont-note">No caption and no alt text means a failed image leaves nothing behind but an empty box - the content is simply gone for that user.</p>
         </div>
       </div>

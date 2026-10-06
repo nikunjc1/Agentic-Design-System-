@@ -45,7 +45,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // States are identical across both types (the icon type only differs by
@@ -168,7 +168,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Anchor (inline text link) component */");
-    lines.push('.anchor-demo-link{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:4px; cursor:pointer; }');
+    lines.push('.anchor-demo-link{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:var(--space-4); cursor:pointer; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -194,7 +194,7 @@
       var iconMarkup = t.key === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
       lines.push('<a href="#" class="anchor-demo-link anchor-demo-link--' + t.key + ' anchor-demo-link--fs' + exampleSize + '">' + escapeHtml(label) + iconMarkup + "</a>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size, fully resolved (never

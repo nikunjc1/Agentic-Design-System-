@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,16 +172,16 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Select type</p>
+      <h2 class="panel-title">Select type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="select-system-grid">
       <div class="system-card select-type-card" data-system="dropdown" data-detail-href="select-dropdown.html">
         <div class="button-type-demo">
-          <div class="select-demo-field" style="width:180px;">
+          <div class="select-demo-field" style="width:var(--dimension-180);">
             <label class="select-demo-label">Country</label>
-            <div class="select-demo-control select-demo-control--outlined select-demo-control--h40" style="border-radius:8px;" role="button" tabindex="0">
+            <div class="select-demo-control select-demo-control--outlined select-demo-control--h40" style="border-radius:var(--radius-md);" role="button" tabindex="0">
               <span class="select-demo-value">Select a country</span>
               <span class="select-demo-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </div>

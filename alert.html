@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,14 +172,14 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Alert type</p>
+      <h2 class="panel-title">Alert type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="alert-system-grid">
       <div class="system-card alert-type-card" data-system="default" data-detail-href="alert-default.html">
         <div class="button-type-demo">
-          <div class="alert-demo-banner alert-demo-banner--info" style="border-radius:8px;">
+          <div class="alert-demo-banner alert-demo-banner--info" style="border-radius:var(--radius-md);">
             <span class="alert-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><line x1="12" y1="7.5" x2="12" y2="7.51"></line></svg></span>
             <div class="alert-demo-body">
               <p class="alert-demo-title">Update available</p>

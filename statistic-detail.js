@@ -113,24 +113,24 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Statistic component */");
-    lines.push(".statistic-demo-field{ display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.statistic-demo-title{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.statistic-demo-value{ font-family:var(--font-body); font-size:28px; font-weight:700; color:var(--text-hi); margin:0; display:flex; align-items:baseline; gap:4px; max-width:260px; min-width:0; overflow:hidden; }');
+    lines.push(".statistic-demo-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.statistic-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.statistic-demo-value{ font-family:var(--font-body); font-size:var(--type-h4-size); font-weight:700; color:var(--text-hi); margin:0; display:flex; align-items:baseline; gap:var(--space-4); max-width:var(--dimension-260); min-width:0; overflow:hidden; }');
     lines.push(".statistic-demo-value-text{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".statistic-demo-value--mono{ font-family:var(--font-mono); }");
     lines.push(".statistic-demo-value--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-value--negative{ color:var(--danger-500); }");
-    lines.push(".statistic-demo-affix{ font-size:16px; font-weight:600; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".statistic-demo-affix{ font-size:var(--type-body-size); font-weight:600; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("/* Its own line below the value (a sibling in .statistic-demo-field, not");
     lines.push("   packed into the same line as the number) - field's own gap:6px is the");
     lines.push("   single source of the value-to-trend spacing; no margin needed here. */");
-    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:2px; font-size:14px; font-weight:600; color:var(--text-dim); }");
-    lines.push(".statistic-demo-trend svg{ width:14px; height:14px; }");
+    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--type-body-size); font-weight:600; color:var(--text-dim); }");
+    lines.push(".statistic-demo-trend svg{ width:var(--dimension-14); height:var(--dimension-14); }");
     lines.push(".statistic-demo-trend--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-trend--negative{ color:var(--danger-500); }");
     lines.push("");
     lines.push("/* Loading - animated shimmer placeholder, reuses the same shimmer keyframe as Image/Skeleton */");
-    lines.push(".statistic-demo-skeleton{ width:120px; height:28px; border-radius:var(--radius-sm); background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }");
+    lines.push(".statistic-demo-skeleton{ width:var(--dimension-120); height:var(--dimension-28); border-radius:var(--radius-sm); background:linear-gradient(90deg, var(--graphite-800) 25%, var(--graphite-700) 50%, var(--graphite-800) 75%); background-size:200% 100%; animation:image-demo-shimmer var(--duration-shimmer) var(--ease-emphasis) infinite; }");
     lines.push("/* The shimmer is decorative - the placeholder bar already says \"loading\" - so it switches off entirely when reduced motion is requested. */");
     lines.push("@media (prefers-reduced-motion: reduce){ .statistic-demo-skeleton{ animation:none; background:var(--graphite-700); } }");
     lines.push("");
@@ -138,7 +138,7 @@
     TYPES.forEach(function(t){
       lines.push(buildStatisticField(t.key, "default", title, value, prefix, suffix));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

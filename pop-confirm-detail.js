@@ -95,7 +95,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Pop Confirm component */");
-    lines.push(".popconfirm-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:8px; }");
+    lines.push(".popconfirm-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); }");
     lines.push("/* DOM order is always bubble, arrow, trigger - flex-direction alone");
     lines.push("   decides which side the bubble visually lands on per placement. */");
     lines.push(".popconfirm-demo-wrap--top, .popconfirm-demo-wrap--bottom{ flex-direction:column; }");
@@ -103,7 +103,7 @@
     lines.push(".popconfirm-demo-wrap--left{ flex-direction:row; }");
     lines.push(".popconfirm-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".popconfirm-demo-trigger{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:6px 14px; border-radius:var(--radius-sm); background:var(--graphite-800); border:1.5px solid var(--line-strong); color:var(--text-hi); cursor:pointer; }");
+    lines.push(".popconfirm-demo-trigger{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1.5px solid var(--line-strong); color:var(--text-hi); cursor:pointer; }");
     lines.push(".popconfirm-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
     lines.push("/* Inverted against the page on purpose - near-black in light theme,");
@@ -122,11 +122,11 @@
     lines.push("   near-black-on-near-black against the new light-theme bubble. --confirm");
     lines.push("   (both variants) keep their own fully opaque background, so they stay");
     lines.push("   self-contained regardless of what the bubble inverts to. */");
-    lines.push(".popconfirm-demo-bubble{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; text-align: start; }");
-    lines.push(".popconfirm-demo-question{ display:flex; align-items:flex-start; gap:6px; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:260px; overflow-wrap:anywhere; }");
-    lines.push(".popconfirm-demo-icon{ flex:none; width:14px; height:14px; color:var(--amber-500); }");
-    lines.push(".popconfirm-demo-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }");
-    lines.push(".popconfirm-demo-btn{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popconfirm-demo-bubble{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-12) var(--space-14); border-radius:var(--radius-md); width:var(--dimension-220); text-align: start; }");
+    lines.push(".popconfirm-demo-question{ display:flex; align-items:flex-start; gap:var(--space-6); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
+    lines.push(".popconfirm-demo-icon{ flex:none; width:var(--dimension-14); height:var(--dimension-14); color:var(--amber-500); }");
+    lines.push(".popconfirm-demo-actions{ display:flex; justify-content:flex-end; gap:var(--space-8); margin-top:var(--space-12); }");
+    lines.push(".popconfirm-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".popconfirm-demo-btn--cancel{ background:transparent; border-color:color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color:var(--overlay-invert-text); }");
     lines.push(".popconfirm-demo-btn--confirm{ background:var(--graphite-700); color:var(--text-hi); }");
     lines.push("/* var(--danger-500), not var(--red-500) - Destructive uses the fixed");
@@ -148,7 +148,7 @@
     lines.push("   order is always bubble/arrow/trigger regardless of placement (only");
     lines.push("   flex-direction changes which side is visually which), so which");
     lines.push("   physical margin swaps between top/bottom and between left/right. */");
-    lines.push(".popconfirm-demo-arrow{ position:relative; z-index:1; flex:none; width:8px; height:8px; background:var(--overlay-invert-bg); box-shadow:2px 2px 4px rgba(0,0,0,0.3); transform:rotate(45deg); }");
+    lines.push(".popconfirm-demo-arrow{ position:relative; z-index:1; flex:none; width:var(--dimension-8); height:var(--dimension-8); background:var(--overlay-invert-bg); box-shadow:2px 2px 4px rgba(0,0,0,0.3); transform:rotate(45deg); }");
     lines.push(".popconfirm-demo-wrap--top .popconfirm-demo-arrow{ margin:-12px auto -4px; }");
     lines.push(".popconfirm-demo-wrap--bottom .popconfirm-demo-arrow{ margin:-4px auto -12px; }");
     lines.push(".popconfirm-demo-wrap--left .popconfirm-demo-arrow{ margin:auto -4px auto -12px; }");
@@ -158,7 +158,7 @@
     TYPES.forEach(function(t){
       lines.push(buildPopConfirmField(t.key, "default", question, confirmLabel, cancelLabel));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

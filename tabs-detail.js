@@ -36,10 +36,15 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var textHi = getCssVar("--text-hi", "#F3F2EF");
     var textMid = getCssVar("--text-mid", "#A7ABB2");
     var graphite800 = getCssVar("--graphite-800", "#1C1F23");
@@ -109,7 +114,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -132,7 +137,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function parseLabels(raw){
@@ -208,8 +213,8 @@
     var lines = [];
     lines.push("/* Agentic Design System - Tabs component */");
     lines.push(".tabs-demo-bar{ display:inline-flex; align-items:stretch; box-sizing:border-box; }");
-    lines.push(".tabs-demo-bar--underline{ gap:24px; border-bottom:1.5px solid var(--line-strong); }");
-    lines.push(".tabs-demo-bar--pill{ gap:4px; align-items:center; }");
+    lines.push(".tabs-demo-bar--underline{ gap:var(--space-24); border-bottom:1.5px solid var(--line-strong); }");
+    lines.push(".tabs-demo-bar--pill{ gap:var(--space-4); align-items:center; }");
     lines.push('.tabs-demo-trigger{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; border:none; background:transparent; border-bottom:2px solid transparent; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; white-space:nowrap; cursor:pointer; color:var(--text-mid); transition:background-color .15s ease, border-color .15s ease, color .15s ease; }');
     lines.push(".tabs-demo-trigger:disabled{ cursor:not-allowed; }");
     lines.push("");
@@ -252,7 +257,7 @@
       });
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

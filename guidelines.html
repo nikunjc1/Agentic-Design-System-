@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -168,7 +171,7 @@
   <p class="page-lede">Which component to reach for, by domain - the layer above an individual component's own page, for the moment before you've picked one yet.</p>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Feedback - which one, when</p>
+    <h2 class="panel-title">Feedback - which one, when</h2>
     <p class="get-library-copy">Five components exist for reporting something to the user. Picking the wrong one either interrupts a task that didn't need interrupting, or lets something important scroll past unread.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -205,7 +208,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Navigation - which one, when</p>
+    <h2 class="panel-title">Navigation - which one, when</h2>
     <p class="get-library-copy">Getting from one place to another, or showing where the user already is, without more machinery than the situation needs.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -242,7 +245,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Data Entry - which one, when</p>
+    <h2 class="panel-title">Data Entry - which one, when</h2>
     <p class="get-library-copy">The input should match the shape of the answer the user already has - not the shape that's easiest to build.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -289,7 +292,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Data Display - which one, when</p>
+    <h2 class="panel-title">Data Display - which one, when</h2>
     <p class="get-library-copy">Showing a set of records or values in the shape the reader actually needs to act on them.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -331,7 +334,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Button - hierarchy in one row</p>
+    <h2 class="panel-title">Button - hierarchy in one row</h2>
     <p class="get-library-copy">Every screen should have at most one Primary. Everything else is there to make the choice between actions legible, not to compete with it.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -363,7 +366,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Data List - grouping and density</p>
+    <h2 class="panel-title">Data List - grouping and density</h2>
     <p class="get-library-copy">Long lists fail by hiding structure (everything looks the same) or by adding structure the data doesn't have (fake grouping, arbitrary dividers).</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -390,9 +393,9 @@
   </section>
 
   <section class="panel spacing-model-panel md-export-panel">
-    <p class="panel-title">Component Guidelines - Markdown export</p>
+    <h2 class="panel-title">Component Guidelines - Markdown export</h2>
     <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="page-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>

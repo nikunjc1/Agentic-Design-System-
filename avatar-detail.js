@@ -31,7 +31,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Hand-tuned width/height/font-size per size option - must stay identical
@@ -138,7 +138,7 @@
       lines.push('  <span class="avatar-demo-status avatar-demo-status--online"></span>');
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   function buildComboPrompt(size, shape, initials){

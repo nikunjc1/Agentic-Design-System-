@@ -78,7 +78,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function escapeHtml(str){
@@ -161,17 +161,17 @@
     var lines = [];
     lines.push("/* Agentic Design System - Badge component */");
     lines.push(".badge-demo-host-wrap{ display:inline-flex; position:relative; }");
-    lines.push(".badge-demo-host{ width:32px; height:32px; display:flex; align-items:center; justify-content:center; background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-md); color:var(--text-dim); }");
-    lines.push(".badge-demo-host svg{ width:16px; height:16px; }");
+    lines.push(".badge-demo-host{ width:var(--dimension-32); height:var(--dimension-32); display:flex; align-items:center; justify-content:center; background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-md); color:var(--text-dim); }");
+    lines.push(".badge-demo-host svg{ width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push(".badge-demo-badge{ position:absolute; top:-6px; right:-6px; display:flex; align-items:center; justify-content:center; border:2px solid var(--graphite-950); border-radius:9999px; box-sizing:border-box; }");
-    lines.push(".badge-demo-count{ min-width:18px; height:18px; padding:0 5px; border-radius:9999px; font-family:var(--font-body); font-size:11px; font-weight:700; color:#FFFFFF; display:flex; align-items:center; justify-content:center; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".badge-demo-dot{ width:10px; height:10px; border-radius:9999px; }");
+    lines.push(".badge-demo-count{ min-width:var(--dimension-18); height:var(--dimension-18); padding:0 var(--space-5); border-radius:9999px; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:700; color:#FFFFFF; display:flex; align-items:center; justify-content:center; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".badge-demo-dot{ width:var(--dimension-10); height:var(--dimension-10); border-radius:9999px; }");
     lines.push("");
     lines.push("/* Size (2) - Small tightens the Count pill and Status dot+label together */");
-    lines.push(".badge-demo-badge--sz-small .badge-demo-count{ min-width:16px; height:16px; font-size:10px; }");
-    lines.push(".badge-demo-badge--sz-small .badge-demo-dot{ width:8px; height:8px; }");
-    lines.push(".badge-demo-status-row--sz-small .badge-demo-status-dot--default,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--success,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--warning,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--info{ width:8px; height:8px; }");
-    lines.push(".badge-demo-status-row--sz-small .badge-demo-status-label{ font-size:12px; }");
+    lines.push(".badge-demo-badge--sz-small .badge-demo-count{ min-width:var(--dimension-16); height:var(--dimension-16); font-size:var(--type-body-size); }");
+    lines.push(".badge-demo-badge--sz-small .badge-demo-dot{ width:var(--dimension-8); height:var(--dimension-8); }");
+    lines.push(".badge-demo-status-row--sz-small .badge-demo-status-dot--default,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--success,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--warning,\n.badge-demo-status-row--sz-small .badge-demo-status-dot--info{ width:var(--dimension-8); height:var(--dimension-8); }");
+    lines.push(".badge-demo-status-row--sz-small .badge-demo-status-label{ font-size:var(--type-caption-size); }");
     lines.push("");
     lines.push("/* Colors (5) - applied to both the Count pill and the Dot */");
     STATES.forEach(function(s){
@@ -184,19 +184,19 @@
     lines.push(".badge-demo-badge--processing .badge-demo-count::after, .badge-demo-badge--processing .badge-demo-dot::after{ content:\"\"; position:absolute; inset:0; border-radius:inherit; background:" + "var(" + STATE_COLOR_VAR.processing + ")" + "; animation:badge-pulse 1.2s ease-out infinite; }");
     lines.push("");
     lines.push("/* Status - standalone inline dot + text label, not overlaid on a host */");
-    lines.push(".badge-demo-status-row{ display:inline-flex; align-items:center; gap:8px; }");
+    lines.push(".badge-demo-status-row{ display:inline-flex; align-items:center; gap:var(--space-8); }");
     STATES.forEach(function(s){
       var colorVar = "var(" + STATE_COLOR_VAR[s.key] + ")";
-      lines.push(".badge-demo-status-dot--" + s.key + "{ width:10px; height:10px; border-radius:9999px; background:" + colorVar + "; position:relative; }");
+      lines.push(".badge-demo-status-dot--" + s.key + "{ width:var(--dimension-10); height:var(--dimension-10); border-radius:9999px; background:" + colorVar + "; position:relative; }");
     });
     lines.push(".badge-demo-status-dot--processing::after{ content:\"\"; position:absolute; inset:0; border-radius:9999px; background:" + "var(" + STATE_COLOR_VAR.processing + ")" + "; animation:badge-pulse 1.2s ease-out infinite; }");
-    lines.push(".badge-demo-status-label{ font-family:var(--font-body); font-size:13px; color:var(--text-hi); }");
+    lines.push(".badge-demo-status-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); }");
     lines.push("");
     lines.push("<!-- Example usage - one per form, Default color" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " -->");
     lines.push(buildBadgeField("count", "default", count, max, label, exampleSize));
     lines.push(buildBadgeField("dot", "default", count, max, label, exampleSize));
     lines.push(buildBadgeField("status", "default", count, max, label, exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

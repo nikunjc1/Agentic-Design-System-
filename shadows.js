@@ -60,13 +60,13 @@
     saveBtn.addEventListener("click", function(){
       persistShadow();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetShadowBtn");
     resetBtn.addEventListener("click", function(){
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       selectSystem("balanced");
 
       saveStatus.textContent = "Reset to defaults";

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -179,10 +182,10 @@
 <label class="setup-option"><input type="checkbox" class="export-foundation-check" value="shadows" checked>Shadows</label>
 <label class="setup-option"><input type="checkbox" class="export-foundation-check" value="icons" checked>Icons</label>
 </div></fieldset>
-<div class="setup-field" style="margin-top:4px">Which components should be included? (applies when the file includes component guides) <span class="setup-help" style="display:block;margin-top:2px;font-weight:400">Open a category to choose individual components, or use its own checkbox to select the whole category at once.</span></div>
+<div class="setup-field" style="margin-top:var(--space-4);">Which components should be included? (applies when the file includes component guides) <span class="setup-help" style="display:block;margin-top:var(--space-2);font-weight:400">Open a category to choose individual components, or use its own checkbox to select the whole category at once.</span></div>
 <div id="exportComponentGroups" class="export-category-groups"></div>
 <label class="setup-option"><input type="checkbox" id="includeIdentity">Include my name, email and designation</label>
-<label class="setup-field" for="markdownPreview" style="margin-top:20px">Markdown preview</label><textarea class="export-preview" id="markdownPreview" readonly spellcheck="false"></textarea>
+<label class="setup-field" for="markdownPreview" style="margin-top:var(--space-20);">Markdown preview</label><textarea class="export-preview" id="markdownPreview" readonly spellcheck="false"></textarea>
 <div class="setup-actions"><button class="btn btn-primary" id="downloadMarkdown" type="button" disabled>Download .md</button><button class="btn btn-ghost" id="copyMarkdown" type="button" disabled>Copy Markdown</button><button class="btn btn-ghost" id="refreshMarkdown" type="button">Refresh preview</button></div>
 <p id="exportStatus" class="setup-status" role="status" aria-live="polite"></p></section>
 <aside class="setup-panel"><h2>Ready for your next tool</h2><p>Attach the file to your AI coding tool or place it alongside your project documentation. Ask it to follow the saved tokens and documented component rules.</p><p>The file is a snapshot of your current local draft. Regenerate it after changing your setup or foundations.</p><p class="setup-help">HTML and CSS examples target the web. Native mobile and desktop products need platform-specific implementations.</p><div class="setup-actions"><a href="new-project.html">Edit product setup</a><a href="foundations.html#colors">Customize colors</a></div></aside></div>

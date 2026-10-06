@@ -127,29 +127,29 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Divider component */");
-    lines.push(".divider-demo-line{ width:160px; height:0; border-top-width:1.5px; border-top-color:var(--line-strong); margin-inline:auto; }");
+    lines.push(".divider-demo-line{ width:var(--dimension-160); height:0; border-top-width:1.5px; border-top-color:var(--line-strong); margin-inline:auto; }");
     lines.push(".divider-demo-line--solid{ border-top-style:solid; }");
     lines.push(".divider-demo-line--dashed{ border-top-style:dashed; }");
     lines.push(".divider-demo-line--dotted{ border-top-style:dotted; }");
     lines.push("");
     lines.push("/* Horizontal with text - two segments (reusing the line-style");
     lines.push("   modifiers above) flank a centered/left/right label */");
-    lines.push(".divider-demo-line-text{ display:flex; align-items:center; gap:12px; width:220px; margin-inline:auto; }");
+    lines.push(".divider-demo-line-text{ display:flex; align-items:center; gap:var(--space-12); width:var(--dimension-220); margin-inline:auto; }");
     lines.push(".divider-demo-line-segment{ flex:1 1 auto; height:0; border-top-width:1.5px; border-top-color:var(--line-strong); }");
     lines.push(".divider-demo-line-text--left .divider-demo-line-segment:first-child{ flex:0 0 16px; }");
     lines.push(".divider-demo-line-text--right .divider-demo-line-segment:last-child{ flex:0 0 16px; }");
-    lines.push(".divider-demo-label{ font-family:var(--font-body); font-size:13px; color:var(--text-dim); white-space:nowrap; }");
+    lines.push(".divider-demo-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); white-space:nowrap; }");
     lines.push("");
     lines.push("/* Size (3) - Medium is the default (the base widths/weights above) */");
     lines.push(".divider-demo-line.divider-demo-sz-small{ border-top-width:1px; }");
     lines.push(".divider-demo-line.divider-demo-sz-large{ border-top-width:2px; }");
-    lines.push(".divider-demo-line-text--left.divider-demo-sz-small .divider-demo-label, .divider-demo-line-text--center.divider-demo-sz-small .divider-demo-label, .divider-demo-line-text--right.divider-demo-sz-small .divider-demo-label{ font-size:12px; }");
-    lines.push(".divider-demo-line-text--left.divider-demo-sz-large .divider-demo-label, .divider-demo-line-text--center.divider-demo-sz-large .divider-demo-label, .divider-demo-line-text--right.divider-demo-sz-large .divider-demo-label{ font-size:14px; }");
+    lines.push(".divider-demo-line-text--left.divider-demo-sz-small .divider-demo-label, .divider-demo-line-text--center.divider-demo-sz-small .divider-demo-label, .divider-demo-line-text--right.divider-demo-sz-small .divider-demo-label{ font-size:var(--type-caption-size); }");
+    lines.push(".divider-demo-line-text--left.divider-demo-sz-large .divider-demo-label, .divider-demo-line-text--center.divider-demo-sz-large .divider-demo-label, .divider-demo-line-text--right.divider-demo-sz-large .divider-demo-label{ font-size:var(--type-body-size); }");
     lines.push("");
     lines.push("<!-- Example usage - one per form, Solid line style" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + ", at the chosen Text label/alignment -->");
     lines.push(buildDividerField("horizontal-plain", "solid", text, align, exampleSize));
     lines.push(buildDividerField("horizontal-text", "solid", text, align, exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

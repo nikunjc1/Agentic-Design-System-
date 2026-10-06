@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Comment" data-default-placeholder="Type @ to mention someone">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="mention-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="mention-size-mount"></div>
@@ -211,13 +214,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="mention-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any free-form text field where someone needs to tag or notify another person inline, mixed in with the rest of the message.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Comments</span>
@@ -229,10 +232,10 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Mention adds async suggestion states on top of whatever validation the underlying text field needs - what shows while matches are being fetched, what shows when there are none, and whether an unresolved "@" fragment is allowed to stand.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - mark a required Mention field the same way as any other required field in this system (asterisk after the label, or "(required)" if the form spells it out). When the form requires at least one valid mention specifically, say so in the field's helper text - "required" alone doesn't tell the user a mention is what's missing.</li>
+      <li><strong>Required marking</strong> - mark a required Mention field the same way as any other required field in this system (red asterisk after the label). When the form requires at least one valid mention specifically, say so in the field's helper text - "required" alone doesn't tell the user a mention is what's missing.</li>
       <li><strong>Loading state</strong> - while the suggestion popover is fetching matches for whatever follows "@", show a lightweight loading indicator inside it rather than leaving it empty. An empty flash between keystroke and results reads as lag or a broken query, not as "still searching."</li>
       <li><strong>No-results state</strong> - if nothing matches, show a specific, calm "No matches for '[query]'" message inside the popover instead of closing it silently. Closing without a message reads as a bug, not a deliberate empty state.</li>
       <li><strong>Unresolved mentions</strong> - when the field requires every mention to resolve to a real, selected entity rather than arbitrary trailing text, validate that on blur or submit with a message like "Remove or fix the unresolved mention '@[text]'," naming the exact fragment that didn't resolve.</li>
@@ -241,7 +244,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>

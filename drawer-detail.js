@@ -32,7 +32,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Size -> panel WIDTH in px (the panel is always full-height, or
@@ -62,7 +62,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -86,7 +86,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   // All 4 corners round, regardless of placement - a prior version only
@@ -213,12 +213,12 @@
       lines.push(".drawer-panel--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCss + "; }");
     });
     lines.push("");
-    lines.push(".drawer-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 20px; border-bottom:1px solid " + line + "; }");
-    lines.push('.drawer-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:16px; font-weight:600; color:' + textHi + "; margin:0; }");
-    lines.push(".drawer-close{ flex:none; width:20px; height:20px; background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
-    lines.push('.drawer-body{ padding:16px 20px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:14px; color:' + textMid + "; flex:1; overflow:auto; }");
-    lines.push(".drawer-footer{ display:flex; justify-content:flex-end; gap:8px; padding:12px 20px; border-top:1px solid " + line + "; }");
-    lines.push('.drawer-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:600; padding:8px 16px; border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
+    lines.push(".drawer-header{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-12); padding:var(--space-16) var(--space-20); border-bottom:1px solid " + line + "; }");
+    lines.push('.drawer-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin:0; }");
+    lines.push(".drawer-close{ flex:none; width:var(--dimension-20); height:var(--dimension-20); background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
+    lines.push('.drawer-body{ padding:var(--space-16) var(--space-20); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:' + textMid + "; flex:1; overflow:auto; }");
+    lines.push(".drawer-footer{ display:flex; justify-content:flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top:1px solid " + line + "; }");
+    lines.push('.drawer-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
     lines.push(".drawer-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
     lines.push(".drawer-btn--primary{ color:#FFFFFF; background:" + red500 + "; }");
     lines.push(".drawer-btn--primary:hover{ background:" + red600 + "; }");
@@ -242,7 +242,7 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value (at the

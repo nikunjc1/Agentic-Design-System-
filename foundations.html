@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Brand color</p>
+      <h2 class="panel-title">Brand color</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -183,7 +186,7 @@
       <span>Also set a separate brand color for dark theme</span>
     </label>
 
-    <div class="theme-pair-grid" style="margin-top:16px;">
+    <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Light theme</p>
@@ -192,7 +195,7 @@
           <div class="color-field">
             <div class="color-field-head">
               <span class="color-field-label">PRIMARY</span>
-              <span class="badge badge-required">Required</span>
+              <span class="ads-required" aria-label="Required">*</span>
             </div>
             <span class="hex-input-wrap type-color-wrap">
               <input type="color" class="type-color-swatch" data-role="brand-light-picker" value="#ff031a" />
@@ -202,9 +205,9 @@
             <p class="color-rgba" data-role="brand-light-rgba">rgb(255, 3, 26)</p>
           </div>
         </div>
-        <p class="empty-eyebrow" style="margin-top:16px;">Derived scale</p>
+        <p class="empty-eyebrow" style="margin-top:var(--space-16);">Derived scale</p>
         <div class="color-chip-strip" data-role="brand-light-scale"></div>
-        <p class="color-contrast" data-role="brand-light-on-brand-text" style="margin-top:12px;"></p>
+        <p class="color-contrast" data-role="brand-light-on-brand-text" style="margin-top:var(--space-12);"></p>
       </div>
 
       <div class="theme-pair-col" data-role="brand-dark-col" hidden>
@@ -219,7 +222,6 @@
           <div class="color-field">
             <div class="color-field-head">
               <span class="color-field-label">PRIMARY</span>
-              <span class="badge badge-optional">Optional</span>
             </div>
             <span class="hex-input-wrap type-color-wrap">
               <input type="color" class="type-color-swatch" data-role="brand-dark-picker" value="#f74858" />
@@ -229,9 +231,9 @@
             <p class="color-rgba" data-role="brand-dark-rgba">rgb(247, 72, 88)</p>
           </div>
         </div>
-        <p class="empty-eyebrow" style="margin-top:16px;">Derived scale</p>
+        <p class="empty-eyebrow" style="margin-top:var(--space-16);">Derived scale</p>
         <div class="color-chip-strip" data-role="brand-dark-scale"></div>
-        <p class="color-contrast" data-role="brand-dark-on-brand-text" style="margin-top:12px;"></p>
+        <p class="color-contrast" data-role="brand-dark-on-brand-text" style="margin-top:var(--space-12);"></p>
       </div>
     </div>
 
@@ -248,7 +250,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title" id="bg-surface">Background &amp; surface elevation</p>
+      <h2 class="panel-title" id="bg-surface">Background &amp; surface elevation</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -262,7 +264,7 @@
       <span>Also set separate surface colors for dark theme</span>
     </label>
 
-    <div class="theme-pair-grid" style="margin-top:16px;">
+    <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Light theme</p>
@@ -293,7 +295,7 @@
             </span>
           </div>
         </div>
-        <p class="empty-eyebrow" style="margin-top:16px;">Live preview</p>
+        <p class="empty-eyebrow" style="margin-top:var(--space-16);">Live preview</p>
         <div class="elevation-demo elevation-demo--compact elevation-demo--for-light">
           <div class="elevation-demo-layer is-primary" data-role="elevation-light-primary">Page
             <div class="elevation-demo-layer is-secondary" data-role="elevation-light-secondary">Panel
@@ -338,7 +340,7 @@
             </span>
           </div>
         </div>
-        <p class="empty-eyebrow" style="margin-top:16px;">Live preview</p>
+        <p class="empty-eyebrow" style="margin-top:var(--space-16);">Live preview</p>
         <div class="elevation-demo elevation-demo--compact elevation-demo--for-dark">
           <div class="elevation-demo-layer is-primary" data-role="elevation-dark-primary">Page
             <div class="elevation-demo-layer is-secondary" data-role="elevation-dark-secondary">Panel
@@ -363,7 +365,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Semantic &amp; status colors</p>
+      <h2 class="panel-title">Semantic &amp; status colors</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -380,7 +382,7 @@
       <span>Also set separate status colors for dark theme</span>
     </label>
 
-    <div class="theme-pair-grid" style="margin-top:16px;">
+    <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Light theme</p>
@@ -483,7 +485,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-    <p class="panel-title">Neutral scale</p>
+    <h2 class="panel-title">Neutral scale</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -497,7 +499,7 @@
       <span>Also set separate values for dark theme</span>
     </label>
 
-    <div class="theme-pair-grid" style="margin-top:16px;">
+    <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Light theme</p>
@@ -612,7 +614,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Light &amp; dark theme behavior</p>
+      <h2 class="panel-title">Light &amp; dark theme behavior</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -660,9 +662,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Color tokens - Markdown export</p>
+    <h2 class="panel-title">Color tokens - Markdown export</h2>
     <p class="get-library-copy">A single Markdown snapshot of every section above - regenerates live the moment you change or save any color, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="colors-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="colors-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyColorsMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="colorsMarkdownStatus" role="status" aria-live="polite"></span>

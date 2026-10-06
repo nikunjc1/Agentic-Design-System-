@@ -177,33 +177,33 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Description component */");
-    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:10px; width:280px; text-align: start; }");
-    lines.push(".description-demo-title{ font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--text-hi); max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".description-demo-grid{ display:grid; gap:12px; }");
+    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-280); text-align: start; }");
+    lines.push(".description-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".description-demo-grid{ display:grid; gap:var(--space-12); }");
     lines.push(".description-demo-panel--bordered .description-demo-grid{ gap:0; border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }");
-    lines.push(".description-demo-item{ display:flex; flex-direction:column; gap:4px; }");
-    lines.push(".description-demo-panel--bordered .description-demo-item{ padding:8px 10px; border-inline-end:1px solid var(--line); border-bottom:1px solid var(--line); gap:2px; }");
+    lines.push(".description-demo-item{ display:flex; flex-direction:column; gap:var(--space-4); }");
+    lines.push(".description-demo-panel--bordered .description-demo-item{ padding:var(--space-8) var(--space-10); border-inline-end:1px solid var(--line); border-bottom:1px solid var(--line); gap:var(--space-2); }");
     lines.push("/* Cells against the grid's own right/bottom edge skip their own divider border there, since the grid's outer border already draws that edge */");
     lines.push(".description-demo-panel--bordered .description-demo-item.is-last-col{ border-inline-end:none; }");
     lines.push(".description-demo-panel--bordered .description-demo-item.is-last-row{ border-bottom:none; }");
-    lines.push(".description-demo-label{ font-family:var(--font-body); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".description-demo-value{ font-family:var(--font-body); font-size:13px; color:var(--text-hi); word-break:break-word; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".description-demo-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".description-demo-value{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); word-break:break-word; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Size (3) - Large is the default; Middle/Small tighten item padding and both label/value font one step */");
-    lines.push(".description-demo-panel--sz-middle .description-demo-item{ gap:2px; }");
-    lines.push(".description-demo-panel--sz-middle.description-demo-panel--bordered .description-demo-item{ padding:6px 8px; }");
-    lines.push(".description-demo-panel--sz-middle .description-demo-label{ font-size:10px; }");
-    lines.push(".description-demo-panel--sz-middle .description-demo-value{ font-size:12px; }");
-    lines.push(".description-demo-panel--sz-small .description-demo-item{ gap:1px; }");
-    lines.push(".description-demo-panel--sz-small.description-demo-panel--bordered .description-demo-item{ padding:4px 6px; }");
-    lines.push(".description-demo-panel--sz-small .description-demo-label{ font-size:10px; }");
-    lines.push(".description-demo-panel--sz-small .description-demo-value{ font-size:11px; }");
+    lines.push(".description-demo-panel--sz-middle .description-demo-item{ gap:var(--space-2); }");
+    lines.push(".description-demo-panel--sz-middle.description-demo-panel--bordered .description-demo-item{ padding:var(--space-6) var(--space-8); }");
+    lines.push(".description-demo-panel--sz-middle .description-demo-label{ font-size:var(--type-body-size); }");
+    lines.push(".description-demo-panel--sz-middle .description-demo-value{ font-size:var(--type-caption-size); }");
+    lines.push(".description-demo-panel--sz-small .description-demo-item{ gap:var(--space-1); }");
+    lines.push(".description-demo-panel--sz-small.description-demo-panel--bordered .description-demo-item{ padding:var(--space-4) var(--space-6); }");
+    lines.push(".description-demo-panel--sz-small .description-demo-label{ font-size:var(--type-body-size); }");
+    lines.push(".description-demo-panel--sz-small .description-demo-value{ font-size:var(--type-body-size); }");
     lines.push("");
     lines.push("<!-- Example usage - one per form, at " + columns + " column" + (columns === "1" ? "" : "s") + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + ", with section title \"" + title + "\" -->");
     TYPES.forEach(function(t){
       lines.push(buildDescriptionField(t.key, "with-title", columns, title, exampleSize));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

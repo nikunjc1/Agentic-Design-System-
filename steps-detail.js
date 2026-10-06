@@ -47,7 +47,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function liveStepsColors(){
@@ -234,18 +234,18 @@
     var lines = [];
     lines.push("/* Agentic Design System - Steps (progress indicator) component */");
     lines.push(".steps-demo-row{ display:flex; align-items:flex-start; }");
-    lines.push(".steps-demo-step{ display:flex; flex-direction:column; align-items:center; gap:8px; box-sizing:border-box; }");
-    lines.push('.steps-demo-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; white-space:nowrap; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push(".steps-demo-connector{ flex:1 1 auto; min-width:16px; height:1.5px; background:" + c.lineStrong + "; }");
+    lines.push(".steps-demo-step{ display:flex; flex-direction:column; align-items:center; gap:var(--space-8); box-sizing:border-box; }");
+    lines.push('.steps-demo-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); white-space:nowrap; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push(".steps-demo-connector{ flex:1 1 auto; min-width:var(--dimension-16); height:1.5px; background:" + c.lineStrong + "; }");
     lines.push(".steps-demo-connector.is-completed{ background:" + c.red500 + "; }");
     lines.push("");
     lines.push(orientationInfo.mode === "all"
       ? "/* Orientation - not chosen yet, default is Horizontal */"
       : "/* Orientation - explicitly chosen: " + orientationInfo.values.map(function(v){ return optionLabelFor(ORIENTATION_OPTIONS, v); }).join(", ") + " */");
     lines.push(".steps-demo-row--vertical{ flex-direction:column; align-items:flex-start; }");
-    lines.push(".steps-demo-row--vertical .steps-demo-step{ flex-direction:row; align-items:center; gap:12px; }");
+    lines.push(".steps-demo-row--vertical .steps-demo-step{ flex-direction:row; align-items:center; gap:var(--space-12); }");
     lines.push(".steps-demo-row--vertical .steps-demo-label{ white-space:normal; }");
-    lines.push(".steps-demo-row--vertical .steps-demo-connector{ flex:none; width:1.5px; height:20px; min-width:0; margin-top:0; }");
+    lines.push(".steps-demo-row--vertical .steps-demo-connector{ flex:none; width:1.5px; height:var(--dimension-20); min-width:0; margin-top:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -262,13 +262,13 @@
     lines.push("");
     lines.push("/* States (5, apply per step) */");
     lines.push(".steps-demo-step.is-upcoming .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
-    lines.push(".steps-demo-step.is-upcoming .steps-demo-label{ color:" + c.textDim + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".steps-demo-step.is-upcoming .steps-demo-label{ color:" + c.textDim + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-current .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-current .steps-demo-label{ color:" + c.textHi + "; font-weight:700; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".steps-demo-step.is-current .steps-demo-label{ color:" + c.textHi + "; font-weight:700; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-completed .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-completed .steps-demo-label{ color:" + c.textHi + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".steps-demo-step.is-completed .steps-demo-label{ color:" + c.textHi + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-error .steps-demo-circle{ background:" + c.danger500 + "; border:1.5px solid " + c.danger500 + "; color:#FFFFFF; }");
-    lines.push(".steps-demo-step.is-error .steps-demo-label{ color:" + c.danger500 + "; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".steps-demo-step.is-error .steps-demo-label{ color:" + c.danger500 + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-disabled{ opacity:0.4; }");
     lines.push(".steps-demo-step.is-disabled .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
     lines.push("");
@@ -276,7 +276,7 @@
     var exampleOrientation = orientationInfo.mode === "all" ? FALLBACK_DEFAULTS.orientation : orientationInfo.values[0];
     lines.push("<!-- Example usage" + ((sizeInfo.mode === "specific" || orientationInfo.mode === "specific") ? " - at the explicitly chosen size/orientation" : "") + ", a 3-step flow with the middle step Current -->");
     lines.push(buildStepsRow("numbered", "current", exampleSize, labels, exampleOrientation));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Orientation combination,

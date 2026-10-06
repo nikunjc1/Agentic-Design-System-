@@ -29,13 +29,18 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Box treatment is identical across both Types - only the Card type adds
   // an outer wrapper that highlights as a whole when checked, so liveCssFor
   // returns the shared box states plus an optional card highlight.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textDim = getCssVar("--text-dim", "#64686F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -91,7 +96,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -117,7 +122,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -190,9 +195,9 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Checkbox component */");
-    lines.push('.checkbox-demo-field{ display:inline-flex; align-items:center; gap:10px; cursor:pointer; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.checkbox-demo-field{ display:inline-flex; align-items:center; gap:var(--space-10); cursor:pointer; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
     lines.push(".checkbox-demo-field.is-disabled{ cursor:not-allowed; }");
-    lines.push(".checkbox-demo-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
+    lines.push(".checkbox-demo-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -221,15 +226,15 @@
     lines.push(".checkbox-demo-input:focus-visible + .checkbox-demo-box, .checkbox-demo-box.is-focus{ " + css.box.focus + " }");
     lines.push(".checkbox-demo-input:disabled + .checkbox-demo-box, .checkbox-demo-box.is-disabled{ " + css.box.disabled + " }");
     lines.push(".checkbox-demo-icon{ display:flex; color:#FFFFFF; }");
-    lines.push(".checkbox-demo-label{ font-size:14px; color:var(--text-hi); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".checkbox-demo-label{ font-size:var(--type-body-size); color:var(--text-hi); max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Card type (2nd Types option) - whole row highlights when checked */");
     var cardCss = liveCssFor("card");
-    lines.push(".checkbox-demo-card{ display:flex; align-items:center; padding:12px 14px; border:1.5px solid var(--line-strong); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".checkbox-demo-card{ display:flex; align-items:center; padding:var(--space-12) var(--space-14); border:1.5px solid var(--line-strong); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
     lines.push(".checkbox-demo-card.is-checked{ " + cardCss.card + " }");
     lines.push("");
     lines.push("/* Disabled - 40% opacity, not-allowed cursor */");
-    lines.push(".checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity:0.7; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".checkbox-demo-input:disabled ~ .checkbox-demo-label{ opacity:0.7; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
@@ -245,7 +250,7 @@
       lines.push('</label>');
       if (t.key === "card") lines.push('</div>');
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius

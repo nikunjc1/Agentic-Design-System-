@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,16 +172,16 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Tree Select type</p>
+      <h2 class="panel-title">Tree Select type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="treeselect-system-grid">
       <div class="system-card treeselect-type-card" data-system="default" data-detail-href="tree-select-default.html">
         <div class="button-type-demo">
-          <div class="treeselect-demo-field" style="width:220px;">
+          <div class="treeselect-demo-field" style="width:var(--dimension-220);">
             <label class="treeselect-demo-label">Assignee team</label>
-            <div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40" style="border-radius:8px;">
+            <div class="treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40" style="border-radius:var(--radius-md);">
               <input type="text" class="treeselect-demo-input" value="Engineering / Frontend" readonly />
               <span class="treeselect-demo-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
             </div>

@@ -26,7 +26,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function escapeHtml(str){
@@ -78,7 +78,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -96,7 +96,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -167,7 +167,7 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Tag component */");
-    lines.push(".tag-demo-chip{ box-sizing:border-box; display:inline-flex; align-items:center; gap:4px; padding:4px 10px; font-family:var(--font-body); font-size:12px; font-weight:600; white-space:nowrap; }");
+    lines.push(".tag-demo-chip{ box-sizing:border-box; display:inline-flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-10); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; white-space:nowrap; }");
     lines.push(".tag-demo-chip--default{ background:var(--graphite-700); color:var(--text-mid); }");
     lines.push(".tag-demo-chip--success{ background:rgba(47,191,110,0.12); color:var(--green-500); }");
     lines.push(".tag-demo-chip--warning{ background:rgba(230,165,58,0.12); color:var(--amber-500); }");
@@ -179,7 +179,7 @@
     lines.push(".tag-demo-chip--warning.is-selected{ background:var(--amber-500); color:#1A1400; }");
     lines.push(".tag-demo-chip--error.is-selected{ background:var(--danger-500); color:#FFFFFF; }");
     lines.push("");
-    lines.push(".tag-demo-remove{ flex:none; width:12px; height:12px; background:none; border:none; color:inherit; opacity:0.7; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }");
+    lines.push(".tag-demo-remove{ flex:none; width:var(--dimension-12); height:var(--dimension-12); background:none; border:none; color:inherit; opacity:0.7; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }");
     lines.push(".tag-demo-remove:hover{ opacity:1; }");
     return lines.join("\n");
   }
@@ -215,7 +215,7 @@
     lines.push("<!-- Example usage - the other 2 forms (Default color) -->");
     lines.push(buildTagField("default", "removable", exampleRadius, info.label));
     lines.push(buildTagField("default", "selected", exampleRadius, info.label));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value, fully

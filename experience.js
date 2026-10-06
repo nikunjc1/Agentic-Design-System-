@@ -40,10 +40,7 @@
     if (headings.length > 2) {
       const nav = el('nav', '', 'page-outline');
       nav.setAttribute('aria-label', 'On this page');
-      // Styled as a real Group Button (segmented control), not just links
-      // that look like one - .is-selected tracks whichever section is
-      // actually in view (IntersectionObserver below), the same "exactly
-      // one segment selected at a time" behavior the component always has.
+      // Reading locations use Anchor; Group Buttons select values.
       const links = headings.map((h, i) => {
         h.id ||= 'section-' + (i + 1);
         // Strip a leading "1. "/"10. " ordinal from the label - some
@@ -52,24 +49,29 @@
         // but doubles up oddly once it's also a short nav-strip label.
         // The heading itself is untouched, only this nav copy.
         const label = h.textContent.replace(/^\d+\.\s*/, '');
-        const a = el('a', label, 'group-btn-segment group-btn-segment--h36');
+        const a = el('a', label, 'anchor-demo-link anchor-demo-link--fs14');
         a.href = '#' + h.id;
         nav.append(a);
         return a;
       });
-      const intro = main.querySelector('.page-lede') || main.querySelector('h1');
+      const intro = main.querySelector(':scope > .component-meta') || main.querySelector(':scope > .page-lede') || main.querySelector(':scope > h1');
       intro?.after(nav);
-      links[0]?.classList.add('is-selected');
+      const markCurrent = index => links.forEach((link, i) => {
+        if (i === index) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      const initial = links.findIndex(link => link.getAttribute('href') === location.hash);
+      markCurrent(initial < 0 ? 0 : initial);
+      links.forEach((link, i) => link.addEventListener('click', () => markCurrent(i)));
       const sections = headings.map(h => h.closest('section') || h);
       const spy = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const i = sections.indexOf(entry.target);
           if (i === -1) return;
-          links.forEach(l => l.classList.remove('is-selected'));
-          links[i].classList.add('is-selected');
+          markCurrent(i);
         });
-      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+      }, { root: main, rootMargin: '-15% 0px -70% 0px', threshold: 0 });
       sections.forEach(s => spy.observe(s));
     }
     if (!['new-project.html', 'settings.html'].includes(file)) {
@@ -91,17 +93,13 @@
       const details = el('details', '', 'platform-guidance');
       details.append(el('summary', 'Guidance for your target platforms'));
       for (const key of profile.platforms) details.append(el('p', M.PLATFORMS[key].label + ': ' + M.PLATFORMS[key].guidance));
-      main.querySelector('.page-lede')?.after(details);
+      (main.querySelector(':scope > .component-meta') || main.querySelector(':scope > .page-lede'))?.after(details);
     }
     requestAnimationFrame(() => {
       main.querySelectorAll('[data-detail-href]').forEach(card => {
         card.removeAttribute('role'); card.removeAttribute('tabindex');
-        // Real Button classes, not a one-off style - this is the card's
-        // actual primary action (the whole card already navigates here on
-        // click), so it gets the same .btn-primary treatment as any other
-        // primary CTA, placed before the secondary Copy prompt/Copy code
-        // utility actions rather than after them.
-        const link = el('a', 'View component guide', 'btn btn-primary component-open-link');
+        // Plain navigation and repeated card actions use Anchor, not Primary.
+        const link = el('a', 'View component guide', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
         link.href = card.dataset.detailHref;
         const copyRow = card.querySelector('.card-copy-row');
         if (copyRow) copyRow.before(link); else card.append(link);
@@ -121,7 +119,7 @@
     if (roadmap) {
       const section = el('section', '', 'setup-notice');
       const copy = el('div'); copy.append(el('h2',roadmap[0]),el('p',roadmap[1]));
-      const action = el('a','Export Markdown','btn btn-primary'); action.href = 'md-export.html';
+      const action = el('a','Export Markdown','anchor-demo-link anchor-demo-link--fs14'); action.href = 'md-export.html';
       section.append(copy,action); main.querySelector('.page-lede')?.after(section);
     }
   }
@@ -329,7 +327,7 @@
     });
   }
 
-  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons'];
+  const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons','sizing','units','data-format'];
   // Maps each Foundations sidebar tab to the token key(s) its editor saves
   // under - Colors alone covers 4 keys (its own light-mode value plus the
   // other 3 themed Foundations panels; Text colors was removed as its own
@@ -345,6 +343,9 @@
     borders: ['border','border-states'],
     shadows: ['shadow'],
     icons: ['icons'],
+    'data-format': ['data-format'],
+    sizing: ['sizing'],
+    units: ['units'],
   };
   // Resolved documented defaults, one entry per TOKEN_KEYS key, each
   // shaped identically to what that key's own page actually persists
@@ -368,24 +369,7 @@
       primaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
       secondaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
       platform: null,
-      levels: {
-        h1: { family: 'primary', size: 'display-lg', lineHeightPct: '125', weight: '700', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        h2: { family: 'primary', size: 'display-md', lineHeightPct: '122', weight: '700', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        h3: { family: 'primary', size: 'display-sm', lineHeightPct: '127', weight: '600', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        h4: { family: 'primary', size: 'display-xs', lineHeightPct: '133', weight: '600', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        h5: { family: 'primary', size: 'text-xl', lineHeightPct: '150', weight: '500', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        h6: { family: 'primary', size: 'text-lg', lineHeightPct: '156', weight: '500', italic: false, color: '#111827', darkColor: '#D8DFEE' },
-        body: { family: 'secondary', size: 'text-md', lineHeightPct: '150', weight: '400', italic: false, color: '#4B5563', darkColor: '#9CA6B4' },
-        paragraph: { family: 'secondary', size: 'text-md', lineHeightPct: '150', weight: '400', italic: false, color: '#4B5563', darkColor: '#9CA6B4' },
-        caption: { family: 'secondary', size: 'text-xs', lineHeightPct: '150', weight: '400', italic: false, color: '#6B7280', darkColor: '#7F8694' },
-        active: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#FF031A', darkColor: '#F74858' },
-        selected: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '600', italic: false, color: '#FF031A', darkColor: '#F74858' },
-        disabled: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '400', italic: false, color: '#9CA3AF', darkColor: '#505763' },
-        error: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#FF3F4F', darkColor: '#FA818B' },
-        warning: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#E6A53A', darkColor: '#E6BC77' },
-        success: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#2FBF6E', darkColor: '#5ECD8F' },
-        info: { family: 'secondary', size: 'text-sm', lineHeightPct: '143', weight: '500', italic: false, color: '#4F8FE6', darkColor: '#8AB2E8' }
-      }
+      levels: window.ADSFoundationModel.typeDefaults
     },
     spacing: { product: null, system: '4px' },
     radius: { product: null, philosophy: 'balanced' },
@@ -393,7 +377,7 @@
     'border-states': {
       default: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
       hover: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
-      focus: { light: '4F8FE6', dark: '8AB2E8', darkAuto: true },
+      focus: { light: 'FF031A', dark: 'FF4253', darkAuto: true },
       active: { light: 'D80016', dark: 'D80016', darkAuto: true },
       selected: { light: 'FF031A', dark: 'F74858', darkAuto: true },
       disabled: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
@@ -439,17 +423,9 @@
     marketing: 'rows', 'consumer-app': 'columns', 'ai-product': 'rows', 'cross-platform': 'columns'
   };
   function contextualDefault(key, profile) {
-    const slug = profile && PROJECT_PRODUCT_TYPE_MAP[profile.productType];
-    if (!slug) return RESOLVED_DEFAULTS[key];
-    if (key === 'spacing' && SPACING_BY_PRODUCT[slug]) {
-      const [primary, secondary] = SPACING_BY_PRODUCT[slug];
-      const system = primary === '2px' || primary === '8px' || primary === '4px' ? primary : 'adaptive';
-      return { product: slug, system };
-    }
-    if (key === 'radius' && RADIUS_BY_PRODUCT[slug]) return { product: slug, philosophy: RADIUS_BY_PRODUCT[slug] };
-    if (key === 'grid-layout' && GRID_BY_PRODUCT[slug]) return { product: slug, system: GRID_BY_PRODUCT[slug] };
-    return RESOLVED_DEFAULTS[key];
+    return window.ADSFoundationModel.contextualDefault(key, profile) || RESOLVED_DEFAULTS[key];
   }
+
   function savedTokens(allowedKeys = TOKEN_KEYS, profile = null) {
     const values = {};
     for (const key of allowedKeys) {
@@ -461,8 +437,9 @@
       // bad record can't crash the whole export), resolves to the project's
       // own contextual recommendation, or the plain documented default.
       const saved = window.ADSStorage.safeGet('ads:' + key);
-      values[key] = saved !== null ? saved : contextualDefault(key, profile);
+      values[key] = saved !== null ? saved : key === 'data-format' ? window.ADSFoundationModel.dataDefaults : key === 'units' ? {unit:window.ADSFoundation.get().unit} : key === 'sizing' ? window.ADSFoundationModel.sizingDefaults : contextualDefault(key, profile);
     }
+    values.resolvedFoundation = window.ADSFoundation.get();
     return values;
   }
   // docs-catalog.js has no literal "category" field - every component
@@ -726,7 +703,7 @@
     const main = $('main');
     if (!output || !copyBtn || !main) return;
 
-    const SKIP_TAGS = new Set(['script', 'style']);
+    const SKIP_TAGS = new Set(['script', 'style', 'button']);
     const BLOCK_TAGS = new Set(['p', 'section', 'div', 'pre', 'br']);
 
     function extract(root) {
@@ -750,7 +727,13 @@
         .trim();
     }
 
-    output.textContent = extract(main);
+    function refreshMarkdown() {
+      let text = extract(main);
+      if (location.pathname.endsWith('data-format.html')) text += '\n\n## Current Data Format configuration\n\n```json\n' + JSON.stringify(window.ADSFoundation.get().dataFormat, null, 2) + '\n```';
+      if (output.textContent !== text) output.textContent = text;
+    }
+    refreshMarkdown();
+    window.addEventListener('ads:foundation-applied', refreshMarkdown);
 
     copyBtn.addEventListener('click', () => {
       const status = $('#pageMarkdownStatus');

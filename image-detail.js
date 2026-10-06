@@ -28,7 +28,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Corner radius option list - same value scale as the Button and Group
@@ -50,7 +50,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -84,7 +84,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -154,7 +154,7 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Image component */");
-    lines.push(".image-demo-wrap{ display:inline-flex; flex-direction:column; gap:8px; }");
+    lines.push(".image-demo-wrap{ display:inline-flex; flex-direction:column; gap:var(--space-8); }");
     lines.push(".image-demo-frame{ box-sizing:border-box; position:relative; overflow:hidden; background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
     lines.push(".image-demo-frame.image-demo-frame--loading{ background:var(--graphite-800); }");
     lines.push(".image-demo-frame.image-demo-frame--error{ background:var(--graphite-850); display:flex; align-items:center; justify-content:center; }");
@@ -162,13 +162,13 @@
     lines.push("@keyframes image-demo-shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }");
     lines.push("/* The shimmer is decorative - the placeholder's shape already says \"loading\" - so it switches off entirely when reduced motion is requested. */");
     lines.push("@media (prefers-reduced-motion: reduce){ .image-demo-skeleton{ animation:none; background:var(--graphite-700); } }");
-    lines.push(".image-demo-error{ display:flex; flex-direction:column; align-items:center; gap:6px; color:var(--text-dim); }");
-    lines.push(".image-demo-error svg{ width:24px; height:24px; }");
-    lines.push('.image-demo-error-text{ font-family:var(--font-body); font-size:11px; }');
-    lines.push(".image-demo-zoom-icon{ position:absolute; bottom:6px; right:6px; width:22px; height:22px; border-radius:9999px; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#FFFFFF; opacity:0.7; transition:opacity .15s ease; }");
+    lines.push(".image-demo-error{ display:flex; flex-direction:column; align-items:center; gap:var(--space-6); color:var(--text-dim); }");
+    lines.push(".image-demo-error svg{ width:var(--dimension-24); height:var(--dimension-24); }");
+    lines.push('.image-demo-error-text{ font-family:var(--font-body); font-size:var(--type-body-size); }');
+    lines.push(".image-demo-zoom-icon{ position:absolute; bottom:6px; right:6px; width:var(--dimension-22); height:var(--dimension-22); border-radius:9999px; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#FFFFFF; opacity:0.7; transition:opacity .15s ease; }");
     lines.push(".image-demo-frame:hover .image-demo-zoom-icon, .image-demo-frame--hover .image-demo-zoom-icon{ opacity:1; }");
-    lines.push(".image-demo-zoom-icon svg{ width:12px; height:12px; }");
-    lines.push('.image-demo-caption{ font-family:var(--font-body); font-size:12px; color:var(--text-dim); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push(".image-demo-zoom-icon svg{ width:var(--dimension-12); height:var(--dimension-12); }");
+    lines.push('.image-demo-caption{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     return lines.join("\n");
   }
 
@@ -213,7 +213,7 @@
     lines.push(buildImageField("default", "loading", exampleRadius, info.aspectKey, info.caption));
     lines.push(buildImageField("default", "error", exampleRadius, info.aspectKey, info.caption));
     lines.push(buildImageField("default", "hover", exampleRadius, info.aspectKey, info.caption));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value (with the

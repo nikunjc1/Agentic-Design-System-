@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body data-default-label="Brand color" data-default-hex="#FF031A">
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Size, corner radius, label and color value are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="colorpicker-size-dropdown-label">Size</span>
         <div class="multiselect" data-role="colorpicker-size-mount"></div>
@@ -211,13 +214,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 6 states. One full matrix is rendered per selected combination of Size and Corner radius - check more than one option in a dropdown to see every combination side by side.</p>
     <div class="button-matrix-wrap" data-role="colorpicker-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any field where someone chooses or edits a color, such as a brand color, theme customization, a chart series color, or a label highlight color.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Brand color</span>
@@ -229,7 +232,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">The swatch and preset palette can't produce an invalid value by definition - validation is really about the typed or pasted hex text, since that's the only way to enter a value the component can't already guarantee is well-formed.</p>
     <ul class="guide-list">
       <li><strong>Validation timing</strong> - validate the typed value on blur, not on every keystroke - a partial string like "#3a" is a normal in-progress state while typing, not an error.</li>
@@ -241,7 +244,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -277,12 +280,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="colorpicker-demo-field"><label class="colorpicker-demo-label">Brand colour</label><div class="colorpicker-demo-control colorpicker-demo-control--outlined colorpicker-demo-control--h40"><span class="colorpicker-demo-swatch" style="background:#FF031A;"></span><span class="colorpicker-demo-value">#FF031A</span></div></div></div>
+          <div class="guide-dodont-demo"><div class="colorpicker-demo-field"><label class="colorpicker-demo-label">Brand colour</label><div class="colorpicker-demo-control colorpicker-demo-control--outlined colorpicker-demo-control--h40"><span class="colorpicker-demo-swatch" style="background:var(--red-500);"></span><span class="colorpicker-demo-value">#FF031A</span></div></div></div>
           <p class="guide-dodont-note">The swatch is paired with the hex value, so the choice can be read, copied and checked without trusting the screen's calibration.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="colorpicker-demo-field"><label class="colorpicker-demo-label">Brand colour</label><div class="colorpicker-demo-control colorpicker-demo-control--outlined colorpicker-demo-control--h40"><span class="colorpicker-demo-swatch" style="background:#FF031A;"></span></div></div></div>
+          <div class="guide-dodont-demo"><div class="colorpicker-demo-field"><label class="colorpicker-demo-label">Brand colour</label><div class="colorpicker-demo-control colorpicker-demo-control--outlined colorpicker-demo-control--h40"><span class="colorpicker-demo-swatch" style="background:var(--red-500);"></span></div></div></div>
           <p class="guide-dodont-note">A swatch with no value is unreadable to anyone who cannot distinguish it from the neighbouring shade, and impossible to reproduce elsewhere.</p>
         </div>
       </div>

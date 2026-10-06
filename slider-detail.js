@@ -27,7 +27,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // Colors are the same regardless of type (Single vs Range) - only the
@@ -35,6 +35,11 @@
   // a typeKey parameter for shape-consistency with the other components'
   // liveCssFor.
   function liveCssFor(typeKey){
+    if (typeKey === "primary") return {
+      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
+      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
+      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+    };
     var graphite800 = getCssVar("--graphite-800", "#1C1F23");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var red500 = getCssVar("--red-500", "#FF031A");
@@ -141,12 +146,12 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Slider component */");
-    lines.push(".slider-field{ display:flex; flex-direction:column; gap:10px; width:220px; }");
-    lines.push('.slider-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:500; }');
-    lines.push(".slider-track-wrap{ position:relative; padding:10px 0; cursor:pointer; }");
+    lines.push(".slider-field{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-220); }");
+    lines.push('.slider-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
+    lines.push(".slider-track-wrap{ position:relative; padding:var(--space-10) 0; cursor:pointer; }");
     lines.push(".slider-track{ width:100%; border-radius:9999px; position:relative; overflow:visible; }");
     lines.push(".slider-track-fill{ position:absolute; top:0; bottom:0; border-radius:9999px; }");
-    lines.push(".slider-thumb{ position:absolute; top:50%; width:16px; height:16px; border-radius:9999px; transform:translate(-50%,-50%); box-shadow:0 1px 3px rgba(0,0,0,0.4); }");
+    lines.push(".slider-thumb{ position:absolute; top:50%; width:var(--dimension-16); height:var(--dimension-16); border-radius:9999px; transform:translate(-50%,-50%); box-shadow:0 1px 3px rgba(0,0,0,0.4); }");
     lines.push("");
     var thicknessesToEmit = thicknessInfo.mode === "all" ? THICKNESS_OPTIONS.map(function(o){ return o.value; }) : thicknessInfo.values;
     lines.push(thicknessInfo.mode === "all"
@@ -188,7 +193,7 @@
     lines.push("    </div>");
     lines.push("  </div>");
     lines.push("</div>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Track thickness, fully resolved

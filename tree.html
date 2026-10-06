@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,14 +172,14 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Tree type</p>
+      <h2 class="panel-title">Tree type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
     <div class="system-card-grid" data-role="tree-system-grid">
       <div class="system-card tree-type-card" data-system="default" data-detail-href="tree-default.html">
         <div class="button-type-demo">
-          <div class="tree-demo-wrap" style="width:180px;">
+          <div class="tree-demo-wrap" style="width:var(--dimension-180);">
             <p class="tree-demo-root">Documents</p>
             <div class="tree-demo-nodes">
               <div class="tree-demo-node">
@@ -197,7 +200,7 @@
 
       <div class="system-card tree-type-card" data-system="default" data-type="lines" data-detail-href="tree-default.html">
         <div class="button-type-demo">
-          <div class="tree-demo-wrap tree-demo-wrap--lines" style="width:180px;">
+          <div class="tree-demo-wrap tree-demo-wrap--lines" style="width:var(--dimension-180);">
             <p class="tree-demo-root">Documents</p>
             <div class="tree-demo-nodes">
               <div class="tree-demo-node">

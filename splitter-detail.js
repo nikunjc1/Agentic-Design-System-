@@ -19,7 +19,7 @@
   var DEFAULT_PANEL2_LABEL = "Content";
   var DEFAULT_RATIO = 35;
 
-  var EXPAND_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:12px;height:12px;"><polyline points="9 18 15 12 9 6"/></svg>';
+  var EXPAND_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-12);height:var(--dimension-12);"><polyline points="9 18 15 12 9 6"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -93,25 +93,25 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Splitter component */");
-    lines.push(".splitter-demo-wrap{ display:flex; width:240px; height:140px; box-sizing:border-box; border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; background:var(--graphite-900); }");
+    lines.push(".splitter-demo-wrap{ display:flex; width:var(--dimension-240); height:var(--dimension-140); box-sizing:border-box; border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; background:var(--graphite-900); }");
     lines.push(".splitter-demo-wrap--vertical{ flex-direction:column; }");
-    lines.push('.splitter-demo-panel{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; min-width:0; padding:8px; font-family:var(--font-body); font-size:12px; color:var(--text-mid); background:var(--graphite-850); }');
+    lines.push('.splitter-demo-panel{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; min-width:0; padding:var(--space-8); font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-mid); background:var(--graphite-850); }');
     lines.push(".splitter-demo-panel-text{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".splitter-demo-panel:first-child{ background:var(--graphite-800); }");
     lines.push(".splitter-demo-panel.is-collapsed{ color:var(--text-dim); }");
     lines.push(".splitter-demo-divider{ flex:none; background:var(--graphite-700); display:flex; align-items:center; justify-content:center; }");
-    lines.push(".splitter-demo-wrap--horizontal .splitter-demo-divider{ width:6px; cursor:col-resize; }");
-    lines.push(".splitter-demo-wrap--vertical .splitter-demo-divider{ height:6px; cursor:row-resize; }");
+    lines.push(".splitter-demo-wrap--horizontal .splitter-demo-divider{ width:var(--dimension-6); cursor:col-resize; }");
+    lines.push(".splitter-demo-wrap--vertical .splitter-demo-divider{ height:var(--dimension-6); cursor:row-resize; }");
     lines.push(".splitter-demo-divider.is-dragging{ background:var(--red-500); }");
-    lines.push(".splitter-demo-handle{ width:3px; height:16px; border-radius:2px; background:var(--text-dim); }");
-    lines.push(".splitter-demo-wrap--vertical .splitter-demo-handle{ width:16px; height:3px; }");
+    lines.push(".splitter-demo-handle{ width:var(--dimension-3); height:var(--dimension-16); border-radius:2px; background:var(--text-dim); }");
+    lines.push(".splitter-demo-wrap--vertical .splitter-demo-handle{ width:var(--dimension-16); height:var(--dimension-3); }");
     lines.push(".splitter-demo-divider.is-dragging .splitter-demo-handle{ background:#FFFFFF; }");
     lines.push("");
     lines.push("<!-- Example usage - one per type, Default state, at the chosen labels/ratio -->");
     TYPES.forEach(function(t){
       lines.push(buildSplitterField(t.key, "default", panel1Label, panel2Label, ratio));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

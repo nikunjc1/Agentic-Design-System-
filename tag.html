@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel">
     <div class="panel-title-row">
-      <p class="panel-title">Tag type</p>
+      <h2 class="panel-title">Tag type</h2>
     </div>
     <p class="get-library-copy">Copy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.</p>
 
@@ -177,10 +180,10 @@
       <div class="system-card tag-type-card" data-system="default" data-detail-href="tag-default.html">
         <div class="button-type-demo">
           <div class="tag-demo-chip-row">
-            <span class="tag-demo-chip tag-demo-chip--default" style="border-radius:8px;">Default</span>
-            <span class="tag-demo-chip tag-demo-chip--success" style="border-radius:8px;">Success</span>
-            <span class="tag-demo-chip tag-demo-chip--warning" style="border-radius:8px;">Warning</span>
-            <span class="tag-demo-chip tag-demo-chip--error" style="border-radius:8px;">Error</span>
+            <span class="tag-demo-chip tag-demo-chip--default" style="border-radius:var(--radius-md);">Default</span>
+            <span class="tag-demo-chip tag-demo-chip--success" style="border-radius:var(--radius-md);">Success</span>
+            <span class="tag-demo-chip tag-demo-chip--warning" style="border-radius:var(--radius-md);">Warning</span>
+            <span class="tag-demo-chip tag-demo-chip--error" style="border-radius:var(--radius-md);">Error</span>
           </div>
           <p class="dualicon-card-label">System Generated System Control</p>
         </div>

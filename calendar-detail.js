@@ -64,7 +64,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   function escapeHtml(str){
@@ -113,19 +113,19 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Calendar component */");
-    lines.push(".calendar-demo-grid{ box-sizing:border-box; background:" + graphite900 + "; border:1px solid " + lineStrong + "; border-radius:var(--radius-md); padding:10px; width:fit-content; margin-inline:auto; }");
-    lines.push('.calendar-demo-header{ text-align:center; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:13px; font-weight:600; color:' + textHi + "; margin-bottom:8px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".calendar-demo-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:4px; }");
-    lines.push('.calendar-demo-weekday{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:10px; font-weight:600; color:' + textDim + "; text-align:center; text-transform:uppercase; }");
-    lines.push(".calendar-demo-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }");
+    lines.push(".calendar-demo-grid{ box-sizing:border-box; background:" + graphite900 + "; border:1px solid " + lineStrong + "; border-radius:var(--radius-md); padding:var(--space-10); width:fit-content; margin-inline:auto; }");
+    lines.push('.calendar-demo-header{ text-align:center; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin-bottom:var(--space-8); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".calendar-demo-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-2); margin-bottom:var(--space-4); }");
+    lines.push('.calendar-demo-weekday{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textDim + "; text-align:center; text-transform:uppercase; }");
+    lines.push(".calendar-demo-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-2); }");
     lines.push('.calendar-demo-day{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; position:relative; padding:0; margin:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; line-height:normal; color:' + textHi + "; background:none; border:none; border-radius:6px; cursor:pointer; }");
     lines.push(".calendar-demo-day:hover:not(.is-outside-month){ background:" + graphite800 + "; }");
     lines.push(".calendar-demo-day:focus-visible{ outline:2px solid " + red400 + "; outline-offset:1px; }");
-    lines.push(".calendar-demo-grid--full .calendar-demo-day{ width:36px; height:36px; font-size:13px; }");
-    lines.push(".calendar-demo-grid--compact .calendar-demo-day{ width:26px; height:26px; font-size:11px; }");
+    lines.push(".calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36); font-size:var(--type-body-size); }");
+    lines.push(".calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-day.is-outside-month{ color:" + textDim + "; opacity:0.4; }");
     lines.push(".calendar-demo-day.is-today{ background:" + red500 + "; color:#FFFFFF; font-weight:700; }");
-    lines.push('.calendar-demo-day.has-event::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:9999px; background:' + blue500 + "; }");
+    lines.push('.calendar-demo-day.has-event::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius:9999px; background:' + blue500 + "; }");
     lines.push(".calendar-demo-day.is-range-start, .calendar-demo-day.is-range-middle, .calendar-demo-day.is-range-end{ background:" + redTint + "; color:" + red400 + "; }");
     lines.push(".calendar-demo-day.is-range-start{ border-top-left-radius:6px; border-bottom-left-radius:6px; }");
     lines.push(".calendar-demo-day.is-range-end{ border-top-right-radius:6px; border-bottom-right-radius:6px; }");
@@ -144,7 +144,7 @@
     });
     lines.push("  </div>");
     lines.push("</div>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   function buildDayClasses(cell, stateKey){

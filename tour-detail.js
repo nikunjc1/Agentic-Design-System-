@@ -100,7 +100,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Tour component */");
-    lines.push(".tour-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:8px; }");
+    lines.push(".tour-demo-wrap{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); }");
     lines.push("/* DOM order is always card, arrow, target - flex-direction alone");
     lines.push("   decides which side the card visually lands on per placement. */");
     lines.push(".tour-demo-wrap--top, .tour-demo-wrap--bottom{ flex-direction:column; }");
@@ -108,7 +108,7 @@
     lines.push(".tour-demo-wrap--left{ flex-direction:row; }");
     lines.push(".tour-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".tour-demo-target{ display:inline-flex; padding:6px 12px; border-radius:var(--radius-sm); background:var(--graphite-800); border:2px solid var(--red-500); box-shadow:0 0 0 3px var(--red-tint); color:var(--text-hi); font-family:var(--font-body); font-size:13px; font-weight:600; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tour-demo-target{ display:inline-flex; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); background:var(--graphite-800); border:2px solid var(--red-500); box-shadow:0 0 0 3px var(--red-tint); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Same inverted-overlay treatment as Tooltip's bubble - near-black card");
     lines.push("   in light theme, near-white in dark theme, via var(--overlay-invert-bg)/");
@@ -120,12 +120,12 @@
     lines.push("   are derived from var(--overlay-invert-text) at low opacity rather than");
     lines.push("   var(--line-strong) - that token's tint is calibrated for a normal");
     lines.push("   surface and goes nearly invisible against an inverted one. */");
-    lines.push(".tour-demo-card{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:12px 14px; border-radius:var(--radius-md); width:220px; text-align: start; }");
-    lines.push(".tour-demo-step-counter{ font-family:var(--font-mono); font-size:11px; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-bottom:6px; }");
-    lines.push(".tour-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".tour-demo-description{ font-family:var(--font-body); font-size:12px; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-top:4px; margin-bottom:0; line-height:1.5; max-width:260px; overflow-wrap:anywhere; }");
-    lines.push(".tour-demo-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }");
-    lines.push(".tour-demo-btn{ font-family:var(--font-body); font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
+    lines.push(".tour-demo-card{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-12) var(--space-14); border-radius:var(--radius-md); width:var(--dimension-220); text-align: start; }");
+    lines.push(".tour-demo-step-counter{ font-family:var(--font-mono); font-size:var(--type-body-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-bottom:var(--space-6); }");
+    lines.push(".tour-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tour-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-top:var(--space-4); margin-bottom:0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
+    lines.push(".tour-demo-actions{ display:flex; justify-content:flex-end; gap:var(--space-8); margin-top:var(--space-12); }");
+    lines.push(".tour-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
     lines.push(".tour-demo-btn--ghost{ background:transparent; border-color:color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color:var(--overlay-invert-text); }");
     lines.push(".tour-demo-btn--primary{ background:var(--red-500); color:#FFFFFF; }");
     lines.push("");
@@ -137,7 +137,7 @@
     lines.push("   target-side margin (-4px) keeps the original small spacing there.");
     lines.push("   Which physical side faces the card swaps between top/bottom and");
     lines.push("   between left/right. */");
-    lines.push(".tour-demo-arrow{ position:relative; z-index:1; flex:none; width:8px; height:8px; background:var(--overlay-invert-bg); box-shadow:2px 2px 4px rgba(0,0,0,0.3); transform:rotate(45deg); }");
+    lines.push(".tour-demo-arrow{ position:relative; z-index:1; flex:none; width:var(--dimension-8); height:var(--dimension-8); background:var(--overlay-invert-bg); box-shadow:2px 2px 4px rgba(0,0,0,0.3); transform:rotate(45deg); }");
     lines.push(".tour-demo-wrap--top .tour-demo-arrow{ margin:-12px auto -4px; }");
     lines.push(".tour-demo-wrap--bottom .tour-demo-arrow{ margin:-4px auto -12px; }");
     lines.push(".tour-demo-wrap--left .tour-demo-arrow{ margin:auto -4px auto -12px; }");
@@ -147,7 +147,7 @@
     TYPES.forEach(function(t){
       lines.push(buildTourField(t.key, "middle-step", targetLabel, title, description));
     });
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

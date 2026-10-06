@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-product-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">What are you building?</p>
+      <h2 class="panel-title">What are you building?</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -254,7 +257,7 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Radius philosophy</p>
+      <h2 class="panel-title">Radius philosophy</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -273,7 +276,7 @@
         </div>
         <p class="system-card-desc">Precise and enterprise-focused. Best for: Enterprise / Finance / Data-heavy.</p>
         <p class="system-card-scale" data-role="scale">0, 2, 4, 6, 8</p>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:4px"></span><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0"></span><span class="radius-demo-box" style="border-radius:var(--radius-sm)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </button>
 
       <button class="system-card" data-system="compact" aria-pressed="false" type="button">
@@ -284,18 +287,18 @@
         </div>
         <p class="system-card-desc">Dense, professional and structured. Best for: Enterprise SaaS / Dashboards / B2B.</p>
         <p class="system-card-scale" data-role="scale">0, 2, 4, 6, 8, 12</p>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:6px"></span><span class="radius-demo-box" style="border-radius:12px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </button>
 
       <button class="system-card is-active" data-system="balanced" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Balanced</span>
           <span class="system-card-tagline">4-16px</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">Modern and flexible. Best for: SaaS / Web / Mobile / Cross-platform.</p>
         <p class="system-card-scale" data-role="scale">0, 2, 4, 6, 8, 12, 16, 24, Full</p>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:8px"></span><span class="radius-demo-box" style="border-radius:24px"></span><span class="radius-demo-box" style="border-radius:9999px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span><span class="radius-demo-box" style="border-radius:var(--radius-full)"></span></div>
       </button>
 
       <button class="system-card" data-system="soft" aria-pressed="false" type="button">
@@ -306,7 +309,7 @@
         </div>
         <p class="system-card-desc">Friendly and approachable. Best for: Consumer / Mobile / Customer-facing products.</p>
         <p class="system-card-scale" data-role="scale">0, 4, 8, 12, 16, 20, 24, Full</p>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:12px"></span><span class="radius-demo-box" style="border-radius:24px"></span><span class="radius-demo-box" style="border-radius:9999px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span><span class="radius-demo-box" style="border-radius:var(--radius-full)"></span></div>
       </button>
 
       <button class="system-card" data-system="expressive" aria-pressed="false" type="button">
@@ -317,7 +320,7 @@
         </div>
         <p class="system-card-desc">Distinctive and brand-led. Best for: Creative / AI / Marketing / Consumer brands.</p>
         <p class="system-card-scale" data-role="scale">0, 4, 8, 12, 16, 24, 32, 40, 48, Full</p>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0px"></span><span class="radius-demo-box" style="border-radius:16px"></span><span class="radius-demo-box" style="border-radius:48px"></span><span class="radius-demo-box" style="border-radius:9999px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:0"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span><span class="radius-demo-box" style="border-radius:var(--radius-full)"></span></div>
       </button>
     </div>
     </div>
@@ -328,7 +331,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Recommended global model</p>
+      <h2 class="panel-title">Recommended global model</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -352,7 +355,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Radius by component role</p>
+      <h2 class="panel-title">Radius by component role</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -365,31 +368,31 @@
         <span class="usage-label">Micro components</span>
         <span class="usage-desc">Small badge, tiny indicator, chip, compact control</span>
         <span class="usage-values">2, 4px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:2px"></span><span class="radius-demo-box" style="border-radius:4px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-sm)"></span><span class="radius-demo-box" style="border-radius:var(--radius-sm)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Interactive components</span>
         <span class="usage-desc">Button, input, select, checkbox, search field, dropdown - default 8px</span>
         <span class="usage-values">4, 6, 8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:4px"></span><span class="radius-demo-box" style="border-radius:6px"></span><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-sm)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Content components</span>
         <span class="usage-desc">Card, info panel, notification, form container - default 12px</span>
         <span class="usage-values">8, 12, 16px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span><span class="radius-demo-box" style="border-radius:12px"></span><span class="radius-demo-box" style="border-radius:16px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Large surfaces</span>
         <span class="usage-desc">Modal, dialog, drawer, bottom sheet, dashboard container - default 16px</span>
         <span class="usage-values">12, 16, 24px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:12px"></span><span class="radius-demo-box" style="border-radius:16px"></span><span class="radius-demo-box" style="border-radius:24px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Floating / overlay</span>
         <span class="usage-desc">Popover, tooltip, dropdown menu, context menu - default 8px</span>
         <span class="usage-values">6, 8, 12px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:6px"></span><span class="radius-demo-box" style="border-radius:8px"></span><span class="radius-demo-box" style="border-radius:12px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
     </div>
     <p class="get-library-copy">Attachment changes which corners this role's radius actually applies to - a floating surface detached on all sides (a popover) rounds all four corners, but a surface attached to the viewport edge (a side drawer, a mobile bottom sheet) only rounds the corners that are actually free - the edge flush against the viewport uses 0 on that edge specifically, via CSS's own per-corner <code>border-radius</code> syntax (e.g. a bottom sheet: <code>border-radius: 12px 12px 0 0</code>), not a single uniform value forced onto all four corners. Shadows documents the same attached edge for its own purpose (still shadowed, just not rounded there) - this is the Radius half of that same rule. A surface that fills the entire viewport with no visible edge at all (a full-screen mobile modal) has no corner to round either way - radius is moot there, not 0 as a stated choice.</p>
@@ -403,7 +406,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component defaults</p>
+      <h2 class="panel-title">Component defaults</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -414,56 +417,56 @@
       <div class="usage-row">
         <span class="usage-label">Button</span>
         <span class="usage-desc">Compact enterprise 4px &middot; expressive consumer 12px &middot; pill uses Full</span>
-        <span class="usage-values">8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <span class="usage-values" data-dimension-value="8">8px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Input / Select / Textarea</span>
         <span class="usage-desc">Share one control radius across every form field</span>
-        <span class="usage-values">8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <span class="usage-values" data-dimension-value="8">8px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Card</span>
         <span class="usage-desc">Compact enterprise 8px &middot; soft consumer 16px &middot; expressive 20-24px</span>
-        <span class="usage-values">12px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:12px"></span></div>
+        <span class="usage-values" data-dimension-value="12">12px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Modal / Dialog</span>
         <span class="usage-desc">Compact enterprise 12px &middot; large/expressive 20-24px</span>
-        <span class="usage-values">16px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:16px"></span></div>
+        <span class="usage-values" data-dimension-value="16">16px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-lg)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Badge</span>
         <span class="usage-desc">Chip uses 8px; pill status uses Full - not every badge should be a pill</span>
-        <span class="usage-values">4px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:4px"></span></div>
+        <span class="usage-values" data-dimension-value="4">4px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-sm)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Tooltip / Popover / Dropdown</span>
         <span class="usage-desc">Keep floating surfaces tighter than content containers</span>
-        <span class="usage-values">8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <span class="usage-values" data-dimension-value="8">8px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Table</span>
         <span class="usage-desc">Round the container only - individual cells stay 0px to avoid fragmentation</span>
-        <span class="usage-values">8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <span class="usage-values" data-dimension-value="8">8px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Avatar / Icon Button / Toggle</span>
         <span class="usage-desc">Circular only when width equals height</span>
         <span class="usage-values">Full</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:9999px"></span></div>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-full)"></span></div>
       </div>
       <div class="usage-row">
         <span class="usage-label">Navigation (nav links, tabs, menu items)</span>
         <span class="usage-desc">Same as its own container's radius family - a sidebar nav link already matches Input/Button's 8px, not a separate value</span>
-        <span class="usage-values">8px</span>
-        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:8px"></span></div>
+        <span class="usage-values" data-dimension-value="8">8px</span>
+        <div class="radius-demo-row"><span class="radius-demo-box" style="border-radius:var(--radius-md)"></span></div>
       </div>
     </div>
 
@@ -473,7 +476,7 @@
       <span class="save-status" id="radiusSaveStatus" role="status" aria-live="polite"></span>
     </div>
 
-    <p class="get-library-copy" style="margin-top:16px;">Nested corners only need adjusting at all when the gap between container and child is tighter than the container's own radius. In that regime, the cap is <code>inner radius = max(0, outer radius - gap)</code> - a ceiling on the inner element's radius, not a replacement value. The moment the gap meets or exceeds the outer radius, this formula stops applying entirely and the inner element keeps its own independent radius unchanged, full stop - it does not mean "the formula evaluates to 0, so square it." Card's 16px body padding is already wider than Card's own 12px radius, so a Button (8px) sitting inside one needs no adjustment (8px, unchanged) - not 0px, even though <code>max(0, 12-16)</code> alone looks like it should be. Something sitting flush against an edge with little or no gap is the case the cap is actually for - e.g. a tab strip inset only 4px inside a 12px-radius container caps at <code>max(0, 12-4) = 8px</code>, genuinely smaller than its own 12px default.</p>
+    <p class="get-library-copy" style="margin-top:var(--space-16);">Nested corners only need adjusting at all when the gap between container and child is tighter than the container's own radius. In that regime, the cap is <code>inner radius = max(0, outer radius - gap)</code> - a ceiling on the inner element's radius, not a replacement value. The moment the gap meets or exceeds the outer radius, this formula stops applying entirely and the inner element keeps its own independent radius unchanged, full stop - it does not mean "the formula evaluates to 0, so square it." Card's 16px body padding is already wider than Card's own 12px radius, so a Button (8px) sitting inside one needs no adjustment (8px, unchanged) - not 0px, even though <code>max(0, 12-16)</code> alone looks like it should be. Something sitting flush against an edge with little or no gap is the case the cap is actually for - e.g. a tab strip inset only 4px inside a 12px-radius container caps at <code>max(0, 12-4) = 8px</code>, genuinely smaller than its own 12px default.</p>
     <p class="get-library-copy">The gap in that formula is the real visual gap to the inner element's own corner, not the padding value alone: subtract any border width sitting between container and child first (a 1px border effectively reduces an 8px padding to a 7px real gap for this purpose). Asymmetric padding needs this applied per corner independently using that corner's own actual gap, not one page-wide number for all four.</p>
 
     <div class="ai-rule-callout">
@@ -487,9 +490,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Radius tokens - Markdown export</p>
+    <h2 class="panel-title">Radius tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of your current product type and radius philosophy choices above - regenerates live as you pick, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="radius-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="radius-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyRadiusMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="radiusMarkdownStatus" role="status" aria-live="polite"></span>

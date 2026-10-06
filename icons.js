@@ -216,13 +216,13 @@
     saveBtn.addEventListener("click", function(){
       persistIcons();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetIconsBtn");
     resetBtn.addEventListener("click", function(){
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       sizeSelect.value = "24";
       strokeSelect.value = "1.8";
       cornerSelect.value = "round";

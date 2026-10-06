@@ -36,8 +36,8 @@
     var gutterInput = document.querySelector('[data-role="grid-gutter-input"]');
     var customRequiredNotice = document.querySelector('[data-role="grid-custom-required-notice"]');
 
-    function effectiveColumns(){ var n = parseInt(columnsInput.value, 10); return isFinite(n) && n > 0 ? n : null; }
-    function effectiveGutter(){ var n = parseInt(gutterInput.value, 10); return isFinite(n) && n >= 0 ? n : null; }
+    function effectiveColumns(){ var n = Number(columnsInput.value); return columnsInput.value !== "" && Number.isInteger(n) && n >= 1 && n <= 24 ? n : null; }
+    function effectiveGutter(){ var n = Number(gutterInput.value); return gutterInput.value !== "" && Number.isInteger(n) && n >= 0 && n <= 64 ? n : null; }
 
     function validateGridValues(){
       var activeSystem = document.querySelector(".system-card.is-active");
@@ -296,12 +296,7 @@
       try{ return window.ADSProject.read(localStorage); }catch(e){ return null; }
     }
     function computeRecommendedProduct(profile){
-      if (!profile) return null;
-      if (Array.isArray(profile.platforms) && profile.platforms.length === 1){
-        var platformProduct = PLATFORM_ONLY_PRODUCT_MAP[profile.platforms[0]];
-        if (platformProduct) return platformProduct;
-      }
-      return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+      return window.ADSFoundationModel.recommendedProduct(profile);
     }
     function productFromProjectProfile(){
       return computeRecommendedProduct(currentProfile());
@@ -449,13 +444,13 @@
       }
       persistGrid();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetGridBtn");
     resetBtn.addEventListener("click", function(){
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       callout.hidden = true;
       var contextNotice = document.querySelector('[data-role="context-changed-notice"]');

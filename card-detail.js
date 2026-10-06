@@ -30,7 +30,7 @@
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    return (v || fallback).toUpperCase();
+    return v || fallback;
   }
 
   // States apply to the whole card regardless of type - unlike Alert's
@@ -69,7 +69,7 @@
   // instead of silently ignoring the sitewide setting.
   function liveRadiusDefault(fallback){
     var raw = getComputedStyle(document.documentElement).getPropertyValue("--radius-md").trim();
-    var num = parseFloat(raw);
+    var num = window.ADSFoundationModel.toPx(raw);
     if (!isFinite(num)) return fallback;
     var closest = null, closestDiff = Infinity;
     RADIUS_OPTIONS.forEach(function(opt){
@@ -101,7 +101,7 @@
   }
 
   function radiusCssFor(value){
-    return value === "9999" ? "9999px" : value + "px";
+    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -174,26 +174,26 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Card component */");
-    lines.push(".card-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; width:240px; background:var(--graphite-900); border:1.5px solid var(--line-strong); overflow:hidden; transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }");
+    lines.push(".card-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; width:var(--dimension-240); background:var(--graphite-900); border:1.5px solid var(--line-strong); overflow:hidden; transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }");
     lines.push(".card-demo-panel.card-demo-shadow{ box-shadow:0 2px 8px rgba(0,0,0,0.2); }");
     lines.push(".card-demo-panel:hover, .card-demo-panel.is-hover{ border-color:var(--text-dim); box-shadow:0 4px 16px rgba(0,0,0,0.3); }");
     lines.push(".card-demo-panel.is-selected{ border-color:var(--red-500); box-shadow:0 0 0 1px var(--red-500); }");
     lines.push(".card-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
-    lines.push(".card-demo-media{ height:80px; background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
-    lines.push(".card-demo-body-wrap{ padding:14px 16px; display:flex; flex-direction:column; gap:6px; }");
-    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--text-hi); text-align: start; margin:0; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:13px; color:var(--text-mid); text-align: start; margin:0; max-width:260px; overflow-wrap:anywhere; }');
+    lines.push(".card-demo-media{ height:var(--dimension-80); background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
+    lines.push(".card-demo-body-wrap{ padding:var(--space-14) var(--space-16); display:flex; flex-direction:column; gap:var(--space-6); }");
+    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); text-align: start; margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.card-demo-text{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); text-align: start; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("/* Footer reuses Modal's own .modal-demo-footer/.modal-demo-btn classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent. Tightened padding restores real margin in this narrower 240px card (Modal's own 20px side padding left almost none); flex-shrink:0 stops the buttons from ever shrinking below their own text width, so they overflow visibly in a worst case instead of silently truncating. */");
-    lines.push(".card-demo-footer{ padding:12px 16px; }");
+    lines.push(".card-demo-footer{ padding:var(--space-12) var(--space-16); }");
     lines.push(".card-demo-footer .modal-demo-btn{ flex-shrink:0; }");
     lines.push(".card-demo-footer .modal-demo-btn--primary{ background:var(--red-500); }");
     lines.push("");
     lines.push("/* Size (2) - Small tightens padding and drops one type-scale step */");
-    lines.push(".card-demo-panel--sz-small .card-demo-body-wrap{ padding:10px 12px; gap:4px; }");
-    lines.push(".card-demo-panel--sz-small .card-demo-title{ font-size:13px; }");
-    lines.push(".card-demo-panel--sz-small .card-demo-text{ font-size:12px; }");
-    lines.push(".card-demo-panel--sz-small .card-demo-media{ height:60px; }");
-    lines.push(".card-demo-panel--sz-small .card-demo-footer{ padding:8px 12px; }");
+    lines.push(".card-demo-panel--sz-small .card-demo-body-wrap{ padding:var(--space-10) var(--space-12); gap:var(--space-4); }");
+    lines.push(".card-demo-panel--sz-small .card-demo-title{ font-size:var(--type-body-size); }");
+    lines.push(".card-demo-panel--sz-small .card-demo-text{ font-size:var(--type-caption-size); }");
+    lines.push(".card-demo-panel--sz-small .card-demo-media{ height:var(--dimension-60); }");
+    lines.push(".card-demo-panel--sz-small .card-demo-footer{ padding:var(--space-8) var(--space-12); }");
     return lines.join("\n");
   }
 
@@ -216,8 +216,8 @@
     // its way," not a second one invented per component.
     var bodyWrapHtml = isLoading
       ? '<div class="card-demo-body-wrap" aria-busy="true" aria-live="polite">' +
-        '<span class="skeleton-demo-line is-animated" style="width:60%;height:14px;"></span>' +
-        '<span class="skeleton-demo-line is-animated" style="margin-top:10px;"></span>' +
+        '<span class="skeleton-demo-line is-animated" style="width:60%;height:var(--dimension-14);"></span>' +
+        '<span class="skeleton-demo-line is-animated" style="margin-top:var(--space-10);"></span>' +
         '<span class="skeleton-demo-line is-animated" style="width:80%;"></span></div>'
       : '<div class="card-demo-body-wrap"><p class="card-demo-title">' + escapeHtml(title) + '</p><p class="card-demo-text">' + escapeHtml(body) + "</p></div>";
     var footerHtml = (typeKey === "with-actions" && !isLoading)
@@ -246,7 +246,7 @@
     lines.push(buildCardField("default", "selected", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
     lines.push(buildCardField("default", "disabled", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
     lines.push(buildCardField("default", "loading", exampleRadius, info.title, info.body, info.showShadow, exampleSize));
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius x Size combination,

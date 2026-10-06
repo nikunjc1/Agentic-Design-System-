@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Divider has no hover/focus/disabled states - it is not interactive. Text label and Text alignment below only visibly apply to the Horizontal with text form; the other forms ignore them. Change them below to check every form and line style in the Live Preview.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <label class="type-control">
         <span>Text label</span>
         <input type="text" data-role="divider-text" value="OR" />
@@ -202,13 +205,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">All 3 forms compared side by side, each in 3 line styles - Solid, Dashed and Dotted. One matrix is rendered per selected Size, at the chosen Text label and Text alignment.</p>
     <div class="button-matrix-wrap" data-role="divider-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any place content needs a clear, low-emphasis break - between sections, form groups, or inline items in a row.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Section separator</span>
@@ -220,7 +223,7 @@
   </section>
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -255,12 +258,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="divider-demo-col" style="width:220px;"><p style="margin:0;font-size:13px;color:var(--text-mid);">Personal details</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;font-size:13px;color:var(--text-mid);">Billing details</p></div></div>
+          <div class="guide-dodont-demo"><div class="divider-demo-col" style="width:var(--dimension-220);"><p style="margin:0;color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Personal details</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Billing details</p></div></div>
           <p class="guide-dodont-note">Marks a real boundary between two distinct groups of fields, so the eye knows where one section ends.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="divider-demo-col" style="width:220px;"><p style="margin:0;font-size:13px;color:var(--text-mid);">First name</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;font-size:13px;color:var(--text-mid);">Last name</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;font-size:13px;color:var(--text-mid);">Email</p></div></div>
+          <div class="guide-dodont-demo"><div class="divider-demo-col" style="width:var(--dimension-220);"><p style="margin:0;color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">First name</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Last name</p><div class="divider-demo-line divider-demo-line--solid"></div><p style="margin:0;color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Email</p></div></div>
           <p class="guide-dodont-note">A divider between every single field turns a short form into a fence of lines, drowning out the one grouping boundary that would actually help.</p>
         </div>
       </div>

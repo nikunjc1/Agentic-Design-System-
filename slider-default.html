@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -171,7 +174,7 @@
 
   <section class="panel color-foundation">
     <div class="panel-title-row">
-      <p class="panel-title">Properties</p>
+      <h2 class="panel-title">Properties</h2>
       <div class="panel-title-actions">
         <div class="copy-action" data-role="copy-prompt-action"></div>
         <div class="copy-action" data-role="copy-code-action"></div>
@@ -179,7 +182,7 @@
     </div>
     <p class="get-library-copy">Track thickness, label text and value are properties of the same component, not separate sliders - change them below to check both types and every state in the Live Preview. There is no configurable corner radius: the track and thumb are always a full pill shape, since a slider control has no practical use for sharp or partial corners.</p>
 
-    <div class="border-config-grid" style="margin-bottom:20px;">
+    <div class="border-config-grid" style="margin-bottom:var(--space-20);">
       <div class="type-control">
         <span id="slider-size-dropdown-label">Track thickness</span>
         <div class="multiselect" data-role="slider-size-mount"></div>
@@ -198,13 +201,13 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Live Preview</p>
+    <h2 class="panel-title">Live Preview</h2>
     <p class="get-library-copy">Both types compared side by side, each in all 4 states - Disabled applies to the whole control, and Focused shows a focus ring on the thumb rather than the track. One full matrix is rendered per selected Track thickness, at the chosen Label and Value.</p>
     <div class="button-matrix-wrap" data-role="slider-matrix-container"></div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">When to use</p>
+    <h2 class="panel-title">When to use</h2>
     <p class="get-library-copy">Any control where a user picks a numeric value, or a range of two values, along a continuous scale.</p>
     <div class="chip-row button-example-chips">
       <span class="chip">Volume control</span>
@@ -216,7 +219,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Validation</p>
+    <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">Dragging a thumb can't produce an out-of-range value - the track itself constrains the position - so validation only matters for the paired numeric input some Slider variants offer for typing an exact value.</p>
     <ul class="guide-list">
       <li><strong>Range validation</strong> - validate the typed value against the slider's min and max on blur, e.g. typing "150" on a 0-100 slider, and either clamp it to the nearest bound or reject it.</li>
@@ -228,7 +231,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Component Guide</p>
+      <h2 class="panel-title">Component Guide</h2>
       <div class="guide-view-toggle" role="group" aria-label="Documentation view">
         <button type="button" class="guide-toggle-btn is-active" data-view="human" aria-pressed="true">Human View</button>
         <button type="button" class="guide-toggle-btn" data-view="machine" aria-pressed="false">Machine View</button>
@@ -264,12 +267,12 @@
       <div class="guide-dodont">
         <div class="guide-dodont-case is-do">
           <p class="guide-dodont-label">Do</p>
-          <div class="guide-dodont-demo"><div class="slider-demo-field"><p class="slider-demo-label">Opacity - 60%</p><div class="slider-demo-track-wrap"><div class="slider-demo-track" style="height:4px;"><div class="slider-demo-fill" style="left:0;width:60%;"></div><div class="slider-demo-thumb" style="left:60%;"></div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="slider-demo-field"><p class="slider-demo-label">Opacity - 60%</p><div class="slider-demo-track-wrap"><div class="slider-demo-track" style="height:var(--dimension-4);"><div class="slider-demo-fill" style="left:0;width:60%;"></div><div class="slider-demo-thumb" style="left:60%;"></div></div></div></div></div>
           <p class="guide-dodont-note">An approximate setting the user judges by eye, with the current value shown so the choice is still repeatable.</p>
         </div>
         <div class="guide-dodont-case is-dont">
           <p class="guide-dodont-label">Don't</p>
-          <div class="guide-dodont-demo"><div class="slider-demo-field"><p class="slider-demo-label">Invoice amount</p><div class="slider-demo-track-wrap"><div class="slider-demo-track" style="height:4px;"><div class="slider-demo-fill" style="left:0;width:37%;"></div><div class="slider-demo-thumb" style="left:37%;"></div></div></div></div></div>
+          <div class="guide-dodont-demo"><div class="slider-demo-field"><p class="slider-demo-label">Invoice amount</p><div class="slider-demo-track-wrap"><div class="slider-demo-track" style="height:var(--dimension-4);"><div class="slider-demo-fill" style="left:0;width:37%;"></div><div class="slider-demo-thumb" style="left:37%;"></div></div></div></div></div>
           <p class="guide-dodont-note">A slider cannot hit an exact figure, and no value is shown to confirm one. Anything that must be precise belongs in a Number field.</p>
         </div>
       </div>

@@ -173,12 +173,7 @@
       try{ return window.ADSProject.read(localStorage); }catch(e){ return null; }
     }
     function computeRecommendedProduct(profile){
-      if (!profile) return null;
-      if (Array.isArray(profile.platforms) && profile.platforms.length === 1){
-        var platformProduct = PLATFORM_ONLY_PRODUCT_MAP[profile.platforms[0]];
-        if (platformProduct) return platformProduct;
-      }
-      return PROJECT_PRODUCT_TYPE_MAP[profile.productType] || null;
+      return window.ADSFoundationModel.recommendedProduct(profile);
     }
     function productFromProjectProfile(){
       return computeRecommendedProduct(currentProfile());
@@ -267,13 +262,13 @@
     saveBtn.addEventListener("click", function(){
       persistRadius();
 
-      saveStatus.textContent = "Saved just now";
+      saveStatus.textContent = window.ADSStorage.lastWriteSucceeded ? "Saved just now" : "Preview only — could not save";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     var resetBtn = document.getElementById("resetRadiusBtn");
     resetBtn.addEventListener("click", function(){
-      localStorage.removeItem(SAVE_KEY);
+      if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       productCards.forEach(function(c){ c.classList.remove("is-active"); c.setAttribute("aria-pressed", "false"); });
       callout.hidden = true;
       var contextNotice = document.querySelector('[data-role="context-changed-notice"]');

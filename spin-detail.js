@@ -75,21 +75,21 @@
     lines.push(".spin-demo-ring{ box-sizing:border-box; border-radius:9999px; border:2.5px solid var(--graphite-700); border-top-color:var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex:none; }");
     lines.push("/* The rotation IS the loading signal here, so reduced motion slows it rather than freezing it - a stopped spinner reads as a hung interface. */");
     lines.push("@media (prefers-reduced-motion: reduce){ .spin-demo-ring{ animation-duration:3s; } }");
-    lines.push(".spin-demo-ring--small{ width:14px; height:14px; border-width:2px; }");
-    lines.push(".spin-demo-ring--default{ width:20px; height:20px; }");
-    lines.push(".spin-demo-ring--large{ width:28px; height:28px; border-width:3px; }");
+    lines.push(".spin-demo-ring--small{ width:var(--dimension-14); height:var(--dimension-14); border-width:2px; }");
+    lines.push(".spin-demo-ring--default{ width:var(--dimension-20); height:var(--dimension-20); }");
+    lines.push(".spin-demo-ring--large{ width:var(--dimension-28); height:var(--dimension-28); border-width:3px; }");
     lines.push("");
-    lines.push(".spin-demo-row{ display:flex; align-items:center; gap:8px; }");
-    lines.push(".spin-demo-label{ font-family:var(--font-body); font-size:12px; color:var(--text-mid); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".spin-demo-row{ display:flex; align-items:center; gap:var(--space-8); }");
+    lines.push(".spin-demo-label{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-mid); max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
-    lines.push(".spin-demo-overlay-wrap{ box-sizing:border-box; width:100%; height:90px; border-radius:var(--radius-md); background:var(--graphite-850); display:flex; align-items:center; justify-content:center; border:1px solid var(--line-strong); }");
+    lines.push(".spin-demo-overlay-wrap{ box-sizing:border-box; width:100%; height:var(--dimension-90); border-radius:var(--radius-md); background:var(--graphite-850); display:flex; align-items:center; justify-content:center; border:1px solid var(--line-strong); }");
     lines.push("");
     lines.push("<!-- Example usage - Default size, With label state -->");
     lines.push('<div class="spin-demo-row">');
     lines.push('  <div class="spin-demo-ring spin-demo-ring--default"></div>');
     lines.push('  <span class="spin-demo-label">' + escapeHtml(label) + "</span>");
     lines.push("</div>");
-    return lines.join("\n");
+    return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){

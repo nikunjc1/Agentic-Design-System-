@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Breakpoints</p>
+      <h2 class="panel-title">Breakpoints</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -180,7 +183,7 @@
 
     <div class="usage-hierarchy">
       <div class="usage-row">
-        <span class="usage-label">900px</span>
+        <span class="usage-label" data-dimension-value="900">900px</span>
         <span class="usage-desc">The one real structural collapse: sidebar leaves the grid and becomes a slide-in drawer; Project setup's layout stacks to one column</span>
         <span class="usage-values">max-width</span>
       </div>
@@ -190,7 +193,7 @@
         <span class="usage-values">max-width</span>
       </div>
       <div class="usage-row">
-        <span class="usage-label">640px</span>
+        <span class="usage-label" data-dimension-value="640">640px</span>
         <span class="usage-desc">Topbar padding tightens; version badge and keyboard-shortcut hint hide; Project setup's fields collapse to one column; its action buttons grow to a 44px touch target; Borders/Colors config grids collapse to one column (consolidated here from a separate 600px - Foundation audit G02)</span>
         <span class="usage-values">max-width</span>
       </div>
@@ -206,7 +209,7 @@
       </div>
     </div>
 
-    <p class="get-library-copy" style="margin-top:16px;">Foundation audit G02 - the "Overview collapses at 800px, the shared shell at 900px" gap previously documented here was itself stale: `overview.css` (where that 800px, plus 1600/1150/500px, lived) is never linked from any HTML page and has zero effect on the live site - confirmed by checking the actually-loaded stylesheet list and finding its target classes (`.resource-card`, `.workspace-panel`, etc.) nowhere in `overview.html`'s real markup. The live Overview page already uses the exact same shared-shell 900px threshold as every other page; there was no real drift to fix, only a stale claim to correct. <code>overview.css</code>, <code>overview.js</code> and <code>overview-model.js</code> are a separately pre-existing, already-documented gap (an earlier 1 October 2026 QA audit flagged all three as unreachable, recommending a product decision - fold Overview into this orphaned implementation, or remove it - that's out of scope for a breakpoints fix and isn't decided here).</p>
+    <p class="get-library-copy" style="margin-top:var(--space-16);">Foundation audit G02 - the "Overview collapses at 800px, the shared shell at 900px" gap previously documented here was itself stale: `overview.css` (where that 800px, plus 1600/1150/500px, lived) is never linked from any HTML page and has zero effect on the live site - confirmed by checking the actually-loaded stylesheet list and finding its target classes (`.resource-card`, `.workspace-panel`, etc.) nowhere in `overview.html`'s real markup. The live Overview page already uses the exact same shared-shell 900px threshold as every other page; there was no real drift to fix, only a stale claim to correct. <code>overview.css</code>, <code>overview.js</code> and <code>overview-model.js</code> are a separately pre-existing, already-documented gap (an earlier 1 October 2026 QA audit flagged all three as unreachable, recommending a product decision - fold Overview into this orphaned implementation, or remove it - that's out of scope for a breakpoints fix and isn't decided here).</p>
     <p class="get-library-copy">What this finding did consolidate: 600px (Project setup's field collapse, several Config-grid collapses) onto the already-common 640px, eliminating one of the real, live stray values. What's left open, disclosed rather than silently dropped: 700px (the component-listing grid's third step) isn't yet folded into the 4-value canonical scale - it's structurally tied to that grid's own 4&rarr;3&rarr;2&rarr;1 step sequence, and collapsing it would change how many columns real component-listing pages show at that width, a visible layout change warranting its own dedicated pass rather than a drive-by rename.</p>
     </div>
     <div class="guide-view-panel" data-view-panel="machine" hidden>
@@ -227,7 +230,7 @@
 
   <section class="panel spacing-product-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">What are you building?</p>
+      <h2 class="panel-title">What are you building?</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -313,7 +316,7 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Grid type</p>
+      <h2 class="panel-title">Grid type</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -335,7 +338,7 @@
       <button class="system-card is-active" data-system="columns" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Columns</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">Page structure, cards, forms, navigation - the default for most products.</p>
         <div class="grid-demo grid-demo-columns"><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span><span class="grid-demo-col"></span></div>
@@ -377,9 +380,9 @@
       <div class="grid-demo grid-demo-baseline"><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span><span class="grid-demo-baseline-line"></span></div>
     </label>
 
-    <div class="setup-fields" style="margin-top:16px;">
+    <div class="setup-fields" style="margin-top:var(--space-16);">
       <label class="setup-field">Columns<input type="number" data-role="grid-columns-input" min="1" max="24" step="1"><span class="setup-error" data-role="grid-columns-error"></span></label>
-      <label class="setup-field">Gutter (px)<input type="number" data-role="grid-gutter-input" min="0" max="64" step="1"><span class="setup-error" data-role="grid-gutter-error"></span></label>
+      <label class="setup-field">Gutter<input type="number" data-role="grid-gutter-input" data-dimension min="0" max="64" step="1"><span class="setup-error" data-role="grid-gutter-error"></span></label>
     </div>
     <p class="setup-help" data-role="grid-custom-required-notice" hidden>Custom grids need their own columns and gutter defined - pick values above before saving.</p>
 
@@ -396,7 +399,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Layout patterns</p>
+      <h2 class="panel-title">Layout patterns</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -456,7 +459,7 @@
       </div>
     </div>
 
-    <p class="get-library-copy" style="margin-top:16px;">Overflow (Foundation audit G05 - this used to say "scroll that one region" as the across-the-board default, too broad for forms, reflow or nested regions): <strong>reflow first</strong> - let the whole page scroll, the normal web default, for anything without a structural reason to be fixed-height: a long form, a settings page, any section that's just "more content than fits." A region only gets its own independent scroll when it has a genuine structural reason to stay a fixed size while its content varies - this shell's own sidebar+main split (both fixed-height, both scroll independently of each other, by design) and bounded data regions like a dashboard KPI row or List's items in Master-Detail (once virtualization is warranted per Table's own paginationAndVirtualization guidance) are the real, named cases, not a blanket rule for every overflow.</p>
+    <p class="get-library-copy" style="margin-top:var(--space-16);">Overflow (Foundation audit G05 - this used to say "scroll that one region" as the across-the-board default, too broad for forms, reflow or nested regions): <strong>reflow first</strong> - let the whole page scroll, the normal web default, for anything without a structural reason to be fixed-height: a long form, a settings page, any section that's just "more content than fits." A region only gets its own independent scroll when it has a genuine structural reason to stay a fixed size while its content varies - this shell's own sidebar+main split (both fixed-height, both scroll independently of each other, by design) and bounded data regions like a dashboard KPI row or List's items in Master-Detail (once virtualization is warranted per Table's own paginationAndVirtualization guidance) are the real, named cases, not a blanket rule for every overflow.</p>
     <p class="get-library-copy">A region that does get its own scroll needs: a name (an accessible label identifying what it is, e.g. <code>aria-label="Resource list"</code>, not just an anonymous scrollable div), keyboard operability (focusable and Page-Up/Down/arrow-operable - native for a plain overflow region, but verify it if the region also contains its own focusable children), a visible affordance (a real scrollbar or fade/shadow edge - never <code>overflow:auto</code> with nothing hinting there's more), and any fixed action inside it (a toolbar, a "Save" button) staying reachable without first scrolling past unrelated content to find it. Two of these nested inside each other (a scrollable region inside another scrollable region) is close to always wrong - it's the specific anti-pattern a blanket "just scroll it" rule tends to produce.</p>
     <p class="get-library-copy">Two cases the old rule didn't address at all: a <strong>virtual keyboard</strong> opening on mobile shrinks the viewport - a nested scroll region sized against the viewport's original height can end up clipped behind the keyboard with no way to reach what's now off-screen; reflow (letting the real page scroll) sidesteps this automatically, which is one more reason to prefer it. And <strong>truncation</strong> (text-overflow ellipsis, a collapsed pane) is only a complete pattern paired with real recovery - an explicit, keyboard-reachable "Show more" control that reveals the rest, not silently-clipped text with no way back to it.</p>
     </div>
@@ -487,7 +490,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">How this page fits together</p>
+      <h2 class="panel-title">How this page fits together</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -508,9 +511,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Grid &amp; Layout tokens - Markdown export</p>
+    <h2 class="panel-title">Grid &amp; Layout tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of your current product type and grid type choices above - regenerates live as you pick, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="gridlayout-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="gridlayout-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyGridLayoutMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="gridLayoutMarkdownStatus" role="status" aria-live="polite"></span>

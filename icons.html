@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
 </head>
 <body>
 
@@ -169,7 +172,7 @@
 
   <section class="panel spacing-system-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Icon style</p>
+      <h2 class="panel-title">Icon style</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -209,7 +212,7 @@
       <button class="system-card is-active" data-system="duotone" aria-pressed="true" type="button">
         <div class="system-card-head">
           <span class="system-card-unit">Duotone</span>
-          <span class="badge badge-required">Recommended</span>
+          <span class="badge badge-recommended">Recommended</span>
         </div>
         <p class="system-card-desc">A muted base shape plus a solid accent layer - adds depth without adding extra color meaning.</p>
         <div class="shadow-demo-row"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><g fill="currentColor" opacity="0.32"><circle cx="12" cy="12" r="8"/></g><g fill="currentColor" transform="translate(12 12) scale(0.55) translate(-12 -12)"><circle cx="12" cy="12" r="8"/></g></svg></div>
@@ -250,7 +253,7 @@
 
   <section class="panel color-foundation component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Configure your icon system</p>
+      <h2 class="panel-title">Configure your icon system</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -290,7 +293,7 @@
       </label>
     </div>
 
-    <p class="empty-eyebrow" style="margin-top:24px;">Live preview</p>
+    <p class="empty-eyebrow" style="margin-top:var(--space-24);">Live preview</p>
     <div class="icon-live-preview" data-role="icon-preview"></div>
 
     <div class="ai-rule-callout">
@@ -311,7 +314,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Icon states</p>
+      <h2 class="panel-title">Icon states</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -364,7 +367,7 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Icon direction and motion</p>
+    <h2 class="panel-title">Icon direction and motion</h2>
     <p class="get-library-copy">Not every directional icon means the same kind of "direction," so not every one mirrors in RTL - three real categories, not one blanket rule:</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
@@ -388,7 +391,7 @@
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <p class="panel-title">Bring your own icons</p>
+      <h2 class="panel-title">Bring your own icons</h2>
       <div class="guide-view-toggle" role="group" aria-label="View mode">
         <button class="guide-toggle-btn is-active" type="button" data-view="human" aria-pressed="true">Human View</button>
         <button class="guide-toggle-btn" type="button" data-view="machine" aria-pressed="false">Machine View</button>
@@ -406,7 +409,7 @@
     </div>
     <div class="icon-upload-grid" data-role="icon-upload-grid"></div>
 
-    <p class="empty-eyebrow" style="margin-top:28px;">Or start from an open-source library</p>
+    <p class="empty-eyebrow" style="margin-top:var(--space-28);">Or start from an open-source library</p>
     <div class="library-card-grid" data-role="library-grid">
       <label class="library-card">
         <input type="radio" name="icon-library" data-role="library-radio" value="Lucide" />
@@ -485,9 +488,9 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <p class="panel-title">Icon tokens - Markdown export</p>
+    <h2 class="panel-title">Icon tokens - Markdown export</h2>
     <p class="get-library-copy">A Markdown snapshot of Icon style, Configure your icon system and Bring your own icons above - regenerates live as you edit, so it's always in sync. Copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:360px;overflow:auto;"><code data-role="icons-markdown-output"></code></pre>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="icons-markdown-output"></code></pre>
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="copyIconsMarkdownBtn" type="button">Copy Markdown</button>
       <span class="save-status" id="iconsMarkdownStatus" role="status" aria-live="polite"></span>
