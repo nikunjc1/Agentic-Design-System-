@@ -246,6 +246,53 @@
     function productFromProjectProfile(){
       return computeRecommendedProduct(currentProfile());
     }
+
+    // Foundation audit G03 - "No platform/container/density precedence;
+    // Consumer App four columns regardless of desktop/native target."
+    // computeRecommendedProduct() above only resolves platform over product
+    // type when exactly one platform is selected - a project with several
+    // platforms (the common, real case this finding names) silently falls
+    // back to the product type alone, with nothing surfacing that a
+    // selected platform might actually want something different. This
+    // doesn't invent new "container"/"density" axes (no schema for either
+    // exists anywhere in this codebase to ground them in) - it surfaces the
+    // one real, concrete conflict this system already has the data for:
+    // product type's own recommendation versus each selected platform's.
+    function platformConflicts(profile){
+      if (!profile || !Array.isArray(profile.platforms) || profile.platforms.length < 2) return [];
+      var activeRecommendation = computeRecommendedProduct(profile);
+      var activeCard = activeRecommendation && document.querySelector('.product-card[data-product="' + activeRecommendation + '"]');
+      if (!activeCard) return [];
+      var conflicts = [];
+      profile.platforms.forEach(function(platformKey){
+        var platformProduct = PLATFORM_ONLY_PRODUCT_MAP[platformKey];
+        if (!platformProduct || platformProduct === activeRecommendation) return;
+        var platformCard = document.querySelector('.product-card[data-product="' + platformProduct + '"]');
+        if (!platformCard) return;
+        if (platformCard.dataset.columns !== activeCard.dataset.columns || platformCard.dataset.gutter !== activeCard.dataset.gutter){
+          conflicts.push(platformCard);
+        }
+      });
+      return conflicts;
+    }
+
+    function showPlatformConflictNotice(profile){
+      var notice = document.querySelector('[data-role="platform-conflict-notice"]');
+      if (!notice) return;
+      var conflicts = platformConflicts(profile);
+      if (!conflicts.length){ notice.hidden = true; notice.innerHTML = ""; return; }
+      var activeRecommendation = computeRecommendedProduct(profile);
+      var activeCard = document.querySelector('.product-card[data-product="' + activeRecommendation + '"]');
+      var activeName = activeCard.querySelector(".product-card-name").textContent;
+      var parts = conflicts.map(function(card){
+        var name = card.querySelector(".product-card-name").textContent;
+        return name + " usually wants " + card.dataset.columns + " columns/" + card.dataset.gutter + "px gutter";
+      });
+      notice.innerHTML = "Showing " + activeName + "'s recommendation (" + activeCard.dataset.columns + " columns/" + activeCard.dataset.gutter +
+        "px gutter) since your product type is the tie-breaker across multiple platforms - " + parts.join("; ") +
+        ". Edit the fields above if one platform needs a different balance than another.";
+      notice.hidden = false;
+    }
     // Same fallback-notice pattern as spacing.js/radius.js - the one case
     // productFromProjectProfile() can't map is New Project's "Other",
     // where the user described their own product type in free text.
@@ -262,6 +309,7 @@
     function loadGrid(){
       var saved;
       saved = window.ADSStorage.safeGet(SAVE_KEY);
+      showPlatformConflictNotice(currentProfile());
       if (!saved){
         var mapped = productFromProjectProfile();
         if (mapped){
