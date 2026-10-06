@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Hardcoded all-caps label text removed from color field labels
+
+User report: field labels like "PAGE (PRIMARY)" were rendering in all capitals, with a screenshot naming that exact label on foundations.html. Investigated whether this was a CSS `text-transform` effect (which would mean fixing one shared rule) or literal uppercase text typed directly into the HTML - it was the latter: `.color-field-label` has no `text-transform` of its own anywhere in the codebase, so every instance was hand-typed in capitals.
+
+Checked every `.color-field-label` span sitewide (the class is used on 3 pages) against the one place its own convention is unambiguous: typography.html's two font-selector labels already read "Primary font - headings" and "Secondary font - supporting text" in plain sentence case - proving sentence case, not capitals, is this label's actual intended style, and that the capitalized instances are the deviation.
+
+Fixed 60 instances across 3 files to sentence case, matching that established convention: `foundations.html` (26 - "PAGE (PRIMARY)" -> "Page (Primary)", "PANEL (SECONDARY)" -> "Panel (Secondary)", "RAISED (TERTIARY)" -> "Raised (Tertiary)", "PRIMARY" -> "Primary", "SUCCESS"/"WARNING"/"DANGER"/"INFO" -> "Success"/"Warning"/"Danger"/"Info", "800 &middot; HOVER FILL" -> "800 &middot; Hover fill" and its 700/600/500 siblings, "CONTROL BORDER" -> "Control border"), `typography.html` (32 - "COLOR" -> "Color"), `borders.html` (2 - "COLOR" -> "Color").
+
+Went further than the one reported label, per the request to check every component on every page: swept every `*-label`-suffixed class sitewide, then every `<span>`/`<p>`/`<div>`/`<label>` element generally, for hardcoded all-caps text content (as opposed to text that is normal-case in the source but rendered uppercase by a deliberate, consistently-applied CSS `text-transform` rule elsewhere - table headers, calendar weekday abbreviations, and similar conventional UI patterns are correctly left alone, since changing those would be removing an intentional, consistent style rather than fixing a bug). Found one other apparent hit (`radio-demo-label">SMS<`) that turned out to be the legitimate acronym "SMS" paired with "Email" as radio options, not a casing bug - left unchanged. Found no further hardcoded-caps label bugs beyond the `.color-field-label` instances.
+
+`typography.html` had unrelated, in-progress changes already present in the working tree from a separately-running process at the time of this fix (a new "Text 2XS" type size and related copy) - isolated this fix from that file cleanly before committing: reconstructed a version containing only the 32 label-casing changes on top of the last commit, staged and committed that, then restored the working tree to its current mixed state so the other in-progress work stays intact and uncommitted, exactly as it was found.
+
+Verified with Playwright: all three pages load with 0 console errors; confirmed computed label text now reads "Primary", "Page (Primary)", "Color", etc. in sentence case.
+
 ## Spacing/gutter audit - one real drift found, codebase otherwise fully tokenized
 
 Prompted by a user report of "lots of inconsistency" in spacing, alignment, gutter, margin and padding across listing and detail pages, backed by 6 screenshots comparing card grids on different Foundation pages (Overview's Foundations/Components/Patterns/Templates nav cards, Design Values' numbered principle cards, Foundation's status color swatches, Grid & Layout's structure cards, Spacing's system cards, and a product-platform recommendation grid).
