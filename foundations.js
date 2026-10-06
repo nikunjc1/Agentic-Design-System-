@@ -1386,12 +1386,13 @@
           '<span class="color-popover-hue-thumb"></span>' +
         '</div>' +
         '<div class="color-popover-alpha-row">' +
-          '<div class="color-popover-alpha" tabindex="0" title="Preview/copy opacity - the saved swatch color stays fully opaque">' +
+          '<div class="color-popover-alpha" tabindex="0">' +
             '<div class="color-popover-alpha-fill"></div>' +
             '<span class="color-popover-alpha-thumb"></span>' +
           '</div>' +
           '<span class="color-popover-alpha-value">100%</span>' +
         '</div>' +
+        '<p class="color-popover-alpha-note">Opacity here is preview/copy only - the saved swatch color always stays fully opaque.</p>' +
         '<div class="color-popover-format-row">' +
           '<label class="color-popover-value-cell color-popover-format-cell">' +
             '<span aria-hidden="true">&nbsp;</span>' +
@@ -1532,6 +1533,26 @@
         alphaThumb.style.left = active.alpha + "%";
         alphaFill.style.background = "linear-gradient(to right, transparent, #" + hex + ")";
         alphaValueEl.textContent = active.alpha + "%";
+
+        // Foundation audit C10 - "adjustable controls lack names/current
+        // range values." svEl is a genuinely 2D control (saturation AND
+        // brightness together), which role="slider" can't natively express
+        // as two separate values - aria-valuetext carries both as one
+        // description instead, the same real-world pattern other 2D color
+        // pickers use when a single slider role is the practical fit.
+        svEl.setAttribute("role", "slider");
+        svEl.setAttribute("aria-label", "Saturation and brightness");
+        svEl.setAttribute("aria-valuetext", "Saturation " + Math.round(active.hsb.s) + "%, brightness " + Math.round(active.hsb.b) + "%");
+        hueEl.setAttribute("role", "slider");
+        hueEl.setAttribute("aria-label", "Hue");
+        hueEl.setAttribute("aria-valuemin", "0");
+        hueEl.setAttribute("aria-valuemax", "360");
+        hueEl.setAttribute("aria-valuenow", String(Math.round(active.hsb.h)));
+        alphaEl.setAttribute("role", "slider");
+        alphaEl.setAttribute("aria-valuemin", "0");
+        alphaEl.setAttribute("aria-valuemax", "100");
+        alphaEl.setAttribute("aria-valuenow", String(active.alpha));
+        alphaEl.setAttribute("aria-label", "Opacity preview, not saved - the saved color always stays fully opaque");
 
         active.trigger.style.background = "#" + hex;
         syncing = true;
@@ -1715,7 +1736,12 @@
         if (popover.hidden) return;
         if (popover.contains(evt.target)) return;
         if (active && evt.target === active.trigger) return;
+        // Foundation audit C10 - "verify focus return": Escape already
+        // restored focus to the trigger swatch, but dismissing by clicking
+        // outside didn't, silently dropping focus to <body> instead.
+        var trigger = active && active.trigger;
         closePopover();
+        if (trigger) trigger.focus();
       });
       document.addEventListener("keydown", function(evt){
         if (evt.key === "Escape" && !popover.hidden){

@@ -1265,6 +1265,13 @@ button{ font-family: inherit; }
   cursor: crosshair;
   touch-action: none;
 }
+/* Foundation audit C10 - these 3 are keyboard-operable (tabindex="0" +
+   arrow keys) but had no visible focus indicator of their own, unlike
+   this project's other 76+ focus-visible outlines. */
+.color-popover-sv:focus-visible,
+.color-popover-hue:focus-visible,
+.color-popover-alpha:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.color-popover-alpha-note{ font-size: 11px; color: var(--text-dim); margin: 2px 0 0; }
 .color-popover-sv-white{ position: absolute; inset: 0; background: linear-gradient(to right, #fff, rgba(255,255,255,0)); border-radius: inherit; }
 .color-popover-sv-black{ position: absolute; inset: 0; background: linear-gradient(to top, #000, rgba(0,0,0,0)); border-radius: inherit; }
 .color-popover-sv-thumb{

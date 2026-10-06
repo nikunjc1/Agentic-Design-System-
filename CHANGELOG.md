@@ -1859,6 +1859,20 @@ Retired the dead mechanism in both places: removed the apply code from `theme-in
 
 Verified with Playwright: seeding a fake legacy `ads:text-colors` record and reloading confirms the key is cleared from storage and `--text-hi` resolves to this system's real built-in default (`#15171a` in light theme) rather than the injected override - across both the first-paint boot path (`theme-init.js`) and the later `shell.js` boot path, since both needed the same fix independently. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit C10 (P1) - the custom color picker's sliders had keyboard handling but no accessible semantics
+
+Finding from the 5 October 2026 Foundation audit: "Picker has arrow-key handling; hue/SV/alpha are focusable generic divs; alpha preview-only disclosed in title... Adjustable controls lack names/current range values; opacity non-persistence insufficiently visible; narrow positioning unverified... Keyboard handling alone is insufficient accessible semantics."
+
+Confirmed exactly: `initCustomColorPickers()`'s saturation/brightness area, hue slider and alpha slider were all plain `<div tabindex="0">` elements - genuinely arrow-key operable, but with no `role`, no accessible name, and no exposed current value at all, so a screen reader user landing on any of them heard nothing beyond "focusable." The alpha slider's "preview only, doesn't get saved" policy existed solely as a `title` attribute - a hover-only tooltip, invisible to keyboard/touch/screen-reader users entirely, which is the opposite of "visibly."
+
+Added `role="slider"` plus live-updated `aria-label`/`aria-valuemin`/`aria-valuemax`/`aria-valuenow`/`aria-valuetext` to all 3 controls, refreshed on every drag and keypress alongside the existing visual thumb-position update. The saturation/brightness area is genuinely 2-dimensional, which a single slider role can't natively express as two separate numbers - used `aria-valuetext` to describe both together ("Saturation 80%, brightness 60%"), the same practical pattern other 2D color pickers use. Alpha's preview-only policy is now in its own accessible name (not a tooltip) and also as a persistently visible caption under the slider, not dependent on hover.
+
+Separately checked and fixed two adjacent gaps surfaced while reading this code closely: the outside-click dismiss path never returned focus to the trigger swatch (Escape already did this correctly, inconsistently) - fixed to match. None of the 3 sliders had a visible focus indicator of their own (this project's other 76+ focus-visible outlines all use `--color-focus-ring`; these 3 had none) - added matching `:focus-visible` styling.
+
+Verified, not changed: "narrow positioning unverified" - tested the existing `positionPopover()` boundary-clamping logic directly at a 375px mobile viewport width; the popover stays fully within the viewport both horizontally and vertically already, so this was a real gap in verification, not in the code itself.
+
+Verified with Playwright: all 3 sliders report `role="slider"` with correct, live-updating ARIA values after dragging/arrow-keying; the alpha slider's accessible name and a new visible caption both state the preview-only policy; a real Tab-driven keyboard focus shows the new outline on both SV and Hue; clicking outside the popover onto an unrelated, real input field correctly leaves focus there (not stolen back to the trigger swatch); the popover stays fully on-screen at a 375px viewport. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
