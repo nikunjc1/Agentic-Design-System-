@@ -451,6 +451,7 @@
       <div class="pattern-card">
         <span class="pattern-card-name">Master-Detail</span>
         <p class="pattern-card-desc">A scannable list drives which record's full detail shows beside it - email, settings, a record browser. Looks like Sidebar + Content, but the narrow pane is selectable content, not persistent app navigation. If the list pane should be resizable rather than a fixed width, that's Splitter's layout underneath this pattern, with the same minimum-size and keyboard-resize rules as Split View above - not a separate set of rules to invent here.</p>
+        <p class="pattern-card-desc">Foundation audit G06 - the diagram alone doesn't define the responsive journey, so stating it here: <strong>narrow transform</strong> - List and Detail never show side-by-side below the 900px structural breakpoint; narrow shows exactly one pane at a time, List by default. <strong>Selecting a record</strong> replaces the List view with Detail (a drill-down, not both panes stacked - stacking an unbounded list above its own detail doesn't work at phone width). <strong>Back</strong> is an explicit, visible control in Detail at narrow width (not reliance on the browser's own back button alone, which may not even apply if selection didn't push a history entry) that returns to List with its scroll position and the previously-selected row's highlight both preserved, not a reset to the top. <strong>Focus order</strong>: selecting a record moves focus to Detail's own heading, not left behind in the list; pressing Back returns focus to that same previously-selected row, not the top of the page - the same restore-to-origin rule, run in both directions. <strong>Pane states</strong>: Detail before any selection (wide width only, since narrow never shows an empty Detail - there's nothing to select into yet) reads as a real empty state ("Select a record to see its details"), not a blank box; loading state while a selected record's detail is fetched is a skeleton or spinner, not a flash of empty state; an error state offers retry, not a silent blank.</p>
         <div class="pattern-diagram pattern-sidebar"><span class="pattern-block pattern-narrow">List</span><span class="pattern-block">Detail</span></div>
       </div>
     </div>
@@ -472,6 +473,13 @@
     "avoid": "nested scroll-in-scroll regions - close to always the wrong result of applying the old blanket rule",
     "virtualKeyboard": "a nested region sized against the original viewport height can end up clipped behind an opened mobile keyboard; reflow avoids this since the real page resizes naturally",
     "truncationRequiresRecovery": "an explicit, keyboard-reachable Show more control, not silently-clipped text with no way back to it"
+  },
+  "masterDetailResponsive": {
+    "narrowBreakpoint": "900px (the same structural breakpoint as the shell's own sidebar collapse)",
+    "narrowBehavior": "exactly one pane at a time - List by default; selecting a record replaces List with Detail (drill-down), panes are never stacked",
+    "back": "an explicit, visible control in Detail at narrow width - not reliance on the browser's own back button alone; returns to List with scroll position and the selected row's highlight both preserved",
+    "focusOrder": "selecting a record moves focus to Detail's own heading; Back returns focus to the same previously-selected row, not page top - restore-to-origin in both directions",
+    "paneStates": { "emptyDetail": "wide width only, before any selection - a real empty state, not a blank box", "loading": "skeleton/spinner, not a flash of empty state", "error": "offers retry, not a silent blank" }
   }
 }</code></pre>
     </div>

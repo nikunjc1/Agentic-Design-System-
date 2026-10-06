@@ -1933,6 +1933,18 @@ Rewrote the rule to lead with reflow - letting the whole page scroll, the normal
 
 Verified: the rewritten Machine View JSON (now a structured object - default/justified cases/requirements/avoid/virtual keyboard/truncation recovery, not a single sentence) parses as valid JSON in the live page. This is a documentation-only fix - no JS/CSS behavior changed, since the finding's evidence was prose guidance, not an implemented mechanism. Regenerated `docs-catalog.json` (grid-layout.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit G06 (P1) - Master-Detail's diagram didn't define its responsive journey
+
+Finding from the 5 October 2026 Foundation audit: "Eight compositions illustrated; Master-Detail distinguished from navigation... No narrow transforms, source/focus order, selected record/back behavior or pane empty/error/loading specs... Diagrams do not define responsive journeys."
+
+Confirmed Master-Detail (the one pattern among the 8 with genuine "selection + navigation" complexity, and the finding's own cited evidence) existed only as a static 2-block diagram with a description explaining what it is and how it relates to Splitter - nothing about what happens at narrow widths, how a user gets back to the list after selecting a record, where focus goes when the layout transforms, or what the Detail pane shows before/during/after a selection.
+
+Added the missing specification directly to the pattern card, grounded in standard, well-established drill-down UX conventions rather than invented from nothing: below the shell's own 900px structural breakpoint, List and Detail never show side-by-side - selecting a record replaces List with Detail (a real drill-down, not both panes stacked, which doesn't work for an unbounded list at phone width); Back is an explicit, visible control (not reliance on the browser's own back button, which may not even apply) that restores List's scroll position and the previously-selected row's highlight; focus moves to Detail's heading on selection and back to that same row on Back - restore-to-origin in both directions, not a reset to page top. Pane states: a real empty state for Detail before any selection (wide width only - narrow never shows an empty Detail, since there's nothing to select into yet), a skeleton/spinner while loading, and a retry-capable error state rather than a silent blank.
+
+Added the same specification as a structured `masterDetailResponsive` object in the section's Machine View JSON, alongside the prose, so an AI agent or tool reading the page gets the same responsive-journey detail in a parseable form, not just prose.
+
+Verified: the rewritten Machine View JSON (now including `masterDetailResponsive` alongside the `overflowRule` object from G05) still parses as valid JSON in the live page. Documentation-only fix - Master-Detail has no live, interactive implementation in this codebase (confirmed it's a static illustration), so there was no code behavior to change, only the missing specification to write. Regenerated `docs-catalog.json` (grid-layout.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
