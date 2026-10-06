@@ -378,6 +378,12 @@
 
     </div>
 
+    <div class="setup-fields" style="margin-top:16px;">
+      <label class="setup-field">Columns<input type="number" data-role="grid-columns-input" min="1" max="24" step="1"><span class="setup-error" data-role="grid-columns-error"></span></label>
+      <label class="setup-field">Gutter (px)<input type="number" data-role="grid-gutter-input" min="0" max="64" step="1"><span class="setup-error" data-role="grid-gutter-error"></span></label>
+    </div>
+    <p class="setup-help" data-role="grid-custom-required-notice" hidden>Custom grids need their own columns and gutter defined - pick values above before saving.</p>
+
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveGridBtn" type="button">Save grid system</button>
       <button class="btn btn-ghost" id="resetGridBtn" type="button">Reset to defaults</button>

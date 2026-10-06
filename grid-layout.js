@@ -21,6 +21,31 @@
 
     var markdownOutput = document.querySelector('[data-role="gridlayout-markdown-output"]');
 
+    // Foundation audit G01 - "Recommendations say columns/gutters editable;
+    // code stores product/system... No numeric/editor/custom schema
+    // exists." The recommendation callout displayed data-columns/data-gutter
+    // as read-only text with no input anywhere to actually change them -
+    // the page's own copy claimed otherwise. These 2 fields are the real
+    // editor: pre-filled from whichever product's recommendation is active,
+    // editable afterward, and the one place Custom's own columns/gutter get
+    // defined (Custom has no card recommendation to pre-fill from).
+    var columnsInput = document.querySelector('[data-role="grid-columns-input"]');
+    var gutterInput = document.querySelector('[data-role="grid-gutter-input"]');
+    var customRequiredNotice = document.querySelector('[data-role="grid-custom-required-notice"]');
+
+    function effectiveColumns(){ var n = parseInt(columnsInput.value, 10); return isFinite(n) && n > 0 ? n : null; }
+    function effectiveGutter(){ var n = parseInt(gutterInput.value, 10); return isFinite(n) && n >= 0 ? n : null; }
+
+    function validateGridValues(){
+      var activeSystem = document.querySelector(".system-card.is-active");
+      var isCustom = activeSystem && activeSystem.dataset.system === "custom";
+      var valid = effectiveColumns() !== null && effectiveGutter() !== null;
+      if (isCustom && effectiveColumns() === null) columnsInput.setAttribute("aria-invalid", "true"); else columnsInput.removeAttribute("aria-invalid");
+      if (isCustom && effectiveGutter() === null) gutterInput.setAttribute("aria-invalid", "true"); else gutterInput.removeAttribute("aria-invalid");
+      if (customRequiredNotice) customRequiredNotice.hidden = !(isCustom && !valid);
+      return !isCustom || valid;
+    }
+
     // Same "MD file" pattern added to Colors: one consolidated Markdown
     // snapshot of this page's editable state (not the 3 static reference
     // sections, which already have their own fixed Machine View JSON),
@@ -45,6 +70,8 @@
       lines.push("", "## Grid type", "");
       lines.push("- Selected: `" + (GRID_TYPE_NAMES[systemKey] || systemKey) + "`");
       if (systemDesc) lines.push("- " + systemDesc.trim());
+      lines.push("- Effective columns: `" + (effectiveColumns() === null ? "not set" : effectiveColumns()) + "`");
+      lines.push("- Effective gutter: `" + (effectiveGutter() === null ? "not set" : effectiveGutter() + "px") + "`");
 
       markdownOutput.textContent = lines.join("\n").trim();
     }
@@ -66,7 +93,9 @@
         gridtypeMachineJson.textContent = JSON.stringify({
           $schema: window.ADS_MACHINE_VIEW_SCHEMA,
           selected: key,
-          label: key ? (GRID_TYPE_NAMES[key] || key) : null
+          label: key ? (GRID_TYPE_NAMES[key] || key) : null,
+          effectiveColumns: effectiveColumns(),
+          effectiveGutter: effectiveGutter()
         }, null, 2);
       }
       renderMarkdown();
@@ -78,6 +107,19 @@
         card.classList.toggle("is-active", active);
         card.setAttribute("aria-pressed", active ? "true" : "false");
       });
+      // Switching to Custom keeps whatever columns/gutter are already in
+      // the fields (the user's own in-progress definition) rather than
+      // clearing them - switching away from Custom back to a product-backed
+      // type re-pulls that product's own recommendation, since the values
+      // shown were Custom's, not that product's.
+      if (key !== "custom"){
+        var activeProduct = document.querySelector(".product-card.is-active");
+        if (activeProduct){
+          columnsInput.value = activeProduct.dataset.columns;
+          gutterInput.value = activeProduct.dataset.gutter;
+        }
+      }
+      validateGridValues();
       updateMachineViews();
     }
 
@@ -95,9 +137,12 @@
       callout.hidden = false;
       calloutText.innerHTML =
         "<strong>" + systemName + "</strong> grid, <strong>" + card.dataset.columns + " columns</strong> with a <strong>" +
-        card.dataset.gutter + "px</strong> gutter recommended for " + name + ".";
+        card.dataset.gutter + "px</strong> gutter recommended for " + name + " - edit the fields below to change them.";
 
+      columnsInput.value = card.dataset.columns;
+      gutterInput.value = card.dataset.gutter;
       selectSystem(systemKey);
+      validateGridValues();
       updateMachineViews();
     }
 
@@ -122,12 +167,24 @@
       // this save, regardless of what was actually picked. Comparing it to
       // the live recommendation on a later load is what tells reconciliation
       // apart from a deliberate override - see showContextChangeNotice().
+      // Foundation audit G01/C03 pattern - a momentarily-cleared field while
+      // editing (e.g. selecting all digits to retype) shouldn't overwrite
+      // the last genuinely valid saved value with null; fall back to
+      // whatever was already saved for that one field instead.
+      var prior = window.ADSStorage.safeGet(SAVE_KEY) || {};
       window.ADSStorage.safeSet(SAVE_KEY, {
         product: getActiveProduct(),
         system: getActiveSystem(),
+        columns: effectiveColumns() !== null ? effectiveColumns() : (prior.columns != null ? prior.columns : null),
+        gutter: effectiveGutter() !== null ? effectiveGutter() : (prior.gutter != null ? prior.gutter : null),
         recommendedAtSave: computeRecommendedProduct(currentProfile())
       });
     }
+
+    // Foundation audit G01 - the one place columns/gutter actually get
+    // edited and persisted, not just displayed as a static recommendation.
+    columnsInput.addEventListener("input", function(){ validateGridValues(); updateMachineViews(); persistGrid(); });
+    gutterInput.addEventListener("input", function(){ validateGridValues(); updateMachineViews(); persistGrid(); });
 
     productCards.forEach(function(card){
       card.addEventListener("click", function(e){
@@ -221,6 +278,13 @@
         if (card) selectProduct(card);
       }
       if (saved.system) selectSystem(saved.system);
+      // selectProduct/selectSystem both populate columns/gutter from the
+      // recommendation - restore the user's own saved values afterward so
+      // a real edit (or a Custom definition, which has no card to pull
+      // from) isn't silently overwritten by the recommendation on load.
+      if (saved.columns !== undefined && saved.columns !== null) columnsInput.value = saved.columns;
+      if (saved.gutter !== undefined && saved.gutter !== null) gutterInput.value = saved.gutter;
+      validateGridValues();
       showContextChangeNotice(saved);
     }
 
@@ -264,6 +328,16 @@
     var saveBtn = document.getElementById("saveGridBtn");
     var saveStatus = document.getElementById("gridSaveStatus");
     saveBtn.addEventListener("click", function(){
+      // Foundation audit G01 - "require Custom definition": a Custom grid
+      // with no columns/gutter of its own is exactly the "Custom is just a
+      // label" gap this finding named - block the save and point at what's
+      // missing instead of persisting an undefined grid.
+      if (!validateGridValues()){
+        saveStatus.textContent = "Define columns and gutter above before saving a Custom grid.";
+        setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
+        columnsInput.focus();
+        return;
+      }
       persistGrid();
 
       saveStatus.textContent = "Saved just now";
@@ -277,6 +351,8 @@
       callout.hidden = true;
       var contextNotice = document.querySelector('[data-role="context-changed-notice"]');
       if (contextNotice) contextNotice.hidden = true;
+      columnsInput.value = "12";
+      gutterInput.value = "24";
       selectSystem("columns");
 
       saveStatus.textContent = "Reset to defaults";
