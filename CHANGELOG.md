@@ -1945,6 +1945,16 @@ Added the same specification as a structured `masterDetailResponsive` object in 
 
 Verified: the rewritten Machine View JSON (now including `masterDetailResponsive` alongside the `overflowRule` object from G05) still parses as valid JSON in the live page. Documentation-only fix - Master-Detail has no live, interactive implementation in this codebase (confirmed it's a static illustration), so there was no code behavior to change, only the missing specification to write. Regenerated `docs-catalog.json` (grid-layout.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit G08 (P1) - the Markdown export never carried this page's own normative guidance
+
+Finding from the 5 October 2026 Foundation audit: "Snapshot exports product/recommended columns/gutter/type, excludes static guidance... No breakpoints/pattern/overflow rules or executable Custom geometry travel... Snapshot must stand alone."
+
+Confirmed exactly: `renderMarkdown()` only ever carried this project's own selections (product, recommended/effective columns and gutter, grid type) - never the sitewide, normative rules this same page documents (the real Breakpoints catalog, the Overflow rule, Master-Detail's responsive spec) that an AI agent or developer would also need to implement a correct, consistent layout without this page open beside them for reference.
+
+Added a `readStaticJson()` helper that reads the real Machine View JSON already documented in the Breakpoints and Layout patterns sections (rebuilt this session in G02/G05/G06) directly from the live DOM, rather than keeping a second, driftable copy of the same facts hardcoded in this file - one real source of truth either way. The export now includes a full "Breakpoints" section (every real, shared threshold with its effect), an "Overflow rule" section (the reflow-first policy, what independent scroll is justified for, what to avoid), and - when relevant - the full "Master-Detail responsive spec" (narrow-width behavior, Back, focus order), alongside the project-specific selections already there.
+
+Verified with Playwright: selecting a product and generating the export now shows all three new sections with their real, current content (confirmed matching exactly what G02/G05/G06 documented in their own source sections, since this reads from the same live DOM), not a stale or duplicated copy. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

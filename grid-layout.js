@@ -53,6 +53,27 @@
     // snapshot of this page's editable state (not the 3 static reference
     // sections, which already have their own fixed Machine View JSON),
     // regenerated on every real change so it's always current.
+    // Foundation audit G08 - "No breakpoints/pattern/overflow rules...
+    // travel" with the export; it only ever carried this project's own
+    // selections, never the sitewide normative guidance (Breakpoints,
+    // Layout patterns, the Overflow rule, Master-Detail's responsive spec)
+    // an AI agent or developer would also need to implement this correctly
+    // without the rest of this page open beside them. Reads the real JSON
+    // already documented in each section (G02/G05/G06) rather than keeping
+    // a second, driftable copy of the same facts in this file.
+    function readStaticJson(panelTitleText){
+      var sections = document.querySelectorAll("section");
+      for (var i = 0; i < sections.length; i++){
+        var title = sections[i].querySelector(".panel-title");
+        if (title && title.textContent.trim() === panelTitleText){
+          var code = sections[i].querySelector(".guide-machine-json code");
+          if (!code) return null;
+          try{ return JSON.parse(code.textContent); }catch(e){ return null; }
+        }
+      }
+      return null;
+    }
+
     function renderMarkdown(){
       if (!markdownOutput) return;
       var productCard = document.querySelector(".product-card.is-active");
@@ -78,6 +99,31 @@
       // Foundation audit G04 - independent of the structural type above,
       // not a 5th value it could be confused with.
       lines.push("- Baseline rhythm overlay: `" + (baselineEnable.checked ? "on (4/8px, layered under the grid above)" : "off") + "`");
+
+      var breakpoints = readStaticJson("Breakpoints");
+      if (breakpoints && Array.isArray(breakpoints.breakpoints)){
+        lines.push("", "## Breakpoints - this system's real, shared thresholds", "");
+        breakpoints.breakpoints.forEach(function(bp){
+          lines.push("- `" + bp.value + "` (" + bp.type + "): " + bp.effect);
+        });
+      }
+
+      var patterns = readStaticJson("Layout patterns");
+      if (patterns){
+        if (patterns.overflowRule){
+          lines.push("", "## Overflow rule", "");
+          lines.push("- Default: " + patterns.overflowRule.default);
+          lines.push("- Independent scroll justified for: " + patterns.overflowRule.independentScrollJustifiedFor.join("; "));
+          lines.push("- Avoid: " + patterns.overflowRule.avoid);
+        }
+        if (patterns.masterDetailResponsive && systemKey){
+          lines.push("", "## Master-Detail responsive spec (if this grid type is used for a selectable list/detail layout)", "");
+          var md = patterns.masterDetailResponsive;
+          lines.push("- Narrow (" + md.narrowBreakpoint + "): " + md.narrowBehavior);
+          lines.push("- Back: " + md.back);
+          lines.push("- Focus order: " + md.focusOrder);
+        }
+      }
 
       markdownOutput.textContent = lines.join("\n").trim();
     }
