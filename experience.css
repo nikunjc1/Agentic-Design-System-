@@ -114,5 +114,7 @@
   .app-main .modal-demo-confirm-shortcuts{grid-template-columns:minmax(0,1fr)}
   .app-main .cascader-demo-panel{min-width:0;max-width:calc(100vw - var(--dimension-100));overflow-x:auto}
   .tabs-demo-bar{max-width:100%;overflow-x:auto}
+  .calendar-demo-grid{max-width:100%;overflow-x:auto}
+  .transfer-demo-panel{max-width:100%;overflow-x:auto}
 }
 @media(min-width:641px) and (max-width:1000px){.app-main .border-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}

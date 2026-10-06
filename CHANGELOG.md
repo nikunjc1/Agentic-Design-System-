@@ -2037,6 +2037,16 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Calendar and Transfer 320px overflow fixed
+
+Follow-up to the pre-existing (not newly caused) overflow bugs first surfaced while verifying the adopted Foundation application engine: Calendar and Transfer both overflowed their own page at 320px viewport width. Left undone at the time as out of scope for that verification pass and documented under Known follow-ups - fixed now at explicit request.
+
+Measured the actual cause with Playwright rather than guessing: at a 320px viewport, the page's own layout chrome (`.app-main`'s 16px side padding, `.panel`'s 24px padding, `.system-card`'s 16px padding - 112px total, each side doubled) leaves only 204px of real content width for a single-column demo card. Calendar's month grid needs a minimum of ~288px (7 touch-sized 36px day cells, a deliberately chosen size, plus its own container padding) and Transfer's two-column layout needs ~292px (two 120px columns, arrows, gaps) - both substantially wider than the 204px available, a mismatch no reasonable amount of inter-component spacing adjustment could close without shrinking day cells/columns to an unreadable or untappable size.
+
+Fixed the same way as the earlier Tabs 320px regression and the existing Cascader panel precedent: `.calendar-demo-grid` and `.transfer-demo-panel` get `max-width:100%;overflow-x:auto` in the existing `@media(max-width:640px)` block (experience.css) - the demo swatch itself can scroll horizontally in its own small, contained space at the narrowest phone widths, rather than the deformed cells/overflowing page.
+
+Verified with Playwright: both pages render at exactly 320/320 (`main.scrollWidth`/`clientWidth`) with no page-level overflow; confirmed no regression at 1440px (both components fit exactly as before, no unwanted scrollbar introduced when there's room); confirmed the 320px state is a genuine, usable internal scroll (`scrollWidth > clientWidth`), not a silently clipped/broken component. Full 157-page regression sweep and all 4 unit test suites: 0 failures, 0 known overflow issues remaining.
+
 ## Form field height/padding aligned to the Component Library's control-size tiers
 
 User report: the "Form Component" (the real functional forms - New Project's setup wizard, Grid & Layout's Columns/Gutter inputs, and md-export's export-scope select, all built on the shared `.setup-field`/`.setup-fields` classes) had spacing between its Input Text, Dropdown and Label elements that didn't match the Components Library.
