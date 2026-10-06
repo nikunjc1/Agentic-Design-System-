@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Dimension-companion inputs/selects aligned to the Component Library's control height
+
+User report, with a screenshot of Typography's Letter spacing field: its input and px/rem unit dropdown didn't match the Components Library. Asked to find which real component this should have been built from.
+
+Traced it to `foundation-runtime.js`'s `unitControl()` - the shared mechanism that wraps every `input[data-dimension]` sitewide (Grid & Layout's Gutter, the Shared Sizing panel's 5 inputs, any future dimension input) plus Letter spacing specifically, inserting a visible px/rem-aware companion input and unit `<select>`. Its CSS (`foundation.css`, the `.ads-foundation-toolbar`/`.ads-unit-control`/`.ads-format-controls`/`.ads-sizing` rules) rendered these at 42px with uniform 6-8px padding on every side - not matching any Component Library control tier, for the same reason the earlier New Project form fields didn't: an ad-hoc padding-driven box instead of the established fixed-height, zero-vertical-padding pattern every other sized control in the system uses (`.number-demo-control--h40`, `.select-demo-control--h40`, etc).
+
+Confirmed the intended height was already correct in principle - `--size-control` (the token driving `min-block-size` here) defaults to exactly 40 in `foundation-model.js`, matching the Component Library's own h40 tier by design - but two things defeated it: `box-sizing` was never set to `border-box`, so the 1px border added on top of the calculated height instead of being absorbed by it (42px instead of 40px); and non-zero vertical padding (`--space-6`/`--space-8` on inputs, `padding-block:--space-8` on selects) fought the height calculation and didn't match the zero-vertical-padding convention. Fixed both: added `box-sizing:border-box`, and zeroed vertical padding on every single-line control in scope (a `<textarea>` stays real-padded, since it's genuinely multi-line - none currently exist in this scope, but the rule is written to not silently break one later).
+
+Verified with Playwright across every affected context: Typography's Letter spacing companion input and its px/rem select both render at exactly 40px with `0px 12px` padding; Grid & Layout's Gutter companion matches identically; the Shared Sizing panel's inputs match; Data Format's select matches. Full 157-page regression sweep and all 5 unit test suites: 0 failures.
+
+`foundation.css` again had unrelated in-progress work mixed in from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Read More/Read Less centered and styled as a CTA; fixed an unrelated Typography column-alignment bug found along the way
 
 User request: center the Read More/Read Less button within its section and style it like a CTA, instead of the plain underlined text link it was.

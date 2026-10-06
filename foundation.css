@@ -41,7 +41,11 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
    Include the exported component classes as well as documentation demos. */
 :is(.input-demo-control,.password-demo-control,.number-demo-control,.search-demo-control,.textarea-demo-control,.addon-demo-control,.autocomplete-demo-control,.cascader-demo-control,.treeselect-demo-control,.input-control,.password-control,.number-control,.search-control,.textarea-control,.addon-control,.autocomplete-control,.cascader-control,.treeselect-control) :is(input,textarea){border:0;outline:none}
 /* These new Foundation controls are standalone, so define their full border. */
-:is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls,.ads-sizing) :is(input:not([type=radio]):not([type=checkbox]),select,textarea){border:var(--border-width-1) var(--border-style) var(--control-border);border-radius:var(--radius-sm);padding:var(--space-6) var(--space-8);background:var(--graphite-950);color:var(--text-hi)}
+:is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls,.ads-sizing) :is(input:not([type=radio]):not([type=checkbox]),select,textarea){box-sizing:border-box;border:var(--border-width-1) var(--border-style) var(--control-border);border-radius:var(--radius-sm);padding:var(--space-6) var(--space-8);background:var(--graphite-950);color:var(--text-hi)}
+/* Single-line controls match the Component Library's own convention: zero
+   vertical padding, height driven entirely by min-block-size below - a
+   textarea is still genuinely multi-line, so it keeps real padding. */
+:is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls,.ads-sizing) :is(input:not([type=radio]):not([type=checkbox]),select){padding:0 var(--space-12)}
 [aria-selected=true]{border-color:var(--border-state-selected,var(--red-500))}
 .setup-error,.input-demo-error{color:var(--type-error-color)}
 .ads-required{display:inline;margin-inline-start:var(--space-4);color:var(--danger-500);font:inherit}
@@ -56,7 +60,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 /* Native selects need the same control height as adjacent buttons/inputs.
    Reserve arrow space explicitly rather than relying on OS-specific insets. */
 .ads-foundation-toolbar :is(select,.btn,.btn-demo),.ads-unit-control :is(input,select),.ads-format-controls :is(input:not([type=checkbox]),select){min-block-size:max(var(--size-control),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));height:auto;margin-block:0}
-:is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls) select:not([multiple]):not([size]){appearance:none;-webkit-appearance:none;padding-block:var(--space-8);padding-inline:var(--space-12) var(--space-34);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right var(--space-12) center;background-size:var(--dimension-10) var(--dimension-6)}
+:is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls) select:not([multiple]):not([size]){appearance:none;-webkit-appearance:none;padding-block:0;padding-inline:var(--space-12) var(--space-34);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right var(--space-12) center;background-size:var(--dimension-10) var(--dimension-6)}
 :root[dir=rtl] :is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls) select:not([multiple]):not([size]){background-position:left var(--space-12) center}
 .ads-foundation-toolbar select{min-inline-size:4.5em;flex:none}
 .ads-unit-note{font-size:var(--type-caption-size);color:var(--type-caption-color)}
