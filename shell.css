@@ -793,7 +793,7 @@ font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(
   margin-bottom:var(--space-24);
 }
 
-.color-field{ display: flex; flex-direction: column; gap:var(--space-12); }
+.color-field{ display: flex; flex-direction: column; gap:var(--space-8); }
 
 .color-field-head{ display: flex; align-items: center; justify-content: space-between; }
 
@@ -880,27 +880,23 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    by foundations.js's initContrastBadges(), not present in the static
    markup. */
 .color-contrast{
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap:var(--space-6);
-  margin:var(--space-4) 0 0;
+  display: grid;
+  gap:var(--space-8);
+  min-width:0;
+  margin:0;
 }
-/* Always its own line: at some field widths (the 4-up Status columns
-   especially) "X.XX:1 vs page background" plus one pill fit on the first
-   line but the second pill alone spilled onto a lonely second line -
-   different fields in the very same row would then wrap differently and
-   throw off the row's shared baseline below. Forcing this one thing to
-   wrap the same way everywhere keeps every badge a consistent two lines. */
-.contrast-ratio{   color:var(--type-body-color); flex-basis: 100%; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+/* Keep each result and its badges together. Badge pairs wrap as a group. */
+.contrast-row{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-8);min-width:0}
+.contrast-tags{display:inline-flex;align-items:center;gap:var(--space-6);flex:none;max-width:100%;flex-wrap:wrap}
+.contrast-ratio{color:var(--type-caption-color);min-width:0;max-width:100%;overflow-wrap:anywhere;font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .contrast-tag{
-
-
-
-
+  display:inline-flex;
+  align-items:center;
+  flex:none;
+  white-space:nowrap;
   border-radius:var(--radius-full);
   padding:var(--space-2) var(--space-8);
-font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+font-family:var(--type-caption-family);font-size:var(--dimension-12);font-weight:400;font-style:normal;line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .contrast-tag.is-pass{ color: var(--green-500); background: color-mix(in srgb, var(--green-500) 12%, transparent); }
 .contrast-tag.is-fail{ color: var(--danger-500); background: var(--red-tint); }
 
@@ -1401,10 +1397,9 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   margin:0;
   padding-top:var(--space-8);
   border-top: var(--border-width-1) var(--border-style) var(--line);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap:var(--space-6);
+  display: grid;
+  gap:var(--space-8);
+  min-width:0;
 }
 .color-popover-cvd{
   display: flex;
@@ -6946,7 +6941,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .concept-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap:var(--space-16);
+  gap:var(--space-24);
   margin-bottom:var(--space-4);
 }
 .concept-card{
