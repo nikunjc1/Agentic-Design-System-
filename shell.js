@@ -171,14 +171,6 @@
       hexProp(neutralSet && neutralSet.border, "--control-border");
     } catch {}
 
-    try {
-      const savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
-      const textSet = savedText && savedText[theme];
-      hexProp(textSet && textSet.hi, "--text-hi");
-      hexProp(textSet && textSet.mid, "--text-mid");
-      hexProp(textSet && textSet.dim, "--text-dim");
-    } catch {}
-
     updateBrandColorDotTitle();
   }
 
@@ -346,7 +338,17 @@
   // every OTHER same-origin tab the instant one of them writes to
   // localStorage (never in the tab that made the change), so this brings
   // every open tab back in sync live, no reload required.
-  const COLOR_STORAGE_KEYS = ["ads:colors", "ads:bg-colors", "ads:status-colors", "ads:neutral-colors", "ads:text-colors"];
+  const COLOR_STORAGE_KEYS = ["ads:colors", "ads:bg-colors", "ads:status-colors", "ads:neutral-colors"];
+  // Foundation audit C07 - "ads:text-colors" was a saved record from a Text
+  // Colors editor section that was removed from foundations.html (Typography's
+  // per-level colors are the one place for text color now - see
+  // FOUNDATION_TOKEN_MAP in experience.js). Nothing writes this key anymore,
+  // but shell.js kept silently reading and applying it on every boot for
+  // anyone who'd saved one before it was removed - invisible customization,
+  // with no UI left to see, edit or reset it, and excluded from the
+  // Foundation export map entirely. Retired: stop applying it, and clear any
+  // pre-existing record so it doesn't linger as dead, inexplicable state.
+  try { localStorage.removeItem("ads:text-colors"); } catch {}
   window.addEventListener("storage", (e) => {
     if (!e.key) return;
     if (e.key === THEME_KEY) {

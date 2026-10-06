@@ -80,16 +80,13 @@
     }
   }catch(e){}
 
-  try{
-    var savedText = JSON.parse(localStorage.getItem("ads:text-colors") || "null");
-    var textSet = savedText && savedText[t];
-    if (textSet){
-      var txRoot = document.documentElement.style;
-      if (textSet.hi && /^#[0-9a-f]{6}$/i.test(textSet.hi)) txRoot.setProperty("--text-hi", textSet.hi);
-      if (textSet.mid && /^#[0-9a-f]{6}$/i.test(textSet.mid)) txRoot.setProperty("--text-mid", textSet.mid);
-      if (textSet.dim && /^#[0-9a-f]{6}$/i.test(textSet.dim)) txRoot.setProperty("--text-dim", textSet.dim);
-    }
-  }catch(e){}
+  // Foundation audit C07 - "ads:text-colors" was a saved record from a Text
+  // Colors editor section removed from foundations.html; nothing writes
+  // this key anymore (Typography's per-level colors are the one place for
+  // text color now), but this ran on every single page's first paint,
+  // applying invisible, unexportable, unresettable overrides for anyone who
+  // had saved one before it was removed. Retired here and in shell.js,
+  // which also clears any pre-existing record so it stops lingering.
 
   // Radius philosophy - sitewide, theme-independent (unlike colors above,
   // there's no light/dark split here). --radius-md alone is referenced
