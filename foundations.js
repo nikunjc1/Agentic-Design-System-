@@ -1090,6 +1090,16 @@
       // readout inside an open picker always matches the badge under the
       // field it belongs to - one source of truth for "what should this
       // swatch be checked against."
+      // Foundation audit C04 - alpha-blends hex over bg at the given opacity
+      // (simple source-over compositing), so a tint's *actual rendered*
+      // color can be contrast-checked instead of silently treating opacity
+      // as if it weren't there.
+      function alphaBlend(hex, bgHex, alpha){
+        var fg = hexToRgb(hex), bg = hexToRgb(bgHex);
+        var mix = function(a, b){ return Math.round(a * alpha + b * (1 - alpha)); };
+        var toHex = function(n){ var h = n.toString(16); return h.length === 1 ? "0" + h : h; };
+        return toHex(mix(fg.r, bg.r)) + toHex(mix(fg.g, bg.g)) + toHex(mix(fg.b, bg.b));
+      }
       function contrastForField(field, hex){
         var hexInput = field.querySelector('input[type="text"][data-role]');
         var col = field.closest(".theme-pair-col");
@@ -1119,13 +1129,29 @@
         // checked against. Showing this one a "fails AA" reading it was
         // never actually held to would be misleading, not just imprecise.
         var isUiComponent = /-border-hex$/.test((hexInput && hexInput.dataset.role) || "");
+        // Foundation audit C04 - "omits on-brand text... opacity." Brand is
+        // the one swatch with a real, live, computed tint token
+        // (--red-tint, see regenerateBrandDark/applyBrandLiveForActiveTheme)
+        // - 8% opacity, not invented here. Status has no equivalent live
+        // tint token (its own tag/badge tints in shell.css are hardcoded to
+        // specific named colors, not derived from the user's edited hex),
+        // so this check only applies where a real token backs it.
+        var isBrandSwatch = /^brand-(light|dark)-hex$/.test((hexInput && hexInput.dataset.role) || "");
+        var tintResult = null;
+        if (isBrandSwatch){
+          var pageBg = isDark ? darkBg : lightBg;
+          var tintBlend = alphaBlend(hex, pageBg, 0.08);
+          var tintRatio = contrastRatio(hex, tintBlend);
+          tintResult = { ratio: tintRatio, aaPass: tintRatio >= 4.5, aaaPass: tintRatio >= 7, vsLabel: "as text on its own 8% tint" };
+        }
         return {
           ratio: ratio,
           aaPass: ratio >= 4.5,
           aaaPass: ratio >= 7,
           vsLabel: vsLabel,
           isUiComponent: isUiComponent,
-          uiPass: ratio >= 3
+          uiPass: ratio >= 3,
+          tintResult: tintResult
         };
       }
 
@@ -1134,7 +1160,14 @@
           ? '<span class="contrast-tag ' + (result.uiPass ? "is-pass" : "is-fail") + '">Non-text 3:1 ' + (result.uiPass ? "&#10003;" : "&#10007;") + '</span>'
           : '<span class="contrast-tag ' + (result.aaPass ? "is-pass" : "is-fail") + '">AA ' + (result.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
             '<span class="contrast-tag ' + (result.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (result.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
-        return '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' + tags;
+        var html = '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' + tags;
+        if (result.tintResult){
+          var t = result.tintResult;
+          html += '<br><span class="contrast-ratio">' + t.ratio.toFixed(2) + ':1 ' + t.vsLabel + '</span>' +
+            '<span class="contrast-tag ' + (t.aaPass ? "is-pass" : "is-fail") + '">AA ' + (t.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
+            '<span class="contrast-tag ' + (t.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (t.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+        }
+        return html;
       }
 
       function recompute(){
