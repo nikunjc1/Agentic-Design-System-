@@ -193,6 +193,37 @@
       previewHeading.style.fontFamily = cssFamily;
       previewBody.style.fontFamily = cssFamily;
       previewMeta.textContent = "Using " + name + (source ? " (" + source + ")" : "");
+      // Foundation audit T01 - uploaded font FILES are never actually
+      // saved anywhere (only the family name/source string persists, via
+      // persistTypography() below) - document.fonts only knows about an
+      // upload for the lifetime of the current page. A restored "uploaded
+      // file" record would otherwise claim "Using X" here while silently
+      // rendering the fallback instead, since the real FontFace is gone.
+      // document.fonts.check() is NOT reliable for this - per the CSS Font
+      // Loading API spec it reports whether the given text CAN render at
+      // all (true for literally any family name, since there's always an
+      // implicit fallback), not whether that specific family is actually
+      // registered - confirmed empirically before relying on it: it
+      // returned true even for a name nothing ever registered. Iterating
+      // document.fonts directly for a loaded face with this exact family
+      // is the one correct way to tell "really registered right now" apart
+      // from "was uploaded in some earlier, unrelated session."
+      if (source === "uploaded file"){
+        var stillAvailable = false;
+        try{
+          document.fonts.forEach(function(face){
+            if (face.family.replace(/^["']|["']$/g, "") === name && face.status === "loaded") stillAvailable = true;
+          });
+        }catch(e){}
+        if (!stillAvailable){
+          previewMeta.textContent = "Can't restore \"" + name + "\" - uploaded font files aren't saved between visits, only their name. Showing the " + fallbackForSource(source) + " fallback instead; re-upload the file to preview it again this session.";
+        } else {
+          // Proactive, not just reactive on a later failed restore - the
+          // user should know this won't survive reload or handoff the
+          // moment they pick it, not only discover it after the fact.
+          previewMeta.textContent += " - previews in this browser tab only; the file itself isn't saved, so this reverts to the fallback after reload or for anyone else.";
+        }
+      }
       // injectLink's own promise reports a REAL stylesheet fetch failure
       // (offline, blocked, 404) via the <link>'s error event - this used
       // to claim "Using X" unconditionally with no way to ever find out
@@ -221,6 +252,18 @@
             uploadName.value = name;
             uploadLabel.textContent = file.name;
             setFamily(name, "uploaded file", null);
+            // Foundation audit T01 - found while verifying the fix above:
+            // the native 'change' event this handler is attached to fires
+            // synchronously, before this async FileReader/FontFace chain
+            // resolves - the delegated main-level listener that calls
+            // persistTypography()/updateMachineViews() had already run by
+            // then, against the *old* state, and nothing re-triggered it
+            // once setFamily() above actually updated things. Dispatching
+            // a bubbling event on uploadLabel (not uploadInput - that would
+            // re-enter this exact handler and read the same file again)
+            // reuses that same existing delegated path instead of reaching
+            // into its closure from here.
+            uploadLabel.dispatchEvent(new Event("change", { bubbles: true }));
           }).catch(function(){
             uploadLabel.textContent = "Couldn't read that font file - try a .woff, .woff2, .ttf or .otf.";
           });
@@ -445,8 +488,15 @@
       lines.push("## Font families", "");
       var primaryState = primaryPicker.getState();
       var secondaryState = secondaryPicker.getState();
-      lines.push("- Primary: " + (primaryState.family || "Not selected") + (primaryState.source ? " (" + primaryState.source + ")" : ""));
-      lines.push("- Secondary: " + (secondaryState.family || "Not selected") + (secondaryState.source ? " (" + secondaryState.source + ")" : ""));
+      // Foundation audit T01 - "package durable... reference, or visibly
+      // label preview-only": an uploaded font's actual file is never saved
+      // anywhere, only this family name - naming that plainly in the one
+      // artifact most likely to leave this page (an AI agent or teammate
+      // reading this export has no other way to know the name alone can't
+      // be installed/resolved as a real dependency).
+      var uploadNote = function(s){ return s.source === "uploaded file" ? " - **preview-only, no font file travels with this export; the uploaded file itself was never saved, only this name**" : ""; };
+      lines.push("- Primary: " + (primaryState.family || "Not selected") + (primaryState.source ? " (" + primaryState.source + ")" : "") + uploadNote(primaryState));
+      lines.push("- Secondary: " + (secondaryState.family || "Not selected") + (secondaryState.source ? " (" + secondaryState.source + ")" : "") + uploadNote(secondaryState));
 
       var activePlatform = document.querySelector(".platform-chips .chip.is-active");
       if (activePlatform){
@@ -481,10 +531,14 @@
 
     function updateMachineViews(){
       if (fontFamilyMachineJson){
+        // Foundation audit T01 - durable: false names the real limitation
+        // machine-readably too, not just in the human-facing preview text
+        // and Markdown export.
+        var withDurability = function(s){ return { family: s.family, source: s.source, linkHref: s.linkHref, durable: s.source !== "uploaded file" }; };
         fontFamilyMachineJson.textContent = JSON.stringify({
           $schema: window.ADS_MACHINE_VIEW_SCHEMA,
-          primary: primaryPicker.getState(),
-          secondary: secondaryPicker.getState()
+          primary: withDurability(primaryPicker.getState()),
+          secondary: withDurability(secondaryPicker.getState())
         }, null, 2);
       }
       if (typeScaleMachineJson){
