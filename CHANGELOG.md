@@ -1763,6 +1763,23 @@ Fixed all four directly:
 
 Verified with Playwright: all 3 step-1 required badges render; all 5 platform checkboxes carry the direct `aria-describedby`; submitting an empty form shows "Please review: Project name, Product type, Platforms."; typing to fix one field no longer erases that summary in `#setupStatus`, while `#draftSaveStatus` correctly shows "Draft saved on this browser." in its own, separate element. Regenerated `docs-catalog.json` (new-project.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit NP09 (P1) - the project handoff export didn't name its own gaps
+
+Finding from the 5 October 2026 Foundation audit: "Export includes platform guidance and raw saved records; absent defaults are a sentence... No complete resolved token/validation/provenance/asset manifest travels through the immediate export path... Recipients need exact decisions and unresolved items... AI: invents missing values."
+
+Confirmed what the export (`project-model.js`'s `markdown()`, read by md-export.html) already had - resolved Foundation tokens, platform guidance, and (from this session's earlier X02 work) a "Provenance" line naming which tokens are documented defaults versus real saves - and what it genuinely didn't:
+- No signal at all when there's no saved project profile - `p = profile || {}` quietly renders "Not configured" for product/role with nothing calling out that the entire handoff is unconfigured, not just those two lines.
+- A free-text "Other" product type or role carries no system-recommended Foundation default behind it at all (confirmed earlier, in NP02/X02's own contextual-default work) - but the export never said so, leaving a recipient (including an AI agent reading this file) to assume the resolved tokens shown reflect a real recommendation for that product, when they're actually this system's plain, generic fallback.
+- Nothing in the export ever mentioned icon assets - and checking icons.js confirmed why: uploaded/custom icons are session-only, never persisted to this workspace's storage at all, so they were silently, totally absent from every export with no indication anything was missing.
+
+Added a new "## Validation & open decisions" section to the generated Markdown, built entirely from data `markdown()` already receives (no new call-site plumbing needed):
+- No saved profile at all → "No project setup was saved for this export - every value above is this system's own plain documented default, not a decision made for this project."
+- `productType === 'Other'` → names the free-text description and states plainly that Spacing/Radius/Grid & Layout fall back to plain global defaults for it, not a tailored recommendation.
+- `role === 'Other'` → names the free-text role and notes the app's own role-based guidance has no tailored version for it.
+- Always present: an explicit asset-manifest disclosure that this is a text-only export and uploaded icon assets never travel with it, since they're never saved anywhere this export could read from in the first place.
+
+Verified with Playwright: exporting with no saved profile shows both the "No project setup was saved" line and the asset-manifest disclosure; a profile with `productType: 'Other'` and `role: 'Other'` surfaces both free-text values by name under the new section header. All 9 `project-model.test.js` assertions (including the existing Markdown-shape and Provenance tests) still pass unchanged. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

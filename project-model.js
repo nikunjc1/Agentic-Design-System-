@@ -119,6 +119,24 @@
     lines.push(defaultedKeys.length
       ? 'Provenance: ' + defaultedKeys.map(k => '`' + k + '`').join(', ') + (defaultedKeys.length === 1 ? ' is' : ' are') + ' this system\'s own documented default - everything else above reflects an explicit save.'
       : 'Provenance: every key above reflects an explicit save - nothing here is a documented default standing in for an unset value.');
+    // Foundation audit NP09 - "No complete... validation/provenance/asset
+    // manifest travels through the immediate export path... AI: invents
+    // missing values." Provenance (above) already says which tokens are
+    // defaulted; this section names the things that aren't tokens at all -
+    // an incomplete/absent profile, a free-text product/role with no
+    // system-recommended default behind it, and visual assets this
+    // text-only export plainly cannot carry - so a recipient (human or AI)
+    // sees these as open items to resolve, not silently invents a value to
+    // fill the gap.
+    const openDecisions = [];
+    if (!profile) {
+      openDecisions.push('No project setup was saved for this export - every value above is this system\'s own plain documented default, not a decision made for this project.');
+    } else {
+      if (p.productType === 'Other') openDecisions.push('Product type is free text ("' + safe(p.productOther || '') + '") - this system has no recommended Spacing/Radius/Grid & Layout default for an undefined category; those sections reflect their plain global defaults unless separately customized.');
+      if (p.role === 'Other') openDecisions.push('Role is free text ("' + safe(p.roleOther || '') + '") - the role-specific guidance this app shows after setup assumes one of its own named roles, and does not have a tailored version for this one.');
+    }
+    openDecisions.push('Asset manifest: this is a text-only export - no uploaded/custom visual assets travel with it. Icons uploaded on the Icons page exist only in that page\'s own browser session and are never saved to this workspace, let alone exported.');
+    lines.push('', '## Validation & open decisions', '', ...openDecisions.map(d => '- ' + d));
     for (const doc of docs) lines.push('', '---', '', '## ' + safe(doc.title), '', 'Source: ' + doc.file + ' · Status: ' + doc.status, '', doc.markdown);
     return lines.join('\n');
   }
