@@ -1139,7 +1139,18 @@
           var light = collectTheme(prefix, "light");
           var enableInput = document.querySelector('[data-role="' + prefix + '-dark-enable"]');
           var darkEnabled = !!(enableInput && enableInput.checked);
-          var dark = darkEnabled ? collectTheme(prefix, "dark") : null;
+          // Foundation audit C01 - Brand's dark field always holds a real,
+          // applied value (auto-generated from light the moment the field
+          // exists, unconditionally persisted by persistBrand() regardless
+          // of this checkbox - see the always-persist-dark fix in
+          // applyBrandLiveForActiveTheme()'s own comment). Gating Brand's
+          // export on this checkbox hid a dark value that's genuinely
+          // live on the site right now. Background/Status/Neutral are
+          // different: unchecked really does mean no override exists for
+          // them, and they correctly fall back to this system's own
+          // built-in dark default - omitting their dark export when
+          // unchecked stays correct.
+          var dark = (prefix === "brand" || darkEnabled) ? collectTheme(prefix, "dark") : null;
           var labels = FIELD_LABELS[prefix] || {};
           lines.push("## " + SECTION_TITLES[prefix], "");
           Object.keys(light).forEach(function(key){
@@ -1161,12 +1172,17 @@
           if (!code) return;
           var enableInput = document.querySelector('[data-role="' + prefix + '-dark-enable"]');
           var darkEnabled = !!(enableInput && enableInput.checked);
+          // Foundation audit C01 - same "Brand always resolves a real dark
+          // value" distinction as renderMarkdown() above: darkOverrideEnabled
+          // still reflects whether this is a user-customized color (true)
+          // versus auto-generated from light (false), but dark itself is
+          // never withheld for Brand, since it's always genuinely applied.
           var data = {
             $schema: window.ADS_MACHINE_VIEW_SCHEMA,
             token: prefix,
             light: collectTheme(prefix, "light"),
             darkOverrideEnabled: darkEnabled,
-            dark: darkEnabled ? collectTheme(prefix, "dark") : null
+            dark: (prefix === "brand" || darkEnabled) ? collectTheme(prefix, "dark") : null
           };
           code.textContent = JSON.stringify(data, null, 2);
         });
