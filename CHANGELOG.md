@@ -1969,6 +1969,20 @@ Also fixed a real, separate bug found while verifying the above: the upload flow
 
 Verified with Playwright, using a real local font file (`/System/Library/Fonts/Geneva.ttf`) uploaded under a deliberately fake family name (to rule out Chromium already knowing a real system font of that name, which the first verification pass caught as a false positive): a fresh upload shows the proactive preview-only caveat immediately; the Machine View correctly reports `durable: false`; the Markdown export correctly flags it; reloading shows the honest "Can't restore" message with the real fallback named, not a false "Using X" claim. Confirmed the default/Google Font happy path is unaffected (`durable: true`, no caveat text). Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit T02 (P1) - a genuine FileReader failure left the upload UI stuck with no error
+
+Finding from the 5 October 2026 Foundation audit: "Input event auto-saves before async FileReader/FontFace completion; callback changes family without update/persist event... Preview can show new font while Markdown/storage retain old one until next interaction; FileReader error unhandled... Async success needs an explicit commit."
+
+The core of this finding - the async upload completing without re-triggering persistence or the Machine View/Markdown export - is the same real bug already found and fixed while verifying T01 moments earlier in this same session (the native `change` event fires before the `FileReader`/`FontFace` promise chain resolves, so the page's delegated persist listener ran against stale state; fixed there by dispatching a synthetic event once the async chain genuinely completes).
+
+What that fix didn't yet cover, checked directly against this finding's own remaining asks: "FileReader error unhandled" was real and still open - `reader.onload` existed, but no `reader.onerror` did, so a genuine read failure (a permission issue, an I/O error, a file that becomes unreadable mid-read) left `uploadLabel` stuck reading "Loading X.ttf…" forever, with no error shown and no visible path back to trying again. Checked the other named asks before assuming more work was needed: "preserve prior valid font" was already correct by construction (every existing error path only ever updates the upload-specific status text, never calls `setFamily()`, so the previously-applied font and its persisted state are simply never touched on failure); "retry" is already available implicitly, since the same upload control can always be used again - no dedicated retry affordance was needed beyond a clear error message saying so.
+
+Added the missing `reader.onerror` handler, naming the real error (`reader.error.name`, e.g. `NotReadableError`) and pointing at the one real recovery path: choosing the file again.
+
+Scope boundary, stated plainly: an explicit "cancel mid-upload" control was named in the recommendation but not built - font files are small enough that this read completes in milliseconds in practice, making a cancel UI for a near-instant operation disproportionate to build speculatively.
+
+Verified with Playwright: monkey-patched `FileReader.readAsArrayBuffer` to synchronously fire a simulated `NotReadableError` instead of completing, confirming the upload label now shows "Couldn't read Geneva.ttf (NotReadableError) - choose the file again to retry." instead of hanging on "Loading…" forever; re-ran T01's own full upload verification immediately afterward to confirm the new error handler introduced no regression to the successful-upload path. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -244,6 +244,14 @@
       var name = uploadName.value.trim() || file.name.replace(/\.[^.]+$/, "");
       uploadLabel.textContent = "Loading " + file.name + "…";
       var reader = new FileReader();
+      // Foundation audit T02 - "FileReader error unhandled": with no
+      // onerror handler, a genuine read failure (permission issue, I/O
+      // error, an unreadable file) left uploadLabel stuck on "Loading
+      // X.ttf…" forever - no error shown, no sign anything had gone wrong,
+      // no indication the user could just try picking the file again.
+      reader.onerror = function(){
+        uploadLabel.textContent = "Couldn't read " + file.name + " (" + (reader.error && reader.error.name || "read error") + ") - choose the file again to retry.";
+      };
       reader.onload = function(){
         try{
           var face = new FontFace(name, reader.result);
