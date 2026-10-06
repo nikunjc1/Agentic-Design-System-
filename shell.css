@@ -1109,6 +1109,17 @@ button{ font-family: inherit; }
   align-items: flex-end;
   gap: 16px;
 }
+/* Foundation audit T03 - "show effective previews": the controls above set
+   size/weight/line-height/italic/color per level, but nothing rendered
+   what the result actually looks like - every visual property here is set
+   inline by updateSample() in typography.js, this just handles layout. */
+.type-row-sample{
+  margin: 16px 0 0;
+  padding: 16px;
+  background: var(--graphite-900);
+  border-radius: var(--radius-md);
+  overflow-wrap: anywhere;
+}
 
 .type-control{
   display: flex;

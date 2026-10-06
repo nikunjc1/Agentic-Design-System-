@@ -350,6 +350,10 @@
     };
   }
 
+  function currentTheme(){
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  }
+
   function wireTypeRow(row){
     var familySel = row.querySelector('[data-role="family"]');
     var sizeSel = row.querySelector('[data-role="size"]');
@@ -360,6 +364,7 @@
     var colorHex = row.querySelector('[data-role="color-hex"]');
     var darkColorPicker = row.querySelector('[data-role="color-picker-dark"]');
     var darkColorHex = row.querySelector('[data-role="color-hex-dark"]');
+    var sampleEl = row.querySelector('[data-role="sample"]');
 
     // Dark starts auto-generated from Light and stays in sync with it
     // (like the same auto/custom idea on the Colors page) until the user
@@ -377,8 +382,27 @@
       lhInput.value = Math.round((lineHeight / fontSize) * 100);
     }
 
+    // Foundation audit T03 - "show effective previews": reads every
+    // control this row actually has (family role resolves to the same
+    // --font-display/--font-body custom properties the rest of the site
+    // reads, so the sample tracks whatever's genuinely applied, not a
+    // second, potentially-stale guess at the resolved family) and applies
+    // them directly, so the result of these settings is visible here
+    // instead of only inferred from the controls' own values.
+    function updateSample(){
+      if (!sampleEl) return;
+      sampleEl.style.fontFamily = familySel.value === "secondary" ? "var(--font-body)" : "var(--font-display)";
+      var opt = sizeSel.options[sizeSel.selectedIndex];
+      sampleEl.style.fontSize = (opt.dataset.size || "16") + "px";
+      sampleEl.style.lineHeight = (parseInt(lhInput.value, 10) || 100) + "%";
+      sampleEl.style.fontWeight = weightSel.value;
+      sampleEl.style.fontStyle = italicChk.checked ? "italic" : "normal";
+      sampleEl.style.color = currentTheme() === "dark" ? darkColorPicker.value : colorPicker.value;
+    }
+
     function apply(){
       lhInput.value = clamp(parseInt(lhInput.value, 10) || 100, 50, 300);
+      updateSample();
     }
 
     function regenerateDark(){
@@ -386,8 +410,10 @@
       darkColorPicker.value = hex;
       darkColorHex.value = hex.replace("#", "").toUpperCase();
       darkAuto = true;
+      updateSample();
     }
 
+    familySel.addEventListener("change", apply);
     sizeSel.addEventListener("change", function(){
       seedLineHeightFromSize();
       apply();

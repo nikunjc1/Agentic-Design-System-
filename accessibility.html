@@ -273,8 +273,8 @@
         <span class="usage-values">Auto-save, click-to-apply</span>
       </div>
       <div class="usage-row">
-        <span class="usage-label">Spacing, Grid &amp; Layout, Borders, Shadows, Icons, Typography (per-level colors)</span>
-        <span class="usage-desc">Auto-saves on every edit, but has no live-apply path at all today - shell.js exposes no <code>window.ADS_apply*</code> for these sections, so a saved value only ever surfaces in this page's own preview, Machine View and Markdown/token export, never in how the rest of the site actually renders. Typography's own font <em>family</em> is the one exception within this page - that part is Tier 1 (auto-apply) - its per-level <em>colors</em> (h1-h6, body, caption, error, etc.) are Tier 3 like the sections named here. Tracked as a known gap, not hidden behind "Save" language that implies otherwise.</span>
+        <span class="usage-label">Spacing, Grid &amp; Layout, Borders, Shadows, Icons, Typography (per-level size/weight/line-height/italic/color)</span>
+        <span class="usage-desc">Auto-saves on every edit, but has no live-apply path at all today - shell.js exposes no <code>window.ADS_apply*</code> for these sections, so a saved value only ever surfaces in this page's own preview, Machine View and Markdown/token export, never in how the rest of the site actually renders. Typography's own font <em>family</em> is the one exception within this page - that part is Tier 1 (auto-apply) - every other per-level property (size, weight, line-height, italic, color - h1-h6, body, caption, error, etc.) is Tier 3 like the sections named here (Foundation audit T03 - this previously only named colors, understating the real scope). Each level's own in-page sample preview (added for T03) shows exactly what these settings produce, since nothing sitewide currently does. Tracked as a known gap, not hidden behind "Save" language that implies otherwise.</span>
         <span class="usage-values">Auto-save, export-only</span>
       </div>
     </div>
