@@ -85,7 +85,7 @@
     document.querySelectorAll('main [style]').forEach(el=>{
       if(el.closest('.type-row,.font-preview,pre,code,svg')||el.matches('.ads-text-content,.ads-read-more')) return;
       const size=el.style.fontSize, roleMatch=size.match(/--type-(\w+)-size/);
-      const roles={12:'caption',13:'body',14:'body',16:'body',18:'h6',20:'h5',24:'h4',30:'h3',36:'h2',48:'h1'};
+      const roles={11:'caption',12:'caption',13:'body',14:'body',16:'body',18:'h6',20:'h5',24:'h4',30:'h3',36:'h2',48:'h1'};
       const role=roleMatch?roleMatch[1]:/px$/.test(size)?roles[parseFloat(size)]||'body':null;
       if(role) for(const [prop,suffix] of [['fontSize','size'],['fontWeight','weight'],['fontStyle','style'],['lineHeight','line-height'],['letterSpacing','tracking']]) {const val='var(--type-'+role+'-'+suffix+')';if(el.style[prop]!==val) el.style[prop]=val;}
     });
@@ -141,30 +141,96 @@
       if(node.textContent!==text) node.textContent=text;
     });
   }
-  let textTimer, clampId=0;
+  const READ_MORE_LINES=4;
+  const observedText=new WeakSet();
+  let textTimer, clampId=0, textResizeObserver;
   function scheduleText() { clearTimeout(textTimer);textTimer=setTimeout(setupText,80); }
-  function setupText() {
-    document.querySelectorAll('main p, main .usage-desc, main .guide-copy, main .system-card-desc').forEach(el=>{
-      if(el.closest('pre,code,button,a,label,summary,[role=button],.type-row,.font-preview,[role=alert],[role=status],.setup-error,.ads-no-clamp')||el.matches('.panel-title,.page-title,.page-eyebrow,.statistic-demo-value')||el.querySelector('input,select,button')&&!el.dataset.adsClamp) return;
-      if(!el.dataset.adsClamp) {
-        if(!el.textContent.trim()) return;
-        const content=document.createElement('span');content.className='ads-text-content';content.id='ads-text-'+(++clampId);
-        while(el.firstChild) content.append(el.firstChild);
-        const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more';btn.textContent='Read More';btn.setAttribute('aria-controls',content.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
-        el.append(content,btn);el.dataset.adsClamp='true';
-        btn.addEventListener('click',()=>{const expanded=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(expanded));btn.textContent=expanded?'Read Less':'Read More';content.classList.toggle('ads-text-clamped',!expanded);});
-        content.addEventListener('focusin',()=>{if(content.classList.contains('ads-text-clamped')){content.classList.remove('ads-text-clamped');btn.setAttribute('aria-expanded','true');btn.textContent='Read Less';}});
-        if(window.ResizeObserver) new ResizeObserver(()=>checkClamp(el)).observe(el);
-      }
-      checkClamp(el);
-    });
+  function textLineHeight(el) {
+    const style=getComputedStyle(el);
+    return parseFloat(style.lineHeight)||parseFloat(style.fontSize)*1.5;
   }
-  function checkClamp(el) {
-    const content=el.querySelector('.ads-text-content'),btn=el.querySelector('.ads-read-more');if(!content||!btn||!el.getClientRects().length) return;
-    const line=parseFloat(getComputedStyle(content).lineHeight)||parseFloat(getComputedStyle(content).fontSize)*1.5;
-    const overflow=content.scrollHeight>line*4+1;
-    if(btn.getAttribute('aria-expanded')==='true') {btn.hidden=false;return;}
-    content.classList.toggle('ads-text-clamped',overflow);btn.hidden=!overflow;
+  function unwrapTextGroup(wrapper) {
+    const btn=wrapper.nextElementSibling;
+    while(wrapper.firstChild) wrapper.before(wrapper.firstChild);
+    wrapper.remove();
+    if(btn&&btn.classList.contains('ads-read-more')) btn.remove();
+  }
+  function buildTextGroup(run) {
+    const parent=run[0].parentElement;
+    const wrapper=document.createElement('div');
+    wrapper.className='ads-text-content ads-text-clamped';
+    wrapper.dataset.adsGroup='true';
+    wrapper.id='ads-text-'+(++clampId);
+    parent.insertBefore(wrapper,run[0]);
+    run.forEach(r=>wrapper.append(r));
+    const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more';btn.textContent='Read More';btn.setAttribute('aria-controls',wrapper.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
+    wrapper.after(btn);
+    btn.addEventListener('click',()=>{const expanded=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(expanded));checkClamp(wrapper);});
+    wrapper.addEventListener('focusin',()=>{if(wrapper.classList.contains('ads-text-clamped')){wrapper.classList.remove('ads-text-clamped');btn.setAttribute('aria-expanded','true');btn.textContent='Read Less';}});
+    checkClamp(wrapper);
+  }
+  function setupText() {
+    const eligible=[];
+    document.querySelectorAll('main p, main .usage-desc, main .guide-copy, main .system-card-desc').forEach(el=>{
+      // Documentation prose can expand. Component specimens, structured
+      // readouts and metadata must keep their authored children and layout.
+      const structured=el.closest('pre,code,button,a,label,summary,[role=button],.type-row,.font-preview,[role=alert],[role=status],.setup-error,.ads-no-clamp,[class*="-demo-"],.guide-dodont-demo')||el.matches('.panel-title,.guide-subhead,.page-title,.color-contrast,.color-popover-contrast,.color-rgba')||/(?:^|\s)[\w-]*(?:-label|-eyebrow|-meta|-status|-title|-value|-scale|-caption|-time)(?:\s|$)/.test(el.className)||el.querySelector('input,select,textarea,svg,img,button:not(.ads-read-more)');
+      if(structured) return;
+      if(!el.getClientRects().length) return;
+      const style=getComputedStyle(el);
+      if(!['block','inline','flow-root',''].includes(style.display||'')) return;
+      if(!el.textContent.trim()) return;
+      if(window.ResizeObserver&&!observedText.has(el)) {
+        textResizeObserver ||= new ResizeObserver(scheduleText);
+        textResizeObserver.observe(el);observedText.add(el);
+      }
+      eligible.push(el);
+    });
+    // Group consecutive sibling paragraphs (an "article") under one shared
+    // clamp and one Read More/Read Less button, instead of one per paragraph -
+    // a heading, image or other non-prose element still ends a run, so
+    // unrelated sections never merge.
+    const runs=[];
+    let i=0;
+    while(i<eligible.length) {
+      let j=i;
+      while(j+1<eligible.length&&eligible[j].nextElementSibling===eligible[j+1]&&eligible[j].parentElement===eligible[j+1].parentElement) j++;
+      runs.push(eligible.slice(i,j+1));
+      i=j+1;
+    }
+    // Reuse an existing group untouched (just re-checking its clamp state)
+    // when its membership already matches - toggling expand/collapse changes
+    // the grouped paragraphs' own layout box enough to refire their
+    // ResizeObserver, and rebuilding on every such pass would wipe out the
+    // very interaction that triggered it.
+    const keepWrappers=new Set(), newRuns=[];
+    for(const run of runs) {
+      const parent=run[0].parentElement;
+      if(parent.dataset&&parent.dataset.adsGroup==='true') {
+        const current=Array.from(parent.children);
+        if(current.length===run.length&&current.every((m,idx)=>m===run[idx])) {
+          keepWrappers.add(parent);checkClamp(parent);continue;
+        }
+      }
+      newRuns.push(run);
+    }
+    document.querySelectorAll('main .ads-text-content[data-ads-group]').forEach(w=>{if(!keepWrappers.has(w)) unwrapTextGroup(w);});
+    newRuns.forEach(buildTextGroup);
+  }
+  function checkClamp(wrapper) {
+    const btn=wrapper.nextElementSibling;if(!btn||!btn.classList.contains('ads-read-more')||!wrapper.getClientRects().length) return;
+    const line=textLineHeight(wrapper);
+    const limit=line*READ_MORE_LINES;
+    wrapper.style.setProperty('--ads-clamp-height',limit+'px');
+    // Measure the full text: clamped scrollHeight differs between browsers.
+    wrapper.classList.remove('ads-text-clamped');
+    const overflow=wrapper.scrollHeight>limit+1;
+    if(!overflow) {unwrapTextGroup(wrapper);return;}
+    const expanded=overflow&&btn.getAttribute('aria-expanded')==='true';
+    wrapper.classList.toggle('ads-text-clamped',overflow&&!expanded);
+    btn.setAttribute('aria-expanded',String(expanded));
+    btn.textContent=expanded?'Read Less':'Read More';
+    btn.hidden=!overflow;
   }
   function indicators() {
     document.querySelectorAll('.badge-required').forEach(el=>{el.className='ads-required';el.textContent='*';el.setAttribute('aria-label','Required');});
