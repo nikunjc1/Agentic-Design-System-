@@ -163,7 +163,7 @@
     wrapper.id='ads-text-'+(++clampId);
     parent.insertBefore(wrapper,run[0]);
     run.forEach(r=>wrapper.append(r));
-    const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more';btn.textContent='Read More';btn.setAttribute('aria-controls',wrapper.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
+    const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more btn btn-primary';btn.textContent='Read More';btn.setAttribute('aria-controls',wrapper.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
     wrapper.after(btn);
     btn.addEventListener('click',()=>{const expanded=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(expanded));checkClamp(wrapper);});
     wrapper.addEventListener('focusin',()=>{if(wrapper.classList.contains('ads-text-clamped')){wrapper.classList.remove('ads-text-clamped');btn.setAttribute('aria-expanded','true');btn.textContent='Read Less';}});

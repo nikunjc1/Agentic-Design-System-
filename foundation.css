@@ -75,8 +75,8 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .ads-format-table th{text-align:start}
 .ads-data-settings>.btn{margin-inline-end:var(--space-8);margin-block:var(--space-8)}
 .ads-text-content{display:block}
-.ads-text-clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.ads-read-more{display:inline-block;border:0;background:none;text-decoration:underline;text-underline-offset:.2em;color:var(--type-body-color);padding:var(--space-4) 0;cursor:pointer;min-block-size:var(--size-target)}
+.ads-text-clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;max-block-size:var(--ads-clamp-height,none);overflow:hidden}
+.ads-read-more{display:flex;width:fit-content;max-width:100%;margin-inline:auto;margin-block-start:var(--space-12);text-decoration:none;min-block-size:var(--size-control);min-inline-size:var(--size-target)}
 [hidden]{display:none!important}
 .ads-data-skeleton{display:inline-block;min-width:5em;min-height:1em;border-radius:var(--radius-sm);background:var(--graphite-700);color:transparent;animation:ads-loading 1.5s ease-in-out infinite}
 [data-format=loading]:not(.ads-data-skeleton){background:none;animation:none;height:auto;color:var(--type-body-color)}

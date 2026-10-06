@@ -1137,6 +1137,8 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .type-control-family{ flex: 1 1 130px; }
 .type-control-size{ flex: 2 1 190px; }
 .type-control-weight{ flex: 1 1 140px; }
+.type-control-lh{ flex: 1 1 100px; }
+.type-control-italic{ flex: none; width:var(--dimension-90); }
 .type-level-name{
   display: block;
 
