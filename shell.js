@@ -97,17 +97,33 @@
         const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
         const mix = (c, target, amt) => Math.round(c + (target - c) * amt);
         const toHex = (rr, gg, bb) => "#" + [rr, gg, bb].map((v) => { const h = v.toString(16); return h.length === 1 ? "0" + h : h; }).join("");
+        const red600 = toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18));
+        const red400 = toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25));
         root.setProperty("--red-500", hex);
-        root.setProperty("--red-600", toHex(mix(r, 0, 0.18), mix(g, 0, 0.18), mix(b, 0, 0.18)));
-        root.setProperty("--red-400", toHex(mix(r, 255, 0.25), mix(g, 255, 0.25), mix(b, 255, 0.25)));
+        root.setProperty("--red-600", red600);
+        root.setProperty("--red-400", red400);
         root.setProperty("--red-tint", `rgba(${r},${g},${b},0.08)`);
         root.setProperty("--red-glow", `rgba(${r},${g},${b},0.35)`);
+        // Foundation audit C05 - same resolveOnBrandText() logic as
+        // foundations.js, duplicated here so a boot-time page load (one
+        // that never visits foundations.html) still gets the correct
+        // on-brand text color, not just the editor page itself.
+        const relLum = (hx) => {
+          const toLin = (c) => { c = c / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+          const rr = parseInt(hx.slice(1, 3), 16), gg = parseInt(hx.slice(3, 5), 16), bb = parseInt(hx.slice(5, 7), 16);
+          return 0.2126 * toLin(rr) + 0.7152 * toLin(gg) + 0.0722 * toLin(bb);
+        };
+        const ratio = (a, b) => { const la = relLum(a), lb = relLum(b); const hi = Math.max(la, lb), lo = Math.min(la, lb); return (hi + 0.05) / (lo + 0.05); };
+        const worstDark = Math.min(ratio("#15171A", hex), ratio("#15171A", red400), ratio("#15171A", red600));
+        const worstLight = Math.min(ratio("#FFFFFF", hex), ratio("#FFFFFF", red400), ratio("#FFFFFF", red600));
+        root.setProperty("--on-brand-text", worstDark >= worstLight ? "#15171A" : "#FFFFFF");
       } else {
         root.removeProperty("--red-500");
         root.removeProperty("--red-600");
         root.removeProperty("--red-400");
         root.removeProperty("--red-tint");
         root.removeProperty("--red-glow");
+        root.removeProperty("--on-brand-text");
       }
     } catch {}
 

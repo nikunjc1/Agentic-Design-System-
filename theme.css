@@ -78,7 +78,16 @@
      label) - was hardcoded #fff at the one place it was needed; naming
      it lets it move if a future brand color ever needs a dark label
      instead of a light one, without hunting down the literal. */
-  --color-on-brand: #fff;
+  --color-on-brand: var(--on-brand-text);
+  /* Foundation audit C05 - foundations.js resolves this live (see
+     resolveOnBrandText()): whichever of white or this system's own dark
+     text color clears the higher worst-case contrast across brand's
+     default/hover/active shades, since neither fixed choice is correct for
+     every brand color (a light/pastel brand needs dark text; this
+     system's own default red needs it too - #15171A, computed for the
+     real default, is the correct static value before any JS runs). The
+     fallback keeps every page safe even where foundations.js never loads. */
+  --on-brand-text: #15171A;
 
   /* Brand red */
   --red-500: #ff031a;

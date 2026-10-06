@@ -135,6 +135,23 @@
       return (lighter + 0.05) / (darker + 0.05);
     }
 
+    // Foundation audit C05 - "no on-brand resolver/editor." A single fixed
+    // on-brand text color (this system's old --color-on-brand: #fff) can't
+    // actually be correct for every brand color: a light/pastel brand (this
+    // system's own auto-generated dark-theme default included) needs dark
+    // text, a saturated one needs light text - and which is "better" can
+    // even flip between a brand color's own default/hover/active shades.
+    // Resolves by maximizing the *worst* of the 3 states, not just the
+    // default shade alone, since optimizing default in isolation could still
+    // leave hover or active worse than the other candidate overall.
+    var ON_BRAND_DARK_TEXT = "15171A";
+    var ON_BRAND_LIGHT_TEXT = "FFFFFF";
+    function resolveOnBrandText(hex500, hex400, hex600){
+      var worstDark = Math.min(contrastRatio(ON_BRAND_DARK_TEXT, hex500), contrastRatio(ON_BRAND_DARK_TEXT, hex400), contrastRatio(ON_BRAND_DARK_TEXT, hex600));
+      var worstLight = Math.min(contrastRatio(ON_BRAND_LIGHT_TEXT, hex500), contrastRatio(ON_BRAND_LIGHT_TEXT, hex400), contrastRatio(ON_BRAND_LIGHT_TEXT, hex600));
+      return worstDark >= worstLight ? ON_BRAND_DARK_TEXT : ON_BRAND_LIGHT_TEXT;
+    }
+
     function hexToHsl(hex){
       var rgb = hexToRgb(hex);
       var r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
@@ -388,6 +405,27 @@
       container.innerHTML = chips.map(function(c){
         return '<div class="color-chip"><span class="color-chip-swatch" style="background:' + c.bg + ';"></span><span class="color-chip-label">' + c.label + '</span></div>';
       }).join("");
+      // Foundation audit C05 - "validate default/hover/pressed pairs." The
+      // resolved on-brand text color's real contrast against all 3 shades
+      // this exact swatch produces, surfaced right next to them instead of
+      // left unvalidated - including the honest case where this system's
+      // own default red can't clear AA on every one of the 3 states with
+      // either fixed text color choice.
+      var onBrandEl = container.nextElementSibling;
+      if (onBrandEl && onBrandEl.matches('[data-role$="-on-brand-text"]')){
+        var resolved = resolveOnBrandText(hex, light400, dark600);
+        var resolvedName = resolved === ON_BRAND_DARK_TEXT ? "dark text (#15171A)" : "white text (#FFFFFF)";
+        var states = [
+          { label: "Default", hex: "#" + hex },
+          { label: "Hover", hex: "#" + light400 },
+          { label: "Active", hex: "#" + dark600 }
+        ];
+        onBrandEl.innerHTML = "On-brand text resolves to " + resolvedName + ":" + states.map(function(s){
+          var r = contrastRatio(resolved, s.hex);
+          var pass = r >= 4.5;
+          return ' <span class="contrast-ratio">' + s.label + " " + r.toFixed(2) + ':1</span><span class="contrast-tag ' + (pass ? "is-pass" : "is-fail") + '">AA ' + (pass ? "&#10003;" : "&#10007;") + '</span>';
+        }).join("");
+      }
     }
     function hslToHexFromMix(rgb, target, amt){
       var mix = function(c){ return Math.round(c + (target - c) * amt); };
@@ -529,17 +567,21 @@
       var root = document.documentElement.style;
       if (hex){
         var rgb = hexToRgb(hex);
+        var red600 = hslToHexFromMix(rgb, 0, 0.18);
+        var red400 = hslToHexFromMix(rgb, 255, 0.25);
         root.setProperty("--red-500", "#" + hex);
-        root.setProperty("--red-600", "#" + hslToHexFromMix(rgb, 0, 0.18));
-        root.setProperty("--red-400", "#" + hslToHexFromMix(rgb, 255, 0.25));
+        root.setProperty("--red-600", "#" + red600);
+        root.setProperty("--red-400", "#" + red400);
         root.setProperty("--red-tint", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.08)");
         root.setProperty("--red-glow", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.35)");
+        root.setProperty("--on-brand-text", "#" + resolveOnBrandText(hex, red400, red600));
       } else {
         root.removeProperty("--red-500");
         root.removeProperty("--red-600");
         root.removeProperty("--red-400");
         root.removeProperty("--red-tint");
         root.removeProperty("--red-glow");
+        root.removeProperty("--on-brand-text");
       }
       // This function only ever runs from Save's click handler below, which
       // already applies the new color to the current page without a reload

@@ -277,7 +277,11 @@
     },
     "color-on-brand": {
       "$type": "other",
-      "$value": "#fff"
+      "$value": "{other.on-brand-text}"
+    },
+    "on-brand-text": {
+      "$type": "other",
+      "$value": "#15171A"
     },
     "tracking-tight": {
       "$type": "other",
