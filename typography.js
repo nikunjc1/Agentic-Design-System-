@@ -400,9 +400,40 @@
       sampleEl.style.color = currentTheme() === "dark" ? darkColorPicker.value : colorPicker.value;
     }
 
+    // Foundation audit T05 - "Very tight values allowed without guidance."
+    // Below 100%, a line's own text height exceeds the space between
+    // baselines - adjacent lines of real, wrapped multi-line text will
+    // visually touch or overlap, not just look cramped. That's an
+    // objective, not a subjective, threshold (100% is exactly the font's
+    // own em box), unlike "too loose," which is a style choice, not
+    // breakage - so only the low end gets a warning, not a vague range.
+    var lhGuidanceEl = row.querySelector('[data-role="line-height-guidance"]');
+    function updateLineHeightGuidance(){
+      if (!lhGuidanceEl) return;
+      var n = parseInt(lhInput.value, 10);
+      if (isFinite(n) && n < 100){
+        lhGuidanceEl.textContent = "Below 100%, wrapped lines will visually touch or overlap.";
+      } else {
+        lhGuidanceEl.textContent = "";
+      }
+    }
+
     function apply(){
-      lhInput.value = clamp(parseInt(lhInput.value, 10) || 100, 50, 300);
       updateSample();
+      updateLineHeightGuidance();
+    }
+
+    // Foundation audit T05 - "clamping impedes entry": the old apply()
+    // clamped lhInput.value to [50,300] on every single keystroke, which
+    // corrupts normal typing - confirmed by reproduction: typing "1", "5",
+    // "0" one digit at a time landed on "100", not 150, since each
+    // intermediate single/double-digit keystroke got clamped up to the
+    // 50-minimum before the next digit could extend it. Clamping now only
+    // runs once, on blur/commit, after the user's actually done typing.
+    function commitLineHeight(){
+      var n = parseInt(lhInput.value, 10);
+      lhInput.value = clamp(isFinite(n) ? n : 100, 50, 300);
+      apply();
     }
 
     function regenerateDark(){
@@ -422,6 +453,7 @@
       lhInput.value = lhInput.value.replace(/[^0-9]/g, "").slice(0, 3);
       apply();
     });
+    lhInput.addEventListener("blur", commitLineHeight);
     weightSel.addEventListener("change", apply);
     italicChk.addEventListener("change", apply);
     colorPicker.addEventListener("input", function(){
@@ -489,7 +521,12 @@
         } else {
           regenerateDark();
         }
-        apply();
+        // Foundation audit T05 - restored/preset data should still be
+        // validated once, the same as a real blur commit would - a
+        // corrupted or out-of-range saved value (a stale record, a manual
+        // localStorage edit) shouldn't silently bypass the clamp just
+        // because typing itself no longer triggers it on every keystroke.
+        commitLineHeight();
       },
       regenerateDark: regenerateDark
     };
