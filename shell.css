@@ -1811,6 +1811,9 @@ button{ font-family: inherit; }
   padding: 8px 12px;
 }
 .hex-input-wrap:focus-within{ border-color: var(--red-500); }
+/* Foundation audit C03 - an incomplete/invalid hex never gets committed,
+   but the field itself needs to visibly say so while it's in that state. */
+.hex-input-wrap:has(input[aria-invalid="true"]){ border-color: var(--danger-500); }
 .hex-prefix{
   font-family: var(--font-mono);
   font-size: 16px;

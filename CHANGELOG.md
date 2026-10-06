@@ -1810,6 +1810,21 @@ Updated the "Light & dark theme behavior" copy and Machine View JSON to state th
 
 Verified with Playwright: checking only Brand's dark-enable checkbox leaves Background/Status/Neutral's checkboxes and storage completely untouched; Brand's own toggle correctly persists to `ads:colors` from a real click; reloading after enabling only Brand's dark shows only Brand's checkbox checked; resetting Brand alone leaves Background's storage and checkbox state untouched; the new "Reset all colors" button correctly clears all 4 sections' storage in one action. The rewritten Machine View JSON still parses as valid JSON. Regenerated `docs-catalog.json` (foundations.html changed) - `--check` reports fresh. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
 
+## Foundation audit C03 (P1) - incomplete hex values could become committed state
+
+Finding from the 5 October 2026 Foundation audit: "Surface/status/neutral readers save field strings directly; Brand guards normalization... Incomplete hex values can persist; Saved can coexist with older applied CSS; rejection lacks consistent field error... Invalid drafts should not become committed state."
+
+Confirmed exactly: `readTriple()` (Background) and `createHexPairSection`'s `readLight`/`readDark` (Status, Neutral) read `input.value.toUpperCase()` directly with no validation at all - type "a1b" into any of these 12 hex fields and that literal string could become the persisted, exported, applied value. Brand already guarded this via `normalizeHex()`, but even Brand's guard failed silently - `if (!normalizeHex(brandLightHex.value)) return;` aborted the save with no visible sign anything was rejected, same "rejection lacks consistent field error" gap from a different angle.
+
+Fixed with per-field granularity, not a whole-section abort, since Background/Status/Neutral each hold several independent fields and one incomplete field shouldn't block the others from saving correctly:
+- Added `validatedHex(input)`: returns the field's current value if it's a complete, valid hex (and records it in `input.dataset.lastValid`, clearing any error); otherwise marks the field `aria-invalid="true"` and returns that field's own last known-good value instead - never a garbage string, and never silently reverting a *different*, still-valid field.
+- `setHexField`/`setTripleFields` (wherever fields get their value from a real source - load, reset, regenerate) now stamp `data-last-valid` at the same time, so the fallback is always a real, previously-confirmed-good value, never undefined.
+- `readTriple`/`readLight`/`readDark` all route through `validatedHex` now, so persisting, live-applying and exporting all see the same committed state, never an in-progress draft.
+- Added `reportHexErrors()`: on explicit Save, names exactly which field(s) were rejected in that section's own existing status line (e.g. "PAGE (PRIMARY) looked incomplete - kept the last valid value there"), instead of a silent no-op or an unexplained value swap. Brand's own silent abort got the same treatment.
+- Added a visible border highlight (`.hex-input-wrap:has(input[aria-invalid="true"])`) so the specific invalid field is identifiable without reading the status text first.
+
+Verified with Playwright: typing an incomplete hex into Background's Primary field and clicking Save keeps the field's last valid value in storage (not the garbage string), sets `aria-invalid`, shows the named-field status message, and renders a red field border; fixing it with a real hex clears all three and saves correctly; the same incomplete-value rejection fires from the auto-persist path too (typing alone, no Save click); Brand's previously-silent rejection now shows an equivalent visible message. Full 157-page regression sweep: 0 console errors. All 15 unit tests still pass.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -73,6 +73,40 @@
       var hex = (value || "").replace(/[^0-9a-f]/gi, "").slice(0, 6);
       return hex.length === 6 ? hex.toUpperCase() : null;
     }
+    // Foundation audit C03 - Surface/Status/Neutral used to save whatever
+    // was literally in the hex text field, uppercased, with no check that
+    // it was even a complete 6-digit hex (unlike Brand, which already
+    // guarded via normalizeHex() and aborted the save if invalid). An
+    // incomplete in-progress edit (e.g. "a1b") could become the committed,
+    // exported, applied value the moment any other field's input event
+    // fired. This keeps the field itself free to show whatever's being
+    // typed (the draft), but every *read* used for persisting/applying/
+    // exporting falls back to that one input's own last known-good value
+    // instead of committing an incomplete one - separating draft from
+    // last-valid state per field, not per section.
+    function validatedHex(input){
+      var normalized = normalizeHex(input.value);
+      if (normalized){
+        input.dataset.lastValid = normalized;
+        input.removeAttribute("aria-invalid");
+        return normalized;
+      }
+      input.setAttribute("aria-invalid", "true");
+      return input.dataset.lastValid || normalized || "000000";
+    }
+    // Foundation audit C03 - "rejection lacks consistent field error": names
+    // which field(s) were rejected, in the same status element each save
+    // already uses, instead of a silent no-op or an unexplained kept value.
+    function reportHexErrors(container, statusEl, savedMessage){
+      var invalid = container.querySelectorAll('input[aria-invalid="true"]');
+      if (!invalid.length){ statusEl.textContent = savedMessage; return; }
+      var labels = Array.prototype.map.call(invalid, function(input){
+        var field = input.closest(".color-field");
+        var label = field && field.querySelector(".color-field-label");
+        return label ? label.textContent : "a field";
+      });
+      statusEl.textContent = savedMessage + " " + labels.join(", ") + " looked incomplete - kept the last valid value there.";
+    }
 
     function hexToRgb(hex){
       hex = (hex || "").replace("#", "");
@@ -288,6 +322,8 @@
       hex = normalizeHex(hex) || hex;
       picker.value = "#" + hex;
       hexInput.value = hex;
+      hexInput.dataset.lastValid = hex;
+      hexInput.removeAttribute("aria-invalid");
     }
     function wireHexPair(picker, hexInput, onChange){
       hexInput.addEventListener("input", function(){
@@ -329,8 +365,8 @@
         isAuto: function(){ return auto; },
         mark: mark,
         regenerateAll: regenerateAll,
-        readLight: function(){ var o = {}; cfg.fields.forEach(function(f){ o[f.key] = f.lightHex.value.toUpperCase(); }); return o; },
-        readDark: function(){ var o = {}; cfg.fields.forEach(function(f){ o[f.key] = f.darkHex.value.toUpperCase(); }); return o; },
+        readLight: function(){ var o = {}; cfg.fields.forEach(function(f){ o[f.key] = validatedHex(f.lightHex); }); return o; },
+        readDark: function(){ var o = {}; cfg.fields.forEach(function(f){ o[f.key] = validatedHex(f.darkHex); }); return o; },
         setLight: function(set){ cfg.fields.forEach(function(f){ setHexField(f.lightPicker, f.lightHex, set[f.key] || f.lightDefault); }); },
         setDark: function(set){ cfg.fields.forEach(function(f){ setHexField(f.darkPicker, f.darkHex, set[f.key] || f.darkDefault); }); }
       };
@@ -514,7 +550,12 @@
 
     var brandSaveStatus = document.getElementById("brandSaveStatus");
     saveBrandBtn.addEventListener("click", function(){
-      if (!normalizeHex(brandLightHex.value)) return;
+      if (!normalizeHex(brandLightHex.value)){
+        brandLightHex.setAttribute("aria-invalid", "true");
+        brandSaveStatus.textContent = "Primary looked incomplete - kept the last saved value, nothing was applied.";
+        setTimeout(function(){ brandSaveStatus.textContent = ''; }, 2500);
+        return;
+      }
       persistBrand();
       applyBrandLiveForActiveTheme();
       setBrandSaved(true);
@@ -576,9 +617,9 @@
 
     function readTriple(fields){
       return {
-        primary: fields.primary.hex.value.toUpperCase(),
-        secondary: fields.secondary.hex.value.toUpperCase(),
-        tertiary: fields.tertiary.hex.value.toUpperCase()
+        primary: validatedHex(fields.primary.hex),
+        secondary: validatedHex(fields.secondary.hex),
+        tertiary: validatedHex(fields.tertiary.hex)
       };
     }
     function setTripleFields(fields, set){
@@ -586,6 +627,8 @@
         var hex = normalizeHex(set[key]) || set[key];
         fields[key].picker.value = "#" + hex;
         fields[key].hex.value = hex;
+        fields[key].hex.dataset.lastValid = hex;
+        fields[key].hex.removeAttribute("aria-invalid");
       });
     }
     // Page/Panel/Raised only read as 3 distinct elevation steps if each
@@ -736,7 +779,7 @@
       applyBgLiveForActiveTheme();
       setBgSaved(true);
 
-      bgSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
+      reportHexErrors(saveBgBtn.closest(".color-foundation"), bgSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ bgSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -842,7 +885,7 @@
       applyStatusLiveForActiveTheme();
       setStatusSaved(true);
 
-      statusSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
+      reportHexErrors(saveStatusBtn.closest(".color-foundation"), statusSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ statusSaveStatus.textContent = ''; }, 2500);
     });
 
@@ -948,7 +991,7 @@
       applyNeutralLiveForActiveTheme();
       setNeutralSaved(true);
 
-      neutralSaveStatus.textContent = "Applied to this page - your edits auto-save as you type";
+      reportHexErrors(saveNeutralBtn.closest(".color-foundation"), neutralSaveStatus, "Applied to this page - your edits auto-save as you type.");
       setTimeout(function(){ neutralSaveStatus.textContent = ''; }, 2500);
     });
 
