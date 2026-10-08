@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Spacing scale swatches now encode their value as width, not as uniform squares plus a hidden margin
+
+User request, with a screenshot of spacing.html highlighting the small colored swatch rows under each spacing-system card and under the Micro/Component/Layout rows: the boxes for 2px, 4px, 6px, 8px (etc.) all rendered as equal-size squares. Asked to keep the height as-is and make the width reflect each value instead.
+
+The swatches (`.gap-demo-block`) were never actually sized per-value in the first place - every one was a fixed 16x16px square; the value each row names (e.g. "2, 4, 6px") was encoded as that swatch's own `margin-right` instead, so the boxes themselves always looked identical and only the gaps between them varied. Converted all 7 instances across spacing.html (the 4 spacing-system cards' own scale preview, plus the Micro/Component/Layout rows in "Recommended global model") from margin-encoded gaps to width-encoded swatches: each swatch's inline style is now `width:var(--dimension-N)` for the exact value already being demonstrated in that row (height stays the shared 16px fixed value), with a small constant `gap:var(--space-4)` on the row replacing the old per-swatch margin. Confirmed every N used (2/4/6/8/16/24/32) is already a registered dimension token in `foundation-model.js`'s whitelist, so each one correctly resolves (and converts under the px/rem toggle) rather than silently failing to apply.
+
+Dropped the old trailing unlabeled "closer" swatch each row ended with - under the margin-based scheme it was just visual padding with no value of its own; under width-encoding there's nothing left for it to represent.
+
+Verified with Playwright: every swatch's rendered width now exactly matches its labelled number in pixels (confirmed 2/4/6, 4/8/16, 8/16, 2/8/24 for the four system cards and 2/4/6, 8/16/24, 16/24/32 for Micro/Component/Layout), height unchanged at 16px throughout, 0 console errors. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Baseline Grid card touching the Grid type cards above it, 0px gap
 
 User report, with a screenshot of grid-layout.html highlighting the region between the "Grid type" cards (Custom/Columns/Rows/Columns+Rows) and the "Baseline Grid" card directly below.
