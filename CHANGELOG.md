@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Patterns/Templates listing cards' Copy prompt and Copy code buttons now use the real 32px control size
+
+User request: the "Copy code"/"Copy prompt" buttons on the Patterns and Templates listing pages' cards should use the 32px button height.
+
+These buttons (`.card-copy-row .btn`, `patterns.html` and `templates.html` - 5 cards each) use the shared `.btn-sm` class, which only sets padding/font and rendered at 40px tall - but `.btn-sm` is also reused on 2 unrelated buttons elsewhere (`components.html`'s "Upload icon variation", `foundations.html`'s 4 "Regenerate from Light" buttons) that nobody asked to resize, so the fix had to be scoped to `.card-copy-row .btn` specifically, not the shared class.
+
+First attempt (`height:var(--dimension-32)` alone) measured no change - still 40px. Found why by listing every CSS rule actually matching the button: `foundation.css`'s sitewide `.btn{ min-block-size:max(var(--size-control), ...) }` (part of the Foundation application engine adopted earlier in this log) enforces a 40px minimum control height on every button on the site, and min-height always wins over a smaller explicit height per the CSS box model regardless of selector specificity. Fixed by also overriding `min-block-size:var(--dimension-32)` on the same scoped selector (which does out-specificity the sitewide rule, so this part alone was sufficient the second time), alongside `height:var(--dimension-32)` and `padding:0 var(--space-12)` to match the established `-h32` convention used by every other 32px control sitewide.
+
+Verified with Playwright: all 10 affected buttons (5 cards x 2 buttons, each page) measure exactly 32px tall on both pages, text still fully visible and centered (no clipping), 0 console errors. Confirmed the 2 unrelated `.btn-sm` buttons on components.html/foundations.html are untouched (different selector, not scoped to `.card-copy-row`). Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Two more Design Principles demos found broken after a wider check, same page
 
 User follow-up to the CTA-alignment fix above, reporting "this same type of issue is on lots of pages." Before touching anything, ran a validated sitewide sweep for the exact bug shape just fixed (a flex row with `align-items:center` pairing a label-plus-control field against a flat sibling button) across all 157 pages - confirmed the detector actually catches the known bug by re-injecting it, then ran it clean: zero other matches. Asked the user for the specific pages rather than guess broadly off an unconfirmed premise; they sent two more screenshots, both of the same Design Principles page - so "lots of pages" meant lots of spots on this one page, not a sitewide pattern.

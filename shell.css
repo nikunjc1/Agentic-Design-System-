@@ -5185,7 +5185,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    longer label removes the stretch entirely - both buttons now render at
    a fixed, content-appropriate 110px on every card, regardless of the
    card's own width. */
-.card-copy-row .btn{ flex: 0 0 auto; min-width:var(--dimension-110); text-align: center; }
+.card-copy-row .btn{ flex: 0 0 auto; min-width:var(--dimension-110); text-align: center; height:var(--dimension-32); min-block-size:var(--dimension-32); padding:0 var(--space-12); }
 
 .card-configure-link{
   display: inline-flex;
