@@ -1566,6 +1566,10 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    now, not a 5th mutually-exclusive option, so it gets a real checkbox
    instead of is-active/aria-pressed like its 4 structural siblings. */
 .system-card-toggle{ position: relative; }
+/* Pulling Baseline Grid out of the mutually-exclusive card grid (G04, above)
+   left it with no margin of its own - it rendered flush against the grid
+   above it (0px gap) while everything else on the page keeps a 16px rhythm. */
+.system-card-grid + .system-card-toggle{ margin-top: var(--space-16); }
 .system-card-toggle input[type="checkbox"]{ position: absolute; top:var(--dimension-16); inset-inline-end:var(--dimension-16); width:var(--dimension-18); height:var(--dimension-18); accent-color: var(--red-500); margin:0; }
 .system-card-toggle:has(input:checked){ border-color: var(--red-500); background: var(--red-tint); }
 .system-card-head{ display: flex; align-items: baseline; gap:var(--space-8); flex-wrap: wrap; }

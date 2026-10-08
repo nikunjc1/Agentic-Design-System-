@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Baseline Grid card touching the Grid type cards above it, 0px gap
+
+User report, with a screenshot of grid-layout.html highlighting the region between the "Grid type" cards (Custom/Columns/Rows/Columns+Rows) and the "Baseline Grid" card directly below.
+
+Measured the actual gap rather than assuming: `0px` - the Baseline Grid card rendered flush against the cards grid above it, while the gap from Baseline Grid down to the Columns/Gutter fields below it was a deliberate 16px. Traced the cause to the G04 fix (already in this file, above): Baseline Grid used to be the 5th option inside the same mutually-exclusive `.system-card-grid`, and was deliberately pulled out into its own standalone `.system-card-toggle` element so selecting it wouldn't silently replace the active structure type. That extraction never gave it a margin of its own, so it inherited zero spacing from its new position as a plain sibling.
+
+Fixed by adding `margin-top:var(--space-16)` scoped to `.system-card-grid + .system-card-toggle` specifically (not a blanket `.system-card-toggle` margin, since that class could in principle be reused elsewhere without following a cards grid) - matching the 16px rhythm already used immediately below it.
+
+Verified with Playwright: both gaps (cards-grid-to-Baseline-Grid, Baseline-Grid-to-Columns/Gutter) now measure 16px identically. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Dimension-companion inputs/selects aligned to the Component Library's control height
 
 User report, with a screenshot of Typography's Letter spacing field: its input and px/rem unit dropdown didn't match the Components Library. Asked to find which real component this should have been built from.
