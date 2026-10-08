@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Seven Foundation/Overview summary grids capped at 3 columns instead of 4
+
+User follow-up asking for "three cards in a row for all listing pages," plus re-confirming the Copy prompt/Copy code fixes above reach every listing page. Rather than changing the shared `.system-card-grid` class globally (used on 70 pages for very different things - component type-variant grids, Foundation philosophy swatches, Overview's own nav cards), checked first, since "listing page" was ambiguous: a sitewide sweep found that none of the ~63 individual component pages (Button, Select, Input, etc.) actually render 4+ cards right now - nearly all show just 1. The only pages that genuinely render a full 4-card row are 7 Foundation/Overview pages: borders.html ("Border presets", 6 cards), grid-layout.html ("Grid type", 4), icons.html ("Icon style", 7), overview.html ("Start here", 4), radius.html ("Radius philosophy", 5), shadows.html ("Shadow philosophy", 5) and spacing.html ("Spacing system", 4). Confirmed this list with the user before touching anything, since changing the shared class outright would have silently affected the other 63 pages too.
+
+(Also confirmed in the same pass that the Copy prompt/Copy code 32px-height and one-row fixes from the two entries above already reach every page that uses `.card-copy-row` - it's a shared class, so nothing further was needed there; verified directly on select.html, input.html and card.html.)
+
+Scoped the fix to exactly these 7 grids rather than the shared class: gave each one's existing `data-role="system-grid"` a unique value, `data-role="foundation-overview-grid"` (nothing in any JS, CSS or test referenced the old generic value, confirmed by grep before renaming), then added one new rule targeting that attribute, positioned in shell.css right after the existing Modal/Tabs/Tree 2-column override and before the narrower responsive breakpoints - matching that exact same source-order-dependent cascade technique already used for every other per-component column override in this file, so the existing `@media(max-width:1100px)`/`@media(max-width:700px)` step-downs to 2/1 columns still correctly apply underneath it at narrow widths.
+
+Verified with Playwright at a wide viewport: all 7 targeted pages now resolve to 3 columns; spot-checked select.html, input.html and components.html still resolve to the untouched default of 4. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css`, `borders.html`, `grid-layout.html`, `icons.html`, `radius.html`, `shadows.html` and `spacing.html` all had unrelated in-progress work from the same separate process noted in earlier entries at the time of this fix - isolated each change onto a clean base before committing, as before. `overview.html` had no such in-progress work.
+
 ## Copy prompt/Copy code stacked onto two lines instead of staying one row
 
 User follow-up to the 32px button-size fix, with a screenshot of components.html's "System Generated Button"/"Insure Edge" cards: the two buttons were stacking vertically instead of sitting side by side.
