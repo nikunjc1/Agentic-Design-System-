@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Reject button's background followed the brand color instead of staying a fixed danger-red
+
+User report, with a second screenshot of the same approve/reject demo: Approve showed proper green, but Reject's background rendered purple/blue instead of red - with their own brand color (visibly blue in the top-right accent dot) now showing through in exactly the one place it shouldn't.
+
+Found the actual inconsistency rather than assuming a rendering bug: `.btn-demo--reject`'s border, text and focus outline already correctly used `var(--danger-500)` (a fixed token, always red regardless of brand customization - confirmed `--danger-500:#ff031a` is defined independently of `--red-500`, which IS the brand-customizable token and only defaults to the same red), but its own `background` property was the one place still using `var(--red-500)`. `.btn-demo--approve` never had this problem - it consistently uses `var(--green-500)` for border, text and background alike, which is why only Reject showed the wrong color.
+
+Fixed by changing `.btn-demo--reject`'s background (rest/hover/active) from `var(--red-500)` to `var(--danger-500)`, matching its own border/text.
+
+Verified by simulating the user's exact scenario: set the brand color to blue (`#2563EB`) via Foundations' color picker, then confirmed via computed style that `--red-500` correctly resolved to blue while Reject's background still correctly resolved to the fixed danger-red (`#ff031a`) - and visually confirmed in a screenshot that Approve/Reject now both show their correct semantic colors regardless of brand customization. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Approve/Reject button tint was too subtle to read as colored at rest
 
 User report, with a screenshot of the AI & Agents "approve/reject" demo: the light red background behind Reject wasn't showing up.
