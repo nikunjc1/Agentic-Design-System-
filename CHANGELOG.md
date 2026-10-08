@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Design Principles' "Keep it Lightweight" Do demo had its CTA misaligned with the input it sits beside
+
+User follow-up, with a screenshot of the same page's "7. Keep it Lightweight" Do demo: the "Create" button next to the "Project name" field wasn't lined up with it.
+
+Measured rather than judged by eye: the field (`.input-demo-field`, a label stacked above its input) is 68px tall as a whole, but its own input control is only the bottom 36px of that - `.guide-dodont-demo`'s base `align-items:center` centers the row's items against each other's full box height, so the 36px-tall "Create" button centered against the field's full 68px, landing 16px above the input it's meant to pair with (confirmed: input center at y=3665, button center at y=3649) instead of sitting flush beside it the way a real inline field-plus-button row would.
+
+Fixed by adding `align-items:flex-end` to this demo's own inline style, so the button's bottom edge lines up with the input's bottom edge (both now measure identical top/bottom, 3647.3/3683.3) - the label is left free to sit above the input alone, which is what every real paired-field-and-button row in the actual component library does.
+
+Swept all 157 pages for the same shape of bug (a `.guide-dodont-demo` row pairing a label-plus-control field against a flat sibling button/control, checked for a vertical-center mismatch) - no other instance found; this was isolated to the one reported demo.
+
+Verified with Playwright: input and button bounding boxes now match exactly (top 3647.34375, bottom 3683.34375 for both), 0 console errors. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`principles.html` was not touched by the separate in-progress process noted in earlier entries, so no isolation was needed for this fix.
+
 ## Design Principles' "Provide an Invitation" Don't demo clipped its own text mid-word
 
 User report: the Design Principles page had widespread alignment/spacing problems, asked to check section by section rather than guess at one spot.
