@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Same tinted-background pattern on the "AI Rule" callout, across 6 pages
+
+User follow-up to the fix above: a similar card exists on other pages too.
+
+Searched broadly rather than guessing which card they meant: every `background: var(--*-tint)` rule in the codebase, then narrowed to the ones NOT tied to an interactive state class (`.is-active`/`.is-checked`/`.is-selected`/`.is-open`/`.is-dragover` and similar all legitimately use a tint background to show selection/hover state, and were left alone - removing those would delete real functional feedback across dozens of unrelated components, not fix a bug). The one other always-on, non-state-conditional tinted callout is `.ai-rule-callout` - the "AI Rule" box already visible in earlier screenshots this session (Spacing, Radius, etc.), present on 6 pages: `ai-foundation.html`, `borders.html`, `icons.html`, `radius.html`, `spacing.html`, `typography.html`.
+
+Removed its `background: var(--red-tint)`, keeping its neutral `--line-strong` border, radius, padding and margin unchanged - same treatment as the AI & Agents card above, applied to its one other instance.
+
+Verified with Playwright across all 6 pages: background now transparent, border unchanged, 0 console errors on every one. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Removed the tinted background from the AI & Agents "approve/reject" demo card
 
 User request, with a screenshot of ai-foundation.html's "Agent actions: approve, reject, undo" section: remove the background fill from the highlighted card, keeping its border.
