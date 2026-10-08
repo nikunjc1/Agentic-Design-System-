@@ -2037,6 +2037,16 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Removed the tinted background from the AI & Agents "approve/reject" demo card
+
+User request, with a screenshot of ai-foundation.html's "Agent actions: approve, reject, undo" section: remove the background fill from the highlighted card, keeping its border.
+
+Confirmed first that the screenshot's pink was the user's own annotation overlay (a fresh, unmodified render of the same card shows its real background as a light purple/lavender tint, `var(--color-ai-accent-tint)`, not pink) - the request is about that real tint, not a bug to chase. `.ai-agent-demo-card` is used only on this one page, so removed `background: var(--color-ai-accent-tint)` from it entirely, keeping its `var(--color-ai-accent)` border, radius and padding unchanged - the card now sits on the page's own background with just its colored outline marking it as AI-suggested content.
+
+Verified with Playwright: computed background is transparent, border unchanged (1px solid, AI-accent purple), 0 console errors. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Same card-swatch misalignment on Borders and Shadows (and a pre-existing, more specific Shadows override found along the way)
 
 User request, following the Spacing and Radius fixes above: check the rest of the Foundation pages with this same card pattern.

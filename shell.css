@@ -863,7 +863,6 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   max-width:var(--dimension-480);
   border: var(--border-width-1) var(--border-style) var(--color-ai-accent);
   border-radius: var(--radius-md);
-  background: var(--color-ai-accent-tint);
   padding:var(--space-16);
 }
 .ai-agent-status{ margin:0; }
