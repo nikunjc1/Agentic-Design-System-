@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Approve/Reject button text and border failed WCAG contrast against their own tinted background
+
+User report: "check the accessibility of the 'Approve' and 'Rejected'" on the AI & Agents demo card - a specific accessibility concern, not a visual complaint, so this was investigated with contrast math rather than by eye.
+
+Measured both buttons' actual rendered colors (text/border `var(--green-500)`/`var(--danger-500)` directly on top of their own `color-mix(in srgb, ... 20%, transparent)` tinted background, composited over the page's white surface) with a from-scratch WCAG contrast-ratio implementation (sRGB-to-linear conversion, relative luminance, `(L1+0.05)/(L2+0.05)`). Both failed the 4.5:1 text/border threshold: Approve measured 2.86:1, Reject 2.82:1 - and traced part of this directly back to this session's own earlier "make the tint visible" fix (opacity 10% to 20%, approved above): raising the tint's opacity darkened the background these same colors sit on, which measurably worsened their own contrast against it (Reject dropped from 3.36:1 to 2.82:1) as a side effect nobody had re-checked at the time.
+
+Checked whether an existing darker token could fix this before inventing a new one: `--danger-600` exists but even that wasn't dark enough against the 20%-opacity background (3.78:1, still failing); no `--green-600`/`--green-700` tier exists at all (unlike red, green has only one shade defined sitewide). Rather than silently invent a color or quietly revert the user-approved opacity bump (which would re-litigate a decision already made), asked the user directly how to resolve the tradeoff: they chose adding new darker tokens and keeping the tint as-is.
+
+Found the real minimum darkening needed by computation, not guesswork: a script darkens each base hue by decreasing multiplicative factors against its own actual tinted background until crossing 4.5:1. Added `--green-700:#1c7242` and `--red-700`/`--danger-700:#b20212` to `foundation-model.js`'s primitives (both light and dark theme blocks, matching the existing convention of literal, non-aliased hex values for these hues). Updated `.btn-demo--approve`/`.btn-demo--reject` in shell.css to use the new `-700` tokens for `color`, `border-color` and the focus-visible `outline`, while deliberately leaving `background` on the original `-500` tokens so the user's approved tint opacity is untouched.
+
+Verified with Playwright: computed `color`/`border-color` now resolve to `rgb(28, 114, 66)` (Approve) and `rgb(178, 2, 18)` (Reject) exactly, both now passing 4.5:1 against their own tinted background; tint opacity and hue unchanged; 0 console errors; visually confirmed in a cropped screenshot showing both buttons clearly readable. Full 157-page regression sweep (628 page/width checks) and all 8 unit test suites (51 tests total): 0 failures.
+
+`shell.css` and `foundation-model.js` both again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Reject button's background followed the brand color instead of staying a fixed danger-red
 
 User report, with a second screenshot of the same approve/reject demo: Approve showed proper green, but Reject's background rendered purple/blue instead of red - with their own brand color (visibly blue in the top-right accent dot) now showing through in exactly the one place it shouldn't.
