@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Two more Design Principles demos found broken after a wider check, same page
+
+User follow-up to the CTA-alignment fix above, reporting "this same type of issue is on lots of pages." Before touching anything, ran a validated sitewide sweep for the exact bug shape just fixed (a flex row with `align-items:center` pairing a label-plus-control field against a flat sibling button) across all 157 pages - confirmed the detector actually catches the known bug by re-injecting it, then ran it clean: zero other matches. Asked the user for the specific pages rather than guess broadly off an unconfirmed premise; they sent two more screenshots, both of the same Design Principles page - so "lots of pages" meant lots of spots on this one page, not a sitewide pattern.
+
+**"8. Provide an Invitation" Do demo** - "Q1 Report.pdf" and its "Rename · Delete" action pill were each wrapping into two lines inside a visibly cramped box, instead of sitting on one line like the matching Don't case right next to it. Measured the cause: the row had a hardcoded `width:var(--dimension-200)` (200px) left over from an earlier layout, too narrow for the actual rendered content once both the filename and the pill are accounted for - confirmed via `getClientRects()` that both spans occupied 2 lines each at that width. Fixed by dropping the fixed width and `justify-content:space-between` in favor of `gap:var(--space-10)` with `white-space:nowrap` on both spans (matching the sibling Don't case's own convention), so the row sizes to its real content on one line.
+
+**"9. Use Transition" Do and Don't demos** - both showed a "Shipping details" Collapse header with no chevron icon, unlike every other instance of this exact illustration pattern sitewide (`collapse-default.html`'s own Do/Don't Collapse demo includes `.collapse-demo-chevron` as a matter of course, since the real Collapse component's header is always `justify-content:space-between` with text on one side and the chevron on the other). Added the missing `<svg class="collapse-demo-chevron">` to both demos' headers, matching `collapse-default.html`'s exact markup (no `is-open` class, consistent with that same file's own precedent for an already-expanded illustration).
+
+Went beyond the two reported spots again: re-swept all 157 pages using `getClientRects()` to find any short, label-like text wrapping inside a `.guide-dodont-demo`, and separately checked every `.collapse-demo-header` sitewide for a missing chevron. The wrap sweep surfaced many hits, but on inspection every one outside this page was ordinary multi-line prose wrapping as designed (alert bodies, card descriptions, empty-state copy) - not the same bug, which is specifically a short label/filename squeezed by a hardcoded width. No missing chevrons found anywhere else.
+
+Verified with Playwright: the Invitation Do row's two spans render at their natural single-line heights (17px font line height, not the previous wrapped ~33-54px), matching the Don't row's layout; both Transition demos' headers now include the chevron, visually matching `collapse-default.html`; 0 console errors. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`principles.html` was not touched by the separate in-progress process noted in earlier entries, so no isolation was needed for this fix.
+
 ## Design Principles' "Keep it Lightweight" Do demo had its CTA misaligned with the input it sits beside
 
 User follow-up, with a screenshot of the same page's "7. Keep it Lightweight" Do demo: the "Create" button next to the "Project name" field wasn't lined up with it.
