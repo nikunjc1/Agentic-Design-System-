@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Copy prompt/Copy code stacked onto two lines instead of staying one row
+
+User follow-up to the 32px button-size fix, with a screenshot of components.html's "System Generated Button"/"Insure Edge" cards: the two buttons were stacking vertically instead of sitting side by side.
+
+Reproduced the cause rather than guessing: `.card-copy-row` (shared by components.html, patterns.html and templates.html) has `flex-wrap:wrap` from the sitewide Foundation engine's generic `.card-copy-row{flex-wrap:wrap;gap:8px}` rule (foundation.css) - each button has a fixed, deliberately-chosen `min-width:110px` (so "Copy prompt"/"Copy code" render at the same uniform width rather than each hugging its own shorter/longer label) and `flex:0 0 auto` (no shrink), so whenever the row's own available width drops below roughly 228px (both buttons' min-width plus gap), wrap is the only thing that can give, stacking the row onto two lines. Confirmed this reproduces starting at a 320px viewport in a fresh, default-profile browser - narrower than this session's own desktop testing had been checking, which is why it hadn't surfaced yet.
+
+Fixed by adding `.app-main .card-copy-row{ flex-wrap:nowrap; max-width:100%; overflow-x:auto; }` to shell.css - the extra `.app-main` ancestor qualifier gives this two-class selector enough specificity to win over foundation.css's single-class rule without `!important`, matching how other sitewide-engine overrides in this file are already written. `overflow-x:auto` is a deliberate fallback matching the established Calendar/Transfer/Cascader 320px-overflow pattern already used elsewhere in this codebase: at the one width this change was verified against (320px) the row's own fixed-width buttons are wider than the available space, so it scrolls horizontally within its own small area rather than reverting to the two-line stack the user was asking to get rid of, or overflowing the page itself.
+
+Verified with Playwright at 1440/480/320px on all 3 pages: the row never wraps onto two lines at any width, button height stays the confirmed 32px from the prior fix, and `main.scrollWidth` matches `main.clientWidth` everywhere (no page-level overflow introduced). Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries. This time the isolated fix was merged directly onto the process's current working-tree state rather than restoring the pre-fix snapshot afterward - the prior entry's restore step is what let the Copy-button height fix silently disappear from the live file for a time even though it was already committed, a mistake this commit's workflow was changed to avoid repeating.
+
 ## Patterns/Templates listing cards' Copy prompt and Copy code buttons now use the real 32px control size
 
 User request: the "Copy code"/"Copy prompt" buttons on the Patterns and Templates listing pages' cards should use the 32px button height.

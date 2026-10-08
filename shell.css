@@ -5173,6 +5173,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   gap:var(--space-8);
   margin-top:var(--space-4);
 }
+.app-main .card-copy-row{ flex-wrap: nowrap; max-width:100%; overflow-x:auto; }
 /* flex:1 (the previous rule here) stretched each button to fill whatever
    width .card-copy-row itself resolved to - every *-type-card rule sets
    that to width:100% of its own card, so the row (and both buttons with
