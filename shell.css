@@ -1422,6 +1422,11 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 /* Visual gap demos - actual rendered spacing, not just numbers, so the
    scale is legible at a glance without reading the px list. */
 .gap-demo-row{ display: flex; align-items: center; gap:var(--space-4); margin-top:var(--space-12); }
+/* Inside a system-card (flex column, equal-height via its CSS Grid row),
+   the swatch row's distance from the top varies with how many lines the
+   card's own description/scale text happens to wrap to - pin it to the
+   bottom instead, so it lines up across every card in the row regardless. */
+.system-card .gap-demo-row{ margin-top: auto; }
 .gap-demo-block{
   /* Width is set inline per swatch to the real px value it represents -
      the block's own size is the data, not a fixed decoration with the

@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Spacing-system card swatches not bottom-aligned across the row
+
+User report, with a screenshot of spacing.html's four spacing-system cards (2px/4px/8px/Adaptive): the swatch row under "4px" sat higher than the swatches on the cards to its left and right, which lined up at the bottom correctly.
+
+Measured each card precisely rather than guessing: all four cards are already the same height (equal rows via `.system-card-grid`'s CSS Grid, which stretches grid items by default) - `display:flex;flex-direction:column` confirmed on every card. The gap below the swatch row to the card's own bottom edge was 17px/33px/58px for 2px/4px/8px respectively, instead of matching. Traced it to each card's own description and scale-list text wrapping to a different number of lines (word-wrap position, not character count, decides this - 2px's and 4px's scale strings are nearly the same length but wrap to a different line count) - with nothing pinning the swatch row to the bottom of its flex column, it just sat wherever the preceding text happened to end, so cards with shorter wrapped text left a bigger gap below their swatch.
+
+Fixed with the standard flex technique for this: `margin-top:auto` on `.gap-demo-row`, scoped to `.system-card .gap-demo-row` specifically (not every page using this swatch row - `.gap-demo-row` is also used in "Recommended global model"'s Micro/Component/Layout rows, a horizontal, not vertical, flex context where this fix doesn't apply and isn't needed; confirmed `.gap-demo-row` is only used on this one page at all).
+
+Verified with Playwright: all 4 cards now measure identically 17px from their swatch row to the card's bottom edge, confirmed visually matching. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Spacing scale swatches now encode their value as width, not as uniform squares plus a hidden margin
 
 User request, with a screenshot of spacing.html highlighting the small colored swatch rows under each spacing-system card and under the Micro/Component/Layout rows: the boxes for 2px, 4px, 6px, 8px (etc.) all rendered as equal-size squares. Asked to keep the height as-is and make the width reflect each value instead.
