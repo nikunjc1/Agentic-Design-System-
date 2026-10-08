@@ -1625,7 +1625,10 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   background: #f1f1ee;
   border-radius: var(--radius-md);
 }
-.system-card .shadow-demo-row{ margin-top:var(--space-12); padding:var(--space-12); gap:var(--space-12); }
+/* Same fix as .gap-demo-row/.radius-demo-row: pin the swatch row to the
+   bottom of its system-card instead of wherever the preceding description/
+   scale text happens to wrap to, so it lines up across every card in the row. */
+.system-card .shadow-demo-row{ margin-top:auto; padding:var(--space-12); gap:var(--space-12); }
 .system-card .shadow-demo-box{ width:var(--dimension-28); height:var(--dimension-28); }
 .shadow-demo-box{
   width:var(--dimension-40); height:var(--dimension-40);
@@ -1646,6 +1649,10 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 /* Real rendered borders, same family as the gap/radius/shadow demos above -
    a swatch with the actual width/style/color/opacity applied, not a number. */
 .border-demo-row{ display: flex; align-items: center; margin-top:var(--space-12); }
+/* Same fix as .gap-demo-row/.radius-demo-row/.shadow-demo-row: pin the swatch
+   row to the bottom of its system-card instead of wherever the preceding
+   description/scale text happens to wrap to, so it lines up across the row. */
+.system-card .border-demo-row{ margin-top: auto; }
 .border-demo-box{
   width:var(--dimension-32); height:var(--dimension-32);
   flex: none;

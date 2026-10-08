@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Same card-swatch misalignment on Borders and Shadows (and a pre-existing, more specific Shadows override found along the way)
+
+User request, following the Spacing and Radius fixes above: check the rest of the Foundation pages with this same card pattern.
+
+Checked systematically rather than guessing which pages might have it: Typography and Colors have no `system-card-grid` at all; Grid & Layout's structure cards (`.grid-demo`) were already consistently aligned (17px every card) - not every system-card-grid has this bug, only the ones whose swatch row has no bottom-pinning. Measured the remaining three: Borders' presets (`.border-demo-row`) showed 17/18/41/41px gaps across its 6 cards; Shadows' philosophies (`.shadow-demo-row`, shared with Icons) showed 17/41/40/41px; Icons itself (`.shadow-demo-row` too) was already consistently 17-18px.
+
+Fixed `.border-demo-row` the same way as the three prior fixes: `margin-top:auto` scoped to `.system-card .border-demo-row` (confirmed only used on borders.html).
+
+Shadows needed a closer look first: `.shadow-demo-row` already had an existing, more specific `.system-card .shadow-demo-row{ margin-top:var(--space-12); padding:var(--space-12); gap:var(--space-12); }` override (a compact variant for inside the card, smaller padding than the base rule's 20px) - introduced before this fix and unrelated to it, so the correct change was replacing that override's own `margin-top` value with `auto`, not adding a competing rule elsewhere. (An editing slip while making this change briefly misplaced the base `.shadow-demo-row` rule's own `padding`/`background`/`border-radius` properties into the wrong rule - caught via `git diff` against HEAD before verifying, and corrected to a clean, minimal diff before testing anything.)
+
+Verified with Playwright: Borders' 6 presets and Shadows' 5 philosophies (and Icons' 7 styles, confirmed unaffected since it was already correct) all now measure an identical 17px from swatch row to card bottom, 0 console errors. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Radius philosophy card swatches not bottom-aligned (same root cause as the Spacing fix, different class)
 
 User request, following the Spacing card fix above: check the rest of radius.html's own tabs for the same problem.
