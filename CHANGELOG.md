@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Approve/Reject button tint was too subtle to read as colored at rest
+
+User report, with a screenshot of the AI & Agents "approve/reject" demo: the light red background behind Reject wasn't showing up.
+
+Measured rather than assumed: `getComputedStyle` confirmed the tint genuinely was being applied (`color-mix(in srgb, var(--red-500) 10%, transparent)`), and sampling the actual rendered pixel inside the button gave `rgb(255, 229, 232)` - mathematically correct for a 10% mix, but close enough to white that it reads as plain white at normal viewing size. Not a broken rule; the chosen opacity was just too subtle to be perceived as "light red" in practice. Checked with the user what level of visibility they wanted before picking a number, since this is a design-intensity judgment call, not an objective bug fix.
+
+Raised both `.btn-demo--approve` and `.btn-demo--reject` (resting/hover/active) from 10%/16%/26% to 20%/28%/36% - confirmed only used on `ai-foundation.html`, so no other page is affected.
+
+Verified by re-sampling the same pixel after the change: `rgb(255, 205, 209)`, a clearly visible light red/pink now, and visually confirmed in a cropped screenshot of the button. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Same tinted-background pattern on the "AI Rule" callout, across 6 pages
 
 User follow-up to the fix above: a similar card exists on other pages too.

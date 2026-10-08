@@ -2390,18 +2390,18 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 /* Approve is a positive/success semantic action - it gets its own green
    treatment rather than reusing Neutral's gray, matching Destructive's
    red so the two semantic outcomes read as opposites at a glance. */
-.btn-demo--approve{ background: color-mix(in srgb, var(--green-500) 10%, transparent); color: var(--green-500); border-width: 2px; border-color: var(--green-500); }
-.btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: color-mix(in srgb, var(--green-500) 16%, transparent); }
-.btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: color-mix(in srgb, var(--green-500) 26%, transparent); }
+.btn-demo--approve{ background: color-mix(in srgb, var(--green-500) 20%, transparent); color: var(--green-500); border-width: 2px; border-color: var(--green-500); }
+.btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: color-mix(in srgb, var(--green-500) 28%, transparent); }
+.btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: color-mix(in srgb, var(--green-500) 36%, transparent); }
 .btn-demo--approve:focus-visible, .btn-demo--approve.is-focus{ outline: 2px solid var(--green-500); outline-offset: 2px; }
 .btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* Reject - approve's counterpart, same structure, danger instead of
    success. An AI-suggestion review needs both, not just an approve
    path with no equally-visible way to decline one. */
-.btn-demo--reject{ background: color-mix(in srgb, var(--red-500) 10%, transparent); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
-.btn-demo--reject:hover, .btn-demo--reject.is-hover{ background: color-mix(in srgb, var(--red-500) 16%, transparent); }
-.btn-demo--reject:active, .btn-demo--reject.is-pressed{ background: color-mix(in srgb, var(--red-500) 26%, transparent); }
+.btn-demo--reject{ background: color-mix(in srgb, var(--red-500) 20%, transparent); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
+.btn-demo--reject:hover, .btn-demo--reject.is-hover{ background: color-mix(in srgb, var(--red-500) 28%, transparent); }
+.btn-demo--reject:active, .btn-demo--reject.is-pressed{ background: color-mix(in srgb, var(--red-500) 36%, transparent); }
 .btn-demo--reject:focus-visible, .btn-demo--reject.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
 .btn-demo--reject:disabled, .btn-demo--reject.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
