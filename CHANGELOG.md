@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Design Principles' "Provide an Invitation" Don't demo clipped its own text mid-word
+
+User report: the Design Principles page had widespread alignment/spacing problems, asked to check section by section rather than guess at one spot.
+
+Checked every one of the page's 10 numbered sections plus its Markdown-export section individually - rendered each via Playwright at desktop width and reviewed the Do/Don't card pair in every one for misaligned edges, inconsistent padding/gaps, and overflow. Found one real, confirmed bug: "8. Provide an Invitation"'s Don't demo ("Q1 Report.pdf (actions appear only on hover, with no visible cue)") was hard-clipped mid-word by `.guide-dodont-demo`'s own `overflow:hidden` - measured the inner row's right edge at 8.8px past its card's own boundary, confirming it wasn't a rendering artifact. Traced the cause: both spans in that one row carried an inline `white-space:nowrap`, and as flex items with no width constraint, they refused to shrink to the available space the way the matching "Do" row (as a sibling comparison on the exact same card pair) does; everywhere else on the page prose spans wrap normally and were unaffected - a sitewide grep confirmed `white-space:nowrap` appears nowhere else on this page.
+
+Fixed by removing `white-space:nowrap` from the longer descriptive span only (keeping it on the short "Q1 Report.pdf" filename label, matching the Do case's own convention) - lets the sentence wrap onto a second line inside the card instead of being cut off.
+
+Went beyond the one reported page per the request to check thoroughly: swept all 157 pages with Playwright for the same failure mode (any `.guide-dodont-demo` descendant rendering past its own `.guide-dodont-case` boundary) - zero other instances found, confirming this was an isolated, one-off markup mistake rather than a systemic `.guide-dodont-demo` bug.
+
+Verified with Playwright: the row's right edge now sits 37px inside its card (previously 8.8px past it), the text wraps onto two lines exactly like its "Do" counterpart, 0 console errors. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`principles.html` was not touched by the separate in-progress process noted in earlier entries, so no isolation was needed for this fix.
+
 ## Approve/Reject button text and border failed WCAG contrast against their own tinted background
 
 User report: "check the accessibility of the 'Approve' and 'Rejected'" on the AI & Agents demo card - a specific accessibility concern, not a visual complaint, so this was investigated with contrast math rather than by eye.
