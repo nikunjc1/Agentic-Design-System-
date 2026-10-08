@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Radius philosophy card swatches not bottom-aligned (same root cause as the Spacing fix, different class)
+
+User request, following the Spacing card fix above: check the rest of radius.html's own tabs for the same problem.
+
+Checked every section on the page systematically rather than assuming it was limited to one spot: "What are you building?" (`.product-card-grid`) already aligned correctly (consistent 13px gap below every card's recommendation line); "Radius by component role" and "Component defaults" use a horizontal `.usage-row` layout (label/description/values/swatch all on one line), which was never susceptible to this bug in the first place; "Recommended global model" uses plain `.stat-grid` tiles with no demo swatch at all. The one real hit was "Radius philosophy" (`.system-card-grid`, Sharp/Compact/Balanced/Soft/Expressive) - the exact same pattern as the Spacing cards, just using `.radius-demo-row` instead of `.gap-demo-row`, so the earlier fix (scoped specifically to `.gap-demo-row`) didn't cover it. Measured it before fixing: Balanced's swatch row sat 40px above its card's bottom edge versus 17px for the other four.
+
+Fixed with the identical technique: `margin-top:auto` scoped to `.system-card .radius-demo-row` (confirmed `.radius-demo-row` is only used on this one page, same as `.gap-demo-row` was only used on Spacing).
+
+Verified with Playwright: all 5 philosophy cards now measure identically 17px from their swatch row to the card's bottom edge. Full 157-page regression sweep and all unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Spacing-system card swatches not bottom-aligned across the row
 
 User report, with a screenshot of spacing.html's four spacing-system cards (2px/4px/8px/Adaptive): the swatch row under "4px" sat higher than the swatches on the cards to its left and right, which lined up at the bottom correctly.

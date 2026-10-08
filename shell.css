@@ -1439,6 +1439,10 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 
 /* Visual corner-radius demos - real rendered corners, not just numbers. */
 .radius-demo-row{ display: flex; align-items: center; gap:var(--space-12); margin-top:var(--space-12); }
+/* Same fix as .gap-demo-row above: pin the swatch row to the bottom of its
+   system-card instead of letting it sit wherever the preceding description/
+   scale text happens to wrap to, so it lines up across every card in the row. */
+.system-card .radius-demo-row{ margin-top: auto; }
 .radius-demo-box{
   width:var(--dimension-32); height:var(--dimension-32);
   flex: none;
