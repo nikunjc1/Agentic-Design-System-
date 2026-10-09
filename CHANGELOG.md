@@ -2037,6 +2037,30 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Removed the "System Generated" prefix from every card's caption
+
+User request, mid-task: strip "System Generated" off every listing card's label.
+
+Found every instance via a sitewide grep rather than guessing the phrase's exact variations (it prefixes a different noun phrase per component - "System Generated Button", "System Generated Date Range", "System Generated Text Field", 29 unique variants in total) - 63 occurrences across 61 HTML files (every component listing card except the few, like "Insure Edge", whose caption never had the prefix to begin with). Stripped the literal "System Generated " substring from each, leaving just the descriptive remainder ("Button", "Date Range", "Text Field", ...) - confirmed with a follow-up sitewide grep that zero instances remain anywhere in rendered page content.
+
+Also found (case-insensitive sweep) one stale reference each in `docs-catalog.js`/`docs-catalog.json` - both are generated snapshots of every page's real content (via `tools/audit_pages.py`), now out of sync after 61 pages' captions changed. Regenerated both; `docs-catalog-manifest.json` updated alongside them. Left one historical code comment in `breadcrumb-detail.js` untouched - it narrates what a past bug's placeholder text used to read at the time that bug was fixed, which is accurate as history and isn't describing current behavior.
+
+Verified with Playwright: components.html, select.html and splitter.html's captions now read "Button", "Dropdown" and "System Control" respectively (no "Generated" anywhere), 0 console errors. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+Only `splitter.html` of the 61 edited HTML files had unrelated in-progress work from the same separate process noted in earlier entries, and this edit's own line matched HEAD exactly before changing it, so no isolation was needed there or anywhere else in this batch.
+
+## Card captions moved above the live demo instead of below it
+
+User request, with a screenshot (not received - confirmed the target element by description instead): move each listing card's caption label (e.g. "System Generated Button", now just "Button" per the entry above) to the top of the card, above the rendered demo, so a reader knows what they're looking at before they have to decode the demo itself.
+
+The label (`.dualicon-card-label`) was static HTML nested inside each card's own demo wrapper (`.button-type-demo`), identically structured across every component type sitewide - moving it in markup would have meant editing the same nesting change into dozens of HTML files by hand. Used the existing precedent instead: `experience.js` already walks every `[data-role="detail-href"]` card at runtime to insert its "View component guide" link, so extended that same loop to also `prepend()` the label to the card before building the link - one shared runtime fix instead of a mass HTML edit.
+
+The label's own `margin-top:12px` (sized to create a gap below the demo, its old position) left a 28px gap above it in its new spot (16px card padding plus that same 12px margin) instead of the clean 16px every other card edge uses - added `.system-card > .dualicon-card-label:first-child{margin-top:0}` so the card's own flex `gap:8px` handles label-to-demo spacing on its own, matching how every other adjacent pair of elements in the card is already spaced.
+
+Verified with Playwright: the label is now `.system-card`'s first child on every card; measured spacing on components.html came out to 17px above the label (matching the card's 16px padding, 1px of sub-pixel rounding) and a clean 8px between the label and the demo below it. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.js` and `shell.css` both again had unrelated in-progress work from the same separate process noted in earlier entries - isolated each change onto a clean base before committing, as before.
+
 ## "View component guide" restyled as a ghost CTA instead of a bare text link
 
 User request: give the "View component guide" link a transparent/ghost-button treatment, on every card it already appears on.
