@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## "View component guide" switched to the view (eye) icon and joined the Copy row
+
+User follow-up to the icon-only CTA above: use the "view" icon instead of the chevron, and put all three CTAs - view, Copy prompt, Copy code - on one row.
+
+Swapped the chevron-right path for the eye icon already established elsewhere in this codebase (Password's show/hide toggle uses the identical path), for visual consistency with this site's own icon language rather than introducing a second unrelated icon shape. Moved the link into `.card-copy-row` itself (`copyRow.prepend(link)` instead of `copyRow.before(link)`) so it renders as the row's first item alongside the two buttons, rather than on its own row above them.
+
+The move surfaced a real alignment bug: `.component-open-link` still carried `margin-top:var(--space-8)`, left over from when it sat as a standalone sibling under the card label - once nested inside the copy row next to two 32px-tall buttons, that stray margin pushed it 8px lower than its new siblings (measured: 753px vs. 745px, an exact 8px offset). Removed the margin (the row's own layout now owns all of this spacing) and added `flex:0 0 auto`, matching the row's existing buttons, so it doesn't get stretched or shrunk differently from them.
+
+Verified with Playwright: all three items in the row now share the identical top position and 32px height; checked select.html, modal.html and card.html at 1600/768/480/375/320px - stays one row, no wrapping, no page overflow, at every width. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.js` and `experience.css` both again had unrelated in-progress work from the same separate process noted in earlier entries - isolated each change onto a clean base before committing, as before.
+
 ## "View component guide" is now an icon-only CTA
 
 User request: replace the text CTA with an icon-only one.

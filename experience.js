@@ -107,9 +107,9 @@
         link.href = card.dataset.detailHref;
         link.setAttribute('aria-label', 'View component guide');
         link.title = 'View component guide';
-        link.innerHTML = '<svg class="anchor-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+        link.innerHTML = '<svg class="anchor-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
         const copyRow = card.querySelector('.card-copy-row');
-        if (copyRow) copyRow.before(link); else card.append(link);
+        if (copyRow) copyRow.prepend(link); else card.append(link);
       });
       main.querySelectorAll('.button-matrix-wrap').forEach(region => {
         region.tabIndex = 0;
