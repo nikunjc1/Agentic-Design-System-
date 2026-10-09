@@ -2037,6 +2037,16 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## "View component guide" restyled as a ghost CTA instead of a bare text link
+
+User request: give the "View component guide" link a transparent/ghost-button treatment, on every card it already appears on.
+
+`.component-open-link` (the class added in the centering fix above, shared by every `.system-card[data-detail-href]` sitewide) previously only had alignment/wrapping properties, inheriting its visual look entirely from the base `.anchor-demo-link` - plain colored text, underlined on hover, no box around it. Rather than touching `.anchor-demo-link` itself (used elsewhere sitewide for plain inline links that should stay plain text), added the ghost treatment directly to `.component-open-link`: `background:none`, a `--line-strong` border, `--radius-md` corners and real button padding (`var(--space-8) var(--space-16)`, matching the base `.btn` component's own padding), with the border switching to `--red-500` on hover/focus instead of the inherited underline (overridden off), keeping the link's existing red accent text color from `.anchor-demo-link` rather than switching to `.btn-ghost`'s neutral gray scheme, so it stays visually tied to its own established color identity.
+
+Verified with Playwright: computed styles confirm a transparent background, visible border, no underline on hover; visually checked (including a hover-state screenshot) on components.html and select.html; confirmed no page overflow at 1600/375/320px on select.html, modal.html and card.html (spanning the default 4-column-turned-3, the 2-column, and the always-3-column groups). Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Extended the 3-column listing fix to every other under-filled component page
 
 User follow-up: wanted the same width fix just applied to Button's listing extended to "the other tab[s] of components" too.
