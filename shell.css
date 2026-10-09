@@ -1548,8 +1548,9 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 /* Foundation/Overview summary grids (Border presets, Grid type, Icon
-   style, Radius philosophy, Shadow philosophy, Spacing system, and
-   Overview's own "Start here" row) - capped at 3 columns instead of the
+   style, Radius philosophy, Shadow philosophy, Spacing system,
+   Overview's own "Start here" row, and components.html's inline
+   Button-type example grid) - capped at 3 columns instead of the
    usual 4, at the user's explicit request, independent of the generic
    4-card default every other .system-card-grid still uses. */
 [data-role="foundation-overview-grid"]{

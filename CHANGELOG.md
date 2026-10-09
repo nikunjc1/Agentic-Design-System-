@@ -2037,6 +2037,16 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## components.html's Button-type grid added to the 3-column fix
+
+User follow-up, with a screenshot of components.html's "Button type" section: its 2 cards ("System Generated Button", "Insure Edge") were sitting in a 4-column grid, leaving two whole columns of visible empty space to their right - this page had been explicitly spot-checked as "should stay at 4" in the prior entry, since at the time it only had 2 cards and no page with fewer than 4 cards had been reported as a problem. The user's screenshot showed that empty trailing space itself was the actual complaint, not a missed card count.
+
+Added this grid to the same fix: changed its `data-role` from the generic `system-grid` to the shared `foundation-overview-grid` hook introduced in the prior entry, and updated that rule's explanatory comment to list this page alongside the 7 Foundation/Overview ones. No new CSS rule was needed - the existing `[data-role="foundation-overview-grid"]{grid-template-columns:repeat(3,...)}` selector picks it up automatically.
+
+Verified with Playwright: the grid now resolves to 3 columns, both cards render at the wider width a 3-column row gives them instead of a 4-column one, 0 console errors. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before. `components.html` had no such in-progress work.
+
 ## Seven Foundation/Overview summary grids capped at 3 columns instead of 4
 
 User follow-up asking for "three cards in a row for all listing pages," plus re-confirming the Copy prompt/Copy code fixes above reach every listing page. Rather than changing the shared `.system-card-grid` class globally (used on 70 pages for very different things - component type-variant grids, Foundation philosophy swatches, Overview's own nav cards), checked first, since "listing page" was ambiguous: a sitewide sweep found that none of the ~63 individual component pages (Button, Select, Input, etc.) actually render 4+ cards right now - nearly all show just 1. The only pages that genuinely render a full 4-card row are 7 Foundation/Overview pages: borders.html ("Border presets", 6 cards), grid-layout.html ("Grid type", 4), icons.html ("Icon style", 7), overview.html ("Start here", 4), radius.html ("Radius philosophy", 5), shadows.html ("Shadow philosophy", 5) and spacing.html ("Spacing system", 4). Confirmed this list with the user before touching anything, since changing the shared class outright would have silently affected the other 63 pages too.
