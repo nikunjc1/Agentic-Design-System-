@@ -1500,13 +1500,15 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 @media (max-width:1440px){
   .system-card-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-/* Each of these components has a single, wider example card (its content
-   needs more horizontal room than most components' 180-220px preview),
-   so its listing row reserves 3 columns worth of width even above the
-   1440px breakpoint, instead of the usual 4 - keeps the one card from
-   looking like a narrow orphan in a mostly-empty wide row. Add-on, Date
+/* Each of these components has a single (or, for a handful, just two)
+   example card whose content needs more horizontal room than a full
+   4-wide row gives it, so its listing row reserves 3 columns worth of
+   width instead of the usual 4 - keeps the card(s) from looking like a
+   narrow orphan in a mostly-empty wide row. Originally Add-on, Date
    Range, Transfer, Calendar, Table, Alert, Toast, Tour, Drawer,
-   Notification, Pop Confirm, Card, Collapse, Description. */
+   Notification, Pop Confirm, Card, Collapse, Description; extended at
+   the user's explicit request to every other component listing page
+   still showing this same under-filled 4-column default. */
 [data-role="addon-system-grid"],
 [data-role="daterange-system-grid"],
 [data-role="transfer-system-grid"],
@@ -1520,7 +1522,51 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 [data-role="popconfirm-system-grid"],
 [data-role="card-system-grid"],
 [data-role="collapse-system-grid"],
-[data-role="description-system-grid"]{
+[data-role="description-system-grid"],
+[data-role="affix-system-grid"],
+[data-role="anchor-system-grid"],
+[data-role="autocomplete-system-grid"],
+[data-role="avatar-system-grid"],
+[data-role="badge-system-grid"],
+[data-role="breadcrumb-system-grid"],
+[data-role="cascader-system-grid"],
+[data-role="checkbox-system-grid"],
+[data-role="colorpicker-system-grid"],
+[data-role="datepicker-system-grid"],
+[data-role="divider-system-grid"],
+[data-role="dropdown-system-grid"],
+[data-role="empty-system-grid"],
+[data-role="floatbutton-system-grid"],
+[data-role="group-system-grid"],
+[data-role="image-system-grid"],
+[data-role="input-system-grid"],
+[data-role="list-system-grid"],
+[data-role="mention-system-grid"],
+[data-role="menu-system-grid"],
+[data-role="number-system-grid"],
+[data-role="pagination-system-grid"],
+[data-role="password-system-grid"],
+[data-role="popover-system-grid"],
+[data-role="progress-system-grid"],
+[data-role="radio-system-grid"],
+[data-role="rating-system-grid"],
+[data-role="result-system-grid"],
+[data-role="search-system-grid"],
+[data-role="select-system-grid"],
+[data-role="skeleton-system-grid"],
+[data-role="slider-system-grid"],
+[data-role="spin-system-grid"],
+[data-role="splitter-system-grid"],
+[data-role="statistic-system-grid"],
+[data-role="switch-system-grid"],
+[data-role="tag-system-grid"],
+[data-role="textarea-system-grid"],
+[data-role="time-system-grid"],
+[data-role="timeline-system-grid"],
+[data-role="tooltip-system-grid"],
+[data-role="treeselect-system-grid"],
+[data-role="upload-system-grid"],
+[data-role="steps-system-grid"]{
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 [data-role="addon-system-grid"] .system-card,

@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Extended the 3-column listing fix to every other under-filled component page
+
+User follow-up: wanted the same width fix just applied to Button's listing extended to "the other tab[s] of components" too.
+
+Checked the actual scope before changing anything broad: a sitewide sweep of every `.system-card-grid` found 44 other component pages (Select, Input, Checkbox, Affix, Anchor, Avatar, Badge, Breadcrumb, Autocomplete, Cascader, Color Picker, Date Picker, Divider, Dropdown, Empty, Float Button, Group Button, Image, List, Mention, Menu, Number, Pagination, Password, Popover, Progress, Radio, Rating, Result, Search, Skeleton, Slider, Spin, Splitter, Statistic, Switch, Tag, Text Area, Time, Timeline, Tooltip, Tree Select, Upload, Steps) still showing the exact same under-filled 4-column default Button had - 43 with a single card, Steps with two, every one of them a narrow orphan with 2-3 empty columns of wasted space in its row. Confirmed this full list with the user before touching anything.
+
+Rather than inventing a new mechanism, extended the existing "single wide card needs more room than 4 columns gives it" 3-column override (already used for Add-on, Date Range, Transfer, Calendar, Table, Alert, Toast, Tour, Drawer, Notification, Pop Confirm, Card, Collapse, Description) to also match these 44 pages' own already-unique `data-role` values - no HTML changes were needed at all, since every one of these pages already carries its own distinct `{component}-system-grid` data-role from how this codebase names them; only the CSS selector list grew.
+
+Verified with Playwright: all 44 pages now resolve to 3 columns; spot-checked the pre-existing 3-column group (Add-on, Card) and 2-column group (Modal, Tabs) stayed exactly as they were, confirming the extension only matched the new selectors and didn't disturb the established ones. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## "View component guide" link not centered like the rest of its card
 
 User report: the "View component guide" link under each component card wasn't centered, unlike the demo above it and the caption below it.
