@@ -2755,6 +2755,8 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   margin-top:var(--space-12);
   margin-bottom:0;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+/* Moved to the top of the card (experience.js) so a reader sees what a card represents before the rendered demo - the card's own flex gap handles spacing here, not this label's own margin meant for sitting below the demo. */
+.system-card > .dualicon-card-label:first-child{ margin-top:0; }
 
 .button-type-states-preview{
   display: none;
