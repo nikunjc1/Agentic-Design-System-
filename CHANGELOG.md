@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## "View component guide" link not centered like the rest of its card
+
+User report: the "View component guide" link under each component card wasn't centered, unlike the demo above it and the caption below it.
+
+Measured rather than assumed, since the card's other content (the live demo, the caption) clearly was centered: `.system-card`'s children are centered as flex items, and the demo/caption both measured dead-center of the card width - but the link's own bounding box measured flush against the card's left padding edge instead (374px vs. the card's own left-padding edge at ~373px), confirming its box itself wasn't centered, not just its text. Traced the cause to `.component-open-link{align-self:flex-start; ...}` (experience.css) - a deliberate override breaking this one child out of the card's otherwise-centered flex alignment, paired with `max-width:100%;white-space:normal;overflow-wrap:anywhere` clearly written as a defensive wrap-safety-net for unexpectedly long link text.
+
+Checked whether that defensive wrapping is ever actually exercised before touching the override: the link's text is always the same fixed, short literal ("View component guide" - confirmed in `experience.js`, never interpolated or variable-length), and even at a 320px viewport it still renders on one line everywhere it's used - so there's no real content that the left-aligned, multi-line-friendly layout was actually protecting. Changed `align-self` from `flex-start` to `center`, keeping the wrap-safety properties as a harmless fallback in case that ever changes.
+
+This class is shared by every `.system-card[data-detail-href]` sitewide (every component's own type-variant listing, not just components.html's Button types), so the fix applies everywhere at once by design.
+
+Verified with Playwright: the link's horizontal center now matches its card's center almost exactly (sub-pixel rounding only) on components.html, and spot-checked select.html, input.html, card.html and modal.html at 1600px, 375px and 320px - centered everywhere, text still renders on exactly one line at every width checked. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## components.html's Button-type grid added to the 3-column fix
 
 User follow-up, with a screenshot of components.html's "Button type" section: its 2 cards ("System Generated Button", "Insure Edge") were sitting in a 4-column grid, leaving two whole columns of visible empty space to their right - this page had been explicitly spot-checked as "should stay at 4" in the prior entry, since at the time it only had 2 cards and no page with fewer than 4 cards had been reported as a problem. The user's screenshot showed that empty trailing space itself was the actual complaint, not a missed card count.
