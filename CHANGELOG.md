@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## "View component guide" is now an icon-only CTA
+
+User request: replace the text CTA with an icon-only one.
+
+Changed the link's content from the literal "View component guide" text to a single chevron-right icon (reused the exact SVG path/attributes already used for Pagination's next-page arrow, matching this site's one consistent icon style rather than drawing a new one), using the already-defined-but-previously-unused `.anchor-demo-icon` class for sizing. Since the visible label disappeared, added `aria-label="View component guide"` and a matching `title` directly in the same `experience.js` runtime loop that builds this link, so the action keeps a real accessible name and a hover tooltip despite having no visible text.
+
+Resized `.component-open-link` to match this site's own icon-only-button convention (`.icon-btn`: a 32x32px box, `padding:0`, centered content) instead of the wide text-button padding it had before, and dropped the now-irrelevant text-wrapping properties (`max-width`, `white-space`, `overflow-wrap`) that only mattered when it held visible text.
+
+Verified with Playwright: the link renders as an exact 32x32px square with the chevron centered inside, on every page checked (select.html, modal.html, card.html at 1600/375/320px) - no page overflow anywhere, hover still turns the border red per the established ghost-button convention. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.js` and `experience.css` both again had unrelated in-progress work from the same separate process noted in earlier entries - isolated each change onto a clean base before committing, as before.
+
 ## Removed the "System Generated" prefix from every card's caption
 
 User request, mid-task: strip "System Generated" off every listing card's label.

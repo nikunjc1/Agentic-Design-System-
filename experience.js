@@ -103,8 +103,11 @@
         const label = card.querySelector('.dualicon-card-label');
         if (label) card.prepend(label);
         // Plain navigation and repeated card actions use Anchor, not Primary.
-        const link = el('a', 'View component guide', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
+        const link = el('a', '', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
         link.href = card.dataset.detailHref;
+        link.setAttribute('aria-label', 'View component guide');
+        link.title = 'View component guide';
+        link.innerHTML = '<svg class="anchor-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
         const copyRow = card.querySelector('.card-copy-row');
         if (copyRow) copyRow.before(link); else card.append(link);
       });

@@ -98,7 +98,7 @@
 .app-main h1{overflow-wrap:anywhere}
 .get-library-copy,.guide-body-text,.guide-list{overflow-wrap:anywhere}
 /* Card navigation is an Anchor; repeated links carry no Primary emphasis. */
-.component-open-link{align-self:center;max-width:100%;white-space:normal;overflow-wrap:anywhere;margin-top:var(--space-8);background:none;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);padding:var(--space-8) var(--space-16);}
+.component-open-link{align-self:center;margin-top:var(--space-8);background:none;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);width:var(--dimension-32);height:var(--dimension-32);padding:0;justify-content:center;}
 .component-open-link:hover,.component-open-link.is-hover{border-color:var(--red-500);text-decoration:none;}
 .component-open-link:focus-visible,.component-open-link.is-focus{border-color:var(--red-500);}
 .setup-notice h2{margin:0 0 var(--space-8);font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking);}
