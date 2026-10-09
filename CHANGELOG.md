@@ -2037,6 +2037,16 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Removed every listing card's caption label entirely
+
+User request, with a screenshot of input.html's "Text Field" card: remove the caption. Confirmed scope before touching anything - sitewide, on every card, not just this one.
+
+The caption (`.dualicon-card-label`) had already been moved to the top of each card in an earlier entry specifically so a reader would see it before the demo; this request reverses that - the live demo (an actual rendered "Email address" field, a real "Save" button, etc.) already communicates what the component is well enough that the caption became redundant rather than helpful. Changed the same `experience.js` runtime loop from moving the label to removing it outright (`card.querySelector('.dualicon-card-label')?.remove()`), and deleted the `.system-card > .dualicon-card-label:first-child{margin-top:0}` rule added for the move - now dead code, since nothing will ever match that selector again.
+
+Verified with Playwright: input.html's card now goes straight from the demo to the view/Copy row with no caption in between, matching the report exactly; a sitewide sweep of every `.system-card[data-detail-href]` on all 157 pages confirms zero cards still have a caption label anywhere. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`experience.js` and `shell.css` both again had unrelated in-progress work from the same separate process noted in earlier entries - isolated each change onto a clean base before committing, as before.
+
 ## "View component guide" switched to the view (eye) icon and joined the Copy row
 
 User follow-up to the icon-only CTA above: use the "view" icon instead of the chevron, and put all three CTAs - view, Copy prompt, Copy code - on one row.

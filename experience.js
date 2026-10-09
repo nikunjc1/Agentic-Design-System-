@@ -98,10 +98,9 @@
     requestAnimationFrame(() => {
       main.querySelectorAll('[data-detail-href]').forEach(card => {
         card.removeAttribute('role'); card.removeAttribute('tabindex');
-        // Scanning the label before the rendered demo tells the reader what
-        // they're looking at before they have to decode the demo itself.
-        const label = card.querySelector('.dualicon-card-label');
-        if (label) card.prepend(label);
+        // The demo already shows what the component is; the caption was
+        // redundant with it, so it's removed outright rather than reordered.
+        card.querySelector('.dualicon-card-label')?.remove();
         // Plain navigation and repeated card actions use Anchor, not Primary.
         const link = el('a', '', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
         link.href = card.dataset.detailHref;
