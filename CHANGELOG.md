@@ -2037,6 +2037,18 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Excess whitespace inside listing cards after the caption/CTA changes
+
+User report: after removing the caption and compacting the CTA, cards now show a lot of empty space above the demo and below the CTA row.
+
+Measured rather than assumed, since the card's own outer padding (16px) and internal gap (8px) both checked out as normal: the demo preview box itself was stretching to 146px tall to display a single 40px button, on a page with only one other identically-sized sibling card. Traced it to `.button-type-card, .group-type-card, .input-type-card, ...` (~60 component-type selectors sharing one rule) setting `min-height:var(--dimension-220)` on every listing card - a floor originally sized for the OLD card contents (demo + caption + a separate text-link row + the Copy row), which together needed roughly 220px. With the caption gone and the link now folded into the Copy row, natural content height dropped to 130-180px for most simple components, but the 220px floor stayed fixed - `.button-type-demo`'s own `flex:1 1 0%` then stretched to soak up the entire now-oversized gap between the shrunk content and that stale floor.
+
+Measured natural heights with the floor temporarily removed across a representative spread (Checkbox 130px, Button 146px, Select/Input 178px, Card 244px, Transfer 252px, Table 343px, Calendar 418px) before deciding anything - confirmed the floor was only ever binding for the shorter, simpler components; taller ones (Table, Calendar, Transfer) already exceeded 220px and were never affected by it. Also checked every page with more than one card per row (Steps, Tree, and the Foundation/Overview grids) to confirm cards sharing a row already match each other's height naturally, since they're typically the same component's own variants - the uniform floor wasn't actually preventing any real cross-card mismatch, just adding dead space. Removed `min-height:var(--dimension-220)` entirely rather than picking a new fixed number, letting every card size to its own real content.
+
+Verified with Playwright: components.html's Button card dropped from 220px to 146px with the button sitting snugly in its demo box; Select's card similarly tightened; spot-checked Table (a taller, more complex demo) still renders with zero clipping. Full 157-page regression sweep and all 8 unit test suites: 0 failures.
+
+`shell.css` again had unrelated in-progress work from the same separate process noted in earlier entries - isolated this change onto a clean base before committing, as before.
+
 ## Removed every listing card's caption label entirely
 
 User request, with a screenshot of input.html's "Text Field" card: remove the caption. Confirmed scope before touching anything - sitewide, on every card, not just this one.

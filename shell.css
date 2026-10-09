@@ -2467,7 +2467,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    losing its matching inset for one component's sake.
    align-self:stretch is explicit, not inherited, because ~24 component
    types (Tree Select, Badge, Table, Card and others - see the
-   min-height:var(--dimension-220)/align-items:center rule below) set align-items:center
+   align-items:center rule below) set align-items:center
    on .system-card itself, to center THEIR narrower preview content. That
    makes this box shrink to its own content width and center instead of
    filling the card - invisible before it had a background, but a real
@@ -2546,7 +2546,6 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .spin-type-card,
 .statistic-type-card,
 .tree-type-card{
-  min-height:var(--dimension-220);
   align-items: center;
   text-align: center;
 }
