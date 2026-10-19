@@ -752,7 +752,57 @@
       });
     });
   }
-  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); initPageMarkdownExport(); }
+  // Self-positioning tooltip, shared by every icon-only control sitewide
+  // (the view-guide icon on every listing card, plus any icon-only Button
+  // demo using the same convention) - one floating element, shown and
+  // positioned on demand. Placement (top/bottom/left/right) is chosen
+  // per-hover from whichever side has room in the current viewport, with a
+  // "prefer this order, else pick whichever has the most space" fallback,
+  // and edges are clamped so the tooltip never renders off-screen.
+  function smartTooltips() {
+    const selector = '.btn-demo.is-icon-only[aria-label], .component-open-link[aria-label]';
+    const gap = 8, edgePadding = 8, placementOrder = ['top', 'bottom', 'right', 'left'];
+    const tip = el('div', '', 'dynamic-tooltip');
+    tip.setAttribute('role', 'tooltip');
+    document.body.append(tip);
+    let activeAnchor = null;
+
+    function place(anchor) {
+      const text = anchor.getAttribute('aria-label');
+      if (!text) return hide();
+      tip.textContent = text;
+      tip.classList.add('is-visible');
+      const anchorRect = anchor.getBoundingClientRect();
+      const tipRect = tip.getBoundingClientRect();
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const space = { top: anchorRect.top, bottom: vh - anchorRect.bottom, left: anchorRect.left, right: vw - anchorRect.right };
+      const fits = { top: space.top >= tipRect.height + gap, bottom: space.bottom >= tipRect.height + gap, left: space.left >= tipRect.width + gap, right: space.right >= tipRect.width + gap };
+      let placement = placementOrder.find(side => fits[side]);
+      if (!placement) placement = [...placementOrder].sort((a, b) => space[b] - space[a])[0];
+      let top, left;
+      if (placement === 'top' || placement === 'bottom') {
+        top = placement === 'top' ? anchorRect.top - tipRect.height - gap : anchorRect.bottom + gap;
+        left = anchorRect.left + anchorRect.width / 2 - tipRect.width / 2;
+        left = Math.max(edgePadding, Math.min(left, vw - tipRect.width - edgePadding));
+      } else {
+        left = placement === 'left' ? anchorRect.left - tipRect.width - gap : anchorRect.right + gap;
+        top = anchorRect.top + anchorRect.height / 2 - tipRect.height / 2;
+        top = Math.max(edgePadding, Math.min(top, vh - tipRect.height - edgePadding));
+      }
+      tip.setAttribute('data-placement', placement);
+      tip.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
+    }
+    function hide() { tip.classList.remove('is-visible'); tip.removeAttribute('data-placement'); activeAnchor = null; }
+    function findAnchor(target) { return target && typeof target.closest === 'function' ? target.closest(selector) : null; }
+
+    document.addEventListener('mouseover', e => { const a = findAnchor(e.target); if (a) { activeAnchor = a; place(a); } });
+    document.addEventListener('mouseout', e => { const a = findAnchor(e.target); if (a && a === activeAnchor) hide(); });
+    document.addEventListener('focusin', e => { const a = findAnchor(e.target); if (a) { activeAnchor = a; place(a); } });
+    document.addEventListener('focusout', e => { const a = findAnchor(e.target); if (a && a === activeAnchor) hide(); });
+    window.addEventListener('scroll', () => { if (activeAnchor) place(activeAnchor); }, true);
+    window.addEventListener('resize', () => { if (activeAnchor) place(activeAnchor); });
+  }
+  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); initPageMarkdownExport(); smartTooltips(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

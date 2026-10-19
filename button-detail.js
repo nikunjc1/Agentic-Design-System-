@@ -430,112 +430,11 @@
     });
   }
 
-  // ---------- self-positioning tooltip for icon-only buttons ----------
-  // One shared floating element, shown/positioned on demand. Placement
-  // (top/bottom/left/right) is chosen per-hover from whichever side has
-  // room in the current viewport, with a "prefer this order, else pick
-  // whichever has the most space" fallback, and edges are clamped so the
-  // tooltip never renders off-screen.
-  function attachSmartTooltip(options){
-    var selector = options.selector;
-    var getText = options.getText;
-    var gap = options.gap || 8;
-    var edgePadding = options.edgePadding || 8;
-    var placementOrder = options.placementOrder || ["top", "bottom", "right", "left"];
-
-    var tip = document.createElement("div");
-    tip.className = "dynamic-tooltip";
-    tip.setAttribute("role", "tooltip");
-    document.body.appendChild(tip);
-
-    var activeAnchor = null;
-
-    function place(anchor){
-      var text = getText(anchor);
-      if (!text) return hide();
-
-      tip.textContent = text;
-      tip.classList.add("is-visible");
-
-      var anchorRect = anchor.getBoundingClientRect();
-      var tipRect = tip.getBoundingClientRect();
-      var vw = window.innerWidth;
-      var vh = window.innerHeight;
-
-      var space = {
-        top: anchorRect.top,
-        bottom: vh - anchorRect.bottom,
-        left: anchorRect.left,
-        right: vw - anchorRect.right
-      };
-      var fits = {
-        top: space.top >= tipRect.height + gap,
-        bottom: space.bottom >= tipRect.height + gap,
-        left: space.left >= tipRect.width + gap,
-        right: space.right >= tipRect.width + gap
-      };
-
-      var placement = placementOrder.filter(function(side){ return fits[side]; })[0];
-      if (!placement){
-        placement = placementOrder.slice().sort(function(a, b){ return space[b] - space[a]; })[0];
-      }
-
-      var top, left;
-      if (placement === "top" || placement === "bottom"){
-        top = placement === "top" ? anchorRect.top - tipRect.height - gap : anchorRect.bottom + gap;
-        left = anchorRect.left + anchorRect.width / 2 - tipRect.width / 2;
-        left = Math.max(edgePadding, Math.min(left, vw - tipRect.width - edgePadding));
-      } else {
-        left = placement === "left" ? anchorRect.left - tipRect.width - gap : anchorRect.right + gap;
-        top = anchorRect.top + anchorRect.height / 2 - tipRect.height / 2;
-        top = Math.max(edgePadding, Math.min(top, vh - tipRect.height - edgePadding));
-      }
-
-      tip.setAttribute("data-placement", placement);
-      tip.style.transform = "translate(" + Math.round(left) + "px, " + Math.round(top) + "px)";
-    }
-
-    function hide(){
-      tip.classList.remove("is-visible");
-      tip.removeAttribute("data-placement");
-      activeAnchor = null;
-    }
-
-    function findAnchor(target){
-      if (!target || typeof target.closest !== "function") return null;
-      return target.closest(selector);
-    }
-
-    document.addEventListener("mouseover", function(e){
-      var anchor = findAnchor(e.target);
-      if (!anchor) return;
-      activeAnchor = anchor;
-      place(anchor);
-    });
-    document.addEventListener("mouseout", function(e){
-      var anchor = findAnchor(e.target);
-      if (anchor && anchor === activeAnchor) hide();
-    });
-    document.addEventListener("focusin", function(e){
-      var anchor = findAnchor(e.target);
-      if (!anchor) return;
-      activeAnchor = anchor;
-      place(anchor);
-    });
-    document.addEventListener("focusout", function(e){
-      var anchor = findAnchor(e.target);
-      if (anchor && anchor === activeAnchor) hide();
-    });
-    window.addEventListener("scroll", function(){ if (activeAnchor) place(activeAnchor); }, true);
-    window.addEventListener("resize", function(){ if (activeAnchor) place(activeAnchor); });
-  }
+  // The icon-only button tooltip used to be wired up here, but only this
+  // page ever loaded it - moved to experience.js (smartTooltips()) so every
+  // page's icon-only controls get it, not just this one.
 
   document.addEventListener("DOMContentLoaded", function(){
-    attachSmartTooltip({
-      selector: ".btn-demo.is-icon-only[aria-label]",
-      getText: function(anchor){ return anchor.getAttribute("aria-label"); }
-    });
-
     // Gallery-card copy CTAs (components.html's flexible-system cards -
     // one per type, all copying the identical full-system output) -
     // separate data-role from components.js's own per-type copy-prompt/

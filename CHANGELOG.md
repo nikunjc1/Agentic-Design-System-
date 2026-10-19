@@ -2037,6 +2037,20 @@ The same baseline comparison also surfaced 2 overflow failures that are **not** 
 
 This supersedes the Tier 3 classification as written in several earlier entries in this file (X05-X07, C07, T03) and in `accessibility.html`'s "Foundation editor state model" section - Spacing, Grid & Layout, Borders, Shadows and Icons are no longer export-only; see the "Known follow-ups" note below for the one earlier bullet this directly resolves.
 
+## Sitewide hover audit, and a real tooltip for the View icon CTA
+
+User report: alignment/spacing/margin/padding problems on "all hover states on all components" sitewide, plus a separate, specific complaint that the icon-only "View" CTA's tooltip never appears in any direction (top/bottom/left/right).
+
+Investigated the broad claim with actual measurement rather than guessing at fixes: wrote a sweep that hovers every element matching one of the 129 distinct classes that carry a dedicated `:hover` CSS rule, across all 157 pages, comparing each element's (and its parent's and next sibling's) exact bounding box before and after hover. First pass found 433 apparent "shifts" out of 2610 elements checked - but inspecting them showed this was a flaw in the check itself: hovering an off-screen element makes Playwright auto-scroll it into view, which looks exactly like a huge fake "shift" if the "before" measurement was taken before that scroll happened. Fixed the sweep to scroll each element into view and let it settle *before* taking the "before" snapshot, then reran: 2610 elements, 1 remaining finding. Verified that one directly with a fresh, isolated reproduction - it did not reproduce (identical position before and after). Net result: zero confirmed hover-triggered layout shifts anywhere on the site. The broad claim doesn't hold up under measurement; no sitewide hover-alignment fix was needed or made.
+
+The specific tooltip complaint was real and distinct from the broad claim: the icon-only View CTA (added in an earlier entry) only had a native `title` attribute - which some browsers delay by a second or more and never positions the way a designed tooltip would - with no custom tooltip wired up at all, unlike this site's own established pattern. Found that pattern already fully built: `attachSmartTooltip()` in `button-detail.js`, a self-positioning tooltip (shared `.dynamic-tooltip` element, `data-placement="top/bottom/left/right"` chosen per-hover from whichever side has room, with edge-clamping so it never renders off-screen) - but it was only ever wired up on button-primary.html, for that page's own icon-only Button demo, never applied anywhere else.
+
+Moved the function into `experience.js` (loads on every page) as `smartTooltips()`, broadened its selector to cover both the original icon-only Button demo and `.component-open-link`, and removed the now-dead duplicate from `button-detail.js` - leaving both in place would have attached two competing tooltip instances to the same selector on button-primary.html, showing two overlapping tooltips there specifically.
+
+Verified with Playwright: hovering the View icon on select.html, modal.html, card.html and components.html all show a correctly-positioned, styled tooltip reading "View component guide"; keyboard focus (not just mouse hover) shows and then hides it on blur, matching the existing accessibility behavior; confirmed exactly one `.dynamic-tooltip` element exists in button-primary.html's DOM (no duplicate-attachment regression from the move). Full 157-page regression sweep and all 11 unit test suites: 0 failures.
+
+`experience.js` and `button-detail.js` both had no unrelated in-progress work at the time of this fix (matched HEAD exactly beforehand), so no isolation was needed.
+
 ## Grouped Read More/Read Less paragraphs clipped a faint sliver of the next paragraph's text
 
 User report, with a screenshot of accessibility.html's "Foundation editor state model" section: no visible separator after a "Read More" button, between it and the next row.
