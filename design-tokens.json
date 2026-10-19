@@ -549,6 +549,43 @@
         }
       }
     },
+    "overlay-invert-amber": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.5607843137254902,
+          0.4,
+          0.1411764705882353
+        ],
+        "alpha": 1,
+        "hex": "#8f6624"
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5607843137254902,
+              0.4,
+              0.1411764705882353
+            ],
+            "alpha": 1,
+            "hex": "#8f6624"
+          },
+          "light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9019607843137255,
+              0.6470588235294118,
+              0.22745098039215686
+            ],
+            "alpha": 1,
+            "hex": "#e6a53a"
+          }
+        }
+      }
+    },
     "red-500": {
       "$type": "color",
       "$value": {
