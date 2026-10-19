@@ -13,8 +13,8 @@
 .setup-actions{display:flex;gap:var(--space-12);align-items:center;flex-wrap:wrap}
 .setup-notice > .setup-actions{margin-inline-start:auto;justify-content:flex-end}
 .setup-actions :is(.setup-edit,.setup-close){--setup-action-size:max(var(--size-control),var(--size-target),calc(var(--icon-size) + var(--space-16)));inline-size:var(--setup-action-size);block-size:var(--setup-action-size);padding:0;flex:none;transition:color var(--duration-base) var(--ease-standard),border-color var(--duration-base) var(--ease-standard),background-color var(--duration-base) var(--ease-standard)}
-.setup-actions :is(.setup-edit,.setup-close):is(:hover,:focus-visible){color:var(--red-500);border-color:var(--red-500);background:var(--red-tint)}
-.setup-actions :is(.setup-edit,.setup-close):active{color:var(--red-600);border-color:var(--red-600);background:var(--red-tint)}
+.setup-actions :is(.setup-edit,.setup-close):is(:hover,:focus-visible){color:var(--text-hi);border-color:var(--text-hi);background:var(--graphite-800)}
+.setup-actions :is(.setup-edit,.setup-close):active{color:var(--text-hi);border-color:var(--text-hi);background:var(--graphite-700)}
 .setup-actions a:not(.btn),.setup-help a{text-decoration:underline;text-underline-offset:3px}
 .setup-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:var(--space-24);align-items:start}
 .setup-panel{padding:clamp(var(--space-20),3vw,var(--space-32));border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-md);background:var(--graphite-900);min-width:0;}

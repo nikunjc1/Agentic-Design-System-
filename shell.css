@@ -122,7 +122,7 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   color: var(--text-mid);
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 }
-.theme-toggle:hover{ border-color: var(--red-500); color: var(--text-hi); }
+.theme-toggle:hover{ border-color: var(--text-hi); color: var(--text-hi); }
 .theme-toggle-icon{
   width:var(--dimension-18); height:var(--dimension-18);
   background-color: currentColor;
@@ -163,7 +163,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking);}
-.icon-btn:hover{ border-color: var(--red-500); color: var(--text-hi); }
+.icon-btn:hover{ border-color: var(--text-hi); color: var(--text-hi); }
 
 /* ---------- sidebar ---------- */
 /* `overflow-y: auto` alone does nothing here unless the box also has a
@@ -423,7 +423,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .copy-tab:hover{ color: var(--text-hi); }
-.copy-tab.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+.copy-tab.is-active{ color: var(--text-hi); border-color: var(--text-hi); background: var(--graphite-800); }
 
 .copy-panel{ display: none; }
 .copy-panel.is-active{ display: block; }
@@ -459,7 +459,7 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.copy-btn:hover{ color: var(--text-hi); border-color: var(--red-500); }
+.copy-btn:hover{ color: var(--text-hi); border-color: var(--text-hi); }
 .copy-btn.is-copied{ color: var(--green-500); border-color: var(--green-500); }
 
 .library-status{
@@ -547,7 +547,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   background-position: right 12px center;
   padding-inline-end:var(--space-34);
 }
-.form-field input:focus, .form-field select:focus{ outline: none; border-color: var(--red-500); }
+.form-field input:focus, .form-field select:focus{ outline: none; border-color: var(--text-hi); }
 .modal-actions{ display: flex; justify-content: flex-end; gap:var(--space-12); margin-top:var(--space-8); }
 .btn{
 
@@ -571,7 +571,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    still need to click this," which is what a plain label swap alone would
    still look like. */
 .btn-primary.is-saved{ background: var(--graphite-700); border-color: var(--line-strong); color: var(--text-hi); }
-.btn-primary.is-saved:hover{ background: var(--graphite-600); border-color: var(--red-500); }
+.btn-primary.is-saved:hover{ background: var(--graphite-600); border-color: var(--text-hi); }
 
 /* ---------- welcome modal (overview.html only - real, not a demo) ---------- */
 /* Same root cause already fixed once for .select-demo-panel: this class's
@@ -624,7 +624,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   font-family: var(--font-body);
   transition: border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
 }
-.welcome-choice-btn:hover, .welcome-choice-btn:focus-visible{ border-color: var(--red-500); background: var(--red-tint); outline: none; }
+.welcome-choice-btn:hover, .welcome-choice-btn:focus-visible{ border-color: var(--text-hi); background: var(--graphite-800); outline: none; }
 .welcome-choice-btn-title{ display: block;   margin-bottom:var(--space-2); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .welcome-choice-btn-desc{ display: block;  color:var(--type-caption-color); font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .welcome-modal-fields{ display: flex; flex-direction: column; gap:var(--space-14); margin-bottom:var(--space-20); }
@@ -1047,7 +1047,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.upload-dropzone:hover{ border-color: var(--red-500); color: var(--text-mid); }
+.upload-dropzone:hover{ border-color: var(--text-hi); color: var(--text-mid); }
 
 .font-category-hint{
 
@@ -1059,7 +1059,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .font-category-chips .chip,
 .platform-chips .chip{ background: none; cursor: pointer; transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard); }
 .font-category-chips .chip.is-active,
-.platform-chips .chip.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+.platform-chips .chip.is-active{ color: var(--text-hi); border-color: var(--text-hi); background: var(--graphite-800); }
 
 .platform-chips{ margin-bottom:var(--space-24); }
 
@@ -1078,8 +1078,8 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   text-align: start;
   transition: border-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.font-option:hover{ color: var(--text-hi); border-color: var(--red-500); }
-.font-option.is-active{ color: var(--text-hi); border-color: var(--red-500); background: var(--red-tint); }
+.font-option:hover{ color: var(--text-hi); border-color: var(--text-hi); }
+.font-option.is-active{ color: var(--text-hi); border-color: var(--text-hi); background: var(--graphite-800); }
 .font-option-meta{   color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 
 .font-preview{
@@ -1173,7 +1173,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   border-radius: var(--radius-md);
   padding:var(--space-8) var(--space-12);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.type-control-lh input[type="text"]:focus{ outline: none; border-color: var(--red-500); }
+.type-control-lh input[type="text"]:focus{ outline: none; border-color: var(--text-hi); }
 
 .type-control select{
   appearance: none;
@@ -1192,7 +1192,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   border-radius: var(--radius-md);
   padding:var(--space-8) var(--space-34) var(--space-8) var(--space-12);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.type-control select:focus{ outline: none; border-color: var(--red-500); }
+.type-control select:focus{ outline: none; border-color: var(--text-hi); }
 
 .type-control input[type="text"],
 .type-control input[type="number"]{
@@ -1209,7 +1209,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   padding:var(--space-8) var(--space-12);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .type-control input[type="text"]:focus,
-.type-control input[type="number"]:focus{ outline: none; border-color: var(--red-500); }
+.type-control input[type="number"]:focus{ outline: none; border-color: var(--text-hi); }
 .type-control input[type="text"]::placeholder{ color: var(--text-dim); }
 
 .type-control-italic{
@@ -1270,7 +1270,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   padding:0;
   cursor: pointer;
 }
-.color-swatch-trigger:hover{ border-color: var(--red-500); }
+.color-swatch-trigger:hover{ border-color: var(--text-hi); }
 .color-swatch-trigger:focus-visible{ outline: 2px solid var(--red-500); outline-offset: 2px; }
 
 .color-popover[hidden]{ display: none; }
@@ -1403,7 +1403,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 
   padding:var(--space-6) var(--space-8);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.color-popover-value-cell input:focus{ border-color: var(--red-500); outline: none; }
+.color-popover-value-cell input:focus{ border-color: var(--text-hi); outline: none; }
 .color-popover-copy{
   flex: none;
   background: var(--graphite-700);
@@ -1489,8 +1489,8 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   gap:var(--space-4);
   transition: border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
 }
-.product-card:hover{ border-color: var(--red-500); }
-.product-card.is-active{ border-color: var(--red-500); background: var(--red-tint); }
+.product-card:hover{ border-color: var(--text-hi); }
+.product-card.is-active{ border-color: var(--text-hi); background: var(--graphite-800); }
 .product-card-name{   color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .product-card-rec{   color:var(--type-caption-color); font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 
@@ -1648,8 +1648,8 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   max-width:none;
   transition: border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
 }
-.system-card:hover{ border-color: var(--red-500); }
-.system-card.is-active{ border-color: var(--red-500); background: var(--red-tint); }
+.system-card:hover{ border-color: var(--text-hi); }
+.system-card.is-active{ border-color: var(--text-hi); background: var(--graphite-800); }
 /* Foundation audit G04 - Baseline Grid is an independent on/off overlay
    now, not a 5th mutually-exclusive option, so it gets a real checkbox
    instead of is-active/aria-pressed like its 4 structural siblings. */
@@ -1659,7 +1659,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    above it (0px gap) while everything else on the page keeps a 16px rhythm. */
 .system-card-grid + .system-card-toggle{ margin-top: var(--space-16); }
 .system-card-toggle input[type="checkbox"]{ position: absolute; top:var(--dimension-16); inset-inline-end:var(--dimension-16); width:var(--dimension-18); height:var(--dimension-18); accent-color: var(--red-500); margin:0; }
-.system-card-toggle:has(input:checked){ border-color: var(--red-500); background: var(--red-tint); }
+.system-card-toggle:has(input:checked){ border-color: var(--text-hi); background: var(--graphite-800); }
 .system-card-head{ display: flex; align-items: baseline; gap:var(--space-8); flex-wrap: wrap; }
 .system-card-unit{ font-family: var(--font-display); font-size:var(--type-h4-size); font-weight: 700; color:var(--type-h4-color); }
 .system-card-tagline{   color:var(--type-caption-color); font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -1929,7 +1929,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   border-radius: var(--radius-md);
   padding:var(--space-8) var(--space-12);
 }
-.hex-input-wrap:focus-within{ border-color: var(--red-500); }
+.hex-input-wrap:focus-within{ border-color: var(--text-hi); }
 /* Foundation audit C03 - an incomplete/invalid hex never gets committed,
    but the field itself needs to visibly say so while it's in that state. */
 .hex-input-wrap:has(input[aria-invalid="true"]){ border-color: var(--danger-500); }
@@ -1962,7 +1962,7 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   pointer-events: none;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .opacity-input-wrap input:disabled ~ .opacity-suffix{ color: var(--text-dim); opacity: 0.6; }
-.picker-field input:focus{ outline: none; border-color: var(--red-500); }
+.picker-field input:focus{ outline: none; border-color: var(--text-hi); }
 .picker-field input:disabled{ cursor: not-allowed; }
 
 .panel-footer-row{
@@ -2053,7 +2053,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
     cursor: pointer;
     flex: none;
   }
-  .sidebar-menu-toggle:hover{ border-color: var(--red-500); color: var(--text-hi); }
+  .sidebar-menu-toggle:hover{ border-color: var(--text-hi); color: var(--text-hi); }
   .sidebar-menu-toggle svg{ width:var(--dimension-18); height:var(--dimension-18); display: block; }
 
   .app-sidebar{
@@ -2159,7 +2159,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 
   cursor: pointer;
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.icon-upload-thumb-remove:hover{ background: var(--red-tint); color: var(--red-400); }
+.icon-upload-thumb-remove:hover{ background: var(--graphite-800); color: var(--danger-400); }
 
 .icon-upload-panel{ margin-top:var(--space-16); }
 
@@ -2180,13 +2180,13 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   cursor: pointer;
   transition: border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
 }
-.library-card:hover{ border-color: var(--red-500); }
-.library-card:has(input:checked){ border-color: var(--red-500); background: var(--red-tint); }
+.library-card:hover{ border-color: var(--text-hi); }
+.library-card:has(input:checked){ border-color: var(--text-hi); background: var(--graphite-800); }
 .library-card input{ position: absolute; opacity: 0; pointer-events: none; }
 .library-card-name{   color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .library-card-meta{   color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .library-card-link{   color:var(--type-body-color); text-decoration: none; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.library-card-link:hover{ color: var(--red-400); text-decoration: underline; }
+.library-card-link:hover{ color: var(--text-hi); text-decoration: underline; }
 
 .picker-field textarea{
 
@@ -2199,7 +2199,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   padding:var(--space-8) var(--space-12);
   resize: vertical;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.picker-field textarea:focus{ outline: none; border-color: var(--red-500); }
+.picker-field textarea:focus{ outline: none; border-color: var(--text-hi); }
 .picker-field textarea[readonly]{ color: var(--text-mid); background: var(--graphite-950); }
 
 /* ---------- grid & layout foundations ---------- */
@@ -5218,7 +5218,7 @@ a.system-card{ text-decoration: none; color: inherit; }
   margin-bottom:var(--space-8);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .back-link-icon{ flex: none; line-height: 1; }
-.back-link:hover{ color: var(--red-400); }
+.back-link:hover{ color: var(--text-hi); }
 
 .button-state-row{
   display: flex;
@@ -5278,7 +5278,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   text-decoration: none;
   margin-top:var(--space-2);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.card-configure-link:hover{ color: var(--red-400); }
+.card-configure-link:hover{ color: var(--text-hi); }
 
 /* ---------- lightweight hover/focus tooltip ---------- */
 .info-tip{
@@ -5299,7 +5299,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   position: relative;
   vertical-align: middle;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.info-tip:hover, .info-tip:focus-visible{ color: var(--text-hi); border-color: var(--red-500); outline: none; }
+.info-tip:hover, .info-tip:focus-visible{ color: var(--text-hi); border-color: var(--text-hi); outline: none; }
 
 .info-tip::before, .info-tip::after{
   opacity: 0;
@@ -5398,9 +5398,9 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   padding:var(--space-8) var(--space-12);
   cursor: pointer;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.multiselect-trigger:hover{ border-color: var(--red-500); }
-.multiselect-trigger:focus-visible{ outline: 2px solid var(--red-500); outline-offset: 2px; }
-.multiselect.is-open .multiselect-trigger{ border-color: var(--red-500); }
+.multiselect-trigger:hover{ border-color: var(--text-hi); }
+.multiselect-trigger:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.multiselect.is-open .multiselect-trigger{ border-color: var(--text-hi); }
 
 .multiselect-trigger-label{
   overflow: hidden;
@@ -6741,7 +6741,13 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   transition: background-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .guide-toggle-btn:hover{ color: var(--text-hi); }
-.guide-toggle-btn.is-active{ background: var(--red-500); color: #FFFFFF; }
+/* .is-active alone used to lose to .group-btn--outlined .group-btn-segment.is-selected
+   (both classes are always present together on this toggle) - that rule wins
+   on specificity regardless of source order, so this real site-chrome toggle
+   was actually rendering red-500 text on a red-tint background (brand-
+   dependent, invisible with a dark saved brand), not the white-on-red this
+   rule alone implied. Matching both classes here restores control. */
+.guide-toggle-btn.is-active, .guide-toggle-btn.is-active.is-selected{ background: var(--graphite-800); color: var(--text-hi); }
 .guide-toggle-btn:focus-visible{ outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .guide-view-panel[hidden]{ display: none; }

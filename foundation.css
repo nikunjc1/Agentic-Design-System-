@@ -57,7 +57,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
    vertical padding, height driven entirely by min-block-size below - a
    textarea is still genuinely multi-line, so it keeps real padding. */
 :is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls,.ads-sizing) :is(input:not([type=radio]):not([type=checkbox]),select){padding:0 var(--space-12)}
-[aria-selected=true]{border-color:var(--border-state-selected,var(--red-500))}
+[aria-selected=true]{border-color:var(--border-state-selected,var(--text-hi))}
 .setup-error,.input-demo-error{color:var(--type-error-color)}
 .ads-required{display:inline;margin-inline-start:var(--space-4);color:var(--danger-500);font:inherit}
 .ads-foundation-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);margin-block:var(--space-16);padding:var(--space-12);border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-md)}
@@ -84,7 +84,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .type-row .type-row-controls .type-control .ads-unit-control :is(input,select){box-sizing:border-box;block-size:var(--type-editor-control-height);min-block-size:var(--type-editor-control-height);height:var(--type-editor-control-height);padding-block:var(--space-6);background-color:var(--graphite-900);color:var(--type-body-color);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
 .type-row .type-row-controls .type-control .ads-unit-control input{padding-inline:var(--space-12)}
 .type-row .type-row-controls .type-control .ads-unit-control select{padding-inline:var(--space-12) var(--space-34)}
-.type-row .type-row-controls .type-control .ads-unit-control :is(input,select):focus{border-color:var(--red-500)}
+.type-row .type-row-controls .type-control .ads-unit-control :is(input,select):focus{border-color:var(--text-hi)}
 .type-row .type-row-controls .type-control .ads-unit-control :is(input,select)[aria-invalid=true]{border-color:var(--border-state-error,var(--danger-500))}
 .ads-sizing{container-type:inline-size;container-name:shared-sizing}
 .ads-sizing-fields{display:grid;gap:var(--space-16);max-inline-size:var(--dimension-440);min-inline-size:0;margin-block:var(--space-16) var(--space-24)}
@@ -265,7 +265,7 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
 .app-main .ads-tab-group .group-btn-segment:last-child{border-inline-end:0}
 .app-main .ads-tab-group .group-btn-segment:hover{background:var(--graphite-800)}
 .app-main .ads-tab-group .group-btn-segment:active{background:var(--graphite-700)}
-.app-main .ads-tab-group .group-btn-segment.is-selected{background:var(--red-tint);color:var(--red-500)}
+.app-main .ads-tab-group .group-btn-segment.is-selected{background:var(--graphite-800);color:var(--text-hi)}
 .app-main .ads-tab-group .group-btn-segment:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus-ring);outline-offset:calc(-1 * var(--space-3))}
 /* Generated implementation guidance shares the panel's rhythm and separators. */
 .ads-contract-rule { padding-block:var(--space-16); border-block-start:1px solid var(--line); }
@@ -280,8 +280,8 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
 .color-popover,.autocomplete-demo-panel,.mention-demo-panel,.colorpicker-demo-panel,.cascader-demo-panel,.treeselect-demo-panel { z-index:var(--layer-popover); }
 .ads-storage-notice { z-index:var(--layer-toast); }
 /* An icon starts with H6 color, so hovering to --text-hi was identical. */
-:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):hover { color:var(--red-500); border-color:var(--red-500); }
-:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):active { color:var(--red-600); border-color:var(--red-600); }
+:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):hover { color:var(--text-hi); border-color:var(--text-hi); }
+:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):active { color:var(--text-hi); border-color:var(--text-hi); }
 .contrast-tag.is-pass { color:var(--contrast-pass-text); background:var(--contrast-pass-bg); }
 .contrast-tag.is-fail { color:var(--contrast-fail-text); background:var(--contrast-fail-bg); }
 .ads-copy-status { position:fixed; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
@@ -298,7 +298,7 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
 .ads-master-list { max-block-size:var(--dimension-320); overflow:auto; }
 .ads-master-list [data-master=records] { display:flex; flex-direction:column; gap:var(--space-8); }
 .ads-master-list button { text-align:start; white-space:normal; min-block-size:var(--size-target); }
-.ads-master-list button[aria-pressed=true] { background:var(--red-tint); border-color:var(--red-500); }
+.ads-master-list button[aria-pressed=true] { background:var(--graphite-800); border-color:var(--text-hi); }
 .ads-master-detail [data-master=content] { min-block-size:3em; }
 @media(max-width:900px) { .ads-master-shell { grid-template-columns:minmax(0,1fr); } }
 .skip-link { z-index:100; }
