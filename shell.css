@@ -96,6 +96,10 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   border: var(--border-width-1) var(--border-style) var(--line-strong);
   flex: none;
 }
+.brand-color-code{
+  color: var(--text-mid);
+  white-space: nowrap;
+font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);font-family:var(--font-mono);}
 
 /* Restyled from a track/thumb pill switch + text label into a plain
    icon-only button, matching .icon-btn (the Settings gear button right

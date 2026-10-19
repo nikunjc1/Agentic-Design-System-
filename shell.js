@@ -173,14 +173,19 @@
   // color correctly (it's just var(--red-500), which the block above keeps
   // current) - the actual gap was that nothing ever showed WHICH color that
   // is, only a generic "Active brand color" tooltip with no value in it.
+  // Now also written as real, visible text (not just a hover-only title),
+  // so it reads the same in both themes without relying on a tooltip.
   // Exposed on window so foundations.js's own Save action (which applies
   // the new brand color to the current page immediately, no reload
   // required) can refresh this same tooltip right away too.
   function updateBrandColorDotTitle() {
     const dot = document.getElementById("brandColorDot");
-    if (!dot) return;
+    const code = document.getElementById("brandColorCode");
+    if (!dot && !code) return;
     const hex = getComputedStyle(document.documentElement).getPropertyValue("--red-500").trim();
-    dot.title = hex ? `Active brand color: ${hex.toUpperCase()}` : "Active brand color";
+    const label = hex ? hex.toUpperCase() : "";
+    if (dot) dot.title = label ? `Active brand color: ${label}` : "Active brand color";
+    if (code) code.textContent = label;
   }
   window.ADS_updateBrandColorDotTitle = updateBrandColorDotTitle;
 

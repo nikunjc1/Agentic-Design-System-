@@ -2611,6 +2611,14 @@ Verified: re-ran this exact repro (`colors.light` blue, `colors.dark` a near-bla
 
 **Flagged, not changed:** the Colors page (`foundations.html`) still has its whole "Dark" brand-color column (an enable checkbox, its own picker/hex field, a "Regenerate from Light" button) - editing and saving it now has no visible effect anywhere, since the resolver never reads it. Left the UI alone pending a product decision on whether to remove it, hide it, or repurpose it, since tearing out a settings-page feature wasn't part of what was asked here.
 
+## Brand color hex code now shown as visible text on the top navigation bar
+
+User request: show the actual color code, not just a swatch, next to the brand color indicator in the top nav - in both themes.
+
+The hex value already existed as a hover-only `title` tooltip on the color dot (`updateBrandColorDotTitle()` in `shell.js`, added for the previous brand-color fix) - not discoverable without hovering, and not visible at all on touch devices. Added a second, always-visible `<span class="brand-color-code" id="brandColorCode">` next to the dot on all 157 pages (the topbar markup is identical everywhere, so this was one scripted find/replace plus the one shared `shell.js`/`shell.css`), populated by the same function that already keeps the tooltip current, so it updates live on theme switch and on save from the Colors page with no extra wiring. Styled with the monospace font (`--font-mono`) this system already uses for other literal code/value displays, and `--text-mid` for color - a token already proven in this fix series to resolve to a properly-contrasted, theme-correct value in both themes (not brand-dependent).
+
+Verified: confirmed the rendered text reads e.g. `#FF031A` in both themes with the correct font and >7:1 contrast against the topbar background in each; checked 400px width for overflow (none); ran a full HTML tag-balance check across all 157 edited pages (none); all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
