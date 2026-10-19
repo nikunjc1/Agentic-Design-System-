@@ -82,10 +82,13 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
    shrink - drop the purely decorative pieces so the bar itself, and every
    grid track it shares with .app-main, can actually fit the viewport
    instead of forcing the whole page to scroll horizontally. .theme-toggle
-   is icon-only now, so it has no text label left to hide at this width. */
+   is icon-only now, so it has no text label left to hide at this width.
+   (.version-badge/.brand-color-code's own "display:none" lives further
+   down, after their base rules - those rules now set display themselves,
+   and an earlier same-specificity declaration would lose to them regardless
+   of this media query being active.) */
 @media (max-width: 640px){
   .app-topbar{ padding:0 var(--space-16); gap:var(--space-8); }
-  .version-badge{ display: none; }
   .kbd{ display: none; }
 }
 
@@ -97,15 +100,16 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   flex: none;
 }
 .brand-color-code{
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   box-sizing: border-box;
+  height:var(--dimension-32);
+  line-height: var(--dimension-32);
   color: var(--text-mid);
   white-space: nowrap;
   border: var(--border-width-1) var(--border-style) var(--line-strong);
   border-radius: var(--radius-md);
-  padding:var(--space-4) var(--space-8);
-font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);font-family:var(--font-mono);}
+  padding:0 var(--space-8);
+font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);letter-spacing:var(--type-caption-tracking);font-family:var(--font-mono);}
 
 /* Restyled from a track/thumb pill switch + text label into a plain
    icon-only button, matching .icon-btn (the Settings gear button right
@@ -150,14 +154,21 @@ font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-s
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z'/%3E%3C/svg%3E");
 }
 .version-badge{
-
-
-
+  display: inline-block;
+  box-sizing: border-box;
+  height:var(--dimension-32);
+  line-height: var(--dimension-32);
   color:var(--type-caption-color);
   border: var(--border-width-1) var(--border-style) var(--line-strong);
   border-radius: var(--radius-md);
-  padding:var(--space-4) var(--space-8);
-font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+  padding:0 var(--space-8);
+font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);letter-spacing:var(--type-caption-tracking);}
+/* Positioned after both rules' own "display" declaration on purpose - an
+   earlier same-specificity rule (the main narrow-width media query above)
+   would lose this property to them regardless of this query being active. */
+@media (max-width: 640px){
+  .version-badge, .brand-color-code{ display: none; }
+}
 .icon-btn{
   display: flex;
   align-items: center;

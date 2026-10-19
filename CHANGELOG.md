@@ -2629,6 +2629,18 @@ Fixed by giving `.brand-color-code` the exact same box model as `.version-badge`
 
 Verified: measured both elements' `getBoundingClientRect()` directly - `codeHeight`/`badgeHeight` are now identical (26.5px) and both start at the same `top` offset; screenshotted both themes and a 400px mobile width (no overflow); all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Topbar height-matching fix caused a real width regression at narrow viewports
+
+User report: the color code and version box height still didn't match the theme/settings button height.
+
+First fixed the actual height mismatch: `.version-badge`/`.brand-color-code` were sized by padding+line-height alone (auto height), while `.theme-toggle`/`.icon-btn` are fixed 32x32px boxes - gave both a matching `height:var(--dimension-32)`. Making that height apply required switching off the default inline display, which is where this went wrong: using `display:inline-flex` reset each element's flex `min-width` to its own nowrap content width, and this topbar row's own long-standing narrow-viewport handling depends on being able to shrink those two elements away entirely, not just narrower - a dependency that broke silently, and the **full 157-page regression sweep caught it immediately** (0 to 157 failures, all "Document overflow: 330" at the 320px width check), which is exactly why that check runs as standard verification rather than only a visual spot check.
+
+Root cause once isolated (bisected property-by-property against the previous commit): the project already has `.version-badge{ display:none; }` inside a `@media(max-width:640px)` block specifically for this ("drop the purely decorative pieces so the bar fits the viewport" per its own code comment) - but my new base rule now sets `display` itself, and a later same-specificity rule always wins a tie regardless of whether the earlier rule's media condition is true. The hide-at-narrow-width behavior was silently dead the moment `display` appeared in the unconditional rule, open workaround and all.
+
+Fixed both problems together: switched `display` to plain `inline-block` (no flex min-width implications, line-height alone centers single-line text) for the height fix, and moved the "hide below 640px" rule to a new media query positioned after both elements' own rules (so it wins the same-specificity tie), extending it to also cover `.brand-color-code` - the same decorative-at-a-glance category as the version badge, so it should disappear with it.
+
+Verified: 320px no longer overflows (`scrollWidth` back to 320) and both elements compute `display:none` there; desktop height/alignment still measures identically to `.theme-toggle`/`.icon-btn` (32px, same top offset); checked 700px (just above the hide threshold) shows no overflow either; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
