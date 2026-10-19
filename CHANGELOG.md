@@ -2539,6 +2539,18 @@ Verified: Playwright screenshots of both the unvisited and (real-navigation-hist
 
 **Flagged, not fixed:** `--line`/`--line-strong` (the sitewide hairline border tokens) measure 1.24-1.63:1 against typical panel surfaces - well under WCAG 1.4.11's 3:1 for a UI component's sole boundary indicator (outlined buttons, input fields). This is a foundational, both-themes-equal design-language choice behind the vast majority of borders sitewide, not something introduced by or specific to dark mode - raising it would mean redesigning the whole site's border-weight philosophy, not a token swap, so left alone pending an explicit decision to take that on.
 
+## Listing-card CTA buttons - boundary too faint in dark mode
+
+User report, after the icon-color fix above: the icon-only "View" CTA and the "Copy prompt"/"Copy code" CTAs on listing cards still didn't look right in dark mode - specifically their outline/stroke/outer boundary.
+
+These three buttons (`.component-open-link`, and `.btn.btn-ghost` for Copy prompt/Copy code) are real, live site-chrome controls - not `.btn-demo--*` content demonstrating the Button component - and both used `--line-strong`, the same 8%/16%-white hairline-divider token already identified (two fixes ago) as a sitewide, both-themes-equal, intentionally-subtle choice. For a plain section divider that's fine; for a clickable button's own clickable extent, it measures only 1.6:1 against a typical dark panel - WCAG 1.4.11 wants 3:1 for a UI component's boundary, and in practice it read as barely-there, which matches "not coming properly."
+
+Rather than touching `--line-strong` itself (sitewide, would re-open the question settled in the last audit) or inventing a new token, found the system already defines exactly the right one and simply never used it for this: `--control-border` (theme.css) - a solid, non-translucent gray (dark `#72767e`, light `#85888d`) already used for real form-control borders in `foundation.css`, measuring 3.94-4.21:1 against dark panels and 3.56:1 in light mode. (It also exists, unused, in the orphaned `overview.css` - already documented elsewhere as dead code, not a lead worth following, just confirmed and ruled out.) Switched `.btn-ghost` (`shell.css`) and `.component-open-link` (`experience.css`) to it.
+
+This is a sitewide class, not a per-page tweak, so it reaches every one of the 68 Listing pages' CTA rows (and the ~80 other pages using the same `.btn.btn-ghost` for setup-notice/welcome-modal/close buttons) from the two rule changes, without touching `.btn-demo--secondary`/`.btn-demo--tertiary`/`.btn-demo--ghost` (the actual Button component's own documented look, which intentionally still uses `--line-strong` and is correct as-is).
+
+Verified in a loop per the request - checked, fixed, re-verified: computed border color confirmed `rgb(114,118,126)` (dark) / `rgb(133,136,141)` (light) on a 6-page sample (Avatar, Components/Button, Badge, Modal, Checkbox, Table, Icons); screenshotted both the rest state (clearly visible border now) and the `:hover` state (still switches to the brand red border, unaffected by this change); all 11 unit test suites pass (no token changes, reused an existing one); full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
