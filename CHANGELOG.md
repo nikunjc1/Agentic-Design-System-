@@ -2511,6 +2511,20 @@ Prompted by a request to check every component's Rest/Hover/Pressed/Focused/Disa
 
 Verified with Playwright: re-ran the full 69-page dark-mode sweep after every fix, confirming each targeted failure cleared 4.5:1 and no new ones appeared; spot-checked light mode on every shared-token change. All 11 unit test suites pass (the new `--red-700` token required registering a matching entry in `design-tokens.json` so `tests/foundation-release.test.cjs`'s existing token-publish check kept passing; no test itself changed). Full 157-page x 4-viewport regression sweep: 0 new failures.
 
+## Listing-page preview cards had a hardcoded white background in dark mode
+
+User report: every component listing page's preview card showed a glaring white panel in dark mode, "on all the screens."
+
+Root cause: `.button-type-demo` (`shell.css`) - the live-preview panel rendered inside every listing card's `.system-card`, showing a miniature working example of that component type - had `background: #fff` hardcoded. It's used on 62 of the 68 Listing-kind pages (everything except Borders, Grid & Layout, Icons, Radius, Shadows and Spacing, which use their own card classes), so this was a single shared root cause, not 62 separate bugs. Worse than just an eyesore: the label text inside that panel already uses the theme-aware `--type-body-color` (correctly light-colored for a dark background), so on top of the wrong white panel, dark-mode visitors were also getting near-invisible light text on that white panel.
+
+Fixed by switching the hardcoded `#fff` to `var(--graphite-900)` - a token that resolves to `#ffffff` in light mode (pixel-identical to the old hardcoded value, so no light-mode visual change) and a near-black panel shade in dark mode, preserving the original "panel slightly lighter than its parent card" relationship in both themes (the card itself uses `--graphite-950`, one step darker).
+
+While fixing this, found the same root cause behind the Avatar `--red-700` fix from the previous dark-mode audit (a sitewide typography-sync pass overwrites any inline-`font-size`, no-inline-`color` element's text to a muted gray) also present in two more places, both outside the `*-detail.js` matrix already fixed: Avatar's own listing-card preview (`avatar.html`) and a "Don't" guide example on `avatar-default.html` ("JOHNATHAN" overflowing a 40px circle). Both set an inline `font-size` without an inline `color`, so the sync pass was quietly replacing their white initials text with the same low-contrast gray. Fixed both by adding the explicit inline `color:#FFFFFF;`, matching the class's own intended color and the fix already applied to the JS-generated matrix.
+
+Checked the remaining hardcoded `#fff`/`#ffffff` backgrounds left in `shell.css` and confirmed each is intentional, not the same bug: the color picker's hue/alpha slider thumbs and alpha-channel checkerboard pattern (standard UI convention, meant to read the same in both themes), two generic range-slider thumb handles, and `.shadow-demo-box` on the Shadows listing page - left white on purpose, since the shadow tokens themselves are a fixed, theme-independent `rgba(0,0,0,...)` that would be invisible against any dark surface, so the demo needs an actual light surface to show what a shadow looks like at all.
+
+Verified with Playwright: `.button-type-demo`'s computed background is now `rgb(21,23,26)` (dark) across a 10-page sample in dark mode and unchanged `rgb(255,255,255)` in light mode; confirmed live that Avatar's "JD"/"JOHNATHAN" render in white, not gray, on both fixed pages. All 11 unit test suites pass (no token changes this round, CSS/HTML only). Full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

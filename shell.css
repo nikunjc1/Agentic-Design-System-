@@ -2492,7 +2492,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    makes this box shrink to its own content width and center instead of
    filling the card - invisible before it had a background, but a real
    gap on both sides now that it's a visible white panel. */
-.button-type-demo{ margin-top:var(--space-12); background: #fff; border-radius: var(--radius-md); padding:var(--space-16); align-self: stretch; width:100%; box-sizing: border-box; }
+.button-type-demo{ margin-top:var(--space-12); background: var(--graphite-900); border-radius: var(--radius-md); padding:var(--space-16); align-self: stretch; width:100%; box-sizing: border-box; }
 /* Transfer's two columns and Calendar's grid both size themselves to
    exactly 100% of this box's available width with no slack - adding
    16px back on their left/right pushed Transfer's content 49px past
