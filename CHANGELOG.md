@@ -2641,6 +2641,14 @@ Fixed both problems together: switched `display` to plain `inline-block` (no fle
 
 Verified: 320px no longer overflows (`scrollWidth` back to 320) and both elements compute `display:none` there; desktop height/alignment still measures identically to `.theme-toggle`/`.icon-btn` (32px, same top offset); checked 700px (just above the hide threshold) shows no overflow either; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Destructive button background still bled the customizable brand color
+
+Follow-up from a code-and-design audit requested across the whole portal. One finding was immediately fixable and low-risk: `.btn-demo--destructive`'s rest/hover/pressed backgrounds used `color-mix(in srgb, var(--red-500) ...)` while its own border/text already correctly used the fixed `--danger-500/400/700` - directly contradicting its own code comment ("a Delete button must always read as red, regardless of whatever brand color is currently saved"). This was flagged as a known gap earlier this session but not yet acted on; became more consequential now that brand color is confirmed user-customizable and theme-independent (see the top-nav brand color work above) - a visitor who sets a non-red brand would see the Destructive button's background drift away from red while its border/text stayed red, an actual visible inconsistency, not just a latent one.
+
+Fixed by switching all three states' `color-mix()` source to `--danger-500`, matching the border/text tokens already in use.
+
+Verified: saved a non-default brand color (`#2563EB`, blue) and confirmed the Destructive button's background still resolves to the fixed danger red regardless; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

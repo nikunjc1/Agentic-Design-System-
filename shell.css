@@ -2473,9 +2473,9 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 /* Destructive uses the fixed --danger-* tokens, not the brand-customizable
    --red-* tokens - a Delete button must always read as red, regardless of
    whatever brand color is currently saved on the Colors page. */
-.btn-demo--destructive{ background: color-mix(in srgb, var(--red-500) 10%, transparent); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
-.btn-demo--destructive:hover, .btn-demo--destructive.is-hover{ background: color-mix(in srgb, var(--red-500) 16%, transparent); border-color: var(--danger-400); color: var(--danger-400); }
-.btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: color-mix(in srgb, var(--red-500) 26%, transparent); border-color: var(--danger-700); color: var(--text-hi); }
+.btn-demo--destructive{ background: color-mix(in srgb, var(--danger-500) 10%, transparent); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
+.btn-demo--destructive:hover, .btn-demo--destructive.is-hover{ background: color-mix(in srgb, var(--danger-500) 16%, transparent); border-color: var(--danger-400); color: var(--danger-400); }
+.btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: color-mix(in srgb, var(--danger-500) 26%, transparent); border-color: var(--danger-700); color: var(--text-hi); }
 .btn-demo--destructive:focus-visible, .btn-demo--destructive.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
 .btn-demo--destructive:disabled, .btn-demo--destructive.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
