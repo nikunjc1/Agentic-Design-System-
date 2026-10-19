@@ -2443,7 +2443,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 
 .btn-demo--link{ background: transparent; color: var(--red-400); border-color: transparent; padding-inline:var(--space-8); }
 .btn-demo--link:hover, .btn-demo--link.is-hover{ text-decoration: underline; }
-.btn-demo--link:active, .btn-demo--link.is-pressed{ color: var(--red-600); }
+.btn-demo--link:active, .btn-demo--link.is-pressed{ color: var(--red-700); }
 .btn-demo--link:focus-visible, .btn-demo--link.is-focus{ outline: 2px solid var(--color-focus-ring); outline-offset: 3px; border-radius: var(--radius-sm); }
 .btn-demo--link:disabled, .btn-demo--link.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; text-decoration: none; }
 
@@ -2452,7 +2452,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    whatever brand color is currently saved on the Colors page. */
 .btn-demo--destructive{ background: color-mix(in srgb, var(--red-500) 10%, transparent); color: var(--danger-500); border-width: 2px; border-color: var(--danger-500); }
 .btn-demo--destructive:hover, .btn-demo--destructive.is-hover{ background: color-mix(in srgb, var(--red-500) 16%, transparent); border-color: var(--danger-400); color: var(--danger-400); }
-.btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: color-mix(in srgb, var(--red-500) 26%, transparent); border-color: var(--danger-600); color: var(--danger-600); }
+.btn-demo--destructive:active, .btn-demo--destructive.is-pressed{ background: color-mix(in srgb, var(--red-500) 26%, transparent); border-color: var(--danger-700); color: var(--text-hi); }
 .btn-demo--destructive:focus-visible, .btn-demo--destructive.is-focus{ outline: 2px solid var(--danger-500); outline-offset: 2px; }
 .btn-demo--destructive:disabled, .btn-demo--destructive.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
@@ -3471,6 +3471,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 
 .addon-demo-control--filled{ background: var(--graphite-800); border:var(--border-width-1) var(--border-style) transparent; }
 .addon-demo-control--filled:hover, .addon-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.addon-demo-control--filled:hover .addon-demo-segment, .addon-demo-control--filled.is-hover .addon-demo-segment{ color: var(--text-mid); }
 .addon-demo-control--filled:focus-within, .addon-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .addon-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .addon-demo-control--filled:has(.addon-demo-input:disabled), .addon-demo-control--filled.is-disabled{ opacity: 0.5; }
@@ -3537,6 +3538,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .mention-demo-control{ position: relative; box-sizing: border-box; display: flex; align-items: flex-start; gap:var(--space-8); width:100%; min-height:var(--dimension-84); border-radius: var(--radius-md); transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard); }
 .mention-demo-input{ flex: 1 1 auto; min-width:0; width:100%; font-family: var(--font-body); color: var(--text-hi); line-height: 1.5; cursor: default; }
 .mention-demo-input--empty{ color: var(--text-dim); }
+.mention-demo-control--filled:hover .mention-demo-input--empty, .mention-demo-control--filled.is-hover .mention-demo-input--empty{ color: var(--text-mid); }
 /* Absolutely positioned against .mention-demo-control itself (not a flex
    sibling of the multi-line content div) so a tall contenteditable box
    doesn't stretch the button - it sits fixed at the control's top-right
@@ -3612,6 +3614,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 
 .daterange-demo-control--filled{ background: var(--graphite-800); border:var(--border-width-1) var(--border-style) transparent; }
 .daterange-demo-control--filled:hover, .daterange-demo-control--filled.is-hover{ background: var(--graphite-700); }
+.daterange-demo-control--filled:hover .daterange-demo-segment.is-placeholder, .daterange-demo-control--filled.is-hover .daterange-demo-segment.is-placeholder{ color: var(--text-mid); }
 .daterange-demo-control--filled:focus-visible, .daterange-demo-control--filled.is-focus{ background: var(--graphite-900); border-color: var(--red-500); outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
 .daterange-demo-control--filled.is-error{ border-color: var(--danger-500); }
 .daterange-demo-control--filled[aria-disabled="true"], .daterange-demo-control--filled.is-disabled{ opacity: var(--opacity-50); cursor: not-allowed; pointer-events: none; }
@@ -3625,6 +3628,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .time-demo-control{ box-sizing: border-box; display: flex; align-items: center; gap:var(--space-8); width:100%; border-radius: var(--radius-md); cursor: pointer; transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard); }
 .time-demo-value{ flex: 1 1 auto; min-width:0; font-family: var(--font-body); color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .time-demo-value.is-filled{ color: var(--text-hi); }
+.time-demo-control--filled:hover .time-demo-value:not(.is-filled), .time-demo-control--filled.is-hover .time-demo-value:not(.is-filled){ color: var(--text-mid); }
 .time-demo-icon{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
 .time-demo-icon svg{ width:100%; height:100%; display: block; }
 .time-demo-clear{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; padding:0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
@@ -5659,6 +5663,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   text-overflow: ellipsis;
 }
 .select-demo-value.is-filled{ color: var(--text-hi); }
+.select-demo-control--filled:hover .select-demo-value:not(.is-filled), .select-demo-control--filled.is-hover .select-demo-value:not(.is-filled){ color: var(--text-mid); }
 .select-demo-icon{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
 .select-demo-icon svg{ width:100%; height:100%; display: block; }
 .select-demo-clear{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; padding:0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
@@ -5744,6 +5749,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   white-space: nowrap;
 }
 .datepicker-demo-value.is-filled{ color: var(--text-hi); }
+.datepicker-demo-control--filled:hover .datepicker-demo-value:not(.is-filled), .datepicker-demo-control--filled.is-hover .datepicker-demo-value:not(.is-filled){ color: var(--text-mid); }
 .datepicker-demo-icon{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
 .datepicker-demo-icon svg{ width:100%; height:100%; display: block; }
 .datepicker-demo-clear{ margin-inline-start:auto; flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; padding:0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
@@ -6107,7 +6113,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 
 .tabs-demo-bar--pill .tabs-demo-trigger.is-active{
   background: var(--red-tint);
-  color: var(--red-500);
+  color: var(--color-focus-ring);
   font-weight: 600;
 }
 .tabs-demo-bar--pill .tabs-demo-trigger:hover,

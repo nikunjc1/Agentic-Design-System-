@@ -588,6 +588,43 @@
         "hex": "#d10215"
       }
     },
+    "red-700": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          0.011764705882352941,
+          0.10196078431372549
+        ],
+        "alpha": 1,
+        "hex": "#ff031a"
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.011764705882352941,
+              0.10196078431372549
+            ],
+            "alpha": 1,
+            "hex": "#ff031a"
+          },
+          "light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9215686274509803,
+              0.011764705882352941,
+              0.09411764705882353
+            ],
+            "alpha": 1,
+            "hex": "#eb0318"
+          }
+        }
+      }
+    },
     "red-glow": {
       "$type": "color",
       "$value": {

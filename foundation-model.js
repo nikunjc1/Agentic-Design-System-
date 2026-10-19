@@ -212,6 +212,7 @@
     const semanticSurface=hex(tokens['--graphite-900'],theme==='dark'?'#15171A':'#FFFFFF');
     tokens['--green-700']=semanticForeground(hex(tokens['--green-500'],'#2FBF6E'),semanticSurface);
     tokens['--danger-700']=semanticForeground(hex(tokens['--danger-500'],'#FF031A'),semanticSurface);
+    tokens['--red-700']=semanticForeground(hex(tokens['--red-500'],'#FF031A'),semanticSurface);
     for(const [state,color] of [['pass',tokens['--green-500']],['fail',tokens['--danger-500']]]) {
       const background=blendColor(color,semanticSurface,.12);
       tokens['--contrast-'+state+'-bg']=background;

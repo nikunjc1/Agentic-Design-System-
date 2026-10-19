@@ -154,6 +154,14 @@
     var dotInfo = STATUS_DOT_MAP[sizeKey] || STATUS_DOT_MAP[FALLBACK_DEFAULTS.size];
     var circleCls = "avatar-demo-circle avatar-demo-circle--" + typeKey + " avatar-demo-circle--" + shapeKey + " avatar-demo-circle--h" + sizeKey;
     var circleStyle = "width:" + sizeInfo.box + "px;height:" + sizeInfo.box + "px;font-size:" + sizeInfo.font + "px;";
+    // Initials/Image circles are always white-on-brand-red, regardless of
+    // theme - an inline font-size alone makes foundation-runtime.js's
+    // typography sync (bindExamples) treat this as body text and overwrite
+    // an unset color with the muted body-text gray, which fails contrast
+    // against the red badge. Setting color inline keeps the sync pass from
+    // touching it (it only overrides when no inline color is set, or it is
+    // one of its own inferred values).
+    if (typeKey === "initials" || typeKey === "image") circleStyle += "color:#FFFFFF;";
     var inner = "";
     if (typeKey === "initials"){
       inner = "<span>" + escapeHtml(initials || FALLBACK_DEFAULTS.initials) + "</span>";
