@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-08",
+  "method": "Actual scripts in jsdom; rendering, font decoding and assistive technology not evaluated",
+  "assertions": 141,
+  "failures": 0,
+  "results": [
+    {
+      "name": "All 15 schemas: preserve future records, explicit reset and migrated save",
+      "status": "pass"
+    },
+    {
+      "name": "Project draft recovery, context review, full save and nine-section readiness",
+      "status": "pass"
+    },
+    {
+      "name": "Invalid project draft: failed discard preserves data, backup and successful discard recover",
+      "status": "pass"
+    },
+    {
+      "name": "Typography presets: scoped Undo restores metrics, later edit retires Undo",
+      "status": "pass"
+    },
+    {
+      "name": "Icon references: decode failure removes invalid asset and reports recovery",
+      "status": "pass"
+    },
+    {
+      "name": "Streaming start, stop, continue, interruption and retry preserve output and scope",
+      "status": "pass"
+    },
+    {
+      "name": "Project Markdown: effective defaults, all nine contracts and exact copy",
+      "status": "pass"
+    },
+    {
+      "name": "Foundation JSON: settings, both themes, context, contract and recipient parity",
+      "status": "pass"
+    }
+  ]
+}

@@ -63,6 +63,13 @@
     return '<div class="' + wrapCls + '">' + panel1Html + dividerHtml + panel2Html + "</div>";
   }
 
+  function buildLiveSplitterField(typeKey,panel1Label,panel2Label,id){
+    return '<div class="splitter-demo-wrap splitter-demo-wrap--'+typeKey+' ads-live-splitter" data-live-splitter data-splitter-axis="'+typeKey+'">'+
+      '<div class="splitter-demo-panel" id="'+id+'-first" data-splitter-first><span class="splitter-demo-panel-text">'+escapeHtml(panel1Label)+'</span></div>'+
+      '<div class="splitter-demo-divider splitter-demo-divider--'+typeKey+'" data-splitter-divider><span class="splitter-demo-handle"></span></div>'+
+      '<div class="splitter-demo-panel" data-splitter-second><span class="splitter-demo-panel-text">'+escapeHtml(panel2Label)+'</span></div></div>';
+  }
+
   function buildFullPrompt(panel1Label, panel2Label, ratio){
     panel1Label = (panel1Label || DEFAULT_PANEL1_LABEL).trim() || DEFAULT_PANEL1_LABEL;
     panel2Label = (panel2Label || DEFAULT_PANEL2_LABEL).trim() || DEFAULT_PANEL2_LABEL;
@@ -83,7 +90,8 @@
     lines.push("- Collapsed: the first panel shrinks to a thin 28px strip showing only an expand chevron, temporarily reclaiming its space for the second panel.");
     lines.push("");
     lines.push("Component properties: First panel label (text, e.g. \"" + panel1Label + "\"); Second panel label (text, e.g. \"" + panel2Label + "\"); Split ratio (number, percent given to the first panel when not collapsed) - currently " + ratio + ".");
-    return lines.join("\n");
+    lines.push("Live interaction: include splitter-runtime.js and mount ADSSplitter. Named separator with arrow/Shift/Home/End/Enter keys, 64px minimum expanded panes, 10–90% bounds, collapse/restore, pointer cancellation and versioned width persistence. Use a unique storage key per product layout. Static state comparisons remain inert.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(panel1Label, panel2Label, ratio){
@@ -109,38 +117,16 @@
     lines.push("");
     lines.push("<!-- Example usage - one per type, Default state, at the chosen labels/ratio -->");
     TYPES.forEach(function(t){
-      lines.push(buildSplitterField(t.key, "default", panel1Label, panel2Label, ratio));
+      lines.push(buildLiveSplitterField(t.key,panel1Label,panel2Label,"splitter-"+t.key));
     });
+    lines.push('<!-- Include splitter-runtime.js after the shared Foundation scripts. Use a unique key per layout. -->');
+    lines.push('<script>document.querySelectorAll("[data-live-splitter]").forEach(function(wrap){ADSSplitter.mount(wrap,{ratio:'+ratio+',label:wrap.querySelector("[data-splitter-first]").textContent,storageKey:"my-layout-"+wrap.dataset.splitterAxis});});</script>');
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     var cardCopyPromptBtn = document.querySelector('[data-role="copy-prompt-splitter"]');
@@ -289,68 +275,27 @@
     var sandbox = document.querySelector('[data-role="splitter-interactive"]');
     if (!sandbox) return;
 
-    var liveRatio = DEFAULT_RATIO;
-    var MIN_RATIO = 10;
-    var MAX_RATIO = 90;
-
-    function renderSandbox(){
-      var v = currentValues();
-      sandbox.innerHTML =
-        '<div class="splitter-demo-wrap splitter-demo-wrap--horizontal" data-role="live-wrap">' +
-          '<div class="splitter-demo-panel" style="flex:0 0 ' + liveRatio + '%;">' +
-            '<span class="splitter-demo-panel-text">' + escapeHtml(v.panel1Label) + "</span>" +
-          "</div>" +
-          '<div class="splitter-demo-divider splitter-demo-divider--horizontal" data-role="live-divider">' +
-            '<span class="splitter-demo-handle"></span>' +
-          "</div>" +
-          '<div class="splitter-demo-panel" style="flex:1 1 auto;">' +
-            '<span class="splitter-demo-panel-text">' + escapeHtml(v.panel2Label) + "</span>" +
-          "</div>" +
-        "</div>" +
-        '<p class="interactive-demo-readout" data-role="live-readout">' + liveRatio + "% / " + (100 - liveRatio) + "%</p>";
+    var v=currentValues();
+    sandbox.innerHTML=buildLiveSplitterField('horizontal',v.panel1Label,v.panel2Label,'splitter-live')+
+      '<p id="splitter-help" class="get-library-copy ads-no-clamp">Arrow keys resize; Shift adjusts 10%. Home/End use bounds. Enter collapses/restores the first pane.</p>'+
+      '<p class="interactive-demo-readout" data-role="live-readout" role="status"></p>'+
+      '<button type="button" class="btn btn-ghost" data-role="splitter-reset">Reset saved split</button>';
+    var live=window.ADSSplitter.mount(sandbox.querySelector('[data-live-splitter]'),{
+      ratio:v.ratio,storageKey:'ads:splitter-demo:v1',label:v.panel1Label,
+      output:sandbox.querySelector('[data-role="live-readout"]'),helpId:'splitter-help',
+      onChange:function(value){if(ratioInput)ratioInput.value=value.ratio;window.ADS_scheduleRender(render);}
+    });
+    if(ratioInput){ratioInput.value=live.getState().ratio;ratioInput.addEventListener('change',function(){live.setRatio(currentValues().ratio);});render();}
+    sandbox.querySelector('[data-role="splitter-reset"]').addEventListener('click',live.reset);
+    function updateLabels(){
+      var next=currentValues();
+      sandbox.querySelector('[data-splitter-first] .splitter-demo-panel-text').textContent=next.panel1Label;
+      sandbox.querySelector('[data-splitter-second] .splitter-demo-panel-text').textContent=next.panel2Label;
+      sandbox.querySelector('[data-splitter-divider]').setAttribute('aria-label',next.panel1Label);
     }
+    if(panel1Input)panel1Input.addEventListener('input',updateLabels);
+    if(panel2Input)panel2Input.addEventListener('input',updateLabels);
+    window.addEventListener('pagehide',live.destroy);
 
-    // Pointer events rather than mouse events, so a trackpad, a mouse and a
-    // touchscreen all behave the same. setPointerCapture keeps the drag alive
-    // when the pointer runs ahead of the divider, which it always does.
-    function beginDrag(e){
-      var divider = e.target.closest('[data-role="live-divider"]');
-      if (!divider) return;
-      var wrap = sandbox.querySelector('[data-role="live-wrap"]');
-      if (!wrap) return;
-      e.preventDefault();
-      divider.setPointerCapture(e.pointerId);
-
-      function onMove(ev){
-        var box = wrap.getBoundingClientRect();
-        if (!box.width) return;
-        var pct = ((ev.clientX - box.left) / box.width) * 100;
-        // In RTL the panels are mirrored, so the same pointer position means
-        // the opposite ratio.
-        if (getComputedStyle(wrap).direction === "rtl") pct = 100 - pct;
-        pct = Math.max(MIN_RATIO, Math.min(MAX_RATIO, Math.round(pct)));
-        if (pct === liveRatio) return;
-        liveRatio = pct;
-        var first = wrap.querySelector(".splitter-demo-panel");
-        var readout = sandbox.querySelector('[data-role="live-readout"]');
-        if (first) first.style.flex = "0 0 " + liveRatio + "%";
-        if (readout) readout.textContent = liveRatio + "% / " + (100 - liveRatio) + "%";
-      }
-      function onUp(ev){
-        divider.releasePointerCapture(ev.pointerId);
-        divider.removeEventListener("pointermove", onMove);
-        divider.removeEventListener("pointerup", onUp);
-        divider.classList.remove("is-dragging");
-      }
-      divider.classList.add("is-dragging");
-      divider.addEventListener("pointermove", onMove);
-      divider.addEventListener("pointerup", onUp);
-    }
-
-    sandbox.addEventListener("pointerdown", beginDrag);
-    if (panel1Input) panel1Input.addEventListener("input", renderSandbox);
-    if (panel2Input) panel2Input.addEventListener("input", renderSandbox);
-
-    renderSandbox();
   });
 })();

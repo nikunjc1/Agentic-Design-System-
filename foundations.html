@@ -670,6 +670,74 @@
       <span class="save-status" id="colorsMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>User and task flow</h3><p>Set brand, surfaces, statuses and neutrals independently. Inspect light/dark applied pairs, save valid choices, then copy the current configuration. Enabling dark editing is durable and does not couple Danger to Brand.</p></div>
+<div class="ads-contract-rule"><h3>Roles and states</h3><p>Brand communicates selection/actions; Success, Warning, Danger and Info communicate severity. Charts use a separate series palette. Foreground is selected per actual primary-button state. Status text uses an accessible semantic foreground against its real surface, not an untested raw hue.</p></div>
+<div class="ads-contract-rule"><h3>Accessible pairs</h3><p>Normal text requires 4.5:1 and large text 3:1; essential non-text boundaries require 3:1. Decorative lines and disabled controls have different scope. Calculate alpha-composited backgrounds first. Recheck current Typography colors after surface edits. A passing swatch is not certification of every component.</p></div>
+<div class="ads-contract-rule"><h3>Derivation and hierarchy</h3><p>Resolver version 1 derives hover by mixing brand with 25% white and pressed by mixing with 18% black; tint is 8% brand and glow 35%. Semantic readable foregrounds move toward black or white until the actual surface pair passes 4.5:1. Highly customized surfaces can collapse the page/panel/raised hierarchy: use a neutral border or restore separation deliberately; luminance order alone is not a universal hierarchy guarantee.</p></div>
+<div class="ads-contract-rule"><h3>Compatibility mapping</h3><p>Existing red-* tokens represent brand/action; danger-* represent severity. type-*-color represents text by role; graphite-950/900/850 represents page/panel/raised surfaces. Prefer the exported color-brand, color-action, color-text and color-surface aliases for new consumers. Compatibility names retain their existing meaning and are not a license to use a brand hue for error feedback.</p></div>
+<div class="ads-contract-rule"><h3>Examples and recovery</h3><p>A red brand with a red Danger is two independent choices. White text on default red can fail; use the resolved on-brand foreground. For a tinted Tag calculate status text versus its tinted surface. Use label/icon/message in addition to hue. Keep full hex validation and the last valid value while typing.</p></div>
+<div class="ads-contract-rule"><h3>Responsive and interaction</h3><p>Picker numeric controls remain keyboard accessible. Escape returns focus to the trigger; outside dismissal does not trap focus. At narrow/zoomed widths keep fields and popup inside the content viewport. Use forced-color system colors rather than relying on tinted fills.</p></div>
+<div class="ads-contract-rule"><h3>Agent and export</h3><p>Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Colors&quot;,
+    &quot;rules&quot;: {
+      &quot;User and task flow&quot;: &quot;Set brand, surfaces, statuses and neutrals independently. Inspect light/dark applied pairs, save valid choices, then copy the current configuration. Enabling dark editing is durable and does not couple Danger to Brand.&quot;,
+      &quot;Roles and states&quot;: &quot;Brand communicates selection/actions; Success, Warning, Danger and Info communicate severity. Charts use a separate series palette. Foreground is selected per actual primary-button state. Status text uses an accessible semantic foreground against its real surface, not an untested raw hue.&quot;,
+      &quot;Accessible pairs&quot;: &quot;Normal text requires 4.5:1 and large text 3:1; essential non-text boundaries require 3:1. Decorative lines and disabled controls have different scope. Calculate alpha-composited backgrounds first. Recheck current Typography colors after surface edits. A passing swatch is not certification of every component.&quot;,
+      &quot;Derivation and hierarchy&quot;: &quot;Resolver version 1 derives hover by mixing brand with 25% white and pressed by mixing with 18% black; tint is 8% brand and glow 35%. Semantic readable foregrounds move toward black or white until the actual surface pair passes 4.5:1. Highly customized surfaces can collapse the page/panel/raised hierarchy: use a neutral border or restore separation deliberately; luminance order alone is not a universal hierarchy guarantee.&quot;,
+      &quot;Compatibility mapping&quot;: &quot;Existing red-* tokens represent brand/action; danger-* represent severity. type-*-color represents text by role; graphite-950/900/850 represents page/panel/raised surfaces. Prefer the exported color-brand, color-action, color-text and color-surface aliases for new consumers. Compatibility names retain their existing meaning and are not a license to use a brand hue for error feedback.&quot;,
+      &quot;Examples and recovery&quot;: &quot;A red brand with a red Danger is two independent choices. White text on default red can fail; use the resolved on-brand foreground. For a tinted Tag calculate status text versus its tinted surface. Use label/icon/message in addition to hue. Keep full hex validation and the last valid value while typing.&quot;,
+      &quot;Responsive and interaction&quot;: &quot;Picker numeric controls remain keyboard accessible. Escape returns focus to the trigger; outside dismissal does not trap focus. At narrow/zoomed widths keep fields and popup inside the content viewport. Use forced-color system colors rather than relying on tinted fills.&quot;,
+      &quot;Agent and export&quot;: &quot;Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

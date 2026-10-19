@@ -116,7 +116,7 @@
     lines.push("- Pending: the same events plus a trailing, dimmed placeholder item with a dashed segment of connecting line above it and no timestamp (just \"Pending...\"), indicating more events are still to come.");
     lines.push("");
     lines.push("Component properties: Show icons (boolean, default off) - " + (showIcons ? "ON, so every dot is replaced with a small colored status icon (a checkmark in a circle)." : "OFF, so every event shows a plain dot rather than an icon.") + " The current event in the \"With events\" state and the pending placeholder keep their own accent/dimmed coloring regardless of this setting.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(showIcons){
@@ -196,31 +196,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (timeline.html's listing

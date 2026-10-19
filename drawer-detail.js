@@ -154,7 +154,7 @@
     lines.push("");
     lines.push("Component properties: Title (text, e.g. \"" + title + "\"); Body text (text, e.g. \"" + body + "\"); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).");
     lines.push("Show close button is currently: " + (showClose ? "on" : "off") + ".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(selectionInfo){
@@ -270,31 +270,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (drawer.html's listing

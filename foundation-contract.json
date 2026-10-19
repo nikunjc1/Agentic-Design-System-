@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "authority": "Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.",
+  "governance": {
+    "owners": "Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.",
+    "changes": "Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.",
+    "compatibility": "Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.",
+    "deprecation": "Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.",
+    "scope": "This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification."
+  },
+  "storage": {
+    "version": 1,
+    "legacy": "Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.",
+    "future": "Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.",
+    "invalid": "Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.",
+    "concurrency": "A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently."
+  },
+  "units": {
+    "base": "1rem = 16px at default browser settings. Do not fix the root font size.",
+    "use": "Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.",
+    "native": "Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library."
+  },
+  "acceptance": [
+    "Compare page, applied tokens, durable record, Machine View and exported instructions.",
+    "Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.",
+    "Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.",
+    "Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.",
+    "Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance."
+  ],
+  "layers": {
+    "content": 0,
+    "sticky": 20,
+    "popover": 40,
+    "scrim": 60,
+    "dialog": 70,
+    "toast": 80,
+    "tooltip": 90,
+    "rules": "Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size."
+  },
+  "sections": {
+    "new-project.html": {
+      "title": "Project setup",
+      "rules": {
+        "User and task flow": "Choose a product and delivery platforms, choose a role, review, save, then configure Foundations and export. Resume or discard an existing draft explicitly. This workspace holds one editable project profile with shared Foundation settings, rather than isolated projects.",
+        "Navigation and recovery": "Step links and reload advance only after earlier required fields validate. Back preserves entries. Final submit checks both earlier steps and focuses the first error. Invalid or future drafts have backup/discard actions. Failed discard keeps the draft notice. Successful save moves focus to confirmation; Back returns to editable steps.",
+        "Context and readiness": "One delivery platform can supply a platform recommendation; multiple platforms use product context. Explicit editor choices win. Readiness distinguishes a valid saved record, a resolved default and recovery needed. Neither saved nor default means verified. AI is documented as examples, with no live execution.",
+        "Categories and identity": "Dashboard describes a data-focused product; Desktop web describes delivery. Choose AI Product for an AI-led experience, and Other only when no category fits. Name, email and designation are optional and excluded from handoff unless opted in. Returning from docs preserves the durable profile and chosen overrides.",
+        "Handoff": "Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example."
+      }
+    },
+    "foundations.html": {
+      "title": "Colors",
+      "rules": {
+        "User and task flow": "Set brand, surfaces, statuses and neutrals independently. Inspect light/dark applied pairs, save valid choices, then copy the current configuration. Enabling dark editing is durable and does not couple Danger to Brand.",
+        "Roles and states": "Brand communicates selection/actions; Success, Warning, Danger and Info communicate severity. Charts use a separate series palette. Foreground is selected per actual primary-button state. Status text uses an accessible semantic foreground against its real surface, not an untested raw hue.",
+        "Accessible pairs": "Normal text requires 4.5:1 and large text 3:1; essential non-text boundaries require 3:1. Decorative lines and disabled controls have different scope. Calculate alpha-composited backgrounds first. Recheck current Typography colors after surface edits. A passing swatch is not certification of every component.",
+        "Derivation and hierarchy": "Resolver version 1 derives hover by mixing brand with 25% white and pressed by mixing with 18% black; tint is 8% brand and glow 35%. Semantic readable foregrounds move toward black or white until the actual surface pair passes 4.5:1. Highly customized surfaces can collapse the page/panel/raised hierarchy: use a neutral border or restore separation deliberately; luminance order alone is not a universal hierarchy guarantee.",
+        "Compatibility mapping": "Existing red-* tokens represent brand/action; danger-* represent severity. type-*-color represents text by role; graphite-950/900/850 represents page/panel/raised surfaces. Prefer the exported color-brand, color-action, color-text and color-surface aliases for new consumers. Compatibility names retain their existing meaning and are not a license to use a brand hue for error feedback.",
+        "Examples and recovery": "A red brand with a red Danger is two independent choices. White text on default red can fail; use the resolved on-brand foreground. For a tinted Tag calculate status text versus its tinted surface. Use label/icon/message in addition to hue. Keep full hex validation and the last valid value while typing.",
+        "Responsive and interaction": "Picker numeric controls remain keyboard accessible. Escape returns focus to the trigger; outside dismissal does not trap focus. At narrow/zoomed widths keep fields and popup inside the content viewport. Use forced-color system colors rather than relying on tinted fills.",
+        "Agent and export": "Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result."
+      }
+    },
+    "grid-layout.html": {
+      "title": "Grid & Layout",
+      "rules": {
+        "Geometry": "Columns are integers 1\u201324; gutters are integers 0\u201364px. Rows, Columns+Rows and Custom obey the same validation. Baseline is independent. Custom requires explicit geometry; saved geometry is the buildable result, not a preset name.",
+        "Platform profiles": "The workspace applies one global profile. One selected platform supplies its recommendation; multiple platforms use the product recommendation. Exports also include a light/dark recommendation snapshot for each selected platform, with saved overrides retained. Consumers choose the matching platform profile explicitly; these exports do not automatically implement native layouts or viewport switching. Unsupported context falls back to system defaults and requires review.",
+        "Container and spans": "Use a centered container capped by --size-content (default 1200px), min-width:0, equal logical gutters and border-box sizing. Main gutters are 40px desktop, 24px compact and 16px below 640px. A span k in N columns is (available width minus (N-1) gutters)/N multiplied by k plus (k-1) gutters. Nested grids use their parent content box, never the full viewport.",
+        "Breakpoints and density": "640px governs compact reflow and 900px shell navigation. The default 1200px content cap is not a viewport breakpoint. Listing grids retain 1440/1100/700px for their 4\u21923\u21922\u21921 preview sequence; those compatibility thresholds preserve wider 180\u2013220px specimens and their action rows. Container thresholds 560/800px govern reference rows; Typography uses 960/640/420px for 3/2/1 control columns. The Border editor's 1000px two-column exception accommodates its six property fields. These content exceptions require boundary/zoom evidence before changes. Density never reduces accessible targets.",
+        "Pattern inventory": "Single column stacks all content. Split view becomes a labelled drill-down with Back and focus return. Master-detail uses list then detail with loading/empty/error states. Dashboard preserves reading order while stacking cards. Sidebar moves to the navigation drawer. Three-column layouts collapse secondary then tertiary panes. Masonry preserves DOM reading order. Full-screen workspaces keep primary actions reachable and independently name justified scroll regions.",
+        "Resize and panes": "Splitter panes have explicit min/max bounds, keyboard resizing, Home/End, and persistent user preference scoped to the layout. Collapse never hides the focused action. On wide-to-narrow transitions preserve selection and return focus on Back. Affix content stays below the measured banner and yields when its height exceeds half the viewport.",
+        "Overflow and handoff": "Reflow first. Confine unavoidable tables/code to named keyboard-operable scroll regions. Avoid page-wide horizontal scroll. Show truncation recovery. Export container, columns, gutter, spans, baseline, thresholds, pattern states and resize/overflow rules.",
+        "Pattern: Single Column": "Use one readable content column within the shared maximum container. At narrow widths keep source order, equal gutters and reachable primary actions. Empty content states explain why and offer the next action; loading reserves the expected structure; error offers retry without losing entries.",
+        "Pattern: Two Column": "Use two related columns at wide widths. Below 900px stack in source order rather than CSS visual reordering. Each column may show its own named empty/loading/error state. Keep keyboard focus in the edited column across reflow; do not shrink form labels or fields to fit.",
+        "Pattern: Sidebar + Content": "Use persistent navigation beside the main pane above 900px. At 900px and below use a named navigation drawer with a trigger, Escape dismissal and focus restoration. Selection updates the active navigation item; loading/error belongs to main content, not the whole navigation tree.",
+        "Pattern: Dashboard": "Header precedes KPI cards and then charts/tables in source order. Cards wrap with minmax and a minimum readable width rather than a fixed card count. Preserve independent loading/error states per region and expose exact values for abbreviated metrics. Bounded wide tables scroll in a named keyboard-operable region.",
+        "Pattern: Split View": "Wide uses two panes with an explicit content-priority ratio. Narrow stacks editor then preview in source order; preserve entered data and the current focus. Resizing uses the shared Splitter controller with arrow keys, Shift/Home/End, collapse/restore, pointer cancellation and versioned ratios. A static split has no fake interactive handle.",
+        "Pattern: Card Grid": "Equal-weight cards use auto-fit with a documented minimum readable width. Narrow reflows to one column; keep DOM reading order. Clickable cards expose one named link or action. Static cards do not gain hover elevation. Empty/loading/error states occupy the collection region and retain filter values.",
+        "Pattern: Hero + Content": "A hero may span the container but its text and actions keep the same safe content gutters as the body. At narrow widths wrap text, contain imagery and keep primary actions visible. Do not use a fixed height that clips expansion, zoom or a long translated title. Decorative imagery has empty alternative text.",
+        "Pattern: Master-Detail": "Above 900px keep list and detail side by side; before selection show a real detail empty state. At 900px and below display only list or detail. Selecting moves focus to the detail heading; Back restores the selected row and list scroll. Loading retains selection and aria-busy; error offers Retry for the same record. Clear selection restores the originating list focus. The Try Master-Detail specimen exercises this local journey."
+      }
+    },
+    "typography.html": {
+      "title": "Typography",
+      "rules": {
+        "Roles": "Default heading sizes are H1 32px (2rem), H2 28px (1.75rem), H3 24px (1.5rem), H4 20px (1.25rem), H5 18px (1.125rem), H6 16px (1rem). Each role resolves family, size, weight, line height, tracking, style and color. Use semantic HTML for document hierarchy independently of visual size. Body and Paragraph default to 16px and Caption to 11px. Larger display sizes remain explicit custom choices.",
+        "State modifiers": "Active, Selected, Disabled, Error, Warning, Success and Info are color modifiers. A state must inherit its base role's metrics to avoid layout movement. Independent state metrics in the editor are explicit specimen overrides and must not be applied as a universal state typography recipe. Use the state color token over the original role.",
+        "Component role mapping": "Buttons, form labels, table cells and link text inherit Body metrics; dense metadata uses Caption; a form's helper or error text keeps the underlying label/body size and adds its state color. Eyebrows may use Caption with approved case; code uses the monospace family with Body dimensions. HTML headings preserve hierarchy even when a visual role differs. Default enabled text colors pass 4.5:1 on default page/panel/raised surfaces; saved custom text/surface colors require a new pair check.",
+        "Responsive usage": "Saved roles apply consistently across widths. Optional product-specific fluid headings use clamp(1.5rem, 2vw + 1rem, 3rem) for H1, with explicit exported min/max. Body and paragraph stay readable at 1rem; do not automatically shrink text to fit. Caption remains the user-requested 11px role. Content wraps and 200% zoom remains supported. Platform presets seed values; edited presets become custom.",
+        "Fonts and recovery": "Load actual faces and required weights, not only a successful stylesheet. Files are WOFF/WOFF2/TTF/OTF up to 2MB. Include uploaded data and remote stylesheet dependencies in the Foundation JSON. Stale completion cannot overwrite a newer selection or reset. Preserve the last valid font on failure and show a category-appropriate fallback.",
+        "Validation and examples": "Line height is 50\u2013300%, tracking -5\u201320px and weight 100\u2013900. Blank tracking is invalid. Validate full hex before applying. Check text on the actual panel and error/tint surface. Exercise German expansion, Arabic RTL and Japanese wrapping, plus user line/word/letter-spacing overrides.",
+        "Preset changes and handoff": "Before applying a platform preset show its affected role values. Provide scoped Undo until the next edit/reset; restore fonts and colors only if included in that change. Export all semantic roles, base/state distinction, metrics, responsive policy, fonts and px/rem equivalents."
+      }
+    },
+    "spacing.html": {
+      "title": "Spacing",
+      "rules": {
+        "Scale algorithm": "2px, 4px and 8px systems round requested steps to their selected quantum. Adaptive uses 2px at requested steps up to 6px, 4px above 6px and below 32px, and 8px from 32px. Positive steps smaller than their quantum keep their original value. --space-n is a compatibility request slot; its resolved value is authoritative. This differs from immutable numeric radius primitives.",
+        "Allowed values": "Use resolved space tokens for component gaps and padding. Zero is permitted for attached surfaces. auto is permitted for centering/available-space distribution. Percent/viewport units belong to explicitly documented container sizing. Negative margins require a named overlap exception and must not clip focus or targets.",
+        "Composition examples": "Use 8px label-to-field, 4px field-to-error, 16px field-to-field, 8px checkbox/radio glyph-to-label, 8px related toolbar actions, 24px panel content and 32px between major groups as semantic requests resolved by the active scale. Wrapped labels align with the first line; error text occupies its own row without moving unrelated controls.",
+        "Density and targets": "Comfortable/compact density affects visual spacing, never the minimum 44px product target. Glyph size, field height and hit area are separate. Reserve room for multilingual labels and validation. A 24px icon is not a 24px touch target.",
+        "Context and responsive rules": "Single-platform context wins for unsaved recommendations; explicit selection wins thereafter. Cross-Platform is one active scale with documented density/layout variants, not simultaneous conflicting global bases. Logical gutters are equal. Fluid outer padding may interpolate between approved endpoint tokens; internal spacing remains token-based.",
+        "Export": "Export algorithm, resolved scale, relationship roles, density/target rules, direction and exceptions. Show px/rem equivalents and explain native dp/sp adaptation rather than claiming native CSS support."
+      }
+    },
+    "radius.html": {
+      "title": "Radius",
+      "rules": {
+        "Primitives and roles": "Numeric --radius-n primitives retain n pixels in every philosophy. Only semantic sm/md/lg roles change: Sharp 2/4/8; Compact 2/6/12; Balanced 4/8/16; Soft 4/12/20; Expressive 8/16/32. Export these active roles and use semantic tokens for component shells.",
+        "Permission and exceptions": "Controls use sm/md according to the component recipe; panels/dialogs use md/lg. Pills use full with content width; circles require equal width/height. Attached edges and full-screen sheets set the attached corners to zero. Do not claim every third-party or native consumer is automatically tokenized.",
+        "Nested geometry": "Measure the inset between the outer contour and the child's outer contour. With border-box outer radius R, border b and padding p, an adjacent child is inset b+p: cap=max(0,R-(b+p)). For outer R=12,b=1,p=4 the cap is 7px. For the parent's inner contour use R-b and gap p. Apply independently per corner; a child separated by at least R keeps its independent radius.",
+        "States and clipping": "Hover, focus, selected and error change color/boundary but preserve corner geometry. Avoid overflow:hidden near focusable children or leave focus-ring clearance. Forced colors still expose the outline; state shape is not the only signal.",
+        "Flow and export": "Choose context/philosophy, inspect active role values, edit, reset and reload. Reset returns to the current project recommendation. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents."
+      }
+    },
+    "borders.html": {
+      "title": "Borders",
+      "rules": {
+        "Editable versus fixed": "Base width, color, opacity, style and sides are editable. State colors are editable; per-state width/opacity/style rows are fixed reference geometry. Presets seed the base recipe and diverged edits become Custom. Default reference opacity and Standard preset opacity are different recipes, not competing applied defaults.",
+        "Geometry and precedence": "Use border-box sizing and reserve base border width. Focus uses an external outline, never thicker layout geometry. Disabled/read-only prevents activation; error/warning communicates validation; selected communicates selection; hover/pressed may change tone; keyboard focus remains visible on top of all. Required adds a marker and validation rather than an unexplained border state.",
+        "Semantic defaults": "Resting controls use --control-border; structural lines remain --line/--line-strong. Error, Warning, Success and Info resolve to semantic colors unless a state override is explicitly saved. Brand is for active/selected/focus. Include text or an icon for validation; do not make color the only indicator.",
+        "Combined-state examples": "Focused error: error boundary and associated message plus an independent brand focus outline. Selected hover: preserve selection marker while adjusting its tone. Loading disabled: aria-busy plus blocked activation and a readable loading label; do not announce each frame. Success focus: success message/indicator plus visible focus. Read-only is focusable and copyable where appropriate, rather than disabled. Show required status in the label and validate on the documented form trigger.",
+        "Widths and exceptions": "Approved visual widths are 0,1,1.5,2,3,4px. Custom base widths up to 8px are allowed only as explicit configured exceptions. CSS triangles are geometry and not control boundaries. Native hairlines require the platform adapter and physical-density acceptance; 1 CSS px is not universally one device pixel.",
+        "Accessible and directional behavior": "Calculate alpha-composited boundary versus its adjacent surface for 3:1 when essential to identify a control. Focus must remain visible in forced colors. Logical start/end track RTL; physical sides are only for physical geometry. Print uses explicit solid boundaries if shadow/tint disappears.",
+        "Flow and export": "Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior."
+      }
+    },
+    "shadows.html": {
+      "title": "Shadows",
+      "rules": {
+        "Philosophy algorithm": "Flat removes all shadows. Subtle/Balanced/Soft/Expressive multiply y-offset and blur by 0.5/1/1.4/2 while retaining recipe opacity. xs through 2xl use y/blur/alpha: 1/2/.06,1/4/.08,4/8/.10,8/16/.12,12/24/.14,16/32/.16. Export resolved offsets, blur, spread, color and inset rather than just philosophy names.",
+        "Card variants": "Static bordered cards use no shadow. Explicitly elevated static cards use SM with no hover change. Interactive cards use SM at rest, MD on hover and XS when pressed. Focus uses an outline. Flat philosophy removes these shadows while borders/surfaces retain separation.",
+        "Modes and alternatives": "Dark surfaces and custom palettes must be checked for actual layer separation. Use surface and boundary tokens when shadow is invisible. Forced colors and print preserve boundaries and remove decorative shadow. Do not make a shadow the only sign of a control or modal.",
+        "Layers": "Use the shared layer map: content 0, sticky 20, popover 40, scrim 60, dialog 70, toast 80, tooltip 90. Portal overlays out of clipped containers, assign focus ownership, close the top layer with Escape, restore trigger focus and test nested owners/collisions. Elevation magnitude is not z-index.",
+        "Motion and export": "Apply hover/pressed effects only to actionable cards. Reduced motion removes animated elevation; touch has no hover requirement. Export both theme recipes, philosophy mapping, card variants, layer map, focus/clip rules and px/rem equivalents."
+      }
+    },
+    "icons.html": {
+      "title": "Icons",
+      "rules": {
+        "Catalog and aliases": "Use the bundled named catalog for edit, close, confirm, add, info and chevron-end. Resolve semantic action names through the catalog API. Existing library choices record source/style intent and do not download or replace the entire component glyph set. Other glyphs require a named source/version/license and optical review.",
+        "Geometry and sources": "UI glyphs use a 24x24 viewBox and currentColor. Illustrative isometric/3D examples use 32x32 and are not interchangeable with a 24px UI action icon. Rendered size uses --icon-size. Stroke is unitless SVG geometry. Optical centering/stroke normalization is reviewed independently of CSS width.",
+        "Accessible examples": "Decorative SVG: aria-hidden=true and focusable=false. Icon-only button: an explicit accessible name plus a 44px target; optional tooltip supplements the name. Status icon: visible message and semantic label. Loading icon: one coarse role=status announcement, reduced-motion fallback and no per-frame speech.",
+        "Assets and recovery": "Reference uploads are images up to 2MB each, at most 10 and 2.8MB encoded total. Keep choose/remove keyboard accessible; report read/decode errors. JSON packages references. Unreviewed SVG references render as images, never executable inline markup. Reference upload does not certify a reusable normalized glyph.",
+        "RTL and motion": "Mirror chevron-end and navigation arrows in RTL. Do not mirror physical objects, logos, text or mathematical/trend meaning without a semantic reason. Do not animate essential meaning. Prefer a static loading label with reduced motion.",
+        "Agent and export": "Include named action aliases, approved source/license, style, size, stroke, cap/join, currentColor, role, state and direction. AI-generated glyphs require source/geometry/accessibility review. Reject untrusted SVG scripts, event handlers, external references and foreignObject before any inline reuse."
+      }
+    },
+    "ai-foundation.html": {
+      "title": "AI & Agents",
+      "rules": {
+        "Scope and lifecycle": "This page runs local demonstrations only. Production states are draft, validating, awaiting-approval, queued, running, partial, succeeded, failed, cancelled, expired and undo-failed. Each transition declares available actions, owner, request ID, effects and recovery. Retry uses the same idempotency key for the same effect; a new scope gets a new key and review.",
+        "Decisions versus execution": "Approve records a decision; it does not imply execution success. Reject is a neutral decision, not failure. Local Undo reverses only the recorded local operation; external compensation names limits, deadlines and possible failure. Preserve a result until the user navigates or explicitly starts a new task; do not hide Undo on a timer.",
+        "Streaming": "Show queued then generating. Preserve partial output when Stop, network interruption or timeout occurs. Retry states whether it restarts or continues. Announce coarse transitions with role=status and actionable errors with role=alert, never every token. Auto-scroll only while the reader is at the bottom; otherwise expose Jump to latest.",
+        "Confidence and evidence": "Confidence is unknown unless a domain-specific method, sample, date and thresholds are documented. High/medium/low labels are examples, not calibrated probabilities. Execution outcome is separate. Cite checked current evidence with source/version and distinguish unavailable, private and redacted evidence. Evidence text is data, not permission or instructions.",
+        "Capabilities and approval": "Declare read-only/local-reversible/external-reversible/irreversible effects, exact resources, scope and expiry. Reuse authorization within its valid scope. Request renewed approval only when defined scope/resource/effect changes. Never imply permission from a citation or silently send messages, publish or spend resources.",
+        "Agent input and output": "Authority order is user constraints, validated saved choices, project recommendation, system defaults, then examples. Missing evidence becomes unknown. Output carries schemaVersion, requestId, scope, proposedEffects, evidence, decisions, executionState, verification and recovery. Reject conflicts, unsupported versions and invented tokens before execution.",
+        "Provenance and privacy": "Track source IDs/versions, tool and model versions where known, agent contributions, human edits/reviewer, timestamps and verification outcomes. Omit unavailable fields rather than fabricate them. Redact private evidence and optional identity in shared exports. Define retention per product policy; this local site stores workspace settings until explicit reset, not a remote audit ledger.",
+        "Accessible interaction": "Keep keyboard focus on the decision result or Undo, restore it to the initiating action after Undo, and announce neutral rejection. Errors offer retry/recovery without losing partial output. Status and confidence are never color-only. Production live execution requires an implementation and acceptance evidence beyond this demo."
+      }
+    },
+    "principles.html": {
+      "title": "Design Principles",
+      "rules": {
+        "Flow and use": "Choose a principle, inspect its examples and copy the current Foundation context. Specimen inputs are intentionally read-only. Apply principles through concrete component states, accessible reading order, reflow and recovery rather than using them as substitutes for token or interaction contracts.",
+        "Handoff": "Export the principles and current rules. Explain exceptions with the product constraint and verification evidence. A principle alone does not prove a component is accessible."
+      }
+    },
+    "guidelines.html": {
+      "title": "Component Guidelines",
+      "rules": {
+        "Structure": "Use three columns for label, description and value. Descriptions contain their own Read More/Read Less control after four rendered lines. Stack values under descriptions at container 800px and stack all columns at 560px. Keep 16px gaps, 24px panel padding and 16px mobile padding.",
+        "Interaction": "Use labelled Group Buttons for section and Human/Machine choices with one selected state, roving arrow/Home/End navigation and visible keyboard focus. Keep copy, export and disclosure feedback accurate. Every component contract declares variant, state precedence, target, responsive behavior and exceptions.",
+        "Copy outcomes": "All component, pattern and template copy actions use the shared clipboard helper. Modern clipboard failure may fall back only when the legacy copy command succeeds. Otherwise show Copy failed and manual-copy guidance; preserve focus and original button contents. The displayed prompt/code remains available for selection."
+      }
+    },
+    "copywriting.html": {
+      "title": "Copywriting",
+      "rules": {
+        "Structure and states": "Keep label/description/value aligned using the same three-column reference layout. Explain the next action and recovery in error text. Do not report Saved, Copied, Applied or Verified before the corresponding operation succeeds.",
+        "Expansion and localization": "Clamp explanatory prose only when it exceeds four rendered lines. Preserve adjacent values, accessible aria-expanded/aria-controls and focus on the toggle. Keep essential labels/errors untruncated. Test long translations, RTL and zoom without shrinking text."
+      }
+    },
+    "data-format.html": {
+      "title": "Data Format",
+      "rules": {
+        "Flow": "Configure a field, inspect its formatted example, copy/export current valid settings and reset/reload. Every valid input updates without blur. Invalid simultaneous fields all expose errors and retain the prior valid configuration.",
+        "Constraints": "Decimal precision 0\u20136, trailing reveal 0\u20138, one Unicode code point for the mask, a supported locale and valid IANA zone. Explicit comma grouping cannot conflict with a comma decimal locale. Distinguish real zero, missing, invalid and loading. Never reveal the entire value through a tooltip or accessible name.",
+        "Layout and accessibility": "Group number/currency, date/time and missing/sensitive settings with separators. Equal field heights and gutters, wrapped labels and responsive columns share the reference layout. Loading is announced once. Export the typed configuration and locale/zone/range/redaction rules.",
+        "Value identity": "Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one."
+      }
+    },
+    "accessibility.html": {
+      "title": "Accessibility",
+      "rules": {
+        "Acceptance": "Verify keyboard, names/roles/values, visible focus, focus return, error association, status announcements and reading order. Test 200% zoom, text-spacing overrides, narrow reflow, RTL, reduced motion, forced colors and touch targets. WCAG AA checks are per actual usage, not a single token badge.",
+        "Layout and state": "Use the shared three-column responsive reference layout, 16px row gaps, 24px panel padding and 16px mobile padding. Valid choices auto-save/apply; unfinished drafts stay unapplied. Versioned recovery preserves unreadable records and offers backup/reset. Defaults are not proof of acceptance.",
+        "Evidence": "Report automated model/DOM checks separately from rendered-browser, real font and screen-reader checks. Record page, viewport, theme, state, method, outcome and artifact. Do not mark an unavailable check complete."
+      }
+    }
+  }
+}

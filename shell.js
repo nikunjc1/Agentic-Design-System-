@@ -11,6 +11,48 @@
     clearTimeout(renderTimers.get(render));
     renderTimers.set(render, setTimeout(() => { renderTimers.delete(render); render(); }, 80));
   };
+  // Report copying only after an actual clipboard write or successful
+  // legacy copy command. Keep focus on the action that initiated it.
+  window.ADSClipboard = {
+    async copy(text) {
+      if (!String(text).trim()) throw new Error('Nothing to copy');
+      try { if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); return; } } catch {}
+      if (typeof document.execCommand !== 'function') throw new Error('Clipboard unavailable');
+      const active=document.activeElement, input=document.createElement('textarea');
+      input.value=text;input.readOnly=true;input.style.cssText='position:fixed;opacity:0;pointer-events:none';document.body.append(input);
+      try { input.select();if(!document.execCommand('copy'))throw new Error('Copy failed'); }
+      finally { input.remove();active?.focus({preventScroll:true}); }
+    }
+  };
+  // All component, pattern and template actions use the same truthful outcome.
+  const copyFeedback = new WeakMap();
+  window.ADSClipboard.copyWithFeedback = async function(text, button) {
+    let state = copyFeedback.get(button);
+    if (!state) {
+      state = { nodes:Array.from(button.childNodes), title:button.getAttribute('title'), sequence:0 };
+      copyFeedback.set(button,state);
+    }
+    clearTimeout(state.timer);
+    const sequence=++state.sequence;
+    let success=false;
+    try { await window.ADSClipboard.copy(text); success=true; } catch {}
+    if(sequence!==state.sequence)return success;
+    button.textContent=success?'Copied!':'Copy failed';
+    button.title=success?'Copied to clipboard':'Clipboard unavailable. Select the displayed prompt or code and copy it manually.';
+    let status=document.getElementById('ads-copy-status');
+    if(!status) {
+      status=document.createElement('p');status.id='ads-copy-status';status.className='ads-copy-status';
+      status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+      (document.body||document.documentElement).append(status);
+    }
+    status.textContent=success?'Copied to clipboard.':'Copy failed. Select the displayed prompt or code and copy it manually.';
+    state.timer=setTimeout(()=>{
+      if(sequence!==state.sequence)return;
+      button.replaceChildren(...state.nodes);
+      if(state.title==null)button.removeAttribute('title');else button.setAttribute('title',state.title);
+    },1800);
+    return success;
+  };
 
   // Preferences remain optional when browser storage is unavailable.
   function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
@@ -54,6 +96,20 @@
         return false;
       }
       try {
+        if(window.ADSFoundationModel.recordKeys.includes(key.replace(/^ads:/,''))) {
+          const current=window.ADSFoundationModel.inspectRecord(key,localStorage.getItem(key));
+          if(['corrupt','invalid','future'].includes(current.status)) {
+            this.lastWriteSucceeded=false;
+            showStorageNotice('Saved settings are unreadable or from a newer version. They have been preserved. Export a backup or explicitly reset this section before saving.');
+            return false;
+          }
+          value=window.ADSFoundationModel.migrateRecord(key,value);
+          if(current.status==='valid'&&current.value&&JSON.stringify(current.value)===JSON.stringify(value)){
+            this.lastWriteSucceeded=true;
+            window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key,value}}));
+            return true;
+          }
+        }
         localStorage.setItem(key, JSON.stringify(value));
         this.lastWriteSucceeded = true;
         window.dispatchEvent(new CustomEvent('ads:foundation-change', { detail:{key,value} }));
@@ -94,11 +150,11 @@
       try {
         const value = JSON.parse(raw);
         if (!window.ADSFoundationModel.validRecord(key, value)) throw new Error('Invalid saved settings');
-        return value;
+        return window.ADSFoundationModel.migrateRecord(key,value);
       }
       catch (e) {
         console.warn(`ADS storage: value for "${key}" was corrupt JSON - reset to default instead of guessed at.`, e);
-        showStorageNotice("A saved value looked corrupted, so it was reset to its default instead of being guessed at.");
+        showStorageNotice("Saved settings are invalid or from an unsupported version. They are preserved; defaults are shown. Back up saved settings, then explicitly reset this section to recover.");
         return null;
       }
     },
@@ -485,6 +541,31 @@
     });
   }
 
+  // Shared Group Button behavior for documentation section/view choices.
+  window.ADSGroupButton = function(group, buttons) {
+    group.classList.add('group-btn','group-btn--outlined','ads-tab-group');
+    group.setAttribute('role','group');
+    buttons.forEach(button => button.classList.add('group-btn-segment','group-btn-segment--h40'));
+    const sync = () => buttons.forEach(button => {
+      const selected=button.classList.contains('is-active')||button.getAttribute('aria-current')==='location';
+      button.classList.toggle('is-selected',selected);
+      button.setAttribute('aria-pressed',String(selected));
+      button.tabIndex=selected?0:-1;
+    });
+    sync();buttons.forEach(button => button.addEventListener('click',sync));
+    group.addEventListener('keydown',event => {
+      const index=buttons.indexOf(event.target);if(index<0) return;
+      const rtl=document.documentElement.dir==='rtl';let next;
+      if(event.key==='Home') next=0;
+      else if(event.key==='End') next=buttons.length-1;
+      else if(event.key==='ArrowRight') next=(index+(rtl?-1:1)+buttons.length)%buttons.length;
+      else if(event.key==='ArrowLeft') next=(index+(rtl?1:-1)+buttons.length)%buttons.length;
+      else return;
+      event.preventDefault();buttons[next].focus();buttons[next].click();
+    });
+    return sync;
+  };
+
   // Component Guide (Human View / Machine View) - a delegated toggle
   // shared by every detail page's bottom "Component Guide" section, so no
   // per-page script is needed even though the guide's content differs on
@@ -504,6 +585,8 @@
           panels.forEach((p) => { p.hidden = p.dataset.viewPanel !== view; });
         });
       });
+      const group=guide.querySelector('.guide-view-toggle');
+      if(group) { group.setAttribute('aria-label','Documentation view');window.ADSGroupButton(group,buttons); }
     });
   }
 

@@ -79,7 +79,7 @@
     lines.push("Visual treatment: the same inverted-overlay bubble as Tooltip/Tour/Pop Confirm - near-black in light theme, near-white in dark theme, via the fixed var(--overlay-invert-bg)/-text tokens (never the user-customizable var(--graphite-900)/var(--text-hi)), so it always contrasts with the page regardless of theme or any saved brand color. No border on the bubble - box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" (matching this system's other floating-panel language, Menu/Autocomplete) gives it enough separation from the page on its own; a border read as an unwanted outline against the inverted background. Reads as a proper elevated panel rather than Tooltip's flat single-line bubble, with border-radius var(--radius-md) and room for a title/body/close button. The trigger is a real clickable button (not a decorative circle like Tooltip's trigger), styled like a simple bordered button on the ordinary page background - background var(--graphite-800), border 1px solid var(--line-strong), color var(--text-hi), padding 8px 14px, border-radius var(--radius-sm) - since it sits outside the inverted bubble, not part of it. The arrow is a small rotated square (transform:rotate(45deg)), same background as the bubble, with only half of it showing - the rest tucked behind the bubble's own opaque background as a clean triangular point (same technique as Tooltip's arrow).");
     lines.push("");
     lines.push("Component properties: Trigger label (string, the text on the trigger button) - currently \"" + triggerLabel + "\". Title (string, bold text at the top of the bubble) - currently \"" + title + "\". Body (string, used by the With body and With close states) - currently \"" + body + "\".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(triggerLabel, title, body){
@@ -146,31 +146,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (popover.html's listing

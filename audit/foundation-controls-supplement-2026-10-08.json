@@ -1,0 +1,5 @@
+{
+  "checks": 32,
+  "failures": 0,
+  "scope": "Typography tracking, font read/load errors, shared sizing reset failures, simultaneous Data Format errors, icon read failures and invalid saved typography"
+}

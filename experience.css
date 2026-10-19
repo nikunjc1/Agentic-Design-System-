@@ -1,17 +1,23 @@
 /* Shared navigation and setup, scoped to avoid changing component specimens. */
 .skip-link{position:fixed;top:var(--dimension-8);left:var(--dimension-16);transform:translateY(-180%);z-index:10000;padding:var(--space-12) var(--space-16);background:var(--graphite-950);border:var(--border-width-2) var(--border-style) var(--red-500);border-radius:var(--radius-md)}
 .skip-link:focus{transform:none}
-/* Anchor navigation follows the reading location in a long document. */
-.page-outline{display:flex;flex-wrap:wrap;gap:var(--space-8) var(--space-16);margin:0 0 var(--space-24);padding:var(--space-8) 0;border-bottom:var(--border-width-1) var(--border-style) var(--line)}
-.page-outline .anchor-demo-link{min-width:0;white-space:normal;overflow-wrap:anywhere}
-.page-outline .anchor-demo-link[aria-current=location]{color:var(--red-500);text-decoration:underline;text-underline-offset:.25em}
+/* Joined section choices preserve one track at narrow widths. */
+.page-outline{display:block;max-width:100%;overflow-x:auto;margin:0 0 var(--space-24);padding:0;border:0}
+.page-outline > .ads-tab-group{width:max-content;max-width:none}
 .app-main :is(h2,h3,section[id]){scroll-margin-top:var(--space-24)}
-.setup-notice{display:flex;align-items:center;justify-content:space-between;gap:var(--space-16);flex-wrap:wrap;padding:var(--space-16) var(--space-20);margin-bottom:var(--space-24);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-12);background:var(--graphite-900)}
+.setup-notice{display:flex;align-items:center;justify-content:space-between;gap:var(--space-16);flex-wrap:wrap;padding:var(--space-16) var(--space-20);margin-bottom:var(--space-24);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);background:var(--graphite-900)}
+.setup-context{position:sticky;top:0;z-index:5;box-shadow:var(--shadow-sm)}
+.setup-context[data-floating=false]{position:static;box-shadow:none}
+.app-main:has(> .setup-context){scroll-padding-block-start:var(--setup-context-height,0px)}
 .setup-notice p{margin:0;max-width:65ch;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .setup-actions{display:flex;gap:var(--space-12);align-items:center;flex-wrap:wrap}
+.setup-notice > .setup-actions{margin-inline-start:auto;justify-content:flex-end}
+.setup-actions :is(.setup-edit,.setup-close){--setup-action-size:max(var(--size-control),var(--size-target),calc(var(--icon-size) + var(--space-16)));inline-size:var(--setup-action-size);block-size:var(--setup-action-size);padding:0;flex:none;transition:color var(--duration-base) var(--ease-standard),border-color var(--duration-base) var(--ease-standard),background-color var(--duration-base) var(--ease-standard)}
+.setup-actions :is(.setup-edit,.setup-close):is(:hover,:focus-visible){color:var(--red-500);border-color:var(--red-500);background:var(--red-tint)}
+.setup-actions :is(.setup-edit,.setup-close):active{color:var(--red-600);border-color:var(--red-600);background:var(--red-tint)}
 .setup-actions a:not(.btn),.setup-help a{text-decoration:underline;text-underline-offset:3px}
 .setup-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:var(--space-24);align-items:start}
-.setup-panel{padding:clamp(var(--space-20),3vw,var(--space-32));border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-16);background:var(--graphite-900);min-width:0;}
+.setup-panel{padding:clamp(var(--space-20),3vw,var(--space-32));border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-md);background:var(--graphite-900);min-width:0;}
 .setup-panel h2{margin:0 0 var(--space-12);font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking);}
 /* margin reset to 0, not left as the browser's default <p> margin
    (1em, ~16px here) - that default was never actually in this rule,
@@ -22,13 +28,13 @@
    deliberate margin-top:24px, which was already winning that
    collapse regardless - zeroed for the same reason, not because it
    was visibly wrong there too. */
-.setup-panel p{line-height:1.6;color:var(--text-mid);margin:0;}
+.setup-panel p{margin:0;}
 .setup-steps{display:flex;list-style:none;padding:0;gap:var(--space-12);flex-wrap:wrap;margin:var(--space-24) 0;}
 .setup-steps li{padding:var(--space-8) var(--space-14);border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-24);color:var(--type-body-color);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .setup-steps [aria-current=step]{border-color:var(--red-500);background:var(--red-tint);color:var(--text-hi)}
 .setup-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-20);margin:var(--space-24) 0;}
 .setup-field{display:flex;flex-direction:column;gap:var(--space-8);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.setup-field input,.setup-field select{width:100%;height:var(--dimension-44);padding:0 var(--space-18);color:var(--text-hi);background:var(--graphite-950);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);font:inherit}
+.setup-field input,.setup-field select{width:100%;height:var(--dimension-44);padding:0 var(--space-18);color:var(--type-body-color);background:var(--graphite-950);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);font:inherit}
 .export-preview{width:100%;min-height:var(--dimension-44);padding:var(--space-10) var(--space-12);color:var(--text-hi);background:var(--graphite-950);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);font:inherit}
 .setup-field input[aria-invalid=true],.setup-field select[aria-invalid=true]{border-color:var(--danger-500)}
 .setup-error{color:var(--danger-500);min-height:0;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
@@ -63,7 +69,7 @@
 .export-component-option{display:flex;gap:var(--space-10);align-items:center;padding:var(--space-8) var(--space-6);border-radius:var(--radius-6);cursor:pointer;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .export-component-option:hover{background:var(--graphite-900)}
 .export-component-option input{width:var(--dimension-16);height:var(--dimension-16);accent-color:var(--red-500)}
-.setup-help{color:var(--type-body-color);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.setup-help{color:var(--type-caption-color);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 /* Foundation audit NP01 - saving Project setup replaces the one existing
    profile, so this notice needs to read as a real consequence, not routine
    help text like the rest of .setup-help. */
@@ -104,7 +110,7 @@
 .setup-notice h2{margin:0 0 var(--space-8);font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking);}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}
 @media(max-width:900px){.setup-layout{grid-template-columns:1fr}.setup-layout>aside{order:2}}
-@media(max-width:640px){.setup-fields{grid-template-columns:1fr}.setup-actions .btn{min-height:var(--dimension-44);}.setup-review{grid-template-columns:1fr;gap:var(--space-8);}.setup-review dd{margin-bottom:var(--space-12);}.topbar-right{gap:var(--space-8);}.app-topbar{gap:var(--space-8);}.brand{white-space:normal}.page-outline .anchor-demo-link{min-height:var(--dimension-44);}.setup-notice{padding:var(--space-16);}.app-main .usage-row{flex-wrap:wrap}.app-main .guide-dodont{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.setup-fields{grid-template-columns:1fr}.setup-actions .btn{min-height:var(--dimension-44);}.setup-review{grid-template-columns:1fr;gap:var(--space-8);}.setup-review dd{margin-bottom:var(--space-12);}.topbar-right{gap:var(--space-8);}.app-topbar{gap:var(--space-8);}.brand{white-space:normal}.page-outline .group-btn-segment{min-height:var(--size-target);}.setup-notice{padding:var(--space-16);}.app-main .usage-row{flex-wrap:wrap}.app-main .guide-dodont{grid-template-columns:minmax(0,1fr)}}
 @media(pointer:coarse){.sidebar-menu-toggle,.theme-toggle,.icon-btn{min-width:var(--dimension-44);min-height:var(--dimension-44);}.nav-link{min-height:var(--dimension-44);display:flex;align-items:center}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(max-width:640px){
@@ -120,3 +126,7 @@
   .transfer-demo-panel{max-width:100%;overflow-x:auto}
 }
 @media(min-width:641px) and (max-width:1000px){.app-main .border-config-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.setup-foundation-changes { margin-block-start:var(--space-24); overflow:auto; }
+.setup-foundation-changes table { width:100%; border-collapse:collapse; }
+.setup-foundation-changes th,.setup-foundation-changes td { padding:var(--space-12); text-align:start; vertical-align:top; border-block-end:1px solid var(--line); overflow-wrap:anywhere; }
+@media(max-width:640px){.setup-foundation-changes table{min-width:32rem}}

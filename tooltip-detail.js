@@ -117,7 +117,7 @@
     lines.push("Visual treatment: one consistent look regardless of placement or content state - this is a neutral utility component, not semantically colored like Alert or Toast. Inverted against the page (near-black background in light theme, near-white in dark theme - background var(--overlay-invert-bg), color var(--overlay-invert-text), NOT the normal-surface var(--text-hi)/var(--graphite-900) pair, since those are user-customizable via Foundations and would silently break the guaranteed inversion), the arrow a small rotated square (transform:rotate(45deg)) in the same background color, positioned so it visually connects the bubble to the trigger.");
     lines.push("");
     lines.push("Component properties: Size (Small/Default/Large, controls padding and font-size) - currently " + sizeLabel(sizeKey) + " (" + size.pad + " padding, " + size.font + "px font). Show arrow (boolean, toggles the connecting arrow) - currently " + (showArrow ? "shown" : "hidden") + ". Text content (string, used by the Plain text state) - currently \"" + text + "\".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(sizeKey, text, showArrow){
@@ -186,31 +186,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (tooltip.html's listing

@@ -477,7 +477,7 @@
     </div>
 
     <p class="get-library-copy" style="margin-top:var(--space-16);">Nested corners only need adjusting at all when the gap between container and child is tighter than the container's own radius. In that regime, the cap is <code>inner radius = max(0, outer radius - gap)</code> - a ceiling on the inner element's radius, not a replacement value. The moment the gap meets or exceeds the outer radius, this formula stops applying entirely and the inner element keeps its own independent radius unchanged, full stop - it does not mean "the formula evaluates to 0, so square it." Card's 16px body padding is already wider than Card's own 12px radius, so a Button (8px) sitting inside one needs no adjustment (8px, unchanged) - not 0px, even though <code>max(0, 12-16)</code> alone looks like it should be. Something sitting flush against an edge with little or no gap is the case the cap is actually for - e.g. a tab strip inset only 4px inside a 12px-radius container caps at <code>max(0, 12-4) = 8px</code>, genuinely smaller than its own 12px default.</p>
-    <p class="get-library-copy">The gap in that formula is the real visual gap to the inner element's own corner, not the padding value alone: subtract any border width sitting between container and child first (a 1px border effectively reduces an 8px padding to a 7px real gap for this purpose). Asymmetric padding needs this applied per corner independently using that corner's own actual gap, not one page-wide number for all four.</p>
+    <p class="get-library-copy">Measure the gap from the outer border edge: <code>gap = border width + padding</code>. A 12px outer radius, 1px border and 4px padding give a 7px child cap: <code>12 - (1 + 4) = 7px</code>. The inner border contour itself is <code>outer radius - border width</code>. Apply the child cap per corner using its adjacent inset; when the inset exceeds the outer radius, keep the child's independent radius.</p>
 
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
@@ -498,6 +498,68 @@
       <span class="save-status" id="radiusMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Primitives and roles</h3><p>Numeric --radius-n primitives retain n pixels in every philosophy. Only semantic sm/md/lg roles change: Sharp 2/4/8; Compact 2/6/12; Balanced 4/8/16; Soft 4/12/20; Expressive 8/16/32. Export these active roles and use semantic tokens for component shells.</p></div>
+<div class="ads-contract-rule"><h3>Permission and exceptions</h3><p>Controls use sm/md according to the component recipe; panels/dialogs use md/lg. Pills use full with content width; circles require equal width/height. Attached edges and full-screen sheets set the attached corners to zero. Do not claim every third-party or native consumer is automatically tokenized.</p></div>
+<div class="ads-contract-rule"><h3>Nested geometry</h3><p>Measure the inset between the outer contour and the child&#x27;s outer contour. With border-box outer radius R, border b and padding p, an adjacent child is inset b+p: cap=max(0,R-(b+p)). For outer R=12,b=1,p=4 the cap is 7px. For the parent&#x27;s inner contour use R-b and gap p. Apply independently per corner; a child separated by at least R keeps its independent radius.</p></div>
+<div class="ads-contract-rule"><h3>States and clipping</h3><p>Hover, focus, selected and error change color/boundary but preserve corner geometry. Avoid overflow:hidden near focusable children or leave focus-ring clearance. Forced colors still expose the outline; state shape is not the only signal.</p></div>
+<div class="ads-contract-rule"><h3>Flow and export</h3><p>Choose context/philosophy, inspect active role values, edit, reset and reload. Reset returns to the current project recommendation. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Radius&quot;,
+    &quot;rules&quot;: {
+      &quot;Primitives and roles&quot;: &quot;Numeric --radius-n primitives retain n pixels in every philosophy. Only semantic sm/md/lg roles change: Sharp 2/4/8; Compact 2/6/12; Balanced 4/8/16; Soft 4/12/20; Expressive 8/16/32. Export these active roles and use semantic tokens for component shells.&quot;,
+      &quot;Permission and exceptions&quot;: &quot;Controls use sm/md according to the component recipe; panels/dialogs use md/lg. Pills use full with content width; circles require equal width/height. Attached edges and full-screen sheets set the attached corners to zero. Do not claim every third-party or native consumer is automatically tokenized.&quot;,
+      &quot;Nested geometry&quot;: &quot;Measure the inset between the outer contour and the child&#x27;s outer contour. With border-box outer radius R, border b and padding p, an adjacent child is inset b+p: cap=max(0,R-(b+p)). For outer R=12,b=1,p=4 the cap is 7px. For the parent&#x27;s inner contour use R-b and gap p. Apply independently per corner; a child separated by at least R keeps its independent radius.&quot;,
+      &quot;States and clipping&quot;: &quot;Hover, focus, selected and error change color/boundary but preserve corner geometry. Avoid overflow:hidden near focusable children or leave focus-ring clearance. Forced colors still expose the outline; state shape is not the only signal.&quot;,
+      &quot;Flow and export&quot;: &quot;Choose context/philosophy, inspect active role values, edit, reset and reload. Reset returns to the current project recommendation. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

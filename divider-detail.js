@@ -116,7 +116,7 @@
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Scales line thickness and label font-size together - Medium is the line-weight shown above.");
     lines.push("");
     lines.push("Component properties: Text label (string, applies only to Horizontal with text) - currently \"" + text + "\". Text alignment (Left/Center/Right, applies only to Horizontal with text, controls how much line sits on each side of the label) - currently " + alignLabel(align) + ". Size.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(text, align, sizeInfo){
@@ -154,31 +154,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (divider.html's listing

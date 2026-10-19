@@ -519,11 +519,94 @@
       <span class="save-status" id="gridLayoutMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Geometry</h3><p>Columns are integers 1–24; gutters are integers 0–64px. Rows, Columns+Rows and Custom obey the same validation. Baseline is independent. Custom requires explicit geometry; saved geometry is the buildable result, not a preset name.</p></div>
+<div class="ads-contract-rule"><h3>Platform profiles</h3><p>The workspace applies one global profile. One selected platform supplies its recommendation; multiple platforms use the product recommendation. Exports also include a light/dark recommendation snapshot for each selected platform, with saved overrides retained. Consumers choose the matching platform profile explicitly; these exports do not automatically implement native layouts or viewport switching. Unsupported context falls back to system defaults and requires review.</p></div>
+<div class="ads-contract-rule"><h3>Container and spans</h3><p>Use a centered container capped by --size-content (default 1200px), min-width:0, equal logical gutters and border-box sizing. Main gutters are 40px desktop, 24px compact and 16px below 640px. A span k in N columns is (available width minus (N-1) gutters)/N multiplied by k plus (k-1) gutters. Nested grids use their parent content box, never the full viewport.</p></div>
+<div class="ads-contract-rule"><h3>Breakpoints and density</h3><p>640px governs compact reflow and 900px shell navigation. The default 1200px content cap is not a viewport breakpoint. Listing grids retain 1440/1100/700px for their 4→3→2→1 preview sequence; those compatibility thresholds preserve wider 180–220px specimens and their action rows. Container thresholds 560/800px govern reference rows; Typography uses 960/640/420px for 3/2/1 control columns. The Border editor&#x27;s 1000px two-column exception accommodates its six property fields. These content exceptions require boundary/zoom evidence before changes. Density never reduces accessible targets.</p></div>
+<div class="ads-contract-rule"><h3>Pattern inventory</h3><p>Single column stacks all content. Split view becomes a labelled drill-down with Back and focus return. Master-detail uses list then detail with loading/empty/error states. Dashboard preserves reading order while stacking cards. Sidebar moves to the navigation drawer. Three-column layouts collapse secondary then tertiary panes. Masonry preserves DOM reading order. Full-screen workspaces keep primary actions reachable and independently name justified scroll regions.</p></div>
+<div class="ads-contract-rule"><h3>Resize and panes</h3><p>Splitter panes have explicit min/max bounds, keyboard resizing, Home/End, and persistent user preference scoped to the layout. Collapse never hides the focused action. On wide-to-narrow transitions preserve selection and return focus on Back. Affix content stays below the measured banner and yields when its height exceeds half the viewport.</p></div>
+<div class="ads-contract-rule"><h3>Overflow and handoff</h3><p>Reflow first. Confine unavoidable tables/code to named keyboard-operable scroll regions. Avoid page-wide horizontal scroll. Show truncation recovery. Export container, columns, gutter, spans, baseline, thresholds, pattern states and resize/overflow rules.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Single Column</h3><p>Use one readable content column within the shared maximum container. At narrow widths keep source order, equal gutters and reachable primary actions. Empty content states explain why and offer the next action; loading reserves the expected structure; error offers retry without losing entries.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Two Column</h3><p>Use two related columns at wide widths. Below 900px stack in source order rather than CSS visual reordering. Each column may show its own named empty/loading/error state. Keep keyboard focus in the edited column across reflow; do not shrink form labels or fields to fit.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Sidebar + Content</h3><p>Use persistent navigation beside the main pane above 900px. At 900px and below use a named navigation drawer with a trigger, Escape dismissal and focus restoration. Selection updates the active navigation item; loading/error belongs to main content, not the whole navigation tree.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Dashboard</h3><p>Header precedes KPI cards and then charts/tables in source order. Cards wrap with minmax and a minimum readable width rather than a fixed card count. Preserve independent loading/error states per region and expose exact values for abbreviated metrics. Bounded wide tables scroll in a named keyboard-operable region.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Split View</h3><p>Wide uses two panes with an explicit content-priority ratio. Narrow stacks editor then preview in source order; preserve entered data and the current focus. Resizing uses the shared Splitter controller with arrow keys, Shift/Home/End, collapse/restore, pointer cancellation and versioned ratios. A static split has no fake interactive handle.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Card Grid</h3><p>Equal-weight cards use auto-fit with a documented minimum readable width. Narrow reflows to one column; keep DOM reading order. Clickable cards expose one named link or action. Static cards do not gain hover elevation. Empty/loading/error states occupy the collection region and retain filter values.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Hero + Content</h3><p>A hero may span the container but its text and actions keep the same safe content gutters as the body. At narrow widths wrap text, contain imagery and keep primary actions visible. Do not use a fixed height that clips expansion, zoom or a long translated title. Decorative imagery has empty alternative text.</p></div>
+<div class="ads-contract-rule"><h3>Pattern: Master-Detail</h3><p>Above 900px keep list and detail side by side; before selection show a real detail empty state. At 900px and below display only list or detail. Selecting moves focus to the detail heading; Back restores the selected row and list scroll. Loading retains selection and aria-busy; error offers Retry for the same record. Clear selection restores the originating list focus. The Try Master-Detail specimen exercises this local journey.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Grid &amp; Layout&quot;,
+    &quot;rules&quot;: {
+      &quot;Geometry&quot;: &quot;Columns are integers 1\u201324; gutters are integers 0\u201364px. Rows, Columns+Rows and Custom obey the same validation. Baseline is independent. Custom requires explicit geometry; saved geometry is the buildable result, not a preset name.&quot;,
+      &quot;Platform profiles&quot;: &quot;The workspace applies one global profile. One selected platform supplies its recommendation; multiple platforms use the product recommendation. Exports also include a light/dark recommendation snapshot for each selected platform, with saved overrides retained. Consumers choose the matching platform profile explicitly; these exports do not automatically implement native layouts or viewport switching. Unsupported context falls back to system defaults and requires review.&quot;,
+      &quot;Container and spans&quot;: &quot;Use a centered container capped by --size-content (default 1200px), min-width:0, equal logical gutters and border-box sizing. Main gutters are 40px desktop, 24px compact and 16px below 640px. A span k in N columns is (available width minus (N-1) gutters)/N multiplied by k plus (k-1) gutters. Nested grids use their parent content box, never the full viewport.&quot;,
+      &quot;Breakpoints and density&quot;: &quot;640px governs compact reflow and 900px shell navigation. The default 1200px content cap is not a viewport breakpoint. Listing grids retain 1440/1100/700px for their 4\u21923\u21922\u21921 preview sequence; those compatibility thresholds preserve wider 180\u2013220px specimens and their action rows. Container thresholds 560/800px govern reference rows; Typography uses 960/640/420px for 3/2/1 control columns. The Border editor&#x27;s 1000px two-column exception accommodates its six property fields. These content exceptions require boundary/zoom evidence before changes. Density never reduces accessible targets.&quot;,
+      &quot;Pattern inventory&quot;: &quot;Single column stacks all content. Split view becomes a labelled drill-down with Back and focus return. Master-detail uses list then detail with loading/empty/error states. Dashboard preserves reading order while stacking cards. Sidebar moves to the navigation drawer. Three-column layouts collapse secondary then tertiary panes. Masonry preserves DOM reading order. Full-screen workspaces keep primary actions reachable and independently name justified scroll regions.&quot;,
+      &quot;Resize and panes&quot;: &quot;Splitter panes have explicit min/max bounds, keyboard resizing, Home/End, and persistent user preference scoped to the layout. Collapse never hides the focused action. On wide-to-narrow transitions preserve selection and return focus on Back. Affix content stays below the measured banner and yields when its height exceeds half the viewport.&quot;,
+      &quot;Overflow and handoff&quot;: &quot;Reflow first. Confine unavoidable tables/code to named keyboard-operable scroll regions. Avoid page-wide horizontal scroll. Show truncation recovery. Export container, columns, gutter, spans, baseline, thresholds, pattern states and resize/overflow rules.&quot;,
+      &quot;Pattern: Single Column&quot;: &quot;Use one readable content column within the shared maximum container. At narrow widths keep source order, equal gutters and reachable primary actions. Empty content states explain why and offer the next action; loading reserves the expected structure; error offers retry without losing entries.&quot;,
+      &quot;Pattern: Two Column&quot;: &quot;Use two related columns at wide widths. Below 900px stack in source order rather than CSS visual reordering. Each column may show its own named empty/loading/error state. Keep keyboard focus in the edited column across reflow; do not shrink form labels or fields to fit.&quot;,
+      &quot;Pattern: Sidebar + Content&quot;: &quot;Use persistent navigation beside the main pane above 900px. At 900px and below use a named navigation drawer with a trigger, Escape dismissal and focus restoration. Selection updates the active navigation item; loading/error belongs to main content, not the whole navigation tree.&quot;,
+      &quot;Pattern: Dashboard&quot;: &quot;Header precedes KPI cards and then charts/tables in source order. Cards wrap with minmax and a minimum readable width rather than a fixed card count. Preserve independent loading/error states per region and expose exact values for abbreviated metrics. Bounded wide tables scroll in a named keyboard-operable region.&quot;,
+      &quot;Pattern: Split View&quot;: &quot;Wide uses two panes with an explicit content-priority ratio. Narrow stacks editor then preview in source order; preserve entered data and the current focus. Resizing uses the shared Splitter controller with arrow keys, Shift/Home/End, collapse/restore, pointer cancellation and versioned ratios. A static split has no fake interactive handle.&quot;,
+      &quot;Pattern: Card Grid&quot;: &quot;Equal-weight cards use auto-fit with a documented minimum readable width. Narrow reflows to one column; keep DOM reading order. Clickable cards expose one named link or action. Static cards do not gain hover elevation. Empty/loading/error states occupy the collection region and retain filter values.&quot;,
+      &quot;Pattern: Hero + Content&quot;: &quot;A hero may span the container but its text and actions keep the same safe content gutters as the body. At narrow widths wrap text, contain imagery and keep primary actions visible. Do not use a fixed height that clips expansion, zoom or a long translated title. Decorative imagery has empty alternative text.&quot;,
+      &quot;Pattern: Master-Detail&quot;: &quot;Above 900px keep list and detail side by side; before selection show a real detail empty state. At 900px and below display only list or detail. Selecting moves focus to the detail heading; Back restores the selected row and list scroll. Loading retains selection and aria-busy; error offers Retry for the same record. Clear selection restores the originating list focus. The Try Master-Detail specimen exercises this local journey.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
 <script src="grid-layout.js"></script>
+<script src="layout-patterns.js"></script>
 </body>
 </html>

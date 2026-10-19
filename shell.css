@@ -1090,27 +1090,32 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .font-preview-meta{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 
 /* ---------- typography: type scale ---------- */
-.type-scale-list{ display: flex; flex-direction: column; margin-bottom:var(--space-24); }
+.type-scale-list{display:flex;flex-direction:column;margin-bottom:var(--space-24);container-type:inline-size;container-name:typography-scale}
 
 .type-row{
-  padding:var(--space-16) 0;
+  display:grid;
+  gap:var(--space-16);
+  min-width:0;
+  padding:var(--space-24) 0;
   border-top: var(--border-width-1) var(--border-style) var(--line);
 }
 .type-row:first-child{ border-top: none; padding-top:0; }
 
 .type-row-controls{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
+  --type-editor-control-height:max(var(--size-control),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-12) + var(--border-width-2)));
+  display:grid;
+  grid-template-columns:minmax(0,var(--dimension-80)) minmax(0,1.1fr) minmax(0,1.8fr) minmax(0,1fr) minmax(0,1.1fr) minmax(0,var(--dimension-64)) minmax(0,1.5fr);
+  align-items:start;
   gap:var(--space-16);
+  min-width:0;
 }
 /* Foundation audit T03 - "show effective previews": the controls above set
    size/weight/line-height/italic/color per level, but nothing rendered
    what the result actually looks like - every visual property here is set
    inline by updateSample() in typography.js, this just handles layout. */
 .type-row-sample{
-  margin:var(--space-16) 0 0;
-  padding:var(--space-16);
+  margin:0;
+  padding:0;
   background: var(--graphite-900);
   border-radius: var(--radius-md);
   overflow-wrap: anywhere;
@@ -1119,9 +1124,10 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .type-control{
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap:var(--space-4);
-  min-height:var(--dimension-56);
+  justify-content:flex-start;
+  gap:var(--space-6);
+  min-height:0;
+  min-width:0;
 
 
 
@@ -1132,30 +1138,26 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    included, is currently inapplicable rather than just empty/unset. */
 .type-control.is-disabled{ opacity: 0.45; }
 
-.type-control-level{ flex: none; width:var(--dimension-104); }
-.type-control-family{ flex: 1 1 130px; }
-.type-control-size{ flex: 2 1 190px; }
-.type-control-weight{ flex: 1 1 140px; }
-.type-control-lh{ flex: 1 1 100px; }
-.type-control-italic{ flex: none; width:var(--dimension-90); }
+.type-control-level{width:auto}
+.type-control-italic{width:auto}
 .type-level-name{
-  display: block;
+  display:flex;
+  align-items:center;
+  min-block-size:var(--type-editor-control-height);
 
 
 
   color:var(--type-body-color);
   text-transform: none;
 
-  padding:var(--space-8) 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding:0;
+  overflow-wrap:anywhere;
+  white-space:normal;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 
-.type-control-family select{ min-width:var(--dimension-110); }
-.type-control-size select{ min-width:var(--dimension-190); }
+.type-control-family select,.type-control-size select{min-width:0}
 
-.type-control-lh .opacity-input-wrap{ width:var(--dimension-76); }
+.type-control-lh .opacity-input-wrap{width:100%;min-width:0}
 .type-control-lh input[type="text"]{
   width:100%;
   box-sizing: border-box;
@@ -1213,10 +1215,28 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   align-items: center;
   justify-content: flex-start;
   gap:var(--space-8);
-  min-height:var(--dimension-56);
-  padding-bottom:var(--space-8);
+  min-block-size:var(--type-editor-control-height);
+  margin-block-start:calc(var(--type-caption-size) * var(--type-caption-line-height) + var(--space-6));
+  padding:0;
 }
 .type-control-italic input[type="checkbox"]{ width:var(--dimension-16); height:var(--dimension-16); accent-color: var(--red-500); cursor: pointer; }
+
+/* Labels, fields and preview share a left edge and a single spacing owner. */
+.type-control > span:first-child,.type-control-italic > span{font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking)}
+.type-control .setup-error:empty{display:none}
+.type-row-controls .type-control :is(select,input[type=text],input[type=number]){box-sizing:border-box;width:100%;min-width:0;max-width:100%;block-size:var(--type-editor-control-height);min-block-size:var(--type-editor-control-height);height:var(--type-editor-control-height);padding-block:var(--space-6)}
+.type-row-controls .type-control select{padding-inline:var(--space-12) var(--space-34);background-position:right var(--space-12) center}
+:root[dir=rtl] .type-row-controls .type-control select{background-position:left var(--space-12) center}
+.type-control-tracking .ads-unit-control{display:flex;width:100%;min-width:0;gap:var(--space-16)}
+.type-control-tracking .ads-unit-control input{flex:1 1 0;width:0;min-width:0}
+.type-control-tracking .ads-unit-control select{flex:0 0 4.5em;width:4.5em}
+.type-row > .theme-pair-grid{margin:0}
+.type-row .theme-pair-label-row{height:auto;min-height:0;margin-bottom:var(--space-8)}
+.type-row .color-field-grid{grid-template-columns:minmax(0,1fr);margin-bottom:0;min-width:0}
+.type-row .theme-pair-col{min-width:0}
+@container typography-scale (max-width:960px){.type-row-controls{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container typography-scale (max-width:640px){.type-row-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.type-row > .theme-pair-grid{grid-template-columns:1fr;gap:var(--space-16)}}
+@container typography-scale (max-width:420px){.type-row-controls{grid-template-columns:minmax(0,1fr)}.type-control-italic{margin-block-start:0}}
 
 .hex-input-wrap input.type-color-swatch{
   -webkit-appearance: none;
@@ -2445,18 +2465,18 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 /* Approve is a positive/success semantic action - it gets its own green
    treatment rather than reusing Neutral's gray, matching Destructive's
    red so the two semantic outcomes read as opposites at a glance. */
-.btn-demo--approve{ background: color-mix(in srgb, var(--green-500) 20%, transparent); color: var(--green-700); border-width: 2px; border-color: var(--green-700); }
-.btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: color-mix(in srgb, var(--green-500) 28%, transparent); }
-.btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: color-mix(in srgb, var(--green-500) 36%, transparent); }
+.btn-demo--approve{ background: var(--agent-approve-bg-default); color: var(--agent-approve-text-default); border-width: 2px; border-color: var(--green-700); }
+.btn-demo--approve:hover, .btn-demo--approve.is-hover{ background: var(--agent-approve-bg-hover); color: var(--agent-approve-text-hover); }
+.btn-demo--approve:active, .btn-demo--approve.is-pressed{ background: var(--agent-approve-bg-active); color: var(--agent-approve-text-active); }
 .btn-demo--approve:focus-visible, .btn-demo--approve.is-focus{ outline: 2px solid var(--green-700); outline-offset: 2px; }
 .btn-demo--approve:disabled, .btn-demo--approve.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 
 /* Reject - approve's counterpart, same structure, danger instead of
    success. An AI-suggestion review needs both, not just an approve
    path with no equally-visible way to decline one. */
-.btn-demo--reject{ background: color-mix(in srgb, var(--danger-500) 20%, transparent); color: var(--danger-700); border-width: 2px; border-color: var(--danger-700); }
-.btn-demo--reject:hover, .btn-demo--reject.is-hover{ background: color-mix(in srgb, var(--danger-500) 28%, transparent); }
-.btn-demo--reject:active, .btn-demo--reject.is-pressed{ background: color-mix(in srgb, var(--danger-500) 36%, transparent); }
+.btn-demo--reject{ background: var(--agent-reject-bg-default); color: var(--agent-reject-text-default); border-width: 2px; border-color: var(--danger-700); }
+.btn-demo--reject:hover, .btn-demo--reject.is-hover{ background: var(--agent-reject-bg-hover); color: var(--agent-reject-text-hover); }
+.btn-demo--reject:active, .btn-demo--reject.is-pressed{ background: var(--agent-reject-bg-active); color: var(--agent-reject-text-active); }
 .btn-demo--reject:focus-visible, .btn-demo--reject.is-focus{ outline: 2px solid var(--danger-700); outline-offset: 2px; }
 .btn-demo--reject:disabled, .btn-demo--reject.is-disabled{ opacity: var(--opacity-40); cursor: not-allowed; }
 

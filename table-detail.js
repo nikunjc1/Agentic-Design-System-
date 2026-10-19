@@ -209,7 +209,7 @@
     lines.push("- Pagination vs virtualization (threshold " + PAGINATION_SPEC.thresholdRows + " rows): " + PAGINATION_SPEC.below + " " + PAGINATION_SPEC.above);
     lines.push("- Density (" + DENSITY_MODES.length + "): " + DENSITY_MODES.map(function(m){ return m.label + " - " + m.detail; }).join(" "));
     lines.push("- Required states (" + REQUIRED_STATES.length + "): " + REQUIRED_STATES.map(function(s){ return s.label + " - " + s.detail; }).join(" "));
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function cssBlock(){
@@ -380,31 +380,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (table.html's listing card)

@@ -4,6 +4,7 @@
   const file = location.pathname.split('/').pop() || 'overview.html';
   const $ = selector => document.querySelector(selector);
   const el = (tag, text, cls) => { const n = document.createElement(tag); if (text) n.textContent = text; if (cls) n.className = cls; return n; };
+  const downloadBackup=(text,name)=>{const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const a=el('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   // Foundation audit NP03 - lets the draft/profile provenance notice say
   // how stale a resumed draft is, not just that it exists.
   const relativeTime = date => {
@@ -40,7 +41,8 @@
     if (headings.length > 2) {
       const nav = el('nav', '', 'page-outline');
       nav.setAttribute('aria-label', 'On this page');
-      // Reading locations use Anchor; Group Buttons select values.
+      const group=el('div','','group-btn group-btn--outlined ads-tab-group');
+      group.setAttribute('aria-label','Page sections');nav.append(group);
       const links = headings.map((h, i) => {
         h.id ||= 'section-' + (i + 1);
         // Strip a leading "1. "/"10. " ordinal from the label - some
@@ -49,9 +51,9 @@
         // but doubles up oddly once it's also a short nav-strip label.
         // The heading itself is untouched, only this nav copy.
         const label = h.textContent.replace(/^\d+\.\s*/, '');
-        const a = el('a', label, 'anchor-demo-link anchor-demo-link--fs14');
-        a.href = '#' + h.id;
-        nav.append(a);
+        const a = el('button', label, 'group-btn-segment group-btn-segment--h40');
+        a.type='button';a.dataset.sectionTarget=h.id;
+        group.append(a);
         return a;
       });
       const intro = main.querySelector(':scope > .component-meta') || main.querySelector(':scope > .page-lede') || main.querySelector(':scope > h1');
@@ -59,10 +61,19 @@
       const markCurrent = index => links.forEach((link, i) => {
         if (i === index) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
+        link.classList.toggle('is-selected',i===index);
+        link.setAttribute('aria-pressed',String(i===index));link.tabIndex=i===index?0:-1;
       });
-      const initial = links.findIndex(link => link.getAttribute('href') === location.hash);
+      const initial = links.findIndex(link => '#'+link.dataset.sectionTarget === location.hash);
       markCurrent(initial < 0 ? 0 : initial);
-      links.forEach((link, i) => link.addEventListener('click', () => markCurrent(i)));
+      links.forEach((link, i) => link.addEventListener('click', () => {
+        markCurrent(i);location.hash=link.dataset.sectionTarget;headings[i].scrollIntoView({block:'start'});
+      }));
+      window.ADSGroupButton(group,links);
+      window.addEventListener('hashchange',()=>{
+        const index=links.findIndex(link=>'#'+link.dataset.sectionTarget===location.hash);
+        if(index>=0) markCurrent(index);
+      });
       const sections = headings.map(h => h.closest('section') || h);
       const spy = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -75,19 +86,60 @@
       sections.forEach(s => spy.observe(s));
     }
     if (!['new-project.html', 'settings.html'].includes(file)) {
-      const notice = el('section', '', 'setup-notice');
+      const notice = el('section', '', 'setup-notice setup-context');
       notice.setAttribute('aria-label', 'Your design system');
       const copy = profile ? `${profile.project} · ${profile.productType === 'Other' ? profile.productOther : profile.productType} · ${profile.platforms.map(k => M.PLATFORMS[k].label).join(', ')}` : 'What are you creating? Set up your product, role and target platforms to get a tailored design-system brief.';
       notice.append(el('p', copy));
       const actions = el('div', '', 'setup-actions');
-      const setup = el('a', profile ? 'Edit setup' : 'Customize your system', 'btn btn-ghost btn-sm');
-      setup.href = 'new-project.html'; actions.append(setup);
+      const setup = el('a', profile ? '' : 'Customize your system', 'btn btn-ghost btn-sm');
+      if (profile) {
+        setup.classList.add('setup-edit');
+        setup.setAttribute('aria-label', 'Edit setup');
+        setup.title = 'Edit setup';
+        // Google Material Icons: image/edit (Apache 2.0, Material-Icons-LICENSE.txt).
+        // Adapted with inherited color and accessible decoration attributes.
+        setup.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
+      }
+      setup.href = 'new-project.html';
+      if (!profile) actions.append(setup);
       if (profile || main.querySelector('.back-link')) {
         const detail = Boolean(main.querySelector('.back-link'));
         const a = el('a', detail ? 'Export this guide' : 'Export Markdown');
         a.href = detail ? 'md-export.html?page=' + encodeURIComponent(file) : 'md-export.html'; actions.append(a);
       }
+      if (profile) actions.append(setup);
+      const close = el('button', '', 'btn btn-ghost btn-sm setup-close');
+      close.type = 'button';
+      close.setAttribute('aria-label', 'Close project banner');
+      close.title = 'Close banner';
+      // Google Material Icons: navigation/close (Apache 2.0).
+      close.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+      actions.append(close);
       notice.append(actions); main.prepend(notice);
+      let bannerObserver = null, dismissed = false;
+      // Keep section jumps below the floating banner as its text/actions
+      // wrap, fonts load, or the viewport and Foundation settings change.
+      const syncBannerHeight = () => {
+        if (dismissed) return;
+        const height = notice.getBoundingClientRect().height;
+        // A tall banner must not consume a small/zoomed viewport.
+        const floating = height < main.clientHeight / 2;
+        notice.dataset.floating = String(floating);
+        main.style.setProperty('--setup-context-height', (floating ? height : 0) + 'px');
+      };
+      if (typeof ResizeObserver !== 'undefined') {
+        bannerObserver = new ResizeObserver(syncBannerHeight);
+        bannerObserver.observe(notice); bannerObserver.observe(main);
+      } else window.addEventListener('resize', syncBannerHeight);
+      close.addEventListener('click', () => {
+        dismissed = true;
+        if (bannerObserver) bannerObserver.disconnect();
+        else window.removeEventListener('resize', syncBannerHeight);
+        notice.remove();
+        main.style.setProperty('--setup-context-height', '0px');
+        main.focus({ preventScroll:true });
+      });
+      requestAnimationFrame(syncBannerHeight);
     }
     if (profile && main.querySelector('.back-link')) {
       const details = el('details', '', 'platform-guidance');
@@ -156,7 +208,7 @@
     }
     let draft = null;
     try { draft = M.read(localStorage, M.DRAFT); } catch (e) { storageError = e.message; }
-    const initial = draft || profile;
+    const initial = profile;
     // Foundation audit NP01 - this page overwrites the one existing project
     // profile, it does not create an isolated new one, and Foundation values
     // (Colors, Spacing, etc.) are shared sitewide regardless - saying so here
@@ -172,31 +224,35 @@
     // and genuinely differ - if they already match, there's nothing to
     // choose between.
     const draftNotice = $('#draftProvenanceNotice');
-    if (draftNotice && draft && profile) {
+    let rawDraft=null;try {rawDraft=localStorage.getItem(M.DRAFT);}catch{}
+    if (draftNotice && rawDraft!==null) {
       const compareKeys = ['project','productType','productOther','name','email','designation','role','roleOther','platforms'];
-      const differs = compareKeys.some(k => JSON.stringify(draft[k] ?? null) !== JSON.stringify(profile[k] ?? null));
+      const differs = !draft||!profile||compareKeys.some(k => JSON.stringify(draft[k] ?? null) !== JSON.stringify(profile[k] ?? null));
       if (differs) {
-        const when = draft.updatedAt ? new Date(draft.updatedAt) : null;
+        const when = draft?.updatedAt ? new Date(draft.updatedAt) : null;
         const whenText = when && !isNaN(when) ? relativeTime(when) : 'an unknown time';
-        draftNotice.innerHTML = `You have an unsaved draft from ${whenText} that differs from your saved project ("${profile.project}"). ` +
-          `<button type="button" class="btn btn-ghost" id="resumeDraftBtn">Resume draft</button> ` +
-          `<button type="button" class="btn btn-ghost" id="discardDraftBtn">Discard draft</button>`;
+        draftNotice.replaceChildren(document.createTextNode(draft?`You have an unsaved draft from ${whenText}. Choose Resume or Discard before editing. `:'This saved draft could not be read. It has been preserved. Export a backup or discard it to continue. '));
+        if(draft){const resume=el('button','Resume draft','btn btn-ghost');resume.type='button';resume.id='resumeDraftBtn';draftNotice.append(resume);}
+        const discard=el('button','Discard draft','btn btn-ghost');discard.type='button';discard.id='discardDraftBtn';draftNotice.append(discard);
+        const backup=el('button','Back up draft','btn btn-ghost');backup.type='button';backup.addEventListener('click',()=>downloadBackup(rawDraft,'project-draft-backup.json'));draftNotice.append(backup);
         draftNotice.hidden = false;
-        $('#resumeDraftBtn').addEventListener('click', () => { draftNotice.hidden = true; });
+        $('#resumeDraftBtn')?.addEventListener('click', () => {populateSetup(draft);draftNotice.hidden = true;field('project').focus();});
         $('#discardDraftBtn').addEventListener('click', () => {
-          try { localStorage.removeItem(M.DRAFT); } catch {}
-          for (const key of ['project','productType','productOther','name','email','designation','role','roleOther']) field(key).value = typeof profile[key] === 'string' ? profile[key] : '';
-          form.querySelectorAll('[name=platforms]').forEach(n => { n.checked = Array.isArray(profile.platforms) && profile.platforms.includes(n.value); });
-          conditional();
+          try { localStorage.removeItem(M.DRAFT); } catch {status.textContent='Draft could not be discarded. Your saved data is unchanged.';return;}
+          populateSetup(profile||{});
           draftNotice.hidden = true;
         });
       }
     }
-    if (initial) {
-      for (const key of ['project', 'productType', 'productOther', 'name', 'email', 'designation', 'role', 'roleOther']) if (typeof initial[key] === 'string') field(key).value = initial[key];
-      form.querySelectorAll('[name=platforms]').forEach(n => { n.checked = Array.isArray(initial.platforms) && initial.platforms.includes(n.value); });
-    }
+    function populateSetup(value){for(const key of ['project','productType','productOther','name','email','designation','role','roleOther'])field(key).value=typeof value[key]==='string'?value[key]:'';form.querySelectorAll('[name=platforms]').forEach(n=>{n.checked=Array.isArray(value.platforms)&&value.platforms.includes(n.value);});conditional();}
+    if (initial) populateSetup(initial);
     if (storageError) status.textContent = storageError;
+    if(!profile){let rawProfile=null;try{rawProfile=localStorage.getItem(M.KEY);}catch{}
+      if(rawProfile!==null){const recovery=el('div','','setup-notice');recovery.setAttribute('role','group');recovery.setAttribute('aria-label','Saved project recovery');
+        const backup=el('button','Back up saved setup','btn btn-ghost');backup.type='button';backup.addEventListener('click',()=>downloadBackup(rawProfile,'project-profile-backup.json'));
+        const reset=el('button','Discard unreadable setup','btn btn-ghost');reset.type='button';reset.addEventListener('click',()=>{try{localStorage.removeItem(M.KEY);recovery.remove();status.textContent='Unreadable setup discarded. Foundation settings are unchanged.';}catch{status.textContent='Could not discard setup. Your saved data is unchanged.';}});recovery.append(backup,reset);form.before(recovery);
+      }
+    }
     const collect = () => {
       const p = Object.fromEntries(new FormData(form));
       p.platforms = Array.from(form.querySelectorAll('[name=platforms]:checked'), n => n.value);
@@ -224,6 +280,14 @@
     function review() {
       const p = collect(), dl = $('#setupReview'); dl.replaceChildren();
       for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name || 'Not provided'], ['Email',p.email || 'Not provided'], ['Designation',p.designation || 'Not provided'], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
+      let changes=$('#setupFoundationChanges');if(!changes){changes=el('section','','setup-foundation-changes');changes.id='setupFoundationChanges';dl.after(changes);}changes.replaceChildren(el('h3','Foundation recommendations'));
+      changes.append(el('p','Saved overrides are retained. Unsaved Foundations inherit the revised project recommendation. Review the before/after values below; customize each Foundation from its own editor.'));
+      const F=window.ADSFoundationModel,table=el('table'),head=el('thead'),body=el('tbody'),tr=el('tr');
+      for(const label of ['Foundation','Previous recommendation','New recommendation','Applied choice']){const cell=el('th',label);cell.scope='col';tr.append(cell);}head.append(tr);
+      for(const [key,label]of [['spacing','Spacing'],['radius','Radius'],['grid-layout','Grid & Layout']]){
+        const row=el('tr'),saved=window.ADSStorage.safeGet('ads:'+key),previous=F.contextualDefault(key,profile),next=F.contextualDefault(key,p);
+        row.append(el('td',label),el('td',previous?JSON.stringify(previous):'System default'),el('td',next?JSON.stringify(next):'System default'),el('td',saved?'Saved override retained: '+JSON.stringify(saved):'Inherited recommendation'));body.append(row);
+      }table.append(head,body);changes.append(table);
     }
     // Foundation audit NP05 - "add a summary" of what actually needs fixing,
     // not just a generic "highlighted fields" pointer.
@@ -256,10 +320,11 @@
     const draftStatus = $('#draftSaveStatus');
     form.addEventListener('input', () => {
       conditional();
+      if(draftNotice&&!draftNotice.hidden){draftStatus.textContent='Choose Resume or Discard to preserve the existing draft before saving new edits.';return;}
       // Foundation audit NP03 - a timestamp here is what lets the
       // draft/profile provenance notice below say how stale a resumed
       // draft actually is, instead of just that one exists.
-      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(), updatedAt: new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
+      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(),version:1,updatedAt:new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
       catch { draftStatus.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
     });
     $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });
@@ -277,7 +342,9 @@
       show(requested);
     });
     // A resumed draft starts at the first step so required fields are always reviewable.
-    history.replaceState(null,'','#step-1'); show(1,false);
+    const requestedStep=Number(location.hash.match(/^#step-([123])$/)?.[1]||1);
+    const initialStep=requestedStep>1&&!Object.keys(M.validate(collect())).some(k=>firstKeys.includes(k))?(requestedStep===3&&!Object.keys(M.validate(collect())).some(k=>secondKeys.includes(k))?3:2):1;
+    history.replaceState(null,'','#step-'+initialStep); show(initialStep,false);
     // Every role beyond the 2 that already routed somewhere real now also
     // gets its own concrete first task, pointed at a page that genuinely
     // answers it (the release contract/known-gaps sections added to
@@ -287,25 +354,29 @@
       'Product Manager': ['templates.html', 'Explore templates', 'Check Grid & Layout’s Breakpoints tab for what "responsive" concretely means in this system before writing it into a requirement.'],
       'Design System Lead': ['accessibility.html', 'Review the release contract', 'Read the Foundation release contract (Accessibility page) for this system’s compatibility and deprecation rules before changing any token.'],
       'QA / Accessibility': ['accessibility.html', 'Review known gaps', 'Start with the Accessibility guide’s "Known gaps - not yet done" section - these are the areas still needing verification.'],
-      'Designer': ['foundations.html#colors', 'Customize foundations', 'Start with Colors and Typography - your brand color and type scale drive every other Foundation’s defaults.']
+      'Designer': ['foundations.html#colors', 'Customize foundations', 'Start with Colors and Typography, then review the independent Grid, Spacing, Radius and interaction contracts before designing components.']
     };
     const DEFAULT_NEXT = ['foundations.html#colors', 'Customize foundations', 'Explore the Foundation pages and customize what applies to your product - every value stays editable afterward.'];
     // Informational readiness, not a gate - every Foundation page already
     // lets Save/export happen at any completion state, and this list
     // follows that same rule rather than inventing a new blocking one.
-    const FOUNDATION_SECTIONS = [['colors','Colors'], ['grid-layout','Grid & Layout'], ['typography','Typography'], ['spacing','Spacing'], ['radius','Radius'], ['borders','Borders'], ['shadows','Shadows'], ['icons','Icons']];
+    const FOUNDATION_SECTIONS = [['colors','Colors'], ['grid-layout','Grid & Layout'], ['typography','Typography'], ['spacing','Spacing'], ['radius','Radius'], ['borders','Borders'], ['shadows','Shadows'], ['icons','Icons'],['ai','AI & Agents']];
     function renderReadiness() {
       const list = $('#foundationReadiness'); if (!list) return;
       list.replaceChildren();
       FOUNDATION_SECTIONS.forEach(([key, label]) => {
-        const configured = FOUNDATION_TOKEN_MAP[key].some(tokenKey => localStorage.getItem('ads:' + tokenKey) !== null);
+        const records=(FOUNDATION_TOKEN_MAP[key]||[]).map(tokenKey=>{try{return window.ADSFoundationModel.inspectRecord(tokenKey,localStorage.getItem('ads:'+tokenKey));}catch{return {status:'unavailable'};}});
+        const invalid=records.some(r=>['invalid','corrupt','future','unavailable'].includes(r.status));
+        const configured=!invalid&&records.some(r=>['valid','migrated'].includes(r.status));
         const li = el('li'); li.dataset.done = String(configured);
-        li.append(el('span','','readiness-dot'), document.createTextNode(label + ' – ' + (configured ? 'Configured' : 'Default')));
+        const link=el('a',label);link.href=key==='colors'?'foundations.html':key==='ai'?'ai-foundation.html':key+'.html';
+        li.append(el('span','','readiness-dot'),link,document.createTextNode(' – ' + (invalid?'Needs recovery':key==='ai'?'Documented examples; no live agent':configured?'Valid saved settings; acceptance not verified':'Resolved default; acceptance not verified')));
         list.append(li);
       });
     }
     form.addEventListener('submit', e => {
       e.preventDefault();
+      if(draftNotice&&!draftNotice.hidden){status.textContent='Resume or discard the existing draft before continuing.';draftNotice.querySelector('button')?.focus();return;}
       if (step < 3) {
         if (!validate(step === 1 ? firstKeys : secondKeys)) return;
         location.hash = 'step-' + (step + 1); return;
@@ -321,6 +392,7 @@
       if (!validate(secondKeys)) { location.hash = 'step-2'; return; }
       try { profile = M.save(localStorage, collect()); }
       catch (error) { status.textContent = 'Could not save: ' + error.message + ' Your entries are still available here.'; return; }
+      window.ADSFoundation.apply();
       try { localStorage.removeItem(M.DRAFT); localStorage.setItem('ads:welcome-seen','1'); } catch {}
       form.hidden = true; $('.setup-steps').hidden = true;
       done.hidden = false;
@@ -353,85 +425,7 @@
     sizing: ['sizing'],
     units: ['units'],
   };
-  // Resolved documented defaults, one entry per TOKEN_KEYS key, each
-  // shaped identically to what that key's own page actually persists
-  // (confirmed against every real persistX() function and every real
-  // default <input value>/is-active card, not guessed) - so a fresh
-  // project with nothing customized still exports a complete, concrete
-  // snapshot instead of an empty object and a "use the documented
-  // defaults" hand-wave an AI would have to go invent values for.
-  // Mirrors defaults authored in foundations.js/typography.js/spacing.js/
-  // radius.js/borders.js/shadows.js/icons.js and their own HTML; keep in
-  // sync if any of those change (the same accepted limitation as
-  // PROJECT_PRODUCT_TYPE_MAP already being duplicated across 3 files -
-  // there is no shared-script path between md-export.html and those
-  // pages to source this from live instead).
-  const RESOLVED_DEFAULTS = {
-    colors: { light: { primary: { hex: '#FF031A' } } },
-    'bg-colors': { light: { primary: '#F6F6F4', secondary: '#FFFFFF', tertiary: '#FBFBFA' } },
-    'status-colors': { light: { success: '#2FBF6E', warning: '#E6A53A', danger: '#FF031A', info: '#4F8FE6' } },
-    'neutral-colors': { light: { c800: '#F1F1EE', c700: '#E3E3DF', c600: '#C7C7C1', c500: '#8F918C', border: '#85888D' } },
-    typography: {
-      primaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
-      secondaryFont: { family: 'Inter', source: 'sans-serif', linkHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
-      platform: null,
-      levels: window.ADSFoundationModel.typeDefaults
-    },
-    spacing: { product: null, system: '4px' },
-    radius: { product: null, philosophy: 'balanced' },
-    border: { system: 'standard', width: '1', color: '9A9A95', darkColor: '6A6A65', darkColorAuto: true, opacity: '85', style: 'solid', sides: 'all' },
-    'border-states': {
-      default: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
-      hover: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
-      focus: { light: 'FF031A', dark: 'FF4253', darkAuto: true },
-      active: { light: 'D80016', dark: 'D80016', darkAuto: true },
-      selected: { light: 'FF031A', dark: 'F74858', darkAuto: true },
-      disabled: { light: '9A9A95', dark: '6A6A65', darkAuto: true },
-      error: { light: 'FF3F4F', dark: 'FA818B', darkAuto: true },
-      warning: { light: 'E6A53A', dark: 'E6BC77', darkAuto: true },
-      success: { light: '2FBF6E', dark: '5ECD8F', darkAuto: true },
-      info: { light: '4F8FE6', dark: '8AB2E8', darkAuto: true }
-    },
-    shadow: { philosophy: 'balanced' },
-    'grid-layout': { product: null, system: 'columns' },
-    icons: { system: 'duotone', size: '24', stroke: '1.8', corner: 'round', library: null }
-  };
-  // Spacing/Radius/Grid & Layout each auto-select a recommendation on
-  // their own first visit based on the saved project's product type
-  // (see each page's own productFromProjectProfile()) - a "resolved
-  // default" that ignores this and always falls back to the generic
-  // global default (Balanced/4px/Columns) isn't actually resolved, it's
-  // just a different flat placeholder: a Data-Heavy Application project
-  // would export generic 4px/Balanced/Columns here while the live pages
-  // themselves would show 2px/Sharp/Columns+Rows - the exact "AI invents
-  // defaults, recipient can't reconstruct the system" failure X02 was
-  // about, just moved one level down. Mirrors each page's own real
-  // product-card data (not estimated), same accepted cross-file
-  // duplication as PROJECT_PRODUCT_TYPE_MAP itself.
-  const PROJECT_PRODUCT_TYPE_MAP = {
-    'SaaS': 'saas', 'Enterprise SaaS': 'enterprise-saas', 'Web Application': 'web-app',
-    'Dashboard': 'dashboard', 'Data-Heavy Application': 'data-heavy', 'Marketing Website': 'marketing',
-    'Consumer App': 'consumer-app', 'AI Product': 'ai-product', 'Cross-Platform': 'cross-platform'
-  };
-  const SPACING_BY_PRODUCT = {
-    saas: ['4px','8px'], 'enterprise-saas': ['4px','2px'], 'web-app': ['4px','8px'], 'desktop-web': ['8px','4px'],
-    'mobile-web': ['4px','8px'], 'mobile-app': ['4px','8px'], marketing: ['8px','4px'], dashboard: ['4px','8px'],
-    'data-heavy': ['2px','4px'], 'consumer-app': ['4px','8px'], 'ai-product': ['4px','8px'], 'cross-platform': ['4px','2px + 8px']
-  };
-  const RADIUS_BY_PRODUCT = {
-    saas: 'balanced', 'enterprise-saas': 'compact', 'web-app': 'balanced', 'desktop-web': 'compact',
-    'mobile-web': 'soft', 'mobile-app': 'soft', dashboard: 'compact', 'data-heavy': 'sharp',
-    marketing: 'expressive', 'consumer-app': 'soft', 'ai-product': 'balanced', 'cross-platform': 'balanced'
-  };
-  const GRID_BY_PRODUCT = {
-    saas: 'columns', 'enterprise-saas': 'columns', 'web-app': 'columns', 'desktop-web': 'columns',
-    'mobile-web': 'columns', 'mobile-app': 'columns', dashboard: 'columns-rows', 'data-heavy': 'columns-rows',
-    marketing: 'rows', 'consumer-app': 'columns', 'ai-product': 'rows', 'cross-platform': 'columns'
-  };
-  function contextualDefault(key, profile) {
-    return window.ADSFoundationModel.contextualDefault(key, profile) || RESOLVED_DEFAULTS[key];
-  }
-
+  // Applied settings and resolved snapshots come from the shared resolver.
   function savedTokens(allowedKeys = TOKEN_KEYS, profile = null) {
     const values = {};
     for (const key of allowedKeys) {
@@ -443,9 +437,16 @@
       // bad record can't crash the whole export), resolves to the project's
       // own contextual recommendation, or the plain documented default.
       const saved = window.ADSStorage.safeGet('ads:' + key);
-      values[key] = saved !== null ? saved : key === 'data-format' ? window.ADSFoundationModel.dataDefaults : key === 'units' ? {unit:window.ADSFoundation.get().unit} : key === 'sizing' ? window.ADSFoundationModel.sizingDefaults : contextualDefault(key, profile);
+      // Null means no durable override. The full resolved snapshots below
+      // carry effective defaults; editor seed recipes must not masquerade
+      // as settings actually applied to the page.
+      values[key] = window.ADSFoundation.read(key);
     }
     values.resolvedFoundation = window.ADSFoundation.get();
+    const allSettings=Object.fromEntries(TOKEN_KEYS.map(key=>[key,window.ADSFoundation.read(key)]));
+    values.resolvedThemes = Object.fromEntries(['light','dark'].map(theme=>[theme,window.ADSFoundationModel.resolve(allSettings,theme,profile)]));
+    values.platformProfiles=window.ADSFoundationModel.resolvePlatformProfiles(allSettings,profile);
+    values.verification=window.ADSFoundation.getVerification();
     return values;
   }
   // docs-catalog.js has no literal "category" field - every component
@@ -618,7 +619,7 @@
       status.textContent = 'Markdown download started.';
     });
     copy.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(preview.value); status.textContent = 'Markdown copied.'; }
+      try { await window.ADSClipboard.copy(preview.value); status.textContent = 'Markdown copied.'; }
       catch { preview.focus(); preview.select(); status.textContent = 'Copy is unavailable. The Markdown is selected; use your device’s Copy command or download the file.'; }
     });
     generate();
@@ -736,19 +737,19 @@
     function refreshMarkdown() {
       let text = extract(main);
       if (location.pathname.endsWith('data-format.html')) text += '\n\n## Current Data Format configuration\n\n```json\n' + JSON.stringify(window.ADSFoundation.get().dataFormat, null, 2) + '\n```';
+      text = window.ADSFoundation.preparePageMarkdown(text);
       if (output.textContent !== text) output.textContent = text;
     }
     refreshMarkdown();
     window.addEventListener('ads:foundation-applied', refreshMarkdown);
 
     copyBtn.addEventListener('click', () => {
+      window.ADSFoundation.apply();refreshMarkdown();
       const status = $('#pageMarkdownStatus');
       const done = () => { status.textContent = 'Copied to clipboard'; setTimeout(() => { status.textContent = ''; }, 2500); };
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(output.textContent).then(done).catch(() => {
+      window.ADSClipboard.copy(output.textContent).then(done).catch(() => {
           status.textContent = 'Copy failed - select the text above and copy manually.';
-        });
-      } else done();
+      });
     });
   }
   function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); initPageMarkdownExport(); }

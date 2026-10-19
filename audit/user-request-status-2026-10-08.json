@@ -1,0 +1,382 @@
+{
+  "date": "2026-10-08",
+  "scope": "26 original screenshot/attachment requests; source status separated from physical acceptance",
+  "requests": [
+    {
+      "id": "U01",
+      "section": "Foundation audit and task report",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Earlier tracker did not show each original finding separately.",
+      "solution": "Retain all 100 findings and their own source references; keep 14 acceptance rows open.",
+      "guide": "Filter Original findings; compare ID, current evidence and remaining task.",
+      "reference": "foundation-audit-report-2026-10-05.md; audit/foundation-finding-evidence-2026-10-08.json",
+      "evidence": "100 unique IDs, problems, recommendations and historical statuses retained."
+    },
+    {
+      "id": "U02",
+      "section": "Blue structural boundaries",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Brand-colored borders appeared on page containers and sections.",
+      "solution": "Structural panels use neutral line tokens; focus/selected specimens retain semantic treatment.",
+      "guide": "Inspect unfocused containers, then keyboard focus, in both themes and custom Brand.",
+      "reference": "foundation.css; shell.css; foundation-model.js",
+      "evidence": "Source distinguishes neutral containers from focus/state tokens. Real screenshot comparison still required."
+    },
+    {
+      "id": "U03",
+      "section": "Inner input strokes",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Text inside composite fields gained a second border.",
+      "solution": "Composite wrapper owns border/focus; inner input border is zero.",
+      "guide": "Check outlined/filled/underlined Input, Password, Number and Search in every state.",
+      "reference": "foundation.css:50; input-detail.js",
+      "evidence": "Composite CSS reset is present. Actual native field rendering remains pending."
+    },
+    {
+      "id": "U04",
+      "section": "Page and sidebar spacing",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Margins, gutters, section gaps and side spacing were unequal.",
+      "solution": "Shared logical gutters, stable mirrored scrollbar space and one owner per section gap.",
+      "guide": "Measure both content edges and sidebar in wide/narrow widths; expand content and retest.",
+      "reference": "foundation.css:18; foundation.css:171; shell.css",
+      "evidence": "Shared source rules present; computed box geometry needs a connected renderer."
+    },
+    {
+      "id": "U05",
+      "section": "Dropdown alignment",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Unit and other dropdowns did not align with adjacent fields.",
+      "solution": "Consistent control height, padding and arrow inset; responsive minimum widths.",
+      "guide": "Compare select/input baseline and bounds at 320/375/768/1440px.",
+      "reference": "foundation.css:74; shell.css:1227",
+      "evidence": "Control CSS and DOM interaction pass; native popup placement requires browser verification."
+    },
+    {
+      "id": "U06",
+      "section": "H1-H6, Body and Paragraph",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Section headings were larger than page titles and used conflicting sizes.",
+      "solution": "Restore standard H1-H6 defaults and bind every role metric to shared tokens.",
+      "guide": "Reset Typography; inspect hierarchy; change size, weight, line height, tracking and color.",
+      "reference": "foundation-model.js; foundation.css:5; tests/foundation-typography.test.cjs",
+      "evidence": "Role resolution, legacy migration, metric bindings and editor option checks pass. Visual release acceptance remains separate."
+    },
+    {
+      "id": "U07",
+      "section": "Default Inter and live typography",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Selected font and typography values did not propagate across the design.",
+      "solution": "Default headings/body use Inter; live shared resolver applies family and every role metric.",
+      "guide": "Change font; navigate; reload; inspect exported source/assets and copied current context.",
+      "reference": "foundation-runtime.js; typography.js; foundation-defaults.json",
+      "evidence": "Model/DOM bindings and durable settings pass. Real font decoding is an open asset check."
+    },
+    {
+      "id": "U08",
+      "section": "11px Caption descriptions",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Contrast labels and metadata used oversized body copy.",
+      "solution": "Caption metadata follows the 11px default Caption role and full role metrics.",
+      "guide": "Inspect contrast descriptions, RGB readouts, eyebrows and helpers; test Caption customization.",
+      "reference": "foundation.css:217; foundation.css:234; foundation-model.js",
+      "evidence": "All metadata bindings use Caption metrics; rendered sizing remains part of acceptance."
+    },
+    {
+      "id": "U09",
+      "section": "12px Regular pills",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Contrast pills needed 12px Regular typography.",
+      "solution": "Contrast tags use 12px, weight 400, with readable own-background pass/fail foregrounds.",
+      "guide": "Inspect AA/AAA and Non-text 3:1 pills in light/dark and custom panels.",
+      "reference": "shell.css:891; foundation.css; tests/foundation-followup.test.cjs",
+      "evidence": "12px/400 source binding and 4.5:1 default/custom panel model checks pass."
+    },
+    {
+      "id": "U10",
+      "section": "Four-line Read More/Less",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Long descriptions expanded too far and toggles appeared inconsistently.",
+      "solution": "Measure prose overflow against four line heights; only overflowing content gets an accessible expand/collapse button.",
+      "guide": "Check 3/4/5-line prose, resize, expand/collapse, keyboard and text-spacing overrides.",
+      "reference": "foundation-runtime.js:210; foundation.css:163",
+      "evidence": "Four-line measurement/clamp and retained expansion implemented; actual line wrapping cannot be certified in jsdom."
+    },
+    {
+      "id": "U11",
+      "section": "Tabs into Group Button",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Section tabs used unjoined underlined links.",
+      "solution": "Joined Outlined Group Button tracks with active state, focus and keyboard behavior.",
+      "guide": "Click every section and Human/Machine choice; use arrows/Home/End; check overflow track.",
+      "reference": "experience.js; foundation.css:242; experience.css:5",
+      "evidence": "Group navigation regression tests and 14-page section/view checks pass."
+    },
+    {
+      "id": "U12",
+      "section": "Letter-spacing field height",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Tracking input did not match neighboring typography fields.",
+      "solution": "One shared type-editor control height applies to input and unit select.",
+      "guide": "Compare tracking, line-height, font and size fields after unit/font changes.",
+      "reference": "foundation.css:83; shell.css:1227",
+      "evidence": "Identical height, box sizing, typography and border recipe present; rendered geometry pending."
+    },
+    {
+      "id": "U13",
+      "section": "Gap between tracking/unit fields",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Paired tracking and unit fields used a different gap.",
+      "solution": "Tracking pair uses the same 16px spacing token, flexible numeric width and bounded select.",
+      "guide": "Compare paired input gap with adjacent editor columns at multiple widths.",
+      "reference": "shell.css:1230",
+      "evidence": "Specific tracking selector uses --space-16; shared 4px wrapper rule does not override its higher specificity."
+    },
+    {
+      "id": "U14",
+      "section": "px/rem relevance and interaction",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Unit selection failed and was shown on unrelated pages.",
+      "solution": "Working shared radios/paired controls; toolbar unit choice appears on seven dimensional Foundations.",
+      "guide": "Switch px/rem on Typography, Grid, Spacing, Radius, Borders, Shadows, Icons; inspect conversion/save/copy.",
+      "reference": "foundation-runtime.js:8; tests/foundation-units.test.cjs",
+      "evidence": "Both units and 224 theme/unit/density/direction cases pass. Colors/AI/Guidelines do not get irrelevant unit selectors."
+    },
+    {
+      "id": "U15",
+      "section": "Right-aligned Foundation JSON export",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Export Foundation JSON stayed beside the unit labels.",
+      "solution": "Auto start margin sends export to the right; narrow layouts wrap within available width.",
+      "guide": "Inspect toolbar with and without unit selector; narrow width and long labels.",
+      "reference": "foundation.css:64",
+      "evidence": "Responsive flex rule present. Current JSON export passed on all nine Foundations."
+    },
+    {
+      "id": "U16",
+      "section": "px and rem in Markdown",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Copied prompts omitted equivalent rem values.",
+      "solution": "Dimensional prompts show both units; component, pattern and template prompts include current Foundation settings.",
+      "guide": "Switch units; copy prompt; compare dimensions and current applied settings.",
+      "reference": "foundation-model.js; foundation-runtime.js; all 63 component detail scripts",
+      "evidence": "All 131 component pages plus Patterns/Templates pass both-unit and changed-setting copy checks."
+    },
+    {
+      "id": "U17",
+      "section": "Consistent section/banner radius",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Project banner radius differed from other sections.",
+      "solution": "Banner, panels, action buttons and joined groups use their matching semantic radius role.",
+      "guide": "Change radius philosophy; compare banner/panel outer corners and inner controls.",
+      "reference": "experience.css:8; foundation.css; radius.js",
+      "evidence": "Shared --radius-md role bindings and numeric-versus-semantic radius tests pass; pixel comparison pending."
+    },
+    {
+      "id": "U18",
+      "section": "Edit icon-only/right/Google",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Edit setup text CTA and icon placement/style did not match requested design.",
+      "solution": "Use named Google Material edit icon, icon-only accessible CTA after Export on the right.",
+      "guide": "Inspect accessible name, SVG provenance, ordering and activation.",
+      "reference": "experience.js; experience.css:11; icon-catalog.json",
+      "evidence": "Reviewed licensed edit path, accessible name and DOM ordering are present."
+    },
+    {
+      "id": "U19",
+      "section": "Icon-only hover color",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Header icons hovered to their unchanged default foreground.",
+      "solution": "Topbar icons and banner actions change to Brand on hover; active uses pressed Brand.",
+      "guide": "Hover theme/settings/edit/close; check SVG/mask currentColor in both themes.",
+      "reference": "foundation.css:262; experience.css:13",
+      "evidence": "Previously equal default/hover token fixed; currentColor icon source retained. Physical hover rendering pending."
+    },
+    {
+      "id": "U20",
+      "section": "Floating banner and Close",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Project context needed floating behavior and dismissal.",
+      "solution": "Sticky context banner includes Close, restores focus and updates sticky scroll offset.",
+      "guide": "Scroll content, close banner, navigate/reopen context and check focus/section reachability.",
+      "reference": "experience.js; experience.css:9",
+      "evidence": "Sticky banner, explicit close state and context-height updates are present; scroll painting needs browser."
+    },
+    {
+      "id": "U21",
+      "section": "Blank space at scroll bottom",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Scrolling exposed excess page tail/blank space.",
+      "solution": "Viewport-bounded shell; main/sidebar scroll inside minmax row; consistent bottom padding; no elastic outer tail.",
+      "guide": "Scroll every page to bottom at desktop/mobile and resize; check final content/actions remain reachable.",
+      "reference": "foundation.css:175",
+      "evidence": "Shell height/min-height/overscroll and terminal section margin fixes present; physical scroll check still open."
+    },
+    {
+      "id": "U22",
+      "section": "Data Format alignment and controls",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Categories lacked customization; numeric values and rows aligned inconsistently.",
+      "solution": "All 24 controls apply current formats; three-column rows and grouped separators; protect IDs/phones; date/range/Unicode recovery.",
+      "guide": "Edit each format, save/reload/copy; test empty/loading/masked/escaped/date/number examples and invalid boundaries.",
+      "reference": "data-format.js; foundation-runtime.js:84; foundation.css:97",
+      "evidence": "59 edits, all offered options, 48 locale/separator/group cases and identity/alignment scenarios pass. Visual column acceptance pending."
+    },
+    {
+      "id": "U23",
+      "section": "Accessibility gutters/separators",
+      "status": "Partial",
+      "priority": "P1",
+      "problem": "Reference rows had wrong columns and inconsistent spacing.",
+      "solution": "Three-column documentation layout, responsive stacking, protected description expansion and neutral separators.",
+      "guide": "Expand each description; inspect status alignment and panel/row gaps at narrow/wide widths.",
+      "reference": "foundation.css:133; accessibility.html",
+      "evidence": "20 DOM checks pass; actual layout, zoom and assistive-technology checks remain pending."
+    },
+    {
+      "id": "U24",
+      "section": "All Foundation/Guidelines actions",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Inputs, views, saves, resets and copies needed full functional verification.",
+      "solution": "Exercise every offered editor option plus invalid/save/recovery paths and defined matrices; fix current-prompt propagation.",
+      "guide": "Repeat the committed DOM tools; inspect each evidence JSON and any failed row before release.",
+      "reference": "tools/audit-foundation-controls.cjs; tools/audit-foundation-recovery.cjs; tools/audit-pending-tasks.cjs",
+      "evidence": "2205 main checks, 32 recovery checks, 141 pending checks, 817 defined combinations; zero failures. Arbitrary input space is not exhaustively tested."
+    },
+    {
+      "id": "U25",
+      "section": "Required red asterisk",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Mandatory fields still allowed Required text instead of the requested marker.",
+      "solution": "Required labels use * in Foundation danger color; native required/ARIA stays programmatic; conflicting dropdown guidance corrected.",
+      "guide": "Inspect required form labels and error summary; verify one explanation of the marker.",
+      "reference": "foundation-runtime.js:295; foundation.css:62; select-dropdown.html",
+      "evidence": "Shared indicator runtime and corrected guideline are present; actual announcements need AT acceptance."
+    },
+    {
+      "id": "U26",
+      "section": "Remove Optional suffix",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Optional label text cluttered non-mandatory fields.",
+      "solution": "Shared indicator normalization removes optional badges; optional identity no longer blocks Project setup.",
+      "guide": "Inspect setup/other optional fields; leave blank and complete review/save.",
+      "reference": "foundation-runtime.js:297; project-model.js",
+      "evidence": "Optional marker removal and profile/identity regression checks pass."
+    }
+  ],
+  "followupFixes": [
+    {
+      "id": "N03",
+      "section": "Library copy failure",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "65 page drivers reported Copied even when clipboard and fallback failed.",
+      "solution": "Shared awaited copy feedback checks actual success and announces manual-copy recovery.",
+      "guide": "Copy with normal API, denied API and failing/successful legacy fallback; preserve focus.",
+      "reference": "shell.js; all component detail scripts; patterns.js; templates.js",
+      "evidence": "131 component pages plus Patterns/Templates pass copy success/failure/focus paths."
+    },
+    {
+      "id": "N04",
+      "section": "Copied component context",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Component/pattern/template prompts missed current settings and dimension equivalence.",
+      "solution": "Prepare page Markdown with current applied snapshot and both units; keep code outputs valid code.",
+      "guide": "Change Spacing then copy each prompt; compare applied setting and px/rem values.",
+      "reference": "foundation-runtime.js; component detail scripts; patterns.js; templates.js",
+      "evidence": "Each of 133 library pages passed a changed-setting prompt check."
+    },
+    {
+      "id": "N05",
+      "section": "Splitter live interactions",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Divider was pointer-only with no min panes, saved ratio or cancellation recovery.",
+      "solution": "Accessible separator controller, RTL/vertical keyboard, collapse/restore, physical minima, pointer cancel and versioned persistence.",
+      "guide": "Arrow/Shift/Home/End/Enter; cancel pointer; reload width; future record; failed reset then retry.",
+      "reference": "splitter-runtime.js; splitter-detail.js; splitter-default.html",
+      "evidence": "Actual page-script interaction, bounds, save, reset and future-record scenarios pass; physical drag layout pending."
+    },
+    {
+      "id": "N06",
+      "section": "Responsive layout patterns",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Eight patterns lacked buildable transitions; Master-Detail had no working state/focus example.",
+      "solution": "Per-pattern contracts plus executable selected/empty/loading/error/retry/back example and stale-request protection.",
+      "guide": "Select record, Back, retry error, clear during load, cross narrow/wide threshold.",
+      "reference": "layout-patterns.js; foundation-contract.json; grid-layout.html",
+      "evidence": "Simulated media transitions, list position, focus return, loading/error and stale cancellation pass."
+    },
+    {
+      "id": "N07",
+      "section": "Data value edge cases",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "IDs/phones formatted as quantities, dates aligned as numbers, Unicode masks split characters and invalid ranges leaked.",
+      "solution": "Protect identity labels/leading zeros; numeric-only alignment; code-point masks; ordered valid ranges.",
+      "guide": "Format IDs, phone, boolean/blank number, date-only values, reverse range and emoji masks.",
+      "reference": "foundation-model.js; foundation-runtime.js; tests/foundation-followup.test.cjs",
+      "evidence": "Model fixtures and actual table value/alignment checks pass."
+    },
+    {
+      "id": "N08",
+      "section": "Header icon hover",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Header default and hover mapped to the same text color.",
+      "solution": "Hover Brand and active pressed Brand apply to icon-only header controls.",
+      "guide": "Hover settings/theme/navigation and banner actions; verify currentColor paths/masks.",
+      "reference": "foundation.css; experience.css",
+      "evidence": "Different state tokens are present; real hover painting still needs browser."
+    },
+    {
+      "id": "N09",
+      "section": "Contrast pill foregrounds",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "12px status pills could be unreadable on their own tinted backgrounds.",
+      "solution": "Derive foreground/background pairs with at least 4.5:1, retaining 12px Regular.",
+      "guide": "Check pass/fail pairs in both themes and white/dark/blue panels.",
+      "reference": "foundation-model.js; foundation.css; tests/foundation-followup.test.cjs",
+      "evidence": "Custom/default panel contrast fixtures pass."
+    },
+    {
+      "id": "N10",
+      "section": "Incomplete typed token publish",
+      "status": "Implemented",
+      "priority": "P1",
+      "problem": "Published token file omitted runtime semantic roles and metrics.",
+      "solution": "Generate from the shared default resolver, both themes, with source/model/contract freshness.",
+      "guide": "Independent import; compare all property names and representative values; reject invalid/cyclic inputs.",
+      "reference": "tools/generate_tokens.py; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "evidence": "613 typed tokens + 21 explicit CSS-only keywords restore all 634 default properties in each mode."
+    }
+  ]
+}

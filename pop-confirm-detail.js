@@ -85,7 +85,7 @@
     lines.push("Visual treatment: reads as a proper elevated panel, matching this system's other floating-panel language (Menu, Autocomplete, Popover), but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" alone gives it separation from the page), border-radius var(--radius-md). The trigger sits on the ordinary page background outside the bubble, so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 1.5px solid var(--line-strong), color var(--text-hi), padding 6px 14px, border-radius var(--radius-sm). The arrow is a small rotated square (transform:rotate(45deg)) matching the bubble's own inverted background color. The Confirm/Cancel buttons sit in a right-aligned row below the question - Cancel is a transparent/bordered button using the bubble's own inverted text color (var(--text-hi) would go near-invisible against it), Confirm is a solid neutral button by default or a solid red button in the Destructive state, both with their own fully opaque background so they stay legible regardless of the bubble's inversion.");
     lines.push("");
     lines.push("Component properties: Question (string, the short question shown in the bubble) - currently \"" + question + "\". Confirm label (string, the text on the confirm button) - currently \"" + confirmLabel + "\". Cancel label (string, the text on the cancel button) - currently \"" + cancelLabel + "\".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(question, confirmLabel, cancelLabel){
@@ -163,31 +163,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (pop-confirm.html's listing

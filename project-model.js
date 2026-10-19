@@ -1,8 +1,8 @@
 (function(root, factory) {
-  const api = factory();
+  const api = factory(typeof module === 'object' && module.exports ? require('./foundation-model.js') : root.ADSFoundationModel);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.ADSProject = api;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function() {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function(F) {
   'use strict';
   const KEY = 'ads:project-profile:v1';
   const DRAFT = 'ads:project-draft:v1';
@@ -85,7 +85,8 @@
     try { p = JSON.parse(raw); }
     catch { throw new Error('Saved setup could not be read. Your saved data has not been changed.'); }
     if (!p || typeof p !== 'object' || Array.isArray(p)) throw new Error('Saved setup could not be read. Your saved data has not been changed.');
-    if (key === KEY && typeof p.version === 'number' && p.version > SUPPORTED_VERSION) throw new Error('Saved setup was created by a newer version of this app and can’t be read here. Update the app, or start a new setup.');
+    if (p.version!=null&&(!Number.isInteger(p.version)||p.version<0)) throw new Error('Saved setup has an invalid version. Your saved data has not been changed.');
+    if (typeof p.version === 'number' && p.version > SUPPORTED_VERSION) throw new Error('Saved setup was created by a newer version of this app and can’t be read here. Update the app, or explicitly discard the saved setup.');
     // Foundation audit NP03 - this migration used to run only for the real
     // profile (key === KEY), so a draft saved under an old product-type name
     // silently lost its selection instead of migrating forward: the <select>
@@ -93,11 +94,18 @@
     // the field reads as unset. A legacy name is equally invalid in a draft
     // as in a saved profile, so the migration applies to both unconditionally.
     if (LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
+    if(key===DRAFT){
+      if(p.productType&&!PRODUCTS.includes(p.productType))throw new Error('Saved draft has an unsupported product category. Export a backup or discard the draft.');
+      if(p.role&&!ROLES.includes(p.role))throw new Error('Saved draft has an unsupported role. Export a backup or discard the draft.');
+      for(const k of ['project','productType','productOther','name','email','designation','role','roleOther']) if(p[k]!=null&&(typeof p[k]!=='string'||p[k].length>(k==='email'?254:100)))throw new Error('Saved draft has invalid fields. Export a backup or discard the draft.');
+      if(p.platforms!=null&&(!Array.isArray(p.platforms)||p.platforms.some(k=>!PLATFORMS[k])))throw new Error('Saved draft has invalid platforms. Export a backup or discard the draft.');
+    }
     if (key === KEY && Object.keys(validate(p)).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;
   }
   function save(storage, p) {
     if (Object.keys(validate(p)).length) throw new Error('Review the highlighted fields before saving.');
+    read(storage);
     const profile = {...p, version:1, updatedAt:new Date().toISOString()};
     storage.setItem(KEY, JSON.stringify(profile));
     return profile;
@@ -105,7 +113,7 @@
   const safe = value => String(value || '').replace(/[\r\n]+/g, ' ').replace(/[\\`*_{}\[\]<>#]/g, '\\$&');
   function markdown(profile, tokens, docs = [], includeIdentity = false, defaultedKeys = []) {
     const p = profile || {};
-    const lines = ['---', 'project: ' + JSON.stringify(p.project || 'Damco design system'), 'version: "3.4.0-local-draft"', 'generated: ' + JSON.stringify(new Date().toISOString()), 'scope: ' + JSON.stringify(docs.length ? 'documentation-and-context' : 'project-context'), '---', '', '# ' + safe(p.project || 'Damco design system'), '', '## Product context', '', '- Product: ' + safe(p.productType === 'Other' ? p.productOther : p.productType || 'Not configured'), '- Delivery role: ' + safe(p.role === 'Other' ? p.roleOther : p.role || 'Not configured')];
+    const lines = ['---', 'project: ' + JSON.stringify(p.project || 'Damco design system'), 'version: "3.5.0-local-draft"', 'generated: ' + JSON.stringify(new Date().toISOString()), 'scope: ' + JSON.stringify(docs.length ? 'documentation-and-context' : 'project-context'), '---', '', '# ' + safe(p.project || 'Damco design system'), '', '## Product context', '', '- Product: ' + safe(p.productType === 'Other' ? p.productOther : p.productType || 'Not configured'), '- Delivery role: ' + safe(p.role === 'Other' ? p.roleOther : p.role || 'Not configured')];
     if (includeIdentity) lines.push('- Owner: ' + safe(p.name), '- Email: ' + safe(p.email), '- Designation: ' + safe(p.designation));
     lines.push('', '## Target platforms', '');
     for (const key of p.platforms || []) if (PLATFORMS[key]) lines.push('### ' + PLATFORMS[key].label, '', PLATFORMS[key].guidance, '');
@@ -129,16 +137,24 @@
     // sees these as open items to resolve, not silently invents a value to
     // fill the gap.
     const openDecisions = [];
+    if(tokens.verification?.unsavedPreviewKeys?.length)openDecisions.push('Unsaved local previews are included for '+tokens.verification.unsavedPreviewKeys.join(', ')+'. These values are not durable browser saves; save successfully before treating them as approved workspace settings.');
     if (!profile) {
       openDecisions.push('No project setup was saved for this export - every value above is this system\'s own plain documented default, not a decision made for this project.');
     } else {
       if (p.productType === 'Other') openDecisions.push('Product type is free text ("' + safe(p.productOther || '') + '") - this system has no recommended Spacing/Radius/Grid & Layout default for an undefined category; those sections reflect their plain global defaults unless separately customized.');
       if (p.role === 'Other') openDecisions.push('Role is free text ("' + safe(p.roleOther || '') + '") - the role-specific guidance this app shows after setup assumes one of its own named roles, and does not have a tailored version for this one.');
     }
-    openDecisions.push('Asset manifest: this is a text-only export - no uploaded/custom visual assets travel with it. Icons uploaded on the Icons page exist only in that page\'s own browser session and are never saved to this workspace, let alone exported.');
+    const assets=(tokens.icons?.uploads||[]).map(asset=>({name:asset.name,kind:'icon reference',packagedIn:'Foundation JSON'}));
+    for(const role of ['primaryFont','secondaryFont']) {const font=tokens.typography?.[role];if(font?.family)assets.push({role,family:font.family,source:font.source,stylesheet:font.linkHref||null,packagedIn:font.dataUrl?'Foundation JSON':null});}
+    lines.push('', '## Asset manifest', '', 'Uploaded files are preserved in Foundation JSON. This Markdown identifies dependencies without embedding large binary data. Icon references require review before inline reuse.', '', '```json', JSON.stringify({schemaVersion:1,namedIcons:F.iconCatalog,assets},null,2), '```');
+    openDecisions.push('Rendered browser, font decoding, forced-color, zoom and assistive-technology acceptance require separate evidence; a valid saved record does not certify these checks.');
     lines.push('', '## Validation & open decisions', '', ...openDecisions.map(d => '- ' + d));
     for (const doc of docs) lines.push('', '---', '', '## ' + safe(doc.title), '', 'Source: ' + doc.file + ' · Status: ' + doc.status, '', doc.markdown);
-    return lines.join('\n');
+    const resolved=tokens.resolvedThemes?.light||F.resolve(tokens,'light',profile);
+    const prefixes={typography:['--type-'],spacing:['--space-'],sizing:['--size-'],radius:['--radius-'],border:['--border-width-'],'border-states':['--focus-ring-width'],shadow:['--shadow-'],icons:['--icon-size'],'grid-layout':['--grid-gutter']};
+    const names=Object.keys(resolved.tokens).filter(name=>Object.keys(tokens).some(key=>(prefixes[key]||[]).some(prefix=>name.startsWith(prefix))));
+    lines.push('', F.contractMarkdown());
+    return F.prepareMarkdown(lines.join('\n'),resolved,names);
   }
   return {KEY,DRAFT,PRODUCTS,ROLES,PLATFORMS,validate,slug,read,save,markdown};
 });

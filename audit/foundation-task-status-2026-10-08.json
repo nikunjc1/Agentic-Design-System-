@@ -1,0 +1,911 @@
+{
+  "date": "2026-10-08",
+  "scope": "Original 100 findings; implemented means source/documentation requirement present, not production certification",
+  "browser": "Unavailable: browser connection lists no browsers",
+  "findings": [
+    {
+      "id": "X01",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Catalog regenerated from all 157 page sources, including AI and current role guidance.",
+      "reference": "tools/audit_pages.py; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X02",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Shared resolve/export materializes default and applied settings, both themes, context and platform profiles.",
+      "reference": "foundation-runtime.js; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X03",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Published defaults now include all 634 applied properties: 613 typed tokens and 21 CSS-only keywords.",
+      "reference": "tools/generate_tokens.py; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X04",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Independent importer validates typed values and alias cycles in both modes; relative em uses an explicit extension.",
+      "reference": "tools/dtcg-import.cjs; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X05",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Valid edits auto-apply; failed writes identify unsaved preview; reload restores durable settings.",
+      "reference": "shell.js; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X06",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "All 15 records migrate legacy values, preserve malformed/future data and support explicit reset/raw backup.",
+      "reference": "foundation-model.js; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X07",
+      "section": "Systemwide Foundation contract",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Joined button choices expose selected state; section navigation retains anchors and keyboard handling.",
+      "reference": "experience.js; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X08",
+      "section": "Systemwide Foundation contract",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Shared schemaVersion 1, resolver precedence and current-context handoff are documented and used.",
+      "reference": "foundation-contract.json; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X09",
+      "section": "Systemwide Foundation contract",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "One product/platform resolver supplies recommendations; mixed-platform handoff resolves separate profiles.",
+      "reference": "foundation-model.js; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "X10",
+      "section": "Systemwide Foundation contract",
+      "priority": "P2",
+      "status": "Partial",
+      "currentEvidence": "Acceptance contract separates web scope, model evidence, renderer checks, assets and external/native adapters.",
+      "reference": "foundation-contract.json; foundation-model.js; foundation-runtime.js; shell.js; foundation-contract.json; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Attach actual viewport, zoom, forced-color, recipient and assistive-technology release evidence. Native rendering and live external agents are separate adapters, explicitly outside this web demo."
+    },
+    {
+      "id": "NP01",
+      "section": "New Project",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Project setup describes one shared profile and warns before replacing existing details.",
+      "reference": "new-project.html; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP02",
+      "section": "New Project",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Review displays recommendation before/after changes and distinguishes retained explicit overrides.",
+      "reference": "experience.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP03",
+      "section": "New Project",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Resume, Discard and Backup handle saved/draft/corrupt/future cases without injecting project names as HTML.",
+      "reference": "experience.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP04",
+      "section": "New Project",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Other/free-text fields have model bounds; draft and review validation share the profile rules.",
+      "reference": "project-model.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP05",
+      "section": "New Project",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Error summary links invalid fields and platform group; corrected submissions route to the invalid step.",
+      "reference": "experience.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP06",
+      "section": "New Project",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Role routes and all nine readiness rows distinguish valid/default/recovery, including AI.",
+      "reference": "experience.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP07",
+      "section": "New Project",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Step/history routing, final review and invalid-step focus recovery use one setup state.",
+      "reference": "experience.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP08",
+      "section": "New Project",
+      "priority": "P2",
+      "status": "Partial",
+      "currentEvidence": "Responsive setup layout and long-label rules are present; rendered keyboard/zoom acceptance remains open.",
+      "reference": "experience.css; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Verify setup with soft keyboard, long/localized labels, split windows and 200% zoom."
+    },
+    {
+      "id": "NP09",
+      "section": "New Project",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Immediate handoff includes resolved defaults, portable rules, current context, asset manifest and open decisions.",
+      "reference": "project-model.js; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "NP10",
+      "section": "New Project",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Identity is optional; categories, Other and return/edit guidance explain context choices.",
+      "reference": "new-project.html; new-project.html#implementation-contract; experience.js; project-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C01",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Separate dark edit-enabled flags persist and appear in copied current settings; disabled dark uses documented fallback.",
+      "reference": "foundations.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C02",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Resets are scoped to their color family; separate-dark choices restore independently.",
+      "reference": "foundations.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C03",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Incomplete hex is a draft error; previous valid colors stay applied and incomplete values are not saved.",
+      "reference": "foundations.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C04",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Readouts use resolved text/action colors and composited tint pairs; actual component pair acceptance remains open.",
+      "reference": "foundations.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Compare actual rendered role/surface/tint/state pairs. Model and scoped swatch checks do not certify every component."
+    },
+    {
+      "id": "C05",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Default, hover and active action foregrounds are derived for at least 4.5:1 on their actual background.",
+      "reference": "foundation-model.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C06",
+      "section": "Colors",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Derivation, perceptual limits and custom hierarchy checks are explicit; arbitrary custom ramps are not certified.",
+      "reference": "foundation-contract.json; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C07",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Legacy color text overrides migrate into Typography ownership and travel in current exports.",
+      "reference": "foundation-model.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C08",
+      "section": "Colors",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Semantic action/status/surface aliases document compatibility hue names and authoritative role ownership.",
+      "reference": "foundation-contract.json; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C09",
+      "section": "Colors",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Component-specific Alert/Tag/Badge/Table/validation recipes distinguish status from selection and chart series.",
+      "reference": "foundations.html; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "C10",
+      "section": "Colors",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Picker controls expose names/values, keyboard increments, transient opacity and Escape focus recovery.",
+      "reference": "foundations.js; foundations.html#implementation-contract; foundations.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Verify picker clipping, actual range announcements, keyboard focus return and narrow positioning."
+    },
+    {
+      "id": "G01",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Custom columns/gutter bounds validate every grid type; current geometry is saved/applied/exported.",
+      "reference": "grid-layout.js; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "G02",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Canonical container/viewport thresholds and legacy compatibility exceptions are documented; rendered boundaries pending.",
+      "reference": "foundation-contract.json; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Measure documented breakpoint/container boundaries and compatibility exceptions in a real renderer."
+    },
+    {
+      "id": "G03",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Platform profiles, container width, explicit overrides and density precedence resolve from shared context.",
+      "reference": "foundation-model.js; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "G04",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Independent baseline, max width, gutters, spans, nesting, source order and row alignment have buildable rules.",
+      "reference": "foundation-contract.json; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "G05",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Document scrolling, reflow, virtual keyboard, fixed actions and justified independent regions are documented.",
+      "reference": "foundation-contract.json; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "G06",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "All eight patterns have wide/narrow/state rules; executable Master-Detail preserves selection, Back, list position and focus.",
+      "reference": "layout-patterns.js; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Verify each consumer pattern at wide/narrow widths, including selected-record, empty/loading/error and focus-return states."
+    },
+    {
+      "id": "G07",
+      "section": "Grid & Layout",
+      "priority": "P2",
+      "status": "Partial",
+      "currentEvidence": "Live Splitter now supports bounds, keyboard/collapse, cancellation and versioned width persistence; overlay rules documented.",
+      "reference": "splitter-runtime.js; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Verify real Splitter/Affix/Table panes, min/max resizing, keyboard, persistence and overlay collision."
+    },
+    {
+      "id": "G08",
+      "section": "Grid & Layout",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Layout Markdown carries effective Custom geometry, pattern rules, breakpoints and overflow guidance.",
+      "reference": "grid-layout.js; grid-layout.html#implementation-contract; grid-layout.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T01",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Uploaded font data and source manifest persist and travel in Foundation JSON; reset removes old runtime faces.",
+      "reference": "typography.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T02",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Read/load errors, retry and generation guards prevent late fonts or reset uploads from replacing current values.",
+      "reference": "typography.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T03",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Every role resolves family, size, weight, style, line height, tracking and color; shared CSS binds actual headings.",
+      "reference": "foundation.css; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T04",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Semantic heading level remains independent of visual size; status modifiers retain readable base typography.",
+      "reference": "foundation-contract.json; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T05",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Full field validation preserves invalid drafts, including blank tracking, instead of silently committing zero.",
+      "reference": "typography.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T06",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Standard H1-H6 restore, platform preset mapping and arbitrary customized metric export share the resolver.",
+      "reference": "foundation-model.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T07",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Default text pair checks pass; localization, text spacing and rendered custom-pair acceptance remain open.",
+      "reference": "tests/foundation-release.test.cjs; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Verify rendered scripts, expansion, user text-spacing overrides and customized text/surface pairs; default pair math passes."
+    },
+    {
+      "id": "T08",
+      "section": "Typography",
+      "priority": "P2",
+      "status": "Partial",
+      "currentEvidence": "Font bounds, requested faces, retry, synthesis/fallback guidance are present; real decoding still pending.",
+      "reference": "typography.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Verify real font decoding, network failure/retry, supported faces, synthesis and fallback metrics."
+    },
+    {
+      "id": "T09",
+      "section": "Typography",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Button/label/table/code/link/eyebrow role mapping, font assets and responsive rules are included in handoff.",
+      "reference": "foundation-contract.json; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "T10",
+      "section": "Typography",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Preset change previews affected sizes, supports scoped Undo and retires stale preset/Undo after edits/reset.",
+      "reference": "typography.js; typography.html#implementation-contract; typography.js; foundation-model.js; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S01",
+      "section": "Spacing",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "All offered spacing systems resolve applied scale and aliases, including zero and advertised values.",
+      "reference": "foundation-model.js; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S02",
+      "section": "Spacing",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Allowed tokens and zero/auto/percent/negative/fluid exceptions are explicitly governed.",
+      "reference": "foundation-contract.json; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S03",
+      "section": "Spacing",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Adaptive micro/control/layout resolution uses a defined algorithm and consistent px/rem conversion.",
+      "reference": "foundation-model.js; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S04",
+      "section": "Spacing",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Shared project taxonomy and context mappings replace contradictory per-page recommendations.",
+      "reference": "foundation-model.js; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S05",
+      "section": "Spacing",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Label/helper/error/group/list/toolbar/empty/wrapped spacing and scrim/content padding have relationship rules.",
+      "reference": "foundation-contract.json; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S06",
+      "section": "Spacing",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Density is separated from glyph/control/target size; target editor enforces a 44px minimum.",
+      "reference": "foundation-runtime.js; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S07",
+      "section": "Spacing",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Logical gutters and documented fluid/native exceptions distinguish token adoption from renderer-specific units.",
+      "reference": "foundation.css; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "S08",
+      "section": "Spacing",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Current values, relationship aliases, composition and unit rules travel in Markdown and JSON.",
+      "reference": "foundation-runtime.js; spacing.html#implementation-contract; spacing.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R01",
+      "section": "Radius",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Chosen philosophy resolves semantic defaults; prompts carry the active mappings instead of fixed seed rules.",
+      "reference": "foundation-model.js; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R02",
+      "section": "Radius",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Numeric radius primitives stay numeric; effective role aliases change with philosophy.",
+      "reference": "tests/foundation-model.test.cjs; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R03",
+      "section": "Radius",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Role permissions and pill/circle/attached/native exceptions are explicit in the generated contract.",
+      "reference": "foundation-contract.json; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R04",
+      "section": "Radius",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Contour cap subtracts border plus padding; asymmetric insets and independent child controls are explained.",
+      "reference": "radius.html; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R05",
+      "section": "Radius",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Attached, full-screen, pill, circle and responsive radius rules are consolidated.",
+      "reference": "foundation-contract.json; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R06",
+      "section": "Radius",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Geometry stays invariant through focus/error/selected states; clipping and focus visibility rules are explicit.",
+      "reference": "foundation-contract.json; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R07",
+      "section": "Radius",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Current semantic mappings and nested/attached permissions appear in portable Radius handoff.",
+      "reference": "radius.js; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "R08",
+      "section": "Radius",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Reset derives the current project recommendation and persists/restores the same effective philosophy.",
+      "reference": "radius.js; radius.html#implementation-contract; radius.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B01",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Base geometry is editable; fixed per-state geometry is accurately labelled with editable state colors.",
+      "reference": "borders.html; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B02",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Focus outline is separate from resting boundary and layout; real transition measurement remains pending.",
+      "reference": "foundation.css; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Measure control geometry through focus/error/selected transitions; no-layout outlines are implemented."
+    },
+    {
+      "id": "B03",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Combined error/focus, selection/hover, loading/disabled, success/focus and read-only/required precedence is defined.",
+      "reference": "foundation-contract.json; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B04",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Compositing, essential boundary contrast and forced-color focus rules are explicit; rendered evidence pending.",
+      "reference": "foundation-contract.json; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Verify composited essential boundaries and unobscured focus in forced colors and custom themes."
+    },
+    {
+      "id": "B05",
+      "section": "Borders",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Preset seeding and current live inheritance/application are correctly described rather than promised future work.",
+      "reference": "borders.html; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B06",
+      "section": "Borders",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Approved width exceptions and native hairline recipes are documented with consumers and rationale.",
+      "reference": "foundation-contract.json; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B07",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Default semantic state colors follow Brand/status until overridden; alias/override precedence travels in export.",
+      "reference": "foundation-model.js; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B08",
+      "section": "Borders",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Logical start/end sides are editable; native, print and forced-color translations are documented.",
+      "reference": "borders.js; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "B09",
+      "section": "Borders",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Portable border contract includes component exceptions, state precedence, accessibility and directional rules.",
+      "reference": "foundation-contract.json; borders.html#implementation-contract; borders.js; foundation-model.js; tests/foundation-model.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H01",
+      "section": "Shadows",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Each philosophy resolves actual recipes; Flat preserves required overlay separation through alternatives.",
+      "reference": "foundation-model.js; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H02",
+      "section": "Shadows",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Shadow defaults publish typed offset, blur, spread and color composites; mode mappings import independently.",
+      "reference": "tools/generate_tokens.py; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H03",
+      "section": "Shadows",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Custom-dark, print and forced-color separation alternatives are documented; rendered adjacency evidence pending.",
+      "reference": "foundation-contract.json; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Verify actual custom-dark adjacency, borders/backdrops and forced-color/print fallbacks."
+    },
+    {
+      "id": "H04",
+      "section": "Shadows",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Named layers and portal/nesting/clipping/backdrop/focus ownership rules distinguish elevation from stacking.",
+      "reference": "foundation-contract.json; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H05",
+      "section": "Shadows",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Pressed example uses XS; static bordered, elevated and interactive cards have distinct recipes.",
+      "reference": "shadows.html; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H06",
+      "section": "Shadows",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Keyboard/touch interaction, reduced-motion alternatives and shadow performance guidance are concrete.",
+      "reference": "foundation-contract.json; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "H07",
+      "section": "Shadows",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Current shadow recipes, layers and mode/alternative rules travel in Markdown/JSON.",
+      "reference": "foundation-runtime.js; shadows.html#implementation-contract; foundation-model.js; tools/dtcg-import.cjs; tests/foundation-release.test.cjs",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I01",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Reference assets persist with per-file removal and complete reset; explicit source/manifest travels in handoff.",
+      "reference": "icons.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I02",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Upload dropzone is keyboard reachable with a named activation path and visible focus.",
+      "reference": "icons.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I03",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Bounded type/size/count, duplicates and read/decode errors preserve recovery; references stay inert images.",
+      "reference": "icons.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Verify malformed/valid asset decoding and error feedback in a real image engine. References are inert; only reviewed catalog glyphs may be inlined."
+    },
+    {
+      "id": "I04",
+      "section": "Icons",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "UI glyphs and illustration references have separate rules; unsupported source/style controls disable accurately.",
+      "reference": "icons.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I05",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Six licensed Google Material actions have canonical names, directional metadata and an accessible SVG API.",
+      "reference": "icon-catalog.json; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I06",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Decorative versus labelled SVG, icon-only controls and status/loading announcements have concrete examples.",
+      "reference": "foundation-model.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I07",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Partial",
+      "currentEvidence": "Glyph size, viewBox/stroke and target size are separate; actual optical/clipping/hit-area acceptance remains open.",
+      "reference": "foundation-contract.json; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Verify actual-size optical bounds, stroke scaling, clipping and hit areas across styles/devices."
+    },
+    {
+      "id": "I08",
+      "section": "Icons",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Directional chevrons mirror in RTL; invariant symbols do not; reduced-motion/localized meaning rules are explicit.",
+      "reference": "foundation-model.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I09",
+      "section": "Icons",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Catalog license/provenance and agent constraints define accepted geometry and reviewed versus inert references.",
+      "reference": "foundation-contract.json; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "I10",
+      "section": "Icons",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Icon handoff carries sources/assets, state/accessibility/direction and generation constraints.",
+      "reference": "icons.js; icons.html#implementation-contract; icons.js; icon-catalog.json; foundation-model.js; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A01",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Rationale uses honest illustrative source labels and linked references rather than unsupported real research claims.",
+      "reference": "ai-foundation.html; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A02",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Local approval/decline/Undo reflects recorded decision state; decline is neutral and is not execution failure.",
+      "reference": "ai-foundation.js; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A03",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Validated lifecycle covers queue/run/partial/success/failure/cancel/expiry/undo failure, scope and idempotent retry.",
+      "reference": "agent-model.js; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A04",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Confidence allows unknown, separates evidence/calibration thresholds from execution outcome.",
+      "reference": "foundation-contract.json; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A05",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Executable stream supports partial output, Stop/Continue, interruption/Retry, cancellation and coarse announcements.",
+      "reference": "ai-foundation.js; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A06",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Local versus external effects, approval scope, changed-scope consent, expiry and resource limits are defined.",
+      "reference": "foundation-contract.json; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A07",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Decision/stream outcomes have named status and focus recovery; pending/undo timing is documented.",
+      "reference": "ai-foundation.js; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A08",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "Agent input/output contract defines authority, trusted evidence, schema, missing data, capabilities and verification.",
+      "reference": "foundation-contract.json; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A09",
+      "section": "AI & Agents",
+      "priority": "P1",
+      "status": "Implemented",
+      "currentEvidence": "AI is included in catalog, nine-section readiness and complete portable Foundation handoff.",
+      "reference": "project-model.js; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    },
+    {
+      "id": "A10",
+      "section": "AI & Agents",
+      "priority": "P2",
+      "status": "Implemented",
+      "currentEvidence": "Provenance/privacy rules cover mixed authorship, tools/review history, private/missing sources and retention.",
+      "reference": "foundation-contract.json; ai-foundation.html#implementation-contract; ai-foundation.js; agent-model.js; foundation-contract.json; audit/pending-tasks-2026-10-08.json",
+      "remaining": "Source/documentation fix present; include this specific requirement in release acceptance."
+    }
+  ],
+  "counts": {
+    "Implemented": 86,
+    "Partial": 14
+  }
+}

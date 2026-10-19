@@ -219,7 +219,7 @@
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Segments nest inside the control's own radius on their outer corner only.");
     lines.push("");
     lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show prefix (boolean, optional text segment attached to the left edge of the field with its own editable prefix text - e.g. a protocol or currency symbol), Show suffix (boolean, optional text segment attached to the right edge of the field with its own editable suffix text - e.g. a domain or unit).");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, prefixText, suffixText){
@@ -316,31 +316,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (add-on.html's listing

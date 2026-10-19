@@ -165,7 +165,7 @@
   </nav>
 </aside>
 
-<main class="app-main">
+<main class="app-main reference-page">
   <p class="page-eyebrow">Guidelines &middot; Copywriting</p>
   <h1 class="page-title">Copywriting</h1>
   <p class="page-lede">How this system writes to the user - tone, grammar and the specific rules that make an error message actually useful instead of just accurate.</p>
@@ -176,27 +176,27 @@
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Perspective</span>
-        <span class="usage-desc">"You" for the user, "we" only when acknowledging a complaint or a mistake on our side</span>
+        <div class="reference-detail"><span class="usage-desc">"You" for the user, "we" only when acknowledging a complaint or a mistake on our side</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Vocabulary</span>
-        <span class="usage-desc">Plain words over jargon - a first-time user should never need a glossary</span>
+        <div class="reference-detail"><span class="usage-desc">Plain words over jargon - a first-time user should never need a glossary</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Consistency</span>
-        <span class="usage-desc">One term per concept, used the same way everywhere - never "delete" here and "remove" there for the same action</span>
+        <div class="reference-detail"><span class="usage-desc">One term per concept, used the same way everywhere - never "delete" here and "remove" there for the same action</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Completeness</span>
-        <span class="usage-desc">State the cause and the next step - never just "Something went wrong"</span>
+        <div class="reference-detail"><span class="usage-desc">State the cause and the next step - never just "Something went wrong"</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Restraint</span>
-        <span class="usage-desc">Avoid absolute words ("never", "always") and commands ("can't", "don't") - offer guidance instead</span>
+        <div class="reference-detail"><span class="usage-desc">Avoid absolute words ("never", "always") and commands ("can't", "don't") - offer guidance instead</span></div>
         <span class="usage-values">Rule</span>
       </div>
     </div>
@@ -225,27 +225,27 @@
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Titles, buttons, labels</span>
-        <span class="usage-desc">Sentence case - capitalize only the first word and proper nouns ("Save changes", not "Save Changes")</span>
+        <div class="reference-detail"><span class="usage-desc">Sentence case - capitalize only the first word and proper nouns ("Save changes", not "Save Changes")</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Product / acronym names</span>
-        <span class="usage-desc">Full caps for genuine acronyms only (ESC, API) - not for emphasis</span>
+        <div class="reference-detail"><span class="usage-desc">Full caps for genuine acronyms only (ESC, API) - not for emphasis</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Numbers</span>
-        <span class="usage-desc">Numerals over spelled-out numbers wherever a value appears - faster to scan ("3 items", not "three items")</span>
+        <div class="reference-detail"><span class="usage-desc">Numerals over spelled-out numbers wherever a value appears - faster to scan ("3 items", not "three items")</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Periods</span>
-        <span class="usage-desc">Omit in labels, titles, tooltips and table cells - keep them in full sentences (help text, error messages)</span>
+        <div class="reference-detail"><span class="usage-desc">Omit in labels, titles, tooltips and table cells - keep them in full sentences (help text, error messages)</span></div>
         <span class="usage-values">Rule</span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Exclamation marks</span>
-        <span class="usage-desc">Reserve for genuine congratulations or greetings - one on every confirmation reads as forced enthusiasm</span>
+        <div class="reference-detail"><span class="usage-desc">Reserve for genuine congratulations or greetings - one on every confirmation reads as forced enthusiasm</span></div>
         <span class="usage-values">Rule</span>
       </div>
     </div>
@@ -261,6 +261,62 @@
     </div>
   </section>
 
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Structure and states</h3><p>Keep label/description/value aligned using the same three-column reference layout. Explain the next action and recovery in error text. Do not report Saved, Copied, Applied or Verified before the corresponding operation succeeds.</p></div>
+<div class="ads-contract-rule"><h3>Expansion and localization</h3><p>Clamp explanatory prose only when it exceeds four rendered lines. Preserve adjacent values, accessible aria-expanded/aria-controls and focus on the toggle. Keep essential labels/errors untruncated. Test long translations, RTL and zoom without shrinking text.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Copywriting&quot;,
+    &quot;rules&quot;: {
+      &quot;Structure and states&quot;: &quot;Keep label/description/value aligned using the same three-column reference layout. Explain the next action and recovery in error text. Do not report Saved, Copied, Applied or Verified before the corresponding operation succeeds.&quot;,
+      &quot;Expansion and localization&quot;: &quot;Clamp explanatory prose only when it exceeds four rendered lines. Preserve adjacent values, accessible aria-expanded/aria-controls and focus on the toggle. Keep essential labels/errors untruncated. Test long translations, RTL and zoom without shrinking text.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

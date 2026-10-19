@@ -166,7 +166,7 @@
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Scales item padding and both label/value font one step - column count and grid gap are independent of size.");
     lines.push("");
     lines.push("Component properties: Columns (1/2/3, default 2, drives grid-template-columns for how many label/value pairs sit per row); Size; Section title (optional string, shown as a heading above the grid" + (title ? ", currently \"" + title + "\"" : ", e.g. \"Account details\"") + " - With title state only, other states ignore it).");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(columns, title, sizeInfo){
@@ -208,31 +208,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (description.html's listing

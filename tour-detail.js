@@ -90,7 +90,7 @@
     lines.push("Visual treatment: reads as a proper elevated panel, similar in floating-panel language to this system's Tooltip and Popover components, but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" alone gives it separation from the page), border-radius var(--radius-md). The target is a decorative highlighted chip (not a real interactive control), sitting on the ordinary page background outside the card so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 2px solid var(--red-500), box-shadow \"0 0 0 3px var(--red-tint)\" - so it reads clearly as the highlighted element the tour is pointing at. The arrow is a small rotated square (transform:rotate(45deg)) matching the card's own inverted background color. Primary actions (Next/Finish) use background var(--red-500); the Back button is a ghost/outline style using the card's own inverted text color for its border and label (var(--text-hi)/var(--line-strong) would go near-invisible against the inverted background).");
     lines.push("");
     lines.push("Component properties: Target label (string, the highlighted element's text) - currently \"" + targetLabel + "\". Title (string, bold text at the top of the card body) - currently \"" + title + "\". Description (string, supporting text below the title) - currently \"" + description + "\".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(targetLabel, title, description){
@@ -152,31 +152,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (tour.html's listing card) -

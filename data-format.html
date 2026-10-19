@@ -165,7 +165,7 @@
   </nav>
 </aside>
 
-<main class="app-main">
+<main class="app-main data-format-page">
   <p class="page-eyebrow">Guidelines &middot; Data Format</p>
   <h1 class="page-title">Data Format</h1>
   <p class="page-lede">How numbers, dates, currency and missing values are written for display - one rule per case, so the same value never renders two different ways on two different screens.</p>
@@ -293,6 +293,66 @@
     </div>
   </section>
 
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Flow</h3><p>Configure a field, inspect its formatted example, copy/export current valid settings and reset/reload. Every valid input updates without blur. Invalid simultaneous fields all expose errors and retain the prior valid configuration.</p></div>
+<div class="ads-contract-rule"><h3>Constraints</h3><p>Decimal precision 0–6, trailing reveal 0–8, one Unicode code point for the mask, a supported locale and valid IANA zone. Explicit comma grouping cannot conflict with a comma decimal locale. Distinguish real zero, missing, invalid and loading. Never reveal the entire value through a tooltip or accessible name.</p></div>
+<div class="ads-contract-rule"><h3>Layout and accessibility</h3><p>Group number/currency, date/time and missing/sensitive settings with separators. Equal field heights and gutters, wrapped labels and responsive columns share the reference layout. Loading is announced once. Export the typed configuration and locale/zone/range/redaction rules.</p></div>
+<div class="ads-contract-rule"><h3>Value identity</h3><p>Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Data Format&quot;,
+    &quot;rules&quot;: {
+      &quot;Flow&quot;: &quot;Configure a field, inspect its formatted example, copy/export current valid settings and reset/reload. Every valid input updates without blur. Invalid simultaneous fields all expose errors and retain the prior valid configuration.&quot;,
+      &quot;Constraints&quot;: &quot;Decimal precision 0\u20136, trailing reveal 0\u20138, one Unicode code point for the mask, a supported locale and valid IANA zone. Explicit comma grouping cannot conflict with a comma decimal locale. Distinguish real zero, missing, invalid and loading. Never reveal the entire value through a tooltip or accessible name.&quot;,
+      &quot;Layout and accessibility&quot;: &quot;Group number/currency, date/time and missing/sensitive settings with separators. Equal field heights and gutters, wrapped labels and responsive columns share the reference layout. Loading is announced once. Export the typed configuration and locale/zone/range/redaction rules.&quot;,
+      &quot;Value identity&quot;: &quot;Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

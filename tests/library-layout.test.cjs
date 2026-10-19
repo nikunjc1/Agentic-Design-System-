@@ -8,18 +8,23 @@ const ROOT = path.resolve(__dirname, '..');
 const source = file => fs.readFileSync(path.join(ROOT, file), 'utf8');
 
 // Exercise the production shared-page script without a browser connection.
-test('section links identify one reading location and repeated card links stay navigational', () => {
+test('section Group Buttons identify one reading location and repeated card links stay navigational', () => {
   const created = [];
   class Node {
-    constructor(tag, text = '') { this.tagName = tag.toUpperCase(); this.textContent = text; this.children = []; this.dataset = {}; this.attrs = new Map(); this.listeners = new Map(); this.className = ''; }
+    constructor(tag, text = '') { this.tagName = tag.toUpperCase(); this.textContent = text; this.children = []; this.dataset = {}; this.attrs = new Map(); this.listeners = new Map(); this.className = ''; this.clientHeight = 600; this.measuredHeight = 72; this.style = { setProperty: (name,value) => this.attrs.set(name,value) }; this.classList = { contains: c => this.className.split(' ').includes(c), add: (...cs) => { this.className += ' ' + cs.join(' '); }, toggle: (c,on) => { const classes=new Set(this.className.split(' '));if(on)classes.add(c);else classes.delete(c);this.className=[...classes].join(' '); } }; }
+    getBoundingClientRect() { return { height:this.measuredHeight }; }
     append(...nodes) { nodes.forEach(n => { this.children.push(n); n.parent = this; }); }
     prepend(...nodes) { nodes.forEach(n => { n.parent = this; }); this.children.unshift(...nodes); }
     after(n) { const i = this.parent.children.indexOf(this); this.parent.children.splice(i + 1, 0, n); n.parent = this.parent; }
     before(n) { const i = this.parent.children.indexOf(this); this.parent.children.splice(i, 0, n); n.parent = this.parent; }
+    remove() { this.parent.children.splice(this.parent.children.indexOf(this),1);this.parent=null; }
     setAttribute(k, v) { this.attrs.set(k, v); }
     getAttribute(k) { return k === 'href' ? this.href : this.attrs.get(k); }
     removeAttribute(k) { this.attrs.delete(k); }
-    addEventListener(k, fn) { this.listeners.set(k, fn); }
+    addEventListener(k, fn) { const prev=this.listeners.get(k);this.listeners.set(k,e=>{prev?.(e);fn(e);}); }
+    scrollIntoView() { this.scrolled = true; }
+    focus() { this.focused = true; }
+    click() { this.listeners.get('click')?.(); }
     querySelector() { return null; }
     querySelectorAll() { return []; }
     closest(tag) { return this.tagName === tag.toUpperCase() ? this : this.parent?.closest(tag); }
@@ -31,21 +36,54 @@ test('section links identify one reading location and repeated card links stay n
   main.append(lede, ...sections, ...cards);
   main.querySelector = selector => selector === ':scope > .page-lede' ? lede : null;
   main.querySelectorAll = selector => selector.startsWith('section > h2') ? headings : selector === '[data-detail-href]' ? cards : [];
-  const document = { readyState: 'complete', body, querySelector: selector => selector === 'main' ? main : null, querySelectorAll: () => [], createElement(tag) { const n = new Node(tag); created.push(n); return n; } };
-  let observer;
-  vm.runInNewContext(source('experience.js'), {
-    window: { ADSProject: { read: () => null }, ADSFoundationModel: M }, document, localStorage: {}, location: { pathname: '/overview.html', hash: '#section-2' },
+  const document = { readyState: 'complete', body, documentElement:{dir:'ltr'},addEventListener(){}, querySelector: selector => selector === 'main' ? main : null, querySelectorAll: () => [], createElement(tag) { const n = new Node(tag); created.push(n); return n; } };
+  let observer, bannerObserver;
+  const events=new Map(),location={ pathname: '/overview.html', hash: '#section-2' };
+  const context=vm.createContext({
+    window: { ADSProject: { read: () => null }, ADSFoundationModel: M,addEventListener:(type,fn)=>events.set(type,fn) }, document, localStorage: {}, location,
     requestAnimationFrame: fn => fn(), IntersectionObserver: class { constructor(callback, options) { observer = { callback, options, observed: [] }; } observe(node) { observer.observed.push(node); } },
+    ResizeObserver: class { constructor(callback) { bannerObserver = { callback, observed:[] }; } observe(node) { bannerObserver.observed.push(node); } disconnect() { bannerObserver.disconnected=true; } },
   });
-  const nav = created.find(n => n.tagName === 'NAV'), links = nav.children;
+  vm.runInContext(source('shell.js'), context);
+  vm.runInContext(source('experience.js'), context);
+  const banner = created.find(n => n.classList.contains('setup-context'));
+  assert.equal(banner.dataset.floating,'true');
+  assert.equal(main.attrs.get('--setup-context-height'),'72px');
+  assert.deepEqual(bannerObserver.observed,[banner,main]);
+  banner.measuredHeight=120;bannerObserver.callback();
+  assert.equal(main.attrs.get('--setup-context-height'),'120px');
+  main.clientHeight=200;bannerObserver.callback();
+  assert.equal(banner.dataset.floating,'false');
+  assert.equal(main.attrs.get('--setup-context-height'),'0px');
+  main.clientHeight=600;bannerObserver.callback();
+  assert.equal(banner.dataset.floating,'true');
+  const close = created.find(n=>n.classList.contains('setup-close'));
+  assert.equal(close.tagName,'BUTTON');assert.equal(close.type,'button');
+  assert.equal(close.getAttribute('aria-label'),'Close project banner');
+  assert.equal(banner.children[1].children.at(-1),close);
+  close.click();
+  assert.equal(main.children.includes(banner),false);
+  assert.equal(main.attrs.get('--setup-context-height'),'0px');
+  assert.equal(bannerObserver.disconnected,true);assert.equal(main.focused,true);
+  bannerObserver.callback();
+  assert.equal(main.attrs.get('--setup-context-height'),'0px');
+  const nav = created.find(n => n.tagName === 'NAV'),group=nav.children[0],links = group.children;
   assert.equal(nav.attrs.get('aria-label'), 'On this page');
+  assert.equal(group.attrs.get('role'),'group');assert.equal(group.attrs.get('aria-label'),'Page sections');
   assert.equal(links[0].textContent, 'Overview');
-  links.forEach((a, i) => { assert.match(a.className, /anchor-demo-link/); assert.doesNotMatch(a.className, /group-btn|btn-primary/); assert.equal(a.href, '#' + headings[i].id); });
+  links.forEach((a, i) => { assert.equal(a.tagName,'BUTTON');assert.equal(a.type,'button');assert.match(a.className, /group-btn-segment/);assert.equal(a.dataset.sectionTarget,headings[i].id); });
   const current = () => links.filter(a => a.attrs.get('aria-current') === 'location');
   assert.deepEqual(current(), [links[1]]);
   links[0].listeners.get('click')(); assert.deepEqual(current(), [links[0]]);
+  assert.equal(location.hash,'section-1');assert.equal(headings[0].scrolled,true);
+  assert.equal(links[0].attrs.get('aria-pressed'),'true');assert.equal(links[0].tabIndex,0);assert.equal(links[1].tabIndex,-1);
   assert.equal(observer.options.root, main); assert.deepEqual(observer.observed, sections);
   observer.callback([{ target: sections[2], isIntersecting: true }]); assert.deepEqual(current(), [links[2]]);
+  assert.equal(links[2].classList.contains('is-selected'),true);
+  location.hash='#section-2';events.get('hashchange')();assert.deepEqual(current(),[links[1]]);
+  let prevented=false;group.listeners.get('keydown')({target:links[1],key:'End',preventDefault(){prevented=true;}});
+  assert.equal(prevented,true);assert.equal(links[2].focused,true);assert.deepEqual(current(),[links[2]]);
+  document.documentElement.dir='rtl';group.listeners.get('keydown')({target:links[2],key:'ArrowRight',preventDefault(){}});assert.deepEqual(current(),[links[1]]);
   cards.forEach(card => { assert.equal(card.attrs.has('role'), false); assert.equal(card.attrs.has('tabindex'), false); const a = card.children[0]; assert.match(a.className, /anchor-demo-link/); assert.doesNotMatch(a.className, /btn-primary/); assert.equal(a.href, card.dataset.detailHref); });
 });
 

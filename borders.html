@@ -422,8 +422,8 @@
       </div>
     </div>
     <div class="guide-view-panel" data-view-panel="human">
-    <p class="get-library-copy">Each state below can independently vary width, color, opacity and style - none of them should ever be the only signal for what's happening.</p>
-    <p class="get-library-copy">This "Default" row (70% opacity) and "Standard" in Border presets above (85%) are not the same number disagreeing with itself - they answer two different questions. Border presets is a starting point for configuring a custom border system from scratch; Border states documents the resting value a component already has before anything else happens to it, independent of whichever preset (if any) you've configured above. Neither one is what a shipped component actually renders today, either - real components currently reference the fixed <code>--line-strong</code> token directly (confirmed in source), not a value from this page; wiring this page's saved configuration into real components sitewide is tracked separately.</p>
+    <p class="get-library-copy">State colors are editable independently in light and dark themes. The width, opacity and style displayed in each state row are fixed reference recipes. Use Configure your border to edit the base control boundary. Keyboard focus uses an outline outside the reserved boundary, so changing state does not shift the layout.</p>
+    <p class="get-library-copy">Presets seed the base control recipe. Valid saved settings apply through the shared Foundation resolver and are included in Markdown and JSON. Documentation panels and structural dividers keep neutral line tokens. State reference rows describe their fixed example geometry; they do not override the base recipe. A custom state color takes precedence over its semantic fallback. Focus remains visible over error and selected states.</p>
 
     <div class="usage-hierarchy" id="stateRows">
       <div class="usage-row" data-role="state-row" data-state="default" data-width="1" data-opacity="70" data-style="solid">
@@ -696,6 +696,72 @@
       <span class="save-status" id="bordersMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Editable versus fixed</h3><p>Base width, color, opacity, style and sides are editable. State colors are editable; per-state width/opacity/style rows are fixed reference geometry. Presets seed the base recipe and diverged edits become Custom. Default reference opacity and Standard preset opacity are different recipes, not competing applied defaults.</p></div>
+<div class="ads-contract-rule"><h3>Geometry and precedence</h3><p>Use border-box sizing and reserve base border width. Focus uses an external outline, never thicker layout geometry. Disabled/read-only prevents activation; error/warning communicates validation; selected communicates selection; hover/pressed may change tone; keyboard focus remains visible on top of all. Required adds a marker and validation rather than an unexplained border state.</p></div>
+<div class="ads-contract-rule"><h3>Semantic defaults</h3><p>Resting controls use --control-border; structural lines remain --line/--line-strong. Error, Warning, Success and Info resolve to semantic colors unless a state override is explicitly saved. Brand is for active/selected/focus. Include text or an icon for validation; do not make color the only indicator.</p></div>
+<div class="ads-contract-rule"><h3>Combined-state examples</h3><p>Focused error: error boundary and associated message plus an independent brand focus outline. Selected hover: preserve selection marker while adjusting its tone. Loading disabled: aria-busy plus blocked activation and a readable loading label; do not announce each frame. Success focus: success message/indicator plus visible focus. Read-only is focusable and copyable where appropriate, rather than disabled. Show required status in the label and validate on the documented form trigger.</p></div>
+<div class="ads-contract-rule"><h3>Widths and exceptions</h3><p>Approved visual widths are 0,1,1.5,2,3,4px. Custom base widths up to 8px are allowed only as explicit configured exceptions. CSS triangles are geometry and not control boundaries. Native hairlines require the platform adapter and physical-density acceptance; 1 CSS px is not universally one device pixel.</p></div>
+<div class="ads-contract-rule"><h3>Accessible and directional behavior</h3><p>Calculate alpha-composited boundary versus its adjacent surface for 3:1 when essential to identify a control. Focus must remain visible in forced colors. Logical start/end track RTL; physical sides are only for physical geometry. Print uses explicit solid boundaries if shadow/tint disappears.</p></div>
+<div class="ads-contract-rule"><h3>Flow and export</h3><p>Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Borders&quot;,
+    &quot;rules&quot;: {
+      &quot;Editable versus fixed&quot;: &quot;Base width, color, opacity, style and sides are editable. State colors are editable; per-state width/opacity/style rows are fixed reference geometry. Presets seed the base recipe and diverged edits become Custom. Default reference opacity and Standard preset opacity are different recipes, not competing applied defaults.&quot;,
+      &quot;Geometry and precedence&quot;: &quot;Use border-box sizing and reserve base border width. Focus uses an external outline, never thicker layout geometry. Disabled/read-only prevents activation; error/warning communicates validation; selected communicates selection; hover/pressed may change tone; keyboard focus remains visible on top of all. Required adds a marker and validation rather than an unexplained border state.&quot;,
+      &quot;Semantic defaults&quot;: &quot;Resting controls use --control-border; structural lines remain --line/--line-strong. Error, Warning, Success and Info resolve to semantic colors unless a state override is explicitly saved. Brand is for active/selected/focus. Include text or an icon for validation; do not make color the only indicator.&quot;,
+      &quot;Combined-state examples&quot;: &quot;Focused error: error boundary and associated message plus an independent brand focus outline. Selected hover: preserve selection marker while adjusting its tone. Loading disabled: aria-busy plus blocked activation and a readable loading label; do not announce each frame. Success focus: success message/indicator plus visible focus. Read-only is focusable and copyable where appropriate, rather than disabled. Show required status in the label and validate on the documented form trigger.&quot;,
+      &quot;Widths and exceptions&quot;: &quot;Approved visual widths are 0,1,1.5,2,3,4px. Custom base widths up to 8px are allowed only as explicit configured exceptions. CSS triangles are geometry and not control boundaries. Native hairlines require the platform adapter and physical-density acceptance; 1 CSS px is not universally one device pixel.&quot;,
+      &quot;Accessible and directional behavior&quot;: &quot;Calculate alpha-composited boundary versus its adjacent surface for 3:1 when essential to identify a control. Focus must remain visible in forced colors. Logical start/end track RTL; physical sides are only for physical geometry. Print uses explicit solid boundaries if shadow/tint disappears.&quot;,
+      &quot;Flow and export&quot;: &quot;Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

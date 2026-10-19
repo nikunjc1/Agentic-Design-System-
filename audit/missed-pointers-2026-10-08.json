@@ -1,0 +1,699 @@
+{
+  "date": "2026-10-08",
+  "method": "Page scripts in jsdom. CSS, fonts and assistive technology are not rendered.",
+  "componentPages": 131,
+  "assertions": 1502,
+  "failures": 0,
+  "results": [
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "add-on-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "add-on.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "affix-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "affix.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "alert-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "alert.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "anchor-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "anchor.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "autocomplete-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "autocomplete.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "avatar-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "avatar.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "badge-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "badge.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "breadcrumb-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "breadcrumb.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-destructive.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-ghost.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-link.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-neutral.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-primary-icon.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-primary.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-secondary.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "button-tertiary.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "calendar-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "calendar.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "card-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "card.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "cascader-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "cascader.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "checkbox-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "checkbox.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "collapse-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "collapse.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "color-picker-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "color-picker.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "components.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "date-picker-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "date-picker.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "date-range-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "date-range.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "description-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "description.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "divider-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "divider.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "drawer-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "drawer.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "dropdown-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "dropdown.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "empty-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "empty.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "float-button-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "float-button.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "group-button-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "group-button.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "image-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "image.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "input-text-field.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "input.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "list-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "list.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "mention-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "mention.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "menu-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "menu.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "modal-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "modal.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "notification-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "notification.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "number-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "number.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "pagination-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "pagination.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "password-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "password.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "pop-confirm-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "pop-confirm.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "popover-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "popover.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "progress-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "progress.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "radio-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "radio.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "rating-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "rating.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "result-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "result.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "search-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "search.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "select-dropdown.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "select.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "skeleton-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "skeleton.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "slider-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "slider.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "spin-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "spin.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "splitter-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "splitter.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "statistic-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "statistic.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "steps-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "steps.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "switch-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "switch.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "table-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "table.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tabs-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tabs.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tag-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tag.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "text-area-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "text-area.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "time-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "time.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "timeline-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "timeline.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "toast-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "toast.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tooltip-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tooltip.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tour-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tour.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "transfer-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "transfer.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tree-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tree-select-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tree-select.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "tree.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "upload-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "upload.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "patterns.html",
+      "status": "pass"
+    },
+    {
+      "name": "Copy success, denied clipboard and fallback",
+      "page": "templates.html",
+      "status": "pass"
+    },
+    {
+      "name": "Splitter keyboard, bounds, collapse, cancellation, save and reset",
+      "page": "splitter-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Splitter reload and future-record preservation",
+      "page": "splitter-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Splitter future version is preserved until explicit reset",
+      "page": "splitter-default.html",
+      "status": "pass"
+    },
+    {
+      "name": "Master-Detail selection, Back, error, retry, clear and stale-loading cancellation",
+      "page": "grid-layout.html",
+      "status": "pass"
+    },
+    {
+      "name": "Data formats retain leading-zero identifiers, phone labels and numeric-only alignment",
+      "page": "data-format.html",
+      "status": "pass"
+    }
+  ]
+}

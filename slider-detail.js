@@ -134,7 +134,7 @@
     lines.push(propertyPromptLine("Track thickness", thicknessInfo, THICKNESS_OPTIONS) + " Corner radius is always a full pill on both the track and the thumb - not configurable, since a slider track has no practical use for sharp or partial corners.");
     lines.push("");
     lines.push("Component properties: Label (text input, default \"Volume\"); Value (number, 0-100, default 60 - drives the Single type's fill percentage and thumb position; the Range type uses two fixed example values, 30 and 70, for illustration, since there's only one Value property in this demo).");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(selectionInfo){
@@ -217,31 +217,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (slider.html's listing

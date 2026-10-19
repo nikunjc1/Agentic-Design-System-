@@ -148,7 +148,7 @@
     lines.push("Current values - Aspect ratio: " + aspect.label + " (" + aspect.width + "x" + aspect.height + "px), Caption: \"" + info.caption + "\" (With caption type only).");
     lines.push("");
     lines.push("Important: in real usage this wraps a real <img> element, with onerror/onload handlers driving the Loading/Error/Loaded state classes above. This is a static offline design system with no network access, so every cell shown here is a fixed CSS gradient standing in for \"a loaded photo\" - never an actual fetched image.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function cssBlock(){
@@ -238,31 +238,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (image.html's listing card)

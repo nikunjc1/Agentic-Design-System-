@@ -187,6 +187,68 @@
 </form>
 <div id="setupDone" hidden><h2 tabindex="-1">Your setup is ready</h2><p><strong id="savedProjectName"></strong> now has a tailored product brief and platform guidance.</p><p class="setup-help" id="roleTaskText" style="margin-top:var(--space-8);"></p><p class="setup-field" id="readinessLabel" style="margin-top:var(--space-20);">Foundation readiness</p><ul class="setup-readiness" id="foundationReadiness"></ul><div class="setup-actions" style="margin-top:var(--space-20);"><a class="btn btn-primary" id="recommendedNext" href="foundations.html#colors">Customize foundations</a><a class="btn btn-ghost" href="md-export.html">Export Markdown</a></div><p class="setup-help">You can export immediately, even with every Foundation still at its default - the readiness list above is informational, not a requirement.</p></div>
 </section><aside class="setup-panel" aria-label="What happens next"><h2>From idea to implementation</h2><p><strong>1. Set your context</strong><br>Product, platforms and role guide your handoff.</p><p><strong>2. Make it yours</strong><br>Save your brand colors and foundation values.</p><p><strong>3. Take it with you</strong><br>Export a brief or the documentation as Markdown.</p><p class="setup-help">One active project per browser, not a list: there's no separate create, switch or duplicate here - saving this form always edits and replaces that same one profile, it never creates an isolated second one alongside it. Foundation values (Colors, Spacing, Typography, etc.) are owned by this workspace as a whole, not by any one project - they're shared and unaffected by what you save here, in either direction.</p></aside></div>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>User and task flow</h3><p>Choose a product and delivery platforms, choose a role, review, save, then configure Foundations and export. Resume or discard an existing draft explicitly. This workspace holds one editable project profile with shared Foundation settings, rather than isolated projects.</p></div>
+<div class="ads-contract-rule"><h3>Navigation and recovery</h3><p>Step links and reload advance only after earlier required fields validate. Back preserves entries. Final submit checks both earlier steps and focuses the first error. Invalid or future drafts have backup/discard actions. Failed discard keeps the draft notice. Successful save moves focus to confirmation; Back returns to editable steps.</p></div>
+<div class="ads-contract-rule"><h3>Context and readiness</h3><p>One delivery platform can supply a platform recommendation; multiple platforms use product context. Explicit editor choices win. Readiness distinguishes a valid saved record, a resolved default and recovery needed. Neither saved nor default means verified. AI is documented as examples, with no live execution.</p></div>
+<div class="ads-contract-rule"><h3>Categories and identity</h3><p>Dashboard describes a data-focused product; Desktop web describes delivery. Choose AI Product for an AI-led experience, and Other only when no category fits. Name, email and designation are optional and excluded from handoff unless opted in. Returning from docs preserves the durable profile and chosen overrides.</p></div>
+<div class="ads-contract-rule"><h3>Handoff</h3><p>Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Project setup&quot;,
+    &quot;rules&quot;: {
+      &quot;User and task flow&quot;: &quot;Choose a product and delivery platforms, choose a role, review, save, then configure Foundations and export. Resume or discard an existing draft explicitly. This workspace holds one editable project profile with shared Foundation settings, rather than isolated projects.&quot;,
+      &quot;Navigation and recovery&quot;: &quot;Step links and reload advance only after earlier required fields validate. Back preserves entries. Final submit checks both earlier steps and focuses the first error. Invalid or future drafts have backup/discard actions. Failed discard keeps the draft notice. Successful save moves focus to confirmation; Back returns to editable steps.&quot;,
+      &quot;Context and readiness&quot;: &quot;One delivery platform can supply a platform recommendation; multiple platforms use product context. Explicit editor choices win. Readiness distinguishes a valid saved record, a resolved default and recovery needed. Neither saved nor default means verified. AI is documented as examples, with no live execution.&quot;,
+      &quot;Categories and identity&quot;: &quot;Dashboard describes a data-focused product; Desktop web describes delivery. Choose AI Product for an AI-led experience, and Other only when no category fits. Name, email and designation are optional and excluded from handoff unless opted in. Returning from docs preserves the durable profile and chosen overrides.&quot;,
+      &quot;Handoff&quot;: &quot;Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

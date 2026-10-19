@@ -43,10 +43,11 @@
       var activeSystem = document.querySelector(".system-card.is-active");
       var isCustom = activeSystem && activeSystem.dataset.system === "custom";
       var valid = effectiveColumns() !== null && effectiveGutter() !== null;
-      if (isCustom && effectiveColumns() === null) columnsInput.setAttribute("aria-invalid", "true"); else columnsInput.removeAttribute("aria-invalid");
-      if (isCustom && effectiveGutter() === null) gutterInput.setAttribute("aria-invalid", "true"); else gutterInput.removeAttribute("aria-invalid");
+      columnsInput.required = true;gutterInput.required = true;
+      if (effectiveColumns() === null) columnsInput.setAttribute("aria-invalid", "true"); else columnsInput.removeAttribute("aria-invalid");
+      if (effectiveGutter() === null) gutterInput.setAttribute("aria-invalid", "true"); else gutterInput.removeAttribute("aria-invalid");
       if (customRequiredNotice) customRequiredNotice.hidden = !(isCustom && !valid);
-      return !isCustom || valid;
+      return valid;
     }
 
     // Same "MD file" pattern added to Colors: one consolidated Markdown
@@ -125,8 +126,9 @@
         }
       }
 
-      markdownOutput.textContent = lines.join("\n").trim();
+      markdownOutput.textContent = window.ADSFoundation.preparePageMarkdown(lines.join("\n").trim());
     }
+    window.addEventListener('ads:foundation-applied', renderMarkdown);
 
     function updateMachineViews(){
       if (buildingMachineJson){
@@ -217,6 +219,7 @@
     // always reflects the current on-screen choice without a separate
     // "click Save" step.
     function persistGrid(){
+      if(!validateGridValues()) return;
       // recommendedAtSave - Foundation audit NP02's provenance field: what
       // this page would have recommended for the project, at the moment of
       // this save, regardless of what was actually picked. Comparing it to
@@ -437,7 +440,7 @@
       // label" gap this finding named - block the save and point at what's
       // missing instead of persisting an undefined grid.
       if (!validateGridValues()){
-        saveStatus.textContent = "Define columns and gutter above before saving a Custom grid.";
+        saveStatus.textContent = "Enter 1–24 columns and a whole-pixel gutter from 0–64 before saving.";
         setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
         columnsInput.focus();
         return;
@@ -468,18 +471,16 @@
     var markdownStatus = document.getElementById("gridLayoutMarkdownStatus");
     if (copyMarkdownBtn){
       copyMarkdownBtn.addEventListener("click", function(){
+        window.ADSFoundation.apply();
+        renderMarkdown();
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
           markdownStatus.textContent = "Copied to clipboard";
           setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
-        if (navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
-          });
-        } else {
-          done();
-        }
+        window.ADSClipboard.copy(text).then(done).catch(function(){
+          markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+        });
       });
     }
   });

@@ -1,0 +1,606 @@
+{
+  "date": "2026-10-08",
+  "method": "Individual source/documentation references; DOM/model evidence is linked separately and is not rendered acceptance.",
+  "findings": {
+    "X01": {
+      "evidence": "Catalog regenerated from all 157 page sources, including AI and current role guidance.",
+      "references": [
+        "tools/audit_pages.py"
+      ]
+    },
+    "X02": {
+      "evidence": "Shared resolve/export materializes default and applied settings, both themes, context and platform profiles.",
+      "references": [
+        "foundation-runtime.js"
+      ]
+    },
+    "X03": {
+      "evidence": "Published defaults now include all 634 applied properties: 613 typed tokens and 21 CSS-only keywords.",
+      "references": [
+        "tools/generate_tokens.py"
+      ]
+    },
+    "X04": {
+      "evidence": "Independent importer validates typed values and alias cycles in both modes; relative em uses an explicit extension.",
+      "references": [
+        "tools/dtcg-import.cjs"
+      ]
+    },
+    "X05": {
+      "evidence": "Valid edits auto-apply; failed writes identify unsaved preview; reload restores durable settings.",
+      "references": [
+        "shell.js"
+      ]
+    },
+    "X06": {
+      "evidence": "All 15 records migrate legacy values, preserve malformed/future data and support explicit reset/raw backup.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "X07": {
+      "evidence": "Joined button choices expose selected state; section navigation retains anchors and keyboard handling.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "X08": {
+      "evidence": "Shared schemaVersion 1, resolver precedence and current-context handoff are documented and used.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "X09": {
+      "evidence": "One product/platform resolver supplies recommendations; mixed-platform handoff resolves separate profiles.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "X10": {
+      "evidence": "Acceptance contract separates web scope, model evidence, renderer checks, assets and external/native adapters.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "NP01": {
+      "evidence": "Project setup describes one shared profile and warns before replacing existing details.",
+      "references": [
+        "new-project.html"
+      ]
+    },
+    "NP02": {
+      "evidence": "Review displays recommendation before/after changes and distinguishes retained explicit overrides.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "NP03": {
+      "evidence": "Resume, Discard and Backup handle saved/draft/corrupt/future cases without injecting project names as HTML.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "NP04": {
+      "evidence": "Other/free-text fields have model bounds; draft and review validation share the profile rules.",
+      "references": [
+        "project-model.js"
+      ]
+    },
+    "NP05": {
+      "evidence": "Error summary links invalid fields and platform group; corrected submissions route to the invalid step.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "NP06": {
+      "evidence": "Role routes and all nine readiness rows distinguish valid/default/recovery, including AI.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "NP07": {
+      "evidence": "Step/history routing, final review and invalid-step focus recovery use one setup state.",
+      "references": [
+        "experience.js"
+      ]
+    },
+    "NP08": {
+      "evidence": "Responsive setup layout and long-label rules are present; rendered keyboard/zoom acceptance remains open.",
+      "references": [
+        "experience.css"
+      ]
+    },
+    "NP09": {
+      "evidence": "Immediate handoff includes resolved defaults, portable rules, current context, asset manifest and open decisions.",
+      "references": [
+        "project-model.js"
+      ]
+    },
+    "NP10": {
+      "evidence": "Identity is optional; categories, Other and return/edit guidance explain context choices.",
+      "references": [
+        "new-project.html"
+      ]
+    },
+    "C01": {
+      "evidence": "Separate dark edit-enabled flags persist and appear in copied current settings; disabled dark uses documented fallback.",
+      "references": [
+        "foundations.js"
+      ]
+    },
+    "C02": {
+      "evidence": "Resets are scoped to their color family; separate-dark choices restore independently.",
+      "references": [
+        "foundations.js"
+      ]
+    },
+    "C03": {
+      "evidence": "Incomplete hex is a draft error; previous valid colors stay applied and incomplete values are not saved.",
+      "references": [
+        "foundations.js"
+      ]
+    },
+    "C04": {
+      "evidence": "Readouts use resolved text/action colors and composited tint pairs; actual component pair acceptance remains open.",
+      "references": [
+        "foundations.js"
+      ]
+    },
+    "C05": {
+      "evidence": "Default, hover and active action foregrounds are derived for at least 4.5:1 on their actual background.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "C06": {
+      "evidence": "Derivation, perceptual limits and custom hierarchy checks are explicit; arbitrary custom ramps are not certified.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "C07": {
+      "evidence": "Legacy color text overrides migrate into Typography ownership and travel in current exports.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "C08": {
+      "evidence": "Semantic action/status/surface aliases document compatibility hue names and authoritative role ownership.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "C09": {
+      "evidence": "Component-specific Alert/Tag/Badge/Table/validation recipes distinguish status from selection and chart series.",
+      "references": [
+        "foundations.html"
+      ]
+    },
+    "C10": {
+      "evidence": "Picker controls expose names/values, keyboard increments, transient opacity and Escape focus recovery.",
+      "references": [
+        "foundations.js"
+      ]
+    },
+    "G01": {
+      "evidence": "Custom columns/gutter bounds validate every grid type; current geometry is saved/applied/exported.",
+      "references": [
+        "grid-layout.js"
+      ]
+    },
+    "G02": {
+      "evidence": "Canonical container/viewport thresholds and legacy compatibility exceptions are documented; rendered boundaries pending.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "G03": {
+      "evidence": "Platform profiles, container width, explicit overrides and density precedence resolve from shared context.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "G04": {
+      "evidence": "Independent baseline, max width, gutters, spans, nesting, source order and row alignment have buildable rules.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "G05": {
+      "evidence": "Document scrolling, reflow, virtual keyboard, fixed actions and justified independent regions are documented.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "G06": {
+      "evidence": "All eight patterns have wide/narrow/state rules; executable Master-Detail preserves selection, Back, list position and focus.",
+      "references": [
+        "layout-patterns.js"
+      ]
+    },
+    "G07": {
+      "evidence": "Live Splitter now supports bounds, keyboard/collapse, cancellation and versioned width persistence; overlay rules documented.",
+      "references": [
+        "splitter-runtime.js"
+      ]
+    },
+    "G08": {
+      "evidence": "Layout Markdown carries effective Custom geometry, pattern rules, breakpoints and overflow guidance.",
+      "references": [
+        "grid-layout.js"
+      ]
+    },
+    "T01": {
+      "evidence": "Uploaded font data and source manifest persist and travel in Foundation JSON; reset removes old runtime faces.",
+      "references": [
+        "typography.js"
+      ]
+    },
+    "T02": {
+      "evidence": "Read/load errors, retry and generation guards prevent late fonts or reset uploads from replacing current values.",
+      "references": [
+        "typography.js"
+      ]
+    },
+    "T03": {
+      "evidence": "Every role resolves family, size, weight, style, line height, tracking and color; shared CSS binds actual headings.",
+      "references": [
+        "foundation.css"
+      ]
+    },
+    "T04": {
+      "evidence": "Semantic heading level remains independent of visual size; status modifiers retain readable base typography.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "T05": {
+      "evidence": "Full field validation preserves invalid drafts, including blank tracking, instead of silently committing zero.",
+      "references": [
+        "typography.js"
+      ]
+    },
+    "T06": {
+      "evidence": "Standard H1-H6 restore, platform preset mapping and arbitrary customized metric export share the resolver.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "T07": {
+      "evidence": "Default text pair checks pass; localization, text spacing and rendered custom-pair acceptance remain open.",
+      "references": [
+        "tests/foundation-release.test.cjs"
+      ]
+    },
+    "T08": {
+      "evidence": "Font bounds, requested faces, retry, synthesis/fallback guidance are present; real decoding still pending.",
+      "references": [
+        "typography.js"
+      ]
+    },
+    "T09": {
+      "evidence": "Button/label/table/code/link/eyebrow role mapping, font assets and responsive rules are included in handoff.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "T10": {
+      "evidence": "Preset change previews affected sizes, supports scoped Undo and retires stale preset/Undo after edits/reset.",
+      "references": [
+        "typography.js"
+      ]
+    },
+    "S01": {
+      "evidence": "All offered spacing systems resolve applied scale and aliases, including zero and advertised values.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "S02": {
+      "evidence": "Allowed tokens and zero/auto/percent/negative/fluid exceptions are explicitly governed.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "S03": {
+      "evidence": "Adaptive micro/control/layout resolution uses a defined algorithm and consistent px/rem conversion.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "S04": {
+      "evidence": "Shared project taxonomy and context mappings replace contradictory per-page recommendations.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "S05": {
+      "evidence": "Label/helper/error/group/list/toolbar/empty/wrapped spacing and scrim/content padding have relationship rules.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "S06": {
+      "evidence": "Density is separated from glyph/control/target size; target editor enforces a 44px minimum.",
+      "references": [
+        "foundation-runtime.js"
+      ]
+    },
+    "S07": {
+      "evidence": "Logical gutters and documented fluid/native exceptions distinguish token adoption from renderer-specific units.",
+      "references": [
+        "foundation.css"
+      ]
+    },
+    "S08": {
+      "evidence": "Current values, relationship aliases, composition and unit rules travel in Markdown and JSON.",
+      "references": [
+        "foundation-runtime.js"
+      ]
+    },
+    "R01": {
+      "evidence": "Chosen philosophy resolves semantic defaults; prompts carry the active mappings instead of fixed seed rules.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "R02": {
+      "evidence": "Numeric radius primitives stay numeric; effective role aliases change with philosophy.",
+      "references": [
+        "tests/foundation-model.test.cjs"
+      ]
+    },
+    "R03": {
+      "evidence": "Role permissions and pill/circle/attached/native exceptions are explicit in the generated contract.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "R04": {
+      "evidence": "Contour cap subtracts border plus padding; asymmetric insets and independent child controls are explained.",
+      "references": [
+        "radius.html"
+      ]
+    },
+    "R05": {
+      "evidence": "Attached, full-screen, pill, circle and responsive radius rules are consolidated.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "R06": {
+      "evidence": "Geometry stays invariant through focus/error/selected states; clipping and focus visibility rules are explicit.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "R07": {
+      "evidence": "Current semantic mappings and nested/attached permissions appear in portable Radius handoff.",
+      "references": [
+        "radius.js"
+      ]
+    },
+    "R08": {
+      "evidence": "Reset derives the current project recommendation and persists/restores the same effective philosophy.",
+      "references": [
+        "radius.js"
+      ]
+    },
+    "B01": {
+      "evidence": "Base geometry is editable; fixed per-state geometry is accurately labelled with editable state colors.",
+      "references": [
+        "borders.html"
+      ]
+    },
+    "B02": {
+      "evidence": "Focus outline is separate from resting boundary and layout; real transition measurement remains pending.",
+      "references": [
+        "foundation.css"
+      ]
+    },
+    "B03": {
+      "evidence": "Combined error/focus, selection/hover, loading/disabled, success/focus and read-only/required precedence is defined.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "B04": {
+      "evidence": "Compositing, essential boundary contrast and forced-color focus rules are explicit; rendered evidence pending.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "B05": {
+      "evidence": "Preset seeding and current live inheritance/application are correctly described rather than promised future work.",
+      "references": [
+        "borders.html"
+      ]
+    },
+    "B06": {
+      "evidence": "Approved width exceptions and native hairline recipes are documented with consumers and rationale.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "B07": {
+      "evidence": "Default semantic state colors follow Brand/status until overridden; alias/override precedence travels in export.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "B08": {
+      "evidence": "Logical start/end sides are editable; native, print and forced-color translations are documented.",
+      "references": [
+        "borders.js"
+      ]
+    },
+    "B09": {
+      "evidence": "Portable border contract includes component exceptions, state precedence, accessibility and directional rules.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "H01": {
+      "evidence": "Each philosophy resolves actual recipes; Flat preserves required overlay separation through alternatives.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "H02": {
+      "evidence": "Shadow defaults publish typed offset, blur, spread and color composites; mode mappings import independently.",
+      "references": [
+        "tools/generate_tokens.py"
+      ]
+    },
+    "H03": {
+      "evidence": "Custom-dark, print and forced-color separation alternatives are documented; rendered adjacency evidence pending.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "H04": {
+      "evidence": "Named layers and portal/nesting/clipping/backdrop/focus ownership rules distinguish elevation from stacking.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "H05": {
+      "evidence": "Pressed example uses XS; static bordered, elevated and interactive cards have distinct recipes.",
+      "references": [
+        "shadows.html"
+      ]
+    },
+    "H06": {
+      "evidence": "Keyboard/touch interaction, reduced-motion alternatives and shadow performance guidance are concrete.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "H07": {
+      "evidence": "Current shadow recipes, layers and mode/alternative rules travel in Markdown/JSON.",
+      "references": [
+        "foundation-runtime.js"
+      ]
+    },
+    "I01": {
+      "evidence": "Reference assets persist with per-file removal and complete reset; explicit source/manifest travels in handoff.",
+      "references": [
+        "icons.js"
+      ]
+    },
+    "I02": {
+      "evidence": "Upload dropzone is keyboard reachable with a named activation path and visible focus.",
+      "references": [
+        "icons.js"
+      ]
+    },
+    "I03": {
+      "evidence": "Bounded type/size/count, duplicates and read/decode errors preserve recovery; references stay inert images.",
+      "references": [
+        "icons.js"
+      ]
+    },
+    "I04": {
+      "evidence": "UI glyphs and illustration references have separate rules; unsupported source/style controls disable accurately.",
+      "references": [
+        "icons.js"
+      ]
+    },
+    "I05": {
+      "evidence": "Six licensed Google Material actions have canonical names, directional metadata and an accessible SVG API.",
+      "references": [
+        "icon-catalog.json"
+      ]
+    },
+    "I06": {
+      "evidence": "Decorative versus labelled SVG, icon-only controls and status/loading announcements have concrete examples.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "I07": {
+      "evidence": "Glyph size, viewBox/stroke and target size are separate; actual optical/clipping/hit-area acceptance remains open.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "I08": {
+      "evidence": "Directional chevrons mirror in RTL; invariant symbols do not; reduced-motion/localized meaning rules are explicit.",
+      "references": [
+        "foundation-model.js"
+      ]
+    },
+    "I09": {
+      "evidence": "Catalog license/provenance and agent constraints define accepted geometry and reviewed versus inert references.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "I10": {
+      "evidence": "Icon handoff carries sources/assets, state/accessibility/direction and generation constraints.",
+      "references": [
+        "icons.js"
+      ]
+    },
+    "A01": {
+      "evidence": "Rationale uses honest illustrative source labels and linked references rather than unsupported real research claims.",
+      "references": [
+        "ai-foundation.html"
+      ]
+    },
+    "A02": {
+      "evidence": "Local approval/decline/Undo reflects recorded decision state; decline is neutral and is not execution failure.",
+      "references": [
+        "ai-foundation.js"
+      ]
+    },
+    "A03": {
+      "evidence": "Validated lifecycle covers queue/run/partial/success/failure/cancel/expiry/undo failure, scope and idempotent retry.",
+      "references": [
+        "agent-model.js"
+      ]
+    },
+    "A04": {
+      "evidence": "Confidence allows unknown, separates evidence/calibration thresholds from execution outcome.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "A05": {
+      "evidence": "Executable stream supports partial output, Stop/Continue, interruption/Retry, cancellation and coarse announcements.",
+      "references": [
+        "ai-foundation.js"
+      ]
+    },
+    "A06": {
+      "evidence": "Local versus external effects, approval scope, changed-scope consent, expiry and resource limits are defined.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "A07": {
+      "evidence": "Decision/stream outcomes have named status and focus recovery; pending/undo timing is documented.",
+      "references": [
+        "ai-foundation.js"
+      ]
+    },
+    "A08": {
+      "evidence": "Agent input/output contract defines authority, trusted evidence, schema, missing data, capabilities and verification.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    },
+    "A09": {
+      "evidence": "AI is included in catalog, nine-section readiness and complete portable Foundation handoff.",
+      "references": [
+        "project-model.js"
+      ]
+    },
+    "A10": {
+      "evidence": "Provenance/privacy rules cover mixed authorship, tools/review history, private/missing sources and retention.",
+      "references": [
+        "foundation-contract.json"
+      ]
+    }
+  }
+}

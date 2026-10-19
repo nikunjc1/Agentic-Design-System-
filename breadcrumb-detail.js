@@ -150,7 +150,7 @@
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Font-size scales proportionally, applied to the whole trail.");
     lines.push("");
     lines.push("Component properties: Labels (comma-separated editable text, one per breadcrumb item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(selectionInfo){
@@ -217,31 +217,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (breadcrumb.html's listing

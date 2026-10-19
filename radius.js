@@ -41,11 +41,12 @@
       if (systemCard){
         lines.push("- Selected: `" + systemCard.dataset.system + "`" + (systemTagline ? " (" + systemTagline.trim() + ")" : ""));
         if (systemDesc) lines.push("- " + systemDesc.trim());
-        if (systemScale) lines.push("- Scale: `" + systemScale.trim() + "`");
+        if (systemScale) lines.push("- Scale: " + systemScale.trim().replace(/\b\d+(?:\.\d+)?\b/g,function(n){ return window.ADSFoundationModel.dimensionPair(Number(n)); }));
       }
 
-      markdownOutput.textContent = lines.join("\n").trim();
+      markdownOutput.textContent = window.ADSFoundation.preparePageMarkdown(lines.join("\n").trim());
     }
+    window.addEventListener('ads:foundation-applied', renderMarkdown);
 
     function updateMachineViews(){
       if (buildingMachineJson){
@@ -285,18 +286,16 @@
     var markdownStatus = document.getElementById("radiusMarkdownStatus");
     if (copyMarkdownBtn){
       copyMarkdownBtn.addEventListener("click", function(){
+        window.ADSFoundation.apply();
+        renderMarkdown();
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
           markdownStatus.textContent = "Copied to clipboard";
           setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
-        if (navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
-          });
-        } else {
-          done();
-        }
+        window.ADSClipboard.copy(text).then(done).catch(function(){
+          markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+        });
       });
     }
   });

@@ -14,10 +14,14 @@
       "Known gaps - not yet done",
       "Foundation editor state model",
       "Foundation release contract",
-      "Accessibility - Markdown export"
+      "Accessibility - Markdown export",
+      "Implementation contract",
+      "Acceptance",
+      "Layout and state",
+      "Evidence"
     ],
     "issues": [],
-    "bytes": 30320
+    "bytes": 37333
   },
   {
     "file": "add-on-default.html",
@@ -43,7 +47,7 @@
       "Add-on type"
     ],
     "issues": [],
-    "bytes": 11392
+    "bytes": 11375
   },
   {
     "file": "affix-default.html",
@@ -69,7 +73,7 @@
       "Affix type"
     ],
     "issues": [],
-    "bytes": 11202
+    "bytes": 11185
   },
   {
     "file": "ai-foundation.html",
@@ -82,10 +86,20 @@
       "Confidence",
       "Streaming content",
       "Agent actions: approve, reject, undo",
-      "Explainability"
+      "Explainability",
+      "AI & Agents - Markdown export",
+      "Implementation contract",
+      "Scope and lifecycle",
+      "Decisions versus execution",
+      "Streaming",
+      "Confidence and evidence",
+      "Capabilities and approval",
+      "Agent input and output",
+      "Provenance and privacy",
+      "Accessible interaction"
     ],
     "issues": [],
-    "bytes": 18114
+    "bytes": 31282
   },
   {
     "file": "ai-generator.html",
@@ -121,7 +135,7 @@
       "Alert type"
     ],
     "issues": [],
-    "bytes": 11361
+    "bytes": 11344
   },
   {
     "file": "anchor-default.html",
@@ -146,7 +160,7 @@
       "Anchor type"
     ],
     "issues": [],
-    "bytes": 10873
+    "bytes": 10856
   },
   {
     "file": "autocomplete-default.html",
@@ -172,7 +186,7 @@
       "Autocomplete type"
     ],
     "issues": [],
-    "bytes": 11524
+    "bytes": 11507
   },
   {
     "file": "avatar-default.html",
@@ -198,7 +212,7 @@
       "Avatar type"
     ],
     "issues": [],
-    "bytes": 11419
+    "bytes": 11402
   },
   {
     "file": "badge-default.html",
@@ -223,7 +237,7 @@
       "Badge type"
     ],
     "issues": [],
-    "bytes": 11329
+    "bytes": 11312
   },
   {
     "file": "borders.html",
@@ -235,10 +249,18 @@
       "Configure your border",
       "Component guidance",
       "Border states",
-      "Border tokens - Markdown export"
+      "Border tokens - Markdown export",
+      "Implementation contract",
+      "Editable versus fixed",
+      "Geometry and precedence",
+      "Semantic defaults",
+      "Combined-state examples",
+      "Widths and exceptions",
+      "Accessible and directional behavior",
+      "Flow and export"
     ],
     "issues": [],
-    "bytes": 41703
+    "bytes": 52707
   },
   {
     "file": "breadcrumb-default.html",
@@ -263,7 +285,7 @@
       "Breadcrumb type"
     ],
     "issues": [],
-    "bytes": 10836
+    "bytes": 10819
   },
   {
     "file": "button-destructive.html",
@@ -400,7 +422,7 @@
       "Calendar type"
     ],
     "issues": [],
-    "bytes": 16496
+    "bytes": 16479
   },
   {
     "file": "card-default.html",
@@ -425,7 +447,7 @@
       "Card type"
     ],
     "issues": [],
-    "bytes": 11054
+    "bytes": 11037
   },
   {
     "file": "cascader-default.html",
@@ -452,7 +474,7 @@
       "Cascader type"
     ],
     "issues": [],
-    "bytes": 11447
+    "bytes": 11430
   },
   {
     "file": "changelog.html",
@@ -490,7 +512,7 @@
       "Checkbox type"
     ],
     "issues": [],
-    "bytes": 11358
+    "bytes": 11341
   },
   {
     "file": "collapse-default.html",
@@ -515,7 +537,7 @@
       "Collapse type"
     ],
     "issues": [],
-    "bytes": 11524
+    "bytes": 11507
   },
   {
     "file": "color-picker-default.html",
@@ -541,7 +563,7 @@
       "Color Picker type"
     ],
     "issues": [],
-    "bytes": 11289
+    "bytes": 11272
   },
   {
     "file": "components.html",
@@ -552,7 +574,7 @@
       "Button type"
     ],
     "issues": [],
-    "bytes": 12686
+    "bytes": 12682
   },
   {
     "file": "copywriting.html",
@@ -563,10 +585,13 @@
       "Voice",
       "Error messages",
       "Capitalization and punctuation",
-      "Copywriting - Markdown export"
+      "Copywriting - Markdown export",
+      "Implementation contract",
+      "Structure and states",
+      "Expansion and localization"
     ],
     "issues": [],
-    "bytes": 15461
+    "bytes": 22616
   },
   {
     "file": "data-format.html",
@@ -578,10 +603,15 @@
       "Dates and times",
       "Missing and sensitive data",
       "Empty vs. missing vs. loading",
-      "Data Format - Markdown export"
+      "Data Format - Markdown export",
+      "Implementation contract",
+      "Flow",
+      "Constraints",
+      "Layout and accessibility",
+      "Value identity"
     ],
     "issues": [],
-    "bytes": 17361
+    "bytes": 25748
   },
   {
     "file": "date-picker-default.html",
@@ -607,7 +637,7 @@
       "Date Picker type"
     ],
     "issues": [],
-    "bytes": 11542
+    "bytes": 11525
   },
   {
     "file": "date-range-default.html",
@@ -633,7 +663,7 @@
       "Date Range type"
     ],
     "issues": [],
-    "bytes": 11751
+    "bytes": 11734
   },
   {
     "file": "description-default.html",
@@ -658,7 +688,7 @@
       "Description type"
     ],
     "issues": [],
-    "bytes": 11767
+    "bytes": 11750
   },
   {
     "file": "divider-default.html",
@@ -683,7 +713,7 @@
       "Divider type"
     ],
     "issues": [],
-    "bytes": 11284
+    "bytes": 11267
   },
   {
     "file": "drawer-default.html",
@@ -708,7 +738,7 @@
       "Drawer type"
     ],
     "issues": [],
-    "bytes": 11702
+    "bytes": 11685
   },
   {
     "file": "dropdown-default.html",
@@ -734,7 +764,7 @@
       "Dropdown type"
     ],
     "issues": [],
-    "bytes": 11203
+    "bytes": 11186
   },
   {
     "file": "empty-default.html",
@@ -759,7 +789,7 @@
       "Empty type"
     ],
     "issues": [],
-    "bytes": 11556
+    "bytes": 11539
   },
   {
     "file": "figma.html",
@@ -795,7 +825,7 @@
       "Float Button type"
     ],
     "issues": [],
-    "bytes": 11399
+    "bytes": 11382
   },
   {
     "file": "foundations.html",
@@ -808,10 +838,19 @@
       "Semantic & status colors",
       "Neutral scale",
       "Light & dark theme behavior",
-      "Color tokens - Markdown export"
+      "Color tokens - Markdown export",
+      "Implementation contract",
+      "User and task flow",
+      "Roles and states",
+      "Accessible pairs",
+      "Derivation and hierarchy",
+      "Compatibility mapping",
+      "Examples and recovery",
+      "Responsive and interaction",
+      "Agent and export"
     ],
     "issues": [],
-    "bytes": 46285
+    "bytes": 57614
   },
   {
     "file": "grid-layout.html",
@@ -824,10 +863,26 @@
       "Grid type",
       "Layout patterns",
       "How this page fits together",
-      "Grid & Layout tokens - Markdown export"
+      "Grid & Layout tokens - Markdown export",
+      "Implementation contract",
+      "Geometry",
+      "Platform profiles",
+      "Container and spans",
+      "Breakpoints and density",
+      "Pattern inventory",
+      "Resize and panes",
+      "Overflow and handoff",
+      "Pattern: Single Column",
+      "Pattern: Two Column",
+      "Pattern: Sidebar + Content",
+      "Pattern: Dashboard",
+      "Pattern: Split View",
+      "Pattern: Card Grid",
+      "Pattern: Hero + Content",
+      "Pattern: Master-Detail"
     ],
     "issues": [],
-    "bytes": 40747
+    "bytes": 58809
   },
   {
     "file": "group-button-default.html",
@@ -852,7 +907,7 @@
       "Group Button type"
     ],
     "issues": [],
-    "bytes": 11165
+    "bytes": 11148
   },
   {
     "file": "guidelines.html",
@@ -866,10 +921,14 @@
       "Data Display - which one, when",
       "Button - hierarchy in one row",
       "Data List - grouping and density",
-      "Component Guidelines - Markdown export"
+      "Component Guidelines - Markdown export",
+      "Implementation contract",
+      "Structure",
+      "Interaction",
+      "Copy outcomes"
     ],
     "issues": [],
-    "bytes": 23357
+    "bytes": 32363
   },
   {
     "file": "history.html",
@@ -885,7 +944,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 27714
+    "bytes": 27485
   },
   {
     "file": "icons.html",
@@ -898,10 +957,17 @@
       "Icon states",
       "Icon direction and motion",
       "Bring your own icons",
-      "Icon tokens - Markdown export"
+      "Icon tokens - Markdown export",
+      "Implementation contract",
+      "Catalog and aliases",
+      "Geometry and sources",
+      "Accessible examples",
+      "Assets and recovery",
+      "RTL and motion",
+      "Agent and export"
     ],
     "issues": [],
-    "bytes": 31508
+    "bytes": 41524
   },
   {
     "file": "image-default.html",
@@ -926,7 +992,7 @@
       "Image type"
     ],
     "issues": [],
-    "bytes": 11230
+    "bytes": 11213
   },
   {
     "file": "input-text-field.html",
@@ -951,7 +1017,7 @@
       "Input type"
     ],
     "issues": [],
-    "bytes": 11090
+    "bytes": 11073
   },
   {
     "file": "list-default.html",
@@ -976,7 +1042,7 @@
       "List type"
     ],
     "issues": [],
-    "bytes": 11961
+    "bytes": 11944
   },
   {
     "file": "md-export.html",
@@ -1014,7 +1080,7 @@
       "Mention type"
     ],
     "issues": [],
-    "bytes": 11229
+    "bytes": 11212
   },
   {
     "file": "menu-default.html",
@@ -1039,7 +1105,7 @@
       "Menu type"
     ],
     "issues": [],
-    "bytes": 11226
+    "bytes": 11209
   },
   {
     "file": "modal-default.html",
@@ -1065,7 +1131,7 @@
       "Modal type"
     ],
     "issues": [],
-    "bytes": 11679
+    "bytes": 11662
   },
   {
     "file": "new-project.html",
@@ -1077,10 +1143,16 @@
       "About you",
       "Review your setup",
       "Your setup is ready",
-      "From idea to implementation"
+      "From idea to implementation",
+      "Implementation contract",
+      "User and task flow",
+      "Navigation and recovery",
+      "Context and readiness",
+      "Categories and identity",
+      "Handoff"
     ],
     "issues": [],
-    "bytes": 15828
+    "bytes": 24892
   },
   {
     "file": "notification-default.html",
@@ -1106,7 +1178,7 @@
       "Notification type"
     ],
     "issues": [],
-    "bytes": 11783
+    "bytes": 11766
   },
   {
     "file": "npm-package.html",
@@ -1147,7 +1219,7 @@
       "Number type"
     ],
     "issues": [],
-    "bytes": 11706
+    "bytes": 11689
   },
   {
     "file": "overview.html",
@@ -1159,7 +1231,7 @@
       "Guidelines & governance"
     ],
     "issues": [],
-    "bytes": 13124
+    "bytes": 13951
   },
   {
     "file": "pagination-default.html",
@@ -1184,7 +1256,7 @@
       "Pagination type"
     ],
     "issues": [],
-    "bytes": 11803
+    "bytes": 11786
   },
   {
     "file": "password-default.html",
@@ -1210,7 +1282,7 @@
       "Password type"
     ],
     "issues": [],
-    "bytes": 11446
+    "bytes": 11429
   },
   {
     "file": "patterns.html",
@@ -1275,7 +1347,7 @@
       "Popover type"
     ],
     "issues": [],
-    "bytes": 11196
+    "bytes": 11179
   },
   {
     "file": "principles.html",
@@ -1293,10 +1365,13 @@
       "8. Provide an Invitation",
       "9. Use Transition",
       "10. React Immediately",
-      "Design Principles - Markdown export"
+      "Design Principles - Markdown export",
+      "Implementation contract",
+      "Flow and use",
+      "Handoff"
     ],
     "issues": [],
-    "bytes": 38210
+    "bytes": 45235
   },
   {
     "file": "progress-default.html",
@@ -1321,7 +1396,7 @@
       "Progress type"
     ],
     "issues": [],
-    "bytes": 11214
+    "bytes": 11197
   },
   {
     "file": "radio-default.html",
@@ -1347,7 +1422,7 @@
       "Radio type"
     ],
     "issues": [],
-    "bytes": 11065
+    "bytes": 11048
   },
   {
     "file": "radius.html",
@@ -1360,10 +1435,16 @@
       "Recommended global model",
       "Radius by component role",
       "Component defaults",
-      "Radius tokens - Markdown export"
+      "Radius tokens - Markdown export",
+      "Implementation contract",
+      "Primitives and roles",
+      "Permission and exceptions",
+      "Nested geometry",
+      "States and clipping",
+      "Flow and export"
     ],
     "issues": [],
-    "bytes": 36636
+    "bytes": 45599
   },
   {
     "file": "rating-default.html",
@@ -1389,7 +1470,7 @@
       "Rating type"
     ],
     "issues": [],
-    "bytes": 12718
+    "bytes": 12701
   },
   {
     "file": "result-default.html",
@@ -1414,7 +1495,7 @@
       "Result type"
     ],
     "issues": [],
-    "bytes": 11552
+    "bytes": 11535
   },
   {
     "file": "search-default.html",
@@ -1440,7 +1521,7 @@
       "Search type"
     ],
     "issues": [],
-    "bytes": 11295
+    "bytes": 11278
   },
   {
     "file": "select-dropdown.html",
@@ -1455,7 +1536,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20861
+    "bytes": 20937
   },
   {
     "file": "select.html",
@@ -1466,7 +1547,7 @@
       "Select type"
     ],
     "issues": [],
-    "bytes": 11404
+    "bytes": 11387
   },
   {
     "file": "settings.html",
@@ -1490,10 +1571,17 @@
       "Shadow philosophy",
       "Elevation hierarchy",
       "Component defaults",
-      "Shadows and interaction states"
+      "Shadows and interaction states",
+      "Shadow tokens - Markdown export",
+      "Implementation contract",
+      "Philosophy algorithm",
+      "Card variants",
+      "Modes and alternatives",
+      "Layers",
+      "Motion and export"
     ],
     "issues": [],
-    "bytes": 28051
+    "bytes": 37703
   },
   {
     "file": "skeleton-default.html",
@@ -1518,7 +1606,7 @@
       "Skeleton type"
     ],
     "issues": [],
-    "bytes": 11172
+    "bytes": 11155
   },
   {
     "file": "slider-default.html",
@@ -1544,7 +1632,7 @@
       "Slider type"
     ],
     "issues": [],
-    "bytes": 11134
+    "bytes": 11117
   },
   {
     "file": "spacing.html",
@@ -1556,10 +1644,17 @@
       "Spacing system",
       "Recommended global model",
       "Component defaults",
-      "Spacing tokens - Markdown export"
+      "Spacing tokens - Markdown export",
+      "Implementation contract",
+      "Scale algorithm",
+      "Allowed values",
+      "Composition examples",
+      "Density and targets",
+      "Context and responsive rules",
+      "Export"
     ],
     "issues": [],
-    "bytes": 29537
+    "bytes": 39136
   },
   {
     "file": "spin-default.html",
@@ -1584,7 +1679,7 @@
       "Spin type"
     ],
     "issues": [],
-    "bytes": 11163
+    "bytes": 11146
   },
   {
     "file": "splitter-default.html",
@@ -1599,7 +1694,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19547
+    "bytes": 19723
   },
   {
     "file": "splitter.html",
@@ -1610,7 +1705,7 @@
       "Splitter type"
     ],
     "issues": [],
-    "bytes": 11227
+    "bytes": 11254
   },
   {
     "file": "statistic-default.html",
@@ -1635,7 +1730,7 @@
       "Statistic type"
     ],
     "issues": [],
-    "bytes": 11007
+    "bytes": 10990
   },
   {
     "file": "steps-default.html",
@@ -1660,7 +1755,7 @@
       "Steps type"
     ],
     "issues": [],
-    "bytes": 13200
+    "bytes": 13166
   },
   {
     "file": "switch-default.html",
@@ -1686,7 +1781,7 @@
       "Switch type"
     ],
     "issues": [],
-    "bytes": 11049
+    "bytes": 11032
   },
   {
     "file": "table-default.html",
@@ -1717,7 +1812,7 @@
       "Table type"
     ],
     "issues": [],
-    "bytes": 11877
+    "bytes": 11860
   },
   {
     "file": "tabs-default.html",
@@ -1742,7 +1837,7 @@
       "Tabs type"
     ],
     "issues": [],
-    "bytes": 11099
+    "bytes": 11082
   },
   {
     "file": "tag-default.html",
@@ -1768,7 +1863,7 @@
       "Tag type"
     ],
     "issues": [],
-    "bytes": 11213
+    "bytes": 11196
   },
   {
     "file": "templates.html",
@@ -1809,7 +1904,7 @@
       "Text Area type"
     ],
     "issues": [],
-    "bytes": 11117
+    "bytes": 11100
   },
   {
     "file": "time-default.html",
@@ -1835,7 +1930,7 @@
       "Time type"
     ],
     "issues": [],
-    "bytes": 11379
+    "bytes": 11362
   },
   {
     "file": "timeline-default.html",
@@ -1860,7 +1955,7 @@
       "Timeline type"
     ],
     "issues": [],
-    "bytes": 12154
+    "bytes": 12137
   },
   {
     "file": "toast-default.html",
@@ -1885,7 +1980,7 @@
       "Toast type"
     ],
     "issues": [],
-    "bytes": 11387
+    "bytes": 11370
   },
   {
     "file": "tooltip-default.html",
@@ -1910,7 +2005,7 @@
       "Tooltip type"
     ],
     "issues": [],
-    "bytes": 10997
+    "bytes": 10980
   },
   {
     "file": "tour-default.html",
@@ -1935,7 +2030,7 @@
       "Tour type"
     ],
     "issues": [],
-    "bytes": 11441
+    "bytes": 11424
   },
   {
     "file": "transfer-default.html",
@@ -1961,7 +2056,7 @@
       "Transfer type"
     ],
     "issues": [],
-    "bytes": 12910
+    "bytes": 12893
   },
   {
     "file": "tree-default.html",
@@ -2003,7 +2098,7 @@
       "Tree Select type"
     ],
     "issues": [],
-    "bytes": 11471
+    "bytes": 11454
   },
   {
     "file": "tree.html",
@@ -2014,7 +2109,7 @@
       "Tree type"
     ],
     "issues": [],
-    "bytes": 13513
+    "bytes": 13479
   },
   {
     "file": "typography.html",
@@ -2025,10 +2120,18 @@
       "Font families",
       "Type scale",
       "Additional semantic levels",
-      "Typography tokens - Markdown export"
+      "Typography tokens - Markdown export",
+      "Implementation contract",
+      "Roles",
+      "State modifiers",
+      "Component role mapping",
+      "Responsive usage",
+      "Fonts and recovery",
+      "Validation and examples",
+      "Preset changes and handoff"
     ],
     "issues": [],
-    "bytes": 97936
+    "bytes": 114143
   },
   {
     "file": "upload-default.html",
@@ -2054,7 +2157,7 @@
       "Upload type"
     ],
     "issues": [],
-    "bytes": 12695
+    "bytes": 12678
   },
   {
     "file": "values.html",

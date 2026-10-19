@@ -182,7 +182,7 @@
     lines.push("Each node is either a parent (has children, shown with an expand/collapse chevron" + (showIcons ? " and a folder icon" : "") + ") or a leaf" + (showIcons ? " (shown with a file icon)" : "") + ". Clicking a parent's chevron toggles its children's visibility without selecting it.");
     lines.push("");
     lines.push("Component properties: Root label (text, a heading shown above the node list, e.g. \"" + rootLabel + "\"); Show icons (boolean, toggles the folder/file icon next to each node) - currently " + (showIcons ? "on" : "off") + ".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(rootLabel, showIcons, typeFilter){
@@ -224,31 +224,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     var cardCopyPromptBtn = document.querySelector('[data-role="copy-prompt-tree"]');

@@ -11,31 +11,7 @@
   // "code" handed out is always exactly what's actually on the page.
 
   function copyTextFull(text, btn){
-    var originalLabel = btn.textContent;
-    function done(){
-      btn.textContent = "Copied!";
-      setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(done).catch(function(){
-        fallbackCopyFull(text);
-        done();
-      });
-    } else {
-      fallbackCopyFull(text);
-      done();
-    }
-  }
-
-  function fallbackCopyFull(text){
-    var ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    try{ document.execCommand("copy"); }catch(e){}
-    document.body.removeChild(ta);
+    return window.ADSClipboard.copyWithFeedback(text, btn);
   }
 
   // Demo markup uses "readonly tabindex=-1" throughout so nothing in these
@@ -70,16 +46,16 @@
           lines.push("");
           lines.push("Built from: " + builtFrom + ".");
           lines.push("Use this system's own components and design tokens (color, spacing, radius, typography) for every piece - never arbitrary one-off values, since this template's whole point is assembling already-documented patterns and components instead of rebuilding an equivalent screen from scratch.");
-          copyTextFull(lines.join("\n"), promptBtn);
+          copyTextFull(window.ADSFoundation.preparePageMarkdown(lines.join("\n")), promptBtn);
         });
       }
       if (codeBtn){
         codeBtn.addEventListener("click", function(){
           var lines = [];
           lines.push("<!-- Agentic Design System - \"" + name + "\" template -->");
-          lines.push("<!-- Built from: " + builtFrom + ". Requires this portal's shell.css for every class used below. -->");
+          lines.push("<!-- Built from: " + builtFrom + ". Requires shell.css, foundation.css and the shared Foundation runtime for every class used below. -->");
           lines.push(cleanCode(demo.innerHTML));
-          copyTextFull(lines.join("\n"), codeBtn);
+          copyTextFull(window.ADSFoundation.prepareCode(lines.join("\n")), codeBtn);
         });
       }
     });

@@ -1,14 +1,16 @@
 /* Foundation bindings load after page styles. Code retains its mono role. */
-body{font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);color:var(--type-body-color)}
-main p{font-family:var(--type-paragraph-family);font-size:var(--type-paragraph-size);font-weight:var(--type-paragraph-weight);line-height:var(--type-paragraph-line-height);font-style:var(--type-paragraph-style);letter-spacing:var(--type-paragraph-tracking);color:var(--type-paragraph-color)}
-main :is(h1,.page-title){font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);line-height:var(--type-h1-line-height);font-style:var(--type-h1-style);letter-spacing:var(--type-h1-tracking);color:var(--type-h1-color)}
-main :is(h2,.panel-title){font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);line-height:var(--type-h2-line-height);font-style:var(--type-h2-style);letter-spacing:var(--type-h2-tracking);color:var(--type-h2-color)}
-main h3{font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);line-height:var(--type-h3-line-height);font-style:var(--type-h3-style);letter-spacing:var(--type-h3-tracking);color:var(--type-h3-color)}
-main h4{font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);line-height:var(--type-h4-line-height);font-style:var(--type-h4-style);letter-spacing:var(--type-h4-tracking);color:var(--type-h4-color)}
-main h5{font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);line-height:var(--type-h5-line-height);font-style:var(--type-h5-style);letter-spacing:var(--type-h5-tracking);color:var(--type-h5-color)}
-main h6{font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);line-height:var(--type-h6-line-height);font-style:var(--type-h6-style);letter-spacing:var(--type-h6-tracking);color:var(--type-h6-color)}
+body{font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);color:var(--type-body-color)}
+/* Page roles outrank the earlier page-specific type rules. Metadata and
+   component specimens retain their explicit role bindings below. */
+.app-main :is(p,.page-lede,.get-library-copy,.usage-desc,.guide-copy,.guide-body-text):not(:where([class*="-demo-"],.font-preview-heading,.font-preview-body)){font-family:var(--type-paragraph-family);font-size:var(--type-paragraph-size);font-weight:var(--type-paragraph-weight);line-height:var(--type-paragraph-line-height);font-style:var(--type-paragraph-style);letter-spacing:var(--type-paragraph-tracking);color:var(--type-paragraph-color)}
+.app-main :is(h1,.page-title){font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);line-height:var(--type-h1-line-height);font-style:var(--type-h1-style);letter-spacing:var(--type-h1-tracking);color:var(--type-h1-color)}
+.app-main :is(h2,.panel-title){font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);line-height:var(--type-h2-line-height);font-style:var(--type-h2-style);letter-spacing:var(--type-h2-tracking);color:var(--type-h2-color)}
+.app-main h3{font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);line-height:var(--type-h3-line-height);font-style:var(--type-h3-style);letter-spacing:var(--type-h3-tracking);color:var(--type-h3-color)}
+.app-main h4{font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);line-height:var(--type-h4-line-height);font-style:var(--type-h4-style);letter-spacing:var(--type-h4-tracking);color:var(--type-h4-color)}
+.app-main h5{font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);line-height:var(--type-h5-line-height);font-style:var(--type-h5-style);letter-spacing:var(--type-h5-tracking);color:var(--type-h5-color)}
+.app-main h6{font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);line-height:var(--type-h6-line-height);font-style:var(--type-h6-style);letter-spacing:var(--type-h6-tracking);color:var(--type-h6-color)}
 :is(caption,figcaption,.page-eyebrow,.save-status,.guide-dodont-label,.version-badge){font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);line-height:var(--type-caption-line-height);font-style:var(--type-caption-style);letter-spacing:var(--type-caption-tracking);color:var(--type-caption-color)}
-:is(button,input,select,textarea){font-family:var(--type-body-family);font-size:var(--type-body-size);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+:is(button,input,select,textarea){font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
 pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 :is(h1,h2,h3,h4,h5,h6,.panel-title,.usage-label,p){overflow-wrap:anywhere}
 .panel-title{margin-block:0 var(--space-16);text-transform:none}
@@ -22,6 +24,12 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .app-main > :is(section,.panel,.setup-layout,.stat-grid,.get-library,.empty-state,.page-outline,.platform-guidance,.ads-foundation-toolbar):last-child{margin-block-end:0}
 .panel-title-row > .panel-title{margin-block:0}
 .panel-title-actions{flex-wrap:wrap}
+.app-main .get-library-copy{margin-block:0 var(--space-16)}
+.system-card > .component-open-link{margin-block:0}
+/* Utility rows own their gaps; status text does not add paragraph margins. */
+.panel-footer-row{flex-wrap:wrap;gap:var(--space-8) var(--space-12)}
+.panel-footer-row > :is(p,.save-status){margin:0;min-width:0;overflow-wrap:anywhere}
+.card-copy-row{flex-wrap:wrap;gap:var(--space-8)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-8);min-block-size:max(var(--size-control),calc(1em * var(--type-body-line-height) + var(--space-16)));height:auto;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
 /* Explicit component sizes stay distinct; enlarge only for actual text fit. */
 :is(.input-demo-control,.password-demo-control,.select-demo-control,.search-demo-control,.number-demo-control,.autocomplete-demo-control,.addon-demo-control,.cascader-demo-control,.treeselect-demo-control){min-block-size:calc(1em * var(--type-body-line-height) + var(--border-width-2))}
@@ -30,6 +38,9 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .btn-primary:active{background:var(--button-primary-bg-active);border-color:var(--button-primary-bg-active);color:var(--button-primary-text-active)}
 .btn-primary.is-saved{color:var(--text-hi)}
 :is(button,input,select,textarea,a):focus-visible{outline:var(--focus-ring-width) solid var(--color-focus-ring);outline-offset:var(--space-2)}
+/* Reference-file removal remains a usable target without covering the image. */
+.icon-upload-thumb-remove{position:static;align-self:flex-end;width:var(--size-target);height:var(--size-target);margin-block-start:var(--space-8)}
+.color-popover-value-cell input{min-block-size:var(--size-target)}
 /* Never set border-style on every native field: it revives border:none as a
    browser-default medium-width border inside composite components. */
 :is(input,select,textarea){border-color:var(--border-state-default,var(--control-border))}
@@ -52,6 +63,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .ads-foundation-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);margin-block:var(--space-16);padding:var(--space-12);border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-md)}
 .ads-foundation-toolbar label{display:flex;align-items:center;gap:var(--space-8)}
 .ads-foundation-toolbar label{margin:0;min-width:0}
+.ads-foundation-toolbar > [data-foundation-export]{margin-inline-start:auto;flex:none;max-inline-size:100%;white-space:normal}
 .ads-unit-choice,.ads-unit-options{display:flex;align-items:center;gap:var(--space-12)}
 .ads-unit-choice{flex-wrap:wrap;min-width:0}
 .ads-unit-choice .radio-demo-field{min-block-size:var(--size-control)}
@@ -68,7 +80,22 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .ads-unit-control{display:inline-flex;align-items:center;gap:var(--space-4);min-width:0;max-width:100%}
 .ads-unit-control input{width:6em;min-width:0}
 .ads-unit-control select{width:auto;min-width:4em}
-.ads-sizing label{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-12);margin-block:var(--space-8)}
+/* The Typography editor owns one field height, including paired units. */
+.type-row .type-row-controls .type-control .ads-unit-control :is(input,select){box-sizing:border-box;block-size:var(--type-editor-control-height);min-block-size:var(--type-editor-control-height);height:var(--type-editor-control-height);padding-block:var(--space-6);background-color:var(--graphite-900);color:var(--type-body-color);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+.type-row .type-row-controls .type-control .ads-unit-control input{padding-inline:var(--space-12)}
+.type-row .type-row-controls .type-control .ads-unit-control select{padding-inline:var(--space-12) var(--space-34)}
+.type-row .type-row-controls .type-control .ads-unit-control :is(input,select):focus{border-color:var(--red-500)}
+.type-row .type-row-controls .type-control .ads-unit-control :is(input,select)[aria-invalid=true]{border-color:var(--border-state-error,var(--danger-500))}
+.ads-sizing{container-type:inline-size;container-name:shared-sizing}
+.ads-sizing-fields{display:grid;gap:var(--space-16);max-inline-size:var(--dimension-440);min-inline-size:0;margin-block:var(--space-16) var(--space-24)}
+.ads-sizing-field{display:grid;grid-template-columns:minmax(0,var(--dimension-120)) minmax(0,1fr);align-items:center;gap:var(--space-16);margin:0;min-inline-size:0}
+.ads-sizing-label{min-inline-size:0;overflow-wrap:anywhere}
+.ads-sizing .ads-unit-control{display:grid;grid-template-columns:minmax(0,1fr) minmax(4.5em,5em);align-items:center;gap:var(--space-16);inline-size:100%;min-inline-size:0}
+.ads-sizing .ads-unit-control :is(input,select){box-sizing:border-box;inline-size:100%;min-inline-size:0;block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));min-block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));padding-block:0;margin:0}
+.ads-sizing-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);min-inline-size:0}
+.ads-sizing-actions > :is(button,.save-status){max-inline-size:100%;margin:0;white-space:normal;overflow-wrap:anywhere}
+.ads-sizing-actions .save-status:empty{display:none}
+@container shared-sizing (max-width:360px){.ads-sizing-field{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}}
 .ads-format-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--space-16);margin-block:var(--space-16)}
 .ads-format-controls input,.ads-format-controls select{box-sizing:border-box;width:100%;min-width:0}
 .ads-format-controls input[type=checkbox]{width:auto;align-self:start}
@@ -77,15 +104,105 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .ads-format-table{width:100%;border-collapse:collapse;margin-block:var(--space-16);font-variant-numeric:tabular-nums}
 .ads-format-table :is(th,td){padding:var(--space-8);border-bottom:var(--border-width-1) var(--border-style) var(--line);overflow-wrap:anywhere}
 .ads-format-table th{text-align:start}
-.ads-data-settings>.btn{margin-inline-end:var(--space-8);margin-block:var(--space-8)}
+/* Data Format owns three documentation columns, not the four-column
+   foundation demo grid. Long localized examples must wrap within their cell. */
+.data-format-page .spacing-model-panel:not(.md-export-panel){container-type:inline-size;container-name:data-format-doc}
+.data-format-page .usage-row{grid-template-columns:minmax(0,var(--dimension-160)) minmax(0,1fr) minmax(0,var(--dimension-240));align-items:start}
+.data-format-page .usage-row > *{min-width:0}
+.data-format-page .usage-values{white-space:normal;overflow-wrap:anywhere}
+.ads-data-settings .ads-format-grouped{grid-template-columns:minmax(0,1fr);gap:var(--space-24);margin-block:var(--space-24)}
+.ads-format-group{min-inline-size:0;margin:0;padding:0;border:0}
+.ads-format-group legend{padding:0;margin-block-end:var(--space-16);font-weight:600}
+.ads-format-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--dimension-240)),1fr));gap:var(--space-16)}
+.ads-format-field{display:grid;grid-template-rows:minmax(calc(2 * var(--type-body-size) * var(--type-body-line-height)),auto) auto;gap:var(--space-8);min-width:0;align-content:start}
+.ads-format-label{min-width:0;overflow-wrap:anywhere}
+.ads-data-settings .ads-format-field > :is(input,select),.ads-format-toggle{min-block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));height:auto}
+.ads-format-toggle{display:flex;align-items:center;gap:var(--space-8)}
+.ads-data-settings .ads-format-toggle input[type=checkbox]{width:var(--dimension-18);height:var(--dimension-18);min-block-size:0;padding:0;margin:0;align-self:center;flex:none;accent-color:var(--red-500)}
+.ads-format-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12)}
+.ads-data-settings .setup-error:empty,.ads-format-actions .save-status:empty{display:none}
+.ads-data-settings .ads-format-space-preview{margin-block:var(--space-16)}
+.ads-data-settings .ads-format-table{table-layout:fixed;margin-block-end:0}
+.ads-data-settings .ads-format-table caption{text-align:start;padding-block-end:var(--space-8)}
+/* Neutral separators distinguish settings, actions and examples without
+   adding another container outline. Fieldset legends retain their names. */
+.data-format-page .ads-format-group:not(:last-child){padding-block-end:var(--space-24);border-block-end:var(--border-width-1) var(--border-style) var(--line-strong)}
+.data-format-page :is(.ads-format-actions,.ads-format-space-preview){padding-block-start:var(--space-16);border-block-start:var(--border-width-1) var(--border-style) var(--line-strong)}
+.data-format-page .usage-row{border-block-start:var(--border-width-1) var(--border-style) var(--line-strong)}
+.data-format-page .usage-row:first-child{padding-block-start:var(--space-12)}
+.data-format-page .ads-format-table thead th{border-block-end-color:var(--line-strong)}
+@supports(grid-template-rows:subgrid){.ads-format-field{grid-row:span 2;grid-template-rows:subgrid}}
+@container data-format-doc (max-width:640px){.data-format-page .usage-row{grid-template-columns:minmax(0,var(--dimension-160)) minmax(0,1fr)}.data-format-page .usage-values{grid-column:2;text-align:start}}
+@container data-format-doc (max-width:420px){.data-format-page .usage-row{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}.data-format-page .usage-values{grid-column:auto}}
+/* Accessibility reference rows have three cells. Keep expansion controls
+   inside the description cell so status text never moves into another row. */
+.accessibility-page > .panel{display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-24);container-type:inline-size;container-name:accessibility-doc}
+.accessibility-page :is(.panel,.guide-view-panel) > *{margin-block:0;min-inline-size:0}
+.accessibility-page .guide-view-panel{display:flex;flex-direction:column;gap:var(--space-16)}
+.accessibility-page .panel-title-row{align-items:flex-start;gap:var(--space-16)}
+.accessibility-page .panel-title-row > .panel-title{flex:1 1 var(--dimension-240);min-inline-size:0}
+.accessibility-page .usage-row{grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,1fr);align-items:start;gap:var(--space-16);padding-block:var(--space-16);border-color:var(--line-strong)}
+.accessibility-page .usage-row:first-child{padding-block-start:0}
+.accessibility-page .usage-row:last-child{padding-block-end:0}
+.accessibility-page .usage-row > *{min-inline-size:0;overflow-wrap:anywhere}
+.accessibility-page .usage-desc{display:block}
+.accessibility-page .usage-values{white-space:normal;text-align:end}
+.accessibility-page .accessibility-detail > .ads-read-more{margin-block:var(--space-12) 0}
+.accessibility-page .ads-text-content > p{margin-block:0 var(--space-16)}
+.accessibility-page .ads-text-content > p:last-child{margin-block-end:0}
+.accessibility-page .panel-footer-row{padding-block-start:var(--space-16);border-block-start:var(--border-width-1) var(--border-style) var(--line-strong)}
+@container accessibility-doc (max-width:800px){.accessibility-page .usage-row{grid-template-columns:minmax(0,1fr) minmax(0,2fr);row-gap:var(--space-8)}.accessibility-page .usage-values{grid-column:2;text-align:start}}
+@container accessibility-doc (max-width:560px){.accessibility-page .usage-row{grid-template-columns:minmax(0,1fr)}.accessibility-page .usage-values{grid-column:auto}}
+@media(max-width:640px){.accessibility-page > .panel{padding:var(--space-16)}}
+/* Three-column reference documentation keeps Read More within its description. */
+.reference-page > .panel{display:flex;flex-direction:column;gap:var(--space-16);padding:var(--space-24);container-type:inline-size;container-name:reference-doc}
+.reference-page :is(.panel,.guide-view-panel) > *{margin-block:0;min-inline-size:0}
+.reference-page .guide-view-panel{display:flex;flex-direction:column;gap:var(--space-16)}
+.reference-page .panel-title-row{align-items:flex-start;gap:var(--space-16)}
+.reference-page .panel-title-row > .panel-title{flex:1 1 var(--dimension-240);min-inline-size:0}
+.reference-page .usage-row{grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,1fr);align-items:start;gap:var(--space-16);padding-block:var(--space-16);border-color:var(--line-strong)}
+.reference-page .usage-row:first-child{padding-block-start:0}
+.reference-page .usage-row:last-child{padding-block-end:0}
+.reference-page .usage-row > *{min-inline-size:0;overflow-wrap:anywhere}
+.reference-page .usage-desc{display:block}
+.reference-page .usage-values{white-space:normal;text-align:end}
+.reference-page .reference-detail > .ads-read-more{margin-block:var(--space-12) 0}
+.reference-page .ads-text-content > p{margin-block:0 var(--space-16)}
+.reference-page .ads-text-content > p:last-child{margin-block-end:0}
+.reference-page .panel-footer-row{padding-block-start:var(--space-16);border-block-start:var(--border-width-1) var(--border-style) var(--line-strong)}
+@container reference-doc (max-width:800px){.reference-page .usage-row{grid-template-columns:minmax(0,1fr) minmax(0,2fr);row-gap:var(--space-8)}.reference-page .usage-values{grid-column:2;text-align:start}}
+@container reference-doc (max-width:560px){.reference-page .usage-row{grid-template-columns:minmax(0,1fr)}.reference-page .usage-values{grid-column:auto}}
+@media(max-width:640px){.reference-page > .panel{padding:var(--space-16)}}
+/* Overview navigation has three populated columns; the token comparison
+   tables' fourth column must not leave an empty gutter after its actions. */
+.governance-panel{container-type:inline-size;container-name:governance-doc}
+.governance-panel .usage-hierarchy{margin:0}
+.governance-panel .usage-row{grid-template-columns:minmax(0,var(--dimension-160)) minmax(0,1fr) auto;gap:var(--space-24);padding-block:var(--space-16);align-items:center}
+.governance-panel .usage-row > *{min-inline-size:0;overflow-wrap:anywhere}
+.governance-panel .usage-values{justify-self:end;white-space:normal}
+.governance-panel .governance-view{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-8);min-inline-size:var(--dimension-96);min-block-size:max(var(--dimension-44),var(--size-target));max-inline-size:100%;padding:var(--space-8) var(--space-16);text-decoration:none;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+@container governance-doc (max-width:640px){.governance-panel .usage-row{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-8) var(--space-16)}.governance-panel .usage-label{grid-column:1;grid-row:1}.governance-panel .usage-desc{grid-column:1;grid-row:2}.governance-panel .usage-values{grid-column:2;grid-row:1 / 3}}
+@container governance-doc (max-width:420px){.governance-panel .usage-row{grid-template-columns:minmax(0,1fr);gap:var(--space-12)}.governance-panel .usage-values{grid-column:1;grid-row:3}}
 .ads-text-content{display:block}
 .ads-text-clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;max-block-size:var(--ads-clamp-height,none);overflow:hidden}
-.ads-read-more{display:flex;width:fit-content;max-width:100%;margin-inline:auto;margin-block-start:var(--space-12);text-decoration:none;min-block-size:var(--size-control);min-inline-size:var(--size-target)}
+.ads-read-more{display:flex;width:fit-content;max-width:100%;margin-inline:auto;margin-block:var(--space-12) var(--space-16);text-decoration:none;min-block-size:var(--size-control);min-inline-size:var(--size-target)}
 [hidden]{display:none!important}
 .ads-data-skeleton{display:inline-block;min-width:5em;min-height:1em;border-radius:var(--radius-sm);background:var(--graphite-700);color:transparent;animation:ads-loading 1.5s ease-in-out infinite}
 [data-format=loading]:not(.ads-data-skeleton){background:none;animation:none;height:auto;color:var(--type-body-color)}
 @keyframes ads-loading{50%{opacity:.5}}
-.app-main{max-width:var(--size-content);min-width:0}
+/* Keep scrolling at the viewport edge; center the content inside that
+   scroll area. Mirror classic scrollbar space in both shell columns. */
+/* Bound the grid to the visible viewport. Only its content regions scroll,
+   with no outer document tail or elastic blank area at their boundaries. */
+body{height:100vh;height:100dvh;min-height:0;grid-template-rows:64px minmax(0,1fr);overflow:hidden;overscroll-behavior-y:none}
+.app-main,.app-sidebar{min-height:0;scrollbar-gutter:stable both-edges;overscroll-behavior-y:none}
+.app-main{--page-gutter:var(--space-40);width:100%;max-width:none;min-width:0;padding-inline:var(--page-gutter);padding-block-end:var(--space-24)}
+.app-main > *{max-inline-size:min(100%,var(--size-content));margin-inline:auto}
+.app-sidebar{--sidebar-gutter:var(--space-12);height:100%;min-width:0;overflow-x:hidden}
+.sidebar-nav{width:100%;min-width:0}
+.sidebar-search-sticky,.nav-group{padding-inline:var(--sidebar-gutter)}
+[data-density="compact"] .app-main{--page-gutter:var(--space-24);padding-inline:var(--page-gutter);padding-block-end:var(--space-16)}
+@media(max-width:640px){:root .app-main{--page-gutter:var(--space-16);padding-inline:var(--page-gutter);padding-block-end:var(--space-16)}}
 :is(.icon-btn,.btn,.chip) svg:not([data-fixed-icon]){width:var(--icon-size);height:var(--icon-size);flex-shrink:0}
 svg[stroke="currentColor"]:not([data-fixed-icon]){stroke-width:var(--icon-stroke);stroke-linecap:var(--icon-cap);stroke-linejoin:var(--icon-join)}
 @media(pointer:coarse){:is(button,.btn,.chip,a,input,select){min-block-size:var(--size-target)}}
@@ -119,14 +236,74 @@ svg[stroke="currentColor"]:not([data-fixed-icon]){stroke-width:var(--icon-stroke
 @media(pointer:coarse){.btn-demo{min-block-size:var(--size-target);min-inline-size:var(--size-target)}}
 @media(pointer:coarse){.ads-unit-choice .radio-demo-field{min-block-size:var(--size-target)}}
 
-main :is(.a11y-inline-note,.addon-demo-control--h28,.addon-demo-control--h32,.addon-demo-note,.affix-demo-bar,.ai-agent-status,.ai-confidence,.ai-explain-citations,.ai-rule-eyebrow,.anchor-demo-link--fs12,.autocomplete-demo-control--h28,.autocomplete-demo-control--h32,.back-link,.badge,.brand-sub,.breadcrumb-demo-trail--24,.btn-demo--h28,.btn-demo--h32,.card-configure-link,.cascader-demo-control--h28,.cascader-demo-control--h32,.chip,.color-field-label,.color-popover-copy,.color-popover-format-select,.color-rgba,.colorpicker-demo-control--h28,.colorpicker-demo-control--h32,.component-meta,.component-status,.copy-btn,.copy-tab,.datepicker-demo-control--h28,.datepicker-demo-control--h32,.datepicker-demo-note,.daterange-demo-control--h28,.daterange-demo-control--h32,.daterange-demo-note,.divider-demo-context-text,.do-dont-label,.dropdown-demo-trigger--h28,.dropdown-demo-trigger--h32,.dualicon-state-label,.dynamic-tooltip,.empty-demo-description,.empty-eyebrow,.export-preview,.font-category-hint,.font-preview-meta,.form-field,.grid-canvas-caption,.grid-demo-custom,.group-btn-field-note,.group-btn-segment--h28,.group-btn-segment--h32,.guide-machine-json,.guide-subhead,.guide-toggle-btn,.hex-prefix,.history-avatar,.history-meta,.history-time,.icon-upload-thumb-remove,.image-demo-caption,.input-demo-control--h28,.input-demo-control--h32,.input-demo-note,.kbd,.library-status,.list-demo-description,.mention-demo-control--h28,.mention-demo-control--h32,.menu-demo-item--h28,.menu-demo-item--h32,.nav-group-label,.nav-subgroup-label,.notification-demo-action,.notification-demo-description,.number-demo-control--h28,.number-demo-control--h32,.number-demo-note,.page-eyebrow,.pagination-demo-arrow--h28,.pagination-demo-arrow--h32,.pagination-demo-item--h28,.pagination-demo-item--h32,.password-demo-control--h28,.password-demo-control--h32,.password-demo-note,.picker-ratio,.picker-ratio-note,.popconfirm-demo-btn,.popconfirm-demo-trigger,.popover-demo-body,.product-card-rec,.progress-demo-label,.result-demo-btn,.save-status,.search-demo-control--h28,.search-demo-control--h32,.search-demo-note,.select-demo-control--h28,.select-demo-control--h32,.select-demo-note,.spin-demo-label,.splitcta-state-label,.splitter-demo-panel,.stat-label,.state-color-hex,.switch-project,.system-card-scale,.system-card-tagline,.tabs-demo-trigger--h28,.tabs-demo-trigger--h32,.tag-demo-chip,.textarea-demo-control--h28,.textarea-demo-control--h32,.textarea-demo-note,.theme-pair-label,.time-demo-control--h28,.time-demo-control--h32,.time-demo-note,.tour-demo-btn,.tour-demo-description,.transfer-demo-column-title,.transfer-demo-search,.treeselect-demo-control--h28,.treeselect-demo-control--h32,.upload-demo-file-name,.upload-dropzone,.usage-values,.used-by-avatar,.used-by-status,.used-by-time,.used-by-version,.version-badge,.welcome-choice-btn-desc,.welcome-modal-back,.welcome-modal-status){font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+.app-main :is(caption,figcaption,.setup-help,.color-contrast,.color-popover-contrast,.contrast-ratio,.ads-unit-note,.a11y-inline-note,.addon-demo-control--h28,.addon-demo-control--h32,.addon-demo-note,.affix-demo-bar,.ai-agent-status,.ai-confidence,.ai-explain-citations,.ai-rule-eyebrow,.anchor-demo-link--fs12,.autocomplete-demo-control--h28,.autocomplete-demo-control--h32,.back-link,.badge,.brand-sub,.breadcrumb-demo-trail--24,.btn-demo--h28,.btn-demo--h32,.card-configure-link,.cascader-demo-control--h28,.cascader-demo-control--h32,.chip,.color-field-label,.color-popover-copy,.color-popover-format-select,.color-rgba,.colorpicker-demo-control--h28,.colorpicker-demo-control--h32,.component-meta,.component-status,.copy-btn,.copy-tab,.datepicker-demo-control--h28,.datepicker-demo-control--h32,.datepicker-demo-note,.daterange-demo-control--h28,.daterange-demo-control--h32,.daterange-demo-note,.divider-demo-context-text,.do-dont-label,.dropdown-demo-trigger--h28,.dropdown-demo-trigger--h32,.dualicon-state-label,.dynamic-tooltip,.empty-demo-description,.empty-eyebrow,.export-preview,.font-category-hint,.font-preview-meta,.form-field,.grid-canvas-caption,.grid-demo-custom,.group-btn-field-note,.group-btn-segment--h28,.group-btn-segment--h32,.guide-machine-json,.guide-subhead,.guide-toggle-btn,.hex-prefix,.history-avatar,.history-meta,.history-time,.icon-upload-thumb-remove,.image-demo-caption,.input-demo-control--h28,.input-demo-control--h32,.input-demo-note,.kbd,.library-status,.list-demo-description,.mention-demo-control--h28,.mention-demo-control--h32,.menu-demo-item--h28,.menu-demo-item--h32,.nav-group-label,.nav-subgroup-label,.notification-demo-action,.notification-demo-description,.number-demo-control--h28,.number-demo-control--h32,.number-demo-note,.page-eyebrow,.pagination-demo-arrow--h28,.pagination-demo-arrow--h32,.pagination-demo-item--h28,.pagination-demo-item--h32,.password-demo-control--h28,.password-demo-control--h32,.password-demo-note,.picker-ratio,.picker-ratio-note,.popconfirm-demo-btn,.popconfirm-demo-trigger,.popover-demo-body,.product-card-rec,.progress-demo-label,.result-demo-btn,.save-status,.search-demo-control--h28,.search-demo-control--h32,.search-demo-note,.select-demo-control--h28,.select-demo-control--h32,.select-demo-note,.spin-demo-label,.splitcta-state-label,.splitter-demo-panel,.stat-label,.state-color-hex,.switch-project,.system-card-scale,.system-card-tagline,.tabs-demo-trigger--h28,.tabs-demo-trigger--h32,.tag-demo-chip,.textarea-demo-control--h28,.textarea-demo-control--h32,.textarea-demo-note,.theme-pair-label,.time-demo-control--h28,.time-demo-control--h32,.time-demo-note,.tour-demo-btn,.tour-demo-description,.transfer-demo-column-title,.transfer-demo-search,.treeselect-demo-control--h28,.treeselect-demo-control--h32,.upload-demo-file-name,.upload-dropzone,.usage-values,.used-by-avatar,.used-by-status,.used-by-time,.used-by-version,.version-badge,.welcome-choice-btn-desc,.welcome-modal-back,.welcome-modal-status){font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 
-main :is(.stat-value){font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking);}
+.app-main :is(.stat-value){font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking);}
 
-main :is(.empty-title,.font-preview-heading,.modal-title,.statistic-demo-value,.system-card-unit){font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking);}
+.app-main :is(.empty-title,.font-preview-heading,.modal-title,.statistic-demo-value,.system-card-unit):not(:where(h1,h2,h3,h4,h5,h6)){font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking);}
 
-main :is(.welcome-modal-title){font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking);}
+.app-main :is(.welcome-modal-title){font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking);}
 
-main :is(.anchor-demo-link--fs18,.icon-btn){font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking);}
+.app-main :is(.anchor-demo-link--fs18,.icon-btn){font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking);}
 main .statistic-demo-value--positive{color:var(--type-success-color)}
 main .statistic-demo-value--negative{color:var(--type-error-color)}
+
+/* Read-only metadata uses Caption color; control/status foregrounds keep
+   their semantic colors and on-brand contrast. */
+.app-main :is(caption,figcaption,.page-eyebrow,.component-meta,.color-field-label,.color-contrast,.color-popover-contrast,.contrast-ratio,.color-rgba,.ads-unit-note,.font-category-hint,.font-preview-meta,.grid-canvas-caption,.setup-help){color:var(--type-caption-color)}
+/* Labels and concise interface copy use Body, including notices and validation. */
+.app-main :is(.setup-field,.setup-platforms legend,.setup-option,.setup-steps li,.setup-notice p,.setup-status,.setup-error){font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+/* Code typography keeps its monospace family after Caption metrics apply. */
+.app-main :is(pre,code,kbd,samp,.guide-machine-json,.copy-code,.export-preview){font-family:var(--font-mono)}
+
+.app-main :is(.setup-field,.setup-notice p,.setup-status){color:var(--type-body-color)}
+.app-main :is(.setup-error,.input-demo-error){color:var(--type-error-color)}
+/* Documentation tabs use the library's Outlined Group Button track. */
+.app-main .ads-tab-group{display:inline-flex;align-items:stretch;gap:0;padding:0;max-inline-size:100%;overflow-x:auto;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);flex:none}
+.app-main .page-outline > .ads-tab-group{max-inline-size:none}
+.app-main .ads-tab-group .group-btn-segment{flex:none;height:auto;min-block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));margin:0;padding:0 var(--space-16);border:0;border-inline-end:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:0;background:transparent;color:var(--type-body-color);text-decoration:none;white-space:nowrap;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+.app-main .ads-tab-group .group-btn-segment:last-child{border-inline-end:0}
+.app-main .ads-tab-group .group-btn-segment:hover{background:var(--graphite-800)}
+.app-main .ads-tab-group .group-btn-segment:active{background:var(--graphite-700)}
+.app-main .ads-tab-group .group-btn-segment.is-selected{background:var(--red-tint);color:var(--red-500)}
+.app-main .ads-tab-group .group-btn-segment:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus-ring);outline-offset:calc(-1 * var(--space-3))}
+/* Generated implementation guidance shares the panel's rhythm and separators. */
+.ads-contract-rule { padding-block:var(--space-16); border-block-start:1px solid var(--line); }
+.ads-contract-rule h3 { margin:0 0 var(--space-8); }
+.ads-contract-rule p { margin:0; }
+.ads-implementation-contract details { margin-block-start:var(--space-16); }
+.ads-implementation-contract summary { cursor:pointer; }
+.ads-named-icons { display:flex; flex-wrap:wrap; gap:var(--space-16); margin-block:var(--space-16); }
+.ads-named-icons > span { display:inline-flex; align-items:center; gap:var(--space-8); }
+.ads-stream-output { max-height:12rem; overflow:auto; white-space:pre-wrap; padding:var(--space-16); border:1px solid var(--line); border-radius:var(--radius-sm); }
+.app-topbar,.setup-context { z-index:var(--layer-sticky); }
+.color-popover,.autocomplete-demo-panel,.mention-demo-panel,.colorpicker-demo-panel,.cascader-demo-panel,.treeselect-demo-panel { z-index:var(--layer-popover); }
+.ads-storage-notice { z-index:var(--layer-toast); }
+/* An icon starts with H6 color, so hovering to --text-hi was identical. */
+:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):hover { color:var(--red-500); border-color:var(--red-500); }
+:is(.icon-btn,.theme-toggle,.sidebar-menu-toggle):active { color:var(--red-600); border-color:var(--red-600); }
+.contrast-tag.is-pass { color:var(--contrast-pass-text); background:var(--contrast-pass-bg); }
+.contrast-tag.is-fail { color:var(--contrast-fail-text); background:var(--contrast-fail-bg); }
+.ads-copy-status { position:fixed; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.ads-live-splitter { inline-size:min(100%,var(--dimension-320)); max-inline-size:100%; block-size:var(--dimension-180); overflow:visible; }
+.ads-live-splitter [data-splitter-divider] { position:relative; touch-action:none; min-inline-size:var(--size-target); background:var(--graphite-900); }
+.ads-live-splitter [data-splitter-divider]::before { content:''; position:absolute; inset-block:0; inline-size:var(--border-width-1); background:var(--control-border); }
+.ads-live-splitter[data-splitter-axis=vertical] [data-splitter-divider] { min-block-size:var(--size-target); }
+.ads-live-splitter[data-splitter-axis=vertical] [data-splitter-divider]::before { inset-inline:0; inset-block:auto; inline-size:auto; block-size:var(--border-width-1); }
+.ads-live-splitter [data-splitter-divider].is-dragging { color:var(--button-primary-text-default); background:var(--red-500); }
+.ads-live-splitter .splitter-demo-panel { overflow:auto; }
+.ads-live-splitter .splitter-demo-panel-text { white-space:normal; overflow-wrap:anywhere; }
+.ads-master-shell { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:var(--grid-gutter); }
+.ads-master-list,.ads-master-detail { min-inline-size:0; padding:var(--space-16); border:var(--border-width-1) solid var(--line-strong); border-radius:var(--radius-md); }
+.ads-master-list { max-block-size:var(--dimension-320); overflow:auto; }
+.ads-master-list [data-master=records] { display:flex; flex-direction:column; gap:var(--space-8); }
+.ads-master-list button { text-align:start; white-space:normal; min-block-size:var(--size-target); }
+.ads-master-list button[aria-pressed=true] { background:var(--red-tint); border-color:var(--red-500); }
+.ads-master-detail [data-master=content] { min-block-size:3em; }
+@media(max-width:900px) { .ads-master-shell { grid-template-columns:minmax(0,1fr); } }
+.skip-link { z-index:100; }
+@media(max-width:900px){.sidebar-drawer-backdrop{z-index:var(--layer-scrim)}.app-sidebar{z-index:var(--layer-dialog)}}
+@media(forced-colors:active){.ads-stream-output,.ads-implementation-contract,.ads-contract-rule{border-color:CanvasText}.ai-confidence{color:CanvasText;background:Canvas} :focus-visible{outline-color:Highlight}}
+@media print{.ads-foundation-toolbar,.setup-context,.app-sidebar,.app-topbar{display:none}.panel{box-shadow:none;break-inside:avoid}}
+.modal-overlay,.welcome-modal-overlay { z-index:var(--layer-dialog); }
+.dropdown-demo-menu { z-index:var(--layer-popover); }

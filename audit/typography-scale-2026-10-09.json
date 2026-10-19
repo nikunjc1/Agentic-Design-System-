@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-09",
+  "scale": [
+    32,
+    28,
+    24,
+    20,
+    18,
+    16
+  ],
+  "method": "Actual page scripts in jsdom; rendered font/CSS checks not performed",
+  "assertions": 80,
+  "failures": 0,
+  "results": [
+    {
+      "theme": "light",
+      "unit": "px",
+      "status": "pass"
+    },
+    {
+      "theme": "light",
+      "unit": "rem",
+      "status": "pass"
+    },
+    {
+      "theme": "dark",
+      "unit": "px",
+      "status": "pass"
+    },
+    {
+      "theme": "dark",
+      "unit": "rem",
+      "status": "pass"
+    }
+  ]
+}

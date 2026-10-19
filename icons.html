@@ -277,10 +277,10 @@
       <label class="type-control">
         <span>Stroke width</span>
         <select data-role="icon-stroke">
-          <option value="1.25">1.25px - light</option>
-          <option value="1.5">1.5px - regular</option>
-          <option value="1.8" selected>1.8px - medium</option>
-          <option value="2.2">2.2px - bold</option>
+          <option value="1.25">1.25 SVG units - light</option>
+          <option value="1.5">1.5 SVG units - regular</option>
+          <option value="1.8" selected>1.8 SVG units - medium</option>
+          <option value="2.2">2.2 SVG units - bold</option>
         </select>
       </label>
 
@@ -298,7 +298,7 @@
 
     <div class="ai-rule-callout">
       <p class="ai-rule-eyebrow">AI Rule</p>
-      <p class="ai-rule-text">A generated icon must use this page's own currently saved configuration, not its own judgment: the saved style (stroke vs. fill vs. illustrative), the saved grid size as its <code>viewBox</code> (e.g. 24x24 for 24px), and the saved stroke width/corner treatment if the style is stroke-based - never a hardcoded color (<code>currentColor</code> only, confirmed: every icon on this page already follows this). Name it for the concept or action it represents ("delete," "notification"), never its literal shape ("trash-can," "bell-outline") - the same convention this page's own library picks (Lucide, Feather) already use. A generated or AI-suggested icon needs human review before shipping, same as this system's AI & Agents foundation already requires for any AI-suggested content generally - this page doesn't get a silent exception. Only the libraries listed below (each with its own stated license) are approved reuse sources; an icon from anywhere else needs its own license checked before use, the same as any other third-party asset.</p>
+      <p class="ai-rule-text">A generated icon must use this page's own currently saved configuration, not its own judgment: the saved style (stroke vs. fill vs. illustrative), the saved size for its rendered width and height, with a consistent intrinsic <code>viewBox</code> (24x24 for geometric icons; 32x32 for the illustrative examples), and the saved stroke width in SVG units and corner treatment if the style is stroke-based - never a hardcoded color (<code>currentColor</code> only, confirmed: every icon on this page already follows this). Name it for the concept or action it represents ("delete," "notification"), use a semantic application alias even if the source library uses a shape-based name. A generated or AI-suggested icon needs human review before shipping, same as this system's AI & Agents foundation already requires for any AI-suggested content generally - this page doesn't get a silent exception. Only the libraries listed below (each with its own stated license) are approved reuse sources; an icon from anywhere else needs its own license checked before use, the same as any other third-party asset.</p>
     </div>
 
     <div class="panel-footer-row">
@@ -403,8 +403,8 @@
 
     <div class="icon-upload-row">
       <label class="upload-dropzone icon-upload-drop" data-role="icon-upload-drop">
-        <input type="file" data-role="icon-upload-input" accept=".svg,.png" multiple hidden />
-        <span data-role="icon-upload-label">Drop .svg or .png reference icons here, or click to choose files&hellip;</span>
+        <input type="file" data-role="icon-upload-input" accept="image/svg+xml,image/png,image/jpeg,image/webp,image/gif,image/avif" multiple hidden />
+        <span data-role="icon-upload-label">Choose SVG, PNG, JPEG, WebP, GIF or AVIF references. Up to 2 MB per file; 10 files and 2.8 MB encoded in total.</span>
       </label>
     </div>
     <div class="icon-upload-grid" data-role="icon-upload-grid"></div>
@@ -496,6 +496,70 @@
       <span class="save-status" id="iconsMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Catalog and aliases</h3><p>Use the bundled named catalog for edit, close, confirm, add, info and chevron-end. Resolve semantic action names through the catalog API. Existing library choices record source/style intent and do not download or replace the entire component glyph set. Other glyphs require a named source/version/license and optical review.</p></div>
+<div class="ads-contract-rule"><h3>Geometry and sources</h3><p>UI glyphs use a 24x24 viewBox and currentColor. Illustrative isometric/3D examples use 32x32 and are not interchangeable with a 24px UI action icon. Rendered size uses --icon-size. Stroke is unitless SVG geometry. Optical centering/stroke normalization is reviewed independently of CSS width.</p></div>
+<div class="ads-contract-rule"><h3>Accessible examples</h3><p>Decorative SVG: aria-hidden=true and focusable=false. Icon-only button: an explicit accessible name plus a 44px target; optional tooltip supplements the name. Status icon: visible message and semantic label. Loading icon: one coarse role=status announcement, reduced-motion fallback and no per-frame speech.</p></div>
+<div class="ads-contract-rule"><h3>Assets and recovery</h3><p>Reference uploads are images up to 2MB each, at most 10 and 2.8MB encoded total. Keep choose/remove keyboard accessible; report read/decode errors. JSON packages references. Unreviewed SVG references render as images, never executable inline markup. Reference upload does not certify a reusable normalized glyph.</p></div>
+<div class="ads-contract-rule"><h3>RTL and motion</h3><p>Mirror chevron-end and navigation arrows in RTL. Do not mirror physical objects, logos, text or mathematical/trend meaning without a semantic reason. Do not animate essential meaning. Prefer a static loading label with reduced motion.</p></div>
+<div class="ads-contract-rule"><h3>Agent and export</h3><p>Include named action aliases, approved source/license, style, size, stroke, cap/join, currentColor, role, state and direction. AI-generated glyphs require source/geometry/accessibility review. Reject untrusted SVG scripts, event handlers, external references and foreignObject before any inline reuse.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Icons&quot;,
+    &quot;rules&quot;: {
+      &quot;Catalog and aliases&quot;: &quot;Use the bundled named catalog for edit, close, confirm, add, info and chevron-end. Resolve semantic action names through the catalog API. Existing library choices record source/style intent and do not download or replace the entire component glyph set. Other glyphs require a named source/version/license and optical review.&quot;,
+      &quot;Geometry and sources&quot;: &quot;UI glyphs use a 24x24 viewBox and currentColor. Illustrative isometric/3D examples use 32x32 and are not interchangeable with a 24px UI action icon. Rendered size uses --icon-size. Stroke is unitless SVG geometry. Optical centering/stroke normalization is reviewed independently of CSS width.&quot;,
+      &quot;Accessible examples&quot;: &quot;Decorative SVG: aria-hidden=true and focusable=false. Icon-only button: an explicit accessible name plus a 44px target; optional tooltip supplements the name. Status icon: visible message and semantic label. Loading icon: one coarse role=status announcement, reduced-motion fallback and no per-frame speech.&quot;,
+      &quot;Assets and recovery&quot;: &quot;Reference uploads are images up to 2MB each, at most 10 and 2.8MB encoded total. Keep choose/remove keyboard accessible; report read/decode errors. JSON packages references. Unreviewed SVG references render as images, never executable inline markup. Reference upload does not certify a reusable normalized glyph.&quot;,
+      &quot;RTL and motion&quot;: &quot;Mirror chevron-end and navigation arrows in RTL. Do not mirror physical objects, logos, text or mathematical/trend meaning without a semantic reason. Do not animate essential meaning. Prefer a static loading label with reduced motion.&quot;,
+      &quot;Agent and export&quot;: &quot;Include named action aliases, approved source/license, style, size, stroke, cap/join, currentColor, role, state and direction. AI-generated glyphs require source/geometry/accessibility review. Reject untrusted SVG scripts, event handlers, external references and foreignObject before any inline reuse.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

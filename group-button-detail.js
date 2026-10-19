@@ -207,7 +207,7 @@
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the group's outer corners only - the joining edges between segments stay square.");
     lines.push("");
     lines.push("Component properties: Number of buttons (dropdown, 1-9, default 3 - drives both segment count and labels, one consistent lettered sequence: Option A, Option B, Option C, Option D, Option E, Option F, Option G, Option H, Option I); Field label (optional toggle, shows a label above the group, e.g. \"View\", mirrors the Input component's Label); Supporting text (optional toggle, shows helper text below the group, e.g. \"Choose how to display your results.\", mirrors Input's helper text).");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(selectionInfo){
@@ -303,31 +303,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (group-button.html's

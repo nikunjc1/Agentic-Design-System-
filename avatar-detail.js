@@ -95,7 +95,7 @@
     lines.push("These are structural/presentational variants, not interaction states - Avatar itself is not interactive.");
     lines.push("");
     lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a \"+N\" overflow indicator styled like a real avatar. Show as (Avatars / Names only) - whether the group renders as that overlapping avatar-circle stack, or as a plain vertical list of full names with no avatar graphic at all, for contexts where showing the avatar image isn't worth the space; both modes represent the identical list, including the same \"+N\" overflow count.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(selectionInfo){
@@ -173,31 +173,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (avatar.html's listing

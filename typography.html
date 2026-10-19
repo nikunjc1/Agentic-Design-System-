@@ -189,7 +189,7 @@
     </div>
 
     <div class="font-panel" data-font="primary">
-      <div class="copy-tabs font-method-tabs" role="tablist">
+      <div class="copy-tabs font-method-tabs" role="group">
         <button class="copy-tab is-active" data-method="category" type="button">Browse by category</button>
         <button class="copy-tab" data-method="upload" type="button">Upload font</button>
       </div>
@@ -209,7 +209,7 @@
       <div class="font-method-panel" data-panel="upload">
         <label class="picker-field">
           <span>Font family name</span>
-          <input type="text" data-role="upload-name" placeholder="My Brand Primary" autocomplete="off" spellcheck="false" />
+          <input type="text" data-role="upload-name" maxlength="100" placeholder="My Brand Primary" autocomplete="off" spellcheck="false" />
         </label>
         <label class="upload-dropzone" data-role="upload-drop">
           <input type="file" data-role="upload-input" accept=".woff,.woff2,.ttf,.otf" hidden />
@@ -231,7 +231,7 @@
     </div>
 
     <div class="font-panel" data-font="secondary">
-      <div class="copy-tabs font-method-tabs" role="tablist">
+      <div class="copy-tabs font-method-tabs" role="group">
         <button class="copy-tab is-active" data-method="category" type="button">Browse by category</button>
         <button class="copy-tab" data-method="upload" type="button">Upload font</button>
       </div>
@@ -251,7 +251,7 @@
       <div class="font-method-panel" data-panel="upload">
         <label class="picker-field">
           <span>Font family name</span>
-          <input type="text" data-role="upload-name" placeholder="My Brand Secondary" autocomplete="off" spellcheck="false" />
+          <input type="text" data-role="upload-name" maxlength="100" placeholder="My Brand Secondary" autocomplete="off" spellcheck="false" />
         </label>
         <label class="upload-dropzone" data-role="upload-drop">
           <input type="file" data-role="upload-input" accept=".woff,.woff2,.ttf,.otf" hidden />
@@ -287,7 +287,7 @@
 
 
 
-    <p class="get-library-copy">Responsive typography: H1–H6, Body, Paragraph and Caption now apply their exact selected metrics across all pages through Foundation tokens. Small screens wrap headings and stack controls without replacing the chosen sizes. Rem mode respects the browser's root font size; the default conversion uses 16 px. Viewport breakpoints stay fixed so changing typography cannot move the layout thresholds. Per-breakpoint type overrides remain a future capability that would need its own explicit controls.</p>
+    <p class="get-library-copy">Caption defaults to 11 px for helper labels, metadata and contrast descriptions. Responsive typography: H1–H6, Body, Paragraph and Caption now apply their exact selected metrics across all pages through Foundation tokens. Small screens wrap headings and stack controls without replacing the chosen sizes. Rem mode respects the browser's root font size; the default conversion uses 16 px. Viewport breakpoints stay fixed so changing typography cannot move the layout thresholds. Per-breakpoint type overrides remain a future capability that would need its own explicit controls.</p>
     <p class="get-library-copy">Tabular figures: Table's cells and Statistic's headline value both use tabular (fixed-width) digits, so a column of numbers lines up instead of drifting as digit shapes vary - reserved for actual numeric data, not applied to running body text.</p>
     <p class="get-library-copy">Foundation audit T04 - H1-H6 here are visual sizes, not an HTML heading-rank mandate: pick whichever level's size reads right for a given piece of text, then choose its actual <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code> tag from the page's own real document structure (one visible <code>&lt;h1&gt;</code> per page, ranks nested without skipping) - the two are independent decisions. A page's main heading might need H3's smaller size while still correctly being marked up as the page's one real <code>&lt;h1&gt;</code>; a visually prominent H1-styled pull-quote is still just a <code>&lt;p&gt;</code> or <code>&lt;blockquote&gt;</code>, not a second page heading.</p>
 
@@ -315,15 +315,18 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" selected data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
-              <option value="display-lg" data-size="48" data-line-height="60" selected>Display LG - 48/60px</option>
+              <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
               <option value="display-2xl" data-size="72" data-line-height="90">Display 2XL - 72/90px</option>
           </select>
@@ -352,7 +355,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -403,14 +406,17 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" selected data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
-              <option value="display-md" data-size="36" data-line-height="44" selected>Display MD - 36/44px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
+              <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
               <option value="display-2xl" data-size="72" data-line-height="90">Display 2XL - 72/90px</option>
@@ -440,7 +446,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -491,13 +497,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
-              <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
-              <option value="display-sm" data-size="30" data-line-height="38" selected>Display SM - 30/38px</option>
+              <option value="display-xs" selected data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
+              <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -528,7 +537,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -579,13 +588,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
-              <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
-              <option value="display-xs" data-size="24" data-line-height="32" selected>Display XS - 24/32px</option>
+              <option value="text-xl" selected data-size="20" data-line-height="30">Text XL - 20/30px</option>
+              <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -616,7 +628,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -667,13 +679,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
-              <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
-              <option value="text-xl" data-size="20" data-line-height="30" selected>Text XL - 20/30px</option>
+              <option value="text-lg" selected data-size="18" data-line-height="28">Text LG - 18/28px</option>
+              <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -704,7 +719,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -755,13 +770,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
-              <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
-              <option value="text-lg" data-size="18" data-line-height="28" selected>Text LG - 18/28px</option>
+              <option value="text-md" selected data-size="16" data-line-height="24">Text MD - 16/24px</option>
+              <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -792,7 +810,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -846,13 +864,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24" selected>Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -883,7 +904,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -934,13 +955,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24" selected>Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -971,7 +995,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1022,13 +1046,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
-              <option value="text-xs" data-size="12" data-line-height="18" selected>Text XS - 12/18px</option>
+              <option value="text-2xs" data-size="11" data-line-height="16.5" selected>Text 2XS - 11/16.5px</option>
+              <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20">Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1059,7 +1086,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1113,13 +1140,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1150,7 +1180,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1201,13 +1231,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1238,7 +1271,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1289,13 +1322,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1326,7 +1362,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1377,13 +1413,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1414,7 +1453,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1465,13 +1504,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1502,7 +1544,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1553,13 +1595,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1590,7 +1635,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1641,13 +1686,16 @@
         <label class="type-control type-control-size">
           <span>Size</span>
           <select data-role="size">
+              <option value="text-2xs" data-size="11" data-line-height="16.5">Text 2XS - 11/16.5px</option>
               <option value="text-xs" data-size="12" data-line-height="18">Text XS - 12/18px</option>
               <option value="text-sm" data-size="14" data-line-height="20" selected>Text SM - 14/20px</option>
               <option value="text-md" data-size="16" data-line-height="24">Text MD - 16/24px</option>
               <option value="text-lg" data-size="18" data-line-height="28">Text LG - 18/28px</option>
               <option value="text-xl" data-size="20" data-line-height="30">Text XL - 20/30px</option>
               <option value="display-xs" data-size="24" data-line-height="32">Display XS - 24/32px</option>
+              <option value="heading-md" data-size="28" data-line-height="36">Heading MD - 28/36px</option>
               <option value="display-sm" data-size="30" data-line-height="38">Display SM - 30/38px</option>
+              <option value="heading-lg" data-size="32" data-line-height="40">Heading LG - 32/40px</option>
               <option value="display-md" data-size="36" data-line-height="44">Display MD - 36/44px</option>
               <option value="display-lg" data-size="48" data-line-height="60">Display LG - 48/60px</option>
               <option value="display-xl" data-size="60" data-line-height="72">Display XL - 60/72px</option>
@@ -1678,7 +1726,7 @@
         </label>
       </div>
       <p class="type-row-sample" data-role="sample">Aa Bb Cc - the quick brown fox jumps over the lazy dog</p>
-      <div class="theme-pair-grid" style="margin-top:var(--space-16);">
+      <div class="theme-pair-grid">
         <div class="theme-pair-col">
           <div class="theme-pair-label-row">
             <p class="theme-pair-label">Light theme</p>
@@ -1790,6 +1838,72 @@
       <span class="save-status" id="typographyMarkdownStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Roles</h3><p>Default heading sizes are H1 32px (2rem), H2 28px (1.75rem), H3 24px (1.5rem), H4 20px (1.25rem), H5 18px (1.125rem), H6 16px (1rem). Each role resolves family, size, weight, line height, tracking, style and color. Use semantic HTML for document hierarchy independently of visual size. Body and Paragraph default to 16px and Caption to 11px. Larger display sizes remain explicit custom choices.</p></div>
+<div class="ads-contract-rule"><h3>State modifiers</h3><p>Active, Selected, Disabled, Error, Warning, Success and Info are color modifiers. A state must inherit its base role&#x27;s metrics to avoid layout movement. Independent state metrics in the editor are explicit specimen overrides and must not be applied as a universal state typography recipe. Use the state color token over the original role.</p></div>
+<div class="ads-contract-rule"><h3>Component role mapping</h3><p>Buttons, form labels, table cells and link text inherit Body metrics; dense metadata uses Caption; a form&#x27;s helper or error text keeps the underlying label/body size and adds its state color. Eyebrows may use Caption with approved case; code uses the monospace family with Body dimensions. HTML headings preserve hierarchy even when a visual role differs. Default enabled text colors pass 4.5:1 on default page/panel/raised surfaces; saved custom text/surface colors require a new pair check.</p></div>
+<div class="ads-contract-rule"><h3>Responsive usage</h3><p>Saved roles apply consistently across widths. Optional product-specific fluid headings use clamp(1.5rem, 2vw + 1rem, 3rem) for H1, with explicit exported min/max. Body and paragraph stay readable at 1rem; do not automatically shrink text to fit. Caption remains the user-requested 11px role. Content wraps and 200% zoom remains supported. Platform presets seed values; edited presets become custom.</p></div>
+<div class="ads-contract-rule"><h3>Fonts and recovery</h3><p>Load actual faces and required weights, not only a successful stylesheet. Files are WOFF/WOFF2/TTF/OTF up to 2MB. Include uploaded data and remote stylesheet dependencies in the Foundation JSON. Stale completion cannot overwrite a newer selection or reset. Preserve the last valid font on failure and show a category-appropriate fallback.</p></div>
+<div class="ads-contract-rule"><h3>Validation and examples</h3><p>Line height is 50–300%, tracking -5–20px and weight 100–900. Blank tracking is invalid. Validate full hex before applying. Check text on the actual panel and error/tint surface. Exercise German expansion, Arabic RTL and Japanese wrapping, plus user line/word/letter-spacing overrides.</p></div>
+<div class="ads-contract-rule"><h3>Preset changes and handoff</h3><p>Before applying a platform preset show its affected role values. Provide scoped Undo until the next edit/reset; restore fonts and colors only if included in that change. Export all semantic roles, base/state distinction, metrics, responsive policy, fonts and px/rem equivalents.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;Typography&quot;,
+    &quot;rules&quot;: {
+      &quot;Roles&quot;: &quot;Default heading sizes are H1 32px (2rem), H2 28px (1.75rem), H3 24px (1.5rem), H4 20px (1.25rem), H5 18px (1.125rem), H6 16px (1rem). Each role resolves family, size, weight, line height, tracking, style and color. Use semantic HTML for document hierarchy independently of visual size. Body and Paragraph default to 16px and Caption to 11px. Larger display sizes remain explicit custom choices.&quot;,
+      &quot;State modifiers&quot;: &quot;Active, Selected, Disabled, Error, Warning, Success and Info are color modifiers. A state must inherit its base role&#x27;s metrics to avoid layout movement. Independent state metrics in the editor are explicit specimen overrides and must not be applied as a universal state typography recipe. Use the state color token over the original role.&quot;,
+      &quot;Component role mapping&quot;: &quot;Buttons, form labels, table cells and link text inherit Body metrics; dense metadata uses Caption; a form&#x27;s helper or error text keeps the underlying label/body size and adds its state color. Eyebrows may use Caption with approved case; code uses the monospace family with Body dimensions. HTML headings preserve hierarchy even when a visual role differs. Default enabled text colors pass 4.5:1 on default page/panel/raised surfaces; saved custom text/surface colors require a new pair check.&quot;,
+      &quot;Responsive usage&quot;: &quot;Saved roles apply consistently across widths. Optional product-specific fluid headings use clamp(1.5rem, 2vw + 1rem, 3rem) for H1, with explicit exported min/max. Body and paragraph stay readable at 1rem; do not automatically shrink text to fit. Caption remains the user-requested 11px role. Content wraps and 200% zoom remains supported. Platform presets seed values; edited presets become custom.&quot;,
+      &quot;Fonts and recovery&quot;: &quot;Load actual faces and required weights, not only a successful stylesheet. Files are WOFF/WOFF2/TTF/OTF up to 2MB. Include uploaded data and remote stylesheet dependencies in the Foundation JSON. Stale completion cannot overwrite a newer selection or reset. Preserve the last valid font on failure and show a category-appropriate fallback.&quot;,
+      &quot;Validation and examples&quot;: &quot;Line height is 50\u2013300%, tracking -5\u201320px and weight 100\u2013900. Blank tracking is invalid. Validate full hex before applying. Check text on the actual panel and error/tint surface. Exercise German expansion, Arabic RTL and Japanese wrapping, plus user line/word/letter-spacing overrides.&quot;,
+      &quot;Preset changes and handoff&quot;: &quot;Before applying a platform preset show its affected role values. Provide scoped Undo until the next edit/reset; restore fonts and colors only if included in that change. Export all semantic roles, base/state distinction, metrics, responsive policy, fonts and px/rem equivalents.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>

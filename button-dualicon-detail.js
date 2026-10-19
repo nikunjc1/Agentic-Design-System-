@@ -259,7 +259,7 @@
     lines.push("---");
     lines.push("");
     lines.push(buildSplitPrompt());
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function exampleMarkup(size, radiusSuffix, content){
@@ -403,7 +403,7 @@
     lines.push("");
     lines.push("Component properties: State (Rest/Hover/Pressed/Focused/Disabled/Loading), Size and Corner radius (shared with the button matrix's own Size/Corner radius properties), Label (editable text, shared with the button matrix's own Label field, default \"Save\"), Leading Icon (boolean, default true). The main action and dropdown trigger are two separate clickable areas, not one button.");
     lines.push("Keep dimensions, padding, typography, alignment and radius identical across every state - only change what each state specifies. Do not introduce additional colors, gradients or effects beyond what's listed.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildSplitCode(){
@@ -430,28 +430,7 @@
   }
 
   function copyText(text, btn){
-    var originalLabel = btn.textContent;
-    function done(){
-      btn.textContent = "Copied!";
-      setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
-    } else {
-      fallbackCopy(text);
-      done();
-    }
-  }
-
-  function fallbackCopy(text){
-    var ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    try{ document.execCommand("copy"); }catch(e){}
-    document.body.removeChild(ta);
+    return window.ADSClipboard.copyWithFeedback(text, btn);
   }
 
   // Renders either a plain Copy prompt/Copy code button (exactly one

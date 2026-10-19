@@ -5,11 +5,64 @@ const path=require('node:path');
 const vm=require('node:vm');
 const M=require('../foundation-model.js');
 const ROOT=path.resolve(__dirname,'..');
+test('AI approval foregrounds maintain text contrast on all status button states',()=>{
+  const blend=(fg,bg,a)=>'#'+fg.slice(1).match(/../g).map((n,i)=>Math.round(parseInt(n,16)*a+parseInt(bg.slice(1+2*i,3+2*i),16)*(1-a)).toString(16).padStart(2,'0')).join('');
+  for(const theme of ['light','dark'])for(const color of ['#FF031A','#2FBF6E','#FFFFFF','#000000','#FFFF00','#808080','#0000FF'])for(const surface of ['#FFFFFF','#15171A','#888888']){
+    const t=M.resolve({'status-colors':{[theme]:{success:color,danger:color}},'bg-colors':{[theme]:{secondary:surface}}},theme).tokens;
+    for(const name of ['green','danger'])assert.ok(M.contrast(t['--'+name+'-700'],surface)>=4.5);
+    for(const tier of ['high','medium','low']){let value=t['--color-ai-confidence-'+tier];const alias=value.match(/^var\((--[\w-]+)\)$/);if(alias)value=t[alias[1]];assert.ok(M.contrast(value,surface)>=4.5,theme+' confidence '+tier);}
+    for(const action of ['approve','reject'])for(const [state,a] of [['default',.2],['hover',.28],['active',.36]]){
+      const bg=t['--agent-'+action+'-bg-'+state];assert.equal(bg,blend(action==='reject'?t['--type-body-color']:color,surface,a));
+      assert.ok(M.contrast(t['--agent-'+action+'-text-'+state],bg)>=4.5,`${theme} ${color} ${surface} ${state}`);
+    }
+  }
+});
+test('dimension, border and reference-asset records reject invalid saved settings',()=>{
+  for(const value of [{color:'zzzzzz'},{opacity:'101'},{width:'9'},{style:'random'},{sides:'random'}])assert.equal(M.validRecord('ads:border',value),false);
+  assert.equal(M.validRecord('ads:border',{color:'ABCDEF',darkColor:'#123456',width:'0',opacity:'0',style:'none',sides:'start'}),true);
+  assert.equal(M.validRecord('ads:border-states',{focus:{light:'broken'}}),false);
+  assert.equal(M.validRecord('ads:sizing',{target:43}),false);assert.equal(M.validRecord('ads:sizing',{control:40,target:44,icon:16,content:960,sidebar:240}),true);
+  const asset={name:'reference.svg',dataUrl:'data:image/svg+xml;base64,PHN2Zy8+'};
+  assert.equal(M.validRecord('ads:icons',{uploads:[asset]}),true);
+  for(const uploads of [[{...asset,dataUrl:'https://example.test/icon.svg'}],Array(11).fill(asset),[{...asset,dataUrl:'data:image/png;base64,'+'A'.repeat(2800001)}]])assert.equal(M.validRecord('ads:icons',{uploads}),false);
+  assert.equal(M.normalizeData({mask:'ab'}).mask,M.dataDefaults.mask);
+  assert.equal(M.validRecord('ads:data-format',{mask:'ab'}),false);
+  assert.equal(M.validRecord('ads:data-format',{decimals:7}),false);
+  assert.equal(M.validRecord('ads:data-format',{zone:'bad/zone'}),false);
+  assert.equal(M.validRecord('ads:data-format',{locale:'de-DE',separator:'comma'}),false);
+  assert.equal(M.validRecord('ads:data-format',{locale:'de-DE',separator:'locale',zone:'Asia/Kolkata',mask:'•',decimals:3}),true);
+});
 test('every typography role resolves all chosen metrics in each theme',()=>{
   for(const role of Object.keys(M.typeDefaults)) {
     const saved={typography:{primaryFont:{family:'Lora'},secondaryFont:{family:'Inter'},levels:{[role]:{family:'primary',size:'text-xl',weight:'600',lineHeightPct:'180',letterSpacing:1.5,italic:true,color:'#123456',darkColor:'#ABCDEF'}}}};
     for(const theme of ['light','dark']) {const t=M.resolve(saved,theme).tokens,p='--type-'+role+'-';assert.equal(t[p+'family'],'var(--font-display)');assert.equal(t[p+'size'],'20px');assert.equal(t[p+'weight'],'600');assert.equal(t[p+'line-height'],'1.8');assert.equal(t[p+'tracking'],'1.5px');assert.equal(t[p+'style'],'italic');assert.equal(t[p+'color'],theme==='light'?'#123456':'#ABCDEF');}
   }
+});
+test('restoring the heading scale preserves other roles, fonts and theme colors',()=>{
+  const saved={primaryFont:{family:'Lora'},secondaryFont:{family:'Inter'},platform:'saas',levels:{
+    h1:{size:'display-xs',weight:'500',lineHeightPct:'180',color:'#123456',darkColor:'#ABCDEF',letterSpacing:-1,italic:true},
+    h2:{size:'display-sm'},body:{size:'text-sm',weight:'600'},paragraph:{size:'text-lg'},caption:{size:'text-2xs'}
+  }};
+  const before=JSON.stringify(saved), restored=M.restoreHeadingScale(saved);
+  assert.equal(restored.headingScaleVersion,2);assert.equal(JSON.stringify(saved),before);
+  assert.deepEqual(restored.primaryFont,saved.primaryFont);assert.equal(restored.levels.h1.color,'#123456');assert.equal(restored.levels.h1.darkColor,'#ABCDEF');assert.equal(restored.levels.h1.letterSpacing,-1);
+  for(const role of ['body','paragraph','caption'])assert.deepEqual(restored.levels[role],saved.levels[role]);
+  for(const theme of ['light','dark'])for(const unit of ['px','rem']) {
+    const t=M.resolve({typography:restored,units:{unit}},theme).tokens;
+    ['h1','h2','h3','h4','h5','h6'].forEach((role,i)=>{
+      assert.equal(M.toPx(t['--type-'+role+'-size']),[32,28,24,20,18,16][i]);
+      assert.equal(t['--type-'+role+'-line-height'],String(Number(M.typeDefaults[role].lineHeightPct)/100));
+      assert.equal(t['--type-'+role+'-weight'],M.typeDefaults[role].weight);
+    });
+  }
+  const migrated=M.migrateRecord('typography',{...saved,headingScaleVersion:1});
+  assert.equal(migrated.headingScaleVersion,2);
+  assert.equal(M.inspectRecord('typography',JSON.stringify({...saved,schemaVersion:1,headingScaleVersion:1})).status,'migrated');
+  assert.equal(migrated.levels.h1.weight,'500');assert.equal(migrated.levels.h1.lineHeightPct,'180');
+  assert.deepEqual(migrated.levels.body,saved.levels.body);assert.equal(JSON.stringify(saved),before);
+  migrated.levels.h1.size='display-xl';
+  assert.equal(M.migrateRecord('typography',migrated).levels.h1.size,'display-xl','Later custom edits must not be reset');
+  assert.equal(M.inspectRecord('typography',JSON.stringify({...saved,headingScaleVersion:3})).status,'future');
 });
 test('px/rem round trips preserve fractional and negative dimensions',()=>{
   for(const n of [-1.5,0,1,1.25,14,24,48,1200])assert.equal(M.convert(M.convert(n,'px','rem'),'rem','px'),n);
@@ -84,7 +137,7 @@ test('malformed records and out-of-bounds values are rejected or safely resolved
   assert.equal(M.validRecord('ads:colors',{light:{primary:{hex:123}}}),false);
   for(const v of [{columns:25},{columns:1.5},{gutter:65},{gutter:2.2}])assert.equal(M.validRecord('ads:grid-layout',v),false);
   const t=M.resolve({typography:{levels:{h1:{size:'bad',weight:'bad',letterSpacing:500}}},sizing:{target:1},radius:{philosophy:'bad'}}).tokens;
-  assert.equal(t['--type-h1-size'],'48px');assert.equal(t['--type-h1-weight'],'700');assert.equal(t['--type-h1-tracking'],'0px');assert.equal(t['--size-target'],'44px');
+  assert.equal(t['--type-h1-size'],'32px');assert.equal(t['--type-h1-weight'],'700');assert.equal(t['--type-h1-tracking'],'0px');assert.equal(t['--size-target'],'44px');
 });
 test('data formatting distinguishes zero, absence, nonnumeric and loading',()=>{
   assert.equal(M.format(0,'number',{}),'0');assert.equal(M.format(null,'number',{}),'–');assert.equal(M.format(NaN,'number',{}),'–');assert.equal(M.format('bad','number',{}),'–');assert.equal(M.format(null,'loading',{}),'Loading…');
@@ -140,11 +193,11 @@ test('head boot, same-page changes, reload defaults and cross-tab clearing use o
   const window={ADSFoundationModel:M,addEventListener:events.addEventListener.bind(events),dispatchEvent:events.dispatchEvent.bind(events)};
   const context={window,document,localStorage:{getItem:k=>store.get(k)||null},location:{href:'https://example.test/overview.html',pathname:'/overview.html'},MutationObserver:class{observe(){}},CustomEvent:CE,queueMicrotask,setTimeout,clearTimeout,URL,console};
   vm.runInNewContext(fs.readFileSync(path.join(ROOT,'foundation-runtime.js'),'utf8'),context);
-  assert.equal(style.get('--type-h1-size'),'48px');
-  window.dispatchEvent(new CE('ads:foundation-change',{detail:{key:'ads:typography',value:{levels:{h1:{size:'text-xl',color:'#123456'}}}}}));await Promise.resolve();assert.equal(style.get('--type-h1-size'),'20px');assert.equal(style.get('--type-h1-color'),'#123456');
-  window.dispatchEvent(new CE('ads:foundation-change',{detail:{key:'ads:typography',removed:true}}));await Promise.resolve();assert.equal(style.get('--type-h1-size'),'48px');
-  store.set('ads:typography',JSON.stringify({levels:{h1:{size:'display-sm'}}}));const event=new Event('storage');event.key='ads:typography';events.dispatchEvent(event);assert.equal(style.get('--type-h1-size'),'30px');
-  store.clear();const clear=new Event('storage');clear.key=null;events.dispatchEvent(clear);assert.equal(style.get('--type-h1-size'),'48px');
+  assert.equal(style.get('--type-h1-size'),'32px');
+  window.dispatchEvent(new CE('ads:foundation-change',{detail:{key:'ads:typography',value:{headingScaleVersion:2,levels:{h1:{size:'text-xl',color:'#123456'}}}}}));await Promise.resolve();assert.equal(style.get('--type-h1-size'),'20px');assert.equal(style.get('--type-h1-color'),'#123456');
+  window.dispatchEvent(new CE('ads:foundation-change',{detail:{key:'ads:typography',removed:true}}));await Promise.resolve();assert.equal(style.get('--type-h1-size'),'32px');
+  store.set('ads:typography',JSON.stringify({headingScaleVersion:2,levels:{h1:{size:'display-sm'}}}));const event=new Event('storage');event.key='ads:typography';events.dispatchEvent(event);assert.equal(style.get('--type-h1-size'),'30px');
+  store.clear();const clear=new Event('storage');clear.key=null;events.dispatchEvent(clear);assert.equal(style.get('--type-h1-size'),'32px');
 });
 test('storage failure keeps saved data, applies a marked preview, and blocks failed resets',async()=>{
   const store=new Map([['ads:spacing',JSON.stringify({system:'4px'})]]),styles=new Map(),events=new EventTarget();let quota=false,resetFailure=false;

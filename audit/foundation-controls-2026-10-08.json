@@ -1,0 +1,213 @@
+{
+  "date": "2026-10-08",
+  "method": "Actual page scripts in jsdom; rendered-browser QA unavailable",
+  "assertions": 2205,
+  "edits": 846,
+  "combinations": 817,
+  "failures": 0,
+  "results": [
+    {
+      "page": "foundations.html",
+      "checks": 95,
+      "edits": 60,
+      "combinations": 0,
+      "viewSwitches": 10,
+      "sectionButtons": 7,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "grid-layout.html",
+      "checks": 64,
+      "edits": 37,
+      "combinations": 0,
+      "viewSwitches": 10,
+      "sectionButtons": 8,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "typography.html",
+      "checks": 492,
+      "edits": 500,
+      "combinations": 0,
+      "viewSwitches": 6,
+      "sectionButtons": 5,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "spacing.html",
+      "checks": 51,
+      "edits": 27,
+      "combinations": 0,
+      "viewSwitches": 8,
+      "sectionButtons": 6,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "radius.html",
+      "checks": 29,
+      "edits": 2,
+      "combinations": 0,
+      "viewSwitches": 10,
+      "sectionButtons": 7,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "borders.html",
+      "checks": 90,
+      "edits": 66,
+      "combinations": 0,
+      "viewSwitches": 8,
+      "sectionButtons": 6,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "shadows.html",
+      "checks": 24,
+      "edits": 2,
+      "combinations": 0,
+      "viewSwitches": 6,
+      "sectionButtons": 6,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "icons.html",
+      "checks": 71,
+      "edits": 47,
+      "combinations": 0,
+      "viewSwitches": 8,
+      "sectionButtons": 7,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "ai-foundation.html",
+      "checks": 17,
+      "edits": 0,
+      "combinations": 0,
+      "viewSwitches": 0,
+      "sectionButtons": 8,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "principles.html",
+      "checks": 19,
+      "edits": 0,
+      "combinations": 0,
+      "viewSwitches": 0,
+      "sectionButtons": 12,
+      "readOnlySamples": 3,
+      "failures": []
+    },
+    {
+      "page": "guidelines.html",
+      "checks": 15,
+      "edits": 0,
+      "combinations": 0,
+      "viewSwitches": 0,
+      "sectionButtons": 8,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "copywriting.html",
+      "checks": 12,
+      "edits": 0,
+      "combinations": 0,
+      "viewSwitches": 0,
+      "sectionButtons": 5,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "data-format.html",
+      "checks": 60,
+      "edits": 59,
+      "combinations": 0,
+      "viewSwitches": 0,
+      "sectionButtons": 6,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "accessibility.html",
+      "checks": 20,
+      "edits": 0,
+      "combinations": 0,
+      "viewSwitches": 2,
+      "sectionButtons": 11,
+      "readOnlySamples": 0,
+      "failures": []
+    },
+    {
+      "page": "spacing.html combinations",
+      "checks": 49,
+      "edits": 0,
+      "combinations": 48,
+      "failures": []
+    },
+    {
+      "page": "radius.html combinations",
+      "checks": 61,
+      "edits": 0,
+      "combinations": 60,
+      "failures": []
+    },
+    {
+      "page": "grid-layout.html combinations",
+      "checks": 97,
+      "edits": 0,
+      "combinations": 96,
+      "failures": []
+    },
+    {
+      "page": "icons.html combinations",
+      "checks": 225,
+      "edits": 0,
+      "combinations": 112,
+      "failures": []
+    },
+    {
+      "page": "borders.html combinations",
+      "checks": 226,
+      "edits": 0,
+      "combinations": 225,
+      "failures": []
+    },
+    {
+      "page": "data-format.html combinations",
+      "checks": 49,
+      "edits": 0,
+      "combinations": 48,
+      "failures": []
+    },
+    {
+      "page": "Failure recovery and assets",
+      "checks": 87,
+      "edits": 0,
+      "combinations": 0,
+      "failures": []
+    },
+    {
+      "page": "Shared theme/unit/density/direction",
+      "checks": 224,
+      "edits": 0,
+      "combinations": 224,
+      "failures": []
+    },
+    {
+      "page": "Font sources, presets and color picker",
+      "checks": 128,
+      "edits": 46,
+      "combinations": 4,
+      "failures": []
+    }
+  ]
+}

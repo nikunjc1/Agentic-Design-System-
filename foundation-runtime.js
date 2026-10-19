@@ -3,12 +3,35 @@
   'use strict';
   const M=window.ADSFoundationModel, root=document.documentElement;
   const keys=['colors','bg-colors','status-colors','neutral-colors','typography','spacing','sizing','radius','border','border-states','shadow','icons','grid-layout','units','data-format'];
-  const drafts=new Map(), previous=new Set();
-  function read(key) { if(drafts.has(key)) return drafts.get(key); try { return JSON.parse(localStorage.getItem('ads:'+key)||'null'); } catch { return null; } }
+  // Unit editing belongs to dimensional Foundations. Component recipes still
+  // inherit the preference, and explicitly marked dimensions keep local controls.
+  const unitPages=new Set(['typography.html','grid-layout.html','spacing.html','radius.html','borders.html','shadows.html','icons.html']);
+  const foundationPages=new Set([...unitPages,'foundations.html','ai-foundation.html']);
+  const pageScopes={
+    'foundations.html':[['colors','bg-colors','status-colors','neutral-colors'],/^--(?:color-(?:brand|action-|surface-|text-)|red-|green-|amber-|danger-|blue-|graphite-|control-border|button-primary-text)/],
+    'grid-layout.html':[['grid-layout','sizing'],/^--(?:grid-|size-)/],
+    'typography.html':[['typography'],/^--(?:type-|font-)/],
+    'spacing.html':[['spacing','sizing'],/^--(?:space-(?:2|4|6|8|10|12|14|16|24|32|40|48|64|label-gap|helper-gap|field-gap|icon-gap|panel-padding|group-gap)$|size-)/],
+    'radius.html':[['radius'],/^--radius-(?:sm|md|lg|full)$/],
+    'borders.html':[['border','border-states'],/^--(?:border-|control-border|focus-ring|color-focus)/],
+    'shadows.html':[['shadow'],/^--shadow-/],
+    'icons.html':[['icons','sizing'],/^--(?:icon-|size-)/],
+    'ai-foundation.html':[['status-colors','bg-colors'],/^--(?:agent-|color-ai-|color-agent-|green-|amber-|danger-)/]
+  };
+  const drafts=new Map(), previous=new Set(),unsavedKeys=new Set();
+  function read(key) {
+    let value;
+    if(drafts.has(key)) value=drafts.get(key);
+    else try { value=JSON.parse(localStorage.getItem('ads:'+key)||'null'); } catch { return null; }
+    if(value!=null) {try {value=M.migrateRecord(key,value);} catch {return null;}}
+    // Restore the requested heading scale on first paint of legacy projects.
+    // The version marker permits deliberate edits after this one-time update.
+    return key==='typography'&&value&&value.headingScaleVersion==null&&M.validRecord('ads:typography',value)?M.restoreHeadingScale(value):value;
+  }
   function preference(key,fallback,choices) { try { const v=localStorage.getItem('ads:'+key);return choices.includes(v)?v:fallback; } catch { return fallback; } }
   root.dataset.theme=preference('theme','light',['light','dark']);root.dataset.density=preference('density','comfortable',['comfortable','compact']);root.dir=preference('direction','ltr',['ltr','rtl']);
   let resolved;
-  const fontAssets=new Map();
+  const fontAssets=new Map(),loadedFaces=new Map();
   function apply() {
     const saved=Object.fromEntries(keys.map(k=>[k,read(k)]));
     let profile=null;try { profile=window.ADSProject?window.ADSProject.read(localStorage):JSON.parse(localStorage.getItem('ads:project-profile:v1')||'null'); } catch {}
@@ -18,22 +41,33 @@
     root.dataset.foundationUnit=resolved.unit;root.dataset.gridSystem=resolved.gridSystem;root.dataset.iconStyle=resolved.iconStyle;
     root.dataset.borderSides=resolved.tokens['--border-sides'];
     const typo=saved.typography||{};
+    for(const [family,dataUrl]of fontAssets)if(![typo.primaryFont,typo.secondaryFont].some(f=>f?.family===family&&f.dataUrl===dataUrl)){fontAssets.delete(family);const face=loadedFaces.get(family);if(face)document.fonts?.delete?.(face);loadedFaces.delete(family);}
     for(const f of [typo.primaryFont,typo.secondaryFont]) if(f&&f.linkHref) {
       try { const url=new URL(f.linkHref,location.href);if(url.protocol==='https:'&&!Array.from(document.querySelectorAll('link[rel=stylesheet]')).some(l=>l.href===url.href)) {const link=document.createElement('link');link.rel='stylesheet';link.href=url.href;document.head.append(link);} } catch {}
     }
     for(const f of [typo.primaryFont,typo.secondaryFont]) if(f&&f.family&&typeof f.dataUrl==='string'&&/^data:[\w.+/-]*;base64,[A-Za-z0-9+/=]+$/.test(f.dataUrl)&&f.dataUrl.length<3000000) {
       if(fontAssets.get(f.family)===f.dataUrl) continue;
       fontAssets.set(f.family,f.dataUrl);
-      try {const face=new FontFace(f.family,'url("'+f.dataUrl+'")');face.load().then(loaded=>{document.fonts.add(loaded);scheduleText();}).catch(()=>{fontAssets.delete(f.family);window.dispatchEvent(new CustomEvent('ads:font-error',{detail:{family:f.family}}));});}catch{fontAssets.delete(f.family);}
+      try {const face=new FontFace(f.family,'url("'+f.dataUrl+'")');face.load().then(loaded=>{if(fontAssets.get(f.family)!==f.dataUrl)return;document.fonts.add(loaded);loadedFaces.set(f.family,loaded);scheduleText();}).catch(()=>{if(fontAssets.get(f.family)!==f.dataUrl)return;fontAssets.delete(f.family);window.dispatchEvent(new CustomEvent('ads:font-error',{detail:{family:f.family}}));});}catch{fontAssets.delete(f.family);}
     }
     if(document.body) { bindExamples();renderData();updateUnits(); scheduleText(); }
     window.dispatchEvent(new CustomEvent('ads:foundation-applied',{detail:resolved}));
     return resolved;
   }
-  window.ADSFoundation={ apply, get:()=>resolved, format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), read };
-  window.addEventListener('ads:foundation-change',e=>{const key=e.detail.key.replace(/^ads:/,'');if(!keys.includes(key)) return;if(e.detail.removed) drafts.delete(key);else drafts.set(key,e.detail.value);queueMicrotask(apply);});
+  function preparePageMarkdown(text) {
+    const page=location.pathname.split('/').pop();
+    const scope=pageScopes[page]||[keys,/^--(?:type-|font-|size-|icon-|grid-|agent-|color-ai-|color-agent-|graphite-|radius-(?:sm|md|lg)$|shadow-|border-|red-|green-|amber-|danger-|blue-|control-border|space-(?:4|6|8|12|16|24|32|40|48|64)$)/];
+    const settings=Object.fromEntries(scope[0].map(key=>[key,read(key)]));
+    // Reference assets are packaged in JSON exports, not duplicated as huge
+    // data URLs inside documentation prompts.
+    const json=JSON.stringify({unit:resolved.unit,theme:resolved.theme,density:root.dataset.density,direction:root.dir,settings,unsavedPreviewKeys:[...unsavedKeys],tokens:Object.fromEntries(Object.entries(resolved.tokens).filter(([name])=>scope[1].test(name)))},(key,value)=>key==='dataUrl'?(value?'Included in Foundation JSON':null):value,2);
+    const source=String(text).replace(/\n*<!-- ads:page-foundation -->[\s\S]*?<!-- \/ads:page-foundation -->/g,'').replace(/\n*<!-- ads:contract -->[\s\S]*?<!-- \/ads:contract -->/g,'').trim()+'\n\n<!-- ads:contract -->\n'+M.contractMarkdown(page)+'\n<!-- /ads:contract -->';
+    return M.prepareMarkdown(source+'\n\n<!-- ads:page-foundation -->\n## Current Foundation configuration\n\nThe following configuration is the applied state. Unfinished or invalid editor drafts are not applied. Reference assets are included in Foundation JSON.\n\n```json\n'+json+'\n```\n<!-- /ads:page-foundation -->',resolved);
+  }
+  window.ADSFoundation={ apply, get:()=>resolved, getVerification:()=>({unsavedPreviewKeys:[...unsavedKeys]}),format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), prepareMarkdown:(text,names)=>M.prepareMarkdown(text,resolved,names), preparePageMarkdown, read };
+  window.addEventListener('ads:foundation-change',e=>{const key=e.detail.key.replace(/^ads:/,'');if(!keys.includes(key)) return;if(e.detail.unsaved)unsavedKeys.add(key);else unsavedKeys.delete(key);if(e.detail.removed) drafts.delete(key);else drafts.set(key,e.detail.value);queueMicrotask(apply);});
   window.addEventListener('storage',e=>{
-    if(e.key===null) {drafts.clear();root.dataset.theme=preference('theme','light',['light','dark']);root.dataset.density=preference('density','comfortable',['comfortable','compact']);root.dir=preference('direction','ltr',['ltr','rtl']);}else drafts.delete(e.key.replace(/^ads:/,''));
+    if(e.key===null) {drafts.clear();unsavedKeys.clear();root.dataset.theme=preference('theme','light',['light','dark']);root.dataset.density=preference('density','comfortable',['comfortable','compact']);root.dir=preference('direction','ltr',['ltr','rtl']);}else {const key=e.key.replace(/^ads:/,'');drafts.delete(key);unsavedKeys.delete(key);}
     apply();
     const editor=location.pathname.match(/\/(foundations|typography|spacing|radius|borders|shadows|icons|grid-layout|data-format)\.html$/)?.[1];
     const editorKeys={foundations:['colors','bg-colors','status-colors','neutral-colors'],typography:['typography'],spacing:['spacing','sizing'],radius:['radius'],borders:['border','border-states'],shadows:['shadow'],icons:['icons','sizing'],'grid-layout':['grid-layout','sizing'],'data-format':['data-format']};
@@ -41,7 +75,7 @@
     const main=document.querySelector('main');if(main.querySelector('.ads-editor-conflict'))return;
     const notice=document.createElement('div');notice.className='ads-editor-conflict';notice.setAttribute('role','status');notice.textContent='Foundation changed in another tab. Reload to refresh these controls before editing. ';
     const reload=document.createElement('button');reload.type='button';reload.className='btn btn-ghost';reload.textContent='Reload controls';reload.addEventListener('click',()=>location.reload());notice.append(reload);
-    main.querySelectorAll('input,select,textarea,button').forEach(el=>{if(!el.closest('.ads-foundation-toolbar')&&!el.matches('.ads-read-more,.guide-toggle-btn'))el.disabled=true;});
+    main.querySelectorAll('input,select,textarea,button').forEach(el=>{if(!el.closest('.ads-foundation-toolbar,.page-outline')&&!el.matches('.ads-read-more,.guide-toggle-btn'))el.disabled=true;});
     main.prepend(notice);
   });
   new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:['data-theme']});
@@ -59,7 +93,7 @@
       if(el.dataset.missing==='true') el.setAttribute('aria-label','No value');
       if(['redaction','full','partial'].includes(kind)) el.setAttribute('aria-label',kind==='full'||(kind==='redaction'&&resolved.dataFormat.redaction==='full')?'Value redacted':'Value partially redacted');
       if(kind==='large') {const exact=window.ADSFoundation.format(value,'number');el.title=exact;el.setAttribute('aria-label',exact);el.tabIndex=0;}
-      if(el.matches('td,th')) el.style.textAlign=resolved.dataFormat.tableAlign;
+      if(el.matches('td,th')&&['number','currency','unit','large','percent'].includes(kind)) el.style.textAlign=resolved.dataFormat.tableAlign;
     });
     document.querySelectorAll('[data-format-space]').forEach(el=>{const chars={space:' ',nbsp:'\u00a0',narrow:'\u202f'};const value='Before'+chars[resolved.dataFormat.escapedSpace]+'After';if(el.textContent!==value) el.textContent=value;});
     document.querySelectorAll('.daterange-demo-arrow').forEach(el=>{if(el.textContent!==resolved.dataFormat.range)el.textContent=resolved.dataFormat.range;});
@@ -69,6 +103,9 @@
     document.querySelectorAll('main td, main .statistic-demo-value-text, main .description-demo-value').forEach(el=>{
       if(el.dataset.format||el.children.length) return;
       const value=el.textContent.trim();
+      const column=el.matches('td')?el.closest('table')?.querySelector('thead tr')?.children[el.cellIndex]?.textContent.trim():null;
+      const label=column||el.closest('.description-demo-item')?.querySelector('.description-demo-label')?.textContent||'';
+      if(/\b(id|code|phone|mobile|account|postcode|zip|tracking)\b/i.test(label)||/^0\d+$/.test(value))return;
       if(/^-?\d{1,3}(?:,\d{3})+(?:\.\d+)?$/.test(value)||/^-?\d+(?:\.\d+)?$/.test(value)) {el.dataset.format='number';el.dataset.value=value.replaceAll(',','');}
       else if(/^\d{4}-\d{2}-\d{2}$/.test(value)) {el.dataset.format='date';el.dataset.value=value;}
       else if(/^[£$€₹]-?[\d,]+(?:\.\d+)?$/.test(value)) {el.dataset.format='currency';el.dataset.value=value.slice(1).replaceAll(',','');}
@@ -86,8 +123,18 @@
       if(el.closest('.type-row,.font-preview,pre,code,svg')||el.matches('.ads-text-content,.ads-read-more')) return;
       const size=el.style.fontSize, roleMatch=size.match(/--type-(\w+)-size/);
       const roles={11:'caption',12:'caption',13:'body',14:'body',16:'body',18:'h6',20:'h5',24:'h4',30:'h3',36:'h2',48:'h1'};
-      const role=roleMatch?roleMatch[1]:/px$/.test(size)?roles[parseFloat(size)]||'body':null;
-      if(role) for(const [prop,suffix] of [['fontSize','size'],['fontWeight','weight'],['fontStyle','style'],['lineHeight','line-height'],['letterSpacing','tracking']]) {const val='var(--type-'+role+'-'+suffix+')';if(el.style[prop]!==val) el.style[prop]=val;}
+      const role=/^H[1-6]$/.test(el.tagName)?el.tagName.toLowerCase():roleMatch?roleMatch[1]:/px$/.test(size)?roles[parseFloat(size)]||'body':null;
+      if(role&&M.typeDefaults[role]) {
+        for(const [prop,suffix] of [['fontFamily','family'],['fontSize','size'],['fontWeight','weight'],['fontStyle','style'],['lineHeight','line-height'],['letterSpacing','tracking']]) {
+          if(prop==='fontFamily'&&el.style.fontFamily.includes('--font-mono')) continue;
+          const val='var(--type-'+role+'-'+suffix+')';if(el.style[prop]!==val) el.style[prop]=val;
+        }
+        // Follow the role's text color, while retaining authored semantic
+        // status, brand and inverse-surface foreground colors.
+        if(!el.style.color||/^var\(--(?:text-(?:hi|mid|dim)|type-\w+-color)\)$/.test(el.style.color)) {
+          const color='var(--type-'+role+'-color)';if(el.style.color!==color) el.style.color=color;
+        }
+      }
     });
   }
   const unitInputs=new Map(), unitTexts=new Map();
@@ -99,14 +146,23 @@
     input.before(wrap);wrap.append(display,select);input.hidden=true;
     unitInputs.set(input,{display,select});
     function commit(event) {
+      event.stopPropagation();
       const px=display.value===''?'':M.convert(display.value,resolved.unit,'px');
       input.value=px;input.dispatchEvent(new Event(event.type,{bubbles:true}));
       display.setAttribute('aria-invalid',input.getAttribute('aria-invalid')==='true'?'true':'false');
     }
     display.addEventListener('input',commit);display.addEventListener('change',commit);
-    select.addEventListener('change',()=>setUnit(select.value));
+    const choose=e=>{e.stopPropagation();setUnit(select.value);};
+    select.addEventListener('input',choose);select.addEventListener('change',choose);
   }
-  function setUnit(unit) { if(window.ADSStorage) window.ADSStorage.safeSet('ads:units',{unit}); }
+  function setUnit(unit) {
+    if(!['px','rem'].includes(unit)||unit===resolved.unit) return;
+    window.ADSStorage.safeSet('ads:units',{unit});
+    // Apply before another editor handler can restore the previous radio/select
+    // value between the native input and change events. safeSet also retains an
+    // unsaved preview and shows the storage warning when persistence fails.
+    apply();
+  }
   function updateUnits() {
     if(!document.body) return;
     document.querySelectorAll('[data-foundation-unit]').forEach(s=>{
@@ -115,8 +171,10 @@
     });
     // Only dimensions: percentages, weights, columns, opacity and time stay unchanged.
     document.querySelectorAll('input[data-dimension], input[data-role="grid-gutter-input"], input[data-role="letter-spacing"]').forEach(unitControl);
-    unitInputs.forEach(({display,select},input)=>{
-      if(document.activeElement!==display) display.value=input.value===''?'':M.convert(input.value,'px',resolved.unit);
+    unitInputs.forEach((control,input)=>{
+      const {display,select}=control;
+      if(document.activeElement!==display||control.unit!==resolved.unit) display.value=input.value===''?'':M.convert(input.value,'px',resolved.unit);
+      control.unit=resolved.unit;
       for(const attr of ['min','max','step']) {const v=input.getAttribute(attr);if(v!=null&&v!=='any') display.setAttribute(attr,String(M.convert(v,'px',resolved.unit)));}
       if(!input.hasAttribute('step')) display.step=String(M.convert(1,'px',resolved.unit));
       display.disabled=input.disabled;select.value=resolved.unit;
@@ -242,15 +300,57 @@
   }
   document.addEventListener('DOMContentLoaded',()=>{
     const main=document.querySelector('main');if(!main) return;
-    const toolbar=document.createElement('div');toolbar.className='ads-foundation-toolbar';toolbar.innerHTML='<div class="ads-unit-choice" role="radiogroup" aria-labelledby="ads-unit-label" aria-describedby="ads-unit-note"><span id="ads-unit-label">Design units</span><div class="ads-unit-options">'+['px','rem'].map(unit=>'<label class="radio-demo-field"><input class="radio-demo-input" type="radio" name="ads-design-unit" data-foundation-unit value="'+unit+'"><span class="radio-demo-circle radio-demo-circle--h16" aria-hidden="true"><span class="radio-demo-dot radio-demo-dot--h16"></span></span><span class="radio-demo-label">'+unit+'</span></label>').join('')+'</div></div><span class="ads-unit-note" id="ads-unit-note">1 rem = 16 px at the default browser size.</span>';
-    const intro=main.querySelector(':scope > .component-meta')||main.querySelector(':scope > .page-lede')||main.querySelector(':scope > h1');if(intro) intro.after(toolbar);else main.prepend(toolbar);
-    toolbar.addEventListener('change',e=>{if(e.target.matches('[data-foundation-unit]')&&e.target.checked) setUnit(e.target.value);});
-    const exportButton=document.createElement('button');exportButton.type='button';exportButton.className='btn-demo btn-demo--neutral btn-demo--h40';exportButton.textContent='Export Foundation JSON';toolbar.append(exportButton);
-    exportButton.addEventListener('click',()=>{const payload={schemaVersion:1,settings:Object.fromEntries(keys.map(k=>[k,read(k)])),resolved:window.ADSFoundation.get()};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='damco-foundation.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+    const typography=window.ADSStorage.safeGet('ads:typography');
+    let legacyHeading=false;try {legacyHeading=JSON.parse(localStorage.getItem('ads:typography')||'null')?.headingScaleVersion!==M.headingScaleVersion;} catch {}
+    if(typography&&legacyHeading) window.ADSStorage.safeSet('ads:typography',typography);
+    const page=location.pathname.split('/').pop();
+    let toolbar;
+    if(foundationPages.has(page)) {
+      toolbar=document.createElement('div');toolbar.className='ads-foundation-toolbar';
+      if(unitPages.has(page)) {
+        const group=document.createElement('div');group.className='ads-unit-choice';group.setAttribute('role','radiogroup');group.setAttribute('aria-labelledby','ads-unit-label');group.setAttribute('aria-describedby','ads-unit-note');
+        const title=document.createElement('span');title.id='ads-unit-label';title.textContent='Design units';
+        const options=document.createElement('div');options.className='ads-unit-options';
+        for(const unit of ['px','rem']) {
+          const label=document.createElement('label');label.className='radio-demo-field';
+          const input=document.createElement('input');input.className='radio-demo-input';input.type='radio';input.name='ads-design-unit';input.dataset.foundationUnit='';input.value=unit;
+          const circle=document.createElement('span');circle.className='radio-demo-circle radio-demo-circle--h16';circle.setAttribute('aria-hidden','true');
+          const dot=document.createElement('span');dot.className='radio-demo-dot radio-demo-dot--h16';circle.append(dot);
+          const text=document.createElement('span');text.className='radio-demo-label';text.textContent=unit;
+          label.append(input,circle,text);options.append(label);
+        }
+        group.append(title,options);
+        const note=document.createElement('span');note.className='ads-unit-note';note.id='ads-unit-note';note.textContent='1 rem = 16 px at the default browser size.';
+        toolbar.append(group,note);
+        const choose=e=>{if(e.target.matches('[data-foundation-unit]')) {e.stopPropagation();if(e.target.checked) setUnit(e.target.value);}};
+        toolbar.addEventListener('input',choose);toolbar.addEventListener('change',choose);
+      }
+      const intro=main.querySelector(':scope > .component-meta')||main.querySelector(':scope > .page-lede')||main.querySelector(':scope > h1');if(intro) intro.after(toolbar);else main.prepend(toolbar);
+      const exportButton=document.createElement('button');exportButton.type='button';exportButton.className='btn-demo btn-demo--neutral btn-demo--h40';exportButton.dataset.foundationExport='';exportButton.textContent='Export Foundation JSON';toolbar.append(exportButton);
+      const download=(payload,name)=>{const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+      exportButton.addEventListener('click',()=>{
+        const settings=Object.fromEntries(keys.map(k=>[k,read(k)]));
+        let profile=null;try{profile=window.ADSProject?.read(localStorage);}catch{}
+        const records={};for(const key of keys){try{records[key]=M.inspectRecord(key,localStorage.getItem('ads:'+key)).status;}catch{records[key]='unavailable';}}
+        const context=profile?{productType:profile.productType,platforms:profile.platforms}:null;
+        download({schemaVersion:1,context,settings,resolved:window.ADSFoundation.get(),resolvedThemes:Object.fromEntries(['light','dark'].map(theme=>[theme,M.resolve(settings,theme,profile)])),platformProfiles:M.resolvePlatformProfiles(settings,profile),implementationContract:M.contract,iconCatalog:M.iconCatalog,verification:{records,unsavedPreviewKeys:[...unsavedKeys],renderedAcceptance:'Not established by export; attach independent acceptance evidence.'}},'damco-foundation.json');
+      });
+      const backup=document.createElement('button');backup.type='button';backup.className='btn btn-ghost';backup.textContent='Back up saved settings';toolbar.prepend(backup);
+      backup.addEventListener('click',()=>{
+        const raw={};try{for(const key of keys)raw['ads:'+key]=localStorage.getItem('ads:'+key);download({schemaVersion:1,format:'Raw recovery backup; validate before importing',records:raw},'damco-foundation-backup.json');}catch{backup.textContent='Backup unavailable — storage cannot be read';}
+      });
+    }
     if(['spacing.html','grid-layout.html','icons.html'].some(p=>location.pathname.endsWith(p))) {
-      const details=document.createElement('details');details.className='panel ads-sizing';details.innerHTML='<summary>Shared sizing</summary><p>Sizes apply to controls, targets, icons and the documentation layout. Touch targets remain at least 44 px.</p>';
+      const details=document.createElement('details');details.className='panel ads-sizing';details.innerHTML='<summary>Shared sizing</summary><p>Sizes apply to controls, targets, fallback icon sizes and the documentation layout. Touch targets remain at least 44 px. Icon configuration takes priority over the fallback icon size; explicit component size variants retain their own dimensions.</p>';
+      const fields=document.createElement('div');fields.className='ads-sizing-fields';details.append(fields);
       const current=read('sizing')||{};
-      for(const [key,min,max] of [['control',24,96],['target',44,96],['icon',12,64],['content',320,1920],['sidebar',180,400]]) {const label=document.createElement('label');label.textContent=key+' ';const input=document.createElement('input');input.type='number';input.min=min;input.max=max;input.step='1';input.value=current[key]||M.sizingDefaults[key];input.dataset.dimension='';input.setAttribute('aria-label',key+' size');label.append(input);details.append(label);input.addEventListener('change',()=>{if(!input.checkValidity()) return;const payload={...(read('sizing')||{}),[key]:Number(input.value)};window.ADSStorage.safeSet('ads:sizing',payload);});}
+      for(const [key,min,max] of [['control',24,96],['target',44,96],['icon',12,64],['content',320,1920],['sidebar',180,400]]) {const label=document.createElement('label');label.className='ads-sizing-field';const title=document.createElement('span');title.className='ads-sizing-label';title.textContent=key[0].toUpperCase()+key.slice(1);label.append(title);const input=document.createElement('input');input.type='number';input.min=min;input.max=max;input.step='1';input.required=true;input.value=current[key]||M.sizingDefaults[key];input.dataset.dimension='';input.setAttribute('aria-label',key+' size');label.append(input);fields.append(label);const save=()=>{input.setAttribute('aria-invalid',String(!input.checkValidity()));if(!input.checkValidity())return;const payload={...(read('sizing')||{}),[key]:Number(input.value)};window.ADSStorage.safeSet('ads:sizing',payload);};input.addEventListener('input',save);input.addEventListener('change',save);}
+      const reset=document.createElement('button');reset.id='resetSharedSizingBtn';reset.type='button';reset.className='btn btn-ghost';reset.textContent='Reset shared sizing';
+      const status=document.createElement('span');status.className='save-status';status.setAttribute('role','status');
+      reset.addEventListener('click',()=>{
+        if(!window.ADSStorage.safeRemove('ads:sizing')){status.textContent='Reset could not be saved.';return;}
+        details.querySelectorAll('input[data-dimension]').forEach(input=>{const key=input.getAttribute('aria-label').split(' ')[0];input.value=M.sizingDefaults[key];input.setAttribute('aria-invalid','false');});apply();status.textContent='Shared sizing defaults restored.';
+      });const actions=document.createElement('div');actions.className='ads-sizing-actions';actions.append(reset,status);details.append(actions);
       toolbar.after(details);
     }
     if(location.pathname.endsWith('grid-layout.html')) {

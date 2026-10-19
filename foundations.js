@@ -135,23 +135,6 @@
       return (lighter + 0.05) / (darker + 0.05);
     }
 
-    // Foundation audit C05 - "no on-brand resolver/editor." A single fixed
-    // on-brand text color (this system's old --color-on-brand: #fff) can't
-    // actually be correct for every brand color: a light/pastel brand (this
-    // system's own auto-generated dark-theme default included) needs dark
-    // text, a saturated one needs light text - and which is "better" can
-    // even flip between a brand color's own default/hover/active shades.
-    // Resolves by maximizing the *worst* of the 3 states, not just the
-    // default shade alone, since optimizing default in isolation could still
-    // leave hover or active worse than the other candidate overall.
-    var ON_BRAND_DARK_TEXT = "15171A";
-    var ON_BRAND_LIGHT_TEXT = "FFFFFF";
-    function resolveOnBrandText(hex500, hex400, hex600){
-      var worstDark = Math.min(contrastRatio(ON_BRAND_DARK_TEXT, hex500), contrastRatio(ON_BRAND_DARK_TEXT, hex400), contrastRatio(ON_BRAND_DARK_TEXT, hex600));
-      var worstLight = Math.min(contrastRatio(ON_BRAND_LIGHT_TEXT, hex500), contrastRatio(ON_BRAND_LIGHT_TEXT, hex400), contrastRatio(ON_BRAND_LIGHT_TEXT, hex600));
-      return worstDark >= worstLight ? ON_BRAND_DARK_TEXT : ON_BRAND_LIGHT_TEXT;
-    }
-
     function hexToHsl(hex){
       var rgb = hexToRgb(hex);
       var r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
@@ -406,24 +389,19 @@
         return '<div class="color-chip"><span class="color-chip-swatch" style="background:' + c.bg + ';"></span><span class="color-chip-label">' + c.label + '</span></div>';
       }).join("");
       // Foundation audit C05 - "validate default/hover/pressed pairs." The
-      // resolved on-brand text color's real contrast against all 3 shades
-      // this exact swatch produces, surfaced right next to them instead of
-      // left unvalidated - including the honest case where this system's
-      // own default red can't clear AA on every one of the 3 states with
-      // either fixed text color choice.
+      // Resolve and report the actual foreground independently per state.
       var onBrandEl = container.nextElementSibling;
       if (onBrandEl && onBrandEl.matches('[data-role$="-on-brand-text"]')){
-        var resolved = resolveOnBrandText(hex, light400, dark600);
-        var resolvedName = resolved === ON_BRAND_DARK_TEXT ? "dark text (#15171A)" : "white text (#FFFFFF)";
         var states = [
           { label: "Default", hex: "#" + hex },
           { label: "Hover", hex: "#" + light400 },
           { label: "Active", hex: "#" + dark600 }
         ];
-        onBrandEl.innerHTML = "On-brand text resolves to " + resolvedName + ":" + states.map(function(s){
+        onBrandEl.innerHTML = '<span class="contrast-intro">On-brand text resolves separately for each state:</span>' + states.map(function(s){
+          var resolved = window.ADSFoundationModel.foreground(s.hex);
           var r = contrastRatio(resolved, s.hex);
           var pass = r >= 4.5;
-          return ' <span class="contrast-ratio">' + s.label + " " + r.toFixed(2) + ':1</span><span class="contrast-tag ' + (pass ? "is-pass" : "is-fail") + '">AA ' + (pass ? "&#10003;" : "&#10007;") + '</span>';
+          return '<span class="contrast-row"><span class="contrast-ratio">' + s.label + " " + r.toFixed(2) + ':1 · text ' + resolved + '</span><span class="contrast-tags"><span class="contrast-tag ' + (pass ? "is-pass" : "is-fail") + '">AA ' + (pass ? "&#10003;" : "&#10007;") + '</span></span></span>';
         }).join("");
       }
     }
@@ -528,7 +506,7 @@
       if (!lightHex) return;
       var payload = { light: { primary: { hex: "#" + lightHex } } };
       var darkHex = normalizeHex(brandDarkHex.value);
-      if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto };
+      if (darkHex) payload.dark = { primary: { hex: "#" + darkHex }, auto: brandDarkAuto, editEnabled: brandDarkEnable.checked };
       window.ADSStorage.safeSet(BRAND_KEY, payload);
     }
     var setBrandSaved = wireSaveState(saveBrandBtn.closest(".color-foundation"), saveBrandBtn, persistBrand);
@@ -541,7 +519,7 @@
       setBrandLightFields(lightHex);
 
       if (saved && saved.dark && saved.dark.primary && saved.dark.primary.hex){
-        brandDarkEnable.checked = saved.dark.auto === false;
+        brandDarkEnable.checked = typeof saved.dark.editEnabled === 'boolean' ? saved.dark.editEnabled : saved.dark.auto === false;
         brandDarkCol.hidden = !brandDarkEnable.checked;
         setBrandDarkFields(saved.dark.primary.hex.replace("#", ""));
         markBrandDarkStatus(saved.dark.auto !== false);
@@ -555,39 +533,7 @@
     loadBrand();
 
     function applyBrandLiveForActiveTheme(){
-      var theme = currentTheme();
-      // brandDarkHex always holds a usable value - either the user's own custom
-      // dark override, or the auto-generated dark-theme variant kept in sync with
-      // the light color (see regenerateBrandDark) - so dark theme must read it
-      // unconditionally. Gating this on brandDarkEnable.checked (removed) meant
-      // an unchecked "customize dark separately" toggle silently dropped the
-      // brand color entirely in dark theme instead of falling back to its
-      // auto-generated variant, which is the actual bug: your light-theme color
-      // choice appeared to vanish the moment you switched to dark theme.
-      var hex = theme === "dark" ? brandDarkHex.value : brandLightHex.value;
-      var root = document.documentElement.style;
-      if (hex){
-        var rgb = hexToRgb(hex);
-        var red600 = hslToHexFromMix(rgb, 0, 0.18);
-        var red400 = hslToHexFromMix(rgb, 255, 0.25);
-        root.setProperty("--red-500", "#" + hex);
-        root.setProperty("--red-600", "#" + red600);
-        root.setProperty("--red-400", "#" + red400);
-        root.setProperty("--red-tint", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.08)");
-        root.setProperty("--red-glow", "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.35)");
-        root.setProperty("--on-brand-text", "#" + resolveOnBrandText(hex, red400, red600));
-      } else {
-        root.removeProperty("--red-500");
-        root.removeProperty("--red-600");
-        root.removeProperty("--red-400");
-        root.removeProperty("--red-tint");
-        root.removeProperty("--red-glow");
-        root.removeProperty("--on-brand-text");
-      }
-      // This function only ever runs from Save's click handler below, which
-      // already applies the new color to the current page without a reload
-      // - keep the topbar swatch's tooltip in sync with that same action,
-      // instead of it only picking up the new hex on the next page load.
+      window.ADSFoundation.apply();
       if (window.ADS_updateBrandColorDotTitle) window.ADS_updateBrandColorDotTitle();
     }
 
@@ -1150,12 +1096,10 @@
         var isDark = /Dark/i.test(label);
         var lightBg = normalizeHex(lightBgHexInput.value) || BG_DEFAULTS.light.primary;
         var darkBg = normalizeHex(darkBgHexInput.value) || BG_DEFAULTS.dark.primary;
-        // Text colors no longer has its own editable section (removed -
-        // Typography's per-level colors are the one place for text color
-        // now), so "primary text" for this check is just the fixed
-        // default Hi value rather than a live, user-editable input.
-        var lightTextHi = TEXT_DEFAULTS.light.hi;
-        var darkTextHi = TEXT_DEFAULTS.dark.hi;
+        // Primary text follows the current Typography role in each theme.
+        var typography = window.ADSFoundation.read('typography');
+        var lightTextHi = window.ADSFoundationModel.resolve({typography:typography}, 'light').tokens['--type-h6-color'];
+        var darkTextHi = window.ADSFoundationModel.resolve({typography:typography}, 'dark').tokens['--type-h6-color'];
         // Background's own swatches (Page/Panel/Raised) ARE the page
         // background, so checking them against "page background" is
         // checking a color against itself - always ~1:1, never useful.
@@ -1203,12 +1147,12 @@
           ? '<span class="contrast-tag ' + (result.uiPass ? "is-pass" : "is-fail") + '">Non-text 3:1 ' + (result.uiPass ? "&#10003;" : "&#10007;") + '</span>'
           : '<span class="contrast-tag ' + (result.aaPass ? "is-pass" : "is-fail") + '">AA ' + (result.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
             '<span class="contrast-tag ' + (result.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (result.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
-        var html = '<span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span>' + tags;
+        var html = '<span class="contrast-row"><span class="contrast-ratio">' + result.ratio.toFixed(2) + ':1 ' + result.vsLabel + '</span><span class="contrast-tags">' + tags + '</span></span>';
         if (result.tintResult){
           var t = result.tintResult;
-          html += '<br><span class="contrast-ratio">' + t.ratio.toFixed(2) + ':1 ' + t.vsLabel + '</span>' +
+          html += '<span class="contrast-row"><span class="contrast-ratio">' + t.ratio.toFixed(2) + ':1 ' + t.vsLabel + '</span><span class="contrast-tags">' +
             '<span class="contrast-tag ' + (t.aaPass ? "is-pass" : "is-fail") + '">AA ' + (t.aaPass ? "&#10003;" : "&#10007;") + '</span>' +
-            '<span class="contrast-tag ' + (t.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (t.aaaPass ? "&#10003;" : "&#10007;") + '</span>';
+            '<span class="contrast-tag ' + (t.aaaPass ? "is-pass" : "is-fail") + '">AAA ' + (t.aaaPass ? "&#10003;" : "&#10007;") + '</span></span></span>';
         }
         return html;
       }
@@ -1224,6 +1168,7 @@
         });
       }
 
+      window.addEventListener("ads:foundation-applied", recompute);
       document.querySelector("main").addEventListener("input", recompute);
       document.querySelector("main").addEventListener("change", recompute);
       recompute();
@@ -1306,7 +1251,7 @@
           }
           lines.push("");
         });
-        mdEl.textContent = lines.join("\n").trim();
+        mdEl.textContent = window.ADSFoundation.preparePageMarkdown(lines.join("\n").trim());
       }
 
       function recompute(){
@@ -1332,6 +1277,7 @@
         renderMarkdown();
       }
 
+      window.addEventListener("ads:foundation-applied", recompute);
       document.querySelector("main").addEventListener("input", recompute);
       document.querySelector("main").addEventListener("change", recompute);
       recompute();
@@ -1340,18 +1286,16 @@
       var copyStatus = document.getElementById("colorsMarkdownStatus");
       if (copyBtn){
         copyBtn.addEventListener("click", function(){
+          window.ADSFoundation.apply();
+          renderMarkdown();
           var text = document.querySelector('[data-role="colors-markdown-output"]').textContent;
           function done(){
             copyStatus.textContent = "Copied to clipboard";
             setTimeout(function(){ copyStatus.textContent = ''; }, 2500);
           }
-          if (navigator.clipboard && navigator.clipboard.writeText){
-            navigator.clipboard.writeText(text).then(done).catch(function(){
-              copyStatus.textContent = "Copy failed - select the text above and copy manually.";
-            });
-          } else {
-            done();
-          }
+          window.ADSClipboard.copy(text).then(done).catch(function(){
+          copyStatus.textContent = "Copy failed - select the text above and copy manually.";
+        });
         });
       }
     }
@@ -1453,7 +1397,10 @@
           var span = document.createElement("span");
           span.textContent = cell.label;
           var input = document.createElement("input");
-          input.type = "text";
+          input.type = ['hex','css'].includes(formatSelect.value) ? 'text' : 'number';
+          if(formatSelect.value !== 'css') input.required = true;
+          if(formatSelect.value === 'hex') {input.pattern='[0-9a-fA-F]{6}';input.maxLength=6;}
+          if(input.type === 'number') {input.min='0';input.max=formatSelect.value === 'rgb' ? '255' : cell.key === 'h' ? '360' : '100';input.step=formatSelect.value === 'rgb' ? '1' : 'any';}
           input.autocomplete = "off";
           input.spellcheck = false;
           input.dataset.key = cell.key;
@@ -1498,6 +1445,9 @@
         if (!active) return;
         var format = formatSelect.value;
         var inputs = valuesEl.querySelectorAll("input");
+        var valid = true;
+        inputs.forEach(function(input){var ok=input.checkValidity();input.setAttribute('aria-invalid',String(!ok));valid=valid&&ok;});
+        if(!valid){contrastEl.textContent = 'Enter a complete color within the indicated range. The previous color remains active.';return;}
         if (format === "hex"){
           var hex = normalizeHex(inputs[0].value);
           if (hex) active.hsb = hexToHsb(hex);
@@ -1668,16 +1618,6 @@
         if (evt.key === "Enter" && evt.target.tagName === "INPUT"){ applyValueInputs(); evt.target.blur(); }
       });
 
-      function fallbackCopy(text){
-        var ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand("copy"); } catch (e){}
-        document.body.removeChild(ta);
-      }
       copyBtn.addEventListener("click", function(){
         var text = valuesEl.querySelector("input").value;
         var original = copyBtn.textContent;
@@ -1685,11 +1625,10 @@
           copyBtn.textContent = "Copied!";
           setTimeout(function(){ copyBtn.textContent = original; }, 1500);
         }
-        if (navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
-        } else {
-          fallbackCopy(text); done();
-        }
+        window.ADSClipboard.copy(text).then(done).catch(function(){
+          copyBtn.textContent = "Copy failed";
+          setTimeout(function(){ copyBtn.textContent = original; }, 1500);
+        });
       });
 
       var swatchInputs = Array.prototype.slice.call(document.querySelectorAll('input[type="color"].type-color-swatch'));

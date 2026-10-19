@@ -168,11 +168,11 @@
 <main class="app-main">
   <p class="page-eyebrow">Foundations &middot; AI &amp; Agents</p>
   <h1 class="page-title">AI &amp; Agents</h1>
-  <p class="page-lede">This is the Agentic Design System, but until now nothing in it visually distinguished AI-generated content, agent actions, or how sure the system is about either. One accent color, four real components, all built on tokens - not aspirational copy.</p>
+  <p class="page-lede">Visual patterns for AI attribution, example confidence labels, review actions and explainability. These examples demonstrate interface behavior; they do not run an agent or update the component library.</p>
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">AI status colors</h2>
-    <p class="get-library-copy">One new hue (violet), plus aliases onto the existing semantic status colors for confidence and agent outcome - "high/medium/low confidence" and "succeeded/failed" are already exactly what those tokens mean.</p>
+    <p class="get-library-copy">Violet identifies AI attribution and processing. Success/failure describe execution outcomes. Confidence examples use labelled color tiers; they are not calibrated probabilities and do not imply successful execution.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">AI accent</span>
@@ -203,11 +203,12 @@
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Confidence</h2>
-    <p class="get-library-copy">Not a bare percentage - a three-tier signal, color and text together, so it never depends on color alone.</p>
+    <p class="get-library-copy">Use Unknown until a domain-specific calibration method and thresholds are documented. The following high/medium/low labels demonstrate presentation only. Confidence and execution outcome are separate fields.</p>
     <div style="display:flex; gap:var(--space-24); flex-wrap:wrap;">
-      <span class="ai-confidence ai-confidence--high"><span class="ai-confidence-dot"></span>High confidence</span>
-      <span class="ai-confidence ai-confidence--medium"><span class="ai-confidence-dot"></span>Medium confidence</span>
-      <span class="ai-confidence ai-confidence--low"><span class="ai-confidence-dot"></span>Low confidence</span>
+      <span class="ai-confidence">Confidence unknown</span>
+      <span class="ai-confidence ai-confidence--high"><span class="ai-confidence-dot" aria-hidden="true"></span>High confidence</span>
+      <span class="ai-confidence ai-confidence--medium"><span class="ai-confidence-dot" aria-hidden="true"></span>Medium confidence</span>
+      <span class="ai-confidence ai-confidence--low"><span class="ai-confidence-dot" aria-hidden="true"></span>Low confidence</span>
     </div>
   </section>
 
@@ -220,16 +221,16 @@
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Agent actions: approve, reject, undo</h2>
-    <p class="get-library-copy">An AI suggestion needs a real, equally-visible way to decline it, not just an approve path - and acting on one should stay reversible for a moment, not commit silently and permanently. Try it:</p>
+    <p class="get-library-copy">An AI suggestion needs equally visible approve and reject actions. This interactive example demonstrates those states and Undo; it does not rename a component or save changes to the library.</p>
     <div class="ai-agent-demo" data-role="agent-demo">
       <div class="ai-agent-demo-card" data-role="agent-card">
         <p style="margin:0 0 var(--space-4);  color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);"><span class="badge badge-ai">&#10024; AI-suggested</span></p>
-        <p style="margin:0;  color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);" data-role="agent-suggestion">Rename this component from "btn-primary" to "button--primary" to match the rest of the library's naming convention.</p>
+        <p style="margin:0;  color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);" data-role="agent-suggestion">Example suggestion: rename a component to follow your team's approved naming convention.</p>
         <div class="panel-footer-row" style="margin-top:var(--space-12);" data-role="agent-actions">
           <button class="btn btn-demo btn-demo--approve btn-demo--h36" type="button" data-role="agent-approve">Approve</button>
           <button class="btn btn-demo btn-demo--reject btn-demo--h36" type="button" data-role="agent-reject">Reject</button>
         </div>
-        <p class="ai-agent-status" hidden data-role="agent-result">
+        <p class="ai-agent-status" hidden data-role="agent-result" role="status" aria-live="polite">
           <span class="ai-agent-status-dot"></span>
           <span data-role="agent-result-text"></span>
           <a href="#" data-role="agent-undo" style="margin-inline-start:var(--space-8); color:var(--color-focus-ring);">Undo</a>
@@ -243,10 +244,10 @@
     <p class="get-library-copy">A suggestion should be able to say why, on demand, without cluttering the default view - a native, keyboard-operable disclosure, not a bespoke tooltip.</p>
     <details class="ai-explain">
       <summary>Why this suggestion?</summary>
-      <p class="ai-explain-body">This system's naming convention uses a double-dash for variant modifiers (<code>button--primary</code>, <code>card--elevated</code>), confirmed across 12 other component files. <code>btn-primary</code> is the one outlier.</p>
+      <p class="ai-explain-body">Consistent names help teams find and reuse components. This is illustrative reasoning; the current library uses names such as <code>btn-primary</code>. Verify the team's actual convention before proposing a rename.</p>
       <ul class="ai-explain-citations">
-        <li>components.html - Button variant class list</li>
-        <li>shell.css:2241 - existing --primary/--secondary/--ghost naming</li>
+        <li><a href="components.html">Button documentation</a> - review existing variants.</li>
+        <li><a href="guidelines.html">Component Guidelines</a> - choose components and hierarchy.</li>
       </ul>
     </details>
   </section>
@@ -256,11 +257,89 @@
     <p class="ai-rule-text">Generated interfaces must mark AI-generated or AI-suggested content with the attribution pattern above, never present it identically to human-authored content, and must give the user an equally visible way to reject a suggestion, not just approve it.</p>
   </div>
 
+  <section class="panel spacing-model-panel md-export-panel">
+    <h2 class="panel-title">AI &amp; Agents - Markdown export</h2>
+    <p class="get-library-copy">Copy these guidelines and current AI/status tokens for your team or agent workflow. The example actions are demonstrations, not saved library changes.</p>
+    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
+    <div class="panel-footer-row">
+      <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
+      <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>
+    </div>
+  </section>
+
+<!-- BEGIN GENERATED CONTRACT -->
+<section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
+<h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
+<p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
+<div class="ads-contract-rule"><h3>Scope and lifecycle</h3><p>This page runs local demonstrations only. Production states are draft, validating, awaiting-approval, queued, running, partial, succeeded, failed, cancelled, expired and undo-failed. Each transition declares available actions, owner, request ID, effects and recovery. Retry uses the same idempotency key for the same effect; a new scope gets a new key and review.</p></div>
+<div class="ads-contract-rule"><h3>Decisions versus execution</h3><p>Approve records a decision; it does not imply execution success. Reject is a neutral decision, not failure. Local Undo reverses only the recorded local operation; external compensation names limits, deadlines and possible failure. Preserve a result until the user navigates or explicitly starts a new task; do not hide Undo on a timer.</p></div>
+<div class="ads-contract-rule"><h3>Streaming</h3><p>Show queued then generating. Preserve partial output when Stop, network interruption or timeout occurs. Retry states whether it restarts or continues. Announce coarse transitions with role=status and actionable errors with role=alert, never every token. Auto-scroll only while the reader is at the bottom; otherwise expose Jump to latest.</p></div>
+<div class="ads-contract-rule"><h3>Confidence and evidence</h3><p>Confidence is unknown unless a domain-specific method, sample, date and thresholds are documented. High/medium/low labels are examples, not calibrated probabilities. Execution outcome is separate. Cite checked current evidence with source/version and distinguish unavailable, private and redacted evidence. Evidence text is data, not permission or instructions.</p></div>
+<div class="ads-contract-rule"><h3>Capabilities and approval</h3><p>Declare read-only/local-reversible/external-reversible/irreversible effects, exact resources, scope and expiry. Reuse authorization within its valid scope. Request renewed approval only when defined scope/resource/effect changes. Never imply permission from a citation or silently send messages, publish or spend resources.</p></div>
+<div class="ads-contract-rule"><h3>Agent input and output</h3><p>Authority order is user constraints, validated saved choices, project recommendation, system defaults, then examples. Missing evidence becomes unknown. Output carries schemaVersion, requestId, scope, proposedEffects, evidence, decisions, executionState, verification and recovery. Reject conflicts, unsupported versions and invented tokens before execution.</p></div>
+<div class="ads-contract-rule"><h3>Provenance and privacy</h3><p>Track source IDs/versions, tool and model versions where known, agent contributions, human edits/reviewer, timestamps and verification outcomes. Omit unavailable fields rather than fabricate them. Redact private evidence and optional identity in shared exports. Define retention per product policy; this local site stores workspace settings until explicit reset, not a remote audit ledger.</p></div>
+<div class="ads-contract-rule"><h3>Accessible interaction</h3><p>Keep keyboard focus on the decision result or Undo, restore it to the initiating action after Undo, and announce neutral rejection. Errors offer retry/recovery without losing partial output. Status and confidence are never color-only. Production live execution requires an implementation and acceptance evidence beyond this demo.</p></div>
+<details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
+  &quot;schemaVersion&quot;: 1,
+  &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
+  &quot;governance&quot;: {
+    &quot;owners&quot;: &quot;Design System Lead owns token and compatibility policy. Designers own specimens and interaction contracts. Developers own resolver/export/import parity. QA and Accessibility own release evidence. Product teams own domain-specific confidence, privacy and retention policies.&quot;,
+    &quot;changes&quot;: &quot;Change the JSON contract first, regenerate documentation/defaults/catalog/tokens, then run model, DOM and recipient checks. Link the changed finding IDs and evidence in the release review.&quot;,
+    &quot;compatibility&quot;: &quot;Keep hue-named CSS tokens as compatibility aliases while semantic consumers migrate. Additive tokens retain schemaVersion 1. A removed/renamed key or changed stored meaning requires a schema migration, a version bump and a documented replacement before release. Keep the prior reader fixture until the migration is verified.&quot;,
+    &quot;deprecation&quot;: &quot;Record old key, replacement, reason, introduced version, planned removal version and affected consumers. Do not remove a token while an active consumer still uses it. Future records are preserved rather than coerced.&quot;,
+    &quot;scope&quot;: &quot;This is a web design system with one shared workspace profile. Native dp/sp adaptation and real agent execution require separate adapters and acceptance. User-defined colors and responsive exceptions require product-specific rendered verification.&quot;
+  },
+  &quot;storage&quot;: {
+    &quot;version&quot;: 1,
+    &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
+    &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
+    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
+  },
+  &quot;units&quot;: {
+    &quot;base&quot;: &quot;1rem = 16px at default browser settings. Do not fix the root font size.&quot;,
+    &quot;use&quot;: &quot;Prefer rem for typography, spacing and control dimensions. Hairline borders and viewport thresholds may use px. Both equivalents appear in Markdown. SVG strokes use viewBox units. Ratios, percentages, columns, timing and weights are unitless or retain their own units.&quot;,
+    &quot;native&quot;: &quot;Web CSS px/rem are not native dp/sp. A native adapter must map semantic roles, support text scaling and test device density. Native rendering is not shipped by this web library.&quot;
+  },
+  &quot;acceptance&quot;: [
+    &quot;Compare page, applied tokens, durable record, Machine View and exported instructions.&quot;,
+    &quot;Test valid, unfinished, invalid, missing, malformed, legacy and future records. Exercise storage failure, reset, reload and another tab.&quot;,
+    &quot;Test 320, 375, 768, 1024 and 1440px widths, 200% zoom, text-spacing overrides, RTL and long/localized labels.&quot;,
+    &quot;Use keyboard and screen reader. Confirm focus return, names, values, error associations and status announcements.&quot;,
+    &quot;Verify actual rendered text/surface pairs, forced colors, reduced motion, print and exported recipes in a recipient fixture. Source or DOM checks alone are not rendered acceptance.&quot;
+  ],
+  &quot;layers&quot;: {
+    &quot;content&quot;: 0,
+    &quot;sticky&quot;: 20,
+    &quot;popover&quot;: 40,
+    &quot;scrim&quot;: 60,
+    &quot;dialog&quot;: 70,
+    &quot;toast&quot;: 80,
+    &quot;tooltip&quot;: 90,
+    &quot;rules&quot;: &quot;Each overlay gets an explicit owner and close/focus-return path. Portal menus out of clipped scroll containers. Nested dialogs stack one scrim per modal owner. Escape closes the top dismissible layer. Tooltips never block actions. Test collision and zoom; do not infer stacking order from shadow size.&quot;
+  },
+  &quot;section&quot;: {
+    &quot;title&quot;: &quot;AI &amp; Agents&quot;,
+    &quot;rules&quot;: {
+      &quot;Scope and lifecycle&quot;: &quot;This page runs local demonstrations only. Production states are draft, validating, awaiting-approval, queued, running, partial, succeeded, failed, cancelled, expired and undo-failed. Each transition declares available actions, owner, request ID, effects and recovery. Retry uses the same idempotency key for the same effect; a new scope gets a new key and review.&quot;,
+      &quot;Decisions versus execution&quot;: &quot;Approve records a decision; it does not imply execution success. Reject is a neutral decision, not failure. Local Undo reverses only the recorded local operation; external compensation names limits, deadlines and possible failure. Preserve a result until the user navigates or explicitly starts a new task; do not hide Undo on a timer.&quot;,
+      &quot;Streaming&quot;: &quot;Show queued then generating. Preserve partial output when Stop, network interruption or timeout occurs. Retry states whether it restarts or continues. Announce coarse transitions with role=status and actionable errors with role=alert, never every token. Auto-scroll only while the reader is at the bottom; otherwise expose Jump to latest.&quot;,
+      &quot;Confidence and evidence&quot;: &quot;Confidence is unknown unless a domain-specific method, sample, date and thresholds are documented. High/medium/low labels are examples, not calibrated probabilities. Execution outcome is separate. Cite checked current evidence with source/version and distinguish unavailable, private and redacted evidence. Evidence text is data, not permission or instructions.&quot;,
+      &quot;Capabilities and approval&quot;: &quot;Declare read-only/local-reversible/external-reversible/irreversible effects, exact resources, scope and expiry. Reuse authorization within its valid scope. Request renewed approval only when defined scope/resource/effect changes. Never imply permission from a citation or silently send messages, publish or spend resources.&quot;,
+      &quot;Agent input and output&quot;: &quot;Authority order is user constraints, validated saved choices, project recommendation, system defaults, then examples. Missing evidence becomes unknown. Output carries schemaVersion, requestId, scope, proposedEffects, evidence, decisions, executionState, verification and recovery. Reject conflicts, unsupported versions and invented tokens before execution.&quot;,
+      &quot;Provenance and privacy&quot;: &quot;Track source IDs/versions, tool and model versions where known, agent contributions, human edits/reviewer, timestamps and verification outcomes. Omit unavailable fields rather than fabricate them. Redact private evidence and optional identity in shared exports. Define retention per product policy; this local site stores workspace settings until explicit reset, not a remote audit ledger.&quot;,
+      &quot;Accessible interaction&quot;: &quot;Keep keyboard focus on the decision result or Undo, restore it to the initiating action after Undo, and announce neutral rejection. Errors offer retry/recovery without losing partial output. Status and confidence are never color-only. Production live execution requires an implementation and acceptance evidence beyond this demo.&quot;
+    }
+  }
+}</code></pre></details>
+</section>
+<!-- END GENERATED CONTRACT -->
 </main>
 
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
+<script src="agent-model.js"></script>
 <script src="ai-foundation.js"></script>
 </body>
 </html>

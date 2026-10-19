@@ -148,7 +148,7 @@
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Small drops the Count pill to 16px/10px font and the Status dot+label to match - the host icon and every color stay identical at either size.");
     lines.push("");
     lines.push("Component properties: Count (number, applies only to the Count type) - currently " + count + ". Max count (number, applies only to the Count type, caps the displayed value at \"N+\" once Count exceeds it) - currently " + max + ". Status label (string, applies only to the Status type) - currently \"" + label + "\".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(count, max, label, sizeInfo){
@@ -201,31 +201,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (badge.html's listing

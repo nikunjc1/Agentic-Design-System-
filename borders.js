@@ -133,6 +133,7 @@
       if (!matches) activeChip.classList.remove("is-active");
     }
     function applyPreview(){
+      if(!validateBorder()) return;
       clearPresetIfDiverged();
       var width = widthSelect.value;
       var style = styleSelect.value;
@@ -226,8 +227,9 @@
         });
       }
 
-      markdownOutput.textContent = lines.join("\n").trim();
+      markdownOutput.textContent = window.ADSFoundation.preparePageMarkdown(lines.join("\n").trim());
     }
+    window.addEventListener('ads:foundation-applied', renderMarkdown);
 
     function updatePresetsMachineView(){
       if (presetsMachineJson){
@@ -297,13 +299,13 @@
     colorHex.addEventListener("input", function(){
       var hex = colorHex.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
       if (hex.length === 6) colorPicker.value = "#" + hex;
-      if (darkAuto) regenerateDark();
+      if (darkAuto && /^[0-9a-f]{6}$/i.test(colorHex.value)) regenerateDark();
       applyPreview();
       persistBorder();
     });
     colorPicker.addEventListener("input", function(){
       colorHex.value = colorPicker.value.replace("#", "").toUpperCase();
-      if (darkAuto) regenerateDark();
+      if (darkAuto && /^[0-9a-f]{6}$/i.test(colorHex.value)) regenerateDark();
       applyPreview();
       persistBorder();
     });
@@ -344,6 +346,7 @@
     // applyPreview()'s own programmatic callers (load, theme toggle) or
     // from Reset - see the same note in grid-layout.js.
     function persistBorder(){
+      if(!validateBorder()) {window.ADSStorage.lastWriteSucceeded = false;return;}
       window.ADSStorage.safeSet(SAVE_KEY, {
         system: getActiveSystem(),
         width: widthSelect.value,
@@ -354,6 +357,17 @@
         style: styleSelect.value,
         sides: sidesSelect.value
       });
+    }
+
+    function validateBorder(){
+      var valid = true;
+      [colorHex,darkColorHex].forEach(function(input){
+        var ok = /^[0-9a-f]{6}$/i.test(input.value);
+        input.setAttribute('aria-invalid', String(!ok));valid = valid && ok;
+      });
+      var opacityValid = /^\d+(?:\.\d+)?$/.test(opacityInput.value) && Number(opacityInput.value) >= 0 && Number(opacityInput.value) <= 100;
+      opacityInput.setAttribute('aria-invalid',String(!opacityValid));
+      return valid && opacityValid;
     }
 
     function loadBorder(){
@@ -367,12 +381,12 @@
 
       if (saved.system) selectSystem(saved.system);
 
-      if (saved.width) widthSelect.value = saved.width;
+      if (saved.width != null) widthSelect.value = saved.width;
       if (saved.color){
         colorHex.value = saved.color;
         colorPicker.value = "#" + saved.color;
       }
-      if (saved.opacity) opacityInput.value = saved.opacity;
+      if (saved.opacity != null) opacityInput.value = saved.opacity;
       if (saved.style) styleSelect.value = saved.style;
       if (saved.sides) sidesSelect.value = saved.sides;
 
@@ -468,6 +482,8 @@
       var darkHexField = row.querySelector('[data-role="state-hex-dark"]');
 
       hexField.addEventListener("input", function(){
+        hexField.setAttribute('aria-invalid', String(!/^[0-9a-f]{6}$/i.test(hexField.value)));
+        if(hexField.getAttribute('aria-invalid') === 'true') return;
         var hex = hexField.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
         if (hex.length !== 6) return;
         applyStateSwatch(row, false, hex);
@@ -480,6 +496,8 @@
         persistStates();
       });
       darkHexField.addEventListener("input", function(){
+        darkHexField.setAttribute('aria-invalid', String(!/^[0-9a-f]{6}$/i.test(darkHexField.value)));
+        if(darkHexField.getAttribute('aria-invalid') === 'true') return;
         var hex = darkHexField.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
         if (hex.length !== 6) return;
         applyStateSwatch(row, true, hex);
@@ -565,18 +583,16 @@
     var markdownStatus = document.getElementById("bordersMarkdownStatus");
     if (copyMarkdownBtn){
       copyMarkdownBtn.addEventListener("click", function(){
+        window.ADSFoundation.apply();
+        renderMarkdown();
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
           markdownStatus.textContent = "Copied to clipboard";
           setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
-        if (navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
-          });
-        } else {
-          done();
-        }
+        window.ADSClipboard.copy(text).then(done).catch(function(){
+          markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+        });
       });
     }
   });

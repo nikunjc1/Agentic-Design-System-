@@ -94,7 +94,7 @@
     lines.push("Structure: a month/year header, a row of 7 day-of-week column labels, and a 6-row grid of day cells (42 cells) including dimmed overflow days from the adjacent previous/next month so the grid is always fully populated.");
     lines.push("");
     lines.push("Component properties: Month label (text, current value \"" + monthLabel + "\"); First day of week (Sunday/Monday - reflows which day starts each week and which days fall outside the current month at the grid's edges) - currently " + (isMonday ? "Monday" : "Sunday") + ".");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(monthLabel, isMonday){
@@ -165,31 +165,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     var cardCopyPromptBtn = document.querySelector('[data-role="copy-prompt-calendar"]');

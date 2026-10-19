@@ -235,7 +235,7 @@
     <h2 class="panel-title">Validation</h2>
     <p class="get-library-copy">A required Select with nothing chosen is still showing its placeholder, not an error - treat "no selection" as invalid only once the user has had a chance to choose.</p>
     <ul class="guide-list">
-      <li><strong>Required marking</strong> - show a visible cue next to the label, an asterisk or "(required)" text, not color alone.</li>
+      <li><strong>Required marking</strong> - place an asterisk next to the label, using the Foundation danger color and a programmatic required state. Explain its meaning once per form; omit optional suffixes.</li>
       <li><strong>Validation timing</strong> - flag a missing required value on blur or submit, not the instant the trigger receives focus - opening the panel to look at options isn't itself an error.</li>
       <li><strong>Error message</strong> - name what's missing, "Choose a country to continue," rather than a generic "This field is required."</li>
     </ul>

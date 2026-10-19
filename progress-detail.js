@@ -93,7 +93,7 @@
     lines.push("Component properties: Percent (0-100, default " + percent + " - drives only the In progress state's fill), Show label (boolean, default " + (showLabel ? "on" : "off") + " - " + (showLabel ? "shows" : "hides") + " the percentage as text alongside the bar or ring).");
     lines.push("");
     lines.push("Accessibility: the track element (the one whose size represents 0-100%, not the wrapper or the fill) carries role=\"progressbar\" with aria-valuemin=\"0\", aria-valuemax=\"100\", and aria-valuenow set to its current percent, plus an aria-label describing what it measures - so assistive technology can announce real progress, not just read a silent colored bar.");
-    return lines.join("\n");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
   function buildFullCode(percent, showLabel){
@@ -123,31 +123,7 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     function copyTextFull(text, btn){
-      var originalLabel = btn.textContent;
-      function done(){
-        btn.textContent = "Copied!";
-        setTimeout(function(){ btn.textContent = originalLabel; }, 1800);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(function(){
-          fallbackCopyFull(text);
-          done();
-        });
-      } else {
-        fallbackCopyFull(text);
-        done();
-      }
-    }
-
-    function fallbackCopyFull(text){
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand("copy"); }catch(e){}
-      document.body.removeChild(ta);
+      return window.ADSClipboard.copyWithFeedback(text, btn);
     }
 
     // Gallery-card copy CTA + click-to-navigate (progress.html's listing

@@ -61,7 +61,7 @@
   // Starting-point type scales per product/device category. Dense dashboards
   // (SaaS, mobile app) run smaller so more fits on screen; desktop web apps
   // get more room; mobile web / marketing desktop sites lean on bigger
-  // display sizes for impact. Every value still maps to one of the 11
+  // display sizes for impact. Every value still maps to a named
   // standard Size tokens - this only decides which one each level starts at.
   // Deliberately a separate, smaller taxonomy from New Project's 10-category
   // PRODUCTS list (project-model.js) or Spacing/Radius/Grid & Layout's own
@@ -74,10 +74,10 @@
   // Radius/Grid & Layout's own sync doesn't apply here: there is no 1:1
   // mapping from "what you're building" to "how much room a heading has."
   var PLATFORM_PRESETS = {
-    "saas": { h1: "display-xs", h2: "text-xl", h3: "text-lg", h4: "text-md", h5: "text-sm", h6: "text-xs", body: "text-sm", paragraph: "text-sm", caption: "text-xs" },
-    "mobile-app": { h1: "display-sm", h2: "display-xs", h3: "text-xl", h4: "text-lg", h5: "text-md", h6: "text-sm", body: "text-md", paragraph: "text-md", caption: "text-xs" },
-    "desktop-web-app": { h1: "display-md", h2: "display-sm", h3: "display-xs", h4: "text-xl", h5: "text-lg", h6: "text-md", body: "text-md", paragraph: "text-md", caption: "text-sm" },
-    "web-and-desktop-site": { h1: "display-lg", h2: "display-md", h3: "display-sm", h4: "display-xs", h5: "text-xl", h6: "text-lg", body: "text-md", paragraph: "text-md", caption: "text-xs" }
+    "saas": { h1: "display-xs", h2: "text-xl", h3: "text-lg", h4: "text-md", h5: "text-sm", h6: "text-xs", body: "text-sm", paragraph: "text-sm", caption: "text-2xs" },
+    "mobile-app": { h1: "display-sm", h2: "display-xs", h3: "text-xl", h4: "text-lg", h5: "text-md", h6: "text-sm", body: "text-md", paragraph: "text-md", caption: "text-2xs" },
+    "desktop-web-app": { h1: "heading-lg", h2: "heading-md", h3: "display-xs", h4: "text-xl", h5: "text-lg", h6: "text-md", body: "text-md", paragraph: "text-md", caption: "text-2xs" },
+    "web-and-desktop-site": { h1: "heading-lg", h2: "heading-md", h3: "display-xs", h4: "text-xl", h5: "text-lg", h6: "text-md", body: "text-md", paragraph: "text-md", caption: "text-2xs" }
   };
 
   // darkColor is a starting suggestion, not a hand-picked value - it's
@@ -131,7 +131,7 @@
       link.rel = "stylesheet";
       link.href = href;
       link.onload = function(){ resolve(true); };
-      link.onerror = function(){ resolve(false); };
+      link.onerror = function(){ delete injectedHrefs[href];link.remove();resolve(false); };
       document.head.appendChild(link);
     });
     injectedHrefs[href] = promise;
@@ -166,6 +166,9 @@
         root.querySelector('.font-method-panel[data-panel="' + tab.dataset.method + '"]').classList.add("is-active");
       });
     });
+    var methodGroup=root.querySelector('.font-method-tabs');
+    methodGroup.setAttribute('aria-label',role==='primary'?'Primary font source':'Secondary font source');
+    window.ADSGroupButton(methodGroup,Array.from(tabs));
 
     function setFamily(name, source, linkHref, dataUrl){
       fontRequest++;
@@ -174,7 +177,7 @@
       state.source = source || null;
       state.linkHref = linkHref || null;
       state.dataUrl = dataUrl || null;
-      var cssFamily = '"' + name + '", ' + fallbackForSource(source);
+      var cssFamily = JSON.stringify(name) + ', ' + fallbackForSource(source);
       previewHeading.style.fontFamily = cssFamily;
       previewBody.style.fontFamily = cssFamily;
       previewMeta.textContent = "Using " + name + (source ? " (" + source + ")" : "");
@@ -187,14 +190,24 @@
       // the request failed.
       if (linkHref){
         var requested = name;
+        var requestId = fontRequest;
+        previewMeta.textContent = 'Loading ' + name + '…';
         injectLink(linkHref).then(function(loaded){
-          if (state.family !== requested) return;
-          if (!loaded) previewMeta.textContent = name + " didn’t load (offline, blocked, or unavailable) - showing the " + (source || "fallback") + " fallback instead.";
+          if (!loaded) return false;
+          if (!document.fonts || !document.fonts.load) return null;
+          return Promise.all([400,500,600,700].map(function(weight){return document.fonts.load(weight+' 16px '+JSON.stringify(requested));})).then(function(faces){return faces.every(function(list){return list.length>0;});},function(){return false;});
+        }).then(function(loaded){
+          if (state.family !== requested || requestId !== fontRequest) return;
+          previewMeta.textContent = loaded === true ? 'Loaded ' + name + ' (400, 500, 600, 700)' : loaded === null ? 'Font decoding unavailable; verify ' + name + ' in a browser.' : name + ' didn’t load (offline, blocked, or unavailable) — showing the fallback instead.';
         });
       }
     }
 
-    uploadDrop.addEventListener("click", function(){ uploadInput.click(); });
+    uploadDrop.setAttribute('role','button');uploadDrop.tabIndex = 0;
+    uploadDrop.setAttribute('aria-label', 'Upload ' + role + ' font');
+    uploadLabel.setAttribute('role','status');uploadLabel.setAttribute('aria-live','polite');
+    uploadDrop.addEventListener("click", function(e){ if(e.target !== uploadInput){e.preventDefault();uploadInput.click();} });
+    uploadDrop.addEventListener('keydown', function(e){if(e.key === 'Enter' || e.key === ' '){e.preventDefault();uploadInput.click();}});
     uploadInput.addEventListener("change", function(){
       var file = uploadInput.files && uploadInput.files[0];
       if (!file) return;
@@ -204,6 +217,11 @@
         return;
       }
       var name = uploadName.value.trim() || file.name.replace(/\.[^.]+$/, "");
+      if(name.length > 100 || /[;{}<>]/.test(name)){
+        uploadName.setAttribute('aria-invalid','true');uploadLabel.textContent = 'Use a font family name up to 100 characters, without CSS markup.';return;
+      }
+      uploadName.removeAttribute('aria-invalid');
+      uploadInput.value = '';
       uploadLabel.textContent = "Loading " + file.name + "…";
       var reader = new FileReader();
       // Foundation audit T02 - "FileReader error unhandled": with no
@@ -238,6 +256,7 @@
             // into its closure from here.
             uploadLabel.dispatchEvent(new Event("change", { bubbles: true }));
           }).catch(function(){
+            if (request !== fontRequest) return;
             uploadLabel.textContent = "Couldn't read that font file - try a .woff, .woff2, .ttf or .otf.";
           });
         }catch(e){
@@ -286,9 +305,11 @@
     selectDefaultFont();
 
     function reset(){
+      fontRequest++;
       state.family = null;
       state.source = null;
       state.linkHref = null;
+      state.dataUrl = null;
 
       tabs.forEach(function(t){ t.classList.remove("is-active"); });
       panels.forEach(function(p){ p.classList.remove("is-active"); });
@@ -330,10 +351,11 @@
     var darkColorPicker = row.querySelector('[data-role="color-picker-dark"]');
     var darkColorHex = row.querySelector('[data-role="color-hex-dark"]');
     var trackingLabel = document.createElement('label');
-    trackingLabel.className = 'type-control';
+    trackingLabel.className = 'type-control type-control-tracking';
     trackingLabel.innerHTML = '<span>Letter spacing</span><input type="number" data-role="letter-spacing" data-dimension min="-5" max="20" step="0.1" value="0" aria-label="Letter spacing">';
     row.querySelector('.type-row-controls').appendChild(trackingLabel);
     var trackingInput = trackingLabel.querySelector('input');
+    trackingInput.required = true;
     var sampleEl = row.querySelector('[data-role="sample"]');
 
     // Dark starts auto-generated from Light and stays in sync with it
@@ -366,7 +388,7 @@
       sampleEl.style.fontSize = window.ADSFoundationModel.dimension(Number(opt.dataset.size || 16), window.ADSFoundation.get().unit);
       var liveLineHeight = Number(lhInput.value);
       if (liveLineHeight >= 50 && liveLineHeight <= 300) sampleEl.style.lineHeight = liveLineHeight + "%";
-      sampleEl.style.letterSpacing = window.ADSFoundationModel.dimension(Number(trackingInput.value), window.ADSFoundation.get().unit);
+      if(trackingInput.value !== '' && trackingInput.checkValidity()) sampleEl.style.letterSpacing = window.ADSFoundationModel.dimension(Number(trackingInput.value), window.ADSFoundation.get().unit);
       sampleEl.style.fontWeight = weightSel.value;
       sampleEl.style.fontStyle = italicChk.checked ? "italic" : "normal";
       sampleEl.style.color = currentTheme() === "dark" ? darkColorPicker.value : colorPicker.value;
@@ -383,7 +405,12 @@
     function updateLineHeightGuidance(){
       if (!lhGuidanceEl) return;
       var n = parseInt(lhInput.value, 10);
-      if (isFinite(n) && n < 100){
+      var valid = /^\d+$/.test(lhInput.value) && n >= 50 && n <= 300;
+      lhInput.setAttribute('aria-invalid',String(!valid));
+      trackingInput.setAttribute('aria-invalid',String(trackingInput.value === '' || !trackingInput.checkValidity()));
+      if(!valid){
+        lhGuidanceEl.textContent = 'Enter a line height from 50% to 300%.';
+      } else if (isFinite(n) && n < 100){
         lhGuidanceEl.textContent = "Below 100%, wrapped lines will visually touch or overlap.";
       } else {
         lhGuidanceEl.textContent = "";
@@ -465,7 +492,7 @@
     return {
       getState: function(){
         return {
-          letterSpacing: Number(trackingInput.value),
+          letterSpacing: trackingInput.value === '' ? '' : Number(trackingInput.value),
           family: familySel.value,
           size: sizeSel.value,
           lineHeightPct: lhInput.value,
@@ -518,6 +545,7 @@
     var rowControllers = {};
     document.querySelectorAll(".type-row").forEach(function(row){
       rowControllers[row.dataset.level] = wireTypeRow(row);
+      rowControllers[row.dataset.level].setState(ROW_DEFAULTS[row.dataset.level]);
     });
 
     var fontFamilyMachineJson = document.querySelector('[data-role="fontfamily-machine-json"]');
@@ -567,9 +595,10 @@
 
         lines.push("### " + level, "");
         lines.push("- Family: " + familySel.options[familySel.selectedIndex].textContent);
-        lines.push("- Size: " + sizeSel.options[sizeSel.selectedIndex].textContent);
-        lines.push("- Letter spacing: " + window.ADSFoundationModel.dimension(Number(row.querySelector('[data-role="letter-spacing"]').value), window.ADSFoundation.get().unit));
-        lines.push("- Line height: " + lhInput.value + "%");
+        var sizePx = window.ADSFoundationModel.sizes[sizeSel.value];
+        lines.push("- Size: " + window.ADSFoundationModel.dimensionPair(sizePx));
+        lines.push("- Letter spacing: " + window.ADSFoundationModel.dimensionPair(Number(row.querySelector('[data-role="letter-spacing"]').value)));
+        lines.push("- Line height: " + lhInput.value + "% (" + window.ADSFoundationModel.dimensionPair(sizePx * Number(lhInput.value) / 100) + ")");
         lines.push("- Weight: " + weightSel.options[weightSel.selectedIndex].textContent);
         lines.push("- Italic: " + (italicChk.checked ? "Yes" : "No"));
         lines.push("- Color (Light): `" + rowControllers[row.dataset.level].getState().color + "`");
@@ -577,7 +606,7 @@
         lines.push("");
       });
 
-      markdownOutput.textContent = lines.join("\n").trim();
+      markdownOutput.textContent = window.ADSFoundation.preparePageMarkdown(lines.join("\n").trim());
     }
 
     function updateMachineViews(){
@@ -611,11 +640,8 @@
     // of new font + still-old row values right over the localStorage entry
     // Reset just removed.
     var suppressPersist = false;
-    // Clicking a view toggle, a method tab, a category filter chip or
-    // Copy Markdown never changes any actual Typography value - only the
-    // "click" listener below needs this filter (input/change only ever
-    // fire on a real form control in the first place, so every value
-    // change is already covered without it).
+    // Presentation controls do not edit Typography. Unit changes use the
+    // Foundation event to refresh exports without autosaving editor values.
     var NON_DATA_CLICK = ".guide-toggle-btn, .font-method-tabs .copy-tab, .font-category-chips, #copyTypographyMarkdownBtn, .ads-read-more, .ads-foundation-toolbar";
     // A platform preset chip stays "is-active" only while every level it
     // sets still matches that preset's own values - editing even one row
@@ -632,8 +658,11 @@
       if (!matches) activeChip.classList.remove("is-active");
     }
     function handleInteraction(e){
+      if(e && e.type === 'click' && !e.target.closest('.font-option, .platform-chips .chip')) return;
+      if (e && e.target.closest('.ads-foundation-toolbar, .page-outline, .ads-unit-control select, [data-unit-display]')) return;
       if (e && e.type === "click" && e.target.closest(NON_DATA_CLICK)) return;
       var isPresetClick = e && e.type === "click" && e.target.closest(".platform-chips .chip");
+      if(!isPresetClick && presetSnapshot){presetSnapshot=null;undoPreset.hidden=true;presetStatus.textContent='Preset Undo ended because another typography setting changed.';}
       if (!isPresetClick) clearPresetIfDiverged();
       updateMachineViews();
       if (!suppressPersist) persistTypography();
@@ -643,15 +672,31 @@
     document.querySelector("main").addEventListener("click", handleInteraction);
 
     var platformChips = document.querySelectorAll(".platform-chips .chip");
+    var presetSnapshot = null;
+    var presetStatus = document.createElement('span');presetStatus.className='save-status';presetStatus.setAttribute('role','status');
+    var undoPreset = document.createElement('button');undoPreset.type='button';undoPreset.className='btn btn-ghost';undoPreset.textContent='Undo preset';undoPreset.hidden=true;
+    document.querySelector('.platform-chips').after(presetStatus,undoPreset);
+    undoPreset.addEventListener('click',function(){
+      if(!presetSnapshot)return;
+      Object.keys(presetSnapshot.levels).forEach(function(level){rowControllers[level].setState(presetSnapshot.levels[level]);});
+      platformChips.forEach(function(chip){chip.classList.toggle('is-active',chip.dataset.platform===presetSnapshot.platform);});
+      var previousPlatform=presetSnapshot.platform;presetSnapshot=null;undoPreset.hidden=true;
+      persistTypography();updateMachineViews();presetStatus.textContent='Previous type sizes and metrics restored.';
+      (Array.from(platformChips).find(function(chip){return chip.dataset.platform===previousPlatform;})||platformChips[0]).focus();
+    });
     platformChips.forEach(function(chip){
+      chip.title=Object.entries(PLATFORM_PRESETS[chip.dataset.platform]||{}).map(function(pair){return pair[0]+': '+window.ADSFoundationModel.sizes[pair[1]]+'px';}).join(', ');
       chip.addEventListener("click", function(){
         var preset = PLATFORM_PRESETS[chip.dataset.platform];
         if (!preset) return;
+        presetSnapshot={platform:document.querySelector('.platform-chips .chip.is-active')?.dataset.platform||null,levels:{}};
+        Object.keys(preset).forEach(function(level){if(rowControllers[level])presetSnapshot.levels[level]=rowControllers[level].getState();});
         platformChips.forEach(function(c){ c.classList.remove("is-active"); });
         chip.classList.add("is-active");
         Object.keys(preset).forEach(function(level){
           if (rowControllers[level]) rowControllers[level].setSize(preset[level]);
         });
+        undoPreset.hidden=false;presetStatus.textContent='Applied '+chip.textContent.trim()+': '+Object.keys(preset).map(function(level){return level+' '+window.ADSFoundationModel.sizes[presetSnapshot.levels[level].size]+'px → '+window.ADSFoundationModel.sizes[preset[level]]+'px';}).join(', ')+'. Fonts and colors are retained. Undo restores the previous metrics for these roles.';
       });
     });
 
@@ -677,10 +722,12 @@
     }
     loadTypography();
     updateMachineViews();
+    window.addEventListener('ads:foundation-applied', updateMachineViews);
 
     function persistTypography(){
       var activeChip = document.querySelector(".platform-chips .chip.is-active");
       var payload = {
+        headingScaleVersion: window.ADSFoundationModel.headingScaleVersion,
         primaryFont: primaryPicker.getState(),
         secondaryFont: secondaryPicker.getState(),
         platform: activeChip ? activeChip.dataset.platform : null,
@@ -708,6 +755,7 @@
 
     var regenerateDarkBtn = document.getElementById("regenerateDarkColorsBtn");
     regenerateDarkBtn.addEventListener("click", function(){
+      presetSnapshot=null;undoPreset.hidden=true;
       Object.keys(rowControllers).forEach(function(level){
         rowControllers[level].regenerateDark();
       });
@@ -727,8 +775,9 @@
       // false, before the browser even starts this event's own bubble
       // phase - so stopPropagation alone doesn't reach those inner clicks).
       e.stopPropagation();
-      suppressPersist = true;
       if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
+      presetSnapshot=null;undoPreset.hidden=true;presetStatus.textContent='';
+      suppressPersist = true;
 
       primaryPicker.reset();
       secondaryPicker.reset();
@@ -749,18 +798,16 @@
     var markdownStatus = document.getElementById("typographyMarkdownStatus");
     if (copyMarkdownBtn){
       copyMarkdownBtn.addEventListener("click", function(){
+        window.ADSFoundation.apply();
+        renderMarkdown();
         var text = markdownOutput ? markdownOutput.textContent : "";
         function done(){
           markdownStatus.textContent = "Copied to clipboard";
           setTimeout(function(){ markdownStatus.textContent = ''; }, 2500);
         }
-        if (navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(text).then(done).catch(function(){
-            markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
-          });
-        } else {
-          done();
-        }
+        window.ADSClipboard.copy(text).then(done).catch(function(){
+          markdownStatus.textContent = "Copy failed - select the text above and copy manually.";
+        });
       });
     }
   });
