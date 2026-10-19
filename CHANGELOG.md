@@ -2561,6 +2561,18 @@ Deliberately left `.group-btn--outlined`/`.group-btn-segment` alone despite also
 
 Verified: computed border color confirmed `rgb(114,118,126)` (dark) / `rgb(133,136,141)` (light) on both a detail page's Size/Shape/Initials configurator (`avatar-default.html`) and a page using the custom multiselect trigger (`add-on-default.html`); screenshotted both panels in dark mode to confirm all fields show a clearly visible border now. All 11 unit test suites pass. Full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Listing-card background was identical to the page background in dark mode
+
+User report: fix the background of the listing cards in dark mode.
+
+Root cause: `.system-card`, `.product-card`, `.library-card` and `.pattern-card` (the card families behind 67 of the 68 Listing pages, plus Grid & Layout's structure cards and Spacing's recommendation cards) all set `background: var(--graphite-950)` - the exact same token `html, body` itself uses. In dark mode that's `rgb(13,15,17)` for both, so a card had zero actual background contrast from the page it sits on; only its `--line-strong` hairline border (already visually subtle by design) separated it at all. The one card family that got this right, `.concept-card` (Design Values' principle cards), already used `--graphite-900` - the fix pattern was sitting right there, just not applied everywhere.
+
+Switched all four to `--graphite-900`, matching `.concept-card` and the semantic `--card-surface`/`--surface-panel` tokens the real Card/Modal components already use for an elevated surface (`#ffffff` in light mode - pixel-identical to before, since `--graphite-950` and `--graphite-900` are only distinguishable in dark mode's direction; `rgb(21,23,26)` in dark, now clearly distinct from the page's `rgb(13,15,17)`).
+
+This left a side effect to fix: `.button-type-demo` (the live-preview panel nested inside these cards, fixed to `--graphite-900` two fixes ago when it was hardcoded white) would now be the exact same shade as the card around it, losing its own distinction. Bumped it one more step to `--graphite-850` (`--surface-raised`, the third and most-elevated tier in this system's own documented Elevation model: page/card/raised), restoring a real three-level page-under-card-under-panel hierarchy in both themes.
+
+Verified: computed background colors confirm a clear three-tier step in dark mode (`rgb(13,15,17)` page -> `rgb(21,23,26)` card -> `rgb(25,28,32)` panel) and light mode (`rgb(246,246,244)` -> `rgb(255,255,255)` -> `rgb(251,251,250)`), checked across Avatar (`.system-card`), Grid & Layout (`.product-card`), Icons (`.library-card`) and Design Values (`.concept-card`); spot-checked that no text contrast regressed against the slightly lighter card background (the largest shift, `--text-dim`, moved from 3.43:1 to 3.21:1 - already below 4.5:1 before this change, same as its established caption-text use everywhere else, not a new failure). All 11 unit test suites pass (no token changes, reused existing ones). Full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
