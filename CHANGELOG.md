@@ -2599,6 +2599,18 @@ Left alone, deliberately: `.btn-primary:hover` (a Primary button showing brand c
 
 Verified: re-checked every fixed selector's actual computed style (not just the source edit) in a fresh browser context; specifically re-confirmed the guide-toggle and theme-toggle/icon-btn/sidebar-toggle cases render `--text-hi` now that the previously-winning `foundation.css` rules are fixed too; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Top nav brand-color swatch showing black instead of the saved color
+
+User report: the brand color dot in the top navigation bar doesn't reflect the selected color - it was showing black. Asked, and confirmed: the dark-theme primary/brand color should always be the exact same hex as light theme, with no auto-adjustment.
+
+Root cause: `foundation-model.js`'s `resolve()` read `saved.colors[theme]` - meaning if a `colors.dark.primary.hex` was ever saved (which it normally is: the Colors page's "Dark" column auto-regenerates a *different*, contrast-adjusted hex from the light color via `suggestDarkAccent()` in `foundations.js`, and saves it alongside on every Save click, whether or not its own editing checkbox is enabled), dark theme used that separately-computed value instead of the light color - and for at least some light colors, that auto-generated suggestion comes out very dark or black.
+
+Fixed by making `--red-500` (and everything derived from it: `--red-400/600/tint/glow`, `--button-primary-text-*`, `--on-brand-text`) always resolve from `colors.light.primary.hex`, in both themes, full stop - `colors.dark` is no longer read for the primary brand color at all. Scoped narrowly to just this one resolution: the separate per-theme `bg-colors`/`neutral-colors`/`status-colors` groups (actual background/surface shades, which do legitimately need their own light and dark values) are untouched.
+
+Verified: re-ran this exact repro (`colors.light` blue, `colors.dark` a near-black auto-generated value) and confirmed `--red-500` and the brand-color-dot's background now both resolve to the light hex in dark theme too; all 23 `foundation-model` tests pass unchanged (none of them asserted a saved `colors.dark` value actually gets used, so none masked this); full 157-page x 4-viewport regression sweep: 0 failures.
+
+**Flagged, not changed:** the Colors page (`foundations.html`) still has its whole "Dark" brand-color column (an enable checkbox, its own picker/hex field, a "Regenerate from Light" button) - editing and saving it now has no visible effect anywhere, since the resolver never reads it. Left the UI alone pending a product decision on whether to remove it, hide it, or repurpose it, since tearing out a settings-page feature wasn't part of what was asked here.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

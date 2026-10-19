@@ -201,7 +201,7 @@
     }
     for(const [k,prop] of [['primaryFont','--font-display'],['secondaryFont','--font-body']]) { const f=record(typography[k]); if(typeof f.family==='string'&&f.family.length<=100&&!/[;{}<>]/.test(f.family)) tokens[prop]=JSON.stringify(f.family)+', ui-sans-serif, system-ui, sans-serif'; }
     tokens['--text-hi']='var(--type-h6-color)'; tokens['--text-mid']='var(--type-body-color)'; tokens['--text-dim']='var(--type-caption-color)';
-    const colors=record(saved.colors), color=record(colors[theme]||(theme==='dark'?colors.light:null)), brand=hex(record(color.primary).hex,'#FF031A');
+    const colors=record(saved.colors), color=record(colors.light), brand=hex(record(color.primary).hex,'#FF031A');
     tokens['--red-500']=brand; tokens['--red-400']=mix(brand,255,.25); tokens['--red-600']=mix(brand,0,.18);
     const rgb=brand.slice(1).match(/../g).map(c=>parseInt(c,16)).join(','); tokens['--red-tint']='rgba('+rgb+',0.08)';tokens['--red-glow']='rgba('+rgb+',0.35)';
     for (const [state,key] of [['default','--red-500'],['hover','--red-400'],['active','--red-600']]) tokens['--button-primary-text-'+state]=foreground(tokens[key]);
