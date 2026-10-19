@@ -278,10 +278,36 @@
   function checkClamp(wrapper) {
     const btn=wrapper.nextElementSibling;if(!btn||!btn.classList.contains('ads-read-more')||!wrapper.getClientRects().length) return;
     const line=textLineHeight(wrapper);
-    const limit=line*READ_MORE_LINES;
-    wrapper.style.setProperty('--ads-clamp-height',limit+'px');
+    let limit=line*READ_MORE_LINES;
     // Measure the full text: clamped scrollHeight differs between browsers.
     wrapper.classList.remove('ads-text-clamped');
+    // Grouped runs (multiple sibling paragraphs sharing one clamp) have a
+    // margin between each paragraph, so a flat line-height*N budget can land
+    // mid-line - clipping a bare sliver of the next paragraph's text instead
+    // of a clean cut. Snap to the real bottom edge of the Nth rendered line
+    // instead, measured per child so inline fragments (e.g. <code> spans) on
+    // the same line don't get counted as separate lines.
+    if(wrapper.children.length>1&&typeof wrapper.getBoundingClientRect==='function'&&typeof document.createRange==='function') {
+      const wrapperTop=wrapper.getBoundingClientRect().top;
+      const rects=[];
+      for(const child of wrapper.children) {
+        const r=document.createRange();r.selectNodeContents(child);
+        rects.push(...Array.from(r.getClientRects()).filter(x=>x.height>0));
+      }
+      rects.sort((a,b)=>a.top-b.top);
+      const lines=[];
+      for(const r of rects) {
+        const last=lines[lines.length-1];
+        // Merge by vertical overlap, not a fixed top-coordinate tolerance -
+        // a taller inline fragment sharing a line with plain text (e.g. an
+        // emoji) can have a top several px off from its line-mate's, which
+        // a small fixed tolerance miscounts as two separate lines.
+        if(last&&r.top<last.bottom-2) {last.top=Math.min(last.top,r.top);last.bottom=Math.max(last.bottom,r.bottom);}
+        else lines.push({top:r.top,bottom:r.bottom});
+      }
+      if(lines.length>=READ_MORE_LINES) limit=lines[READ_MORE_LINES-1].bottom-wrapperTop;
+    }
+    wrapper.style.setProperty('--ads-clamp-height',limit+'px');
     const overflow=wrapper.scrollHeight>limit+1;
     if(!overflow) {unwrapTextGroup(wrapper);return;}
     const expanded=overflow&&btn.getAttribute('aria-expanded')==='true';
