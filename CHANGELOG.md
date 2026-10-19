@@ -2551,6 +2551,16 @@ This is a sitewide class, not a per-page tweak, so it reaches every one of the 6
 
 Verified in a loop per the request - checked, fixed, re-verified: computed border color confirmed `rgb(114,118,126)` (dark) / `rgb(133,136,141)` (light) on a 6-page sample (Avatar, Components/Button, Badge, Modal, Checkbox, Table, Icons); screenshotted both the rest state (clearly visible border now) and the `:hover` state (still switches to the brand red border, unaffected by this change); all 11 unit test suites pass (no token changes, reused an existing one); full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Listing-page CTA border fix, round 2 - the property configurator controls were missed
+
+User report: the previous fix missed some of the same boundary problem elsewhere on listing pages.
+
+The previous pass fixed `.btn-ghost` and `.component-open-link` (the Copy prompt/Copy code/View CTAs) but missed a second, equally-common family of real site-chrome controls using the same faint `--line-strong` border: the property-configurator inputs that sit above the Live Preview on both listing pages (`components.html`'s "Corner radius" selector, `borders.html`'s own controls) and all 71 detail pages (Size, Shape, Label, Placeholder, and every other per-component property field) - `.type-control select`, `.type-control input[type="text"/"number"]`, `.type-control-lh input[type="text"]`, and the custom `.multiselect-trigger` dropdown used wherever a property has more options than a plain `<select>` reads well. Same root cause, same fix: switched all four to `--control-border`, the existing solid-gray token already used for this exact purpose elsewhere (`foundation.css`'s real form inputs).
+
+Deliberately left `.group-btn--outlined`/`.group-btn-segment` alone despite also using `--line-strong`, even though the same class renders the "Human / Machine" guide-view toggle on 7 listing pages: that class is the Group Button component's own documented demo content first (`group-button-default.html`), reused for this one chrome purpose second, the same dual-role situation `.anchor-demo-link` turned out to have - changing it would also silently restyle the Group Button component's own spec. Flagging it here rather than acting on a guess with a shared class; a scoped override (targeting the guide-toggle usage specifically, not the shared class) would be the correct next step if this one also needs it.
+
+Verified: computed border color confirmed `rgb(114,118,126)` (dark) / `rgb(133,136,141)` (light) on both a detail page's Size/Shape/Initials configurator (`avatar-default.html`) and a page using the custom multiselect trigger (`add-on-default.html`); screenshotted both panels in dark mode to confirm all fields show a clearly visible border now. All 11 unit test suites pass. Full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
