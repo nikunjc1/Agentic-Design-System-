@@ -2649,6 +2649,18 @@ Fixed by switching all three states' `color-mix()` source to `--danger-500`, mat
 
 Verified: saved a non-default brand color (`#2563EB`, blue) and confirmed the Destructive button's background still resolves to the fixed danger red regardless; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## P5 audit finding: hardcoded white text on brand-red backgrounds was actually failing contrast, where a correct token already existed
+
+Picked up from the code-and-design audit's P5 list: 4 static markup locations (`avatar.html`, `avatar-default.html`, `calendar-default.html`, `components.html`) hardcoded `color:#FFFFFF`/`#fff` on a `background:var(--red-500)` element, where `--button-primary-text` already exists for exactly this - a token computed via `foreground()` to pick whichever of black/white actually has better contrast against the current brand color.
+
+Checking what that computed value actually resolves to turned up something the whole session had been assuming wrong: `--button-primary-text` resolves to **black** (`#000000`) against the default brand red, not white - black gives 5.28:1 against `#FF031A`, white only 3.98:1 (fails AA for normal text). The real Button component's own Primary type (`button-primary.html`) already renders black text correctly via this token; these 4 static instances, and the separate "Dual Icon" button variant's own hardcoded spec, had just hardcoded the wrong (lower-contrast) color directly instead.
+
+Fixed the 4 flagged static instances, then found and fixed the same root cause in `button-dualicon-detail.js`'s Primary and Secondary types' solid-red-background states (Rest/Focused/Loading) - switched to `var(--button-primary-text)`. Its Hover/Pressed states use a *different* visual treatment (the same red-500 under a 20%/40% black overlay, not the lighter/darker solid colors the real Button component's own hover/active tokens are computed against) - checked the math for that case specifically and white text is actually the correct choice there (5.85:1/8.86:1 once you account for the overlay darkening the surface), so those were intentionally left as `#FFFFFF`, not blanket-replaced.
+
+Not fixed (flagged for a follow-up decision): the same dual-icon spec's Approve (green-500) and Delete (danger-500) types still hardcode white - unlike Primary, no computed foreground token exists yet for solid green-500/danger-500 backgrounds, so fixing those properly means adding two new tokens to `foundation-model.js` following the same `foreground()` pattern, not a direct swap.
+
+Verified: confirmed the correct color via `getComputedStyle` on `document.documentElement` before using it; checked all 4 static locations and both dualicon states in both light and dark theme (identical result in both, since brand-red doesn't change by theme); screenshotted the Avatar initials circle to confirm it still reads clearly; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

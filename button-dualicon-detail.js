@@ -60,12 +60,12 @@
     "primary-icon": {
       name: "Primary Button 36px - Dual Icon",
       states: {
-        rest: { css: "background:var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color, label and icons #FFFFFF, no border or shadow." },
-        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border." },
+        rest: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, no border or shadow." },
+        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF (the overlay darkens the surface enough that white reads better here than Rest's computed color), no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
-        focused: { css: "background:var(--red-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--red-500);color:#FFFFFF;", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. The label and both icon slots are replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. The label and both icon slots are replaced by one spinner; not clickable." }
       }
     },
     "secondary-icon": {
@@ -74,7 +74,7 @@
         rest: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background the page surface (white in light mode, near-black in dark), inside border 1px solid the selected brand color, label and icons the selected brand color, no shadow." },
         hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
-        focused: { css: "background:var(--red-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
         loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
       }
