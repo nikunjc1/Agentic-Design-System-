@@ -97,8 +97,14 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   flex: none;
 }
 .brand-color-code{
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
   color: var(--text-mid);
   white-space: nowrap;
+  border: var(--border-width-1) var(--border-style) var(--line-strong);
+  border-radius: var(--radius-md);
+  padding:var(--space-4) var(--space-8);
 font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);font-family:var(--font-mono);}
 
 /* Restyled from a track/thumb pill switch + text label into a plain

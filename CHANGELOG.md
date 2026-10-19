@@ -2619,6 +2619,16 @@ The hex value already existed as a hover-only `title` tooltip on the color dot (
 
 Verified: confirmed the rendered text reads e.g. `#FF031A` in both themes with the correct font and >7:1 contrast against the topbar background in each; checked 400px width for overflow (none); ran a full HTML tag-balance check across all 157 edited pages (none); all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## Brand color code didn't match the version badge's height
+
+User report: the new color-code text's height didn't match the version badge next to it in the top nav.
+
+Root cause: `.brand-color-code` was added as bare text (color and font only), while `.version-badge` right next to it is a bordered pill with its own padding and border-radius - two visually different shapes of different heights sharing one flex row, so they lined up on their text baseline but not as a matching pair of chips.
+
+Fixed by giving `.brand-color-code` the exact same box model as `.version-badge`: `border`, `border-radius`, and `padding` (all the same token values), plus `display:inline-flex;align-items:center;box-sizing:border-box` so the border is included in the measured height rather than added on top of it.
+
+Verified: measured both elements' `getBoundingClientRect()` directly - `codeHeight`/`badgeHeight` are now identical (26.5px) and both start at the same `top` offset; screenshotted both themes and a 400px mobile width (no overflow); all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
