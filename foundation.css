@@ -257,6 +257,15 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
 .app-main :is(pre,code,kbd,samp,.guide-machine-json,.copy-code,.export-preview){font-family:var(--font-mono)}
 
 .app-main :is(.setup-field,.setup-notice p,.setup-status){color:var(--type-body-color)}
+/* Shrinks the setup prompt's own prose to the Caption role at narrow
+   widths only - its full-Body-size, full-sentence copy measured ~165px
+   tall at 390px wide, ahead of any real page content (audit UX17).
+   Matches .app-main's specificity above so it actually wins here instead
+   of silently losing to the unconditional Body-role rule this file
+   itself declares - this file loads after experience.css/shell.css
+   specifically to outrank page-specific rules, so an override for one of
+   its own selectors has to live here too, not in an earlier stylesheet. */
+@media(max-width:640px){.app-main .setup-notice p{font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}}
 .app-main :is(.setup-error,.input-demo-error){color:var(--type-error-color)}
 /* Documentation tabs use the library's Outlined Group Button track. */
 .app-main .ads-tab-group{display:inline-flex;align-items:stretch;gap:0;padding:0;max-inline-size:100%;overflow-x:auto;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);flex:none}

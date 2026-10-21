@@ -317,6 +317,14 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   font-weight: 500;
 }
 .nav-link.is-hidden{ display: none; }
+.nav-link-status{
+  display: inline-block;
+  margin-inline-start: var(--space-6);
+  color: var(--text-dim);
+  font-size: var(--type-caption-size);
+  font-weight: 400;
+}
+.nav-link-status::before{ content: "\00b7\0020"; }
 .nav-subgroup-label.is-hidden{ display: none; }
 
 .sidebar-search-empty{

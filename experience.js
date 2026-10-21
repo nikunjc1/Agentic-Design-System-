@@ -85,7 +85,15 @@
       }, { root: main, rootMargin: '-15% 0px -70% 0px', threshold: 0 });
       sections.forEach(s => spy.observe(s));
     }
-    if (!['new-project.html', 'settings.html'].includes(file)) {
+    // Persisted, not re-asked every page load - a visitor who intentionally
+    // browses without setup was closing this exact message on every single
+    // page before. Scoped to the no-profile "What are you creating?" nag
+    // specifically: once a profile exists the banner switches to a useful
+    // per-page context summary, not a repeated prompt, so it keeps showing
+    // then - completing setup is what "resets" this preference.
+    let bannerDismissed = false;
+    if (!profile) { try { bannerDismissed = localStorage.getItem('ads:setup-banner-dismissed') === '1'; } catch {} }
+    if (!['new-project.html', 'settings.html'].includes(file) && !bannerDismissed) {
       const notice = el('section', '', 'setup-notice setup-context');
       notice.setAttribute('aria-label', 'Your design system');
       const copy = profile ? `${profile.project} · ${profile.productType === 'Other' ? profile.productOther : profile.productType} · ${profile.platforms.map(k => M.PLATFORMS[k].label).join(', ')}` : 'What are you creating? Set up your product, role and target platforms to get a tailored design-system brief.';
@@ -133,6 +141,7 @@
       } else window.addEventListener('resize', syncBannerHeight);
       close.addEventListener('click', () => {
         dismissed = true;
+        if (!profile) { try { localStorage.setItem('ads:setup-banner-dismissed', '1'); } catch {} }
         if (bannerObserver) bannerObserver.disconnect();
         else window.removeEventListener('resize', syncBannerHeight);
         notice.remove();
@@ -199,6 +208,22 @@
       const action = el('a','Export Markdown','anchor-demo-link anchor-demo-link--fs14'); action.href = 'md-export.html';
       section.append(copy,action); main.querySelector('.page-lede')?.after(section);
     }
+    // Sidebar status tags for the same unavailable/reference-only
+    // destinations the roadmap object above already explains - a reader
+    // deciding whether to open one shouldn't have to click through first to
+    // find out it's a mockup, not a working connection (audit UX21). Short
+    // enough to fit a nav list; the full explanation stays on each page.
+    const navStatus = {
+      'npm-package.html': 'Mockup',
+      'figma.html': 'Not connected',
+      'ai-generator.html': 'Reference',
+      'history.html': 'Mockup',
+    };
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+      const label = navStatus[link.getAttribute('href')];
+      if (!label || link.querySelector('.nav-link-status')) return;
+      link.append(el('span', label, 'nav-link-status'));
+    });
   }
 
   function setupForm() {

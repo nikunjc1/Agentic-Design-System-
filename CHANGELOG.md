@@ -2727,6 +2727,24 @@ Finished the new audit's P3 tier (UX09-15; UX08 had already landed in the P2-tie
 
 Verified throughout: all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures; every behavioral change (dialog roles, tab order, live-region timing, new page registration) confirmed live via Playwright, not just read from source.
 
+## New consolidated audit (UX01-27): P4 tier complete - persisted dismissal, a real restore flow, mobile footprint, quieter disclosure
+
+Finished the new audit's P4 tier (UX16-22; UX22 had already landed as part of the P2-tier Modal rewrite).
+
+**UX16 - the setup banner reappeared on every page after being closed:** its dismissed state was a local JS variable, reset on every navigation. Persisted it to `localStorage` (`ads:setup-banner-dismissed`), scoped specifically to the no-profile "What are you creating?" nag - once a profile exists the banner switches to a genuinely useful per-page context summary, not a repeated prompt, so it keeps showing then (completing setup is what "resets" the preference). Verified: dismiss on Overview, navigate to Design Values, banner stays gone; a fresh browser context still sees it.
+
+**UX17 - the same banner measured ~165px tall at 390px wide, ahead of any real content:** shrank its prose to the Caption type role under 640px width only (the 44px close/edit touch target is untouched). First attempt silently did nothing - `foundation.css` loads last specifically to outrank page-specific type rules (its own header comment says so) and already claims `.setup-notice p` at matching specificity, so the override had to live there too, not in `experience.css`. Verified: 166px to 111px at 390px wide; desktop (1440px) still renders at the full 16px body size, unaffected.
+
+**UX18 - "Back up saved settings" had no restore counterpart:** a user could only get back in by hand-editing `localStorage`. Added "Restore from backup" next to it on every Foundation page: validates schema version and every individual record (via the same `validRecord` check `ADSStorage.safeSet` already uses) before writing any of them, so a corrupt or foreign file can't half-apply - confirmed by round-tripping an actual downloaded backup file through an isolated restore, and separately feeding it invalid JSON, wrong-schema JSON, and a corrupt record, confirming each is rejected with a specific message and zero state change.
+
+**UX19 - Settings' Foundations hub quietly dropped 3 of 9 Foundations:** Grid & Layout, Icons and AI & Agents were missing, leaving `settings.html` looking like a complete list when it wasn't. Added all three, same order as the sidebar.
+
+**UX20 - the "Read More" disclosure control outweighed the page's real actions:** it rendered with the filled, brand-red `.btn-primary` treatment - the same visual weight as an actual primary CTA like Save or Confirm, for a control that only toggles how much of a paragraph is visible. Switched to `.btn-ghost`; `aria-controls`/`aria-expanded` and all existing keyboard behavior are unchanged.
+
+**UX21 - Figma/NPM Package/History/AI Generator gave no indication of their actual status until after you'd already clicked through:** each destination page already explains itself (`experience.js`'s existing `roadmap` notice), but the sidebar link gave no hint beforehand. Added a short status tag next to each ("Mockup", "Not connected", "Reference") sourced from that same roadmap data, rendered sitewide since the sidebar is identical on every page.
+
+Verified throughout: all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures; the backup/restore round trip and the mobile banner measurement were both confirmed live, not just read from source.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

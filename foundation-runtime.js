@@ -221,7 +221,10 @@
     wrapper.id='ads-text-'+(++clampId);
     parent.insertBefore(wrapper,run[0]);
     run.forEach(r=>wrapper.append(r));
-    const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more btn btn-primary';btn.textContent='Read More';btn.setAttribute('aria-controls',wrapper.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
+    // btn-ghost, not btn-primary - this toggles how much of a paragraph is
+    // visible, not a page action, and the filled brand-red treatment was
+    // visually outweighing the page's actual primary actions (audit UX20).
+    const btn=document.createElement('button');btn.type='button';btn.className='ads-read-more btn btn-ghost';btn.textContent='Read More';btn.setAttribute('aria-controls',wrapper.id);btn.setAttribute('aria-expanded','false');btn.hidden=true;
     wrapper.after(btn);
     btn.addEventListener('click',()=>{const expanded=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(expanded));checkClamp(wrapper);});
     wrapper.addEventListener('focusin',()=>{if(wrapper.classList.contains('ads-text-clamped')){wrapper.classList.remove('ads-text-clamped');btn.setAttribute('aria-expanded','true');btn.textContent='Read Less';}});
@@ -392,6 +395,38 @@
       const backup=document.createElement('button');backup.type='button';backup.className='btn btn-ghost';backup.textContent='Back up saved settings';toolbar.prepend(backup);
       backup.addEventListener('click',()=>{
         const raw={};try{for(const key of keys)raw['ads:'+key]=localStorage.getItem('ads:'+key);download({schemaVersion:1,format:'Raw recovery backup; validate before importing',records:raw},'damco-foundation-backup.json');}catch{backup.textContent='Backup unavailable — storage cannot be read';}
+      });
+      // Restore: the counterpart "Back up saved settings" never had - a
+      // user could save this exact file and have no way back in without
+      // manually editing localStorage. Validates every record before
+      // writing any of them (all-or-nothing), so a bad or foreign file
+      // can't half-apply and leave a mixed, unreviewable state; each valid
+      // record still goes through ADSStorage.safeSet's own schema check.
+      const restoreInput=document.createElement('input');restoreInput.type='file';restoreInput.accept='application/json,.json';restoreInput.hidden=true;
+      const restore=document.createElement('button');restore.type='button';restore.className='btn btn-ghost';restore.textContent='Restore from backup';toolbar.prepend(restoreInput,restore);
+      const restoreStatus=document.createElement('span');restoreStatus.className='save-status';restoreStatus.setAttribute('role','status');restoreStatus.setAttribute('aria-live','polite');toolbar.append(restoreStatus);
+      restore.addEventListener('click',()=>restoreInput.click());
+      restoreInput.addEventListener('change',()=>{
+        const file=restoreInput.files[0];restoreInput.value='';if(!file) return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          let parsed;
+          try{parsed=JSON.parse(reader.result);}catch{restoreStatus.textContent='This file is not valid JSON. Nothing was changed.';return;}
+          if(!parsed||typeof parsed!=='object'||parsed.schemaVersion!==1||!parsed.records||typeof parsed.records!=='object'){restoreStatus.textContent='This doesn’t look like a settings backup file (expected the format "Back up saved settings" produces). Nothing was changed - this is a different format from Export Foundation JSON, which is implementation output, not something to restore from.';return;}
+          const toApply=[];
+          for(const key of keys) {
+            const raw=parsed.records['ads:'+key];if(raw==null) continue;
+            let value;try{value=JSON.parse(raw);}catch{restoreStatus.textContent='The "'+key+'" record in this file is corrupt. Nothing was changed.';return;}
+            if(!M.validRecord('ads:'+key,value)){restoreStatus.textContent='The "'+key+'" record in this file failed validation. Nothing was changed.';return;}
+            toApply.push([key,value]);
+          }
+          if(!toApply.length){restoreStatus.textContent='This backup file has no recognized settings to restore. Nothing was changed.';return;}
+          for(const [key,value] of toApply) window.ADSStorage.safeSet('ads:'+key,value);
+          restoreStatus.textContent='Restored '+toApply.length+' setting'+(toApply.length===1?'':'s')+'. Reloading…';
+          setTimeout(()=>location.reload(),600);
+        };
+        reader.onerror=()=>{restoreStatus.textContent='This file could not be read. Nothing was changed.';};
+        reader.readAsText(file);
       });
     }
     if(['spacing.html','grid-layout.html','icons.html'].some(p=>location.pathname.endsWith(p))) {
