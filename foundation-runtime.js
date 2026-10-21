@@ -413,17 +413,56 @@
           let parsed;
           try{parsed=JSON.parse(reader.result);}catch{restoreStatus.textContent='This file is not valid JSON. Nothing was changed.';return;}
           if(!parsed||typeof parsed!=='object'||parsed.schemaVersion!==1||!parsed.records||typeof parsed.records!=='object'){restoreStatus.textContent='This doesn’t look like a settings backup file (expected the format "Back up saved settings" produces). Nothing was changed - this is a different format from Export Foundation JSON, which is implementation output, not something to restore from.';return;}
-          const toApply=[];
+          // Foundation audit AT05/AT10 - a record present in the file with a
+          // null value is a captured "no override at backup time", not an
+          // absent one; skipping it on raw==null left whatever override was
+          // set *after* the backup still in place, so a restore silently
+          // turned into a merge. A key missing from records entirely is a
+          // different case (unknown to this build, e.g. a newer backup) and
+          // is named instead of silently merged in or mistaken for a failure.
+          const toApply=[], skipped=[];
           for(const key of keys) {
-            const raw=parsed.records['ads:'+key];if(raw==null) continue;
+            const recordKey='ads:'+key;
+            if(!(recordKey in parsed.records)) continue;
+            const raw=parsed.records[recordKey];
+            if(raw===null){ toApply.push([key,null]); continue; }
             let value;try{value=JSON.parse(raw);}catch{restoreStatus.textContent='The "'+key+'" record in this file is corrupt. Nothing was changed.';return;}
             if(!M.validRecord('ads:'+key,value)){restoreStatus.textContent='The "'+key+'" record in this file failed validation. Nothing was changed.';return;}
             toApply.push([key,value]);
           }
-          if(!toApply.length){restoreStatus.textContent='This backup file has no recognized settings to restore. Nothing was changed.';return;}
-          for(const [key,value] of toApply) window.ADSStorage.safeSet('ads:'+key,value);
-          restoreStatus.textContent='Restored '+toApply.length+' setting'+(toApply.length===1?'':'s')+'. Reloading…';
-          setTimeout(()=>location.reload(),600);
+          for(const recordKey of Object.keys(parsed.records)) {
+            const bareKey=recordKey.replace(/^ads:/,'');
+            if(recordKey.startsWith('ads:')&&!keys.includes(bareKey)) skipped.push(bareKey);
+          }
+          const skippedNote=skipped.length?' Not recognized by this version, left unchanged: '+skipped.join(', ')+'.':'';
+          if(!toApply.length){restoreStatus.textContent='This backup file has no recognized settings to restore.'+skippedNote+' Nothing was changed.';return;}
+          // Foundation audit AT06 - safeSet/safeRemove's return value used to
+          // be ignored, so a storage-quota failure on any one record still
+          // produced "Restored N settings. Reloading…" and reloaded over it,
+          // discarding the only evidence of the partial write. Every mutation
+          // result is checked below; on any failure the keys that did write
+          // are rolled back to their pre-restore value instead of reloading
+          // into a silent mixture of old and new settings.
+          const previous=toApply.map(([key])=>['ads:'+key,localStorage.getItem('ads:'+key)]);
+          const applied=[],failed=[];
+          for(const [key,value] of toApply) {
+            const ok=value===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,value);
+            (ok?applied:failed).push(key);
+          }
+          if(!failed.length){
+            restoreStatus.textContent='Restored '+applied.length+' setting'+(applied.length===1?'':'s')+'.'+skippedNote+' Reloading…';
+            setTimeout(()=>location.reload(),600);
+            return;
+          }
+          const unresolved=[];
+          for(const key of applied) {
+            const prior=previous.find(p=>p[0]==='ads:'+key)[1];
+            let rolledBack;
+            try{ rolledBack=prior===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,JSON.parse(prior)); }
+            catch{ rolledBack=false; }
+            if(!rolledBack) unresolved.push(key);
+          }
+          restoreStatus.textContent='Restore failed for '+failed.join(', ')+' (storage is full or unavailable).'+(unresolved.length?' Could not roll back: '+unresolved.join(', ')+' - review these manually.':' Other restored settings were rolled back to their prior state.')+skippedNote+' Nothing was reloaded.';
         };
         reader.onerror=()=>{restoreStatus.textContent='This file could not be read. Nothing was changed.';};
         reader.readAsText(file);

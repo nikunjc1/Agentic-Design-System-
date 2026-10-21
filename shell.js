@@ -293,6 +293,20 @@
   // pre-existing record so it doesn't linger as dead, inexplicable state.
   try { localStorage.removeItem("ads:text-colors"); } catch {}
   window.addEventListener("storage", (e) => {
+    // Foundation audit AT08 - a cross-tab localStorage.clear() fires a
+    // storage event with key:null, which used to return here before any of
+    // the branches below ran. foundation-runtime.js's own listener already
+    // resets the root theme/density/direction attributes on a clear, but
+    // only this file's apply*() functions also refresh the toggle's visible
+    // label and aria-pressed - skipping them left Settings showing stale
+    // button state (e.g. "Density: Compact", aria-pressed="true") after the
+    // page itself had already visually reset to its defaults.
+    if (e.key === null) {
+      applyTheme(readPreference(THEME_KEY) === "dark" ? "dark" : "light");
+      applyDensity(readPreference(DENSITY_KEY) === "compact" ? "compact" : "comfortable");
+      applyDirection(readPreference(DIRECTION_KEY) === "rtl" ? "rtl" : "ltr");
+      return;
+    }
     if (!e.key) return;
     if (e.key === THEME_KEY) {
       applyTheme(e.newValue === "dark" ? "dark" : "light");

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Foundation audit UX14 - installed by tools/install-hooks.sh. Blocks a push
+# if tests or any freshness generator (tokens/foundation/docs catalog) are
+# stale, so a broken or out-of-date build can't reach the remote and be
+# mistaken for the current release.
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+"$dir/tools/release_check.sh"
+exit $?

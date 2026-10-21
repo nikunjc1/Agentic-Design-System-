@@ -1,7 +1,7 @@
 {
   "date": "2026-10-08",
   "method": "Actual page scripts in jsdom; rendered-browser QA unavailable",
-  "assertions": 2239,
+  "assertions": 2241,
   "edits": 880,
   "combinations": 817,
   "failures": 0,
@@ -108,21 +108,21 @@
     },
     {
       "page": "guidelines.html",
-      "checks": 15,
+      "checks": 16,
       "edits": 0,
       "combinations": 0,
       "viewSwitches": 0,
-      "sectionButtons": 8,
+      "sectionButtons": 9,
       "readOnlySamples": 0,
       "failures": []
     },
     {
       "page": "copywriting.html",
-      "checks": 12,
+      "checks": 13,
       "edits": 0,
       "combinations": 0,
       "viewSwitches": 0,
-      "sectionButtons": 5,
+      "sectionButtons": 6,
       "readOnlySamples": 0,
       "failures": []
     },

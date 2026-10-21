@@ -230,6 +230,13 @@
     lines.push("   and focus restoration to the trigger on close for free, from the browser");
     lines.push("   itself - not something this snippet has to reimplement or get wrong. */");
     lines.push('dialog.modal-dialog{ box-sizing:border-box; width:100%; margin:auto; padding:0; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
+    // Foundation audit AT07 - dialog.modal-dialog above and the UA's own
+    // dialog:not([open]){display:none} are the same specificity (type + one
+    // class/pseudo-class each), so source order alone decided the winner and
+    // this later author rule silently kept every closed dialog visible.
+    // :not([open]) raises this rule's specificity past the base one so a
+    // closed dialog stays hidden regardless of rule order.
+    lines.push("dialog.modal-dialog:not([open]){ display:none; }");
     lines.push("dialog.modal-dialog::backdrop{ background:rgba(0,0,0,0.55); }");
     lines.push("");
     lines.push("/* Size - controls dialog max-width */");

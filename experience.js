@@ -223,6 +223,19 @@
       if (!label || link.querySelector('.nav-link-status')) return;
       link.append(el('span', label, 'nav-link-status'));
     });
+    // Foundation audit UX08 - Stable/Experimental said what a component's
+    // maturity was without saying what that word actually promises. Link
+    // every component's own badge to the one shared definition rather than
+    // writing unique "acceptance evidence" per component - the component's
+    // own page (Accessibility notes, Component Guide) is that evidence,
+    // this just tells a reader what to check it against.
+    document.querySelectorAll('.page-title > .component-status.is-stable, .page-title > .component-status.is-experimental').forEach(badge => {
+      if (badge.tagName === 'A') return;
+      const link = el('a', badge.textContent, badge.className);
+      link.href = (file === 'guidelines.html' ? '' : 'guidelines.html') + '#component-maturity';
+      link.title = 'What "' + badge.textContent + '" guarantees for this component';
+      badge.replaceWith(link);
+    });
   }
 
   function setupForm() {

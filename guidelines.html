@@ -170,6 +170,28 @@
   <h1 class="page-title">Component Guidelines</h1>
   <p class="page-lede">Which component to reach for, by domain - the layer above an individual component's own page, for the moment before you've picked one yet.</p>
 
+  <section class="panel spacing-model-panel" id="component-maturity">
+    <h2 class="panel-title">Component maturity</h2>
+    <p class="get-library-copy">Every component's own page title carries one of these badges. They describe what's actually been verified for that component, not a subjective quality rating - check a component's own page for its specific Accessibility notes and Component Guide to see that evidence directly.</p>
+    <div class="usage-hierarchy">
+      <div class="usage-row">
+        <span class="usage-label">Stable</span>
+        <div class="reference-detail"><span class="usage-desc">Documented interaction behavior is implemented as written; has an accessible name, role and value for every control; is fully keyboard-operable with visible focus; renders correctly in both themes and at 320px; and has its own Component Guide page with Do/Don't guidance. This is the bar every "Stable" component in this library is expected to meet.</span></div>
+        <span class="usage-values">Guarantee</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Experimental</span>
+        <div class="reference-detail"><span class="usage-desc">Usable today, but its interaction model, visual details or accessibility coverage are still being finalized and may change without the same stability guarantee Stable components carry. Review its own page's Accessibility notes before depending on specific behavior.</span></div>
+        <span class="usage-values">Guarantee</span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Mockup</span>
+        <div class="reference-detail"><span class="usage-desc">Documentation or a visual reference only - not a working, implemented feature. Used for the handful of integration/reference pages that aren't components (NPM Package, History), not for components themselves.</span></div>
+        <span class="usage-values">Guarantee</span>
+      </div>
+    </div>
+  </section>
+
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Feedback - which one, when</h2>
     <p class="get-library-copy">Five components exist for reporting something to the user. Picking the wrong one either interrupts a task that didn't need interrupting, or lets something important scroll past unread.</p>

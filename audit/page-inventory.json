@@ -601,13 +601,14 @@
       "Voice",
       "Error messages",
       "Capitalization and punctuation",
+      "Product terminology",
       "Copywriting - Markdown export",
       "Implementation contract",
       "Structure and states",
       "Expansion and localization"
     ],
     "issues": [],
-    "bytes": 22740
+    "bytes": 24295
   },
   {
     "file": "data-format.html",
@@ -929,9 +930,10 @@
   {
     "file": "guidelines.html",
     "kind": "Tab",
-    "status": "Available",
+    "status": "Reference / planned",
     "sections": [
       "Component Guidelines",
+      "Component maturity",
       "Feedback - which one, when",
       "Navigation - which one, when",
       "Data Entry - which one, when",
@@ -945,7 +947,7 @@
       "Copy outcomes"
     ],
     "issues": [],
-    "bytes": 32487
+    "bytes": 34469
   },
   {
     "file": "history.html",
@@ -1071,7 +1073,7 @@
       "Ready for your next tool"
     ],
     "issues": [],
-    "bytes": 13634
+    "bytes": 14021
   },
   {
     "file": "mention-default.html",

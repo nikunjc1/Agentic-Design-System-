@@ -37,7 +37,21 @@
 <title>${name} — visual scaffold</title>
 <link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="foundation.css">
 <style>body{display:block;min-height:100vh}.composition-recipient{width:100%;min-width:0;box-sizing:border-box;padding:var(--space-24)}</style>
-<script src="foundation-model.js"></script><script src="foundation-runtime.js"></script></head><body>
+<script src="foundation-model.js"></script>
+<script>
+/* Foundation audit AT04 - foundation-runtime.js reads and writes through
+   window.ADSStorage unconditionally for any page with a <main> element, but
+   the full shell.js that normally defines it also wires up sidebar/topbar/
+   theme-toggle markup this standalone scaffold doesn't have. This is the
+   minimal read/write/remove contract it actually needs, so Foundation can
+   boot and apply the saved/resolved tokens without pulling in unrelated
+   host chrome behavior. */
+window.ADSStorage={lastWriteSucceeded:true,
+  safeGet(key){let raw;try{raw=localStorage.getItem(key);}catch(e){return null;}if(raw==null)return null;try{const value=JSON.parse(raw);if(!window.ADSFoundationModel.validRecord(key,value))throw new Error('invalid');return window.ADSFoundationModel.migrateRecord(key,value);}catch(e){return null;}},
+  safeSet(key,value){try{if(!window.ADSFoundationModel.validRecord(key,value)){this.lastWriteSucceeded=false;return false;}localStorage.setItem(key,JSON.stringify(value));this.lastWriteSucceeded=true;window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key,value}}));return true;}catch(e){this.lastWriteSucceeded=false;return false;}},
+  safeRemove(key){try{localStorage.removeItem(key);this.lastWriteSucceeded=true;window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key,removed:true}}));return true;}catch(e){this.lastWriteSucceeded=false;return false;}}};
+</script>
+<script src="foundation-runtime.js"></script></head><body>
 <!-- ${name}: ${warning} -->
 <!-- Requires the linked design-system assets. Use the Markdown handoff for project-specific foundation values on another origin. Assign instance-unique field IDs if mounting the same scaffold more than once. -->
 <!-- References: ${refs.join('; ')} -->

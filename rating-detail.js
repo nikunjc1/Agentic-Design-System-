@@ -160,20 +160,28 @@
     lines.push(".rating-demo-icon.is-preview{ color:var(--red-400); opacity:0.6; }");
     lines.push(".rating-demo-row.is-disabled .rating-demo-icon, .rating-demo-icon:disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push(".rating-demo-icon:hover:not(:disabled){ color:var(--text-hi); }");
+    // Foundation audit AT09/UX02 - the baked fill/stroke attributes below
+    // only ever represented ONE fixed snapshot; these two rules let a class
+    // toggle alone switch a star/heart between outline and solid (an SVG
+    // presentation attribute like the inline fill= below always loses to
+    // any stylesheet rule for the same element, so this safely overrides it
+    // without needing two divergent markups or a re-render per click).
+    lines.push(".rating-demo-icon svg{ fill:none; stroke:currentColor; stroke-width:2; }");
+    lines.push(".rating-demo-icon.is-filled svg{ fill:currentColor; stroke-width:1; }");
     lines.push("");
     lines.push(sizeInfo.mode === "all"
       ? "/* Icon size - not chosen yet, default is 20px. Set via width/height on each <svg> (16 / 20 / 24 / 32px options). */"
       : "/* Icon size - explicitly chosen: " + sizeInfo.values.map(function(v){ return v + "px"; }).join(", ") + " - set via width/height on each <svg>. */");
     lines.push("");
-    lines.push("<!-- Example usage - one per type, Selected state showing " + selectedCount + " of 5 filled, at " + exampleSize + "px -->");
-    lines.push("<!-- Each button needs a click handler that sets is-filled on itself and every");
-    lines.push("     earlier sibling, clears it from every later one, and updates aria-pressed to");
-    lines.push("     match - this markup/CSS only renders one fixed, pre-selected snapshot. -->");
+    lines.push("<!-- Example usage - one per type, starting at " + selectedCount + " of 5 filled, at " + exampleSize + "px -->");
+    lines.push("<!-- Operable: the script below sets the clicked or keyboard-reached icon's");
+    lines.push("     position as the group's value, fills every earlier sibling, clears every");
+    lines.push("     later one, and keeps aria-pressed in sync - not a static illustration. -->");
     TYPES.forEach(function(t){
       var typeNoun = t.label.toLowerCase() + "s";
       lines.push('<div class="rating-demo-field">');
       lines.push('  <p class="rating-demo-label">' + escapeHtml(label) + "</p>");
-      lines.push('  <div class="rating-demo-row is-selected">');
+      lines.push('  <div class="rating-demo-row is-selected" data-rating-group="' + t.key + '">');
       for (var i = 0; i < MAX_ICONS; i++){
         var filled = i < selectedCount;
         var iconLabel = escapeHtml(label) + ", " + (i + 1) + " of " + MAX_ICONS + " " + typeNoun;
@@ -182,6 +190,32 @@
       lines.push("  </div>");
       lines.push("</div>");
     });
+    lines.push("<script>");
+    lines.push("(function(){");
+    lines.push("  document.querySelectorAll('[data-rating-group]').forEach(function(row){");
+    lines.push("    var buttons = Array.prototype.slice.call(row.querySelectorAll('.rating-demo-icon'));");
+    lines.push("    function setValue(value){");
+    lines.push("      buttons.forEach(function(btn, i){");
+    lines.push("        var filled = i < value;");
+    lines.push("        btn.classList.toggle('is-filled', filled);");
+    lines.push("        btn.setAttribute('aria-pressed', String(filled));");
+    lines.push("      });");
+    lines.push("      row.dispatchEvent(new CustomEvent('ratingchange', { detail: { value: value }, bubbles: true }));");
+    lines.push("    }");
+    lines.push("    function focusAndSet(i){ buttons[i].focus(); setValue(i + 1); }");
+    lines.push("    buttons.forEach(function(btn, i){");
+    lines.push("      if (btn.disabled) return;");
+    lines.push("      btn.addEventListener('click', function(){ setValue(i + 1); });");
+    lines.push("      btn.addEventListener('keydown', function(e){");
+    lines.push("        if (e.key === 'ArrowRight' || e.key === 'ArrowUp'){ e.preventDefault(); focusAndSet(Math.min(i + 1, buttons.length - 1)); }");
+    lines.push("        else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ e.preventDefault(); focusAndSet(Math.max(i - 1, 0)); }");
+    lines.push("        else if (e.key === 'Home'){ e.preventDefault(); focusAndSet(0); }");
+    lines.push("        else if (e.key === 'End'){ e.preventDefault(); focusAndSet(buttons.length - 1); }");
+    lines.push("      });");
+    lines.push("    });");
+    lines.push("  });");
+    lines.push("})();");
+    lines.push("</" + "script>");
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
