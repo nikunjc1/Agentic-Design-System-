@@ -215,7 +215,6 @@
     // enough to fit a nav list; the full explanation stays on each page.
     const navStatus = {
       'npm-package.html': 'Mockup',
-      'figma.html': 'Not connected',
       'ai-generator.html': 'Reference',
       'history.html': 'Mockup',
     };

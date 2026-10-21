@@ -158,7 +158,6 @@
       <a class="nav-link" href="ai-generator.html">AI Generator</a>
       <a class="nav-link" href="md-export.html">Markdown Export</a>
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link" href="figma.html">Figma</a>
       <a class="nav-link" href="history.html">History</a>
       <a class="nav-link" href="changelog.html">Changelog</a>
       <a class="nav-link" href="settings.html">Settings</a>
@@ -308,6 +307,11 @@
       </label>
     </div>
 
+    <label class="optional-toggle">
+      <input type="checkbox" data-role="border-dark-enable" />
+      <span>Also set a separate border color for dark theme</span>
+    </label>
+
     <div class="theme-pair-grid" style="margin-top:var(--space-16);">
       <div class="theme-pair-col">
         <div class="theme-pair-label-row">
@@ -325,9 +329,13 @@
         </div>
       </div>
 
-      <div class="theme-pair-col">
+      <div class="theme-pair-col" data-role="border-dark-col" hidden>
         <div class="theme-pair-label-row">
           <p class="theme-pair-label">Dark theme</p>
+          <div class="theme-pair-actions">
+            <span class="badge badge-auto" data-role="border-dark-status">Auto-generated</span>
+            <button class="btn btn-ghost btn-sm" data-role="border-dark-regenerate" type="button">Regenerate from Light</button>
+          </div>
         </div>
         <div class="color-field-grid">
           <div class="color-field">
@@ -375,7 +383,6 @@
 
     <div class="panel-footer-row">
       <button class="btn btn-primary" id="saveBorderBtn" type="button">Save border</button>
-      <button class="btn btn-ghost" id="regenerateBorderDarkBtn" type="button">Regenerate dark color</button>
       <button class="btn btn-ghost" id="resetBorderBtn" type="button">Reset to defaults</button>
       <span class="save-status" id="borderSaveStatus" role="status" aria-live="polite"></span>
     </div>

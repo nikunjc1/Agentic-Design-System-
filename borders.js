@@ -11,6 +11,10 @@
     var colorHex = document.querySelector('[data-role="border-color-hex"]');
     var darkColorPicker = document.querySelector('[data-role="border-color-picker-dark"]');
     var darkColorHex = document.querySelector('[data-role="border-color-hex-dark"]');
+    var darkEnable = document.querySelector('[data-role="border-dark-enable"]');
+    var darkCol = document.querySelector('[data-role="border-dark-col"]');
+    var darkStatus = document.querySelector('[data-role="border-dark-status"]');
+    var darkRegenerate = document.querySelector('[data-role="border-dark-regenerate"]');
     var opacityInput = document.querySelector('[data-role="border-opacity"]');
     var styleSelect = document.querySelector('[data-role="border-style"]');
     var sidesSelect = document.querySelector('[data-role="border-sides"]');
@@ -165,11 +169,21 @@
       updateConfigMachineView();
     }
 
+    // Same auto/custom status concept Colors' brand/status/neutral sections
+    // use - a visible badge, not just an internal flag, so a reader can see
+    // at a glance whether Dark is still following Light or was set by hand.
+    function markDarkStatus(auto){
+      darkAuto = auto;
+      if (!darkStatus) return;
+      darkStatus.textContent = auto ? "Auto-generated" : "Custom";
+      darkStatus.className = "badge " + (auto ? "badge-auto" : "badge-custom");
+    }
+
     function regenerateDark(){
       var hex = suggestDark(colorHex.value);
       darkColorPicker.value = hex;
       darkColorHex.value = hex.replace("#", "").toUpperCase();
-      darkAuto = true;
+      markDarkStatus(true);
       applyPreview();
     }
 
@@ -254,6 +268,7 @@
           color: "#" + colorHex.value,
           colorDark: "#" + darkColorHex.value,
           colorDarkAuto: darkAuto,
+          colorDarkEditEnabled: darkEnable.checked,
           opacity: Number(opacityInput.value),
           style: styleSelect.value,
           sides: sidesSelect.value
@@ -312,23 +327,29 @@
     darkColorHex.addEventListener("input", function(){
       var hex = darkColorHex.value.replace(/[^0-9a-f]/gi, "").slice(0, 6);
       if (hex.length === 6) darkColorPicker.value = "#" + hex;
-      darkAuto = false;
+      markDarkStatus(false);
       applyPreview();
       persistBorder();
     });
     darkColorPicker.addEventListener("input", function(){
       darkColorHex.value = darkColorPicker.value.replace("#", "").toUpperCase();
-      darkAuto = false;
+      markDarkStatus(false);
       applyPreview();
       persistBorder();
     });
 
-    var regenerateDarkBtn = document.getElementById("regenerateBorderDarkBtn");
-    regenerateDarkBtn.addEventListener("click", function(){
+    // Dark starts hidden - same progressive-disclosure pattern as Colors'
+    // brand/status/neutral sections - since it already auto-follows Light
+    // with no action needed; the checkbox is only for a reader who wants to
+    // see or override that derived value.
+    darkEnable.addEventListener("change", function(){
+      darkCol.hidden = !darkEnable.checked;
+      updateConfigMachineView();
+      persistBorder();
+    });
+    darkRegenerate.addEventListener("click", function(){
       regenerateDark();
       persistBorder();
-      saveStatus.textContent = "Dark color regenerated from Light";
-      setTimeout(function(){ saveStatus.textContent = ''; }, 2500);
     });
 
     // A theme change can come from this page's own toggle click, another
@@ -353,6 +374,7 @@
         color: colorHex.value,
         darkColor: darkColorHex.value,
         darkColorAuto: darkAuto,
+        darkColorEditEnabled: darkEnable.checked,
         opacity: opacityInput.value,
         style: styleSelect.value,
         sides: sidesSelect.value
@@ -393,7 +415,15 @@
       if (saved.darkColor){
         darkColorHex.value = saved.darkColor;
         darkColorPicker.value = "#" + saved.darkColor;
-        darkAuto = saved.darkColorAuto !== false;
+        var isCustomDark = saved.darkColorAuto === false;
+        markDarkStatus(!isCustomDark);
+        // Same editEnabled/auto split as Colors' brand section: a reader can
+        // open the Dark column just to look at the auto-generated value
+        // without that alone counting as a custom edit, so the checkbox's
+        // own saved state wins over inferring it from darkColorAuto - which
+        // stays the fallback for records saved before this field existed.
+        darkEnable.checked = typeof saved.darkColorEditEnabled === "boolean" ? saved.darkColorEditEnabled : isCustomDark;
+        darkCol.hidden = !darkEnable.checked;
       } else {
         regenerateDark();
       }
@@ -416,6 +446,8 @@
     resetBtn.addEventListener("click", function(){
       if (!window.ADSStorage.safeRemove(SAVE_KEY)) return;
       selectSystem("standard");
+      darkEnable.checked = false;
+      darkCol.hidden = true;
 
       saveStatus.textContent = "Reset to defaults";
       setTimeout(function(){ saveStatus.textContent = ''; }, 2500);

@@ -2813,6 +2813,18 @@ Separately verified Borders' actual color values (not just their layout) for all
 
 Verified: all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures; confirmed live in both themes via screenshot that every Borders state row's color codes now stay aligned on the right, and the topbar swatch/hex pair now sits inside one visible container.
 
+## Remove Figma navigation tab
+
+Removed the Figma sidebar destination from all 158 HTML pages and the Figma status shortcut from Settings. Removed its unused navigation status label and refreshed the generated documentation catalog. The legacy reference file is retained for historical links; Figma is no longer offered as a navigation tab.
+
+## Borders' base color picker didn't match Primary's own light/dark pattern
+
+**"Border color needs to be aligned with how the primary color is selected."** Colors' Primary (brand) field already has an established opt-in pattern for its dark value - Light is always visible, Dark stays hidden behind a checkbox until a reader asks for it, and once shown it carries an Auto-generated/Custom badge plus a "Regenerate from Light" button. Borders' "Configure your border" section had none of that: both Light and Dark color fields were always shown side by side, with a single plain "Regenerate dark color" button in the panel footer and no indication of whether Dark was still following Light or had been hand-edited. Rebuilt it to match Primary exactly - dark starts hidden behind a new "Also set a separate border color for dark theme" checkbox, and checking it reveals the Dark field alongside its own Auto-generated/Custom badge and in-column "Regenerate from Light" button (replacing the old standalone footer button). The per-state color rows (Default, Hover, Focus, Active, Selected, Disabled, Error, Warning, Success, Info) keep their existing compact always-visible layout by design - their own light/dark auto-sync was separately verified to already work correctly, and this pass was scoped to the single base field only.
+
+Fixing this surfaced a real gap underneath the UI mismatch: the checkbox's own open/closed state was never actually saved - only `darkColorAuto` (auto vs. custom value) was persisted, so opening the Dark column just to look at its auto-generated value, without editing it, silently collapsed back to hidden on reload. Added a `darkColorEditEnabled` field to the saved border record (read with the same fallback Primary's own `editEnabled` field uses, for records saved before this field existed), so the checkbox's state now round-trips correctly independent of whether the value underneath is auto or custom.
+
+Verified: `node --check` passes; all 11 unit test suites pass; the full Foundation-controls DOM audit (2239 assertions across every foundation page) now passes with 0 failures, including the specific "does every control's edit change the generated prompt" check that first caught the missing persistence; full 158-page x 4-viewport regression sweep: 0 failures; confirmed live in both themes via screenshot that the collapsed/expanded states, badge, and button now render identically to Primary's pattern, and via a storage round-trip test that enabling the checkbox without editing the color now survives a reload.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

@@ -1,8 +1,8 @@
 {
   "date": "2026-10-08",
   "method": "Actual page scripts in jsdom; rendered-browser QA unavailable",
-  "assertions": 2237,
-  "edits": 878,
+  "assertions": 2239,
+  "edits": 880,
   "combinations": 817,
   "failures": 0,
   "results": [
@@ -58,8 +58,8 @@
     },
     {
       "page": "borders.html",
-      "checks": 90,
-      "edits": 66,
+      "checks": 92,
+      "edits": 68,
       "combinations": 0,
       "viewSwitches": 8,
       "sectionButtons": 6,
