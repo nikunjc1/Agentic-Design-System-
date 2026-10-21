@@ -423,14 +423,17 @@
       var controlClasses = "datepicker-demo-control datepicker-demo-control--" + typeKey + " datepicker-demo-control--h" + size + stateCls;
       var text = isFilled ? FILLED_VALUE : placeholder;
       var valueClasses = "datepicker-demo-value" + (isFilled ? " is-filled" : "");
-      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
+      // role="button" kept for a real implementation to model its own
+      // interactive control after - tabindex is always -1 here since this
+      // matrix is a static state comparison, not an operable field.
+      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="-1"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="datepicker-demo-note is-error">Enter a valid date.</p>' : "";
       // allowClear takes over the calendar icon's slot once there's a real
       // value - the icon comes back once cleared, matching Select's own
       // chevron-vs-clear-button rule.
       var trailingHtml = (allowClear && isFilled && !isDisabled)
-        ? '<button type="button" class="datepicker-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="datepicker-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : '<span class="datepicker-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
       return '<div class="datepicker-demo-field">' +
         '<label class="datepicker-demo-label">' + escapeHtml(label) + "</label>" +

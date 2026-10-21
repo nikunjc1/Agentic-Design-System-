@@ -521,9 +521,10 @@
       var controlClasses = "cascader-demo-control cascader-demo-control--" + typeKey + " cascader-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="' + SELECTED_PATH_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // tabindex="-1": static state-comparison matrix, not an operable field.
+      var inputHtml = '<input type="text" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var trailingHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="cascader-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="cascader-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen ? buildCascaderPanel() : "";

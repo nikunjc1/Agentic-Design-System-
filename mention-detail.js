@@ -452,7 +452,7 @@
       var inputClasses = "mention-demo-input" + (showsContent ? "" : " mention-demo-input--empty");
       var inputHtml = '<div class="' + inputClasses + '" contenteditable="false" tabindex="-1">' + contentHtml + "</div>";
       var clearHtml = (allowClear && showsContent && !isDisabled)
-        ? '<button type="button" class="mention-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="mention-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen

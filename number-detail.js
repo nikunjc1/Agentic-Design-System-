@@ -448,14 +448,14 @@
       var hasValue = isFilled || isError;
       var controlClasses = "number-demo-control number-demo-control--" + typeKey + " number-demo-control--h" + size + stateCls;
       var stepperHtml = showStepper
-        ? '<div class="number-demo-stepper"><button type="button" class="number-demo-step number-demo-step-up" aria-label="Increase value">' + ICON_CHEVRON_UP + '</button><button type="button" class="number-demo-step number-demo-step-down" aria-label="Decrease value">' + ICON_CHEVRON_DOWN + "</button></div>"
+        ? '<div class="number-demo-stepper"><button type="button" class="number-demo-step number-demo-step-up" aria-label="Increase value" tabindex="-1">' + ICON_CHEVRON_UP + '</button><button type="button" class="number-demo-step number-demo-step-down" aria-label="Decrease value" tabindex="-1">' + ICON_CHEVRON_DOWN + "</button></div>"
         : "";
       var clearHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="number-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="number-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var valueAttr = isFilled ? ' value="3"' : (isError ? ' value="-5"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="number" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="number" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="number-demo-note is-error">Enter a number of 0 or more.</p>' : "";
       return '<div class="number-demo-field">' +

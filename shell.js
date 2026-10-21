@@ -395,7 +395,7 @@
   // collapsible groups, active-link scroll as desktop); this only adds a
   // way to open/close it below 900px, where shell.css now slides it in as
   // an overlay instead of hiding it outright. Injected at runtime instead
-  // of duplicating a hamburger button into all 157 pages' own topbar
+  // of duplicating a hamburger button into all 158 pages' own topbar
   // markup - .sidebar-menu-toggle is display:none above 900px anyway.
   function initSidebarDrawer() {
     const sidebar = document.querySelector(".app-sidebar");
@@ -487,6 +487,16 @@
     emptyState.className = "sidebar-search-empty";
     emptyState.hidden = true;
     if (nav) nav.appendChild(emptyState);
+    // Debounced, polite live region: a visible result count on every
+    // keystroke would be too chatty read live, so this announces once
+    // input pauses - a screen-reader user otherwise has no way to know
+    // whether the sidebar still has anything in it without tabbing in.
+    const status = document.createElement("p");
+    status.className = "sidebar-search-status";
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    if (nav) nav.appendChild(status);
+    let statusTimer;
 
     input.addEventListener("input", () => {
       const query = input.value.trim().toLowerCase();
@@ -496,6 +506,8 @@
         allSubLabels.forEach((l) => l.classList.remove("is-hidden"));
         allGroups.forEach((g) => g.classList.remove("is-collapsed"));
         emptyState.hidden = true;
+        clearTimeout(statusTimer);
+        status.textContent = "";
         // restore persisted collapse state
         allGroups.forEach((g) => {
           const key = g.dataset.group;
@@ -524,9 +536,16 @@
         }
       });
 
-      const anyMatch = allLinks.some((l) => !l.classList.contains("is-hidden"));
+      const matchCount = allLinks.filter((l) => !l.classList.contains("is-hidden")).length;
+      const anyMatch = matchCount > 0;
       emptyState.hidden = anyMatch;
       if (!anyMatch) emptyState.textContent = `No results for "${input.value.trim()}"`;
+      clearTimeout(statusTimer);
+      statusTimer = setTimeout(() => {
+        status.textContent = anyMatch
+          ? `${matchCount} result${matchCount === 1 ? "" : "s"} for "${input.value.trim()}"`
+          : `No results for "${input.value.trim()}"`;
+      }, 400);
     });
 
     document.addEventListener("keydown", (e) => {
@@ -535,10 +554,12 @@
       // "dialog[open]" alone missed the welcome modal (overview.html), which
       // is a plain div toggled via a "hidden" attribute on its overlay, not
       // a native <dialog> - this global shortcut kept stealing focus out of
-      // that modal's own trap while it was open. The site's other
-      // role="dialog" elements (Modal/Drawer/Tour's Do/Don't illustrations)
-      // are static, always-visible demo markup, not real toggleable
-      // overlays, so they're deliberately not matched here.
+      // that modal's own trap while it was open. Modal/Drawer/Tour/Pop
+      // Confirm's own Do/Don't illustrations are static, always-visible demo
+      // markup, not real toggleable overlays - role="group" now, not
+      // role="dialog"/"alertdialog" (see the audit fix removing that fake
+      // modal semantic), so they were never going to match "dialog[open]"
+      // anyway, but still wouldn't belong here even if they were.
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || document.activeElement?.isContentEditable || document.querySelector("dialog[open]") || document.querySelector('[data-role="welcome-overlay"]:not([hidden])')) return;
       e.preventDefault();
       if (document.querySelector('.app-sidebar')?.inert) document.querySelector('.sidebar-menu-toggle')?.click();

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script src="foundation-model.js"></script>
+<script src="foundation-runtime.js"></script>
+<script src="theme-init.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Components - Agentic Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shell.css" />
+<link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="foundation.css" />
+</head>
+<body>
+
+<header class="app-topbar">
+  <a class="brand" href="overview.html">
+    <span class="brand-sub">Agentic Design System</span>
+  </a>
+  <div class="topbar-right">
+    <span class="brand-color-dot" id="brandColorDot" title="Active brand color"></span>
+    <span class="brand-color-code" id="brandColorCode"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <span class="version-badge">v3.5.0</span>
+    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+  </div>
+</header>
+
+<aside class="app-sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-search-sticky">
+      <div class="sidebar-search search-demo-control search-demo-control--filled search-demo-control--h36">
+        <span class="search-demo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="text" class="search-demo-input" placeholder="Filter navigation&hellip;" aria-label="Filter navigation" autocomplete="off" spellcheck="false" />
+        <span class="kbd">/</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <span class="nav-group-label">Design System</span>
+      <a class="nav-link" href="overview.html">Overview</a>
+      <a class="nav-link" href="values.html">Design Values</a>
+      <a class="nav-link" href="new-project.html">Project setup</a>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="foundations">
+      <button class="nav-group-label as-toggle" type="button"><span>Foundations</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="foundations.html#colors">Colors</a>
+        <a class="nav-link" href="grid-layout.html">Grid &amp; Layout</a>
+        <a class="nav-link" href="typography.html">Typography</a>
+        <a class="nav-link" href="spacing.html">Spacing</a>
+        <a class="nav-link" href="radius.html">Radius</a>
+        <a class="nav-link" href="borders.html">Borders</a>
+        <a class="nav-link" href="shadows.html">Shadows</a>
+        <a class="nav-link" href="icons.html">Icons</a>
+        <a class="nav-link" href="ai-foundation.html">AI &amp; Agents</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="guidelines">
+      <button class="nav-group-label as-toggle" type="button"><span>Guidelines</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <a class="nav-link" href="principles.html">Design Principles</a>
+        <a class="nav-link" href="guidelines.html">Component Guidelines</a>
+        <a class="nav-link" href="copywriting.html">Copywriting</a>
+        <a class="nav-link" href="data-format.html">Data Format</a>
+        <a class="nav-link" href="accessibility.html">Accessibility</a>
+      </div>
+    </div>
+
+    <div class="nav-group is-collapsible" data-group="components">
+      <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="nav-group-items">
+        <span class="nav-subgroup-label">Actions</span>
+        <a class="nav-link" href="components.html#button">Button</a>
+        <a class="nav-link" href="group-button.html">Group Button</a>
+        <a class="nav-link" href="float-button.html">Float Button</a>
+
+        <span class="nav-subgroup-label">Forms</span>
+        <a class="nav-link" href="input.html">Input</a>
+        <a class="nav-link" href="select.html">Select</a>
+        <a class="nav-link" href="checkbox.html">Checkbox</a>
+        <a class="nav-link" href="radio.html">Radio</a>
+        <a class="nav-link" href="switch.html">Switch</a>
+        <a class="nav-link" href="date-picker.html">Date Picker</a>
+        <a class="nav-link" href="password.html">Password</a>
+        <a class="nav-link" href="number.html">Number</a>
+        <a class="nav-link" href="mention.html">Mention</a>
+        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
+        <a class="nav-link" href="date-range.html">Date Range</a>
+        <a class="nav-link" href="time.html">Time</a>
+        <a class="nav-link" href="text-area.html">Text Area</a>
+        <a class="nav-link" href="search.html">Search</a>
+        <a class="nav-link" href="add-on.html">Add-on</a>
+        <a class="nav-link" href="color-picker.html">Color Picker</a>
+        <a class="nav-link" href="slider.html">Slider</a>
+        <a class="nav-link" href="rating.html">Rating</a>
+        <a class="nav-link" href="cascader.html">Cascader</a>
+        <a class="nav-link" href="transfer.html">Transfer</a>
+        <a class="nav-link" href="tree-select.html">Tree Select</a>
+        <a class="nav-link" href="upload.html">Upload</a>
+
+        <span class="nav-subgroup-label">Navigation</span>
+        <a class="nav-link" href="tabs.html">Tabs</a>
+        <a class="nav-link" href="anchor.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown.html">Dropdown</a>
+        <a class="nav-link" href="pagination.html">Pagination</a>
+        <a class="nav-link" href="menu.html">Menu</a>
+        <a class="nav-link" href="steps.html">Steps</a>
+        <a class="nav-link" href="affix.html">Affix</a>
+
+        <span class="nav-subgroup-label">Feedback</span>
+        <a class="nav-link" href="alert.html">Alert</a>
+        <a class="nav-link" href="toast.html">Toast</a>
+        <a class="nav-link" href="modal.html">Modal</a>
+        <a class="nav-link" href="tooltip.html">Tooltip</a>
+        <a class="nav-link" href="tour.html">Tour</a>
+        <a class="nav-link" href="drawer.html">Drawer</a>
+        <a class="nav-link" href="notification.html">Notification</a>
+        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <a class="nav-link" href="result.html">Result</a>
+        <a class="nav-link" href="skeleton.html">Skeleton</a>
+        <a class="nav-link" href="spin.html">Spin</a>
+
+        <span class="nav-subgroup-label">Data Display</span>
+        <a class="nav-link" href="divider.html">Divider</a>
+        <a class="nav-link" href="avatar.html">Avatar</a>
+        <a class="nav-link" href="badge.html">Badge</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link" href="card.html">Card</a>
+        <a class="nav-link" href="collapse.html">Collapse</a>
+        <a class="nav-link" href="description.html">Description</a>
+        <a class="nav-link" href="empty.html">Empty</a>
+        <a class="nav-link" href="image.html">Image</a>
+        <a class="nav-link" href="list.html">List</a>
+        <a class="nav-link" href="popover.html">Popover</a>
+        <a class="nav-link" href="splitter.html">Splitter</a>
+        <a class="nav-link" href="statistic.html">Statistic</a>
+        <a class="nav-link" href="table.html">Table</a>
+        <a class="nav-link" href="tag.html">Tag</a>
+        <a class="nav-link" href="timeline.html">Timeline</a>
+        <a class="nav-link" href="tree.html">Tree</a>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <a class="nav-link" href="patterns.html">Patterns</a>
+      <a class="nav-link" href="templates.html">Templates</a>
+      <a class="nav-link" href="ai-generator.html">AI Generator</a>
+      <a class="nav-link" href="md-export.html">MD Export</a>
+      <a class="nav-link" href="npm-package.html">NPM Package</a>
+      <a class="nav-link" href="figma.html">Figma</a>
+      <a class="nav-link" href="history.html">History</a>
+      <a class="nav-link" href="changelog.html">Changelog</a>
+      <a class="nav-link" href="settings.html">Settings</a>
+    </div>
+  </nav>
+</aside>
+
+<main class="app-main">
+  <p class="page-eyebrow">Design System &middot; Components</p>
+  <h1 class="page-title">Components</h1>
+  <p class="page-lede">Every component in this library, grouped the same way the sidebar groups them - 61 entries across 5 categories. Looking for a specific one? Use Filter navigation in the sidebar instead; this page is for browsing the whole catalog at once.</p>
+
+  <section class="panel spacing-system-panel">
+    <h2 class="panel-title">Actions</h2>
+    <p class="get-library-copy">Things a person does, not things they read - buttons and the controls that trigger them.</p>
+    <div class="system-card-grid">
+      <a class="system-card" href="components.html#button"><div class="system-card-head"><span class="system-card-unit">Button</span></div></a>
+      <a class="system-card" href="group-button.html"><div class="system-card-head"><span class="system-card-unit">Group Button</span></div></a>
+      <a class="system-card" href="float-button.html"><div class="system-card-head"><span class="system-card-unit">Float Button</span></div></a>
+    </div>
+  </section>
+
+  <section class="panel spacing-system-panel">
+    <h2 class="panel-title">Forms</h2>
+    <p class="get-library-copy">Every way this system collects a value from someone, from a single checkbox to a multi-field date range.</p>
+    <div class="system-card-grid">
+      <a class="system-card" href="input.html"><div class="system-card-head"><span class="system-card-unit">Input</span></div></a>
+      <a class="system-card" href="select.html"><div class="system-card-head"><span class="system-card-unit">Select</span></div></a>
+      <a class="system-card" href="checkbox.html"><div class="system-card-head"><span class="system-card-unit">Checkbox</span></div></a>
+      <a class="system-card" href="radio.html"><div class="system-card-head"><span class="system-card-unit">Radio</span></div></a>
+      <a class="system-card" href="switch.html"><div class="system-card-head"><span class="system-card-unit">Switch</span></div></a>
+      <a class="system-card" href="date-picker.html"><div class="system-card-head"><span class="system-card-unit">Date Picker</span></div></a>
+      <a class="system-card" href="password.html"><div class="system-card-head"><span class="system-card-unit">Password</span></div></a>
+      <a class="system-card" href="number.html"><div class="system-card-head"><span class="system-card-unit">Number</span></div></a>
+      <a class="system-card" href="mention.html"><div class="system-card-head"><span class="system-card-unit">Mention</span></div></a>
+      <a class="system-card" href="autocomplete.html"><div class="system-card-head"><span class="system-card-unit">Autocomplete</span></div></a>
+      <a class="system-card" href="date-range.html"><div class="system-card-head"><span class="system-card-unit">Date Range</span></div></a>
+      <a class="system-card" href="time.html"><div class="system-card-head"><span class="system-card-unit">Time</span></div></a>
+      <a class="system-card" href="text-area.html"><div class="system-card-head"><span class="system-card-unit">Text Area</span></div></a>
+      <a class="system-card" href="search.html"><div class="system-card-head"><span class="system-card-unit">Search</span></div></a>
+      <a class="system-card" href="add-on.html"><div class="system-card-head"><span class="system-card-unit">Add-on</span></div></a>
+      <a class="system-card" href="color-picker.html"><div class="system-card-head"><span class="system-card-unit">Color Picker</span></div></a>
+      <a class="system-card" href="slider.html"><div class="system-card-head"><span class="system-card-unit">Slider</span></div></a>
+      <a class="system-card" href="rating.html"><div class="system-card-head"><span class="system-card-unit">Rating</span></div></a>
+      <a class="system-card" href="cascader.html"><div class="system-card-head"><span class="system-card-unit">Cascader</span></div></a>
+      <a class="system-card" href="transfer.html"><div class="system-card-head"><span class="system-card-unit">Transfer</span></div></a>
+      <a class="system-card" href="tree-select.html"><div class="system-card-head"><span class="system-card-unit">Tree Select</span></div></a>
+      <a class="system-card" href="upload.html"><div class="system-card-head"><span class="system-card-unit">Upload</span></div></a>
+    </div>
+  </section>
+
+  <section class="panel spacing-system-panel">
+    <h2 class="panel-title">Navigation</h2>
+    <p class="get-library-copy">How someone moves between sections, pages or steps.</p>
+    <div class="system-card-grid">
+      <a class="system-card" href="tabs.html"><div class="system-card-head"><span class="system-card-unit">Tabs</span></div></a>
+      <a class="system-card" href="anchor.html"><div class="system-card-head"><span class="system-card-unit">Anchor</span></div></a>
+      <a class="system-card" href="breadcrumb.html"><div class="system-card-head"><span class="system-card-unit">Breadcrumb</span></div></a>
+      <a class="system-card" href="dropdown.html"><div class="system-card-head"><span class="system-card-unit">Dropdown</span></div></a>
+      <a class="system-card" href="pagination.html"><div class="system-card-head"><span class="system-card-unit">Pagination</span></div></a>
+      <a class="system-card" href="menu.html"><div class="system-card-head"><span class="system-card-unit">Menu</span></div></a>
+      <a class="system-card" href="steps.html"><div class="system-card-head"><span class="system-card-unit">Steps</span></div></a>
+      <a class="system-card" href="affix.html"><div class="system-card-head"><span class="system-card-unit">Affix</span></div></a>
+    </div>
+  </section>
+
+  <section class="panel spacing-system-panel">
+    <h2 class="panel-title">Feedback</h2>
+    <p class="get-library-copy">Tells someone what just happened, what's happening now, or asks them to confirm before something does.</p>
+    <div class="system-card-grid">
+      <a class="system-card" href="alert.html"><div class="system-card-head"><span class="system-card-unit">Alert</span></div></a>
+      <a class="system-card" href="toast.html"><div class="system-card-head"><span class="system-card-unit">Toast</span></div></a>
+      <a class="system-card" href="modal.html"><div class="system-card-head"><span class="system-card-unit">Modal</span></div></a>
+      <a class="system-card" href="tooltip.html"><div class="system-card-head"><span class="system-card-unit">Tooltip</span></div></a>
+      <a class="system-card" href="tour.html"><div class="system-card-head"><span class="system-card-unit">Tour</span></div></a>
+      <a class="system-card" href="drawer.html"><div class="system-card-head"><span class="system-card-unit">Drawer</span></div></a>
+      <a class="system-card" href="notification.html"><div class="system-card-head"><span class="system-card-unit">Notification</span></div></a>
+      <a class="system-card" href="pop-confirm.html"><div class="system-card-head"><span class="system-card-unit">Pop Confirm</span></div></a>
+      <a class="system-card" href="progress.html"><div class="system-card-head"><span class="system-card-unit">Progress</span></div></a>
+      <a class="system-card" href="result.html"><div class="system-card-head"><span class="system-card-unit">Result</span></div></a>
+      <a class="system-card" href="skeleton.html"><div class="system-card-head"><span class="system-card-unit">Skeleton</span></div></a>
+      <a class="system-card" href="spin.html"><div class="system-card-head"><span class="system-card-unit">Spin</span></div></a>
+    </div>
+  </section>
+
+  <section class="panel spacing-system-panel">
+    <h2 class="panel-title">Data Display</h2>
+    <p class="get-library-copy">Presents information someone reads rather than acts on - cards, lists, tables and the pieces inside them.</p>
+    <div class="system-card-grid">
+      <a class="system-card" href="divider.html"><div class="system-card-head"><span class="system-card-unit">Divider</span></div></a>
+      <a class="system-card" href="avatar.html"><div class="system-card-head"><span class="system-card-unit">Avatar</span></div></a>
+      <a class="system-card" href="badge.html"><div class="system-card-head"><span class="system-card-unit">Badge</span></div></a>
+      <a class="system-card" href="calendar.html"><div class="system-card-head"><span class="system-card-unit">Calendar</span></div></a>
+      <a class="system-card" href="card.html"><div class="system-card-head"><span class="system-card-unit">Card</span></div></a>
+      <a class="system-card" href="collapse.html"><div class="system-card-head"><span class="system-card-unit">Collapse</span></div></a>
+      <a class="system-card" href="description.html"><div class="system-card-head"><span class="system-card-unit">Description</span></div></a>
+      <a class="system-card" href="empty.html"><div class="system-card-head"><span class="system-card-unit">Empty</span></div></a>
+      <a class="system-card" href="image.html"><div class="system-card-head"><span class="system-card-unit">Image</span></div></a>
+      <a class="system-card" href="list.html"><div class="system-card-head"><span class="system-card-unit">List</span></div></a>
+      <a class="system-card" href="popover.html"><div class="system-card-head"><span class="system-card-unit">Popover</span></div></a>
+      <a class="system-card" href="splitter.html"><div class="system-card-head"><span class="system-card-unit">Splitter</span></div></a>
+      <a class="system-card" href="statistic.html"><div class="system-card-head"><span class="system-card-unit">Statistic</span></div></a>
+      <a class="system-card" href="table.html"><div class="system-card-head"><span class="system-card-unit">Table</span></div></a>
+      <a class="system-card" href="tag.html"><div class="system-card-head"><span class="system-card-unit">Tag</span></div></a>
+      <a class="system-card" href="timeline.html"><div class="system-card-head"><span class="system-card-unit">Timeline</span></div></a>
+      <a class="system-card" href="tree.html"><div class="system-card-head"><span class="system-card-unit">Tree</span></div></a>
+    </div>
+  </section>
+
+</main>
+
+<script src="shell.js"></script>
+<script src="project-model.js"></script>
+<script src="experience.js"></script>
+</body>
+</html>

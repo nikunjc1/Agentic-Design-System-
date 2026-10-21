@@ -424,13 +424,16 @@
       var controlClasses = "time-demo-control time-demo-control--" + typeKey + " time-demo-control--h" + size + stateCls;
       var text = isFilled ? FILLED_VALUE : (isError ? ERROR_VALUE : placeholder);
       var valueClasses = "time-demo-value" + (isFilled ? " is-filled" : "");
-      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
+      // tabindex is always -1: this matrix is a static state comparison,
+      // not an operable field - role stays so a real implementation has a
+      // correct model to copy.
+      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="-1"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="time-demo-note is-error">Enter a valid time.</p>' : "";
       // Ant defaults allowClear to true for Time specifically, so this is
       // the one field in the family where Rest shows it checked, not off.
       var trailingHtml = (allowClear && isFilled && !isDisabled)
-        ? '<button type="button" class="time-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="time-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : '<span class="time-demo-icon" aria-hidden="true">' + ICON_CLOCK + "</span>";
       return '<div class="time-demo-field">' +
         '<label class="time-demo-label">' + escapeHtml(label) + "</label>" +

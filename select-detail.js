@@ -474,9 +474,12 @@
       var controlClasses = "select-demo-control select-demo-control--" + typeKey + " select-demo-control--h" + size + stateCls;
       var text = hasValue ? FILLED_VALUE : placeholder;
       var valueClasses = "select-demo-value" + (hasValue ? " is-filled" : "");
+      // tabindex is always -1: this matrix is a static state comparison,
+      // not an operable field - role/aria-* stay so a real implementation
+      // has a correct model to copy.
       var interactiveAttrs = isDisabled
         ? ' aria-disabled="true" tabindex="-1"'
-        : ' role="combobox" aria-haspopup="listbox" aria-expanded="' + (isOpen ? "true" : "false") + '" tabindex="0"';
+        : ' role="combobox" aria-haspopup="listbox" aria-expanded="' + (isOpen ? "true" : "false") + '" tabindex="-1"';
       if (isLoading) interactiveAttrs += ' aria-busy="true"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="select-demo-note is-error">Please select a country.</p>' : "";
@@ -487,7 +490,7 @@
       if (isLoading){
         iconHtml = '<span class="select-demo-spinner" aria-hidden="true"></span>';
       } else if (allowClear && hasValue && !isDisabled){
-        iconHtml = '<button type="button" class="select-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>";
+        iconHtml = '<button type="button" class="select-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>";
       } else {
         iconHtml = '<span class="select-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>";
       }

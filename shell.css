@@ -329,6 +329,23 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   border-radius: var(--radius-md);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 
+/* Announces the filter's result count/no-results status to a screen
+   reader on every keystroke, visually hidden via the same sr-only clip
+   pattern as .multiselect-sr-only/.checkbox-demo-input - the visible
+   .sidebar-search-empty banner above already covers sighted users, but
+   only appears for zero results, not a running count. */
+.sidebar-search-status{
+  position: absolute;
+  width:var(--dimension-1);
+  height:var(--dimension-1);
+  padding:0;
+  margin:calc(-1 * var(--space-1));
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- main content frame ---------- */
 .app-main{
   grid-area: main;

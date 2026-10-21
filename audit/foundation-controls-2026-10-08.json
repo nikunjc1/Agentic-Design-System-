@@ -1,8 +1,8 @@
 {
   "date": "2026-10-08",
   "method": "Actual page scripts in jsdom; rendered-browser QA unavailable",
-  "assertions": 2205,
-  "edits": 846,
+  "assertions": 2237,
+  "edits": 878,
   "combinations": 817,
   "failures": 0,
   "results": [
@@ -28,8 +28,8 @@
     },
     {
       "page": "typography.html",
-      "checks": 492,
-      "edits": 500,
+      "checks": 524,
+      "edits": 532,
       "combinations": 0,
       "viewSwitches": 6,
       "sectionButtons": 5,

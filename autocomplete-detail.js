@@ -431,9 +431,10 @@
       var controlClasses = "autocomplete-demo-control autocomplete-demo-control--" + typeKey + " autocomplete-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="San"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="autocomplete-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // tabindex="-1": static state-comparison matrix, not an operable field.
+      var inputHtml = '<input type="text" class="autocomplete-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var clearHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="autocomplete-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="autocomplete-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen

@@ -148,19 +148,38 @@
       (main.querySelector(':scope > .component-meta') || main.querySelector(':scope > .page-lede'))?.after(details);
     }
     requestAnimationFrame(() => {
+      // One real name per card, used to tell repeated guide/copy actions
+      // apart out of context (a screen reader's links/buttons list has no
+      // surrounding card to disambiguate "View component guide" x N) -
+      // prefers a real visible type caption (.system-card-unit, added for
+      // listings with more than one card showing a near-identical demo,
+      // e.g. Button's Primary vs Primary * Dual Icon), then the card's own
+      // soon-to-be-removed label, then this page's one real heading.
+      const pageHeading = main.querySelector('h1')?.textContent.trim();
       main.querySelectorAll('[data-detail-href]').forEach(card => {
         card.removeAttribute('role'); card.removeAttribute('tabindex');
+        const dualiconLabel = card.querySelector('.dualicon-card-label');
+        const cardName = card.querySelector('.system-card-unit')?.textContent.trim()
+          || dualiconLabel?.textContent.trim()
+          || pageHeading
+          || 'component';
         // The demo already shows what the component is; the caption was
         // redundant with it, so it's removed outright rather than reordered.
-        card.querySelector('.dualicon-card-label')?.remove();
+        dualiconLabel?.remove();
         // Plain navigation and repeated card actions use Anchor, not Primary.
         const link = el('a', '', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
         link.href = card.dataset.detailHref;
-        link.setAttribute('aria-label', 'View component guide');
-        link.title = 'View component guide';
+        link.setAttribute('aria-label', 'View ' + cardName + ' guide');
+        link.title = 'View ' + cardName + ' guide';
         link.innerHTML = '<svg class="anchor-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
         const copyRow = card.querySelector('.card-copy-row');
-        if (copyRow) copyRow.prepend(link); else card.append(link);
+        if (copyRow) {
+          copyRow.prepend(link);
+          const copyPromptBtn = copyRow.querySelector('[data-role^="copy-prompt-"]');
+          const copyCodeBtn = copyRow.querySelector('[data-role^="copy-code-"]');
+          if (copyPromptBtn) copyPromptBtn.setAttribute('aria-label', 'Copy ' + cardName + ' prompt');
+          if (copyCodeBtn) copyCodeBtn.setAttribute('aria-label', 'Copy ' + cardName + ' code');
+        } else card.append(link);
       });
       main.querySelectorAll('.button-matrix-wrap').forEach(region => {
         region.tabIndex = 0;

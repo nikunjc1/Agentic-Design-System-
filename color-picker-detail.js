@@ -469,14 +469,16 @@
       // allowClear's button sits alongside the value rather than replacing
       // a placeholder icon - clicking it would revert to the default color,
       // not to nothing.
+      // tabindex="-1" throughout: this matrix is a static state comparison,
+      // not an operable field.
       var clearHtml = (allowClear && !isDisabled)
-        ? '<button type="button" class="colorpicker-demo-clear" aria-label="Reset color">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="colorpicker-demo-clear" aria-label="Reset color" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = "";
       if (isOpen){
         var optionsHtml = paletteSwatches().map(function(hex, i){
-          return '<button type="button" class="colorpicker-demo-swatch-option' + (i === 0 ? " is-active" : "") + '" style="background:' + hex + ';" aria-label="' + hex + '"></button>';
+          return '<button type="button" class="colorpicker-demo-swatch-option' + (i === 0 ? " is-active" : "") + '" style="background:' + hex + ';" aria-label="' + hex + '" tabindex="-1"></button>';
         }).join("");
         panelHtml = '<div class="colorpicker-demo-panel"><div class="colorpicker-demo-grid">' + optionsHtml + "</div></div>";
       }

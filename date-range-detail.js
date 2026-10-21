@@ -431,14 +431,17 @@
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
       var controlClasses = "daterange-demo-control daterange-demo-control--" + typeKey + " daterange-demo-control--h" + size + stateCls;
-      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="0"';
+      // role="button" kept for a real implementation to model its own
+      // interactive control after - tabindex is always -1 here since this
+      // matrix is a static state comparison, not an operable field.
+      var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="-1"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var segmentClass = (isFilled || isError) ? "daterange-demo-segment" : "daterange-demo-segment is-placeholder";
       var startText = escapeHtml(isFilled ? FILLED_START : (isError ? ERROR_START : startPlaceholder));
       var endText = escapeHtml(isFilled ? FILLED_END : (isError ? ERROR_END : endPlaceholder));
       var noteHtml = isError ? '<p class="daterange-demo-note is-error">End date must be after the start date.</p>' : "";
       var trailingHtml = (allowClear && isFilled && !isDisabled)
-        ? '<button type="button" class="daterange-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="daterange-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : '<span class="daterange-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
       return '<div class="daterange-demo-field">' +
         '<label class="daterange-demo-label">' + escapeHtml(label) + "</label>" +

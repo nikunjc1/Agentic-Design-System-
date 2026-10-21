@@ -429,12 +429,12 @@
       var leadingHtml = showLeadingIcon ? '<span class="search-demo-icon">' + ICON_SEARCH + "</span>" : "";
       var valueAttr = isFilled ? ' value="dashboard"' : (isError ? ' value="xyz123notfound"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       // No tabindex override here - a real <button> is focusable by default,
       // and the page's own Accessibility text claims exactly that ("the
       // clear button is independently focusable"), so a hard-coded -1
       // would silently contradict it.
-      var clearHtml = (showClearButton && hasValue) ? '<button type="button" class="search-demo-clear" aria-label="Clear search">' + ICON_CLEAR + "</button>" : "";
+      var clearHtml = (showClearButton && hasValue) ? '<button type="button" class="search-demo-clear" aria-label="Clear search" tabindex="-1">' + ICON_CLEAR + "</button>" : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="search-demo-note is-error">No results found for &quot;xyz123notfound&quot;.</p>' : "";
       return '<div class="search-demo-field">' +

@@ -321,15 +321,20 @@
       var classes = ["table-demo-row"];
       if (isStriped && (i + 1) % 2 === 0) classes.push("table-demo-row--striped");
       if (isSelected && i === 0) classes.push("table-demo-row--selected");
-      var checkboxTd = isSelected ? '<td><input type="checkbox"' + (i === 0 ? " checked" : "") + " /></td>" : "";
+      // tabindex="-1" on every focusable element here: this matrix is a
+      // static side-by-side comparison of type x state (same convention as
+      // every other component's own matrix in this system), not one
+      // operable table - without it, a keyboard user hits a real checkbox
+      // and real mailto:/tel: links on every one of these repeated rows.
+      var checkboxTd = isSelected ? '<td><input type="checkbox" tabindex="-1"' + (i === 0 ? " checked" : "") + " /></td>" : "";
       var statusDotClass = "badge-demo-status-dot--" + person.statusColor;
       var statusHtml = '<td><span class="table-demo-status-cell"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
       // Email/Mobile render as real links (mailto:/tel:) styled in this
       // system's actual defined link color - var(--red-400), the same
       // token the Link-type Button and Toast's own inline action use.
       // There is no blue "link" token anywhere in this system.
-      var emailHtml = '<td><a class="table-demo-link-cell" href="mailto:' + person.email + '">' + person.email + "</a></td>";
-      var mobileHtml = '<td><a class="table-demo-link-cell" href="tel:' + person.mobile.replace(/[^+\d]/g, "") + '">' + person.mobile + "</a></td>";
+      var emailHtml = '<td><a class="table-demo-link-cell" href="mailto:' + person.email + '" tabindex="-1">' + person.email + "</a></td>";
+      var mobileHtml = '<td><a class="table-demo-link-cell" href="tel:' + person.mobile.replace(/[^+\d]/g, "") + '" tabindex="-1">' + person.mobile + "</a></td>";
       return '<tr class="' + classes.join(" ") + '">' + checkboxTd + "<td>" + person.name + "</td>" + statusHtml + "<td>" + person.role + "</td>" + emailHtml + mobileHtml + "</tr>";
     }).join("");
 

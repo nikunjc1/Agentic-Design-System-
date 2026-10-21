@@ -453,12 +453,12 @@
       var controlClasses = "password-demo-control password-demo-control--" + typeKey + " password-demo-control--h" + size + stateCls;
       var valueAttr = isFilled ? ' value="correcthorse"' : (isError ? ' value="short"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="password" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      var inputHtml = '<input type="password" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       // No tabindex override - a real <button> is focusable by default, and
       // a reveal toggle a keyboard user can't reach defeats its own purpose.
-      var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password">' + ICON_EYE + "</button>" : "";
+      var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password" tabindex="-1">' + ICON_EYE + "</button>" : "";
       var clearHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="password-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="password-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="password-demo-note is-error">Password must be at least 8 characters.</p>' : "";

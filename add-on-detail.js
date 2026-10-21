@@ -457,11 +457,12 @@
       // structure, so allowClear can never take it over the way it takes
       // over a plain trailing icon slot elsewhere in this Input family.
       var clearHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="addon-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="addon-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var valueAttr = isFilled ? ' value="yourcompany"' : (isError ? ' value="a"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // tabindex="-1": static state-comparison matrix, not an operable field.
+      var inputHtml = '<input type="text" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var noteHtml = isError ? '<p class="addon-demo-note is-error">Enter at least 3 characters.</p>' : "";
       return '<div class="addon-demo-field">' +
         '<label class="addon-demo-label">' + escapeHtml(label) + "</label>" +

@@ -426,7 +426,10 @@
       var controlClasses = "textarea-demo-control textarea-demo-control--" + typeKey + " textarea-demo-control--h" + size + stateCls;
       var disabledAttr = isDisabled ? " disabled" : "";
       var content = isFilled ? "This feature has been incredibly helpful for our team's daily workflow." : (isError ? "ok" : "");
-      var textareaHtml = '<textarea class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ">" + content + "</textarea>";
+      // tabindex="-1": this matrix is a static side-by-side comparison of
+      // every state (same convention as Modal/Rating/Input's own matrices),
+      // not an operable field.
+      var textareaHtml = '<textarea class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ' tabindex="-1">' + content + "</textarea>";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="textarea-demo-note is-error">Please provide at least 10 characters.</p>' : "";
       return '<div class="textarea-demo-field">' +

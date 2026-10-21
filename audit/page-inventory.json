@@ -566,6 +566,21 @@
     "bytes": 11335
   },
   {
+    "file": "component-index.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Components",
+      "Actions",
+      "Forms",
+      "Navigation",
+      "Feedback",
+      "Data Display"
+    ],
+    "issues": [],
+    "bytes": 19650
+  },
+  {
     "file": "components.html",
     "kind": "Listing",
     "status": "Available",
@@ -574,7 +589,7 @@
       "Button type"
     ],
     "issues": [],
-    "bytes": 12764
+    "bytes": 12947
   },
   {
     "file": "copywriting.html",
@@ -727,7 +742,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21097
+    "bytes": 21059
   },
   {
     "file": "drawer.html",
@@ -1120,7 +1135,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21609
+    "bytes": 21571
   },
   {
     "file": "modal.html",
@@ -1231,7 +1246,7 @@
       "Guidelines & governance"
     ],
     "issues": [],
-    "bytes": 14014
+    "bytes": 14019
   },
   {
     "file": "pagination-default.html",
@@ -1311,7 +1326,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20822
+    "bytes": 20774
   },
   {
     "file": "pop-confirm.html",
@@ -2019,7 +2034,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20714
+    "bytes": 20674
   },
   {
     "file": "tour.html",

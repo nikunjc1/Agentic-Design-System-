@@ -160,8 +160,8 @@ test('component code exports keep comments and use the selected Foundation metri
   const code=M.prepareCode('/* line-height: 38px is a sample comment. */\n.example{font-size:var(--type-body-size);font-weight:600;line-height:20px;gap:8px;border:1.5px solid var(--line);height:40px;}');
   assert.match(code,/line-height: 38px is a sample comment/);assert.match(code,/font-weight:var\(--type-body-weight\)/);assert.match(code,/line-height:var\(--type-body-line-height\)/);assert.match(code,/gap:var\(--space-8\)/);assert.match(code,/height:var\(--dimension-40\)/);assert.match(code,/border:var\(--border-width-1\) var\(--border-style\)/);
 });
-test('all 157 live pages load the resolver before boot and bindings last',()=>{
-  const pages=fs.readdirSync(ROOT).filter(p=>p.endsWith('.html'));assert.equal(pages.length,157);
+test('all 158 live pages load the resolver before boot and bindings last',()=>{
+  const pages=fs.readdirSync(ROOT).filter(p=>p.endsWith('.html'));assert.equal(pages.length,158);
   for(const page of pages) {const s=fs.readFileSync(path.join(ROOT,page),'utf8');assert.ok(s.indexOf('src="foundation-model.js"')<s.indexOf('src="foundation-runtime.js"'),page);assert.ok(s.indexOf('src="foundation-runtime.js"')<s.indexOf('src="theme-init.js"'),page);assert.ok(s.includes('href="foundation.css"'),page);assert.doesNotMatch(s,/<p\s+class="panel-title"/,page);assert.doesNotMatch(s,/<span class="badge badge-(?:required|optional)">/,page);}
 });
 test('CSS dependencies resolve and responsive thresholds never contain custom properties',()=>{

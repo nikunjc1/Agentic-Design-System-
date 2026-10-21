@@ -432,11 +432,15 @@
       // clear - a static trailing icon and a clear button would otherwise
       // compete for the same spot, and Ant's own Input never shows both.
       var trailingHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="input-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="input-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : (showTrailingIcon ? '<span class="input-demo-icon input-demo-icon--trailing">' + ICON_CHECK + "</span>" : "");
       var valueAttr = isFilled ? ' value="jane@example.com"' : (isError ? ' value="not-an-email"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // tabindex="-1": every state/type combination here is a static side-
+      // by-side comparison (same convention as Modal/Rating's own matrices),
+      // not an operable field - a real tab stop would land on dozens of
+      // inputs that exist only to show what Rest/Hover/Error look like.
+      var inputHtml = '<input type="text" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="input-demo-note is-error">Enter a valid email address.</p>' : "";
       return '<div class="input-demo-field">' +
