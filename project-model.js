@@ -55,7 +55,7 @@
   // Your name/Email/Designation are identity, not configuration - nothing
   // downstream requires them (no account, no email sent, role alone
   // drives the post-save routing) and Markdown only ever includes them
-  // when the user separately opts in on MD Export. Required would be
+  // when the user separately opts in on Markdown Export. Required would be
   // friction with no stated purpose, so each is optional but still bound/
   // type-checked *if* provided, the same as every other free-text field.
   function validate(p) {

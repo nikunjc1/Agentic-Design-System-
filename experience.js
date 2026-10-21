@@ -197,7 +197,7 @@
       });
     });
     const roadmap = {
-      'npm-package.html': ['Npm publishing is not connected', 'You can use this design system now by exporting its Markdown documentation. The package workflow below is a design reference.'],
+      'npm-package.html': ['NPM publishing is not connected', 'You can use this design system now by exporting its Markdown documentation. The package workflow below is a design reference.'],
       'figma.html': ['Figma connection is not available yet', 'Use the foundation editors and export a Markdown handoff for your design team.'],
       'ai-generator.html': ['Use this system with your AI tool', 'Export your product brief and component guides as Markdown, then attach the file to your AI tool with a description of the screen you want to build.'],
       'history.html': ['Release history is a design reference', 'There are no published releases in this local workspace. Export the current working draft to keep a snapshot of your setup.']
@@ -743,7 +743,7 @@
   // data snapshot, this exports the page's own actual content as
   // Markdown, mirroring the exact heading/paragraph/list-item conversion
   // tools/audit_pages.py already uses to build docs-catalog.js (the
-  // source the sitewide MD Export page's own per-page export draws from),
+  // source the sitewide Markdown Export page's own per-page export draws from),
   // just run client-side against the live DOM instead of raw HTML source
   // - so a local button gives the same result without loading that
   // 500KB+ sitewide catalog file just to read one page's own entry. Only
