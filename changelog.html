@@ -174,12 +174,13 @@
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title" id="changelogCount">Entries</h2>
+    <label class="setup-field" for="changelogSearch">Search implementation changes</label><input class="input-demo-input" type="search" id="changelogSearch" placeholder="Search titles and descriptions"><button class="btn btn-ghost btn-sm" id="clearChangelogSearch" type="button">Clear search</button><p class="setup-status" role="status" id="changelogSearchStatus"></p>
     <div id="changelogList"></div>
   </section>
 
   <section class="panel spacing-model-panel" id="knownGapsSection" hidden>
     <h2 class="panel-title">Known gaps</h2>
-    <p class="get-library-copy" id="knownGapsBody"></p>
+    <div class="get-library-copy" id="knownGapsBody"></div>
   </section>
 
 </main>
@@ -188,38 +189,6 @@
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
 <script src="changelog.js"></script>
-<script>
-(function(){
-  function inline(text){
-    var esc = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    esc = esc.replace(/`([^`]+)`/g, "<code>$1</code>");
-    esc = esc.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    return esc;
-  }
-  function renderBody(body){
-    return body.split(/\n\n+/).map(function(p){ return "<p class=\"get-library-copy\">" + inline(p.trim()) + "</p>"; }).join("");
-  }
-  document.addEventListener("DOMContentLoaded", function(){
-    var data = window.ADSChangelog || { entries: [], knownGaps: null };
-    var listEl = document.getElementById("changelogList");
-    var countEl = document.getElementById("changelogCount");
-    countEl.textContent = data.entries.length + " entries, newest first";
-    data.entries.forEach(function(entry){
-      var wrap = document.createElement("div");
-      wrap.className = "changelog-entry";
-      var h = document.createElement("h3");
-      h.className = "changelog-entry-title";
-      h.textContent = entry.title;
-      wrap.appendChild(h);
-      wrap.insertAdjacentHTML("beforeend", renderBody(entry.body));
-      listEl.appendChild(wrap);
-    });
-    if (data.knownGaps){
-      document.getElementById("knownGapsSection").hidden = false;
-      document.getElementById("knownGapsBody").innerHTML = renderBody(data.knownGaps);
-    }
-  });
-})();
-</script>
+<script src="changelog-view.js"></script>
 </body>
 </html>

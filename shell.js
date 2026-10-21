@@ -56,7 +56,17 @@
 
   // Preferences remain optional when browser storage is unavailable.
   function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
-  function writePreference(key, value) { try { localStorage.setItem(key, value); } catch {} }
+  function writePreference(key, value) {
+    let saved=true;
+    try { localStorage.setItem(key, value); } catch { saved=false; }
+    if ([THEME_KEY,DENSITY_KEY,DIRECTION_KEY].includes(key)) {
+      let status=document.getElementById('preferenceSaveStatus');
+      if (!status) {status=document.createElement('p');status.id='preferenceSaveStatus';status.className='ads-copy-status';status.setAttribute('role','status');document.body.append(status);}
+      const name=key===THEME_KEY?'Appearance':key===DENSITY_KEY?'Density':'Direction';
+      status.textContent=saved?`${name} saved in this browser.`:`${name} changed for this tab only. Browser storage is unavailable; it will not persist after reload.`;
+    }
+    return saved;
+  }
 
   // Foundation audit X06 - every Foundation editor (Colors, Spacing, Radius,
   // Grid & Layout, Borders, Shadows, Icons, Typography) used to call

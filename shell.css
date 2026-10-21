@@ -7360,3 +7360,15 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   transform: translate(-50%, 0);
   pointer-events: auto;
 }
+
+/* Page handoffs and searchable implementation history. */
+.composition-output { margin-top: var(--space-12); min-width: 0; }
+.composition-scaffold { max-width:100%; min-width:0; box-sizing:border-box; }
+.composition-scaffold div { min-width:0; max-width:100%; box-sizing:border-box; }
+.composition-scaffold table { table-layout:fixed; overflow-wrap:anywhere; }
+.composition-output summary, .changelog-entry > summary { cursor: pointer; color: var(--text-hi); padding-block: var(--space-12); }
+.composition-output textarea { width:100%; max-width:100%; box-sizing:border-box; }
+.changelog-entry[hidden], #exportComponentGroups[hidden] { display:none; }
+.changelog-entry pre { overflow:auto; max-width:100%; white-space:pre; }
+.changelog-entry { scroll-margin-top:var(--space-64); }
+#changelogSearch { min-height:var(--size-control-md,40px); width:100%; box-sizing:border-box; border:var(--border-width-1) solid var(--line); background:var(--graphite-900); color:var(--text-hi); padding:var(--space-8); }

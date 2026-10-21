@@ -486,11 +486,13 @@
       // as settings actually applied to the page.
       values[key] = window.ADSFoundation.read(key);
     }
-    values.resolvedFoundation = window.ADSFoundation.get();
-    const allSettings=Object.fromEntries(TOKEN_KEYS.map(key=>[key,window.ADSFoundation.read(key)]));
-    values.resolvedThemes = Object.fromEntries(['light','dark'].map(theme=>[theme,window.ADSFoundationModel.resolve(allSettings,theme,profile)]));
-    values.platformProfiles=window.ADSFoundationModel.resolvePlatformProfiles(allSettings,profile);
-    values.verification=window.ADSFoundation.getVerification();
+    // Excluded saved sections must not re-enter through resolved snapshots.
+    const selectedSettings={...values};
+    values.resolvedFoundation=window.ADSFoundationModel.resolve(selectedSettings,document.documentElement.dataset.theme,profile);
+    values.resolvedThemes = Object.fromEntries(['light','dark'].map(theme=>[theme,window.ADSFoundationModel.resolve(selectedSettings,theme,profile)]));
+    values.platformProfiles=window.ADSFoundationModel.resolvePlatformProfiles(selectedSettings,profile);
+    values.verification={...window.ADSFoundation.getVerification(),unsavedPreviewKeys:window.ADSFoundation.getVerification().unsavedPreviewKeys.filter(key=>allowedKeys.includes(key.replace(/^ads:/,'')))};
+    values.selection={savedSections:allowedKeys,unselectedSections:'Library defaults in resolved dependencies; saved customizations excluded.'};
     return values;
   }
   // docs-catalog.js has no literal "category" field - every component
@@ -616,6 +618,7 @@
       foundationChecks.forEach(c => c.disabled = true); componentChecks.forEach(c => c.disabled = true);
       status.textContent = 'Preparing your Markdown…';
       try {
+        profile=M.read(localStorage);
         let docs = [];
         if (selector.value !== 'context') {
           // Loaded from docs-catalog.js (a plain <script src>, evaluated
@@ -633,7 +636,7 @@
           // so clearing every component checkbox can't silently drop
           // unrelated documentation the user didn't ask to exclude.
           const allowedFiles = new Set(componentChecks.filter(c => c.checked).flatMap(c => JSON.parse(c.dataset.files)));
-          docs = docs.filter(d => docCategory(d) === null || allowedFiles.has(d.file));
+          if(selector.value !== 'page') docs = docs.filter(d => docCategory(d) === null || allowedFiles.has(d.file));
         }
         // Each checkbox picks a whole Foundations tab (e.g. "colors" also
         // pulls in the bg/status/neutral/text theme-pair values saved
@@ -642,29 +645,40 @@
         // sees as one unit in the Foundations sidebar.
         const allowedKeys = foundationChecks.filter(c => c.checked).flatMap(c => FOUNDATION_TOKEN_MAP[c.value] || []);
         const tokens = savedTokens(allowedKeys, profile);
-        const defaultedKeys = allowedKeys.filter(key => localStorage.getItem('ads:' + key) === null);
+        const defaultedKeys = allowedKeys.filter(key => !window.ADSFoundation.read(key));
         preview.value = M.markdown(profile, tokens, docs, identity.checked, defaultedKeys);
         const includedCount = foundationChecks.filter(c => c.checked).length;
         const foundationSummary = foundationChecks.length ? `${includedCount}/${foundationChecks.length} foundation sections · ` : '';
-        const includedComponentCount = componentChecks.filter(c => c.checked).length;
-        const componentSummary = (selector.value !== 'context' && componentChecks.length) ? `${includedComponentCount}/${componentChecks.length} components · ` : '';
+        const includedComponentCount = docs.filter(d=>docCategory(d)!==null).length;
+        const componentSummary = selector.value !== 'context' ? `${includedComponentCount} component guides · ` : '';
         status.textContent = `${foundationSummary}${componentSummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
         download.disabled = false; copy.disabled = false;
       } catch (error) { preview.value = ''; status.textContent = error.message; }
-      finally { busy = false; selector.disabled = false; identity.disabled = false; foundationChecks.forEach(c => c.disabled = false); componentChecks.forEach(c => c.disabled = false); }
+      finally {
+        busy = false; selector.disabled = false; identity.disabled = false;
+        foundationChecks.forEach(c => c.disabled = false); componentChecks.forEach(c => c.disabled = false);
+        const showComponents=['all','components'].includes(selector.value);
+        $('#exportComponentGroups').hidden=!showComponents;
+        $('#exportComponentGroups').previousElementSibling?.toggleAttribute('hidden',!showComponents);
+      }
     }
     $('#refreshMarkdown').addEventListener('click', generate);
     selector.addEventListener('change', generate); identity.addEventListener('change', generate);
     foundationChecks.forEach(c => c.addEventListener('change', generate));
-    download.addEventListener('click', () => {
+    download.addEventListener('click', async () => {
+      await generate();if(download.disabled)return;
       const url = URL.createObjectURL(new Blob([preview.value], {type:'text/markdown;charset=utf-8'}));
       const a = el('a'); a.href = url; a.download = M.slug(profile?.project || 'damco') + '-design-system.md';
       document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 10000);
       status.textContent = 'Markdown download started.';
     });
     copy.addEventListener('click', async () => {
+      await generate();if(copy.disabled)return;
       try { await window.ADSClipboard.copy(preview.value); status.textContent = 'Markdown copied.'; }
       catch { preview.focus(); preview.select(); status.textContent = 'Copy is unavailable. The Markdown is selected; use your device’s Copy command or download the file.'; }
+    });
+    window.addEventListener('storage',event=>{
+      if(event.key===null||event.key===M.KEY||TOKEN_KEYS.some(key=>event.key==='ads:'+key))generate();
     });
     generate();
   }
@@ -673,7 +687,12 @@
     // name/designation are optional (see project-model.js's validate()) -
     // joined with filter(Boolean) so a blank one collapses away instead of
     // leaving a stray " · · " gap.
-    summary.textContent = storageError || (profile ? [profile.project, profile.name, profile.designation, profile.role].filter(Boolean).join(' · ') : 'No project setup saved yet.');
+    const refreshSummary=()=>{
+      try {profile=M.read(localStorage);storageError='';}catch(error){profile=null;storageError=error.message;}
+      summary.textContent = storageError || (profile ? [profile.project, profile.name, profile.designation, profile.role].filter(Boolean).join(' · ') : 'No project setup saved yet.');
+    };
+    summary.setAttribute('role','status');refreshSummary();
+    window.addEventListener('storage',event=>{if(event.key===null||event.key===M.KEY)refreshSummary();});
   }
   // Machine View schema contract (systemwide, every page's Machine View -
   // static auto-generated ones below and every page-specific dynamic one

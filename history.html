@@ -171,11 +171,11 @@
   <p class="page-eyebrow">Design System &middot; History</p>
   <h1 class="page-title">History <span class="component-status is-draft">Mockup</span></h1>
   <p class="component-meta">Owner: Design System Team &middot; Version: v3.5.0 &middot; <a href="changelog.html">Changelog</a></p>
-  <p class="page-lede">One page, two tabs - a release list is a different object from a full audit trail, with different audiences and retention needs. Top-level navigation, never a dropdown or modal, placed between Governance and Settings.</p>
+  <p class="page-lede">The release list and activity trail below use fictional sample data to illustrate a future workflow. They do not show this browser’s saved project, actual publications or an immutable event log.</p>
 
   <section class="panel spacing-model-panel component-guide" data-role="component-guide">
     <div class="panel-title-row">
-      <h2 class="panel-title">InsureEdge 3.0 &middot; Current version 3.2.0</h2>
+      <h2 class="panel-title">Example project &middot; Sample version 3.2.0</h2>
       <div class="guide-view-toggle" role="group" aria-label="History view">
         <button type="button" class="guide-toggle-btn is-active" data-view="versions" aria-pressed="true">Versions</button>
         <button type="button" class="guide-toggle-btn" data-view="activity" aria-pressed="false">Activity</button>
@@ -197,7 +197,7 @@
           </tbody>
         </table>
       </div>
-      <p class="get-library-copy" style="margin-top:var(--space-10);">Checkbox selection on each row drives Compare directly - no separate version-picker screen. Search, status filter, and date range sit above the table; a two-year-old system has hundreds of versions, so this paginates (showing 4 of 27 here). Row menu: View &middot; Export MD &middot; View changelog &middot; Compare with current &middot; Restore &middot; Copy version link.</p>
+      <p class="get-library-copy" style="margin-top:var(--space-10);">Planned: checkbox selection on each row will drive Compare directly - no separate version-picker screen. Planned search, status filter, and date range will sit above the table; a two-year-old system has hundreds of versions, so the future implementation needs pagination (these four rows are examples). Planned row menu: View &middot; Export MD &middot; View changelog &middot; Compare with current &middot; Restore &middot; Copy version link.</p>
 
       <div style="margin-top:var(--space-16);">
         <h2 class="panel-title">Empty state - no published versions yet</h2>
@@ -208,12 +208,12 @@
             <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Draft changes: 62 components, 9 foundations &middot; [ Publish v1.0.0 ]</p>
           </div>
         </div>
-        <p class="get-library-copy" style="margin-top:var(--space-8);">Not "Create first version" - generation already creates v1.0.0, so a project with a design system always has at least one version. The real empty state is "no <em>published</em> versions yet, draft in progress."</p>
+        <p class="get-library-copy" style="margin-top:var(--space-8);">The proposed published-release empty state is "no <em>published</em> versions yet, draft in progress."</p>
       </div>
     </div>
 
     <div class="guide-view-panel" data-view-panel="activity" hidden>
-      <p class="get-library-copy">Append-only and immutable. Every event records actor (human or agent), timestamp, object ID, before/after reference, and outcome.</p>
+      <p class="get-library-copy">Append-only and immutable. Planned events must record actor (human or agent), timestamp, object ID, before/after reference, and outcome. The table contains examples only.</p>
       <div style="overflow-x:auto;">
         <table class="table-demo-table table-demo-table--bordered" style="width:100%;">
           <thead><tr><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Event</th><th scope="col">Detail</th></tr></thead>
@@ -280,7 +280,7 @@
         <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ 11 components revert to their 3.1.0 definition</p>
         <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&minus; Date Range (added in 3.2.0) will be removed</p>
         <p style="margin:0 0 var(--space-8);color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&#9888; This reintroduces a known contrast failure (SC 1.4.11)</p>
-        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Impact: NPM 3.3.0 will be a MAJOR release &middot; AI context requires re-sync &middot; Figma library requires re-push. A written reason is required before confirming.</p>
+        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Impact: this breaking NPM change requires version 4.0.0 &middot; AI context requires re-sync &middot; Figma library requires re-push. A written reason is required before confirming.</p>
       </div>
     </div>
     <ul class="guide-list">
@@ -300,7 +300,7 @@
       <li>A sticky table header must not obscure a focused row (SC 2.4.11 Focus Not Obscured).</li>
     </ul>
     <p class="guide-subhead">Related</p>
-    <p class="guide-body-text">Every version's stored MD snapshot is served from <a href="md-export.html">Markdown Export</a>'s immutability rule. Publishing a version here is what moves <a href="npm-package.html">NPM Package</a> out of drift. Generation from <a href="new-project.html">Project setup</a> always creates the first entry (v1.0.0).</p>
+    <p class="guide-body-text">Planned: stored version snapshots will be served separately from <a href="md-export.html">Markdown Export</a>'s immutability rule. Planned: publishing a version will move <a href="npm-package.html">NPM Package</a> out of drift. <a href="new-project.html">Project setup</a> currently saves a local profile only; it does not create a versioned release. <a href="changelog.html">Read the actual implementation changelog.</a></p>
   </section>
 </main>
 

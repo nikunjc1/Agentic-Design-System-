@@ -49,7 +49,8 @@ test('Markdown contains saved tokens, selected platforms and source guides; iden
 test('Markdown states provenance - which keys are a real save versus a documented default', () => {
   const tokens = {colors:{light:{primary:{hex:'#123456'}}}, spacing:{product:null,system:'4px'}};
   const noneDefaulted = M.markdown(profile,tokens,[],false,[]);
-  assert.ok(noneDefaulted.includes('every key above reflects an explicit save'));
+  assert.ok(noneDefaulted.includes('selected non-null source records are usable overrides'));
+  assert.ok(noneDefaulted.includes('do not imply explicit saves'));
   const someDefaulted = M.markdown(profile,tokens,[],false,['spacing']);
   assert.ok(someDefaulted.includes('`spacing` is this system\'s own documented default'));
   const multiDefaulted = M.markdown(profile,tokens,[],false,['spacing','radius']);
@@ -60,4 +61,10 @@ test('metadata quotes punctuation and newlines, and project filenames have safe 
   assert.ok(md.includes('project: "A: \\"B\\"\\n---"'));
   assert.equal(M.slug('中文'),'design-system');
   assert.equal(M.slug('../../My Project'),'my-project');
+});
+test('Markdown omits embedded binary assets while preserving dependency references', () => {
+  const md=M.markdown(profile,{typography:{primaryFont:{family:'Brand font',source:'upload',dataUrl:'data:font/woff2;base64,PRIVATE_BINARY'}},icons:{uploads:[{name:'sample-icon.svg',dataUrl:'data:image/svg+xml;base64,PRIVATE_ICON'}]}});
+  assert.ok(!md.includes('PRIVATE_BINARY'));assert.ok(!md.includes('PRIVATE_ICON'));
+  assert.ok(md.includes('Brand font'));assert.ok(md.includes('sample-icon.svg'));
+  assert.ok(md.includes('[Binary asset omitted; obtain Foundation JSON]'));
 });

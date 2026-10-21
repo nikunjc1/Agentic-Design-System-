@@ -107,10 +107,11 @@
     "status": "Reference / planned",
     "sections": [
       "AI Generator",
-      "Reuse first, generate second"
+      "Reuse first, generate second",
+      "Build with your AI tool today"
     ],
     "issues": [],
-    "bytes": 10778
+    "bytes": 11433
   },
   {
     "file": "alert-default.html",
@@ -486,7 +487,7 @@
       "Known gaps"
     ],
     "issues": [],
-    "bytes": 11707
+    "bytes": 10764
   },
   {
     "file": "checkbox-default.html",
@@ -812,10 +813,11 @@
     "status": "Reference / planned",
     "sections": [
       "Figma",
-      "Kept in sync with your Figma library"
+      "Prepare a manual Figma handoff",
+      "Manual handoff"
     ],
     "issues": [],
-    "bytes": 10315
+    "bytes": 10848
   },
   {
     "file": "float-button-default.html",
@@ -951,7 +953,7 @@
     "status": "Reference / planned",
     "sections": [
       "History Mockup",
-      "InsureEdge 3.0 \u00b7 Current version 3.2.0",
+      "Example project \u00b7 Sample version 3.2.0",
       "Empty state - no published versions yet",
       "Version detail",
       "Compare",
@@ -959,7 +961,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 27635
+    "bytes": 27737
   },
   {
     "file": "icons.html",
@@ -1069,7 +1071,7 @@
       "Ready for your next tool"
     ],
     "issues": [],
-    "bytes": 13388
+    "bytes": 13654
   },
   {
     "file": "mention-default.html",
@@ -1202,13 +1204,13 @@
     "sections": [
       "NPM Package Mockup",
       "State machine",
-      "Configuration",
-      "Published state",
-      "Version drift",
+      "Configuration example",
+      "Published state example",
+      "Version drift example",
       "Publish safety"
     ],
     "issues": [],
-    "bytes": 20400
+    "bytes": 20722
   },
   {
     "file": "number-default.html",
@@ -1312,7 +1314,7 @@
       "Form section"
     ],
     "issues": [],
-    "bytes": 21285
+    "bytes": 21422
   },
   {
     "file": "pop-confirm-default.html",
@@ -1575,7 +1577,7 @@
       "Appearance and integrations"
     ],
     "issues": [],
-    "bytes": 12265
+    "bytes": 12434
   },
   {
     "file": "shadows.html",
@@ -1893,7 +1895,7 @@
       "Auth"
     ],
     "issues": [],
-    "bytes": 22261
+    "bytes": 22490
   },
   {
     "file": "text-area-default.html",
