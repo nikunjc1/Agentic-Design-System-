@@ -2763,6 +2763,20 @@ Fixed by switching `.version-badge` from the line-height trick to flex centering
 
 Verified: `.version-badge` now computes the same `top`/`height` box position as `.brand-color-code` and `.icon-btn` (15.5px top, 32px height, all three aligned); screenshotted the topbar to confirm "v3.5.0" reads centered; the narrow-viewport `display:none` rule (320px) still applies correctly, unaffected; all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures.
 
+## Patterns/Templates: the components they're built from weren't actually reachable
+
+User report: on Patterns and Templates, the referenced patterns and components "aren't coming through properly."
+
+Investigated both pages in detail - every demo itself renders correctly in both themes, at mobile width, and with no console errors (confirmed via screenshots and a DOM audit cross-referencing every class and CSS variable used against what's actually defined). One real candidate turned out to be intentional on closer reading: the Settings template's "Save changes" button sits inside `.affix-demo-bar` (Affix's own sticky-bar styling), which looked like a stray box until the section's own copy made clear it's deliberately demonstrating a pinned save bar ("Built from: ...Affix") - left as-is.
+
+Found two real, separate gaps instead, both about components/patterns not actually being reachable from where they're mentioned:
+
+**"All components" had no way in from the sidebar.** The "Components" sidebar entry is a collapsible group toggle, not a link - searching "component" in Filter navigation only ever found "Component Guidelines," never the actual 61-component catalog built earlier this session (`component-index.html`), which was reachable only from the Overview page's own card. Added `<a href="component-index.html">All components</a>` as the first item inside the Components group, on all 158 pages, with `is-active` set correctly on `component-index.html` itself.
+
+**Every "Built from: X, Y, Z" caption (10 of them, across both pages) was plain text**, not links - a reader curious about "Search" or "Date Range" as used in the Filter bar pattern had no way to click through to it. Converted every component name to a real link to its own page (`Date Range` -> `date-range.html`, etc.); the two pattern-to-pattern cross-references ("KPI row pattern," "Form section pattern") link to `patterns.html` itself rather than a specific section, since the page's per-section anchors are assigned by `experience.js` at runtime (`section-N`, in heading order) and aren't reliably present yet at initial page load for a hash-fragment deep link to land on. Added `.guide-dodont-note a` styling using the already-computed `--link-text` token; verified contrast on the actual surface these sit on (not assumed from its original raised-surface computation) - 4.78:1 in both themes.
+
+Verified: searching "component" now surfaces "All components"; clicking a Built-from link lands on the right page; all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

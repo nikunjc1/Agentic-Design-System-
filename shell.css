@@ -7102,6 +7102,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 
   color:var(--type-body-color);
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.guide-dodont-note a{ color:var(--link-text); text-decoration: underline; text-underline-offset: 3px; }
 /* Cascader's Do/Don't example shows the field with its dropdown panel
    already open, as a static snapshot - but .cascader-demo-panel is
    position:absolute with its own min-width:var(--dimension-360) (appropriate for the
