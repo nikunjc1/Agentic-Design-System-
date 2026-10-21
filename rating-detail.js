@@ -166,13 +166,18 @@
       : "/* Icon size - explicitly chosen: " + sizeInfo.values.map(function(v){ return v + "px"; }).join(", ") + " - set via width/height on each <svg>. */");
     lines.push("");
     lines.push("<!-- Example usage - one per type, Selected state showing " + selectedCount + " of 5 filled, at " + exampleSize + "px -->");
+    lines.push("<!-- Each button needs a click handler that sets is-filled on itself and every");
+    lines.push("     earlier sibling, clears it from every later one, and updates aria-pressed to");
+    lines.push("     match - this markup/CSS only renders one fixed, pre-selected snapshot. -->");
     TYPES.forEach(function(t){
+      var typeNoun = t.label.toLowerCase() + "s";
       lines.push('<div class="rating-demo-field">');
       lines.push('  <p class="rating-demo-label">' + escapeHtml(label) + "</p>");
       lines.push('  <div class="rating-demo-row is-selected">');
       for (var i = 0; i < MAX_ICONS; i++){
         var filled = i < selectedCount;
-        lines.push('    <button type="button" class="rating-demo-icon' + (filled ? " is-filled" : "") + '">' + iconSvg(t.key, filled, exampleSize) + "</button>");
+        var iconLabel = escapeHtml(label) + ", " + (i + 1) + " of " + MAX_ICONS + " " + typeNoun;
+        lines.push('    <button type="button" class="rating-demo-icon' + (filled ? " is-filled" : "") + '" aria-label="' + iconLabel + '" aria-pressed="' + filled + '">' + iconSvg(t.key, filled, exampleSize) + "</button>");
       }
       lines.push("  </div>");
       lines.push("</div>");
@@ -319,6 +324,7 @@
 
     function buildRatingField(typeKey, stateKey, stateCls, size, label, selectedCount){
       var isDisabled = stateKey === "disabled";
+      var typeNoun = TYPES.filter(function(t){ return t.key === typeKey; })[0].label.toLowerCase() + "s";
       var icons = [];
       for (var i = 0; i < MAX_ICONS; i++){
         var extraCls = "";
@@ -330,7 +336,14 @@
           extraCls = " is-preview";
         }
         var disabledAttr = isDisabled ? " disabled" : "";
-        icons.push('<button type="button" class="rating-demo-icon' + extraCls + '"' + disabledAttr + ">" + iconSvg(typeKey, filled, size) + "</button>");
+        // tabindex="-1" + the state label in the name: this grid is a
+        // static side-by-side comparison of 4 possible states (same
+        // pattern as Modal's own illustrative matrices), not one
+        // operable control - a real tab stop here would land on 40
+        // buttons that do nothing when activated. aria-pressed reflects
+        // what each one depicts, not a live toggle.
+        var iconLabel = escapeHtml(label) + ", " + stateKey + ", " + (i + 1) + " of " + MAX_ICONS + " " + typeNoun;
+        icons.push('<button type="button" class="rating-demo-icon' + extraCls + '"' + disabledAttr + ' tabindex="-1" aria-label="' + iconLabel + '" aria-pressed="' + filled + '">' + iconSvg(typeKey, filled, size) + "</button>");
       }
       var rowHtml = '<div class="rating-demo-row' + stateCls + '">' + icons.join("") + "</div>";
       return '<div class="rating-demo-field"><p class="rating-demo-label">' + escapeHtml(label) + "</p>" + rowHtml + "</div>";

@@ -225,8 +225,12 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Modal component */");
-    lines.push(".modal-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:var(--space-24); background:rgba(0,0,0,0.55); z-index:1000; }");
-    lines.push('.modal-dialog{ box-sizing:border-box; width:100%; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
+    lines.push("/* <dialog> instead of a scrim + positioned div: showModal() gives real");
+    lines.push("   dialog semantics, background inertness, Escape-to-close, a focus trap");
+    lines.push("   and focus restoration to the trigger on close for free, from the browser");
+    lines.push("   itself - not something this snippet has to reimplement or get wrong. */");
+    lines.push('dialog.modal-dialog{ box-sizing:border-box; width:100%; margin:auto; padding:0; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
+    lines.push("dialog.modal-dialog::backdrop{ background:rgba(0,0,0,0.55); }");
     lines.push("");
     lines.push("/* Size - controls dialog max-width */");
     SIZE_OPTIONS.forEach(function(o){
@@ -243,10 +247,13 @@
     lines.push("");
     lines.push(".modal-header{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-12); padding:var(--space-16) var(--space-20); border-bottom:1px solid " + line + "; }");
     lines.push('.modal-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin:0; }");
-    lines.push(".modal-close{ flex:none; width:var(--dimension-20); height:var(--dimension-20); background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
+    lines.push(".modal-close{ flex:none; width:var(--dimension-44); height:var(--dimension-44); display:flex; align-items:center; justify-content:center; margin:calc(-1 * var(--space-12)); background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
     lines.push('.modal-body{ padding:var(--space-16) var(--space-20); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:' + textMid + "; position:relative; }");
-    lines.push(".modal-body--scrollable{ max-height:var(--dimension-64); overflow:hidden; }");
-    lines.push(".modal-fade{ position:absolute; left:0; right:0; bottom:0; height:var(--dimension-32); background:linear-gradient(to bottom, transparent, " + graphite900 + "); }");
+    lines.push("/* overflow-y:auto, not hidden - a fixed max-height with overflow:hidden");
+    lines.push("   clips any content past it instead of making it reachable; the fade is");
+    lines.push("   pointer-events:none so it never blocks wheel/touch scrolling underneath. */");
+    lines.push(".modal-body--scrollable{ max-height:var(--dimension-64); overflow-y:auto; }");
+    lines.push(".modal-fade{ position:absolute; left:0; right:0; bottom:0; height:var(--dimension-32); background:linear-gradient(to bottom, transparent, " + graphite900 + "); pointer-events:none; }");
     lines.push(".modal-footer{ display:flex; justify-content:flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top:1px solid " + line + "; }");
     lines.push('.modal-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
     lines.push(".modal-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
@@ -269,20 +276,42 @@
     lines.push("<!-- Example usage - " + (selectionInfo.typeFilter ? "the " + (typesToRender[0] ? typesToRender[0].label : selectionInfo.typeFilter) + " type only" : "one per type") + ", at " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " size" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
     typesToRender.forEach(function(t){
       var primaryLabel = t.key === "destructive" ? "Delete" : "Confirm";
-      lines.push('<div class="modal-scrim">');
-      lines.push('  <div class="modal-dialog modal-dialog--' + t.key + " modal-dialog--" + sizeKey + " modal-dialog--radius-" + radiusClassSuffix(exampleRadius) + '" style="border-radius:' + radiusCssFor(exampleRadius) + ';">');
-      lines.push('    <div class="modal-header">');
-      lines.push('      <p class="modal-title">' + escapeHtml(title) + "</p>");
-      if (showClose) lines.push('      <button type="button" class="modal-close" aria-label="Close">&times;</button>');
-      lines.push("    </div>");
-      lines.push('    <div class="modal-body"><p>' + escapeHtml(body) + "</p></div>");
-      lines.push('    <div class="modal-footer">');
-      lines.push('      <button type="button" class="modal-btn modal-btn--cancel">Cancel</button>');
-      lines.push('      <button type="button" class="modal-btn modal-btn--primary">' + primaryLabel + "</button>");
-      lines.push("    </div>");
+      var dialogId = "modal-example-" + t.key;
+      var titleId = dialogId + "-title";
+      lines.push('<button type="button" class="btn btn-primary" data-modal-trigger="' + dialogId + '">Open ' + escapeHtml(title) + "</button>");
+      lines.push('<dialog class="modal-dialog modal-dialog--' + t.key + " modal-dialog--" + sizeKey + " modal-dialog--radius-" + radiusClassSuffix(exampleRadius) + '" id="' + dialogId + '" aria-labelledby="' + titleId + '" style="border-radius:' + radiusCssFor(exampleRadius) + ';">');
+      lines.push('  <div class="modal-header">');
+      lines.push('    <p class="modal-title" id="' + titleId + '">' + escapeHtml(title) + "</p>");
+      if (showClose) lines.push('    <button type="button" class="modal-close" aria-label="Close" data-modal-dismiss>&times;</button>');
       lines.push("  </div>");
-      lines.push("</div>");
+      lines.push('  <div class="modal-body"><p>' + escapeHtml(body) + "</p></div>");
+      lines.push('  <div class="modal-footer">');
+      lines.push('    <button type="button" class="modal-btn modal-btn--cancel" data-modal-dismiss>Cancel</button>');
+      lines.push('    <!-- Closes itself here for demonstration only - a real ' + primaryLabel.toLowerCase() + " action should call dialog.close() from its own success handler, not unconditionally on click. -->");
+      lines.push('    <button type="button" class="modal-btn modal-btn--primary" data-modal-dismiss>' + primaryLabel + "</button>");
+      lines.push("  </div>");
+      lines.push("</dialog>");
     });
+    lines.push("");
+    lines.push("<script>");
+    lines.push("(function(){");
+    lines.push("  document.querySelectorAll('[data-modal-trigger]').forEach(function(trigger){");
+    lines.push("    var dialog = document.getElementById(trigger.dataset.modalTrigger);");
+    lines.push("    if (!dialog) return;");
+    lines.push("    // showModal() gives this dialog a real focus trap, Escape-to-close and");
+    lines.push("    // background inertness natively - close() then restores focus to");
+    lines.push("    // whatever had it before showModal() was called (this trigger).");
+    lines.push("    trigger.addEventListener('click', function(){ dialog.showModal(); });");
+    lines.push("    dialog.querySelectorAll('[data-modal-dismiss]').forEach(function(btn){");
+    lines.push("      btn.addEventListener('click', function(){ dialog.close(); });");
+    lines.push("    });");
+    lines.push("    // A backdrop click's event target is the <dialog> element itself (the");
+    lines.push("    // click didn't hit anything inside it) - close only on that, not on");
+    lines.push("    // every click, so clicking the dialog's own content never dismisses it.");
+    lines.push("    dialog.addEventListener('click', function(e){ if (e.target === dialog) dialog.close(); });");
+    lines.push("  });");
+    lines.push("})();");
+    lines.push("</script>");
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 

@@ -3866,8 +3866,8 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .modal-demo-close{ flex: none; width:var(--dimension-20); height:var(--dimension-20); background: none; border: none; color: var(--text-dim); cursor: pointer; padding:0; }
 
 .modal-demo-body{ padding:var(--space-16) var(--space-20);   color:var(--type-body-color); position: relative; text-align: start; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.modal-demo-body--scrollable{ max-height:var(--dimension-64); overflow: hidden; }
-.modal-demo-fade{ position: absolute; left:0; right:0; bottom:0; height:var(--dimension-32); background: linear-gradient(to bottom, transparent, var(--graphite-900)); }
+.modal-demo-body--scrollable{ max-height:var(--dimension-64); overflow-y: auto; }
+.modal-demo-fade{ position: absolute; left:0; right:0; bottom:0; height:var(--dimension-32); background: linear-gradient(to bottom, transparent, var(--graphite-900)); pointer-events: none; }
 /* Confirm-type shortcuts (Modal.info/.success/.warning/.error/.confirm) -
    icon beside the title, no separate header row and no close "x", since
    these exist specifically to skip that boilerplate. */

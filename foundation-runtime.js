@@ -316,6 +316,34 @@
     btn.textContent=expanded?'Read Less':'Read More';
     btn.hidden=!overflow;
   }
+  function labelColorFields() {
+    document.querySelectorAll('.hex-input-wrap').forEach(wrap=>{
+      const swatch=wrap.querySelector('input[type="color"]'),hex=wrap.querySelector('input[type="text"]');
+      if(!swatch&&!hex) return;
+      const field=wrap.closest('.color-field');
+      let name=field?field.querySelector(':scope > .color-field-head .color-field-label')?.textContent.trim():null;
+      const typeRow=wrap.closest('.type-row');
+      if((!name||name==='Color')&&typeRow) {const level=typeRow.querySelector('.type-level-name')?.textContent.trim();if(level) name=level+' text';}
+      if(!name||name==='Color') {
+        const panelTitle=wrap.closest('.panel')?.querySelector(':scope > .panel-title-row > .panel-title,:scope > .panel-title')?.textContent.trim();
+        const match=panelTitle&&panelTitle.match(/^Configure your (.+)$/i);
+        if(match) name='Base '+match[1].toLowerCase();
+      }
+      const themeCol=wrap.closest('.theme-pair-col');
+      const themeLabel=themeCol?themeCol.querySelector(':scope > .theme-pair-label-row > .theme-pair-label')?.textContent.trim():null;
+      let theme=themeLabel?themeLabel.toLowerCase():'';
+      const stateRow=wrap.closest('.usage-row[data-state]');
+      if(!themeLabel&&stateRow) {
+        if(!name) name=(stateRow.querySelector('.usage-label')?.textContent.trim()||'')+' border';
+        const tag=wrap.closest('.state-color-item')?.querySelector('.state-color-tag')?.textContent.trim();
+        theme=tag==='D'?'dark theme':tag==='L'?'light theme':'';
+      }
+      const subject=(name||'Color')+(/\bcolor$/i.test(name||'')?'':' color');
+      const base=theme?subject+', '+theme:subject;
+      if(swatch) swatch.setAttribute('aria-label',base+', color picker');
+      if(hex) hex.setAttribute('aria-label',base+', hex value');
+    });
+  }
   function indicators() {
     document.querySelectorAll('.badge-required').forEach(el=>{el.className='ads-required';el.textContent='*';el.setAttribute('aria-label','Required');});
     document.querySelectorAll('.badge-optional').forEach(el=>el.remove());
@@ -385,10 +413,10 @@
       const render=()=>{const grid=panel.querySelector('.ads-live-grid'),config=window.ADSFoundation.get(),n=Number(config.tokens['--grid-columns']);grid.style.gridTemplateColumns='repeat('+(config.gridSystem==='rows'?1:n)+', minmax(0,1fr))';const fragment=document.createDocumentFragment();for(let i=0;i<n;i++){const cell=document.createElement('span');cell.textContent=String(i+1);fragment.append(cell);}grid.replaceChildren(fragment);};
       window.addEventListener('ads:foundation-applied',render);render();
     }
-    indicators();apply();
+    indicators();labelColorFields();apply();
     new MutationObserver(records=>{
       if(records.every(r=>r.target.closest&&r.target.closest('.ads-text-content,.ads-read-more,[data-format],.ads-unit-control'))) return;
-      indicators();bindExamples();renderData();updateUnits();scheduleText();
+      indicators();labelColorFields();bindExamples();renderData();updateUnits();scheduleText();
     }).observe(main,{childList:true,subtree:true,attributes:true,attributeFilter:['required','hidden']});
     main.addEventListener('change',()=>{updateUnits();scheduleText();});
     if(document.fonts) document.fonts.ready.then(scheduleText);
