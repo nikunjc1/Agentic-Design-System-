@@ -3144,7 +3144,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   color:var(--type-caption-color);
   margin:0;
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.input-demo-note.is-error{ color: var(--danger-500); }
+.input-demo-note.is-error{ color: var(--danger-700); }
 
 /* Size scale (height in px) - default is 40, same scale as the rest of the system */
 .input-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
@@ -3191,7 +3191,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .password-demo-clear:hover{ color: var(--text-hi); }
 .password-demo-clear svg{ width:100%; height:100%; display: block; }
 .password-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.password-demo-note.is-error{ color: var(--danger-500); }
+.password-demo-note.is-error{ color: var(--danger-700); }
 
 .password-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .password-demo-control--h28{ height:var(--dimension-28); padding:0 var(--space-12);  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -3233,7 +3233,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .number-demo-input::placeholder{ color: var(--text-dim); }
 .number-demo-input:disabled{ cursor: not-allowed; }
 .number-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.number-demo-note.is-error{ color: var(--danger-500); }
+.number-demo-note.is-error{ color: var(--danger-700); }
 
 .number-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .number-demo-control--h28{ height:var(--dimension-28); padding:0 var(--space-12);  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -3341,7 +3341,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .search-demo-input::-webkit-search-decoration,
 .search-demo-input::-webkit-search-cancel-button{ -webkit-appearance: none; appearance: none; }
 .search-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.search-demo-note.is-error{ color: var(--danger-500); }
+.search-demo-note.is-error{ color: var(--danger-700); }
 
 .search-demo-clear{ flex: none; width:var(--dimension-16); height:var(--dimension-16); display: flex; align-items: center; justify-content: center; padding:0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; }
 .search-demo-clear:hover{ color: var(--text-hi); }
@@ -3395,7 +3395,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .textarea-demo-input::placeholder{ color: var(--text-dim); }
 .textarea-demo-input:disabled{ cursor: not-allowed; }
 .textarea-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.textarea-demo-note.is-error{ color: var(--danger-500); }
+.textarea-demo-note.is-error{ color: var(--danger-700); }
 
 .textarea-demo-control--h24{ padding:var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .textarea-demo-control--h28{ padding:var(--space-12);  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -3445,7 +3445,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .addon-demo-input::placeholder{ color: var(--text-dim); }
 .addon-demo-input:disabled{ cursor: not-allowed; }
 .addon-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.addon-demo-note.is-error{ color: var(--danger-500); }
+.addon-demo-note.is-error{ color: var(--danger-700); }
 
 .addon-demo-segment{ flex: none; white-space: nowrap; background: transparent; color: var(--text-dim); display: flex; align-items: center; }
 .addon-demo-segment--prefix{ border-inline-end: var(--border-width-1) var(--border-style) var(--line-strong); }
@@ -3618,7 +3618,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .daterange-demo-clear:hover{ color: var(--text-hi); }
 .daterange-demo-clear svg{ width:100%; height:100%; display: block; }
 .daterange-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.daterange-demo-note.is-error{ color: var(--danger-500); }
+.daterange-demo-note.is-error{ color: var(--danger-700); }
 
 .daterange-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .daterange-demo-control--h28{ height:var(--dimension-28); padding:0 var(--space-12);  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -3658,7 +3658,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .time-demo-clear:hover{ color: var(--text-hi); }
 .time-demo-clear svg{ width:100%; height:100%; display: block; }
 .time-demo-note{   color:var(--type-caption-color); margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.time-demo-note.is-error{ color: var(--danger-500); }
+.time-demo-note.is-error{ color: var(--danger-700); }
 
 .time-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .time-demo-control--h28{ height:var(--dimension-28); padding:0 var(--space-12);  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -3890,10 +3890,13 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .modal-demo-footer{ display: flex; justify-content: flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top: var(--border-width-1) var(--border-style) var(--line); }
 .modal-demo-btn{    padding:var(--space-8) var(--space-16); border-radius: var(--radius-sm); cursor: pointer; border:var(--border-width-1) var(--border-style) transparent; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .modal-demo-btn--cancel{ background: transparent; border-color: var(--line-strong); color: var(--text-hi); }
-.modal-demo-btn--primary{ color: #FFFFFF; }
-.modal-demo-dialog--default .modal-demo-btn--primary{ background: var(--red-500); }
+/* Text color is per-type, not a fixed white - white only clears 3.98:1
+   against the default red (fails AA) and worse against danger; black
+   clears 5.28:1/9.81:1 against both, via the same resolved foreground
+   tokens Button's own Primary/status variants use. */
+.modal-demo-dialog--default .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 .modal-demo-dialog--default .modal-demo-btn--primary:hover{ background: var(--red-600); }
-.modal-demo-dialog--destructive .modal-demo-btn--primary{ background: var(--danger-500); }
+.modal-demo-dialog--destructive .modal-demo-btn--primary{ background: var(--danger-500); color: var(--status-danger-text); }
 .modal-demo-dialog--destructive .modal-demo-btn--primary:hover{ background: var(--danger-600); }
 
 /* ---------- Tooltip demo (tooltip-default.html) ----------
@@ -4374,7 +4377,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .calendar-demo-day.is-outside-month{ color: var(--text-dim); opacity: 0.4; cursor: default; }
-.calendar-demo-day.is-today{ background: var(--red-500); color: #FFFFFF; font-weight: 700; }
+.calendar-demo-day.is-today{ background: var(--red-500); color: var(--button-primary-text); font-weight: 700; }
 .calendar-demo-day.is-today:hover{ background: var(--red-500); }
 .calendar-demo-day.has-event::after{ content: ""; position: absolute; bottom:var(--dimension-3); left:50%; transform: translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius: var(--radius-full); background: var(--blue-500); }
 .calendar-demo-grid--compact .calendar-demo-day.has-event::after{ bottom:auto; top:var(--dimension-2); right:var(--dimension-2); left:auto; transform: none; }
@@ -4443,7 +4446,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    silently truncate. */
 .card-demo-footer{ padding:var(--space-12) var(--space-16); }
 .card-demo-footer .modal-demo-btn{ flex-shrink: 0; }
-.card-demo-footer .modal-demo-btn--primary{ background: var(--red-500); }
+.card-demo-footer .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 
 /* Same "columns of very different natural height shouldn't share one
    centered baseline" bug already fixed for Skeleton: Default/With media/
@@ -4525,7 +4528,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    were wrong. */
 .empty-demo-title{    color:var(--type-body-color); margin:0; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .empty-demo-description{   color:var(--type-caption-color);  margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.empty-demo-panel .modal-demo-btn--primary{ background: var(--red-500); margin-top:var(--space-4); }
+.empty-demo-panel .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); margin-top:var(--space-4); }
 
 /* ---------- Image demo (image-default.html) ---------- */
 .image-demo-wrap{ display: inline-flex; flex-direction: column; gap:var(--space-8); }
@@ -4818,7 +4821,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .tour-demo-actions{ display: flex; justify-content: flex-end; gap:var(--space-8); margin-top:var(--space-12); }
 .tour-demo-btn{    padding:var(--space-6) var(--space-12); border-radius: var(--radius-sm); cursor: pointer; border:var(--border-width-1) var(--border-style) transparent; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .tour-demo-btn--ghost{ background: transparent; border-color: color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color: var(--overlay-invert-text); }
-.tour-demo-btn--primary{ background: var(--red-500); color: #FFFFFF; }
+.tour-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 /* Same fix as Tooltip's arrow (see .tooltip-demo-arrow): DOM order is
    always card/arrow/target regardless of placement, gap:var(--space-8) applies on
    both sides of the arrow, and a rotated square should only ever show
@@ -4894,7 +4897,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .drawer-demo-panel--bottom.drawer-demo-panel--medium{ min-height:var(--dimension-200); }
 .drawer-demo-panel--top.drawer-demo-panel--large,
 .drawer-demo-panel--bottom.drawer-demo-panel--large{ min-height:var(--dimension-220); }
-.drawer-demo-panel .modal-demo-btn--primary{ background: var(--red-500); }
+.drawer-demo-panel .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 
 /* ---------- Notification (corner-anchored async event card) ---------- */
 .notification-demo-card{ box-sizing: border-box; display: flex; gap:var(--space-10); width:var(--dimension-260); padding:var(--space-12) var(--space-14); background: var(--graphite-900); border: var(--border-width-1) var(--border-style) var(--line-strong); border-radius: var(--radius-md); box-shadow:var(--shadow-xl); position: relative; }
@@ -5045,7 +5048,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .result-demo-description{   color:var(--type-body-color);  margin:0; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .result-demo-actions{ display: flex; gap:var(--space-8); margin-top:var(--space-12); justify-content: center; }
 .result-demo-btn{    padding:var(--space-8) var(--space-16); border-radius: var(--radius-sm); cursor: pointer; border:var(--border-width-1) var(--border-style) transparent; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.result-demo-btn--primary{ background: var(--red-500); color: #FFFFFF; }
+.result-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 .result-demo-btn--secondary{ background: transparent; border-color: var(--line-strong); color: var(--text-hi); }
 .result-demo-panel--compact{ padding:var(--space-16) var(--space-14); gap:var(--space-4); }
 .result-demo-panel--compact .result-demo-icon{ width:var(--dimension-32); height:var(--dimension-32); margin-bottom:var(--space-2); }
@@ -5707,7 +5710,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   color:var(--type-caption-color);
   margin:0;
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.select-demo-note.is-error{ color: var(--danger-500); }
+.select-demo-note.is-error{ color: var(--danger-700); }
 
 /* Size scale (height in px) - default is 40, identical values to
    .input-demo-control--h* on purpose (see block comment above) */
@@ -5793,7 +5796,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   color:var(--type-caption-color);
   margin:0;
 font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.datepicker-demo-note.is-error{ color: var(--danger-500); }
+.datepicker-demo-note.is-error{ color: var(--danger-700); }
 
 /* Size scale (height in px) - default is 40, same scale as Input/Select */
 .datepicker-demo-control--h24{ height:var(--dimension-24); padding:0 var(--space-10);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
@@ -7044,8 +7047,8 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
 
   text-transform: uppercase;
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.guide-dodont-case.is-do .guide-dodont-label{ color: var(--green-500); }
-.guide-dodont-case.is-dont .guide-dodont-label{ color: var(--danger-500); }
+.guide-dodont-case.is-do .guide-dodont-label{ color: var(--green-page-text); }
+.guide-dodont-case.is-dont .guide-dodont-label{ color: var(--danger-page-text); }
 
 .guide-dodont-demo{
   display: flex;
@@ -7180,25 +7183,30 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   border: var(--border-width-1) var(--border-style) transparent;
   /* Status badges follow the Foundation caption role. */
 font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+/* Text color is a computed foreground for THIS badge's own translucent
+   pill background (12% status color over the page surface), not the raw
+   status-500 hue - raw green-500 only clears ~2.0:1 here in light theme
+   (fails AA badly), raw danger ~3.7:1; the computed tokens clear 4.5-6.8:1
+   in both themes. */
 .component-status.is-stable{
-  color: var(--green-500);
+  color: var(--green-page-text);
   background: color-mix(in srgb, var(--green-500) 12%, transparent);
   border-color: color-mix(in srgb, var(--green-500) 30%, transparent);
 }
 .component-status.is-experimental{
-  color: var(--amber-500);
+  color: var(--amber-page-text);
   background: color-mix(in srgb, var(--amber-500) 12%, transparent);
   border-color: color-mix(in srgb, var(--amber-500) 30%, transparent);
 }
 /* Lifecycle/status modifiers shared by the New Project, NPM Package, MD
    Export and History pages - same visual language as is-stable/is-experimental
    above, extended to the states a project/version/package moves through. */
-.component-status.is-published{ color: var(--green-500); background: color-mix(in srgb, var(--green-500) 12%, transparent); border-color: color-mix(in srgb, var(--green-500) 30%, transparent); }
+.component-status.is-published{ color: var(--green-page-text); background: color-mix(in srgb, var(--green-500) 12%, transparent); border-color: color-mix(in srgb, var(--green-500) 30%, transparent); }
 .component-status.is-draft{ color: var(--text-dim); background: var(--graphite-800); border-color: var(--line-strong); }
-.component-status.is-in-review{ color: var(--amber-500); background: color-mix(in srgb, var(--amber-500) 12%, transparent); border-color: color-mix(in srgb, var(--amber-500) 30%, transparent); }
+.component-status.is-in-review{ color: var(--amber-page-text); background: color-mix(in srgb, var(--amber-500) 12%, transparent); border-color: color-mix(in srgb, var(--amber-500) 30%, transparent); }
 .component-status.is-deprecated{ color: var(--text-dim); background: var(--graphite-800); border-color: var(--line-strong); text-decoration: line-through; }
-.component-status.is-building{ color: var(--blue-500); background: color-mix(in srgb, var(--blue-500) 12%, transparent); border-color: color-mix(in srgb, var(--blue-500) 30%, transparent); }
-.component-status.is-failed{ color: var(--danger-500); background: color-mix(in srgb, var(--red-500) 10%, transparent); border-color: color-mix(in srgb, var(--red-500) 30%, transparent); }
+.component-status.is-building{ color: var(--blue-page-text); background: color-mix(in srgb, var(--blue-500) 12%, transparent); border-color: color-mix(in srgb, var(--blue-500) 30%, transparent); }
+.component-status.is-failed{ color: var(--danger-page-text); background: color-mix(in srgb, var(--red-500) 10%, transparent); border-color: color-mix(in srgb, var(--red-500) 30%, transparent); }
 .component-status.is-not-configured{ color: var(--text-dim); background: transparent; border-color: var(--line-strong); border-style: dashed; }
 
 /* ---------- right-to-left ----------

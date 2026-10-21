@@ -107,6 +107,7 @@
     var graphite900 = getCssVar("--graphite-900", "#15171A");
     var graphite800 = getCssVar("--graphite-800", "#1C1F23");
     var red500 = getCssVar("--red-500", "#FF031A");
+    var buttonPrimaryText = getCssVar("--button-primary-text", "#15171A");
     var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.1)");
     var red400 = getCssVar("--red-400", "#FF3F4F");
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
@@ -124,7 +125,7 @@
     lines.push(".calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-day.is-outside-month{ color:" + textDim + "; opacity:0.4; }");
-    lines.push(".calendar-demo-day.is-today{ background:" + red500 + "; color:#FFFFFF; font-weight:700; }");
+    lines.push(".calendar-demo-day.is-today{ background:" + red500 + "; color:" + buttonPrimaryText + "; font-weight:700; }");
     lines.push('.calendar-demo-day.has-event::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius:9999px; background:' + blue500 + "; }");
     lines.push(".calendar-demo-day.is-range-start, .calendar-demo-day.is-range-middle, .calendar-demo-day.is-range-end{ background:" + redTint + "; color:" + red400 + "; }");
     lines.push(".calendar-demo-day.is-range-start{ border-top-left-radius:6px; border-bottom-left-radius:6px; }");

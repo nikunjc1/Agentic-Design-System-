@@ -250,12 +250,16 @@
     lines.push(".modal-footer{ display:flex; justify-content:flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top:1px solid " + line + "; }");
     lines.push('.modal-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
     lines.push(".modal-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
-    lines.push(".modal-btn--primary{ color:#FFFFFF; }");
     lines.push("");
-    lines.push("/* Types (" + TYPES.length + ") - primary action button color per type */");
+    lines.push("/* Types (" + TYPES.length + ") - primary action button color per type. Text");
+    lines.push("   color is the resolved foreground for that type's own background (black");
+    lines.push("   against this system's default red - 5.28:1 - not a fixed white, which");
+    lines.push("   only clears 3.98:1 and fails AA), so it stays correct if the brand color");
+    lines.push("   (Default type only; Destructive stays fixed danger red) is customized. */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
-      lines.push(".modal-dialog--" + t.key + " .modal-btn--primary{ background:" + css.primaryBg + "; }");
+      var primaryText = getCssVar(t.key === "destructive" ? "--status-danger-text" : "--button-primary-text", "#15171A");
+      lines.push(".modal-dialog--" + t.key + " .modal-btn--primary{ background:" + css.primaryBg + "; color:" + primaryText + "; }");
       lines.push(".modal-dialog--" + t.key + " .modal-btn--primary:hover{ background:" + css.primaryHoverBg + "; }");
     });
     lines.push("");

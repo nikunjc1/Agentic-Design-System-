@@ -127,7 +127,7 @@
     lines.push(".tour-demo-actions{ display:flex; justify-content:flex-end; gap:var(--space-8); margin-top:var(--space-12); }");
     lines.push(".tour-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
     lines.push(".tour-demo-btn--ghost{ background:transparent; border-color:color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color:var(--overlay-invert-text); }");
-    lines.push(".tour-demo-btn--primary{ background:var(--red-500); color:#FFFFFF; }");
+    lines.push(".tour-demo-btn--primary{ background:var(--red-500); color:var(--button-primary-text); }");
     lines.push("");
     lines.push("/* Arrow - a rotated square, same background/border as the card, only");
     lines.push("   half ever visible (the rest tucks behind the card's own opaque");

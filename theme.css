@@ -59,6 +59,7 @@
      These stay fixed regardless of any saved customization. */
   --overlay-invert-bg: #f3f2ef;
   --overlay-invert-text: #15171a;
+  --overlay-invert-amber: #8f6624;
 
   /* Disabled state sitewide is expressed as reduced opacity of whatever
      the resting color already is, not a distinct disabled color - there
@@ -264,6 +265,28 @@
   --card-shadow-hover: var(--shadow-md);
   --card-shadow-pressed: var(--shadow-xs);
 
+  /* Text that sits on a solid status-color fill (a badge count, a status
+     pill) - same reasoning as --on-brand-text above: foundation-model.js
+     resolves each of these live via foreground(), picking whichever of
+     black/white actually clears 4.5:1 against that status color, since a
+     single fixed choice fails some of them (white only clears 2.14-3.98:1
+     against green/amber/blue/danger-500; black clears 5.28-9.81:1 against
+     every one). Identical in both themes because the status primitives
+     themselves don't change by theme - no light-theme override needed. */
+  --status-success-text: #000000;
+  --status-warning-text: #000000;
+  --status-danger-text: #000000;
+  --status-info-text: #000000;
+
+  /* Brand-colored link/anchor text, computed against the raised surface
+     (--graphite-850) it actually sits on - not the page's main surface -
+     via semanticForeground() in foundation-model.js. --red-700 (anchors'
+     old color) was computed against a different surface and fell short
+     here; this is computed against the one anchors render on. Differs by
+     theme because --graphite-850's own value does, so it IS redefined in
+     the light-theme block below. */
+  --link-text: #ff263a;
+
   /* AI Foundation - this system's own name is "Agentic Design System,"
      but until now nothing distinguished AI-generated/AI-driven content
      from anything else. One new hue (violet - the common cross-industry
@@ -275,7 +298,14 @@
      Theme-independent, same reasoning as brand/status: an AI-generated
      badge should read as the same color regardless of light/dark. */
   --color-ai-accent: #8b5cf6;
-  --color-ai-accent-strong: #7c3aed;
+  /* Text use (badge label, "Why this suggestion?" link) needs its own,
+     lighter shade in dark theme - the deep #7c3aed that reads fine on a
+     light page only clears ~3.0-3.4:1 against this theme's dark page and
+     its own translucent tint badge, failing AA. Redefined in the
+     light-theme block below for the same reason -overlay-invert-amber
+     redefines there: the two themes need genuinely different values, not
+     one fixed literal. */
+  --color-ai-accent-strong: #a78bfa;
   --color-ai-accent-tint: rgba(139,92,246,0.12);
   --color-ai-confidence-high: var(--green-500);
   --color-ai-confidence-medium: var(--amber-500);
@@ -305,6 +335,10 @@
 
   --overlay-invert-bg: #15171a;
   --overlay-invert-text: #ffffff;
+  --overlay-invert-amber: #e6a53a;
 
   --red-tint: rgba(255,3,26,0.07);
+
+  --link-text: #e60317;
+  --color-ai-accent-strong: #7c3aed;
 }

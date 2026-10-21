@@ -114,7 +114,7 @@
     lines.push('.result-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".result-demo-actions{ display:flex; gap:var(--space-8); margin-top:var(--space-12); justify-content:center; }");
     lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
-    lines.push(".result-demo-btn--primary{ background:var(--red-500); color:#FFFFFF; }");
+    lines.push(".result-demo-btn--primary{ background:var(--red-500); color:var(--button-primary-text); }");
     lines.push(".result-demo-btn--secondary{ background:transparent; border-color:var(--line-strong); color:var(--text-hi); }");
     lines.push("");
     lines.push("/* Compact - smaller icon, tighter spacing, for inline use within a card */");
