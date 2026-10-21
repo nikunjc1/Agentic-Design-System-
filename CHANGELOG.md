@@ -2753,6 +2753,16 @@ Verified: all 11 unit test suites pass; full 158-page x 4-viewport regression sw
 
 This closes everything in the new audit except P6 (UX24-26): the audit itself labels these "Optimization/research action[s], not... confirmed defect[s]" requiring real participant testing before scoping a build - global content search, shareable configuration URLs, and a moderated usability baseline. Implementing any of them now would mean guessing at a feature's value without the user evidence the audit explicitly says not to fabricate, so they're left as documented follow-ups below rather than built speculatively.
 
+## Topbar version badge wasn't vertically centered in its box
+
+User report: the version text in the topbar reads too high inside its bordered box, not centered the way the color-code box and icon buttons next to it are.
+
+Root cause: `.version-badge` centers its text the same way `.brand-color-code` does - set `line-height` equal to the box's own height (32px) so a single line of text centers itself. But `foundation.css` (loaded after `shell.css` specifically to outrank page-specific type rules) sets its own `line-height` for `.version-badge` via a shared caption-role selector, at matching specificity, and wins since it loads later - silently overriding the 32px value with the caption role's own (16.5px), leaving the text sitting at the top of the box instead of centered. `.brand-color-code` isn't part of that same selector, so it was never affected - which is why only the version number looked wrong.
+
+Fixed by switching `.version-badge` from the line-height trick to flex centering (`display:flex;align-items:center;justify-content:center`), matching `.icon-btn`'s own approach right next to it - flex alignment doesn't depend on line-height at all, so it can't be silently undone by a later role-based rule the same way again.
+
+Verified: `.version-badge` now computes the same `top`/`height` box position as `.brand-color-code` and `.icon-btn` (15.5px top, 32px height, all three aligned); screenshotted the topbar to confirm "v3.5.0" reads centered; the narrow-viewport `display:none` rule (320px) still applies correctly, unaffected; all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
