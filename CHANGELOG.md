@@ -2661,6 +2661,22 @@ Not fixed (flagged for a follow-up decision): the same dual-icon spec's Approve 
 
 Verified: confirmed the correct color via `getComputedStyle` on `document.documentElement` before using it; checked all 4 static locations and both dualicon states in both light and dark theme (identical result in both, since brand-red doesn't change by theme); screenshotted the Avatar initials circle to confirm it still reads clearly; all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures.
 
+## P4 audit findings: naming, a banner link, and three low-contrast variants
+
+Picked up the P4 tier from the code-and-design audit: a local naming inconsistency, a reported banner-link inconsistency, and three component-variant contrast findings (Badge counts, Anchor links, Tooltip description text).
+
+**Naming:** `button-dualicon-detail.js` had both a `copyText` helper and, nearby, unrelated code also referring to "copy text" generically - renamed the helper to `copyTextFull` at its definition and all 4 call sites to remove the ambiguity. Verified via `node --check` and a live click test ("Copy prompt" still shows "Copied!").
+
+**Banner link ("Export this guide" vs "Export Markdown"), investigated and found correct:** read `experience.js`'s `setup-notice` banner logic directly rather than assuming the audit's premise. The link's label and target are deliberately conditional: it only renders at all when a profile exists or the current page is a detail page with `.back-link` present, and reads "Export this guide" specifically on detail pages (linking to that page's own Markdown export) versus "Export Markdown" elsewhere (linking to the general export). This is correct, context-sensitive behavior, not an inconsistency - no fix made.
+
+**Badge counts failed contrast against 4 of 5 status colors:** `.badge-demo-count` hardcoded `color:#FFFFFF` for every status variant, but white only clears 2.14-3.98:1 against `--green-500`/`--amber-500`/`--blue-500`/`--danger-500` (fails AA for all of them; the default red variant was borderline too). Added four new computed tokens to `foundation-model.js` - `--status-success-text`, `--status-warning-text`, `--status-danger-text`, `--status-info-text`, each via the same `foreground()` black-or-white picker already used for `--button-primary-text` - and registered them in `design-tokens.json`. Each badge variant now uses its own matching token; all five now measure 5.28-9.81:1.
+
+**Anchor link rest-state contrast:** the audit's "visited link" finding turned out to actually be the *rest* state failing in light mode - `.anchor-demo-link` sits on a `--graphite-850` "raised" surface that neither the existing `--red-400` (rest) nor `--color-focus-ring` token was ever computed against. Added a new `--link-text` token to `foundation-model.js`, computed specifically against that raised surface via `semanticForeground()`, and registered it in `design-tokens.json`. Unified rest/hover/focus/visited to this one token, since hover and focus already carry their own non-color cues (underline, focus ring), making color uniformity across states an acceptable, simpler, correct trade-off.
+
+**Tooltip description text, investigated and found correct:** the audit flagged `.tooltip-demo-description` at 3.27:1. Hand-calculated the actual `color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%)` result against each theme's real token values, then verified live via Playwright against `tooltip-default.html` in both themes (had to fix a verification-script bug first - Chromium can serialize a `color-mix()` result as `color(srgb r g b)` with 0-1 floats rather than legacy `rgb()` 0-255 ints, which a naive regex parser doesn't match). Measured ratios: 5.32:1 in dark theme, 8.07:1 in light theme - both comfortably pass AA. No fix made; the audit's figure doesn't match current live state.
+
+Verified: all 11 unit test suites pass; full 157-page x 4-viewport regression sweep: 0 failures; both new tokens confirmed resolving correctly in both themes via direct computation and the typed-export test.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

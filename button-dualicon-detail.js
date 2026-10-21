@@ -429,7 +429,7 @@
     return lines.join("\n");
   }
 
-  function copyText(text, btn){
+  function copyTextFull(text, btn){
     return window.ADSClipboard.copyWithFeedback(text, btn);
   }
 
@@ -450,7 +450,7 @@
     if (combos.length <= 1){
       container.innerHTML = '<button type="button" class="btn btn-ghost btn-sm">' + plainLabel + "</button>";
       var plainBtn = container.querySelector("button");
-      plainBtn.addEventListener("click", function(){ copyText(buildSingle(), plainBtn); });
+      plainBtn.addEventListener("click", function(){ copyTextFull(buildSingle(), plainBtn); });
       return;
     }
 
@@ -500,7 +500,7 @@
       var copyBtn = panel.querySelector('[data-combo-index="' + i + '"]');
       copyBtn.addEventListener("click", function(e){
         e.stopPropagation();
-        copyText(buildCombo(c), copyBtn);
+        copyTextFull(buildCombo(c), copyBtn);
       });
     });
 
@@ -517,13 +517,13 @@
     if (cardCopyPromptBtn){
       cardCopyPromptBtn.addEventListener("click", function(e){
         e.stopPropagation();
-        copyText(buildFullPrompt(), cardCopyPromptBtn);
+        copyTextFull(buildFullPrompt(), cardCopyPromptBtn);
       });
     }
     if (cardCopyCodeBtn){
       cardCopyCodeBtn.addEventListener("click", function(e){
         e.stopPropagation();
-        copyText(buildFullCode(), cardCopyCodeBtn);
+        copyTextFull(buildFullCode(), cardCopyCodeBtn);
       });
     }
 

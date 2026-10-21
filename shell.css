@@ -4284,14 +4284,23 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .badge-demo-host{ width:var(--dimension-32); height:var(--dimension-32); display: flex; align-items: center; justify-content: center; background: var(--graphite-800); border: var(--border-width-1) var(--border-style) var(--line-strong); border-radius: var(--radius-md); color: var(--text-dim); }
 .badge-demo-host svg{ width:var(--dimension-16); height:var(--dimension-16); }
 .badge-demo-badge{ position: absolute; top:calc(-1 * var(--dimension-6)); right:calc(-1 * var(--dimension-6)); display: flex; align-items: center; justify-content: center; border: var(--border-width-2) solid var(--graphite-950); border-radius: var(--radius-full); box-sizing: border-box; }
-.badge-demo-count{ position: relative; min-width:var(--dimension-18); height:var(--dimension-18); padding:0 var(--space-6); border-radius: var(--radius-full);    color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.badge-demo-count{ position: relative; min-width:var(--dimension-18); height:var(--dimension-18); padding:0 var(--space-6); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .badge-demo-dot{ position: relative; width:var(--dimension-10); height:var(--dimension-10); border-radius: var(--radius-full); }
 
+/* Each count's text color is computed per status color (foreground() in
+   foundation-model.js), not a fixed white - white only clears 2.14-3.98:1
+   against these backgrounds (fails AA, badly for Warning/Success), while
+   black clears 5.28-9.81:1 against every one of them. */
 .badge-demo-badge--default .badge-demo-count, .badge-demo-badge--default .badge-demo-dot{ background: var(--red-500); }
+.badge-demo-badge--default .badge-demo-count{ color: var(--button-primary-text); }
 .badge-demo-badge--success .badge-demo-count, .badge-demo-badge--success .badge-demo-dot{ background: var(--green-500); }
+.badge-demo-badge--success .badge-demo-count{ color: var(--status-success-text); }
 .badge-demo-badge--processing .badge-demo-count, .badge-demo-badge--processing .badge-demo-dot{ background: var(--blue-500); }
+.badge-demo-badge--processing .badge-demo-count{ color: var(--status-info-text); }
 .badge-demo-badge--warning .badge-demo-count, .badge-demo-badge--warning .badge-demo-dot{ background: var(--amber-500); }
+.badge-demo-badge--warning .badge-demo-count{ color: var(--status-warning-text); }
 .badge-demo-badge--error .badge-demo-count, .badge-demo-badge--error .badge-demo-dot{ background: var(--danger-500); }
+.badge-demo-badge--error .badge-demo-count{ color: var(--status-danger-text); }
 
 /* Processing - an expanding, fading ring pulses outward, looping, to signal
    something actively happening rather than a static resolved state - the
@@ -6161,7 +6170,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   align-items: center;
   gap:var(--space-4);
   cursor: pointer;
-  color: var(--red-400);
+  color: var(--link-text);
 }
 
 .anchor-demo-link--fs12{  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
@@ -6177,12 +6186,12 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 
 .anchor-demo-link:hover,
 .anchor-demo-link.is-hover{
-  color: var(--red-500);
+  color: var(--link-text);
   text-decoration: underline;
 }
 .anchor-demo-link:focus-visible,
 .anchor-demo-link.is-focus{
-  color: var(--red-400);
+  color: var(--link-text);
   text-decoration: none;
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
@@ -6190,7 +6199,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 }
 .anchor-demo-link:visited,
 .anchor-demo-link.is-visited{
-  color: var(--color-focus-ring);
+  color: var(--link-text);
 }
 .anchor-demo-link[aria-disabled="true"],
 .anchor-demo-link.is-disabled{

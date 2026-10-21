@@ -972,6 +972,56 @@
           }
         }
       }
+    },
+    "status-success-text": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+          "light": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" }
+        }
+      }
+    },
+    "status-warning-text": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+          "light": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" }
+        }
+      }
+    },
+    "status-danger-text": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+          "light": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" }
+        }
+      }
+    },
+    "status-info-text": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" },
+          "light": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1, "hex": "#000000" }
+        }
+      }
+    },
+    "link-text": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [1.0, 0.14901960784313725, 0.22745098039215686], "alpha": 1, "hex": "#ff263a" },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": { "colorSpace": "srgb", "components": [1.0, 0.14901960784313725, 0.22745098039215686], "alpha": 1, "hex": "#ff263a" },
+          "light": { "colorSpace": "srgb", "components": [0.9019607843137255, 0.011764705882352941, 0.09019607843137255], "alpha": 1, "hex": "#e60317" }
+        }
+      }
     }
   },
   "other": {

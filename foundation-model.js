@@ -209,10 +209,13 @@
     const colorGroups = { 'bg-colors':{primary:'--graphite-950',secondary:'--graphite-900',tertiary:'--graphite-850'}, 'neutral-colors':{c800:'--graphite-800',c700:'--graphite-700',c600:'--graphite-600',c500:'--graphite-500',border:'--control-border'}, 'status-colors':{success:'--green-500',warning:'--amber-500',danger:'--danger-500',info:'--blue-500'} };
     for(const [key,props] of Object.entries(colorGroups)) { const set=record(record(saved[key])[theme]); for(const [name,prop] of Object.entries(props)) { const h=hex(set[name],null); if(h) tokens[prop]=h; } }
     if(tokens['--danger-500']) { tokens['--danger-400']=mix(tokens['--danger-500'],255,.25);tokens['--danger-600']=mix(tokens['--danger-500'],0,.18); }
+    for(const [name,key] of [['success','--green-500'],['warning','--amber-500'],['danger','--danger-500'],['info','--blue-500']]) tokens['--status-'+name+'-text']=foreground(tokens[key]);
     const semanticSurface=hex(tokens['--graphite-900'],theme==='dark'?'#15171A':'#FFFFFF');
     tokens['--green-700']=semanticForeground(hex(tokens['--green-500'],'#2FBF6E'),semanticSurface);
     tokens['--danger-700']=semanticForeground(hex(tokens['--danger-500'],'#FF031A'),semanticSurface);
     tokens['--red-700']=semanticForeground(hex(tokens['--red-500'],'#FF031A'),semanticSurface);
+    const raisedSurface=hex(tokens['--graphite-850'],theme==='dark'?'#191C20':'#FBFBFA');
+    tokens['--link-text']=semanticForeground(hex(tokens['--red-500'],'#FF031A'),raisedSurface);
     for(const [state,color] of [['pass',tokens['--green-500']],['fail',tokens['--danger-500']]]) {
       const background=blendColor(color,semanticSurface,.12);
       tokens['--contrast-'+state+'-bg']=background;
