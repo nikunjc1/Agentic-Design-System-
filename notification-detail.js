@@ -154,8 +154,12 @@
   // cards) for a given type/state combination.
   function buildNotificationField(typeKey, stateKey, title, description){
     var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="notification-demo-icon" ');
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action">Undo</button>' : "";
-    var closeHtml = '<button type="button" class="notification-demo-close" aria-label="Dismiss notification">' + CLOSE_ICON + "</button>";
+    // Foundation audit UX10 - both of this component's callers (the state
+    // comparison matrix and the placement mock-viewport) are illustrations,
+    // not a real notification; tabindex="-1" keeps these buttons out of the
+    // Tab sequence without removing them from the accessibility tree.
+    var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action" tabindex="-1">Undo</button>' : "";
+    var closeHtml = '<button type="button" class="notification-demo-close" tabindex="-1" aria-label="Dismiss notification">' + CLOSE_ICON + "</button>";
 
     function cardHtml(extraClass){
       return '<div class="notification-demo-card notification-demo-card--' + typeKey + (extraClass ? " " + extraClass : "") + '">' +

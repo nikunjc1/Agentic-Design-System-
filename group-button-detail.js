@@ -428,10 +428,13 @@
     function buildGroupButton(typeKey, stateKey, stateCls, size, radius, labels, fieldLabel, supportingText){
       var isDisabled = stateKey === "disabled";
       var radiusCss = radiusCssFor(radius);
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real group button; tabindex="-1" keeps it out of the Tab
+      // sequence without removing it from the accessibility tree.
       var segments = labels.map(function(label, i){
         var segCls = "group-btn-segment group-btn-segment--h" + size + (i === 0 ? stateCls : "");
         var disabledAttr = isDisabled ? " disabled" : "";
-        return '<button type="button" class="' + segCls + '"' + disabledAttr + ">" + label + "</button>";
+        return '<button type="button" class="' + segCls + '" tabindex="-1"' + disabledAttr + ">" + label + "</button>";
       }).join("");
       var groupHtml = '<div class="group-btn group-btn--' + typeKey + '" style="border-radius:' + radiusCss + '">' + segments + "</div>";
       if (!fieldLabel && !supportingText) return groupHtml;

@@ -330,7 +330,10 @@
       var cls = "anchor-demo-link anchor-demo-link--" + typeKey + " anchor-demo-link--fs" + size + stateCls;
       var ariaAttr = isDisabled ? ' aria-disabled="true"' : "";
       var iconMarkup = typeKey === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
-      return '<a href="#" class="' + cls + '"' + ariaAttr + ">" + escapeHtml(label) + iconMarkup + "</a>";
+      // Foundation audit UX10 - this is one cell of a side-by-side state
+      // comparison, not a real navigation link; tabindex="-1" keeps it out
+      // of the Tab sequence without removing it from the accessibility tree.
+      return '<a href="#" class="' + cls + '"' + ariaAttr + ' tabindex="-1">' + escapeHtml(label) + iconMarkup + "</a>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){

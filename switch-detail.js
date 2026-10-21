@@ -316,8 +316,11 @@
       var busyAttr = state.loading ? ' aria-busy="true"' : "";
       var thumbInner = state.loading ? '<span class="switch-demo-spinner"></span>' : "";
       var labelSpan = typeKey === "labeled" ? '<span class="switch-demo-label">' + escapeAttr(labelText) + "</span>" : "";
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real switch; tabindex="-1" keeps it out of the Tab sequence
+      // without removing it from the accessibility tree.
       return '<label class="switch-demo-field">' +
-        '<input type="checkbox" role="switch" class="switch-demo-input" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + busyAttr + " />" +
+        '<input type="checkbox" role="switch" class="switch-demo-input" tabindex="-1" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + busyAttr + " />" +
         '<span class="' + trackCls + '"><span class="switch-demo-thumb">' + thumbInner + "</span></span>" +
         labelSpan +
         "</label>";

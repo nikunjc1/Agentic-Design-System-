@@ -188,13 +188,18 @@
   // .tag-demo-remove "x" button only for the "removable" form. "selected"
   // is not its own typeKey - it is the .is-selected modifier class layered
   // on top of the same 4 types, driving the solid-color look via CSS.
-  function buildTagField(typeKey, stateKey, radius, label){
+  // Foundation audit UX10 - illustrative=true (the side-by-side state
+  // comparison matrix) keeps the remove button out of the Tab sequence
+  // without removing it from the accessibility tree; the exported Copy code
+  // example (illustrative=false/omitted) stays real, operable markup.
+  function buildTagField(typeKey, stateKey, radius, label, illustrative){
+    var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var radiusCss = radiusCssFor(radius);
     var selectedCls = stateKey === "selected" ? " is-selected" : "";
     var labelText = escapeHtml(label);
     var labelHtml = "<span>" + labelText + "</span>";
     var removeHtml = (stateKey === "removable")
-      ? '<button type="button" class="tag-demo-remove" aria-label="Remove ' + labelText + '">' + REMOVE_ICON + "</button>"
+      ? '<button type="button" class="tag-demo-remove"' + tabindexAttr + ' aria-label="Remove ' + labelText + '">' + REMOVE_ICON + "</button>"
       : "";
     return '<span class="tag-demo-chip tag-demo-chip--' + typeKey + selectedCls + '" style="border-radius:' + radiusCss + ';">' + labelHtml + removeHtml + "</span>";
   }
@@ -372,7 +377,7 @@
     function buildMatrixSection(radius, label){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTagField(t.key, state.key, radius, label) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTagField(t.key, state.key, radius, label, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

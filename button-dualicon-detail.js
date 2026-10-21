@@ -380,10 +380,13 @@
     var leadingHtml = isLoading
       ? spinnerHtml(iconSize)
       : (showLeading ? '<span class="splitcta-icon" style="' + iconStyle + '">' + ICON_CHEVRON_DOWN + "</span>" : "");
+    // Foundation audit UX10 - one state-comparison cell, not a real split
+    // button; tabindex="-1" on both parts keeps them out of the Tab
+    // sequence without removing them from the accessibility tree.
     return '<div class="' + wrapClass + '" data-rowstate="' + stateKey + '" data-size="' + size + '" data-radius="' + radius + '" style="' + wrapStyle + '">' +
-      '<button type="button" class="splitcta-main" style="' + mainStyle + '"' + disabledAttr + ">" + leadingHtml + "<span>" + label + "</span></button>" +
+      '<button type="button" class="splitcta-main" style="' + mainStyle + '" tabindex="-1"' + disabledAttr + ">" + leadingHtml + "<span>" + label + "</span></button>" +
       '<div class="splitcta-divider" style="' + spec.divider + '"></div>' +
-      '<button type="button" class="splitcta-trigger" style="' + triggerStyle + '" aria-label="Open menu"' + disabledAttr + '><span class="splitcta-icon" style="' + iconStyle + '">' + ICON_CHEVRON_DOWN + "</span></button>" +
+      '<button type="button" class="splitcta-trigger" style="' + triggerStyle + '" aria-label="Open menu" tabindex="-1"' + disabledAttr + '><span class="splitcta-icon" style="' + iconStyle + '">' + ICON_CHEVRON_DOWN + "</span></button>" +
       "</div>";
   }
 
@@ -570,7 +573,10 @@
         if (showRight) inner += iconHtml;
       }
       var disabledAttr = stateKey === "disabled" ? " disabled" : "";
-      return '<button type="button" class="dualicon-btn" data-type="' + typeKey + '" data-rowstate="' + stateKey + '" data-size="' + size + '" data-radius="' + radius + '" style="' + css + '"' + disabledAttr + ">" + inner + "</button>";
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real button; tabindex="-1" keeps it out of the Tab sequence
+      // without removing it from the accessibility tree.
+      return '<button type="button" class="dualicon-btn" data-type="' + typeKey + '" data-rowstate="' + stateKey + '" data-size="' + size + '" data-radius="' + radius + '" style="' + css + '" tabindex="-1"' + disabledAttr + ">" + inner + "</button>";
     }
 
     // Every cell only ever had its ASSIGNED row-state colors, no real

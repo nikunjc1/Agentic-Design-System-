@@ -201,7 +201,12 @@
   // then a title + body text-wrap, then an optional footer button row
   // ("with-actions"). showShadow adds a resting drop-shadow modifier class
   // independent of the state classes, so it can combine with any state.
-  function buildCardField(typeKey, stateKey, radius, title, body, showShadow, sizeKey){
+  // Foundation audit UX10 - illustrative=true (the side-by-side state
+  // comparison matrix) keeps the footer buttons out of the Tab sequence
+  // without removing them from the accessibility tree; the exported Copy
+  // code example (illustrative=false/omitted) stays real, operable markup.
+  function buildCardField(typeKey, stateKey, radius, title, body, showShadow, sizeKey, illustrative){
+    var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var stateCls = (STATES.filter(function(s){ return s.key === stateKey; })[0] || {}).cls || "";
     var radiusCss = radiusCssFor(radius);
     var shadowCls = showShadow ? " card-demo-shadow" : "";
@@ -221,7 +226,7 @@
         '<span class="skeleton-demo-line is-animated" style="width:80%;"></span></div>'
       : '<div class="card-demo-body-wrap"><p class="card-demo-title">' + escapeHtml(title) + '</p><p class="card-demo-text">' + escapeHtml(body) + "</p></div>";
     var footerHtml = (typeKey === "with-actions" && !isLoading)
-      ? '<div class="card-demo-footer modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel">Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="background:var(--red-500);">View details</button></div>'
+      ? '<div class="card-demo-footer modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel"' + tabindexAttr + '>Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="background:var(--red-500);"' + tabindexAttr + ">View details</button></div>"
       : "";
     return '<div class="' + classes + '" style="border-radius:' + radiusCss + ';">' + mediaHtml + bodyWrapHtml + footerHtml + "</div>";
   }
@@ -411,7 +416,7 @@
     function buildMatrixSection(radius, size, title, body, showShadow){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildCardField(t.key, state.key, radius, title, body, showShadow, size) + "</td>";
+          return '<td class="button-matrix-cell">' + buildCardField(t.key, state.key, radius, title, body, showShadow, size, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

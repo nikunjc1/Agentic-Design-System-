@@ -336,7 +336,11 @@
       var isDisabled = stateKey === "disabled";
       var disabledAttr = isDisabled ? " disabled" : "";
       var badgeHtml = showBadge ? '<span class="floatbutton-demo-badge" aria-hidden="true"></span>' : "";
-      var btnHtml = '<button type="button" class="floatbutton-demo-btn floatbutton-demo-btn--' + typeKey + ' floatbutton-demo-btn--h' + size + stateCls + '"' + disabledAttr + ">" +
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real float button; tabindex="-1" keeps it out of the Tab
+      // sequence without removing it from the accessibility tree. It had no
+      // accessible name at all (icon-only, no aria-label), so added one too.
+      var btnHtml = '<button type="button" class="floatbutton-demo-btn floatbutton-demo-btn--' + typeKey + ' floatbutton-demo-btn--h' + size + stateCls + '" tabindex="-1" aria-label="' + typeKey + ' float button, ' + stateKey + ' state"' + disabledAttr + ">" +
         '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>' +
         badgeHtml +
         "</button>";

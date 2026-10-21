@@ -216,8 +216,12 @@
 
     function buildCalendarField(typeKey, stateKey, monthLabel, grid, weekdays, isMonday){
       var weekdaysHtml = weekdays.map(function(w){ return '<span class="calendar-demo-weekday">' + w + "</span>"; }).join("");
+      // Foundation audit UX10 - one cell of a side-by-side state comparison
+      // (one of several full month grids), not a real date picker;
+      // tabindex="-1" keeps every day out of the Tab sequence without
+      // removing it from the accessibility tree.
       var daysHtml = grid.map(function(cell, i){
-        return '<button type="button" class="' + buildDayClasses(cell, stateKey) + '" aria-label="' + fullDateLabel(grid, i, isMonday) + '">' + cell.day + "</button>";
+        return '<button type="button" class="' + buildDayClasses(cell, stateKey) + '" tabindex="-1" aria-label="' + fullDateLabel(grid, i, isMonday) + '">' + cell.day + "</button>";
       }).join("");
       return '<div class="calendar-demo-grid calendar-demo-grid--' + typeKey + '">' +
         '<div class="calendar-demo-header">' + escapeHtml(monthLabel) + "</div>" +

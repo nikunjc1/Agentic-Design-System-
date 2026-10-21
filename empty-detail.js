@@ -45,7 +45,12 @@
   // action button (only "with-action", reusing Modal's own button base
   // class since it isn't inside a .modal-demo-dialog--default/destructive
   // wrapper to inherit color from).
-  function buildEmptyField(typeKey, stateKey, title, description, actionLabel){
+  // Foundation audit UX10 - illustrative=true (the side-by-side state
+  // comparison matrix) keeps the action button out of the Tab sequence
+  // without removing it from the accessibility tree; the exported Copy code
+  // example (illustrative=false/omitted) stays real, operable markup.
+  function buildEmptyField(typeKey, stateKey, title, description, actionLabel, illustrative){
+    var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var safeTitle = escapeHtml(title);
     var iconHtml = '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--' + typeKey + '">' + ICON_SVG + "</div>";
     var titleHtml = '<p class="empty-demo-title">' + safeTitle + "</p>";
@@ -53,7 +58,7 @@
       ? '<p class="empty-demo-description">' + escapeHtml(description) + "</p>"
       : "";
     var actionHtml = (stateKey === "with-action")
-      ? '<button type="button" class="modal-demo-btn modal-demo-btn--primary">' + escapeHtml(actionLabel) + "</button>"
+      ? '<button type="button" class="modal-demo-btn modal-demo-btn--primary"' + tabindexAttr + ">" + escapeHtml(actionLabel) + "</button>"
       : "";
     return '<div class="empty-demo-panel">' + iconHtml + titleHtml + descriptionHtml + actionHtml + "</div>";
   }
@@ -249,7 +254,7 @@
     function buildMatrixSection(title, description, actionLabel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildEmptyField(t.key, state.key, title, description, actionLabel) + "</td>";
+          return '<td class="button-matrix-cell">' + buildEmptyField(t.key, state.key, title, description, actionLabel, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

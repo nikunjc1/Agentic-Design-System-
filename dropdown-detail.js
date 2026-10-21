@@ -521,7 +521,10 @@
       var triggerClasses = "dropdown-demo-trigger dropdown-demo-trigger--" + typeKey + " dropdown-demo-trigger--h" + size + stateCls;
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var disabledAttr = isDisabled ? " disabled" : "";
-      return '<button type="button" class="' + triggerClasses + '"' + radiusStyle + disabledAttr + ">" +
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real dropdown trigger; tabindex="-1" keeps it out of the Tab
+      // sequence without removing it from the accessibility tree.
+      return '<button type="button" class="' + triggerClasses + '"' + radiusStyle + ' tabindex="-1"' + disabledAttr + ">" +
         escapeHtml(label) +
         '<span class="dropdown-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>" +
         "</button>";

@@ -578,7 +578,10 @@
       var attrs = (content === "icon-only" && ariaLabel) ? ' aria-label="' + ariaLabel.replace(/"/g, "&quot;") + '"' : "";
       if (isLoading) attrs += ' aria-busy="true"';
       var disabledAttr = (/ is-disabled\b/.test(stateCls) || isLoading) ? " disabled" : "";
-      return '<button class="' + classes + '" type="button" style="border-radius:' + radius + '"' + attrs + disabledAttr + '>' + inner + "</button>";
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real button; tabindex="-1" keeps it out of the Tab sequence
+      // without removing it from the accessibility tree.
+      return '<button class="' + classes + '" type="button" style="border-radius:' + radius + '" tabindex="-1"' + attrs + disabledAttr + '>' + inner + "</button>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){

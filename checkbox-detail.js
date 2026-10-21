@@ -403,8 +403,11 @@
       } else if (isIndeterminate){
         icon = '<span class="checkbox-demo-icon">' + DASH_ICON_SVG + '</span>';
       }
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real checkbox; tabindex="-1" keeps it out of the Tab sequence
+      // without removing it from the accessibility tree.
       var fieldHtml = '<label class="checkbox-demo-field checkbox-demo-field--' + typeKey + stateCls + '">' +
-        '<input type="checkbox" class="checkbox-demo-input"' + indeterminateAttr + checkedAttr + disabledAttr + ' />' +
+        '<input type="checkbox" class="checkbox-demo-input" tabindex="-1"' + indeterminateAttr + checkedAttr + disabledAttr + ' />' +
         '<span class="' + boxCls + '" style="border-radius:' + radiusCss + '">' + icon + '</span>' +
         '<span class="checkbox-demo-label">' + escapeHtml(label) + '</span>' +
         '</label>';

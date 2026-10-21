@@ -167,15 +167,18 @@
   // Builds a single .transfer-demo-panel at the given type/state/size, with
   // the given panel titles - used by both the Live Preview matrix and (via
   // buildFullCode above) the Copy code output's shape.
+  // Foundation audit UX10 - one cell of a side-by-side state comparison,
+  // not a real transfer list; tabindex="-1" keeps every control out of the
+  // Tab sequence without removing it from the accessibility tree.
   function buildTransferField(typeKey, stateKey, sizeKey, leftTitle, rightTitle){
     var isDisabled = stateKey === "disabled";
     var hasSearch = typeKey === "with-search";
     var listHeight = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
-    var searchHtml = hasSearch ? '<input type="text" class="transfer-demo-search" placeholder="Search..." />' : "";
+    var searchHtml = hasSearch ? '<input type="text" class="transfer-demo-search" tabindex="-1" placeholder="Search..." />' : "";
 
     var sourceRows = SOURCE_ITEMS.map(function(item, i){
       var hoverCls = (stateKey === "hover" && i === 0) ? " is-hover" : "";
-      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input"' + (item.checked ? " checked" : "") + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
+      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input" tabindex="-1"' + (item.checked ? " checked" : "") + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
       var checkboxHtml = item.checked
         ? '<span class="transfer-demo-checkbox is-checked">' + CHECK_ICON_SVG + '</span>'
         : '<span class="transfer-demo-checkbox"></span>';
@@ -183,7 +186,7 @@
     }).join("");
 
     var targetRows = TARGET_ITEMS.map(function(item){
-      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input"' + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
+      var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input" tabindex="-1"' + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
       return '<label class="transfer-demo-item">' + inputHtml + '<span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>';
     }).join("");
 
@@ -202,8 +205,8 @@
     var rightArrowCls = "transfer-demo-arrow-btn" + ((stateKey === "focus") ? " is-focus" : "");
     var disabledAttr = isDisabled ? " disabled" : "";
     var arrows = '<div class="transfer-demo-arrows">' +
-      '<button type="button" class="' + rightArrowCls + '" aria-label="Move checked items right"' + disabledAttr + '>&gt;</button>' +
-      '<button type="button" class="transfer-demo-arrow-btn" aria-label="Move checked items left"' + disabledAttr + '>&lt;</button>' +
+      '<button type="button" class="' + rightArrowCls + '" tabindex="-1" aria-label="Move checked items right"' + disabledAttr + '>&gt;</button>' +
+      '<button type="button" class="transfer-demo-arrow-btn" tabindex="-1" aria-label="Move checked items left"' + disabledAttr + '>&lt;</button>' +
       '</div>';
 
     var panelCls = "transfer-demo-panel" + (isDisabled ? " is-disabled" : "");

@@ -325,8 +325,11 @@
       var checkedAttr = isChecked ? " checked" : "";
       var disabledAttr = isDisabled ? " disabled" : "";
       var dotSpan = isChecked ? '<span class="radio-demo-dot radio-demo-dot--h' + size + '"></span>' : "";
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real radio; tabindex="-1" keeps it out of the Tab sequence
+      // without removing it from the accessibility tree.
       var field = '<label class="radio-demo-field radio-demo-field--' + typeKey + '">' +
-        '<input type="radio" class="radio-demo-input" name="' + inputName + '"' + checkedAttr + disabledAttr + " />" +
+        '<input type="radio" class="radio-demo-input" tabindex="-1" name="' + inputName + '"' + checkedAttr + disabledAttr + " />" +
         '<span class="' + circleCls + '">' + dotSpan + "</span>" +
         '<span class="radio-demo-label">' + escapeHtml(label) + "</span>" +
       "</label>";

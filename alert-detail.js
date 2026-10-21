@@ -220,7 +220,13 @@
   // (description omitted entirely for the "title-only" state, regardless of
   // the Description property's value), then trailing close/action control
   // depending on state.
-  function buildAlertField(typeKey, stateKey, radius, title, description, showIcon){
+  // Foundation audit UX10 - illustrative=true (the side-by-side state
+  // comparison matrix) keeps Dismiss/Undo out of the Tab sequence without
+  // removing them (or their accessible name) from the accessibility tree;
+  // the exported Copy code example (illustrative=false/omitted) stays real,
+  // operable markup.
+  function buildAlertField(typeKey, stateKey, radius, title, description, showIcon, illustrative){
+    var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var radiusCss = radiusCssFor(radius);
     var iconHtml = showIcon ? '<span class="alert-demo-icon">' + ICONS[typeKey] + "</span>" : "";
     var titleHtml = '<p class="alert-demo-title">' + escapeHtml(title) + "</p>";
@@ -229,9 +235,9 @@
     var bodyHtml = '<div class="alert-demo-body">' + titleHtml + descriptionHtml + "</div>";
     var trailingHtml = "";
     if (stateKey === "dismissible"){
-      trailingHtml = '<button type="button" class="alert-demo-close" aria-label="Dismiss">' + CLOSE_ICON + "</button>";
+      trailingHtml = '<button type="button" class="alert-demo-close"' + tabindexAttr + ' aria-label="Dismiss, ' + typeKey + ' alert">' + CLOSE_ICON + "</button>";
     } else if (stateKey === "with-action"){
-      trailingHtml = '<button type="button" class="alert-demo-action">Undo</button>';
+      trailingHtml = '<button type="button" class="alert-demo-action"' + tabindexAttr + ">Undo</button>";
     }
     return '<div class="alert-demo-banner alert-demo-banner--' + typeKey + '" style="border-radius:' + radiusCss + ';">' + iconHtml + bodyHtml + trailingHtml + "</div>";
   }
@@ -396,7 +402,7 @@
     function buildMatrixSection(radius, title, description, showIcon){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildAlertField(t.key, state.key, radius, title, description, showIcon) + "</td>";
+          return '<td class="button-matrix-cell">' + buildAlertField(t.key, state.key, radius, title, description, showIcon, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

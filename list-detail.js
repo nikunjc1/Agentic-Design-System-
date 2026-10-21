@@ -186,7 +186,12 @@
   // or bordered container depending on typeKey.
   var AVATAR_HEIGHT_BY_SIZE = { small: "24", default: "32", large: "40" };
 
-  function buildListField(typeKey, radius, showDividers, stateKey, sizeKey){
+  // Foundation audit UX10 - illustrative=true (the side-by-side state
+  // comparison matrix) keeps the row's action link out of the Tab sequence
+  // without removing it from the accessibility tree; the exported Copy code
+  // example (illustrative=false/omitted) stays a real, focusable link.
+  function buildListField(typeKey, radius, showDividers, stateKey, sizeKey, illustrative){
+    var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var isBordered = typeKey === "bordered";
     var styleAttr = isBordered ? ' style="border-radius:' + radiusCssFor(radius) + ';"' : "";
     var sizeCls = (sizeKey && sizeKey !== "default") ? " list-demo-panel--sz-" + sizeKey : "";
@@ -211,7 +216,7 @@
         ? '<div class="list-demo-avatar avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--h' + avatarH + '">' + person.initials + "</div>"
         : "";
       var actionHtml = (stateKey === "with-actions")
-        ? '<button type="button" class="list-demo-action">View</button>'
+        ? '<button type="button" class="list-demo-action"' + tabindexAttr + ">View</button>"
         : "";
       return '<div class="list-demo-row' + dividedCls + '">' + avatarHtml +
         '<div class="list-demo-body"><p class="list-demo-title">' + person.name + '</p><p class="list-demo-description">' + person.role + "</p></div>" +
@@ -397,7 +402,7 @@
     function buildMatrixSection(radius, size, showDividers){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildListField(t.key, radius, showDividers, state.key, size) + "</td>";
+          return '<td class="button-matrix-cell">' + buildListField(t.key, radius, showDividers, state.key, size, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

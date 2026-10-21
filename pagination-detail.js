@@ -371,13 +371,18 @@
       var disabledAttr = isDisabled ? " disabled" : "";
       var radiusCls = "pagination--radius-" + radiusClassSuffix(radius);
 
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real pagination bar; tabindex="-1" keeps every button out of
+      // the Tab sequence without removing it from the accessibility tree.
+      // The arrow buttons had no accessible name at all (icon-only, no
+      // aria-label); added one while touching this line.
       if (typeKey === "simple"){
         var prevCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls + stateCls;
         var nextCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls;
         return '<nav class="pagination-demo-bar pagination-demo-bar--simple" aria-label="Pagination">' +
-          '<button type="button" class="' + prevCls + '"' + disabledAttr + ">" + PREV_SVG + "</button>" +
+          '<button type="button" class="' + prevCls + '" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
           '<span class="pagination-demo-count">Page 3 of 12</span>' +
-          '<button type="button" class="' + nextCls + '">' + NEXT_SVG + "</button>" +
+          '<button type="button" class="' + nextCls + '" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
           "</nav>";
       }
 
@@ -387,13 +392,13 @@
         var itemStateCls = !isCurrent ? stateCls : "";
         var itemDisabledAttr = !isCurrent && isDisabled ? " disabled" : "";
         var currentCls = isCurrent ? " is-current" : "";
-        return '<button type="button" class="pagination-demo-item pagination-demo-item--h' + size + " " + radiusCls + currentCls + itemStateCls + '"' + itemDisabledAttr + ">" + n + "</button>";
+        return '<button type="button" class="pagination-demo-item pagination-demo-item--h' + size + " " + radiusCls + currentCls + itemStateCls + '" tabindex="-1"' + itemDisabledAttr + ">" + n + "</button>";
       }).join("");
       var nextArrowCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls;
       return '<nav class="pagination-demo-bar" aria-label="Pagination">' +
-        '<button type="button" class="' + prevArrowCls + '"' + disabledAttr + ">" + PREV_SVG + "</button>" +
+        '<button type="button" class="' + prevArrowCls + '" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
         items +
-        '<button type="button" class="' + nextArrowCls + '">' + NEXT_SVG + "</button>" +
+        '<button type="button" class="' + nextArrowCls + '" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
         "</nav>";
     }
 

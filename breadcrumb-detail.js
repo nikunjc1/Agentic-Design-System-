@@ -267,7 +267,7 @@
     // works the same as calling it from its original spot.
     var typeCardPreview = document.querySelector('[data-role="breadcrumb-type-card-preview"]');
     if (typeCardPreview){
-      typeCardPreview.innerHTML = buildBreadcrumbDemo("chevron", "rest", "", FALLBACK_DEFAULTS.size, DEFAULT_LABELS);
+      typeCardPreview.innerHTML = buildBreadcrumbDemo("chevron", "rest", "", FALLBACK_DEFAULTS.size, DEFAULT_LABELS, true);
     }
 
     // Renders either a plain Copy prompt/Copy code button (exactly one
@@ -355,7 +355,13 @@
     // previews) rather than the production ".breadcrumb" classes that
     // Copy Code emits, so the two never collide before the scratch CSS is
     // merged into shell.css.
-    function buildBreadcrumbDemo(typeKey, stateKey, stateCls, size, labels){
+    // Foundation audit UX10 - illustrative=true (the side-by-side state
+    // comparison matrix, and the listing-card preview) keeps these links
+    // out of the Tab sequence without removing them from the accessibility
+    // tree; the exported Copy code example (illustrative=false/omitted)
+    // stays a real, operable navigation trail.
+    function buildBreadcrumbDemo(typeKey, stateKey, stateCls, size, labels, illustrative){
+      var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
       var isDisabled = stateKey === "disabled";
       var trailCls = "breadcrumb-demo-trail breadcrumb-demo-trail--" + typeKey + " breadcrumb-demo-trail--" + size;
       var parts = [];
@@ -368,9 +374,9 @@
         if (i === 0){
           var linkCls = "breadcrumb-demo-link" + stateCls;
           var disabledAttr = (i === 0 && isDisabled) ? ' aria-disabled="true"' : "";
-          parts.push('<a class="' + linkCls + '" href="#"' + disabledAttr + ">" + escapeHtml(label) + "</a>");
+          parts.push('<a class="' + linkCls + '" href="#"' + tabindexAttr + disabledAttr + ">" + escapeHtml(label) + "</a>");
         } else {
-          parts.push('<a class="breadcrumb-demo-link" href="#">' + escapeHtml(label) + "</a>");
+          parts.push('<a class="breadcrumb-demo-link" href="#"' + tabindexAttr + ">" + escapeHtml(label) + "</a>");
         }
         parts.push('<span class="breadcrumb-demo-divider" aria-hidden="true">' + (typeKey === "chevron" ? CHEVRON_SVG : "/") + "</span>");
       });
@@ -393,7 +399,7 @@
     function buildMatrixSection(size, labels){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildBreadcrumbDemo(t.key, state.key, state.cls, size, labels) + "</td>";
+          return '<td class="button-matrix-cell">' + buildBreadcrumbDemo(t.key, state.key, state.cls, size, labels, true) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");

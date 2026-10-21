@@ -247,8 +247,11 @@
   function buildToastField(typeKey, stateKey, radius, title, description, showIcon){
     var radiusCss = radiusCssFor(radius);
     var iconHtml = showIcon ? ICONS[typeKey].replace('<svg ', '<svg class="toast-demo-icon" ') : "";
-    var closeHtml = stateKey === "dismissible" ? '<button type="button" class="toast-demo-close" aria-label="Dismiss">' + CLOSE_ICON + "</button>" : "";
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="toast-demo-action">View</button>' : "";
+    // Foundation audit UX10 - one cell of a side-by-side state comparison,
+    // not a real toast; tabindex="-1" keeps these buttons out of the Tab
+    // sequence without removing them from the accessibility tree.
+    var closeHtml = stateKey === "dismissible" ? '<button type="button" class="toast-demo-close" tabindex="-1" aria-label="Dismiss, ' + typeKey + ' toast">' + CLOSE_ICON + "</button>" : "";
+    var actionHtml = stateKey === "with-action" ? '<button type="button" class="toast-demo-action" tabindex="-1">View</button>' : "";
     var progressHtml = stateKey === "with-progress" ? '<div class="toast-demo-progress"><div class="toast-demo-progress-fill" style="width:60%;"></div></div>' : "";
     var bodyHtml = '<div class="toast-demo-body">' +
       '<p class="toast-demo-title">' + escapeHtml(title) + "</p>" +

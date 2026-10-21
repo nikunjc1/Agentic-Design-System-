@@ -505,9 +505,12 @@
       var controlClasses = "treeselect-demo-control treeselect-demo-control--" + typeKey + " treeselect-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="' + SELECTED_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
+      // Foundation audit UX10 - one cell of a side-by-side state comparison,
+      // not a real tree select; tabindex="-1" keeps it out of the Tab
+      // sequence without removing it from the accessibility tree.
+      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly tabindex="-1" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
       var trailingHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="treeselect-demo-clear" aria-label="Clear">' + ICON_CLEAR + "</button>"
+        ? '<button type="button" class="treeselect-demo-clear" tabindex="-1" aria-label="Clear">' + ICON_CLEAR + "</button>"
         : '<span class="treeselect-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen ? buildTreePanel() : "";

@@ -403,7 +403,10 @@
         if (i === 1) cls += " is-active";
         if (i === 0) cls += stateCls;
         var disabledAttr = (i === 0 && stateKey === "disabled") ? " disabled" : "";
-        return '<button type="button" class="' + cls + '"' + disabledAttr + ">" + escapeHtml(label) + "</button>";
+        // Foundation audit UX10 - one cell of a side-by-side state
+        // comparison, not a real tab bar; tabindex="-1" keeps it out of the
+        // Tab sequence without removing it from the accessibility tree.
+        return '<button type="button" class="' + cls + '" tabindex="-1"' + disabledAttr + ">" + escapeHtml(label) + "</button>";
       }).join("");
       return '<div class="tabs-demo-bar tabs-demo-bar--' + typeKey + " tabs-demo-bar--radius-" + radiusClassSuffix(radius) + '">' + triggers + "</div>";
     }

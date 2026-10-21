@@ -405,7 +405,10 @@
           (i === 0 ? stateCls : "");
         var disabledAttr = (i === 0 && isDisabledState) ? " disabled" : "";
         var icon = typeKey === "icons" ? ICON_SVG : "";
-        out += '<button type="button" class="' + itemCls + '"' + disabledAttr + ">" + icon + escapeHtml(label) + "</button>";
+        // Foundation audit UX10 - one cell of a side-by-side state
+        // comparison, not a real menu; tabindex="-1" keeps it out of the
+        // Tab sequence without removing it from the accessibility tree.
+        out += '<button type="button" class="' + itemCls + '" tabindex="-1"' + disabledAttr + ">" + icon + escapeHtml(label) + "</button>";
         return out;
       }).join("");
       return '<div class="menu-demo-panel" style="border-radius:' + radiusCss + '">' + itemsHtml + "</div>";
