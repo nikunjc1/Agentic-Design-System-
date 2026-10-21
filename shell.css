@@ -83,7 +83,7 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
    grid track it shares with .app-main, can actually fit the viewport
    instead of forcing the whole page to scroll horizontally. .theme-toggle
    is icon-only now, so it has no text label left to hide at this width.
-   (.version-badge/.brand-color-code's own "display:none" lives further
+   (.version-badge/.brand-color-group's own "display:none" lives further
    down, after their base rules - those rules now set display themselves,
    and an earlier same-specificity declaration would lose to them regardless
    of this media query being active.) */
@@ -92,6 +92,26 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   .kbd{ display: none; }
 }
 
+/* The dot and its hex code used to be two separate siblings in the
+   topbar's flex row, spaced apart by the same gap as every other
+   unrelated item next to them - nothing visually tied the swatch to the
+   value it represents. This wrapper is the one bordered box now; the dot
+   and code sit inside it as plain content, flex-centered (not the
+   line-height-equals-box-height trick .brand-color-code used alone
+   before - foundation.css loads after this file specifically to outrank
+   page-specific type rules, and silently overrode that trick for
+   .version-badge once already; flex avoids depending on line-height at
+   all). */
+.brand-color-group{
+  display: flex;
+  align-items: center;
+  gap:var(--space-8);
+  box-sizing: border-box;
+  height:var(--dimension-32);
+  border: var(--border-width-1) var(--border-style) var(--line-strong);
+  border-radius: var(--radius-md);
+  padding:0 var(--space-8);
+}
 .brand-color-dot{
   width:var(--dimension-16); height:var(--dimension-16);
   border-radius: 50%;
@@ -100,15 +120,8 @@ font-family:var(--font-mono);font-size:var(--type-caption-size);font-weight:var(
   flex: none;
 }
 .brand-color-code{
-  display: inline-block;
-  box-sizing: border-box;
-  height:var(--dimension-32);
-  line-height: var(--dimension-32);
   color: var(--text-mid);
   white-space: nowrap;
-  border: var(--border-width-1) var(--border-style) var(--line-strong);
-  border-radius: var(--radius-md);
-  padding:0 var(--space-8);
 font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);letter-spacing:var(--type-caption-tracking);font-family:var(--font-mono);}
 
 /* Restyled from a track/thumb pill switch + text label into a plain
@@ -176,7 +189,7 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    earlier same-specificity rule (the main narrow-width media query above)
    would lose this property to them regardless of this query being active. */
 @media (max-width: 640px){
-  .version-badge, .brand-color-code{ display: none; }
+  .version-badge, .brand-color-group{ display: none; }
 }
 .icon-btn{
   display: flex;
@@ -1730,6 +1743,26 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   padding:var(--space-12) 0;
   border-top: var(--border-width-1) var(--border-style) var(--line);
 }
+/* Pins every column explicitly, by class rather than DOM order - a long
+   description (Borders' own Focus/Active states, "Brand color with a
+   visible ring..."/"Pressed/engaged state...") gets clamped by the
+   shared text-clamp utility, which replaces .usage-desc with a
+   .ads-text-content wrapper and inserts .ads-read-more as a new sibling
+   right after it. That's a 5th direct child in what grid-template-columns
+   only defines 4 tracks for, and CSS Grid's default auto-flow pushed the
+   whole 4th column (.state-color-pair) into an unintended new implicit
+   row instead - its color codes appeared to "jump" under the label
+   instead of staying aligned on the right, in both themes identically
+   (a layout bug, not a per-theme color value difference). Explicit
+   placement keeps columns 1/3/4 in row 1 regardless of whether the
+   clamp/read-more pair exists at all; the button lands directly below
+   its own description in row 2, same column, never displacing anything
+   after it. */
+.usage-row > .usage-label{ grid-row: 1; grid-column: 1; }
+.usage-row > .usage-desc, .usage-row > .ads-text-content{ grid-row: 1; grid-column: 2; }
+.usage-row > .usage-values{ grid-row: 1; grid-column: 3; }
+.usage-row > .state-color-pair{ grid-row: 1; grid-column: 4; }
+.usage-row > .ads-read-more{ grid-row: 2; grid-column: 2; }
 .usage-row:first-child{ border-top: none; padding-top:0; }
 .usage-row .gap-demo-row, .usage-row .radius-demo-row{ overflow: hidden; }
 .usage-row .gap-demo-row, .usage-row .radius-demo-row{ margin-top:0; }
