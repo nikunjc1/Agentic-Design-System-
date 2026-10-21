@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var addonFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -461,11 +462,14 @@
         : "";
       var valueAttr = isFilled ? ' value="yourcompany"' : (isError ? ' value="a"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      // tabindex="-1": static state-comparison matrix, not an operable field.
-      var inputHtml = '<input type="text" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // tabindex="-1" + a real for/id label association: static state-
+      // comparison matrix, not an operable field, but still exposed to a
+      // screen reader's virtual cursor regardless of tab order.
+      var fieldId = "addon-demo-field-" + (++addonFieldCounter);
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var noteHtml = isError ? '<p class="addon-demo-note is-error">Enter at least 3 characters.</p>' : "";
       return '<div class="addon-demo-field">' +
-        '<label class="addon-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="addon-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + prefixHtml + inputHtml + clearHtml + suffixHtml + "</div>" +
         noteHtml +
         "</div>";

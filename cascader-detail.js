@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var cascaderFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -521,15 +522,18 @@
       var controlClasses = "cascader-demo-control cascader-demo-control--" + typeKey + " cascader-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="' + SELECTED_PATH_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      // tabindex="-1": static state-comparison matrix, not an operable field.
-      var inputHtml = '<input type="text" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // tabindex="-1" + a real for/id label association: static state-
+      // comparison matrix, not an operable field, but still exposed to a
+      // screen reader's virtual cursor regardless of tab order.
+      var fieldId = "cascader-demo-field-" + (++cascaderFieldCounter);
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var trailingHtml = (allowClear && hasValue && !isDisabled)
         ? '<button type="button" class="cascader-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var panelHtml = isOpen ? buildCascaderPanel() : "";
       return '<div class="cascader-demo-field">' +
-        '<label class="cascader-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="cascader-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + trailingHtml + "</div>" +
         panelHtml +
         "</div>";

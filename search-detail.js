@@ -429,11 +429,16 @@
       var leadingHtml = showLeadingIcon ? '<span class="search-demo-icon">' + ICON_SEARCH + "</span>" : "";
       var valueAttr = isFilled ? ' value="dashboard"' : (isError ? ' value="xyz123notfound"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
-      // No tabindex override here - a real <button> is focusable by default,
-      // and the page's own Accessibility text claims exactly that ("the
-      // clear button is independently focusable"), so a hard-coded -1
-      // would silently contradict it.
+      // No visible label on Search (matches the real component - placeholder
+      // only), so this needs an aria-label directly, not a for/id
+      // association - still exposed to a screen reader's virtual cursor
+      // regardless of tabindex.
+      var inputHtml = '<input type="search" class="search-demo-input" placeholder="' + escapeHtml(placeholder) + '" aria-label="Search, ' + stateKey + ' state"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // tabindex="-1": this matrix is a static state comparison, not an
+      // operable field - the page's own Accessibility text ("the clear
+      // button is independently focusable") documents the real component's
+      // behavior contract, not a literal claim about every illustrative
+      // cell here.
       var clearHtml = (showClearButton && hasValue) ? '<button type="button" class="search-demo-clear" aria-label="Clear search" tabindex="-1">' + ICON_CLEAR + "</button>" : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="search-demo-note is-error">No results found for &quot;xyz123notfound&quot;.</p>' : "";

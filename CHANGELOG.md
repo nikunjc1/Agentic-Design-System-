@@ -2791,6 +2791,18 @@ Reviewed Patterns, Templates, AI Generator, Markdown Export, NPM Package, Figma,
 
 Verification evidence and the atomic remaining-work list are recorded in the consolidated Excel audit workbook. Open feature work includes interactive pattern/template recipes, model generation, package distribution, Figma sync, versioned release history and participant research.
 
+## UX02/UX10 follow-through: a sitewide sweep found what the earlier fixes missed
+
+User report: previous rounds had forgotten to implement a number of points. Re-verified every UX01-23 fix live rather than trusting memory, then ran a sitewide scan for unnamed interactive elements (checking real label association - `for`/`id` and wrapping `<label>` - not just visible text) across all 158 pages. Two real, confirmed gaps surfaced.
+
+**Rating (UX02) was only half-fixed.** The earlier round added names to the Live Preview matrix (`rating-detail.js`), but missed two entirely separate, hand-authored static markup blocks: `rating-default.html`'s own "Component Guide" Do/Don't illustrations (25 buttons across 5 rating groups - "Rate this article," "Accuracy," "Tone," "Depth," "Usefulness") and `rating.html`'s listing-card specimen (5 more). All had `tabindex="-1"` already but no `aria-label` at all - a screen reader's virtual cursor (which isn't limited by tab order) landed on 30 silent "button" elements. Added "{label}, N of 5 stars" to every one.
+
+**The same gap, for a different reason, across 8 more Input-family components.** `input-detail.js`/`password-detail.js`/`number-detail.js`/`text-area-detail.js`/`add-on-detail.js`/`autocomplete-detail.js`/`cascader-detail.js`'s Live Preview matrices (fixed for UX10's tab-order problem) already had a visible, correctly-worded `<label>` right next to each field - it just was never programmatically associated (no `for`/`id`), so it didn't count as that field's accessible name to assistive tech. Added a unique id per rendered field and wired `for`/`id` correctly on all 7; `search-detail.js`'s matrix has no visible label at all (matches the real component), so it got a direct `aria-label` instead. `table-detail.js`'s selection checkbox got `aria-label="Select {name}"`. Fixed the same `for`/`id` gap on each component's single-card listing page (`input.html`, `password.html`, `number.html`, `text-area.html`, `add-on.html`, `autocomplete.html`, `cascader.html`, `search.html`) while in each file. Also corrected two stale code comments (in `password-detail.js`/`search-detail.js`) that described an older tabindex decision no longer matching the actual code.
+
+Re-confirmed via a second full sitewide sweep: 0 unnamed interactive elements remain on any of these 17 pages. Deliberately did not extend this to Float Button, Pagination, Transfer or Tree Select's own matrices - same pattern, but outside UX02/UX10's named scope; still part of the previously-documented ~45-component follow-up, not newly forgotten.
+
+Verified: all 11 unit test suites pass; full 158-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

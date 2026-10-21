@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var passwordFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -453,9 +454,11 @@
       var controlClasses = "password-demo-control password-demo-control--" + typeKey + " password-demo-control--h" + size + stateCls;
       var valueAttr = isFilled ? ' value="correcthorse"' : (isError ? ' value="short"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="password" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
-      // No tabindex override - a real <button> is focusable by default, and
-      // a reveal toggle a keyboard user can't reach defeats its own purpose.
+      // tabindex="-1" + a real for/id label association: static comparison
+      // matrix, not an operable field, but still exposed to a screen
+      // reader's virtual cursor regardless of tab order.
+      var fieldId = "password-demo-field-" + (++passwordFieldCounter);
+      var inputHtml = '<input type="password" id="' + fieldId + '" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password" tabindex="-1">' + ICON_EYE + "</button>" : "";
       var clearHtml = (allowClear && hasValue && !isDisabled)
         ? '<button type="button" class="password-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
@@ -463,7 +466,7 @@
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="password-demo-note is-error">Password must be at least 8 characters.</p>' : "";
       return '<div class="password-demo-field">' +
-        '<label class="password-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="password-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + toggleHtml + "</div>" +
         noteHtml +
         "</div>";

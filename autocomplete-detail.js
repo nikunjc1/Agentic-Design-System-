@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var autocompleteFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -431,8 +432,11 @@
       var controlClasses = "autocomplete-demo-control autocomplete-demo-control--" + typeKey + " autocomplete-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="San"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
-      // tabindex="-1": static state-comparison matrix, not an operable field.
-      var inputHtml = '<input type="text" class="autocomplete-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // tabindex="-1" + a real for/id label association: static state-
+      // comparison matrix, not an operable field, but still exposed to a
+      // screen reader's virtual cursor regardless of tab order.
+      var fieldId = "autocomplete-demo-field-" + (++autocompleteFieldCounter);
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="autocomplete-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var clearHtml = (allowClear && hasValue && !isDisabled)
         ? '<button type="button" class="autocomplete-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
@@ -445,7 +449,7 @@
           "</div>"
         : "";
       return '<div class="autocomplete-demo-field">' +
-        '<label class="autocomplete-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="autocomplete-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + "</div>" +
         panelHtml +
         "</div>";

@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var textareaFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -426,14 +427,17 @@
       var controlClasses = "textarea-demo-control textarea-demo-control--" + typeKey + " textarea-demo-control--h" + size + stateCls;
       var disabledAttr = isDisabled ? " disabled" : "";
       var content = isFilled ? "This feature has been incredibly helpful for our team's daily workflow." : (isError ? "ok" : "");
-      // tabindex="-1": this matrix is a static side-by-side comparison of
-      // every state (same convention as Modal/Rating/Input's own matrices),
-      // not an operable field.
-      var textareaHtml = '<textarea class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ' tabindex="-1">' + content + "</textarea>";
+      // tabindex="-1" + a real for/id label association: this matrix is a
+      // static side-by-side comparison of every state (same convention as
+      // Modal/Rating/Input's own matrices), not an operable field, but
+      // still exposed to a screen reader's virtual cursor regardless of
+      // tab order.
+      var fieldId = "textarea-demo-field-" + (++textareaFieldCounter);
+      var textareaHtml = '<textarea id="' + fieldId + '" class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ' tabindex="-1">' + content + "</textarea>";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="textarea-demo-note is-error">Please provide at least 10 characters.</p>' : "";
       return '<div class="textarea-demo-field">' +
-        '<label class="textarea-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="textarea-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + textareaHtml + "</div>" +
         noteHtml +
         "</div>";

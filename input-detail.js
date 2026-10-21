@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var inputFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -440,11 +441,16 @@
       // by-side comparison (same convention as Modal/Rating's own matrices),
       // not an operable field - a real tab stop would land on dozens of
       // inputs that exist only to show what Rest/Hover/Error look like.
-      var inputHtml = '<input type="text" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // The visible label still needs a real for/id association though -
+      // without it, a screen reader's virtual cursor (which isn't limited
+      // by tabindex) reaches an unlabeled blank field, same gap Rating's
+      // own matrix was fixed for.
+      var fieldId = "input-demo-field-" + (++inputFieldCounter);
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="input-demo-note is-error">Enter a valid email address.</p>' : "";
       return '<div class="input-demo-field">' +
-        '<label class="input-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="input-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + leadingHtml + inputHtml + trailingHtml + "</div>" +
         noteHtml +
         "</div>";

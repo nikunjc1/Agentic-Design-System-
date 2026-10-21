@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  var numberFieldCounter = 0;
 
   function escapeHtml(str){
     return String(str)
@@ -455,11 +456,15 @@
         : "";
       var valueAttr = isFilled ? ' value="3"' : (isError ? ' value="-5"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
-      var inputHtml = '<input type="number" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      // tabindex="-1" + a real for/id label association: static comparison
+      // matrix, not an operable field, but still exposed to a screen
+      // reader's virtual cursor regardless of tab order.
+      var fieldId = "number-demo-field-" + (++numberFieldCounter);
+      var inputHtml = '<input type="number" id="' + fieldId + '" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var noteHtml = isError ? '<p class="number-demo-note is-error">Enter a number of 0 or more.</p>' : "";
       return '<div class="number-demo-field">' +
-        '<label class="number-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="number-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + stepperHtml + "</div>" +
         noteHtml +
         "</div>";

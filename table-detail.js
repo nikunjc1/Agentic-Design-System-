@@ -326,7 +326,7 @@
       // every other component's own matrix in this system), not one
       // operable table - without it, a keyboard user hits a real checkbox
       // and real mailto:/tel: links on every one of these repeated rows.
-      var checkboxTd = isSelected ? '<td><input type="checkbox" tabindex="-1"' + (i === 0 ? " checked" : "") + " /></td>" : "";
+      var checkboxTd = isSelected ? '<td><input type="checkbox" aria-label="Select ' + person.name + '" tabindex="-1"' + (i === 0 ? " checked" : "") + " /></td>" : "";
       var statusDotClass = "badge-demo-status-dot--" + person.statusColor;
       var statusHtml = '<td><span class="table-demo-status-cell"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
       // Email/Mobile render as real links (mailto:/tel:) styled in this
