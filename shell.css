@@ -1737,12 +1737,31 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .usage-hierarchy{ display: flex; flex-direction: column; margin:var(--space-24) 0; }
 .usage-row{
   display: grid;
-  grid-template-columns: 160px 1fr auto 190px;
+  grid-template-columns: 160px 1fr auto;
   align-items: center;
   gap:var(--space-16);
   padding:var(--space-12) 0;
   border-top: var(--border-width-1) var(--border-style) var(--line);
 }
+/* Foundation audit: the 4th track below exists only for rows that add a
+   real trailing swatch after label/description/values - Borders' own
+   per-state color pair, Spacing's gap-size preview and Shadows' elevation
+   preview. Most pages using this shared .usage-row (NPM Package,
+   Typography, Accessibility, Radius, Icons, Grid & Layout, Data Format,
+   Copywriting, Guidelines, AI & Agents, Overview, Design Values) have just
+   label/description/values and none of these. Reserving a fixed 190px 4th
+   column unconditionally left those pages with a permanently empty block
+   of trailing whitespace and starved the description column down to
+   ~50px, wrapping ordinary text ("3.2.0 - design system 3.2.0") across 4+
+   lines. Scoping the wider layout to rows that actually have a 4th swatch
+   lets every other row's description reclaim that space; the first fix
+   here (:has(> .state-color-pair) only) missed Spacing/Shadows and pushed
+   their unpinned swatch onto a second line instead - :has() needs every
+   class that can legitimately be this 4th column named explicitly, since
+   a plain text-clamp (.ads-text-content + .ads-read-more) never adds a
+   real 4th column of its own (both are pinned back into columns 2/3 by
+   class below, independent of DOM order). */
+.usage-row:has(> .state-color-pair), .usage-row:has(> .gap-demo-row), .usage-row:has(> .shadow-demo-row){ grid-template-columns: 160px 1fr auto 190px; }
 /* Pins every column explicitly, by class rather than DOM order - a long
    description (Borders' own Focus/Active states, "Brand color with a
    visible ring..."/"Pressed/engaged state...") gets clamped by the
@@ -1771,7 +1790,23 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .usage-values{   color:var(--type-caption-color); white-space: nowrap; text-align: end; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 
 @media (max-width:640px){
-  .usage-row{ grid-template-columns: 1fr; gap:var(--space-4); }
+  /* Media-query cascade gotcha: the :has() rules above are unconditional
+     and outscore this plain .usage-row by specificity, so without
+     repeating them here they'd silently win even at this narrow width and
+     keep these rows in a 4-column layout that can't fit. Named explicitly
+     so every variant collapses to one column. */
+  .usage-row, .usage-row:has(> .state-color-pair), .usage-row:has(> .gap-demo-row), .usage-row:has(> .shadow-demo-row){ grid-template-columns: 1fr; gap:var(--space-4); }
+  /* Pre-existing bug found while fixing the above: .usage-label/.usage-desc/
+     .usage-values/.state-color-pair/.ads-read-more are each pinned to an
+     explicit grid-column (1/2/3/4) further down this file, regardless of
+     viewport. A 1-track container doesn't remove that pin - Grid just
+     creates extra implicit tracks to satisfy it, so this single-column
+     rule was never actually collapsing anything. Releasing the pin back to
+     auto here lets every child stack in DOM order instead. */
+  .usage-row > .usage-label, .usage-row > .usage-desc, .usage-row > .ads-text-content,
+  .usage-row > .usage-values, .usage-row > .state-color-pair, .usage-row > .ads-read-more{
+    grid-column: 1; grid-row: auto;
+  }
   .usage-values{ text-align: start; }
 }
 
