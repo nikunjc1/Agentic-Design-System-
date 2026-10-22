@@ -24,7 +24,14 @@ async function run(name,page,options,fn){const f=await boot(page,options);try{aw
     f.d.execCommand=()=>false;button.click();await f.flush();
     check(button.textContent==='Copy failed','Failed copy announced success');
     check(f.d.getElementById('ads-copy-status').textContent.includes('manually'),'No manual-copy recovery');
-    check(f.d.activeElement===button,'Failure moved focus');
+    // Patterns/Templates are the one deliberate exception (DP02/AT02): their
+    // code/prompt text is never visible anywhere else on the page, so a
+    // failed copy moves focus into the now-opened disclosure's own textarea
+    // and selects it - the only way a user can find and manually copy the
+    // text. Every other page's copy source is already visible elsewhere, so
+    // staying on the button is the right behavior there.
+    if(page==='patterns.html'||page==='templates.html')check(f.d.activeElement.tagName==='TEXTAREA'&&f.d.activeElement.value.trim().length>0,'Failure did not focus the recovery textarea');
+    else check(f.d.activeElement===button,'Failure moved focus');
     f.d.execCommand=()=>true;button.click();await f.flush();check(button.textContent==='Copied!','Successful legacy fallback rejected');
   });
   await run('Splitter keyboard, bounds, collapse, cancellation, save and reset','splitter-default.html',{},async f=>{

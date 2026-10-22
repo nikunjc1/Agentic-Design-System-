@@ -2,8 +2,8 @@
   "date": "2026-10-08",
   "method": "Page scripts in jsdom. CSS, fonts and assistive technology are not rendered.",
   "componentPages": 131,
-  "assertions": 1482,
-  "failures": 2,
+  "assertions": 1502,
+  "failures": 0,
   "results": [
     {
       "name": "Copy success, denied clipboard and fallback",
@@ -663,14 +663,12 @@
     {
       "name": "Copy success, denied clipboard and fallback",
       "page": "patterns.html",
-      "status": "fail",
-      "error": "AssertionError [ERR_ASSERTION]: Successful copy not acknowledged\n    at check (/Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:6:38)\n    at /Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:16:5\n    at async run (/Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:7:79)\n    at async /Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:11:74"
+      "status": "pass"
     },
     {
       "name": "Copy success, denied clipboard and fallback",
       "page": "templates.html",
-      "status": "fail",
-      "error": "AssertionError [ERR_ASSERTION]: Successful copy not acknowledged\n    at check (/Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:6:38)\n    at /Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:16:5\n    at async run (/Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:7:79)\n    at async /Users/user/Documents/Damco Agentic Design System/tools/audit-missed-pointers.cjs:11:74"
+      "status": "pass"
     },
     {
       "name": "Splitter keyboard, bounds, collapse, cancellation, save and reset",

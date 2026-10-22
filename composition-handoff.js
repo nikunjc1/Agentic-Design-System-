@@ -61,8 +61,15 @@ window.ADSStorage={lastWriteSucceeded:true,
         button.setAttribute('aria-label',`Copy ${type} for ${name} ${kind}`);
         button.addEventListener('click',async()=>{
           output.value=(type==='prompt'?prompt:code)();disclosure.open=true;
-          try {await window.ADSClipboard.copy(output.value);status.textContent=`${name} ${type} copied.`;}
-          catch {output.focus();output.select();status.textContent='Copy is unavailable. The handoff text is selected; use your device’s Copy command.';}
+          // Foundation audit: used copyWithFeedback (every other page's shared
+          // "Copied!" button-text acknowledgment) instead of calling
+          // ADSClipboard.copy directly - this button used to stay unchanged on
+          // success, the only copy action sitewide that didn't confirm itself.
+          // Local status + focus/select-on-failure (AT02's clipboard-denial
+          // recovery) stays, driven off the same success result.
+          const success=await window.ADSClipboard.copyWithFeedback(output.value,button);
+          if(success){status.textContent=`${name} ${type} copied.`;}
+          else {output.focus();output.select();status.textContent='Copy is unavailable. The handoff text is selected; use your device’s Copy command.';}
         });
       }
     });
