@@ -87,12 +87,17 @@
     }
     // Persisted, not re-asked every page load - a visitor who intentionally
     // browses without setup was closing this exact message on every single
-    // page before. Scoped to the no-profile "What are you creating?" nag
-    // specifically: once a profile exists the banner switches to a useful
-    // per-page context summary, not a repeated prompt, so it keeps showing
-    // then - completing setup is what "resets" this preference.
+    // page before. The profile-exists "context summary" state used to be
+    // exempt from this (closing it only hid it on the current page, since it
+    // was judged useful rather than a repeated prompt) - closing it on one
+    // page left it reappearing on every other one, which a direct request
+    // asked to stop. Uses a separate key from the no-profile prompt so each
+    // has its own reset: saving/editing the project (see the profile save
+    // handler further down) clears this one, so the banner comes back once
+    // to confirm the new context; completing setup for the first time is
+    // what "resets" the no-profile key, same as before.
     let bannerDismissed = false;
-    if (!profile) { try { bannerDismissed = localStorage.getItem('ads:setup-banner-dismissed') === '1'; } catch {} }
+    try { bannerDismissed = localStorage.getItem(profile ? 'ads:setup-context-dismissed' : 'ads:setup-banner-dismissed') === '1'; } catch {}
     if (!['new-project.html', 'settings.html'].includes(file) && !bannerDismissed) {
       const notice = el('section', '', 'setup-notice setup-context');
       notice.setAttribute('aria-label', 'Your design system');
@@ -141,7 +146,7 @@
       } else window.addEventListener('resize', syncBannerHeight);
       close.addEventListener('click', () => {
         dismissed = true;
-        if (!profile) { try { localStorage.setItem('ads:setup-banner-dismissed', '1'); } catch {} }
+        try { localStorage.setItem(profile ? 'ads:setup-context-dismissed' : 'ads:setup-banner-dismissed', '1'); } catch {}
         if (bannerObserver) bannerObserver.disconnect();
         else window.removeEventListener('resize', syncBannerHeight);
         notice.remove();
@@ -449,7 +454,10 @@
       try { profile = M.save(localStorage, collect()); }
       catch (error) { status.textContent = 'Could not save: ' + error.message + ' Your entries are still available here.'; return; }
       window.ADSFoundation.apply();
-      try { localStorage.removeItem(M.DRAFT); localStorage.setItem('ads:welcome-seen','1'); } catch {}
+      // A previously dismissed context banner is for the old project summary -
+      // saving (first setup or a later edit) clears it so the banner comes
+      // back once elsewhere in the system to confirm the new one.
+      try { localStorage.removeItem(M.DRAFT); localStorage.setItem('ads:welcome-seen','1'); localStorage.removeItem('ads:setup-context-dismissed'); } catch {}
       form.hidden = true; $('.setup-steps').hidden = true;
       done.hidden = false;
       $('#savedProjectName').textContent = profile.project;

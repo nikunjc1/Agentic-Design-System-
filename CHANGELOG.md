@@ -2875,6 +2875,14 @@ That same audit run had been flagging a second, unrelated case for months: it as
 
 Verified: live in a real browser, clicking Copy prompt now flips the button to "Copied!" and restores it after ~1.8s; the full copy-action audit (1502 assertions, up from 1482 once the fix added real coverage) passes with 0 failures for the first time including Patterns/Templates; the deep Foundation-controls audit (2241 assertions), the recovery and pending-tasks evidence audits, all 11 unit test suites, and the full 158-page x 4-viewport regression sweep all pass with 0 failures.
 
+## The project-context banner reappeared on every page after being closed
+
+Once a project profile exists (saved via "Customize your system"), the per-page banner switches from a "What are you creating?" prompt into a project summary ("BlueDart · Web Application · Desktop web") with Edit/Export Markdown/Close actions. Closing the no-profile prompt already persisted sitewide - a deliberate earlier fix - but the profile-exists summary was explicitly exempted from that, on the reasoning that it was "useful context, not a repeated nag." A direct report said otherwise: closing it on one page left it reappearing on every other page, which reads as the dismissal simply not working.
+
+Given a separate `ads:setup-context-dismissed` key from the no-profile prompt's own key, so each has its own reset condition: completing setup for the first time still resets the no-profile prompt's dismissal (unchanged), and saving or editing the project profile now resets the context summary's dismissal specifically, so it reappears once to confirm the updated values instead of staying permanently silent after a single close.
+
+Verified: closing the banner on Overview and navigating to Typography and Radius in the same session no longer shows it on either page (previously reappeared on both); confirmed the no-profile prompt's existing persistence is unaffected; confirmed re-saving the project profile clears the new dismissal key so the banner returns with the updated summary; all 11 unit test suites pass; the pending-tasks evidence audit (covers the project-save flow directly) and the copy-action audit both pass with 0 failures; full 158-page x 4-viewport regression sweep: 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)
