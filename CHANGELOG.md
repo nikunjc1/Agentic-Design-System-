@@ -2895,6 +2895,14 @@ A report of listing-page CTAs "not coming properly" traced to three separate, co
 
 Verified: a sitewide sweep confirms the icon is no longer clipped on any of 158 pages; a second sweep confirms all 65 cards show exactly the Primary/Secondary/icon-only-Tertiary structure with no console errors; live in both themes, the tooltip and checkmark-feedback behavior were confirmed directly (not just visually) via computed style and DOM state at each step - hover before click, during the ~1.8s feedback window, and after it restores; a pre-existing unit test asserting the old "Anchor, never Primary" design was updated to assert the new one instead; all 11 unit test suites pass; the deep Foundation-controls audit, the copy-action audit, and the full 158-page x 4-viewport regression sweep all pass with 0 failures.
 
+## The Button listing page's CTAs could end up a different corner radius than every other page's
+
+A follow-up report that the new card CTAs' corner radii "don't match each other" traced to one page: Button's own listing (`components.html`), the only one with a "Corner radius - applies to every card" demo selector. That selector's script queried `.button-type-card .btn-demo` to find the one "Save" preview button it's meant to restyle - a query that only ever matched that one preview until View guide/Copy prompt/Copy code were just rebuilt on `.btn-demo` too (the previous entry in this log). From that point on, the selector's `el.style.borderRadius = ...` swept all three real actions in in addition to the demo preview, overriding their shared `--radius-md` with whatever the demo selector happened to be set to - at the default "8px - Balanced" this coincidentally matched and stayed invisible, but choosing "Full - Pill" or any other option made this one page's CTAs visibly diverge from every other listing page's.
+
+Scoped the selector to `.button-type-demo .btn-demo` - the actual preview wrapper, a sibling of `.card-copy-row`, not an ancestor of it - so it can only ever reach the one button it was always meant to demonstrate.
+
+Verified: with the demo selector left at its default, computed `border-radius` is identical (8px) across Primary/Secondary/Tertiary on both `components.html` and, cross-checked directly, `password.html`; switching the selector to "Full - Pill" now changes only the "Save" preview (9999px) while all three real actions stay at 8px, confirmed live via screenshot; all 11 unit test suites pass; the deep Foundation-controls audit, the copy-action audit, and the full 158-page x 4-viewport regression sweep all pass with 0 failures.
+
 ## Known follow-ups (not yet done)
 
 - **Motion foundation doesn't exist at all** — flagged as the single biggest P0 gap in the whole audit, still untouched. (Motion *tokens* do exist in theme.css and are used consistently sitewide; there's just no dedicated Foundation page documenting them, the way Colors/Spacing/Radius/etc. each have one.)

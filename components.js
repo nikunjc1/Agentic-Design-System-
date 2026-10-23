@@ -7,7 +7,19 @@
 
   document.addEventListener("DOMContentLoaded", function(){
     var globalRadiusSelect = document.querySelector('[data-role="global-radius-select"]');
-    var cardPreviewBtns = document.querySelectorAll('.button-type-card .btn-demo, .button-type-card .dualicon-btn');
+    // Foundation audit - this used to be scoped to the whole card
+    // (".button-type-card .btn-demo"), which only ever matched the one
+    // "Save" preview inside .button-type-demo - until the card's own View
+    // guide/Copy prompt/Copy code actions were rebuilt on .btn-demo too
+    // (Primary/Secondary/icon-only Tertiary), at which point this selector
+    // started sweeping them in as well. This selector exists to demonstrate
+    // a configurable corner radius on the preview button only; the card's
+    // own actions aren't part of that demonstration and must keep the same
+    // --radius-md every other listing page's actions use, or this page's
+    // CTAs mismatch every other page's the moment someone picks a non-
+    // default radius here. Scoped to .button-type-demo specifically so it
+    // can never reach .card-copy-row again.
+    var cardPreviewBtns = document.querySelectorAll('.button-type-demo .btn-demo, .button-type-demo .dualicon-btn');
 
     function getRadius(){
       return globalRadiusSelect ? globalRadiusSelect.value : "8";
