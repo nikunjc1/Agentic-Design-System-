@@ -5388,7 +5388,16 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   gap:var(--space-8);
   margin-top:var(--space-4);
 }
-.app-main .card-copy-row{ flex-wrap: nowrap; max-width:100%; overflow-x:auto; }
+/* Foundation audit - centered justify-content on a row that can overflow
+   splits the overflow evenly on both sides. A scroll container's scrollLeft
+   can't go negative in LTR, so the left half of that overflow - here, the
+   prepended "View guide" icon link, always the row's first child - was
+   permanently clipped and unreachable by scroll, hover or click, while
+   "Copy prompt"/"Copy code" (the right half) stayed visible. flex-start
+   keeps the row's own first child pinned at its own left edge; any overflow
+   this creates is now entirely on the right, where overflow-x:auto can
+   actually scroll it into view. */
+.app-main .card-copy-row{ flex-wrap: nowrap; justify-content: flex-start; max-width:100%; overflow-x:auto; }
 /* flex:1 (the previous rule here) stretched each button to fill whatever
    width .card-copy-row itself resolved to - every *-type-card rule sets
    that to width:100% of its own card, so the row (and both buttons with
@@ -5476,6 +5485,13 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 /* ---------- dynamic, collision-aware tooltip ----------
    Positioned in JS (see attachSmartTooltip) - the [data-placement]
    attribute it sets just picks which side the arrow points from. */
+/* Foundation audit - this used a plain neutral card style (graphite-800
+   fill, visible border, caption typography) completely unlike the actual
+   Tooltip component's own documented look (an inverted dark bubble, no
+   border, body font at a tighter non-scale padding) on tooltip.html. Same
+   overlay-invert-bg/text pairing, same box-sizing/padding/font-size/font
+   family as that component's own "Default" size, so every icon-only
+   button and card's tooltip now matches the component it's named after. */
 .dynamic-tooltip{
   position: fixed;
   top:0;
@@ -5483,29 +5499,27 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
   z-index: 50;
   max-width:var(--dimension-220);
   width:max-content;
-  padding:var(--space-8) var(--space-12);
-  background: var(--graphite-800);
-  color:var(--type-caption-color);
-
-
-
+  box-sizing: border-box;
+  padding:6px 10px;
+  background: var(--overlay-invert-bg);
+  color:var(--overlay-invert-text);
   text-align: center;
-  border: var(--border-width-1) var(--border-style) var(--line-strong);
   border-radius: var(--radius-sm);
-  box-shadow:var(--shadow-lg);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-fast) var(--ease-standard);
-font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+  font-family:var(--font-body);
+  font-size:12px;
+}
 .dynamic-tooltip.is-visible{ opacity: 1; }
 .dynamic-tooltip::after{
   content: "";
   position: absolute;
   border: 5px solid transparent;
 }
-.dynamic-tooltip[data-placement="top"]::after{ top:100%; left:50%; transform: translateX(-50%); border-top-color: var(--graphite-800); }
-.dynamic-tooltip[data-placement="bottom"]::after{ bottom:100%; left:50%; transform: translateX(-50%); border-bottom-color: var(--graphite-800); }
-.dynamic-tooltip[data-placement="left"]::after{ left:100%; top:50%; transform: translateY(-50%); border-inline-start-color: var(--graphite-800); }
+.dynamic-tooltip[data-placement="top"]::after{ top:100%; left:50%; transform: translateX(-50%); border-top-color: var(--overlay-invert-bg); }
+.dynamic-tooltip[data-placement="bottom"]::after{ bottom:100%; left:50%; transform: translateX(-50%); border-bottom-color: var(--overlay-invert-bg); }
+.dynamic-tooltip[data-placement="left"]::after{ left:100%; top:50%; transform: translateY(-50%); border-inline-start-color: var(--overlay-invert-bg); }
 
 /* ---------- Multi-select checkbox dropdown (see multiselect.js) ----------
    Reusable component used for the Properties panel's Size / Corner radius /
@@ -5693,7 +5707,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
   padding:var(--space-4) var(--space-10);
 
 font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.dynamic-tooltip[data-placement="right"]::after{ right:100%; top:50%; transform: translateY(-50%); border-inline-end-color: var(--graphite-800); }
+.dynamic-tooltip[data-placement="right"]::after{ right:100%; top:50%; transform: translateY(-50%); border-inline-end-color: var(--overlay-invert-bg); }
 
 /* ---------- Select demo (select.html / select-dropdown.html) ----------
    Mirrors .input-demo-* one-for-one: same field/label/note structure, same

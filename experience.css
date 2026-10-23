@@ -103,17 +103,19 @@
 .checkbox-demo-field,.radio-demo-field{position:relative}
 .app-main h1{overflow-wrap:anywhere}
 .get-library-copy,.guide-body-text,.guide-list{overflow-wrap:anywhere}
-/* Card navigation is an Anchor; repeated links carry no Primary emphasis.
-   Color is pinned to --text-hi rather than inherited from .anchor-demo-link's
-   brand-tracking red - this is a real site-chrome control, not a demonstrated
-   Anchor specimen, so its icon/border must stay visible regardless of
-   whatever brand color a visitor has saved (including a dark/near-black
-   one), not just the default red. */
-.component-open-link{align-self:center;background:none;border:var(--border-width-1) var(--border-style) var(--control-border);border-radius:var(--radius-md);width:var(--dimension-32);height:var(--dimension-32);padding:0;justify-content:center;flex:0 0 auto;color:var(--text-hi);}
-.component-open-link:hover,.component-open-link.is-hover{border-color:var(--text-hi);color:var(--text-hi);text-decoration:none;}
-.component-open-link:focus-visible,.component-open-link.is-focus{border-color:var(--text-hi);color:var(--text-hi);outline:2px solid var(--color-focus-ring);outline-offset:2px;}
-.component-open-link:active,.component-open-link.is-pressed{border-color:var(--text-hi);color:var(--text-hi);background:var(--graphite-800);}
-.component-open-link:visited,.component-open-link.is-visited{color:var(--text-hi);}
+/* Foundation audit - this used to be pinned to --text-hi specifically to
+   stay legible regardless of the saved brand color, on the reasoning that
+   it was a site-chrome control, not a demonstrated specimen. A direct
+   request now gives it the real Button component's own Primary treatment
+   (.btn-demo--primary, set in experience.js) instead, deliberately tracking
+   brand color the same way every other Primary button in this system
+   already does - its text color is still contrast-resolved against
+   whatever brand color is active (see foundation-model.js's foreground()),
+   so it can't become illegible, only lower-contrast against a very dark
+   brand choice, the same accepted tradeoff every other Primary button here
+   already carries. Only the layout property .btn-demo doesn't itself set
+   is still needed here. */
+.component-open-link{align-self:center;}
 .setup-notice h2{margin:0 0 var(--space-8);font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking);}
 .setup-panel [hidden],.setup-field[hidden]{display:none!important}
 @media(max-width:900px){.setup-layout{grid-template-columns:1fr}.setup-layout>aside{order:2}}

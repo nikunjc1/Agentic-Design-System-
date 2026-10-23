@@ -180,12 +180,20 @@
         // The demo already shows what the component is; the caption was
         // redundant with it, so it's removed outright rather than reordered.
         dualiconLabel?.remove();
-        // Plain navigation and repeated card actions use Anchor, not Primary.
-        const link = el('a', '', 'anchor-demo-link anchor-demo-link--fs14 component-open-link');
+        // Foundation audit: was Anchor-styled (reasoning at the time: "plain
+        // navigation and repeated card actions use Anchor, not Primary").
+        // Direct request overrides that - this is the one action each card
+        // exists to offer (go see the full, authoritative component), so it
+        // now uses the real Button component's own Primary treatment
+        // (.btn-demo--primary) instead of a borderless icon-only link,
+        // matching the hierarchy documented on the Button guideline tab:
+        // Primary = View guide, Secondary = Copy prompt, icon-only Tertiary
+        // = Copy code (see the two button edits in this same card below).
+        const link = el('a', '', 'btn-demo btn-demo--primary btn-demo--h32 component-open-link');
         link.href = card.dataset.detailHref;
         link.setAttribute('aria-label', 'View ' + cardName + ' guide');
         link.title = 'View ' + cardName + ' guide';
-        link.innerHTML = '<svg class="anchor-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+        link.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg><span>View guide</span>';
         const copyRow = card.querySelector('.card-copy-row');
         if (copyRow) {
           copyRow.prepend(link);

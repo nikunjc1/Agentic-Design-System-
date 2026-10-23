@@ -18,7 +18,7 @@
     "title": "Add-on",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Add-on\n  \nA text field with an optional prefix and/or suffix segment attached directly to it, sharing one visual control - like a protocol prefix on a URL field or a unit suffix on a price field.\n\n## Add-on type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Website\n\n              https://\n              \n              .com\n\nAdd-on Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Add-on\n  \nA text field with an optional prefix and/or suffix segment attached directly to it, sharing one visual control - like a protocol prefix on a URL field or a unit suffix on a price field.\n\n## Add-on type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Website\n\n              https://\n              \n              .com\n\nAdd-on Field\n\n          Copy prompt"
   },
   {
     "file": "affix-default.html",
@@ -32,7 +32,7 @@
     "title": "Affix",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Affix\n  \nPins an element to the viewport once the page scrolls past it, so it stays reachable - a toolbar, a filter bar, or a call-to-action that should never scroll out of view.\n\n## Affix type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              Filter toolbar\n              Affixed\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Affix\n  \nPins an element to the viewport once the page scrolls past it, so it stays reachable - a toolbar, a filter bar, or a call-to-action that should never scroll out of view.\n\n## Affix type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              Filter toolbar\n              Affixed\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "ai-foundation.html",
@@ -60,7 +60,7 @@
     "title": "Alert",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Alert\n  \nAn inline banner for surfacing a status message within page content, like \"Your changes have been saved.\" - flush in the page flow, not a floating overlay.\n\n## Alert type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nUpdate available\n              \nA new version is ready to install.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Alert\n  \nAn inline banner for surfacing a status message within page content, like \"Your changes have been saved.\" - flush in the page flow, not a floating overlay.\n\n## Alert type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nUpdate available\n              \nA new version is ready to install.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "anchor-default.html",
@@ -74,7 +74,7 @@
     "title": "Anchor",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Anchor\n  \nA standalone piece of plain inline navigational text, like \"Learn more\" or \"View documentation\" - used for wayfinding within copy, lists and footers, not as a boxed call-to-action.\n\n## Anchor type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n          Learn more\n          \nAnchor\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Anchor\n  \nA standalone piece of plain inline navigational text, like \"Learn more\" or \"View documentation\" - used for wayfinding within copy, lists and footers, not as a boxed call-to-action.\n\n## Anchor type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n          Learn more\n          \nAnchor\n\n          Copy prompt"
   },
   {
     "file": "autocomplete-default.html",
@@ -88,7 +88,7 @@
     "title": "Autocomplete",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Autocomplete\n  \nA text field that suggests matching options in a dropdown panel as the user types, letting them pick a suggestion instead of typing a fully free-form value - like a city-search field.\n\n## Autocomplete type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            City\n\nSan Francisco\n              \nSan Diego\n              \nSan Jose\n\nAutocomplete Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Autocomplete\n  \nA text field that suggests matching options in a dropdown panel as the user types, letting them pick a suggestion instead of typing a fully free-form value - like a city-search field.\n\n## Autocomplete type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            City\n\nSan Francisco\n              \nSan Diego\n              \nSan Jose\n\nAutocomplete Field\n\n          Copy prompt"
   },
   {
     "file": "avatar-default.html",
@@ -102,7 +102,7 @@
     "title": "Avatar",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Avatar\n  \nA compact visual identifier for a person - initials, a generic icon, or an illustrated photo placeholder - optionally paired with a small status dot showing whether they're online, away or offline.\n\n## Avatar type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              JD\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Avatar\n  \nA compact visual identifier for a person - initials, a generic icon, or an illustrated photo placeholder - optionally paired with a small status dot showing whether they're online, away or offline.\n\n## Avatar type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              JD\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "badge-default.html",
@@ -116,7 +116,7 @@
     "title": "Badge",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Badge\n  \nA small indicator for a count, a plain \"something's new\" dot, or an inline status label, usually overlaid on the corner of another element.\n\n## Badge type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              5\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Badge\n  \nA small indicator for a count, a plain \"something's new\" dot, or an inline status label, usually overlaid on the corner of another element.\n\n## Badge type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n              5\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "borders.html",
@@ -137,7 +137,7 @@
     "title": "Breadcrumb",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Breadcrumb\n  \nA horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider, with the last item always the current page.\n\n## Breadcrumb type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nBreadcrumb\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Breadcrumb\n  \nA horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider, with the last item always the current page.\n\n## Breadcrumb type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nBreadcrumb\n\n          Copy prompt"
   },
   {
     "file": "button-destructive.html",
@@ -207,7 +207,7 @@
     "title": "Calendar",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Calendar\n  \nA full month grid for browsing dates or scheduling - a month/year header, day-of-week column labels and a 6-row day grid, with today highlighted and small dots marking days that have events.\n\n## Calendar type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSeptember 2026\n\n              Su\n              Mo\n              Tu\n              We\n              Th\n              Fr\n              Sa\n\n              30\n              31\n              1\n              2\n              3\n              4\n              5\n              6\n              7\n              8\n              9\n              10\n              11\n              12\n              13\n              14\n              15\n              16\n              17\n              18\n              19\n              20\n              21\n              22\n              23\n              24\n              25\n              26\n              27\n              28\n              29\n              30\n              1\n              2\n              3\n              4\n              5\n              6\n              7\n              8\n              9\n              10\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Calendar\n  \nA full month grid for browsing dates or scheduling - a month/year header, day-of-week column labels and a 6-row day grid, with today highlighted and small dots marking days that have events.\n\n## Calendar type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSeptember 2026\n\n              Su\n              Mo\n              Tu\n              We\n              Th\n              Fr\n              Sa\n\n              30\n              31\n              1\n              2\n              3\n              4\n              5\n              6\n              7\n              8\n              9\n              10\n              11\n              12\n              13\n              14\n              15\n              16\n              17\n              18\n              19\n              20\n              21\n              22\n              23\n              24\n              25\n              26\n              27\n              28\n              29\n              30\n              1\n              2\n              3\n              4\n              5\n              6\n              7\n              8\n              9\n              10\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "card-default.html",
@@ -221,7 +221,7 @@
     "title": "Card",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Card\n  \nA bordered container for grouping related content, optionally with a cover/media area at the top or a footer row of action buttons.\n\n## Card type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nTeam standup\n              \nDaily sync at 9:30 AM in the main conference room.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Card\n  \nA bordered container for grouping related content, optionally with a cover/media area at the top or a footer row of action buttons.\n\n## Card type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nTeam standup\n              \nDaily sync at 9:30 AM in the main conference room.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "cascader-default.html",
@@ -235,7 +235,7 @@
     "title": "Cascader",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Cascader\n  \nA select-like field for hierarchical, multi-level data - like Country / State / City - where picking an option in one column reveals the next column's choices, letting the user drill down to a final value.\n\n## Cascader type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Location\n\nCascader\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Cascader\n  \nA select-like field for hierarchical, multi-level data - like Country / State / City - where picking an option in one column reveals the next column's choices, letting the user drill down to a final value.\n\n## Cascader type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Location\n\nCascader\n\n          Copy prompt"
   },
   {
     "file": "changelog.html",
@@ -256,7 +256,7 @@
     "title": "Checkbox",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Checkbox\n  \nA small square selection control with 3 possible values (unchecked, checked, indeterminate), always paired with a text label - for agreements, multi-select lists and settings rows.\n\n## Checkbox type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            I agree to the terms\n\nCheckbox\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Checkbox\n  \nA small square selection control with 3 possible values (unchecked, checked, indeterminate), always paired with a text label - for agreements, multi-select lists and settings rows.\n\n## Checkbox type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            I agree to the terms\n\nCheckbox\n\n          Copy prompt"
   },
   {
     "file": "collapse-default.html",
@@ -270,7 +270,7 @@
     "title": "Collapse",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Collapse\n  \nAn accordion-style panel with a clickable header that reveals or hides its body content beneath it when toggled, useful for progressively disclosing long or secondary content.\n\n## Collapse type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                What's included in the free plan?\n\nThe free plan includes up to 3 projects, 1GB of storage, and community support.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Collapse\n  \nAn accordion-style panel with a clickable header that reveals or hides its body content beneath it when toggled, useful for progressively disclosing long or secondary content.\n\n## Collapse type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                What's included in the free plan?\n\nThe free plan includes up to 3 projects, 1GB of storage, and community support.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "color-picker-default.html",
@@ -284,7 +284,7 @@
     "title": "Color Picker",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Color Picker\n  \nA field that shows the currently selected color as a small swatch plus its hex value, and opens a palette of preset swatch options when focused or clicked.\n\n## Color Picker type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Brand color\n\n              #FF031A\n\nColor Picker Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Color Picker\n  \nA field that shows the currently selected color as a small swatch plus its hex value, and opens a palette of preset swatch options when focused or clicked.\n\n## Color Picker type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Brand color\n\n              #FF031A\n\nColor Picker Field\n\n          Copy prompt"
   },
   {
     "file": "component-index.html",
@@ -298,7 +298,7 @@
     "title": "Button",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Actions\n\n# Button\n  \nChoose the purpose first, the visual treatment second, the interaction third - one Button component, controlled by properties, not a hundred one-off variants.\n\n## Button type\n\n        Upload icon variation\n\nCopy a ready-to-paste AI prompt or the working code for any type - both use this system's own color tokens and Inter, never arbitrary values. Click a card to configure that type in full.\n\n      Corner radius - applies to every card\n      \n        0px - Sharp\n        4px - Compact\n        8px - Balanced\n        12px - Soft\n        Full - Pill\n\nIcons uploaded here become available as custom icon variations for button content (icon-left, icon-right, icon-both, icon-only) - anyone with edit access to this page can add or remove them.\n\nPrimary\n\n  Save\n  \nButton\n\n          Copy prompt\n          Copy code\n\nPrimary · Dual Icon\n\n  Save\n  \nInsure Edge\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Actions\n\n# Button\n  \nChoose the purpose first, the visual treatment second, the interaction third - one Button component, controlled by properties, not a hundred one-off variants.\n\n## Button type\n\n        Upload icon variation\n\nCopy a ready-to-paste AI prompt or the working code for any type - both use this system's own color tokens and Inter, never arbitrary values. Click a card to configure that type in full.\n\n      Corner radius - applies to every card\n      \n        0px - Sharp\n        4px - Compact\n        8px - Balanced\n        12px - Soft\n        Full - Pill\n\nIcons uploaded here become available as custom icon variations for button content (icon-left, icon-right, icon-both, icon-only) - anyone with edit access to this page can add or remove them.\n\nPrimary\n\n  Save\n  \nButton\n\n          Copy prompt\n\nPrimary · Dual Icon\n\n  Save\n  \nInsure Edge\n\n          Copy prompt"
   },
   {
     "file": "copywriting.html",
@@ -326,7 +326,7 @@
     "title": "Date Picker",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Date Picker\n  \nA form control for entering or selecting a calendar date - a text field with a fixed trailing calendar icon, in Outlined and Filled styles across six states.\n\n## Date Picker type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Date of birth\n\n              MM/DD/YYYY\n\nDate Picker\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Date Picker\n  \nA form control for entering or selecting a calendar date - a text field with a fixed trailing calendar icon, in Outlined and Filled styles across six states.\n\n## Date Picker type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Date of birth\n\n              MM/DD/YYYY\n\nDate Picker\n\n          Copy prompt"
   },
   {
     "file": "date-range-default.html",
@@ -340,7 +340,7 @@
     "title": "Date Range",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Date Range\n  \nA form control for picking a start and end date together as one pair - a text field showing both dates with a fixed trailing calendar icon, in Outlined and Filled styles across six states, for things like trip dates or a reporting period.\n\n## Date Range type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Trip dates\n\n              Jan 4, 2026→Jan 9, 2026\n\nDate Range\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Date Range\n  \nA form control for picking a start and end date together as one pair - a text field showing both dates with a fixed trailing calendar icon, in Outlined and Filled styles across six states, for things like trip dates or a reporting period.\n\n## Date Range type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Trip dates\n\n              Jan 4, 2026→Jan 9, 2026\n\nDate Range\n\n          Copy prompt"
   },
   {
     "file": "description-default.html",
@@ -354,7 +354,7 @@
     "title": "Description",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Description\n  \nA read-only label/value grid for showing a set of structured details at a glance, like a summary panel.\n\n## Description type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Name\n                Jordan Lee\n\n                Status\n                Active\n\n                Email\n                jordan@example.com\n\n                Role\n                Admin\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Description\n  \nA read-only label/value grid for showing a set of structured details at a glance, like a summary panel.\n\n## Description type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Name\n                Jordan Lee\n\n                Status\n                Active\n\n                Email\n                jordan@example.com\n\n                Role\n                Admin\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "divider-default.html",
@@ -368,7 +368,7 @@
     "title": "Divider",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Divider\n  \nA thin horizontal rule that visually separates content, with an optional text label breaking the line.\n\n## Divider type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSign in with your work email and password to continue.\n\n              OR\n\nContinue with single sign-on (SSO) instead.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Divider\n  \nA thin horizontal rule that visually separates content, with an optional text label breaking the line.\n\n## Divider type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSign in with your work email and password to continue.\n\n              OR\n\nContinue with single sign-on (SSO) instead.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "drawer-default.html",
@@ -382,7 +382,7 @@
     "title": "Drawer",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Drawer\n  \nA panel that slides in from a screen edge above a dimmed backdrop, for tasks that need more room than a Modal but shouldn't fully interrupt the page layout - stays anchored flush against the edge instead of floating centered.\n\n## Drawer type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Edit profile\n                ×\n\nUpdate your name, photo, and contact details.\n\n                Cancel\n                Save\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Drawer\n  \nA panel that slides in from a screen edge above a dimmed backdrop, for tasks that need more room than a Modal but shouldn't fully interrupt the page layout - stays anchored flush against the edge instead of floating centered.\n\n## Drawer type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Edit profile\n                ×\n\nUpdate your name, photo, and contact details.\n\n                Cancel\n                Save\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "dropdown-default.html",
@@ -396,7 +396,7 @@
     "title": "Dropdown",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Dropdown\n  \nA trigger button that reveals a list of actions or commands when clicked - visually a button, not a form field, and distinct from Select, which picks a form value from a fixed list.\n\n## Dropdown type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Options\n\nDropdown Trigger\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Dropdown\n  \nA trigger button that reveals a list of actions or commands when clicked - visually a button, not a form field, and distinct from Select, which picks a form value from a fixed list.\n\n## Dropdown type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Options\n\nDropdown Trigger\n\n          Copy prompt"
   },
   {
     "file": "empty-default.html",
@@ -410,7 +410,7 @@
     "title": "Empty",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Empty\n  \nA placeholder shown when a list, table, or search has no data to display, so the space never looks broken or blank.\n\n## Empty type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nNo projects yet\n            \nCreate your first project to get started.\n            Create project\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Empty\n  \nA placeholder shown when a list, table, or search has no data to display, so the space never looks broken or blank.\n\n## Empty type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nNo projects yet\n            \nCreate your first project to get started.\n            Create project\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "figma.html",
@@ -431,7 +431,7 @@
     "title": "Float Button",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Actions\n\n# Float Button\n  \nA circular button fixed to a screen corner for an always-accessible primary action, like \"back to top\" or \"compose\" - distinct from a normal inline Button, which sits within the page flow instead of hovering above it.\n\n## Float Button type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Actions\n\n# Float Button\n  \nA circular button fixed to a screen corner for an always-accessible primary action, like \"back to top\" or \"compose\" - distinct from a normal inline Button, which sits within the page flow instead of hovering above it.\n\n## Float Button type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "foundations.html",
@@ -459,7 +459,7 @@
     "title": "Group Button",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Actions\n\n# Group Button\n  \nA row of joined segments where exactly one is selected at a time, like a view toggle or a time-range filter.\n\n## Group Button type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            List\n            Grid\n            Map\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Actions\n\n# Group Button\n  \nA row of joined segments where exactly one is selected at a time, like a view toggle or a time-range filter.\n\n## Group Button type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            List\n            Grid\n            Map\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "guidelines.html",
@@ -494,7 +494,7 @@
     "title": "Image",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Image\n  \nA container for displaying a photo or graphic, handling loading, error and hover-preview states consistently instead of a bare unstyled <img> tag.\n\n## Image type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Image\n  \nA container for displaying a photo or graphic, handling loading, error and hover-preview states consistently instead of a bare unstyled <img> tag.\n\n## Image type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "input-text-field.html",
@@ -508,7 +508,7 @@
     "title": "Input",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Input\n  \nA single-line text field with three visual styles - Outlined, Filled and Underlined - each supporting the same six states.\n\n## Input type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Email address\n\nText Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Input\n  \nA single-line text field with three visual styles - Outlined, Filled and Underlined - each supporting the same six states.\n\n## Input type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Email address\n\nText Field\n\n          Copy prompt"
   },
   {
     "file": "list-default.html",
@@ -522,7 +522,7 @@
     "title": "List",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# List\n  \nA vertical list of rows for displaying a collection of similar items, each row with an optional leading avatar or icon, a title, a description, and trailing meta or actions.\n\n## List type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nJL\n\nJordan Lee\n                \nProduct Designer\n\nSO\n\nSam Ortiz\n                \nEngineer\n\nPN\n\nPriya Nair\n                \nPM\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# List\n  \nA vertical list of rows for displaying a collection of similar items, each row with an optional leading avatar or icon, a title, a description, and trailing meta or actions.\n\n## List type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nJL\n\nJordan Lee\n                \nProduct Designer\n\nSO\n\nSam Ortiz\n                \nEngineer\n\nPN\n\nPriya Nair\n                \nPM\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "md-export.html",
@@ -543,7 +543,7 @@
     "title": "Mention",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Mention\n  \nA multi-line text field that lets someone tag another person inline by typing \"@\", turning the typed name into a highlighted chip within the surrounding text.\n\n## Mention type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Comment\n\nHey @Jordan, can you review this?\n\nMention Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Mention\n  \nA multi-line text field that lets someone tag another person inline by typing \"@\", turning the typed name into a highlighted chip within the surrounding text.\n\n## Mention type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Comment\n\nHey @Jordan, can you review this?\n\nMention Field\n\n          Copy prompt"
   },
   {
     "file": "menu-default.html",
@@ -557,7 +557,7 @@
     "title": "Menu",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Menu\n  \nA floating panel listing clickable commands or actions - what appears when a dropdown trigger, a right-click, or a \"...\" button is activated.\n\n## Menu type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Edit\n            Duplicate\n            Archive\n            Delete\n\nMenu\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Menu\n  \nA floating panel listing clickable commands or actions - what appears when a dropdown trigger, a right-click, or a \"...\" button is activated.\n\n## Menu type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Edit\n            Duplicate\n            Archive\n            Delete\n\nMenu\n\n          Copy prompt"
   },
   {
     "file": "modal-default.html",
@@ -571,7 +571,7 @@
     "title": "Modal",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Modal\n  \nA dialog box that appears above a dimmed page backdrop, blocking interaction with the rest of the page until dismissed or actioned - focuses the user on one task or decision before returning them to what they were doing.\n\n## Modal type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Delete this file?\n                ×\n\nThis action cannot be undone.\n\n                Cancel\n                Delete\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Modal\n  \nA dialog box that appears above a dimmed page backdrop, blocking interaction with the rest of the page until dismissed or actioned - focuses the user on one task or decision before returning them to what they were doing.\n\n## Modal type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Delete this file?\n                ×\n\nThis action cannot be undone.\n\n                Cancel\n                Delete\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "new-project.html",
@@ -592,7 +592,7 @@
     "title": "Notification",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Notification\n  \nA richer, corner-anchored card - icon, bold title, longer description, a close button and an optional action - used to surface background or async events (e.g. \"File uploaded successfully\", \"3 new messages received\"), unlike Toast's brief, single-line transient confirmations.\n\n## Notification type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nFile uploaded\n              \nteam-report.pdf is ready to share.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Notification\n  \nA richer, corner-anchored card - icon, bold title, longer description, a close button and an optional action - used to surface background or async events (e.g. \"File uploaded successfully\", \"3 new messages received\"), unlike Toast's brief, single-line transient confirmations.\n\n## Notification type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nFile uploaded\n              \nteam-report.pdf is ready to share.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "npm-package.html",
@@ -613,7 +613,7 @@
     "title": "Number",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Number\n  \nA single-line field restricted to numeric input, like a quantity or age, with optional increment and decrement stepper buttons.\n\n## Number type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Quantity\n\nNumber Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Number\n  \nA single-line field restricted to numeric input, like a quantity or age, with optional increment and decrement stepper buttons.\n\n## Number type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Quantity\n\nNumber Field\n\n          Copy prompt"
   },
   {
     "file": "overview.html",
@@ -634,7 +634,7 @@
     "title": "Pagination",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Pagination\n  \nA row of page-number controls for navigating through a large result set, with one page always shown as current.\n\n## Pagination type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            1\n            2\n            3\n\nPagination\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Pagination\n  \nA row of page-number controls for navigating through a large result set, with one page always shown as current.\n\n## Pagination type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            1\n            2\n            3\n\nPagination\n\n          Copy prompt"
   },
   {
     "file": "password-default.html",
@@ -648,7 +648,7 @@
     "title": "Password",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Password\n  \nA masked single-line field for secret input, like passwords or PINs - the entered characters are hidden by default.\n\n## Password type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Password\n\nPassword Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Password\n  \nA masked single-line field for secret input, like passwords or PINs - the entered characters are hidden by default.\n\n## Password type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Password\n\nPassword Field\n\n          Copy prompt"
   },
   {
     "file": "patterns.html",
@@ -669,7 +669,7 @@
     "title": "Pop Confirm",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Pop Confirm\n  \nA small inline confirmation popover anchored to a trigger element, asking a short question with Confirm/Cancel buttons directly inside it - for lightweight \"are you sure?\" moments that don't warrant a full Modal.\n\n## Pop Confirm type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDelete this item?\n\n                No\n                Yes\n\n            Delete\n\nInline Confirmation Popover\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Pop Confirm\n  \nA small inline confirmation popover anchored to a trigger element, asking a short question with Confirm/Cancel buttons directly inside it - for lightweight \"are you sure?\" moments that don't warrant a full Modal.\n\n## Pop Confirm type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDelete this item?\n\n                No\n                Yes\n\n            Delete\n\nInline Confirmation Popover\n\n          Copy prompt"
   },
   {
     "file": "popover-default.html",
@@ -683,7 +683,7 @@
     "title": "Popover",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Popover\n  \nA rich floating content panel with a title and body text, anchored to a trigger element and opened by clicking it - for more content than a simple Tooltip hint can hold.\n\n## Popover type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nStorage usage\n              \n8.2 GB of 15 GB used.\n\n            Details\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Popover\n  \nA rich floating content panel with a title and body text, anchored to a trigger element and opened by clicking it - for more content than a simple Tooltip hint can hold.\n\n## Popover type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nStorage usage\n              \n8.2 GB of 15 GB used.\n\n            Details\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "principles.html",
@@ -704,7 +704,7 @@
     "title": "Progress",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Progress\n  \nA visual indicator of completion percentage - either a horizontal bar that fills left-to-right or a circular ring that fills clockwise - with an optional percentage label, used for uploads, multi-step processes, loading operations, or any quantifiable completion state.\n\n## Progress type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            65%\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Progress\n  \nA visual indicator of completion percentage - either a horizontal bar that fills left-to-right or a circular ring that fills clockwise - with an optional percentage label, used for uploads, multi-step processes, loading operations, or any quantifiable completion state.\n\n## Progress type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            65%\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "radio-default.html",
@@ -718,7 +718,7 @@
     "title": "Radio",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Radio\n  \nA small circular control for picking exactly one option from a mutually-exclusive group, like a payment method or a plan tier.\n\n## Radio type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Option A\n\nRadio\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Radio\n  \nA small circular control for picking exactly one option from a mutually-exclusive group, like a payment method or a plan tier.\n\n## Radio type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Option A\n\nRadio\n\n          Copy prompt"
   },
   {
     "file": "radius.html",
@@ -739,7 +739,7 @@
     "title": "Rating",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Rating\n  \nA row of icons someone taps to score something, like a 5-star product review - filling in as the user hovers or clicks to leave a score.\n\n## Rating type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nRate this product\n\nRating\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Rating\n  \nA row of icons someone taps to score something, like a 5-star product review - filling in as the user hovers or clicks to leave a score.\n\n## Rating type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nRate this product\n\nRating\n\n          Copy prompt"
   },
   {
     "file": "result-default.html",
@@ -753,7 +753,7 @@
     "title": "Result",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Result\n  \nA full-panel outcome screen - a large semantic icon, a bold title, a description line and one or two action buttons - shown after a multi-step flow completes or fails (e.g. \"Payment successful\", \"Submission failed\"). Unlike Notification, a small transient card anchored to a corner, Result occupies the main content area as the page's primary content.\n\n## Result type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nPayment successful\n            \nYour receipt has been emailed to you.\n\n              Done\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Result\n  \nA full-panel outcome screen - a large semantic icon, a bold title, a description line and one or two action buttons - shown after a multi-step flow completes or fails (e.g. \"Payment successful\", \"Submission failed\"). Unlike Notification, a small transient card anchored to a corner, Result occupies the main content area as the page's primary content.\n\n## Result type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nPayment successful\n            \nYour receipt has been emailed to you.\n\n              Done\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "search-default.html",
@@ -767,7 +767,7 @@
     "title": "Search",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Search\n  \nA single-line field for querying or filtering content, with a leading search icon and a trailing clear button that appears once text is entered.\n\n## Search type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSearch Field\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Search\n  \nA single-line field for querying or filtering content, with a leading search icon and a trailing clear button that appears once text is entered.\n\n## Search type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSearch Field\n\n          Copy prompt"
   },
   {
     "file": "select-dropdown.html",
@@ -781,7 +781,7 @@
     "title": "Select",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Select\n  \nA form control for choosing one value from a fixed list - visually similar to a text input but with a fixed trailing chevron-down icon and no visible text cursor, since it's a picker, not editable text.\n\n## Select type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Country\n\n              Select a country\n\nDropdown\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Select\n  \nA form control for choosing one value from a fixed list - visually similar to a text input but with a fixed trailing chevron-down icon and no visible text cursor, since it's a picker, not editable text.\n\n## Select type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Country\n\n              Select a country\n\nDropdown\n\n          Copy prompt"
   },
   {
     "file": "settings.html",
@@ -809,7 +809,7 @@
     "title": "Skeleton",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Skeleton\n  \nA shimmering placeholder made of pulsing gray blocks that mirror the shape of content still loading - stacked text lines, an avatar circle next to text lines, or a card with a media block and caption lines - shown while real content is being fetched, to reduce perceived loading time and avoid layout jank.\n\n## Skeleton type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Skeleton\n  \nA shimmering placeholder made of pulsing gray blocks that mirror the shape of content still loading - stacked text lines, an avatar circle next to text lines, or a card with a media block and caption lines - shown while real content is being fetched, to reduce perceived loading time and avoid layout jank.\n\n## Skeleton type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "slider-default.html",
@@ -823,7 +823,7 @@
     "title": "Slider",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Slider\n  \nA draggable control for picking a numeric value, or a range of two values, along a track, like a volume level or a price range filter.\n\n## Slider type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nVolume\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Slider\n  \nA draggable control for picking a numeric value, or a range of two values, along a track, like a volume level or a price range filter.\n\n## Slider type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nVolume\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "spacing.html",
@@ -844,7 +844,7 @@
     "title": "Spin",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Spin\n  \nA small, continuously rotating ring that communicates an indeterminate \"please wait\" loading state - used inline within a button, beside a line of text, or centered over a section of content that is temporarily loading. Distinct from Progress, which shows a known completion percentage, and from Skeleton, which shows content-shaped placeholder blocks - Spin has no known percentage or shape, only that something is happening.\n\n## Spin type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Loading...\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Spin\n  \nA small, continuously rotating ring that communicates an indeterminate \"please wait\" loading state - used inline within a button, beside a line of text, or centered over a section of content that is temporarily loading. Distinct from Progress, which shows a known completion percentage, and from Skeleton, which shows content-shaped placeholder blocks - Spin has no known percentage or shape, only that something is happening.\n\n## Spin type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Loading...\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "splitter-default.html",
@@ -858,7 +858,7 @@
     "title": "Splitter",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Splitter\n  \nA resizable layout with two panels separated by a draggable divider - lets someone adjust how much space each side of a panel gets, like a resizable sidebar next to a main content area.\n\n## Splitter type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSidebar\n\nContent\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Splitter\n  \nA resizable layout with two panels separated by a draggable divider - lets someone adjust how much space each side of a panel gets, like a resizable sidebar next to a main content area.\n\n## Splitter type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSidebar\n\nContent\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "statistic-default.html",
@@ -872,7 +872,7 @@
     "title": "Statistic",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Statistic\n  \nA compact, high-emphasis display for a single quantifiable number - a KPI, a count, or a live metric - with a label above it and an optional prefix, suffix, or trend indicator.\n\n## Statistic type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nActive Users\n            \n112,893\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Statistic\n  \nA compact, high-emphasis display for a single quantifiable number - a KPI, a count, or a live metric - with a label above it and an optional prefix, suffix, or trend indicator.\n\n## Statistic type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nActive Users\n            \n112,893\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "steps-default.html",
@@ -886,7 +886,7 @@
     "title": "Steps",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Steps\n  \nA progress indicator showing position within a multi-step flow, like a checkout or onboarding wizard - horizontal or vertical, both configured on the same component.\n\n## Steps type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDetails\n\n2Shipping\n\n3Payment\n\nSteps\n\n          Copy prompt\n          Copy code\n\nDetails\n\n2Shipping\n\n3Payment\n\nVertical Steps\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Steps\n  \nA progress indicator showing position within a multi-step flow, like a checkout or onboarding wizard - horizontal or vertical, both configured on the same component.\n\n## Steps type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDetails\n\n2Shipping\n\n3Payment\n\nSteps\n\n          Copy prompt\n\nDetails\n\n2Shipping\n\n3Payment\n\nVertical Steps\n\n          Copy prompt"
   },
   {
     "file": "switch-default.html",
@@ -900,7 +900,7 @@
     "title": "Switch",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Switch\n  \nA pill-shaped on/off toggle for a single setting - flips a binary state instantly, no confirmation needed.\n\n## Switch type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Enable notifications\n\nSwitch\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Switch\n  \nA pill-shaped on/off toggle for a single setting - flips a binary state instantly, no confirmation needed.\n\n## Switch type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Enable notifications\n\nSwitch\n\n          Copy prompt"
   },
   {
     "file": "table-default.html",
@@ -914,7 +914,7 @@
     "title": "Table",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Table\n  \nA structured grid of rows and columns for displaying tabular data, with a header row and optional cell borders, alternating row stripes, or row selection.\n\n## Table type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Name\n                Status\n                Role\n\n                Jordan Lee\n                Active\n                Product Designer\n\n                Sam Ortiz\n                Active\n                Engineer\n\n                Priya Nair\n                Away\n                PM\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Table\n  \nA structured grid of rows and columns for displaying tabular data, with a header row and optional cell borders, alternating row stripes, or row selection.\n\n## Table type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n                Name\n                Status\n                Role\n\n                Jordan Lee\n                Active\n                Product Designer\n\n                Sam Ortiz\n                Active\n                Engineer\n\n                Priya Nair\n                Away\n                PM\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "tabs-default.html",
@@ -928,7 +928,7 @@
     "title": "Tabs",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Navigation\n\n# Tabs\n  \nA horizontal row of tab triggers used to switch between related views or sections, with exactly one tab active at a time.\n\n## Tabs type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Overview\n            Activity\n            Settings\n\nTabs\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Navigation\n\n# Tabs\n  \nA horizontal row of tab triggers used to switch between related views or sections, with exactly one tab active at a time.\n\n## Tabs type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Overview\n            Activity\n            Settings\n\nTabs\n\n          Copy prompt"
   },
   {
     "file": "tag-default.html",
@@ -942,7 +942,7 @@
     "title": "Tag",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Tag\n  \nA small labeled chip for categorizing, filtering, or flagging status, in 4 semantic colors - not a one-off pill built from scratch each time.\n\n## Tag type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Default\n            Success\n            Warning\n            Error\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Tag\n  \nA small labeled chip for categorizing, filtering, or flagging status, in 4 semantic colors - not a one-off pill built from scratch each time.\n\n## Tag type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Default\n            Success\n            Warning\n            Error\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "templates.html",
@@ -963,7 +963,7 @@
     "title": "Text Area",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Text Area\n  \nA multi-line free-form text field for longer content, like comments, descriptions, or messages.\n\n## Text Area type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Description\n\nText Area\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Text Area\n  \nA multi-line free-form text field for longer content, like comments, descriptions, or messages.\n\n## Text Area type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Description\n\nText Area\n\n          Copy prompt"
   },
   {
     "file": "time-default.html",
@@ -977,7 +977,7 @@
     "title": "Time",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Time\n  \nA form control for entering or selecting a time of day, like a meeting start time or a reminder - a text field with a fixed trailing clock icon, in Outlined and Filled styles across six states.\n\n## Time type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Meeting time\n\n              10:30 AM\n\nTime\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Time\n  \nA form control for entering or selecting a time of day, like a meeting start time or a reminder - a text field with a fixed trailing clock icon, in Outlined and Filled styles across six states.\n\n## Time type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Meeting time\n\n              10:30 AM\n\nTime\n\n          Copy prompt"
   },
   {
     "file": "timeline-default.html",
@@ -991,7 +991,7 @@
     "title": "Timeline",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Timeline\n  \nA vertical chronological list of events, each with a small dot connected by a continuous line, used for activity logs, order status history, or a project's milestone history.\n\n## Timeline type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nOrder placed\n                \nSep 10, 9:02 AM\n\nPayment confirmed\n                \nSep 10, 9:05 AM\n\nShipped\n                \nSep 11, 2:30 PM\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Timeline\n  \nA vertical chronological list of events, each with a small dot connected by a continuous line, used for activity logs, order status history, or a project's milestone history.\n\n## Timeline type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nOrder placed\n                \nSep 10, 9:02 AM\n\nPayment confirmed\n                \nSep 10, 9:05 AM\n\nShipped\n                \nSep 11, 2:30 PM\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "toast-default.html",
@@ -1005,7 +1005,7 @@
     "title": "Toast",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Toast\n  \nA floating, elevated notification that appears temporarily to confirm an action or report a status - unlike Alert, which sits inline in page content, Toast surfaces above the page itself, the way a real notification appears in a corner of the screen after an action completes.\n\n## Toast type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nUpload complete\n              \nyour-file.pdf was uploaded successfully.\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Toast\n  \nA floating, elevated notification that appears temporarily to confirm an action or report a status - unlike Alert, which sits inline in page content, Toast surfaces above the page itself, the way a real notification appears in a corner of the screen after an action completes.\n\n## Toast type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nUpload complete\n              \nyour-file.pdf was uploaded successfully.\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "tooltip-default.html",
@@ -1019,7 +1019,7 @@
     "title": "Tooltip",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Tooltip\n  \nA small floating label anchored to a trigger element, giving a short hint without needing to click anything.\n\n## Tooltip type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nAdd to favorites\n\n            ?\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Tooltip\n  \nA small floating label anchored to a trigger element, giving a short hint without needing to click anything.\n\n## Tooltip type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nAdd to favorites\n\n            ?\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "tour-default.html",
@@ -1033,7 +1033,7 @@
     "title": "Tour",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Feedback\n\n# Tour\n  \nA step-by-step walkthrough overlay that highlights one UI element at a time with a title, description and Back/Next navigation, guiding a new user through a feature sequence.\n\n## Tour type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n1 of 3\n              \nTry the new dashboard\n              \nGet a quick overview of your team's activity in one place.\n\n                Next\n\n            New feature\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Feedback\n\n# Tour\n  \nA step-by-step walkthrough overlay that highlights one UI element at a time with a title, description and Back/Next navigation, guiding a new user through a feature sequence.\n\n## Tour type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n1 of 3\n              \nTry the new dashboard\n              \nGet a quick overview of your team's activity in one place.\n\n                Next\n\n            New feature\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "transfer-default.html",
@@ -1047,7 +1047,7 @@
     "title": "Transfer",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Transfer\n  \nA dual-list widget for choosing a subset of items - move entries from an available-items list on the left into a chosen-items list on the right using the transfer arrow buttons between them.\n\n## Transfer type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSource1/3\n\n                Alice\n                Bob\n                Carol\n\n              >\n              <\n\nTarget2 items\n\n                Eve\n                Frank\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Transfer\n  \nA dual-list widget for choosing a subset of items - move entries from an available-items list on the left into a chosen-items list on the right using the transfer arrow buttons between them.\n\n## Transfer type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nSource1/3\n\n                Alice\n                Bob\n                Carol\n\n              >\n              <\n\nTarget2 items\n\n                Eve\n                Frank\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "tree-default.html",
@@ -1068,14 +1068,14 @@
     "title": "Tree Select",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Tree Select\n  \nA select field for hierarchical, nested data - like an org chart or a folder structure - where any node at any depth can be chosen, shown as an indented, expandable tree when open.\n\n## Tree Select type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Assignee team\n\nTree Select\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Tree Select\n  \nA select field for hierarchical, nested data - like an org chart or a folder structure - where any node at any depth can be chosen, shown as an indented, expandable tree when open.\n\n## Tree Select type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\n            Assignee team\n\nTree Select\n\n          Copy prompt"
   },
   {
     "file": "tree.html",
     "title": "Tree",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Data Display\n\n# Tree\n  \nA standalone, always-visible hierarchical structure with expandable branches - for browsing or selecting nested data like a file system or an org chart, distinct from Tree Select's dropdown-triggered variant.\n\n## Tree type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDocuments\n\n                  Reports\n\nSystem Control\n\n          Copy prompt\n          Copy code\n\nDocuments\n\n                  Reports12 items\n\n                      Q1 Report.pdf1.2 MB\n\n                      Q2 Report.pdf980 KB\n\nMetatext Tree\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Data Display\n\n# Tree\n  \nA standalone, always-visible hierarchical structure with expandable branches - for browsing or selecting nested data like a file system or an org chart, distinct from Tree Select's dropdown-triggered variant.\n\n## Tree type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nDocuments\n\n                  Reports\n\nSystem Control\n\n          Copy prompt\n\nDocuments\n\n                  Reports12 items\n\n                      Q1 Report.pdf1.2 MB\n\n                      Q2 Report.pdf980 KB\n\nMetatext Tree\n\n          Copy prompt"
   },
   {
     "file": "typography.html",
@@ -1096,7 +1096,7 @@
     "title": "Upload",
     "kind": "Listing",
     "status": "Available",
-    "markdown": "Components · Forms\n\n# Upload\n  \nA drag-and-drop dropzone or a button-triggered control for adding files, paired with a file list that shows each file's name, size and upload status.\n\n## Upload type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nClick or drag file to upload\n              \nPNG, JPG or PDF up to 10MB\n\n                  report.pdf\n                  2.4 MB\n\n                  diagram.png\n                  890 KB\n\n                55%\n\nSystem Control\n\n          Copy prompt\n          Copy code"
+    "markdown": "Components · Forms\n\n# Upload\n  \nA drag-and-drop dropzone or a button-triggered control for adding files, paired with a file list that shows each file's name, size and upload status.\n\n## Upload type\n\nCopy a ready-to-paste AI prompt or the working code - both use this system's own color tokens and Inter, never arbitrary values. Click the card to configure it in full.\n\nClick or drag file to upload\n              \nPNG, JPG or PDF up to 10MB\n\n                  report.pdf\n                  2.4 MB\n\n                  diagram.png\n                  890 KB\n\n                55%\n\nSystem Control\n\n          Copy prompt"
   },
   {
     "file": "values.html",

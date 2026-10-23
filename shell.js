@@ -37,7 +37,21 @@
     let success=false;
     try { await window.ADSClipboard.copy(text); success=true; } catch {}
     if(sequence!==state.sequence)return success;
-    button.textContent=success?'Copied!':'Copy failed';
+    // Foundation audit - an icon-only button (fixed square width, no text
+    // baseline to grow from) broke visibly the first time this ran on one:
+    // textContent='Copied!' still landed inside that fixed width, clipping
+    // to "Copied" with no visible "!". Swapping to a checkmark/alert glyph
+    // instead keeps the button's own size and shape exactly as the layout
+    // around it already expects, the same convention icon-only copy
+    // buttons use elsewhere (VS Code, GitHub, etc.) - a labeled button still
+    // gets the original text treatment, unchanged.
+    if (button.classList.contains('is-icon-only')) {
+      button.innerHTML = success
+        ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>';
+    } else {
+      button.textContent=success?'Copied!':'Copy failed';
+    }
     button.title=success?'Copied to clipboard':'Clipboard unavailable. Select the displayed prompt or code and copy it manually.';
     let status=document.getElementById('ads-copy-status');
     if(!status) {

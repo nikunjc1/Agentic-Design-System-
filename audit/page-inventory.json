@@ -47,7 +47,7 @@
       "Add-on type"
     ],
     "issues": [],
-    "bytes": 11550
+    "bytes": 11928
   },
   {
     "file": "affix-default.html",
@@ -73,7 +73,7 @@
       "Affix type"
     ],
     "issues": [],
-    "bytes": 11309
+    "bytes": 11687
   },
   {
     "file": "ai-foundation.html",
@@ -136,7 +136,7 @@
       "Alert type"
     ],
     "issues": [],
-    "bytes": 11468
+    "bytes": 11846
   },
   {
     "file": "anchor-default.html",
@@ -161,7 +161,7 @@
       "Anchor type"
     ],
     "issues": [],
-    "bytes": 10980
+    "bytes": 11358
   },
   {
     "file": "autocomplete-default.html",
@@ -187,7 +187,7 @@
       "Autocomplete type"
     ],
     "issues": [],
-    "bytes": 11696
+    "bytes": 12074
   },
   {
     "file": "avatar-default.html",
@@ -213,7 +213,7 @@
       "Avatar type"
     ],
     "issues": [],
-    "bytes": 11559
+    "bytes": 11937
   },
   {
     "file": "badge-default.html",
@@ -238,7 +238,7 @@
       "Badge type"
     ],
     "issues": [],
-    "bytes": 11436
+    "bytes": 11814
   },
   {
     "file": "borders.html",
@@ -286,7 +286,7 @@
       "Breadcrumb type"
     ],
     "issues": [],
-    "bytes": 10943
+    "bytes": 11321
   },
   {
     "file": "button-destructive.html",
@@ -423,7 +423,7 @@
       "Calendar type"
     ],
     "issues": [],
-    "bytes": 16603
+    "bytes": 16981
   },
   {
     "file": "card-default.html",
@@ -448,7 +448,7 @@
       "Card type"
     ],
     "issues": [],
-    "bytes": 11161
+    "bytes": 11539
   },
   {
     "file": "cascader-default.html",
@@ -475,7 +475,7 @@
       "Cascader type"
     ],
     "issues": [],
-    "bytes": 11611
+    "bytes": 11989
   },
   {
     "file": "changelog.html",
@@ -513,7 +513,7 @@
       "Checkbox type"
     ],
     "issues": [],
-    "bytes": 11465
+    "bytes": 11843
   },
   {
     "file": "collapse-default.html",
@@ -538,7 +538,7 @@
       "Collapse type"
     ],
     "issues": [],
-    "bytes": 11631
+    "bytes": 12009
   },
   {
     "file": "color-picker-default.html",
@@ -564,7 +564,7 @@
       "Color Picker type"
     ],
     "issues": [],
-    "bytes": 11396
+    "bytes": 11774
   },
   {
     "file": "component-index.html",
@@ -590,7 +590,7 @@
       "Button type"
     ],
     "issues": [],
-    "bytes": 13008
+    "bytes": 13764
   },
   {
     "file": "copywriting.html",
@@ -654,7 +654,7 @@
       "Date Picker type"
     ],
     "issues": [],
-    "bytes": 11649
+    "bytes": 12027
   },
   {
     "file": "date-range-default.html",
@@ -680,7 +680,7 @@
       "Date Range type"
     ],
     "issues": [],
-    "bytes": 11858
+    "bytes": 12236
   },
   {
     "file": "description-default.html",
@@ -705,7 +705,7 @@
       "Description type"
     ],
     "issues": [],
-    "bytes": 11874
+    "bytes": 12252
   },
   {
     "file": "divider-default.html",
@@ -730,7 +730,7 @@
       "Divider type"
     ],
     "issues": [],
-    "bytes": 11391
+    "bytes": 11769
   },
   {
     "file": "drawer-default.html",
@@ -755,7 +755,7 @@
       "Drawer type"
     ],
     "issues": [],
-    "bytes": 11809
+    "bytes": 12187
   },
   {
     "file": "dropdown-default.html",
@@ -781,7 +781,7 @@
       "Dropdown type"
     ],
     "issues": [],
-    "bytes": 11310
+    "bytes": 11688
   },
   {
     "file": "empty-default.html",
@@ -806,7 +806,7 @@
       "Empty type"
     ],
     "issues": [],
-    "bytes": 11663
+    "bytes": 12041
   },
   {
     "file": "figma.html",
@@ -843,7 +843,7 @@
       "Float Button type"
     ],
     "issues": [],
-    "bytes": 11506
+    "bytes": 11884
   },
   {
     "file": "foundations.html",
@@ -925,7 +925,7 @@
       "Group Button type"
     ],
     "issues": [],
-    "bytes": 11272
+    "bytes": 11650
   },
   {
     "file": "guidelines.html",
@@ -1011,7 +1011,7 @@
       "Image type"
     ],
     "issues": [],
-    "bytes": 11337
+    "bytes": 11715
   },
   {
     "file": "input-text-field.html",
@@ -1036,7 +1036,7 @@
       "Input type"
     ],
     "issues": [],
-    "bytes": 11248
+    "bytes": 11626
   },
   {
     "file": "list-default.html",
@@ -1061,7 +1061,7 @@
       "List type"
     ],
     "issues": [],
-    "bytes": 12068
+    "bytes": 12446
   },
   {
     "file": "md-export.html",
@@ -1099,7 +1099,7 @@
       "Mention type"
     ],
     "issues": [],
-    "bytes": 11336
+    "bytes": 11714
   },
   {
     "file": "menu-default.html",
@@ -1124,7 +1124,7 @@
       "Menu type"
     ],
     "issues": [],
-    "bytes": 11333
+    "bytes": 11711
   },
   {
     "file": "modal-default.html",
@@ -1150,7 +1150,7 @@
       "Modal type"
     ],
     "issues": [],
-    "bytes": 11786
+    "bytes": 12164
   },
   {
     "file": "new-project.html",
@@ -1197,7 +1197,7 @@
       "Notification type"
     ],
     "issues": [],
-    "bytes": 11890
+    "bytes": 12268
   },
   {
     "file": "npm-package.html",
@@ -1238,7 +1238,7 @@
       "Number type"
     ],
     "issues": [],
-    "bytes": 11866
+    "bytes": 12244
   },
   {
     "file": "overview.html",
@@ -1275,7 +1275,7 @@
       "Pagination type"
     ],
     "issues": [],
-    "bytes": 11910
+    "bytes": 12288
   },
   {
     "file": "password-default.html",
@@ -1301,7 +1301,7 @@
       "Password type"
     ],
     "issues": [],
-    "bytes": 11610
+    "bytes": 11988
   },
   {
     "file": "patterns.html",
@@ -1341,7 +1341,7 @@
       "Pop Confirm type"
     ],
     "issues": [],
-    "bytes": 11699
+    "bytes": 12077
   },
   {
     "file": "popover-default.html",
@@ -1366,7 +1366,7 @@
       "Popover type"
     ],
     "issues": [],
-    "bytes": 11303
+    "bytes": 11681
   },
   {
     "file": "principles.html",
@@ -1415,7 +1415,7 @@
       "Progress type"
     ],
     "issues": [],
-    "bytes": 11321
+    "bytes": 11699
   },
   {
     "file": "radio-default.html",
@@ -1441,7 +1441,7 @@
       "Radio type"
     ],
     "issues": [],
-    "bytes": 11172
+    "bytes": 11550
   },
   {
     "file": "radius.html",
@@ -1489,7 +1489,7 @@
       "Rating type"
     ],
     "issues": [],
-    "bytes": 13152
+    "bytes": 13530
   },
   {
     "file": "result-default.html",
@@ -1514,7 +1514,7 @@
       "Result type"
     ],
     "issues": [],
-    "bytes": 11659
+    "bytes": 12037
   },
   {
     "file": "search-default.html",
@@ -1540,7 +1540,7 @@
       "Search type"
     ],
     "issues": [],
-    "bytes": 11422
+    "bytes": 11800
   },
   {
     "file": "select-dropdown.html",
@@ -1566,7 +1566,7 @@
       "Select type"
     ],
     "issues": [],
-    "bytes": 11511
+    "bytes": 11889
   },
   {
     "file": "settings.html",
@@ -1625,7 +1625,7 @@
       "Skeleton type"
     ],
     "issues": [],
-    "bytes": 11279
+    "bytes": 11657
   },
   {
     "file": "slider-default.html",
@@ -1651,7 +1651,7 @@
       "Slider type"
     ],
     "issues": [],
-    "bytes": 11241
+    "bytes": 11619
   },
   {
     "file": "spacing.html",
@@ -1698,7 +1698,7 @@
       "Spin type"
     ],
     "issues": [],
-    "bytes": 11270
+    "bytes": 11648
   },
   {
     "file": "splitter-default.html",
@@ -1724,7 +1724,7 @@
       "Splitter type"
     ],
     "issues": [],
-    "bytes": 11378
+    "bytes": 11756
   },
   {
     "file": "statistic-default.html",
@@ -1749,7 +1749,7 @@
       "Statistic type"
     ],
     "issues": [],
-    "bytes": 11114
+    "bytes": 11492
   },
   {
     "file": "steps-default.html",
@@ -1774,7 +1774,7 @@
       "Steps type"
     ],
     "issues": [],
-    "bytes": 13290
+    "bytes": 14046
   },
   {
     "file": "switch-default.html",
@@ -1800,7 +1800,7 @@
       "Switch type"
     ],
     "issues": [],
-    "bytes": 11156
+    "bytes": 11534
   },
   {
     "file": "table-default.html",
@@ -1831,7 +1831,7 @@
       "Table type"
     ],
     "issues": [],
-    "bytes": 11984
+    "bytes": 12362
   },
   {
     "file": "tabs-default.html",
@@ -1856,7 +1856,7 @@
       "Tabs type"
     ],
     "issues": [],
-    "bytes": 11206
+    "bytes": 11584
   },
   {
     "file": "tag-default.html",
@@ -1882,7 +1882,7 @@
       "Tag type"
     ],
     "issues": [],
-    "bytes": 11320
+    "bytes": 11698
   },
   {
     "file": "templates.html",
@@ -1923,7 +1923,7 @@
       "Text Area type"
     ],
     "issues": [],
-    "bytes": 11281
+    "bytes": 11659
   },
   {
     "file": "time-default.html",
@@ -1949,7 +1949,7 @@
       "Time type"
     ],
     "issues": [],
-    "bytes": 11486
+    "bytes": 11864
   },
   {
     "file": "timeline-default.html",
@@ -1974,7 +1974,7 @@
       "Timeline type"
     ],
     "issues": [],
-    "bytes": 12261
+    "bytes": 12639
   },
   {
     "file": "toast-default.html",
@@ -1999,7 +1999,7 @@
       "Toast type"
     ],
     "issues": [],
-    "bytes": 11494
+    "bytes": 11872
   },
   {
     "file": "tooltip-default.html",
@@ -2024,7 +2024,7 @@
       "Tooltip type"
     ],
     "issues": [],
-    "bytes": 11104
+    "bytes": 11482
   },
   {
     "file": "tour-default.html",
@@ -2049,7 +2049,7 @@
       "Tour type"
     ],
     "issues": [],
-    "bytes": 11548
+    "bytes": 11926
   },
   {
     "file": "transfer-default.html",
@@ -2075,7 +2075,7 @@
       "Transfer type"
     ],
     "issues": [],
-    "bytes": 13017
+    "bytes": 13395
   },
   {
     "file": "tree-default.html",
@@ -2117,7 +2117,7 @@
       "Tree Select type"
     ],
     "issues": [],
-    "bytes": 11578
+    "bytes": 11956
   },
   {
     "file": "tree.html",
@@ -2128,7 +2128,7 @@
       "Tree type"
     ],
     "issues": [],
-    "bytes": 13603
+    "bytes": 14359
   },
   {
     "file": "typography.html",
@@ -2176,7 +2176,7 @@
       "Upload type"
     ],
     "issues": [],
-    "bytes": 12802
+    "bytes": 13180
   },
   {
     "file": "values.html",

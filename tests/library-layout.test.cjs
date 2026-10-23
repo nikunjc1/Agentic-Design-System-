@@ -84,7 +84,7 @@ test('section Group Buttons identify one reading location and repeated card link
   let prevented=false;group.listeners.get('keydown')({target:links[1],key:'End',preventDefault(){prevented=true;}});
   assert.equal(prevented,true);assert.equal(links[2].focused,true);assert.deepEqual(current(),[links[2]]);
   document.documentElement.dir='rtl';group.listeners.get('keydown')({target:links[2],key:'ArrowRight',preventDefault(){}});assert.deepEqual(current(),[links[1]]);
-  cards.forEach(card => { assert.equal(card.attrs.has('role'), false); assert.equal(card.attrs.has('tabindex'), false); const a = card.children[0]; assert.match(a.className, /anchor-demo-link/); assert.doesNotMatch(a.className, /btn-primary/); assert.equal(a.href, card.dataset.detailHref); });
+  cards.forEach(card => { assert.equal(card.attrs.has('role'), false); assert.equal(card.attrs.has('tabindex'), false); const a = card.children[0]; assert.match(a.className, /btn-demo--primary/); assert.equal(a.href, card.dataset.detailHref); });
 });
 
 test('unit radios preserve both choices through boot, edits, cross-tab changes and reset', async () => {
