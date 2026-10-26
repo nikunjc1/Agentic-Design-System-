@@ -5411,6 +5411,28 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
    a fixed, content-appropriate 110px on every card, regardless of the
    card's own width. */
 .card-copy-row .btn{ flex: 0 0 auto; min-width:var(--dimension-110); text-align: center; height:var(--dimension-32); min-block-size:var(--dimension-32); padding:0 var(--space-12); }
+/* Foundation audit - View guide/Copy prompt are .btn-demo, which inherits
+   flex:none from its own base rule (by design: everywhere else a Button
+   sits next to other content, it must shrink-wrap to its label, not steal
+   space from a sibling). card-copy-row is the one place a Button instead
+   shares a flex:1 .card-copy-row that's deliberately set to the card's
+   full width - at > 1440px the 4-column grid's cards grow with the
+   viewport while the two labeled actions stayed pinned to their label's
+   natural width, leaving a growing dead gap of plain card background
+   after the icon-only Copy code button. Splitting the row's remaining
+   width evenly between the two labeled actions removes that gap at every
+   breakpoint instead of only at the width this was measured on; the
+   icon-only action is excluded so it keeps its fixed square size, and
+   .btn-demo's own max-width:320px still caps how wide either one can get
+   on an unusually wide card. flex-basis:0 (tried first) let the browser's
+   own sub-pixel rounding shrink "View guide" a fraction of a pixel below
+   its own label's width on narrow viewports, silently ellipsis-ing it to
+   "View gui..." even though the label objectively fit; min-width:max-
+   content keeps each label's natural width as a hard floor, so growing
+   to fill the row can never shrink a label past it - the row's existing
+   overflow-x:auto (set above for the same "never clip a label" reason)
+   is the fallback on whatever narrow card can't fit both floors at once. */
+.card-copy-row .btn-demo:not(.is-icon-only){ flex: 1 1 auto; min-width: max-content; }
 
 .card-configure-link{
   display: inline-flex;

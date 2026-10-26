@@ -121,6 +121,16 @@
   function luminance(color) { const v=color.slice(1).match(/../g).map(c=>parseInt(c,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4); return v[0]*.2126+v[1]*.7152+v[2]*.0722; }
   function contrast(a,b) { const x=luminance(a),y=luminance(b); return (Math.max(x,y)+.05)/(Math.min(x,y)+.05); }
   function foreground(bg) { return contrast(bg,'#000000')>=contrast(bg,'#FFFFFF')?'#000000':'#FFFFFF'; }
+  // One foreground for every background a control can show (its default,
+  // hover and active fills) instead of foreground()'s own single-background
+  // check - picks whichever of black/white has the better worst-case
+  // contrast across all of them, so a single color stays both flicker-free
+  // (same text color through every state) and compliant in whichever state
+  // would otherwise be weakest.
+  function foregroundForAll(bgs) {
+    const worst=fg=>Math.min(...bgs.map(bg=>contrast(fg,bg)));
+    return worst('#000000')>=worst('#FFFFFF')?'#000000':'#FFFFFF';
+  }
   function blendColor(color,surface,alpha) {
     return '#'+color.slice(1).match(/../g).map((c,i)=>Math.round(parseInt(c,16)*alpha+parseInt(surface.slice(1+i*2,3+i*2),16)*(1-alpha)).toString(16).padStart(2,'0')).join('');
   }
@@ -204,7 +214,22 @@
     const colors=record(saved.colors), color=record(colors.light), brand=hex(record(color.primary).hex,'#FF031A');
     tokens['--red-500']=brand; tokens['--red-400']=mix(brand,255,.25); tokens['--red-600']=mix(brand,0,.18);
     const rgb=brand.slice(1).match(/../g).map(c=>parseInt(c,16)).join(','); tokens['--red-tint']='rgba('+rgb+',0.08)';tokens['--red-glow']='rgba('+rgb+',0.35)';
-    for (const [state,key] of [['default','--red-500'],['hover','--red-400'],['active','--red-600']]) tokens['--button-primary-text-'+state]=foreground(tokens[key]);
+    // Foundation audit - default and hover used to resolve their foreground
+    // independently (default vs red-500, hover vs red-400). For roughly a
+    // third of possible brand colors that flipped the text between black
+    // and white on nothing more than a mouse resting over the button -
+    // jarring, and not what hovering is supposed to do when only the
+    // background is meant to change. Sharing one foreground (picked for the
+    // better worst-case contrast across both shades) removes that flicker
+    // for the one transition a pointer actually lingers on. Active keeps
+    // resolving independently against red-600: it's a brief, deliberately
+    // asymmetric tap/press state (darkened well past hover, not just a
+    // lighter lift), and for some brand hues - including this system's own
+    // default red - only the opposite foreground clears 4.5:1 against it;
+    // forcing it to match default/hover would silently fail contrast there
+    // instead of trading a momentary press-state color swap for it.
+    tokens['--button-primary-text-default']=tokens['--button-primary-text-hover']=foregroundForAll([tokens['--red-500'],tokens['--red-400']]);
+    tokens['--button-primary-text-active']=foreground(tokens['--red-600']);
     tokens['--on-brand-text']=tokens['--button-primary-text-default'];
     const colorGroups = { 'bg-colors':{primary:'--graphite-950',secondary:'--graphite-900',tertiary:'--graphite-850'}, 'neutral-colors':{c800:'--graphite-800',c700:'--graphite-700',c600:'--graphite-600',c500:'--graphite-500',border:'--control-border'}, 'status-colors':{success:'--green-500',warning:'--amber-500',danger:'--danger-500',info:'--blue-500'} };
     for(const [key,props] of Object.entries(colorGroups)) { const set=record(record(saved[key])[theme]); for(const [name,prop] of Object.entries(props)) { const h=hex(set[name],null); if(h) tokens[prop]=h; } }
