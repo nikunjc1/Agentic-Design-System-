@@ -75,9 +75,10 @@ function boot(page, { unit = 'px', failWrite = false, typography = null } = {}) 
     URL: class extends URL { static createObjectURL(blob) { exportBlob = blob; return 'blob:test'; } static revokeObjectURL() {} },
   });
   vm.runInContext(source('foundation-runtime.js'), context);
+  const foundationReady=ready.slice();
   vm.runInContext(source('shell.js'), context); // Real shared persistence, including failure handling.
   const firstPaint = window.ADSFoundation.get();
-  document.body = body; ready[0]();
+  document.body = body; foundationReady.forEach(fn=>fn());
   const radios = () => main.querySelectorAll('[data-foundation-unit]');
   const pair = () => dimension.parent.children.find(c => c.className === 'ads-unit-control');
   function chooseRadio(unit, type = 'input') { const radio = radios().find(r => r.value === unit); radios().forEach(r => { r.checked = r === radio; }); radio.dispatchEvent(new Event(type, { bubbles: true })); }
@@ -153,7 +154,7 @@ test('legacy heading scales restore before first paint, save once and permit sub
   const saved = JSON.parse(f.store.get('ads:typography'));
   assert.equal(saved.headingScaleVersion, 2); assert.equal(saved.levels.h1.color, '#123456'); assert.equal(saved.levels.paragraph.size, 'text-lg');
   const reload = boot('typography.html', { typography: saved }); assert.deepEqual(reload.writes, []);
-  saved.levels.h1.size = 'display-xl'; reload.window.ADSStorage.safeSet('ads:typography', saved); await Promise.resolve();
+  saved.levels.h1.size = 'display-xl'; reload.window.ADSFoundationEditor.beginEdit(); reload.window.ADSStorage.safeSet('ads:typography', saved); await Promise.resolve();
   assert.equal(reload.window.ADSFoundation.get().tokens['--type-h1-size'], '60px');
   assert.equal(boot('overview.html', { typography: saved }).firstPaint.tokens['--type-h1-size'], '60px');
   const unsaved = boot('new-project.html', { typography, failWrite: true });

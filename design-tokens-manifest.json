@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-21T05:50:24.735474+00:00",
+  "generatedAt": "2026-10-23T09:59:10.424640+00:00",
   "sourceHash": "dbd8adf18b480217a53e20f4ade414e24670659ee8c7f07929dbc439efcfa6bb",
   "generatorHash": "7b51acfc1cfa9d71169197f2b15f9e1b6b74e9df6e3f3bbda5bc8ad091e863e3",
   "tokenCount": 624,
   "resolvedPropertyCount": 645,
   "sourceHashes": {
     "theme.css": "dbd8adf18b480217a53e20f4ade414e24670659ee8c7f07929dbc439efcfa6bb",
-    "foundation-model.js": "ad8548f893b3ec3a03eaa535511a7dc959a91d08eb59afc5e53c3594d8cdeebb",
-    "foundation-contract.json": "4be37f4e55a8b1d130d5a37c22465903a97150e52d5cd92dded46f255b350612"
+    "foundation-model.js": "be55e8af4240be209b3ea8899ee960767535736e4860629b10dbac9e3d033317",
+    "foundation-contract.json": "f4e97510f26e5650a960e6b248b3b31123597b4cbc9e8dcd4c70cb91dbc50a88"
   }
 }

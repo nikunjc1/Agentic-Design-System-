@@ -54,7 +54,7 @@
         hover: "background:" + graphite800 + ";",
         pressed: "background:" + graphite700 + ";",
         selected: "background:" + redTint + ";color:" + red500 + ";",
-        focus: "outline:2px solid " + red400 + ";outline-offset:-3px;"
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:-3px;"
       };
     }
     return {
@@ -66,7 +66,7 @@
       // own overflow:hidden, cutting the ring into a lopsided arc at the
       // first/last segment instead of a clean rectangle (matches the fix
       // already used by the Outlined type above).
-      focus: "outline:2px solid " + red400 + ";outline-offset:-3px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:-3px;"
     };
   }
 

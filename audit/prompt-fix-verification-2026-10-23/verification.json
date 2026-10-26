@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "confirmedAuditCategoriesFixed": [
+    "PR-01",
+    "PR-02",
+    "PR-03",
+    "PR-04",
+    "PR-05",
+    "PR-06",
+    "PR-07",
+    "PR-08"
+  ],
+  "affectedPagesInOriginalAudit": 46,
+  "detailPagesReviewed": 69,
+  "propertyAndSelectionChecks": 974,
+  "browserRegressions": 161,
+  "unitTestsPassed": 66,
+  "releaseCheck": "pass",
+  "runtimeErrors": [],
+  "unresolvedPromptTokens": [],
+  "unchangedPropertyCases": [
+    {
+      "file": "color-picker-default.html",
+      "reason": "Invalid hex text correctly falls back to the preview default; valid 3- and 6-digit color edits pass regression checks."
+    }
+  ],
+  "scope": "Local project; generated prompts compared with configured previews. No downstream AI generation or deployment was performed."
+}

@@ -49,7 +49,7 @@
       hover: "background:" + graphite700 + ";",
       fill: "background:" + red500 + ";",
       thumb: "background:#FFFFFF;border:2px solid " + red500 + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
     };
   }
 

@@ -1,0 +1,20 @@
+const fs=require('fs');const path=require('path');
+const {chromium}=require('./run-audit.cjs');
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('file://'+path.join(__dirname,'Damco-Prompt-Audit-2026-10-23.html'));
+ const rows=await page.locator('#inventory tbody tr').count();const details=await page.locator('.page-detail').count();
+ await page.locator('#only').click();const mismatches=await page.locator('#inventory tbody tr:visible').count();
+ await page.locator('#search').fill('float-button-default');const filtered=await page.locator('#inventory tbody tr:visible').count();
+ await page.locator('#expand').click();const open=await page.locator('.page-detail[open]:visible').count();
+ await page.locator('#search').fill('');await page.locator('#only').click();await page.locator('#collapse').click();
+ await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,0);});
+ await page.screenshot({path:path.join(__dirname,'report-preview.png'),fullPage:false});
+ const broken=await page.evaluate(()=>[...document.querySelectorAll('a[href]')].filter(a=>!a.getAttribute('href').startsWith('#')).map(a=>a.getAttribute('href')));
+ const missing=broken.filter(p=>!fs.existsSync(path.resolve(__dirname,p)));
+ const result={inventoryRows:rows,pageDetails:details,mismatchRows:mismatches,searchMatches:filtered,expandedSearchResult:open,errors,missingEvidenceLinks:missing};
+ console.log(JSON.stringify(result,null,2));fs.writeFileSync(path.join(__dirname,'report-check.json'),JSON.stringify(result,null,2));
+ if(rows!==69||details!==69||mismatches!==46||filtered!==1||open!==1||errors.length||missing.length)process.exitCode=1;
+ await browser.close();
+})().catch(e=>{console.error(e);process.exitCode=1;});

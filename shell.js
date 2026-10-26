@@ -122,12 +122,24 @@
       try {
         if(window.ADSFoundationModel.recordKeys.includes(key.replace(/^ads:/,''))) {
           const current=window.ADSFoundationModel.inspectRecord(key,localStorage.getItem(key));
-          if(['corrupt','invalid','future'].includes(current.status)) {
+          if(['corrupt','invalid','future'].includes(current.status)&&!window.ADSFoundationEditor?.hasReset(key)) {
             this.lastWriteSucceeded=false;
             showStorageNotice('Saved settings are unreadable or from a newer version. They have been preserved. Export a backup or explicitly reset this section before saving.');
             return false;
           }
           value=window.ADSFoundationModel.migrateRecord(key,value);
+          const staged=window.ADSFoundationEditor?.stage(key,value);
+          if(staged==='locked') {
+            this.lastWriteSucceeded=false;
+            return false;
+          }
+          // The editor captured this as an unsaved preview pending "Save
+          // foundation"; it already dispatched its own unsaved-preview
+          // change event, so this write counts as accepted, not failed.
+          if(staged) {
+            this.lastWriteSucceeded=true;
+            return true;
+          }
           if(current.status==='valid'&&current.value&&JSON.stringify(current.value)===JSON.stringify(value)){
             this.lastWriteSucceeded=true;
             window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key,value}}));
@@ -147,6 +159,9 @@
       }
     },
     safeRemove(key) {
+      const staged=window.ADSFoundationEditor?.stage(key,null);
+      if(staged==='locked') {this.lastWriteSucceeded=false;return false;}
+      if(staged) {this.lastWriteSucceeded=true;return true;}
       try {
         localStorage.removeItem(key);
         this.lastWriteSucceeded = true;

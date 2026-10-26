@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Damco Design System — Verification Report</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;color:#20242c;background:#f6f6f4;margin:0}main{max-width:960px;margin:40px auto;padding:32px;background:white;border:1px solid #ddd;border-radius:12px}h1{font-size:30px;line-height:1.2}h2{margin-top:32px;font-size:22px}.pass{color:#15623b;font-weight:700}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:12px;border-bottom:1px solid #ddd;vertical-align:top}th{background:#f6f6f4}a{color:#174b9a}code{font-size:14px}small{color:#505966}@media(max-width:650px){main{margin:12px;padding:20px}table{font-size:14px}td,th{padding:8px}}</style></head>
+<body><main>
+<small>23 October 2026 · Local working copy · Chrome</small>
+<h1>Damco Agentic Design System</h1>
+<p class="pass">Verification passed after two additional fixes.</p>
+<h2>Issues fixed in this review</h2>
+<table><thead><tr><th>Issue</th><th>Result</th></tr></thead><tbody>
+<tr><td>Resetting corrupt or newer-version Foundation settings could discard the next selection when Save was pressed.</td><td>The editor now remembers the explicit reset through later edits. The newly chosen value is saved, remains locked, and survives reload. Unreadable records remain preserved until an explicit reset.</td></tr>
+<tr><td>The release check could miss a crashed test process if its output lacked a TAP failure line.</td><td>Any nonzero test exit now fails the release check. Generated implementation contracts are also checked for freshness. A simulated test crash correctly produced a failed release.</td></tr>
+</tbody></table>
+<h2>Verification results</h2>
+<table><thead><tr><th>Scope</th><th>Checks</th><th>Result</th></tr></thead><tbody>
+<tr><td>All 158 pages</td><td>632 viewport checks: 1440, 768, 390 and 320 pixels. Main content, heading count, horizontal overflow, local HTTP asset failures and JavaScript exceptions.</td><td class="pass">Pass</td></tr>
+<tr><td>Documentation views</td><td>208 Human/Machine view toggles; selected state and panel visibility.</td><td class="pass">Pass</td></tr>
+<tr><td>Project Setup</td><td>Required identity fields, initial save, saved summary, reload, explicit Edit, saving an edit, and cancelling an edit.</td><td class="pass">Pass</td></tr>
+<tr><td>Eight Foundation editors</td><td>Colors, Grid/Layout, Typography, Spacing, Radius, Borders, Shadows and Icons. Project recommendations, manual Radius, explicit Save, saved-state locking, Edit, Cancel, actual widget changes, persisted records and identical preview tokens after reload.</td><td class="pass">Pass</td></tr>
+<tr><td>Recovery and data integrity</td><td>Corrupt and future record reset; blocked invalid grid values; correction and save; cross-tab conflict and reload; JSON export; raw backup; rejected malformed restore; successful restore; failed storage write; rollback after a failed multi-section color save.</td><td class="pass">Pass</td></tr>
+<tr><td>69 component detail pages</td><td>161 prompt regression checks, including light/dark mode, current properties, CSS variable dependencies, focus/shadows, Loading states, copy combinations and repeat preparation.</td><td class="pass">Pass</td></tr>
+<tr><td>Automated release checks</td><td>67 unit tests; token/default/contract/catalog freshness; 624 exported tokens; whitespace and changed-runtime syntax checks.</td><td class="pass">Pass</td></tr>
+</tbody></table>
+<h2>Evidence</h2>
+<ul><li><a href="results.json">Page, viewport and recovery results</a></li><li><a href="release-gate.json">Simulated test-crash result</a></li><li><a href="../prompt-fix-verification-2026-10-23/regressions.json">Component prompt results</a></li><li><a href="../setup-flow-2026-10-23/spacing-save-failure.png">Storage failure screenshot</a></li></ul>
+<h2>Scope limits</h2>
+<p>Changes and verification apply to the local project; no deployment was made. Browser checks blocked external network requests, so externally hosted fonts were not verified. Prompt checks validate the exported instructions and current configuration; they do not establish the quality of a separate AI tool's generated implementation. The page sweep is a smoke check, supplemented by the workflows listed above.</p>
+</main></body></html>

@@ -1,0 +1,2068 @@
+
+=== add-on-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Add-on component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("An Add-on is a single-line text field with an optional prefix segment and/or suffix segment attached directly to it, sharing one visual control - like a protocol prefix on a URL field or a currency/unit suffix on a price field. Each segment has its own subtle background, distinct from the input area, so it reads as a separate attached zone rather than plain field background.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Segments nest inside the control's own radius on their outer corner only.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show prefix (boolean, optional text segment attached to the left edge of the field with its own editable prefix text - e.g. a protocol or currency symbol), Show suffix (boolean, optional text segment attached to the right edge of the field with its own editable suffix text - e.g. a domain or unit).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== affix-detail.js ===
+function buildFullPrompt(label, offset){
+    label = (label || DEFAULT_LABEL).trim() || DEFAULT_LABEL;
+    offset = (offset === undefined || offset === null || isNaN(offset) || offset < 0) ? DEFAULT_OFFSET : offset;
+
+    var lines = [];
+    lines.push("Create a complete Affix component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, offset, state, content) - a wrapper that pins its child element to the viewport once the page scrolls past the child's original position, so it stays reachable.");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Top: pins the element " + offset + "px from the top of the viewport once scrolled past.");
+    lines.push("- Bottom: pins the element " + offset + "px from the bottom of the viewport once scrolled past.");
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- Rest: the element sits in its normal position in the page flow - not yet affixed.");
+    lines.push("- Affixed: the element is pinned to its edge, visually lifted with a shadow and a slightly stronger border/background so it reads as detached from the page flow beneath it.");
+    lines.push("- Disabled: affix behavior is turned off entirely - the element always stays in its normal flow position, shown dimmed here to distinguish it from Rest.");
+    lines.push("");
+    lines.push("Component properties: Content label (text, e.g. \"" + label + "\" - the content being pinned, such as a toolbar or a call-to-action); Offset (number, px from the edge once affixed) - currently " + offset + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== alert-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push("Create a complete Alert component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state, radius) - an inline banner/message block embedded in page content (not a floating overlay like Toast), used to surface a status message such as \"Your changes have been saved.\" It sits flush in the page flow, full width of its container, with a colored icon, title, optional description, and optional dismiss/action controls.");
+    lines.push("");
+    lines.push("Types (4):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Accent color (icon, title text, left border): " + css.accent);
+      lines.push("  Background: " + css.background + " - ONE consistent background across every type, never tinted per type. Left border: 3px solid the accent color. Only the icon, title and left border ever carry the semantic color.");
+    });
+    lines.push("");
+    lines.push("States (4, structural - change what's rendered inside the banner, not just its color):");
+    lines.push("- Default: title and description, no extra controls.");
+    lines.push("- Dismissible: adds a trailing close (x) icon button.");
+    lines.push("- With action: adds an inline text-style action button (e.g. \"Undo\") after the description.");
+    lines.push("- Title only: title text only - the description is omitted entirely, regardless of whether a description value is set.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the whole banner.");
+    lines.push("");
+    lines.push("Component properties: Corner radius; Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Description (text, default \"" + FALLBACK_DEFAULTS.description + "\", omitted for the Title-only state); Show icon (boolean, default checked - shows a colored status icon matching the alert's type).");
+    lines.push("Current values - Title: \"" + info.title + "\", Description: \"" + info.description + "\", Show icon: " + (info.showIcon ? "yes" : "no") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== anchor-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var label = selectionInfo.label || DEFAULT_LABEL;
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Anchor (inline text link) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, state) - a standalone piece of plain inline navigational text used for wayfinding (e.g. \"Learn more\", \"View documentation\"), distinct from Button's boxed \"Link\"/\"Transparent\" type, which reads as a boxed call-to-action.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (5, apply to the anchor text - identical across both types):");
+    lines.push("- Rest: " + css.rest);
+    lines.push("- Hover: " + css.hover);
+    lines.push("- Focused: " + css.focus + " Never just a color change, so keyboard focus is always visible.");
+    lines.push("- Visited: " + css.visited + " Only a color change is allowed here - browsers block every other CSS property on the real :visited pseudo-class for privacy reasons.");
+    lines.push("- Disabled: " + css.disabled + " Anchors have no native disabled attribute, so this is simulated with aria-disabled=\"true\" plus pointer-events:none and reduced opacity - it is not a real browser-level disabled element.");
+    lines.push("");
+    lines.push("With icon type only: append this trailing external-link arrow SVG after the text with a small gap, sized to roughly match the text's line-height: " + ANCHOR_ICON_SVG_EXACT);
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Anchors are sized by font-size, not height - the icon (With icon type) scales alongside it.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text, current value \"" + label + "\").");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== autocomplete-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Autocomplete component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a text input that shows a dropdown suggestion panel of matching options below it while the user types or when focused, letting them either pick a suggestion or keep typing a free-form value - distinct from Select (a closed-option picker, no typing) and from a plain Input (no suggestion panel).");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Open: same border/outline treatment as Focus, plus a suggestion panel anchored below the field.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("- Focus: real keyboard focus on the field, no suggestion panel visible yet.");
+    lines.push("- Open: the suggestion panel is visible directly below the field while the user is actively typing - panel content is 3 example option rows, with one visually highlighted as if hovered or keyboard-focused so the user can see which option Enter/click would select.");
+    lines.push("- Filled: same appearance as Rest, showing an entered value with the suggestion panel closed - the user already picked a value or dismissed the panel.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== avatar-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var size = selectionInfo.size || FALLBACK_DEFAULTS.size;
+    var shape = selectionInfo.shape || FALLBACK_DEFAULTS.shape;
+    var initials = selectionInfo.initials || FALLBACK_DEFAULTS.initials;
+
+    var lines = [];
+    lines.push("Create a complete Avatar component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, shape, presence state) - a compact circular (or square) visual identifier for a person, not a one-off image tag.");
+    lines.push("");
+    lines.push("Content types (3):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("Presence states (4, a small status dot in the bottom-right corner):");
+    lines.push("- Default: no status dot shown.");
+    lines.push("- Online: a small green dot.");
+    lines.push("- Away: a small amber dot.");
+    lines.push("- Offline: a small gray/dim dot.");
+    lines.push("These are structural/presentational variants, not interaction states - Avatar itself is not interactive.");
+    lines.push("");
+    lines.push("Component properties: Size (24px / 32px - default / 40px / 48px, currently " + optionLabelFor(SIZE_OPTIONS, size) + " - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently " + optionLabelFor(SHAPE_OPTIONS, shape) + "); Initials text (Initials type only, currently \"" + initials + "\"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a \"+N\" overflow indicator styled like a real avatar. Show as (Avatars / Names only) - whether the group renders as that overlapping avatar-circle stack, or as a plain vertical list of full names with no avatar graphic at all, for contexts where showing the avatar image isn't worth the space; both modes represent the identical list, including the same \"+N\" overflow count.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== badge-detail.js ===
+function buildFullPrompt(count, max, label, sizeInfo){
+    count = (count === undefined || count === null || isNaN(count)) ? DEFAULT_COUNT : count;
+    max = (max === undefined || max === null || isNaN(max) || max < 1) ? DEFAULT_MAX : max;
+    label = (label || DEFAULT_LABEL).trim() || DEFAULT_LABEL;
+    sizeInfo = sizeInfo || selectionMode(null, SIZE_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Badge component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (form, color, size) - a small indicator, not a one-off number or dot hard-coded per screen.");
+    lines.push("");
+    lines.push("Badge is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 3 forms, each in 4 semantic colors, each in 2 sizes.");
+    lines.push("");
+    lines.push("Forms (3):");
+    lines.push("- Count: a small numeric pill overlaid on the top-right corner of a host element (an icon or button). Shows the current Count value, capping the display at \"" + max + "+\" once Count exceeds the configured Max count.");
+    lines.push("- Dot: a small plain dot overlaid on the top-right corner of a host element, with no number - just signals \"there's something new\".");
+    lines.push("- Status: an inline dot plus a text label (e.g. \"" + label + "\"), used standalone rather than overlaid on anything.");
+    lines.push("");
+    lines.push("Colors (5, apply to every form, matching Ant Design's own Status Badge set): Default (var(--red-500), this system's brand red), Success (var(--green-500)), Processing (var(--blue-500), pulses with an expanding-ring animation to signal something actively in progress), Warning (var(--amber-500)), Error (var(--danger-500)).");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Small drops the Count pill to 16px/10px font and the Status dot+label to match - the host icon and every color stay identical at either size.");
+    lines.push("");
+    lines.push("Component properties: Count (number, applies only to the Count type) - currently " + count + ". Max count (number, applies only to the Count type, caps the displayed value at \"N+\" once Count exceeds it) - currently " + max + ". Status label (string, applies only to the Status type) - currently \"" + label + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== breadcrumb-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
+    var css = linkStateCss();
+
+    var lines = [];
+    lines.push("Create a complete Breadcrumb component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, state) - a horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider, with the LAST item always the current page (styled differently - not a clickable link, just text in a stronger color).");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Chevron: the divider between items is a small chevron-right icon.");
+    lines.push("- Slash: the divider between items is a literal \"/\" character.");
+    lines.push("");
+    lines.push("States (4, apply to the FIRST link only - every earlier/later link besides it and the final current-page item stay at Rest):");
+    lines.push("  Rest: " + css.rest);
+    lines.push("  Hover: " + css.hover);
+    lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    lines.push("  Disabled: " + css.disabled + " Use aria-disabled=\"true\" on the link, not the native disabled attribute - links have no native disabled state.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Font-size scales proportionally, applied to the whole trail.");
+    lines.push("");
+    lines.push("Component properties: Labels (comma-separated editable text, one per breadcrumb item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== button-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var contentInfo = selectionInfo.content || selectionMode(null, CONTENT_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    var red400 = liveRedHex()[400];
+    var danger500 = getCssVar("--danger-500", "#FF031A");
+    var green500 = getCssVar("--green-500", "#2FBF6E");
+    lines.push("Create a complete Button component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.");
+    lines.push("");
+    lines.push("Types (8):");
+    TYPES.forEach(function(t){
+      var spec = FULL_SPEC[t.key];
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + spec.purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Pressed: " + css.pressed);
+      if (t.key === "destructive"){
+        lines.push("  Focus: 2px outline in " + danger500 + " (fixed danger color, not the brand color), 2px offset.");
+      } else if (t.key === "approve"){
+        lines.push("  Focus: 2px outline in " + green500 + " (fixed approve color, not the brand color), 2px offset.");
+      } else if (t.key === "link"){
+        lines.push("  Focus: 2px outline in " + red400 + ", 3px offset, 4px corner radius on the outline.");
+      }
+    });
+    lines.push("");
+    lines.push("States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.");
+    lines.push("- Focus (default, see per-type exceptions above): 2px outline in " + red400 + ", 2px offset - never just a color change, so layout never shifts.");
+    lines.push("- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Content", contentInfo, CONTENT_OPTIONS) + " Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied uniformly across every type.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== button-dualicon-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var contentInfo = selectionInfo.content || selectionMode(null, CONTENT_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Dual Icon Button component system, covering all 7 types below, each with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.");
+    lines.push("");
+    lines.push("Default size: 122 x 36px (height 36px, 16px horizontal padding), corner radius 4px, horizontal layout, 8px gap between elements - also supports the full size scale (24/28/32/36/40/44/48/56px height, padding/font-size/icon-size scaling with it) and corner radius (0/4/8/12px/full pill), same as the rest of this Button system.");
+    lines.push("Content: left chevron-down icon, label (Inter Medium, default \"Save\"), right chevron-down icon.");
+    lines.push("");
+    TYPES.forEach(function(typeKey){
+      var spec = TYPE_SPEC[typeKey];
+      lines.push(TYPE_LABELS[typeKey] + ":");
+      STATES.forEach(function(key){
+        lines.push("  " + STATE_LABELS[key] + ": " + spec.states[key].desc);
+      });
+    });
+    lines.push("");
+    lines.push("Component properties per type:");
+    lines.push("  State: Rest / Hover / Pressed / Focused / Disabled / Loading.");
+    lines.push("  " + propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS));
+    lines.push("  " + propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS));
+    lines.push("  " + propertyPromptLine("Content", contentInfo, CONTENT_OPTIONS));
+    lines.push("  Label: editable text, default \"Save\".");
+    lines.push("Keep padding, icon size, typography, alignment and radius identical across every state and type at a given size - only change what each state specifies. Do not introduce additional colors, gradients or effects beyond what's listed.");
+    lines.push("");
+    lines.push("---");
+    lines.push("");
+    lines.push(buildSplitPrompt());
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== calendar-detail.js ===
+function buildFullPrompt(monthLabel, isMonday){
+    monthLabel = monthLabel || "September 2026";
+    var lines = [];
+    lines.push("Create a complete Calendar component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (size, month label, first day of week) - a full month grid embedded directly in the page, not a date-picker's small popup trigger.");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Full: larger day cells (36px), suited to a primary scheduling or booking view.");
+    lines.push("- Compact: smaller day cells (26px), condensed for a sidebar-style mini calendar.");
+    lines.push("");
+    lines.push("States (3, content variations, not interaction states - Calendar is not interactive):");
+    lines.push("- Default: plain grid, today highlighted, no events.");
+    lines.push("- With events: 2 specific days additionally show a small event indicator dot.");
+    lines.push("- Range preview: a run of 3 consecutive days share a highlighted background, simulating a date-range selection preview, with rounded end-caps only on the first and last day of the run.");
+    lines.push("");
+    lines.push("Structure: a month/year header, a row of 7 day-of-week column labels, and a 6-row grid of day cells (42 cells) including dimmed overflow days from the adjacent previous/next month so the grid is always fully populated.");
+    lines.push("");
+    lines.push("Component properties: Month label (text, current value \"" + monthLabel + "\"); First day of week (Sunday/Monday - reflows which day starts each week and which days fall outside the current month at the grid's edges) - currently " + (isMonday ? "Monday" : "Sunday") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== card-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Card component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state, radius) - a bordered container for grouping related content, in 3 forms and 4 states.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (4, apply to the whole card, not per type):");
+    lines.push("- Rest: " + css.rest);
+    lines.push("- Hover: " + css.hover + " A lifted shadow, distinct from the resting Show-shadow drop-shadow.");
+    lines.push("- Selected: " + css.selected + " Reads as a persistent chosen-state border indicating this card is the chosen one in a set, not a keyboard focus ring.");
+    lines.push("- Disabled: " + css.disabled + " No interaction.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the whole card; With media's cover area follows the card's top corners only.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Small tightens body-wrap padding to 10px/12px and drops title to 13px, body to 12px - the corner radius, type and state set stay identical at either size.");
+    lines.push("");
+    lines.push("Component properties: Corner radius; Size; Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Body (text, default \"" + FALLBACK_DEFAULTS.body + "\"); Show shadow (boolean, default checked - adds a resting drop-shadow beneath the card, even before hover, distinct from and combinable with the Hover state's own lift shadow).");
+    lines.push("Current values - Title: \"" + info.title + "\", Body: \"" + info.body + "\", Show shadow: " + (info.showShadow ? "yes" : "no") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== cascader-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Cascader component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a select-like trigger field showing a selected hierarchical path (e.g. \"Asia / India / Mumbai\") with a trailing chevron icon, that opens a MULTI-COLUMN panel below it (one column per level: Continent, then Country, then City) where picking an option in an earlier column determines what the next column shows, letting the user drill down to a final leaf value - distinct from Select (one flat list, no drill-down) and from Autocomplete (a single suggestion list, not multiple linked columns).");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Open: same border/outline treatment as Focus, plus a multi-column panel anchored below the field.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("- Focus: real keyboard focus on the field, no panel visible yet.");
+    lines.push("- Open: the multi-column panel is visible directly below the field - 3 columns side by side (Continent, Country, City), each with 3 example option rows. Each column's currently-selected option is highlighted, and a non-final column's selected option gets a trailing right-chevron to show it reveals the next column.");
+    lines.push("- Filled: same appearance as Rest, showing the full selected path joined by \" / \" with the panel closed.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces each option's single active-row highlight with a real checkbox, letting more than one leaf be picked across different branches). Search (boolean - a real input inside the trigger itself, narrowing the first column to matches with the matched substring highlighted).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== checkbox-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Checkbox component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - a small square selection control with 3 possible values (unchecked, checked, indeterminate), always paired with a text label, not a one-off checkbox glued to text.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Unchecked: " + css.box.unchecked);
+      lines.push("  Checked: " + css.box.checked + " White checkmark icon (#FFFFFF).");
+      lines.push("  Indeterminate: " + css.box.indeterminate + " White horizontal dash icon (#FFFFFF) instead of the checkmark.");
+      lines.push("  Hover: " + css.box.hover);
+      lines.push("  Focused: " + css.box.focus + " Never just a color change, so the control stays visible against any background.");
+      if (t.key === "card"){
+        lines.push("  Card highlight (applies to the whole row, only when checked): " + css.card);
+      }
+    });
+    lines.push("");
+    lines.push("States (6): Unchecked, Checked, Indeterminate, Hover, Focused, Disabled.");
+    lines.push("- Checked and Indeterminate share the same solid-fill treatment, distinguished only by icon (checkmark vs dash).");
+    lines.push("- Indeterminate is set via the element's `indeterminate` DOM property at runtime, not an HTML attribute.");
+    lines.push("- Disabled applies 40% opacity and a not-allowed cursor to the control.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Controls the box's width and height in px.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the box itself.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text next to the box).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== collapse-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push("Create a complete Collapse component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state, radius) - an accordion-style panel with a clickable header (with an optional chevron indicator) that reveals or hides a body of content beneath it when toggled, useful for progressively disclosing long or secondary content.");
+    lines.push("");
+    lines.push("Types (2, grouping styles):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- Collapsed: header only, chevron pointing down/closed, body hidden.");
+    lines.push("- Expanded: header plus visible body beneath it, chevron pointing up/open.");
+    lines.push("- Disabled: header at reduced opacity, non-interactive, chevron dimmed, body hidden as if collapsed.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to the Bordered type only - Borderless panels never carry a radius.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Scales header/body padding and the header text one step - body text stays fixed at 13px regardless of size.");
+    lines.push("");
+    lines.push("Component properties: Corner radius (Bordered type only); Size; Header text (text, default \"" + FALLBACK_DEFAULTS.header + "\"); Body text (text, default \"" + FALLBACK_DEFAULTS.body + "\", shown only in the Expanded state); Show icon (boolean, default checked - shows a chevron indicator on the right side of the header).");
+    lines.push("Current values - Header: \"" + info.header + "\", Body: \"" + info.body + "\", Show icon: " + (info.showIcon ? "yes" : "no") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== color-picker-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Color Picker component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("It is a trigger field styled like a text field that shows the currently selected color as a small swatch plus its hex value (e.g. a red square and \"#FF031A\"). Focusing or clicking the field opens a small palette panel of preset swatch options below it, similar to how Autocomplete and Mention open a floating panel below their field - except this panel is a grid of color swatches instead of a list of text or people rows.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Open: same border/outline treatment as Focus, plus a palette panel of preset color swatches anchored below the field.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("- Rest/Hover/Focus/Filled: field shows the current color swatch and hex value at all times - there is no empty/placeholder state, a color is always selected.");
+    lines.push("- Open: the field looks focused and a palette panel is visible directly below it, showing 8 preset color swatches in a grid, with the currently selected swatch visibly marked active via a ring/outline.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Color value (editable hex text shown next to the swatch, e.g. \"#FF031A\").");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== date-picker-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Date Picker component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a text field with a fixed trailing calendar icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a calendar panel rather than typed character-by-character. Scope is the trigger field itself, in all its states - not an interactive calendar popup grid.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing the selected date value (e.g. 03/14/2026) instead of the placeholder.");
+    lines.push("- Error: pairs with an inline error message below the field.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when no date is chosen, typically the expected date format).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== date-range-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Date Range component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a single field showing a start date and an end date separated by an arrow, with a fixed trailing calendar icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a calendar panel rather than typed character-by-character. It picks a start/end pair together instead of two separate date fields. Scope is the trigger field itself, in all its states - not an interactive calendar popup grid.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing the selected start and end date values (e.g. Jan 4, 2026 -> Jan 9, 2026) instead of the two placeholders.");
+    lines.push("- Error: shows an invalid/incomplete pairing (e.g. an end date before the start date) and pairs with an inline error message below the field.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Start placeholder (editable text shown for the start date when no range is chosen), End placeholder (editable text shown for the end date when no range is chosen).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== description-detail.js ===
+function buildFullPrompt(columns, title, sizeInfo){
+    columns = columns || DEFAULT_COLUMNS;
+    title = (title || "").trim();
+    sizeInfo = sizeInfo || selectionMode(null, SIZE_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Description component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (form, column count, size, section title) - a read-only label/value grid for displaying a set of structured details at a glance, like a summary panel, not a one-off table hacked together per screen.");
+    lines.push("");
+    lines.push("Description is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 2 forms, each usable at a configurable column count and size, optionally with a section title above the grid.");
+    lines.push("");
+    lines.push("Forms (2):");
+    lines.push("- Default: clean spacing between label/value pairs, no cell borders - a minimal look.");
+    lines.push("- Bordered: each label/value pair sits in its own bordered cell, forming a compact table-like grid with 1px dividers between cells.");
+    lines.push("");
+    lines.push("Each pair is a label (small, uppercase, dimmed) stacked above its value (regular weight, high-contrast). Long values wrap gracefully within their cell instead of overflowing or breaking the grid layout.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Scales item padding and both label/value font one step - column count and grid gap are independent of size.");
+    lines.push("");
+    lines.push("Component properties: Columns (1/2/3, default 2, drives grid-template-columns for how many label/value pairs sit per row); Size; Section title (optional string, shown as a heading above the grid" + (title ? ", currently \"" + title + "\"" : ", e.g. \"Account details\"") + " - With title state only, other states ignore it).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== divider-detail.js ===
+function buildFullPrompt(text, align, sizeInfo){
+    text = (text || DEFAULT_TEXT).trim() || DEFAULT_TEXT;
+    align = align || DEFAULT_ALIGN;
+    sizeInfo = sizeInfo || selectionMode(null, SIZE_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Divider component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (form, line style, size, text label, text alignment) - a thin rule that visually separates content, not a one-off <hr> or border hack rebuilt per screen.");
+    lines.push("");
+    lines.push("Divider is not interactive - unlike every other component in this system, it has no hover, focus or disabled state. Its variation is purely structural: 2 forms, each in 3 line styles and 3 sizes.");
+    lines.push("");
+    lines.push("Forms (2):");
+    lines.push("- Horizontal: a plain full-width horizontal line with no text, used to separate stacked blocks of content.");
+    lines.push("- Horizontal with text: a horizontal line broken by a short text label (e.g. \"" + text + "\"), positioned at the chosen Text alignment.");
+    lines.push("");
+    lines.push("Line styles (3, apply to every form): Solid, Dashed, Dotted - set via border-style. Line color var(--line-strong), label text color var(--text-dim).");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Scales line thickness and label font-size together - Medium is the line-weight shown above.");
+    lines.push("");
+    lines.push("Component properties: Text label (string, applies only to Horizontal with text) - currently \"" + text + "\". Text alignment (Left/Center/Right, applies only to Horizontal with text, controls how much line sits on each side of the label) - currently " + alignLabel(align) + ". Size.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== drawer-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var sizeKey = selectionInfo.sizeKey || FALLBACK_DEFAULTS.size;
+    var title = selectionInfo.title || DEFAULT_TITLE;
+    var body = selectionInfo.body || DEFAULT_BODY;
+    var showClose = selectionInfo.showClose !== undefined ? selectionInfo.showClose : true;
+
+    var lines = [];
+    lines.push("Create a complete Drawer component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable panel component controlled by properties (type, state, size, radius) - a panel that slides in from a screen edge (Left, Right, Top or Bottom) above a dimmed backdrop (scrim), with a title bar (optional close \"x\"), a body, and (usually) a footer with Cancel/Save buttons. Left/Right are full-height and their Size controls width; Top/Bottom are full-width and their Size controls height instead. It reuses the exact same header/body/footer/button visual language as this system's Modal component, just edge-anchored instead of centered - for tasks that need more room than a Modal but shouldn't fully interrupt the page layout.");
+    lines.push("");
+    lines.push("Types (4):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (3, structural):");
+    lines.push("- Default: title bar with close X, body, and a footer with Cancel/Save buttons.");
+    lines.push("- No footer: title bar with close X and body only - an informational panel, no footer action buttons.");
+    lines.push("- No close: title bar has NO close X, forcing the user to pick a footer action - same concept as Modal's own No-close state.");
+    lines.push("");
+    var sizePx = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
+    lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - on Left/Right, controls the panel's width (" + sizePx + "px) and it stays full-height; on Top/Bottom, it controls the panel's minimum height instead (a separate, smaller scale, since Top/Bottom's own header+body+footer content sets a real floor a width-sized value would undershoot) and the panel stays full-width. Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS));
+    lines.push("Corner radius applies to all 4 corners of the panel.");
+    lines.push("");
+    lines.push("Component properties: Title (text, e.g. \"" + title + "\"); Body text (text, e.g. \"" + body + "\"); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).");
+    lines.push("Show close button is currently: " + (showClose ? "on" : "off") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== dropdown-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var label = selectionInfo.label || "Options";
+
+    var lines = [];
+    lines.push("Create a complete Dropdown component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off buttons for each variant. It is a trigger button that reveals a menu of actions or commands when clicked - a real <button> element, not a form field, with no associated <label>, just its own text and a fixed trailing chevron-down icon. It is distinct from a Select trigger (which picks a form value) and from the menu panel it opens (a separate component).");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Open: " + css.open + " This is the state while its menu is visible - the trigger stays visually pressed so the connection to the open menu reads clearly.");
+      lines.push("  Focused: " + css.focus + " Real keyboard focus, independent of Open - never just a color change, so layout never shifts.");
+    });
+    lines.push("");
+    lines.push("States (5, apply to every type): Rest, Hover, Open, Focused, Disabled.");
+    lines.push("- Open: the menu is currently visible; the trigger takes on a pressed appearance rather than a plain hover.");
+    lines.push("- Focused: a real :focus-visible outline for keyboard navigation, independent of Open.");
+    lines.push("- Disabled: 50% opacity, real disabled attribute, no hover/open/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text inside the button, current value \"" + label + "\").");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== empty-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+
+    var lines = [];
+    lines.push("Create a complete Empty component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (icon style, title, description, action label) - a placeholder shown when there's no data to display (an empty search result, an empty inbox, a freshly-created project with nothing in it yet), so the space never looks broken or blank, not a one-off blank div left behind.");
+    lines.push("");
+    lines.push("Icon styles (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (3, progressively more content, apply to either icon style):");
+    lines.push("- Title only: icon + title, no description, no action.");
+    lines.push("- With description: icon + title + a short description line explaining what to do next.");
+    lines.push("- With action: icon + title + description + a primary action button (e.g. \"Create new\") that resolves the empty state.");
+    lines.push("");
+    lines.push("Component properties: Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Description (text, default \"" + FALLBACK_DEFAULTS.description + "\", only shown from the With description state onward); Action label (text, default \"" + FALLBACK_DEFAULTS.actionLabel + "\", only applies to the With action state).");
+    lines.push("Current values - Title: \"" + info.title + "\", Description: \"" + info.description + "\", Action label: \"" + info.actionLabel + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== float-button-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var tooltip = selectionInfo.tooltip || DEFAULT_TOOLTIP;
+
+    var lines = [];
+    lines.push("Create a complete Float Button component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, state) - a circular (or rounded-square, for the Square type) icon-only button fixed to a screen corner via CSS position:fixed in real usage (shown inline here for the matrix), used for a persistent, always-accessible primary action like \"back to top\", \"compose\", or \"customer support\" - distinct from a normal inline Button.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    });
+    lines.push("");
+    lines.push("States (4): Rest, Hover, Focused, Disabled (40% opacity, not-allowed cursor).");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " The icon scales proportionally with the button, about 40% of its diameter.");
+    lines.push("");
+    lines.push("Component properties: Tooltip text (text input, default \"" + DEFAULT_TOOLTIP + "\", shown on hover in real usage); Show badge (boolean toggle, default off - shows a small red badge dot in the button's corner, for unread counts or notifications).");
+    lines.push("Current tooltip text: \"" + tooltip + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== group-button-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Group Button (segmented control) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - a row of joined segments where exactly one is selected at a time, not separate one-off buttons glued together.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Pressed: " + css.pressed);
+      lines.push("  Selected: " + css.selected);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    });
+    lines.push("");
+    lines.push("States (6, apply per segment): Rest, Hover, Pressed, Selected, Focused, Disabled.");
+    lines.push("- Only one segment is ever Selected at a time - selecting a new segment deselects the previous one.");
+    lines.push("- Disabled applies to the whole group at once (40% opacity, not-allowed cursor), not one segment at a time.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height, applied to every segment.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the group's outer corners only - the joining edges between segments stay square.");
+    lines.push("");
+    lines.push("Component properties: Number of buttons (dropdown, 1-9, default 3 - drives both segment count and labels, one consistent lettered sequence: Option A, Option B, Option C, Option D, Option E, Option F, Option G, Option H, Option I); Field label (optional toggle, shows a label above the group, e.g. \"View\", mirrors the Input component's Label); Supporting text (optional toggle, shows helper text below the group, e.g. \"Choose how to display your results.\", mirrors Input's helper text).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== image-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+    var aspect = ASPECT_MAP[info.aspectKey] || ASPECT_MAP.square;
+
+    var lines = [];
+    lines.push("Create a complete Image component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable container for displaying a photo or graphic with graceful Loading, Error and Loaded states, in a configurable aspect ratio and corner radius, instead of a bare unstyled <img> tag with no fallback handling.");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Default: the image frame alone, no caption.");
+    lines.push("- With caption: the image frame plus a caption text row beneath it.");
+    lines.push("");
+    lines.push("States (4):");
+    lines.push("- Loading: a pulsing shimmer skeleton block shown while the image is being fetched.");
+    lines.push("- Error: a muted background with a small broken-image icon and \"Failed to load\" text, shown when the image fails to load.");
+    lines.push("- Loaded: the photo fills the frame, with a small zoom icon overlay in the bottom-right corner hinting that the image can be clicked to preview.");
+    lines.push("- Hover: the same as Loaded, but the zoom icon overlay becomes fully visible - in real usage this is a plain :hover rule on the frame, not a separate state class.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the frame's corners.");
+    lines.push("");
+    lines.push("Component properties: Corner radius; Aspect ratio (Square / Landscape / Portrait, default Square - sizes the frame); Caption (text, default \"" + FALLBACK_DEFAULTS.caption + "\", With caption type only).");
+    lines.push("Current values - Aspect ratio: " + aspect.label + " (" + aspect.width + "x" + aspect.height + "px), Caption: \"" + info.caption + "\" (With caption type only).");
+    lines.push("");
+    lines.push("Important: in real usage this wraps a real <img> element, with onerror/onload handlers driving the Loading/Error/Loaded state classes above. This is a static offline design system with no network access, so every cell shown here is a fixed CSS gradient standing in for \"a loaded photo\" - never an actual fetched image.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== input-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Input Text Field component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Leading icon (boolean, optional icon before the input text), Trailing icon (boolean, optional icon after the input text - e.g. validation or a password-reveal toggle), Allow clear (boolean, shows an × button in the trailing slot once the field has a value, clearing it on click - takes over the trailing slot from Trailing icon whenever both are on and there's a value, since Ant never shows both at once).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== list-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push("Create a complete List component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, corner radius, size, show dividers) - a vertical stack of item rows for displaying a collection of similar items, each row with a title and description, an optional leading avatar, and an optional trailing action link.");
+    lines.push("");
+    lines.push("Container styles (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("Content states (4, apply to every row in the list at once):");
+    STATES.forEach(function(s){
+      lines.push("- " + s.label + ": " + STATE_SPEC[s.key]);
+    });
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to the Bordered type's outer container only - the Default type never carries a radius.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Scales row padding and the leading avatar's diameter together (reusing Avatar's own h24/h32/h40 scale) - never font-size alone.");
+    lines.push("");
+    lines.push("Component properties: Corner radius (Bordered type only); Size; Show dividers (boolean, default checked - shows a thin line between each row).");
+    lines.push("Current values - Show dividers: " + (info.showDividers ? "yes" : "no") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== mention-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Mention component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("It is a multi-line free-form text field, styled like a compact comment box, that lets someone tag another person inline by typing \"@\" - a suggestion panel of matching people opens below the field, and picking one (or finishing typing a name) inserts it as an inline highlighted chip token mixed into the surrounding text. Distinct from Autocomplete, which replaces the whole field value with one chosen option - Mention inserts a token INSIDE a larger block of free-form text and can hold more than one mention in the same field.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Open: same border/outline treatment as Focus, plus a suggestion panel of people anchored below the field.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("- Rest/Hover/Focus: field is empty, showing the placeholder - no chip yet, nothing typed.");
+    lines.push("- Open: the field looks focused and a suggestion panel is visible directly below it, listing 3 example people, each row showing a small round initials avatar and a full name, with one row visually highlighted as if hovered or keyboard-focused so the user can see which person Enter/click would insert.");
+    lines.push("- Filled: same appearance as Rest, showing free-form text with one inline highlighted chip token mixed into it - the mention has already been inserted and the suggestion panel is closed.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== menu-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Menu (floating panel of commands or actions) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, items) - the floating panel/list itself, like what appears when a dropdown trigger, a right-click, or a \"...\" button is activated. Not the trigger button that opens it, and not separate one-off buttons glued together.");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Default: text-only items.");
+    lines.push("- With icons: each item gets a small leading icon before its label.");
+    lines.push("");
+    lines.push("States (4, apply per item): Rest, Hover, Focused, Disabled.");
+    lines.push("  Rest: " + css.rest);
+    lines.push("  Hover: " + css.hover);
+    lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    lines.push("  Disabled: " + css.disabled);
+    lines.push("");
+    lines.push("Destructive item: if the last item's label is literally \"Delete\" or \"Remove\" (case-insensitive), automatically style that item's text and icon (" + css.destructive + ") and add a thin top border (border-top:1px solid " + css.line + ") on that item itself, separating it from the regular actions above - a common pattern real menus use to set a destructive action apart. Draw the border inside the item's own box (box-sizing:border-box) so it never adds extra spacing beyond the panel's normal item gap, and zero out that item's own top-left/top-right corner radius (border-start-start-radius / border-start-end-radius) so the line stays flush edge-to-edge instead of curling in with the item's own rounded corners - its bottom corners keep the inherited radius since it's the last item, sitting at the panel's actual bottom edge.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Controls each item's row height - padding and font-size scale proportionally.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the panel's outer corners only.");
+    lines.push("");
+    lines.push("Component properties: Labels (comma-separated editable text, one per item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== modal-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var sizeKey = selectionInfo.sizeKey || FALLBACK_DEFAULTS.size;
+    var title = selectionInfo.title || DEFAULT_TITLE;
+    var body = selectionInfo.body || DEFAULT_BODY;
+    var showClose = selectionInfo.showClose !== undefined ? selectionInfo.showClose : true;
+
+    var lines = [];
+    lines.push("Create a complete Modal component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable dialog component controlled by properties (type, state, size, radius) - a dialog box shown above a dimmed page backdrop (scrim), blocking interaction with the rest of the page until dismissed or actioned. It has a title bar (with an optional close \"x\"), a body area for content, and usually a footer with Cancel/primary-action buttons.");
+    lines.push("");
+    lines.push("Types (" + TYPES.length + "):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Primary action button: background:" + css.primaryBg + "; Hover: background:" + css.primaryHoverBg + ";");
+    });
+    if (selectionInfo.typeFilter){
+      var filteredType = TYPES.filter(function(t){ return t.key === selectionInfo.typeFilter; })[0];
+      lines.push("");
+      lines.push("This card's live example commits specifically to the " + (filteredType ? filteredType.label : selectionInfo.typeFilter) + " type - generate that type first, though the full component still supports all " + TYPES.length + " listed above.");
+    }
+    lines.push("");
+    lines.push("States (4, structural):");
+    lines.push("- Default: title bar with close X, body, and a footer with Cancel/primary-action buttons.");
+    lines.push("- No footer: title bar with close X and body only - a purely informational dialog, no footer action buttons.");
+    lines.push("- Scrollable: body content has a fixed max-height with a fade-to-transparent gradient cueing more content below - footer still present.");
+    lines.push("- No close: title bar has NO close X, forcing the user to pick a footer action - common for critical confirmations.");
+    lines.push("");
+    var sizePx = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
+    lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - controls the dialog's max-width (" + sizePx + "px). Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS));
+    lines.push("");
+    lines.push("Component properties: Title (text, e.g. \"" + title + "\"); Body text (text, e.g. \"" + body + "\"); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).");
+    lines.push("Show close button is currently: " + (showClose ? "on" : "off") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== notification-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var title = selectionInfo.title || DEFAULT_TITLE;
+    var description = selectionInfo.description || DEFAULT_DESCRIPTION;
+
+    var lines = [];
+    lines.push("Create a complete Notification component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state) - a corner-anchored card (solid background, border, left accent border, drop shadow, fixed ~260px width) with a semantic icon, a bold title, a longer description line and a close button, used to report a background or async event.");
+    lines.push("");
+    lines.push("It differs from Toast by carrying more content per instance (icon + title + description + close, and optionally an action) for events the user wasn't necessarily watching for (e.g. \"File uploaded successfully\", \"3 new messages received\"), rather than Toast's brief, single-line, self-dismissing confirmation of an action the user just took.");
+    lines.push("");
+    lines.push("Types (4, drive the left accent border and the icon color - the card itself always stays a solid neutral elevated surface):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose + " Accent/icon color: " + css.accent + ".");
+    });
+    lines.push("Card (same for every type): " + liveCssFor("info").card);
+    lines.push("");
+    lines.push("States (3, structural, apply to the whole card):");
+    lines.push("- Default: icon, title, description and a close (x) button - no action.");
+    lines.push("- With action: same as Default, plus an inline text-style action button (\"Undo\") below the description.");
+    lines.push("- Stacked: shows two of the same notification card layered with a small gap, the second one sitting slightly behind and reduced in opacity, to demonstrate multiple simultaneous notifications.");
+    lines.push("");
+    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\"); Placement (topRight/topLeft/bottomRight/bottomLeft, default topRight - which viewport corner the notification stacks in; multiple notifications in the same placement stack outward from the edge they anchor to).");
+    lines.push("Current values - Title: \"" + title + "\", Description: \"" + description + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== number-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Number Field component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("The field is a single-line input restricted to numeric characters, with an optional trailing vertical stepper - two stacked buttons that increment or decrement the value by 1.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by 1), Allow clear (boolean - once the field has a value, shows an × button before the stepper that clears it).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== pagination-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Pagination component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - a row of page-navigation controls with one page always shown as current, not separate one-off buttons glued together.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("Shared visual treatment (Numbered page-number buttons and the Simple type's Prev arrow):");
+    lines.push("  Rest: " + css.rest);
+    lines.push("  Hover: " + css.hover);
+    lines.push("  Current page: " + css.current);
+    lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    lines.push("  \"Page X of Y\" count text (Simple type): " + css.count);
+    lines.push("");
+    lines.push("States (4, apply per button): Rest, Hover, Focused, Disabled.");
+    lines.push("- For the Numbered type, the current page (always the middle of the 5 numbered buttons in this reference) stays a solid filled state regardless of row/state being demonstrated on other buttons.");
+    lines.push("- For the Simple type, there are no individual page-number buttons, so states apply to the Prev arrow button instead.");
+    lines.push("- Disabled means the target button is a real disabled control (40% opacity, not-allowed cursor), not just a visual style.");
+    lines.push("");
+    lines.push("Use a left-chevron arrow icon for Prev and the same icon mirrored horizontally for Next (both real <svg>, stroke-based, 24x24 viewBox, currentColor).");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Controls the height of every arrow/page button; padding and font-size scale proportionally.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to each individual arrow/page button.");
+    lines.push("");
+    lines.push("Component properties: Size, Corner radius. Page numbers/count shown are illustrative reference content, not a configurable property.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== password-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Password component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("It is a single-line masked text input - dots hide the entered value by default, the same way a browser's native type=\"password\" input renders. An optional trailing eye-icon button toggles the field between masked and plain text.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing an entered value (rendered as dots) instead of the placeholder.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text), Allow clear (boolean - once the field has a value, shows an × button before the reveal toggle that clears it).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== pop-confirm-detail.js ===
+function buildFullPrompt(question, confirmLabel, cancelLabel){
+    question = (question || DEFAULT_QUESTION).trim() || DEFAULT_QUESTION;
+    confirmLabel = (confirmLabel || DEFAULT_CONFIRM_LABEL).trim() || DEFAULT_CONFIRM_LABEL;
+    cancelLabel = (cancelLabel || DEFAULT_CANCEL_LABEL).trim() || DEFAULT_CANCEL_LABEL;
+
+    var lines = [];
+    lines.push("Create a complete Pop Confirm component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (placement, state, question, confirm label, cancel label) - a small inline confirmation popover anchored to a trigger element, showing a short question with Confirm/Cancel buttons directly inside it, for lightweight \"are you sure?\" moments that don't warrant a full Modal.");
+    lines.push("");
+    lines.push("Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.");
+    lines.push("");
+    lines.push("States (3): Default (a neutral confirm button, e.g. \"" + question + "\" with \"" + cancelLabel + "\"/\"" + confirmLabel + "\" buttons); Destructive (same layout, but the confirm button is styled in the danger/red color, for an irreversible or delete-type action); With icon (same as Default, but adds a small warning-triangle icon inline before the question text).");
+    lines.push("");
+    lines.push("Visual treatment: reads as a proper elevated panel, matching this system's other floating-panel language (Menu, Autocomplete, Popover), but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" alone gives it separation from the page), border-radius var(--radius-md). The trigger sits on the ordinary page background outside the bubble, so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 1.5px solid var(--line-strong), color var(--text-hi), padding 6px 14px, border-radius var(--radius-sm). The arrow is a small rotated square (transform:rotate(45deg)) matching the bubble's own inverted background color. The Confirm/Cancel buttons sit in a right-aligned row below the question - Cancel is a transparent/bordered button using the bubble's own inverted text color (var(--text-hi) would go near-invisible against it), Confirm is a solid neutral button by default or a solid red button in the Destructive state, both with their own fully opaque background so they stay legible regardless of the bubble's inversion.");
+    lines.push("");
+    lines.push("Component properties: Question (string, the short question shown in the bubble) - currently \"" + question + "\". Confirm label (string, the text on the confirm button) - currently \"" + confirmLabel + "\". Cancel label (string, the text on the cancel button) - currently \"" + cancelLabel + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== popover-detail.js ===
+function buildFullPrompt(triggerLabel, title, body){
+    triggerLabel = (triggerLabel || DEFAULT_TRIGGER_LABEL).trim() || DEFAULT_TRIGGER_LABEL;
+    title = (title || DEFAULT_TITLE).trim() || DEFAULT_TITLE;
+    body = (body || DEFAULT_BODY).trim() || DEFAULT_BODY;
+
+    var lines = [];
+    lines.push("Create a complete Popover component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (placement, content state, trigger label, title, body) - a rich floating content panel (title + optional body text + optional close button) anchored to a real clickable trigger button, opened on click (not hover, unlike this system's Tooltip component), not a one-off floating div built from scratch each time.");
+    lines.push("");
+    lines.push("Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.");
+    lines.push("");
+    lines.push("Content states (3): Simple (a bold title line only); With body (the title plus a body paragraph below it, e.g. \"" + title + "\" / \"" + body + "\"); With close (title, body and a small \"x\" close button in the top-right corner of the bubble, for dismissing the popover without clicking outside it).");
+    lines.push("");
+    lines.push("Visual treatment: the same inverted-overlay bubble as Tooltip/Tour/Pop Confirm - near-black in light theme, near-white in dark theme, via the fixed var(--overlay-invert-bg)/-text tokens (never the user-customizable var(--graphite-900)/var(--text-hi)), so it always contrasts with the page regardless of theme or any saved brand color. No border on the bubble - box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" (matching this system's other floating-panel language, Menu/Autocomplete) gives it enough separation from the page on its own; a border read as an unwanted outline against the inverted background. Reads as a proper elevated panel rather than Tooltip's flat single-line bubble, with border-radius var(--radius-md) and room for a title/body/close button. The trigger is a real clickable button (not a decorative circle like Tooltip's trigger), styled like a simple bordered button on the ordinary page background - background var(--graphite-800), border 1px solid var(--line-strong), color var(--text-hi), padding 8px 14px, border-radius var(--radius-sm) - since it sits outside the inverted bubble, not part of it. The arrow is a small rotated square (transform:rotate(45deg)), same background as the bubble, with only half of it showing - the rest tucked behind the bubble's own opaque background as a clean triangular point (same technique as Tooltip's arrow).");
+    lines.push("");
+    lines.push("Component properties: Trigger label (string, the text on the trigger button) - currently \"" + triggerLabel + "\". Title (string, bold text at the top of the bubble) - currently \"" + title + "\". Body (string, used by the With body and With close states) - currently \"" + body + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== progress-detail.js ===
+function buildFullPrompt(percent, showLabel){
+    var lines = [];
+    lines.push("Create a complete Progress component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (layout, state, percent, show label) - a visual indicator of completion percentage, used for uploads, multi-step processes, loading operations, or any quantifiable completion state.");
+    lines.push("");
+    lines.push("Layouts (2):");
+    lines.push("- Linear: a horizontal track with a fill bar that grows left-to-right to the current percent.");
+    lines.push("- Circular: a ring track with a fill arc that sweeps clockwise to the current percent.");
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- In progress: uses the live Percent property value, filled in the accent color - represents an operation still running.");
+    lines.push("- Success: always shows 100% complete, filled in green - represents a finished operation, regardless of the Percent property.");
+    lines.push("- Error: always shows a fixed, partial value (" + ERROR_PERCENT + "%), filled in a darker red with a diagonal hazard-stripe pattern (linear) or a dashed outline (circular) rather than a plain solid fill - represents a stalled or failed operation, visually distinct from the in-progress state even though both are red-family colors.");
+    lines.push("");
+    lines.push("Component properties: Percent (0-100, default " + percent + " - drives only the In progress state's fill), Show label (boolean, default " + (showLabel ? "on" : "off") + " - " + (showLabel ? "shows" : "hides") + " the percentage as text alongside the bar or ring).");
+    lines.push("");
+    lines.push("Accessibility: the track element (the one whose size represents 0-100%, not the wrapper or the fill) carries role=\"progressbar\" with aria-valuemin=\"0\", aria-valuemax=\"100\", and aria-valuenow set to its current percent, plus an aria-label describing what it measures - so assistive technology can announce real progress, not just read a silent colored bar.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== radio-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var core = radioCoreCss();
+
+    var lines = [];
+    lines.push("Create a complete Radio component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, state) - a small circular selection control normally used in a mutually-exclusive group, where this prompt describes how a single radio input looks and behaves in every state.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (5, apply to the radio circle):");
+    lines.push("- Unchecked: " + core.unchecked + " 1.5px border.");
+    lines.push("- Checked: " + core.checked + " plus an inner dot (" + core.dot + ") sized to roughly 45% of the circle's diameter, centered - the ring stays an outline, the fill is never solid.");
+    lines.push("- Hover: " + core.hover);
+    lines.push("- Focused: " + core.focus + " Never just a color change, so layout never shifts.");
+    lines.push("- Disabled: " + core.disabled + " applies to the radio itself, not the whole group.");
+    lines.push("");
+    lines.push("For the Card type only, the row containing the circle and label sits inside a bordered container that switches to " + core.cardChecked + " once its radio is checked - the whole row is clickable, not just the circle.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " The inner dot scales together with the circle.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text next to the circle).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== rating-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var label = selectionInfo.label || DEFAULT_LABEL;
+    var selectedCount = typeof selectionInfo.selectedCount === "number" ? selectionInfo.selectedCount : DEFAULT_COUNT;
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Rating component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, icon size, state) - a row of 5 identical icon buttons that fill in as the user hovers or taps to score something from 0-5, with the current score persisting as filled icons after selection. This is not a text field - it is a tap-to-score control made of repeated icon buttons.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (4, apply per row of 5 icons):");
+    lines.push("- Rest: all 5 icons unfilled/outline - " + css.rest);
+    lines.push("- Hover: all 5 icons unfilled, but the first 3 show a lighter preview tint to suggest a live hover-preview - " + css.preview);
+    lines.push("- Selected: the first N icons filled (N = the Selected property, 0-5), the rest stay unfilled - filled color: " + css.selected);
+    lines.push("- Disabled: all 5 icons unfilled at 40% opacity, not-allowed cursor - " + css.disabled);
+    lines.push("");
+    lines.push(propertyPromptLine("Icon size", sizeInfo, SIZE_OPTIONS) + " Applied directly to each icon's width/height.");
+    lines.push("");
+    lines.push("Component properties: Label (text, default \"" + DEFAULT_LABEL + "\", shown above the row); Selected (0-5, default 3, controls how many of the 5 icons appear filled/selected)." +
+      (selectionInfo.label || typeof selectionInfo.selectedCount === "number"
+        ? " Currently configured as Label: \"" + label + "\", Selected: " + selectedCount + "."
+        : ""));
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== result-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var title = selectionInfo.title || DEFAULT_TITLE;
+    var description = selectionInfo.description || DEFAULT_DESCRIPTION;
+
+    var lines = [];
+    lines.push("Create a complete Result component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state) - a full-panel outcome screen (large semantic icon, bold title, description line, one or two action buttons) shown after a multi-step flow completes or fails, e.g. \"Payment successful\" or \"Submission failed\".");
+    lines.push("");
+    lines.push("It differs from Notification by occupying the main content area as the page's primary content (a large, centered, prominent panel), rather than Notification's small, transient card anchored to a screen corner.");
+    lines.push("");
+    lines.push("Types (4, drive the icon color only - same tokens as Notification's own semantic icons):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose + " Icon color: " + css.accent + ".");
+    });
+    lines.push("");
+    lines.push("States (3, structural):");
+    lines.push("- Default: icon, title, description and one primary action button (\"Done\").");
+    lines.push("- With secondary: same as Default, plus a secondary/ghost action button (\"View details\") next to the primary \"Done\" button.");
+    lines.push("- Compact: a smaller, tighter-spacing variant of the same content (smaller icon, reduced padding) for using Result inline within a card rather than as a full page.");
+    lines.push("");
+    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\").");
+    lines.push("Current values - Title: \"" + title + "\", Description: \"" + description + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== search-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Search field component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("A Search field is a single-line input for querying or filtering content. It skips a visible label by convention - a placeholder and a leading magnifying-glass icon communicate its purpose instead - and shows a trailing clear (\"x\") button once a value is entered, letting the user reset the field in one click.");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline note below the field in " + getCssVar("--danger-500", "#FF031A") + " reporting that no results were found - this is a \"no results\" state, not a validation failure.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing an entered search value instead of the placeholder.");
+    lines.push("- Error: represents \"no results found\" for the current query.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Search fields are commonly pill-shaped (full radius).");
+    lines.push("");
+    lines.push("Component properties: Placeholder (editable text shown when empty), Leading icon (boolean, magnifying-glass icon before the input text), Clear button (boolean, trailing \"x\" button shown once the field has a value, clearing it in one click).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== select-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Select component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a picker for choosing one value from a fixed list, visually similar to a text input but with a fixed trailing chevron-down icon and no visible text cursor, since it is not editable text.");
+    lines.push("");
+    lines.push("Types (4):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (8, apply to every type): Rest, Hover, Focused, Filled, Open, Error, Disabled, Loading.");
+    lines.push("- Focused: border/outline change only, no panel - the moment before a click or Enter opens it.");
+    lines.push("- Filled: same appearance as Rest, showing a selected value instead of the placeholder.");
+    lines.push("- Open: the trigger plus a real role=\"listbox\" panel below it (role=\"option\" per item, aria-selected on the current value) - the field is role=\"combobox\" with aria-expanded=\"true\" while this is showing.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("- Loading: trailing chevron replaced by a spinner, aria-busy=\"true\", not interactive until it resolves.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when nothing is selected), Allow clear (boolean - once a real value is selected, replaces the trailing chevron with an × button that clears it back to the placeholder).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== skeleton-detail.js ===
+function buildFullPrompt(rows){
+    var lines = [];
+    lines.push("Create a complete Skeleton component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (layout, state, rows) - a loading placeholder made of shimmering gray blocks shaped like the content about to load, used to reduce perceived loading time and avoid layout jank while real content is still being fetched.");
+    lines.push("");
+    lines.push("Layouts (3):");
+    lines.push("- Text: stacked paragraph-shaped placeholder lines, full width except the last line which is shorter - a generic block of loading text.");
+    lines.push("- Avatar + text: a circular avatar placeholder to the left, with 2 shimmering text lines stacked to its right - a fixed 2 lines regardless of the Rows property, representing a typical list-item or comment loading shape.");
+    lines.push("- Card: a rectangular media placeholder block on top, with shimmering caption lines below it (last one shorter) - representing a loading card or thumbnail.");
+    lines.push("");
+    lines.push("States (2):");
+    lines.push("- Animated: a shimmering pulse sweeps across every placeholder block, left to right, on a continuous loop.");
+    lines.push("- Reduced motion: the exact same shapes, but with no animation - a static, flat gray block - representing the prefers-reduced-motion accessibility state this system always demonstrates for any animated component.");
+    lines.push("");
+    lines.push("Component properties: Rows (1-5, default " + rows + " - controls how many placeholder lines the Text layout and the Card layout's caption area show; Avatar + text always shows a fixed " + AVATAR_TEXT_ROWS + " lines, regardless of Rows).");
+    lines.push("Current value - Rows: " + rows + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== slider-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var thicknessInfo = selectionInfo.thickness || selectionMode(null, THICKNESS_OPTIONS);
+    var label = selectionInfo.label || FALLBACK_DEFAULTS.label;
+    var value = (selectionInfo.value === undefined || selectionInfo.value === null) ? FALLBACK_DEFAULTS.value : selectionInfo.value;
+
+    var lines = [];
+    lines.push("Create a complete Slider component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, track thickness, state) - a draggable track with one thumb (Single) or two thumbs (Range) for picking a numeric value or a range of two values.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Fill (progress from the track's start" + (t.key === "range" ? ", or between the two thumbs for Range" : "") + "): " + css.fill);
+      lines.push("  Thumb: " + css.thumb);
+      lines.push("  Focused (ring applies to the thumb, not the track): " + css.focus);
+    });
+    lines.push("");
+    lines.push("States (4, apply to the whole control): Rest, Hover, Focused, Disabled.");
+    lines.push("- Focused shows a focus ring on the thumb specifically, never the track, and never just a color change, so layout never shifts.");
+    lines.push("- Disabled applies to the whole control at once (40% opacity, not-allowed cursor) - the thumb keeps its shape.");
+    lines.push("");
+    lines.push(propertyPromptLine("Track thickness", thicknessInfo, THICKNESS_OPTIONS) + " Corner radius is always a full pill on both the track and the thumb - not configurable, since a slider track has no practical use for sharp or partial corners.");
+    lines.push("");
+    lines.push("Component properties: Label (text input, default \"Volume\"); Value (number, 0-100, default 60 - drives the Single type's fill percentage and thumb position; the Range type uses two fixed example values, 30 and 70, for illustration, since there's only one Value property in this demo).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== spin-detail.js ===
+function buildFullPrompt(label){
+    var lines = [];
+    lines.push("Create a complete Spin component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (size, state, label) - a small, continuously-rotating ring that communicates an indeterminate loading state, used inline within a button, beside text, or centered over a section of content that is loading. It has no known completion percentage or shape - distinct from Progress (a known percentage) and Skeleton (content-shaped placeholder blocks).");
+    lines.push("");
+    lines.push("Sizes (3):");
+    lines.push("- Small: a 14px ring diameter, for tight inline placements like inside a compact button.");
+    lines.push("- Default: a 20px ring diameter, for general inline or standalone use.");
+    lines.push("- Large: a 28px ring diameter, for more prominent standalone loading moments.");
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- Spinning: just the bare ring, no label - the leanest inline case, e.g. inside a button.");
+    lines.push("- With label: the ring plus the Label property text shown beside it, in a row.");
+    lines.push("- Overlay: the ring and label centered over a dimmed rectangular content placeholder, representing a section of the page temporarily covered while it loads.");
+    lines.push("");
+    lines.push('Component properties: Label (text shown beside the ring in the With label and Overlay states, default "' + label + '").');
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== splitter-detail.js ===
+function buildFullPrompt(panel1Label, panel2Label, ratio){
+    panel1Label = (panel1Label || DEFAULT_PANEL1_LABEL).trim() || DEFAULT_PANEL1_LABEL;
+    panel2Label = (panel2Label || DEFAULT_PANEL2_LABEL).trim() || DEFAULT_PANEL2_LABEL;
+    ratio = clampRatio(ratio);
+
+    var lines = [];
+    lines.push("Create a complete Splitter component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, split ratio, state, panel content) - a two-panel layout separated by a draggable divider that lets the user redistribute space between the panels, not a one-off resize handle wired up per screen.");
+    lines.push("");
+    lines.push("Types (2):");
+    lines.push("- Horizontal: panels sit side by side, divided by a vertical draggable line (col-resize cursor).");
+    lines.push("- Vertical: panels stack top to bottom, divided by a horizontal draggable line (row-resize cursor).");
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- Default: a static split at the configured ratio (currently " + ratio + "% / " + (100 - ratio) + "%).");
+    lines.push("- Dragging: the divider itself is highlighted (brand red) while the pointer is actively resizing - panel proportions mid-drag are whatever they were an instant before, not reset.");
+    lines.push("- Collapsed: the first panel shrinks to a thin 28px strip showing only an expand chevron, temporarily reclaiming its space for the second panel.");
+    lines.push("");
+    lines.push("Component properties: First panel label (text, e.g. \"" + panel1Label + "\"); Second panel label (text, e.g. \"" + panel2Label + "\"); Split ratio (number, percent given to the first panel when not collapsed) - currently " + ratio + ".");
+    lines.push("Live interaction: include splitter-runtime.js and mount ADSSplitter. Named separator with arrow/Shift/Home/End/Enter keys, 64px minimum expanded panes, 10–90% bounds, collapse/restore, pointer cancellation and versioned width persistence. Use a unique storage key per product layout. Static state comparisons remain inert.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== statistic-detail.js ===
+function buildFullPrompt(title, value, prefix, suffix){
+    title = (title || DEFAULT_TITLE).trim() || DEFAULT_TITLE;
+    value = (value || DEFAULT_VALUE).trim() || DEFAULT_VALUE;
+    prefix = prefix || "";
+    suffix = suffix || "";
+
+    var lines = [];
+    lines.push("Create a complete Statistic component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, color, title, value, prefix, suffix) - a compact, high-emphasis display for a single quantifiable number, not a one-off big number hard-coded per dashboard tile.");
+    lines.push("");
+    lines.push("Statistic is not interactive - it has no hover, focus or disabled state. Its variation is structural: 3 types, each in 4 states (which act as semantic colors, not interaction states).");
+    lines.push("");
+    lines.push("Types (3):");
+    lines.push("- Default: a title above a large, bold value, with optional prefix/suffix.");
+    lines.push("- With Trend: same as Default, plus a small colored up/down arrow and a percentage change on its own line below the value.");
+    lines.push("- Countdown: same as Default, but the value renders in a monospace, timer-like style.");
+    lines.push("");
+    lines.push("States (4, apply to every type):");
+    lines.push("- Default: neutral color (var(--text-hi)).");
+    lines.push("- Positive: value (and, for With Trend, the arrow pointing up) in var(--green-500).");
+    lines.push("- Negative: value (and, for With Trend, the arrow pointing down) in var(--danger-500).");
+    lines.push("- Loading: title stays visible, but the value is replaced by an animated shimmering placeholder bar - never show a stale or fake value while loading.");
+    lines.push("");
+    lines.push("Component properties: Title (text, e.g. \"" + title + "\"); Value (text, e.g. \"" + value + "\"); Prefix (optional text shown immediately before the value, e.g. a currency symbol) - currently \"" + prefix + "\"; Suffix (optional text shown immediately after the value, e.g. a unit or percent sign) - currently \"" + suffix + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== steps-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var orientationInfo = selectionInfo.orientation || selectionMode(null, ORIENTATION_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
+    var c = liveStepsColors();
+
+    var lines = [];
+    lines.push("Create a complete Steps (progress indicator) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, orientation, size, labels, per-step status) - a row showing position within a multi-step flow like checkout or onboarding, not separate one-off labels glued together. Steps are inherently sequential: every step before the current one renders as completed, every step after it renders as upcoming.");
+    lines.push("");
+    lines.push("Type: Numbered - " + FULL_SPEC.numbered.purpose);
+    lines.push("");
+    lines.push("States (5, apply per step):");
+    lines.push("- Upcoming: empty ring (1.5px " + c.lineStrong + " border, transparent fill), step number in " + c.textDim + ", connector lines on both sides in " + c.lineStrong + ".");
+    lines.push("- Current: solid " + c.red500 + " background, step number in white (never a checkmark - that's Completed only), label text in " + c.textHi + " and bold.");
+    lines.push("- Completed: solid " + c.red500 + " background with a checkmark icon in white in place of the number, connector line after it in " + c.lineStrong + " (the next step is upcoming) but the connector before it in " + c.red500 + " (the previous step is completed too).");
+    lines.push("- Error: solid " + c.danger500 + " background with an X mark in white, label text in " + c.danger500 + ".");
+    lines.push("- Disabled: empty ring at 40% opacity, label text at 40% opacity - static/illustrative, not interactive.");
+    lines.push("- A connector is only filled (brand red) when both steps it joins are completed; otherwise it stays the neutral line color.");
+    lines.push("");
+    lines.push(propertyPromptLine("Orientation", orientationInfo, ORIENTATION_OPTIONS) + " Horizontal runs left-to-right with the circle above its label and a horizontal connector between circles; Vertical stacks top-to-bottom with the circle beside its label and a vertical connector below each circle, centered under the circle column either way.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Circle diameter and the number/icon size scale together, applied to every step.");
+    lines.push("");
+    lines.push("Component properties: Labels (comma-separated editable text, one per step, current value \"" + labels.join(", ") + "\" - step count follows the number of labels entered).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== switch-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var css = liveCssFor();
+
+    var lines = [];
+    lines.push("Create a complete Switch (toggle) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, state) - a pill-shaped track with a sliding circular thumb that flips a single setting on or off, not a checkbox merely styled to look like one.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (5, same visual treatment for both types):");
+    lines.push("- Off: " + css.off);
+    lines.push("- On: " + css.on);
+    lines.push("- Hover: " + css.hover);
+    lines.push("- Focused: " + css.focus + " Never just a color change, so the focus ring stays visible against every other state.");
+    lines.push("- Disabled: " + css.disabled);
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Track width scales with height (width = height x 1.75, rounded); thumb size and travel distance scale with it too.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text next to the switch, shown for the Labeled type and used as the accessible name for both).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== table-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push("Create a complete Table component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, corner radius, size, show header) - a structured grid of rows and columns for displaying tabular data (Name / Status / Role / Email / Mobile example columns - Email and Mobile render as real mailto:/tel: links, styled in this system's defined link color, var(--red-400)), with a header row and optional cell borders, alternating row stripes, or row selection.");
+    lines.push("");
+    lines.push("Border styles (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("");
+    lines.push("States (5, apply to the whole set of body rows at once):");
+    STATES.forEach(function(s){
+      lines.push("- " + s.label + ": " + STATE_SPEC[s.key]);
+    });
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to the Bordered type's outer container only - the Default type never carries a radius.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", info.size, SIZE_OPTIONS) + " Scales cell padding only - column widths and font-size stay the same at every size.");
+    lines.push("");
+    lines.push("Component properties: Corner radius (Bordered type only); Size; Show header (boolean, default checked - shows the column-label header row above the body rows).");
+    lines.push("Current values - Show header: " + (info.showHeader ? "yes" : "no") + ".");
+    lines.push("");
+    lines.push("Interaction contract (real, data-backed usage, beyond this page's static demos):");
+    lines.push("- Selection (" + SELECTION_MODES.length + "): " + SELECTION_MODES.map(function(m){ return m.label; }).join(" / ") + ".");
+    SELECTION_MODES.forEach(function(m){ lines.push("  - " + m.label + ": " + m.detail); });
+    lines.push("- Sort: " + SORT_SPEC.clientSide + " " + SORT_SPEC.serverSide + " " + SORT_SPEC.multiColumn + " " + SORT_SPEC.a11y);
+    lines.push("- Filter: " + FILTER_SPEC.perColumn + " " + FILTER_SPEC.global + " " + FILTER_SPEC.emptyStates);
+    lines.push("- Pagination vs virtualization (threshold " + PAGINATION_SPEC.thresholdRows + " rows): " + PAGINATION_SPEC.below + " " + PAGINATION_SPEC.above);
+    lines.push("- Density (" + DENSITY_MODES.length + "): " + DENSITY_MODES.map(function(m){ return m.label + " - " + m.detail; }).join(" "));
+    lines.push("- Required states (" + REQUIRED_STATES.length + "): " + REQUIRED_STATES.map(function(s){ return s.label + " - " + s.detail; }).join(" "));
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tabs-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var labels = selectionInfo.labels || DEFAULT_LABELS;
+
+    var lines = [];
+    lines.push("Create a complete Tabs (tab bar) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - a horizontal row of tab triggers where exactly one is active at a time. Only the tab bar itself, not a full page with panel content underneath.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Active: " + css.active);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    });
+    lines.push("");
+    lines.push("States (4, apply per trigger): Rest, Hover, Focused, Disabled.");
+    lines.push("- Exactly one trigger is Active at all times - a separate property from these four states, so the bar always shows realistic always-one-selected context.");
+    lines.push("- Disabled applies to one trigger at a time (its own real disabled attribute, 40% opacity, not-allowed cursor), not the whole bar.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " This is the tab bar's height - padding and font-size scale proportionally, applied to every trigger.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Only visually affects the Pill type's active tab (its pill background) - the Underline type ignores it entirely.");
+    lines.push("");
+    lines.push("Component properties: Labels (comma-separated editable text, one per trigger, current value \"" + labels.join(", ") + "\" - trigger count follows the number of labels entered).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tag-detail.js ===
+function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push("Create a complete Tag component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (color, form, radius) - a small labeled chip used for categorizing, filtering, or flagging status, not a one-off pill built from scratch each time.");
+    lines.push("");
+    lines.push("Types (4, semantic colors):");
+    TYPES.forEach(function(t){
+      var c = colorsFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Default look: background " + c.background + ", color " + c.color + ".");
+      lines.push("  Selected look (Selected form only): background " + c.selectedBackground + ", color " + c.selectedColor + " - a solid, more saturated fill showing the toggled-on appearance of a selectable/filter tag.");
+    });
+    lines.push("");
+    lines.push("Forms (3, structural):");
+    lines.push("- Default: plain label only.");
+    lines.push("- Removable: label plus a trailing \"x\" remove icon button.");
+    lines.push("- Selected: the label alone, no remove button, rendered with the type's Selected look instead of its Default look - demonstrates the toggled-on appearance of a selectable/filter-style tag.");
+    lines.push("");
+    lines.push("Checkable mode (Ant's Tag.CheckableTag): a real <button> with aria-pressed instead of a plain <span>, toggling the Selected look on click. Independent, not mutually exclusive - any number of tags in the same group can be pressed at once, unlike a radio group.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to each chip individually.");
+    lines.push("");
+    lines.push("Component properties: Corner radius; Label (text, default \"" + FALLBACK_DEFAULTS.label + "\").");
+    lines.push("Current values - Label: \"" + info.label + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== text-area-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Text Area component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
+    lines.push("");
+    lines.push("It is a multi-line free-form text field for longer content like comments, descriptions, or messages - it grows taller through a Rows property, not by manual dragging (resize: none, matching this system's other fields, which don't offer manual resize).");
+    lines.push("");
+    lines.push("Types (3):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing entered multi-line text instead of the placeholder.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Rows (2-8, default 4, controls the field's visible height - the number of text lines tall it renders).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== time-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Time component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a text field with a fixed trailing clock icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a time-selection UI rather than typed character-by-character. Scope is the trigger control itself, in all its states - the trigger opens a time-selection UI on click/focus in a real implementation, but that popup UI is not built out here, the same \"declared but not interactively simulated\" convention Date Picker itself already uses for its calendar popup.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("- Filled: same appearance as Rest, showing the selected time value (e.g. 10:30 AM) instead of the placeholder.");
+    lines.push("- Error: pairs with an inline error message below the field.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when no time is chosen, e.g. \"Select a time\").");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== timeline-detail.js ===
+function buildFullPrompt(showIcons){
+    var lines = [];
+    lines.push("Create a complete Timeline component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (layout, state, show icons) - a vertical list of chronological events, each with a dot (or optional status icon) connected by a continuous vertical line, used for activity logs, order status history, or a project's milestone history.");
+    lines.push("");
+    lines.push("Layouts (3):");
+    lines.push("- Default: dots aligned to the left, with every event's title and timestamp to the right of the connecting line, stacked vertically.");
+    lines.push("- Alternate: dots centered on the line, with event content alternating left and right of it for odd/even events - a classic alternating vertical timeline layout.");
+    lines.push("- Horizontal: events flow left to right along a single horizontal line, with each dot centered above its own title and timestamp.");
+    lines.push("");
+    lines.push("States (3):");
+    lines.push("- Default: plain, neutral-colored dots (or icons) - every event reads as complete/neutral, with no emphasis on any one item.");
+    lines.push("- With events: the same events, but the current/in-progress event (the second one) gets an accent-colored dot and a bolder title, so it stands out from the events around it.");
+    lines.push("- Pending: the same events plus a trailing, dimmed placeholder item with a dashed segment of connecting line above it and no timestamp (just \"Pending...\"), indicating more events are still to come.");
+    lines.push("");
+    lines.push("Component properties: Show icons (boolean, default off) - " + (showIcons ? "ON, so every dot is replaced with a small colored status icon (a checkmark in a circle)." : "OFF, so every event shows a plain dot rather than an icon.") + " The current event in the \"With events\" state and the pending placeholder keep their own accent/dimmed coloring regardless of this setting.");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== toast-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+    var title = selectionInfo.title || DEFAULT_TITLE;
+    var description = selectionInfo.description || DEFAULT_DESCRIPTION;
+    var showIcon = selectionInfo.showIcon !== false;
+
+    var lines = [];
+    lines.push("Create a complete Toast (floating notification) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state, radius) - a floating, elevated notification card (solid background, border, drop shadow, fixed ~340px max-width) that appears temporarily to confirm an action or report a status.");
+    lines.push("");
+    lines.push("It differs from Alert by being a floating overlay element, not inline page content - in production it is typically rendered in a fixed screen corner (e.g. bottom-right), stacked above the page, rather than embedded in the content flow the way Alert is.");
+    lines.push("");
+    lines.push("Types (4, drive only the icon color - the card itself always stays a solid neutral elevated surface):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose + " Icon color: " + css.icon);
+    });
+    lines.push("Card (same for every type): " + liveCssFor("info").card);
+    lines.push("");
+    lines.push("States (4, structural, apply to the whole card):");
+    lines.push("- Default: title and description only, no extra controls.");
+    lines.push("- Dismissible: adds a trailing close (x) icon button in the card's top-right corner.");
+    lines.push("- With action: adds an inline text-style action button (e.g. \"View\") below the description.");
+    lines.push("- With progress: adds a thin colored progress/timer bar along the card's bottom edge, using the type's accent color at roughly 60% width to suggest a countdown in progress.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the whole card, with matching inset on the bottom edge so the With-progress bar never pokes out past rounded corners.");
+    lines.push("");
+    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\"); Show icon (boolean toggle, default " + (showIcon ? "on" : "off") + " - shows the semantic type icon beside the title/description).");
+    lines.push("Current values - Title: \"" + title + "\", Description: \"" + description + "\", Show icon: " + (showIcon ? "yes" : "no") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tooltip-detail.js ===
+function buildFullPrompt(sizeKey, text, showArrow){
+    sizeKey = sizeKey || DEFAULT_SIZE;
+    text = (text || DEFAULT_TEXT).trim() || DEFAULT_TEXT;
+    if (showArrow === undefined || showArrow === null) showArrow = DEFAULT_SHOW_ARROW;
+    var size = sizeInfoFor(sizeKey);
+
+    var lines = [];
+    lines.push("Create a complete Tooltip component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (placement, size, content state) - a small floating label anchored to a trigger element on one of 4 sides, with a connecting arrow, not a one-off floating div built from scratch each time.");
+    lines.push("");
+    lines.push("Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.");
+    lines.push("");
+    lines.push("Content states (3): Plain text (a single line of text only); Rich (a bold title line plus a smaller description line below it, e.g. \"" + RICH_TITLE + "\" / \"" + RICH_DESCRIPTION + "\"); Long text (wraps to 2-3 lines at a max-width around 180px instead of forcing the bubble wider).");
+    lines.push("");
+    lines.push("Visual treatment: one consistent look regardless of placement or content state - this is a neutral utility component, not semantically colored like Alert or Toast. Inverted against the page (near-black background in light theme, near-white in dark theme - background var(--overlay-invert-bg), color var(--overlay-invert-text), NOT the normal-surface var(--text-hi)/var(--graphite-900) pair, since those are user-customizable via Foundations and would silently break the guaranteed inversion), the arrow a small rotated square (transform:rotate(45deg)) in the same background color, positioned so it visually connects the bubble to the trigger.");
+    lines.push("");
+    lines.push("Component properties: Size (Small/Default/Large, controls padding and font-size) - currently " + sizeLabel(sizeKey) + " (" + size.pad + " padding, " + size.font + "px font). Show arrow (boolean, toggles the connecting arrow) - currently " + (showArrow ? "shown" : "hidden") + ". Text content (string, used by the Plain text state) - currently \"" + text + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tour-detail.js ===
+function buildFullPrompt(targetLabel, title, description){
+    targetLabel = (targetLabel || DEFAULT_TARGET_LABEL).trim() || DEFAULT_TARGET_LABEL;
+    title = (title || DEFAULT_TITLE).trim() || DEFAULT_TITLE;
+    description = (description || DEFAULT_DESCRIPTION).trim() || DEFAULT_DESCRIPTION;
+
+    var lines = [];
+    lines.push("Create a complete Tour component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (placement, step-position state, target label, title, description) - a step-by-step walkthrough card (title + description + step counter + Back/Next or Back/Finish navigation) anchored to a highlighted target element, not a one-off floating div built from scratch each time.");
+    lines.push("");
+    lines.push("Placements (4): Top, Bottom, Left, Right - the card sits on the given side of the target, with a small arrow connecting it back to the target. Top's arrow points down at the target below it, Bottom's arrow points up at the target above it, Left's arrow points right at the target beside it, Right's arrow points left at the target beside it.");
+    lines.push("");
+    lines.push("Step-position states (3): First step (step counter \"1 of " + STEP_TOTAL + "\", only a Next button); Middle step (step counter \"2 of " + STEP_TOTAL + "\", both Back and Next buttons); Last step (step counter \"3 of " + STEP_TOTAL + "\", a Back button plus a Finish button instead of Next).");
+    lines.push("");
+    lines.push("Visual treatment: reads as a proper elevated panel, similar in floating-panel language to this system's Tooltip and Popover components, but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"0 8px 24px rgba(0,0,0,0.4)\" alone gives it separation from the page), border-radius var(--radius-md). The target is a decorative highlighted chip (not a real interactive control), sitting on the ordinary page background outside the card so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 2px solid var(--red-500), box-shadow \"0 0 0 3px var(--red-tint)\" - so it reads clearly as the highlighted element the tour is pointing at. The arrow is a small rotated square (transform:rotate(45deg)) matching the card's own inverted background color. Primary actions (Next/Finish) use background var(--red-500); the Back button is a ghost/outline style using the card's own inverted text color for its border and label (var(--text-hi)/var(--line-strong) would go near-invisible against the inverted background).");
+    lines.push("");
+    lines.push("Component properties: Target label (string, the highlighted element's text) - currently \"" + targetLabel + "\". Title (string, bold text at the top of the card body) - currently \"" + title + "\". Description (string, supporting text below the title) - currently \"" + description + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== transfer-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeKey = selectionInfo.sizeKey || FALLBACK_DEFAULTS.size;
+    var leftTitle = selectionInfo.leftTitle || DEFAULT_LEFT_TITLE;
+    var rightTitle = selectionInfo.rightTitle || DEFAULT_RIGHT_TITLE;
+
+    var lines = [];
+    lines.push("Create a complete Transfer component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable dual-list widget controlled by properties (type, state, size, left title, right title) - two side-by-side list panels, an available-items \"" + leftTitle + "\" list on the left and a chosen-items \"" + rightTitle + "\" list on the right, each item with its own checkbox, with center-aligned \">\" / \"<\" arrow buttons between the panels to move checked items from one side to the other. This is a standalone panel widget, not a text-field trigger.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key]);
+    });
+    lines.push("");
+    lines.push("States (4):");
+    lines.push("- Rest: default appearance.");
+    lines.push("- Hover: the first source item shows a hover background.");
+    lines.push("- Focused: the right (\">\") transfer button shows a visible focus ring.");
+    lines.push("- Disabled: the whole widget at reduced opacity (40%), checkboxes and arrow buttons non-interactive.");
+    lines.push("");
+    lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - controls each panel's list height (" + (SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size]) + "px). Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
+    lines.push("");
+    lines.push("Component properties: Size (dropdown - Small/Default/Large, controls each panel's list height); Left title (text, e.g. \"" + leftTitle + "\"); Right title (text, e.g. \"" + rightTitle + "\").");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tree-detail.js ===
+function buildFullPrompt(rootLabel, showIcons, typeFilter){
+    rootLabel = (rootLabel || DEFAULT_ROOT_LABEL).trim() || DEFAULT_ROOT_LABEL;
+    showIcons = showIcons === undefined ? DEFAULT_SHOW_ICONS : showIcons;
+
+    var lines = [];
+    lines.push("Create a complete Tree component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, root label, icon visibility, state) - a standalone, always-visible hierarchical structure with expandable branches, like a file system or an org chart. Distinct from Tree Select, which hides the same structure behind a Select-style dropdown trigger.");
+    lines.push("");
+    lines.push("Types (" + TYPES.length + "):");
+    lines.push("- Default: nodes are selectable by click - clicking a node highlights it, no checkboxes.");
+    lines.push("- Checkable: every node gets its own checkbox for multi-select; checking a parent should check all its children (and check a parent automatically when every child becomes checked).");
+    lines.push("- Metatext: same selectable nodes as Default (no checkboxes), plus a second, smaller line of muted supplemental text under each node's label (a file size, an item count) - useful for disambiguating similarly-named nodes or surfacing a quick detail without adding a column. Modeled on Lightning Design System's Tree item metatext, which top-aligns the toggle/icon against the now-taller two-line row rather than centering it.");
+    if (typeFilter){
+      var filteredType = TYPES.filter(function(t){ return t.key === typeFilter; })[0];
+      lines.push("");
+      lines.push("This card's live example commits specifically to the " + (filteredType ? filteredType.label : typeFilter) + " type - generate that type first, though the full component still supports all " + TYPES.length + " listed above.");
+    }
+    lines.push("");
+    lines.push("States (4):");
+    lines.push("- Default: top-level nodes visible, all branches collapsed.");
+    lines.push("- Expanded: one branch expanded, showing its children.");
+    lines.push("- Selected: one leaf node highlighted (Default type) or checked (Checkable type), with its parent branch expanded so it's visible.");
+    lines.push("- Disabled: the whole tree dimmed and non-interactive.");
+    lines.push("");
+    lines.push("Each node is either a parent (has children, shown with an expand/collapse chevron" + (showIcons ? " and a folder icon" : "") + ") or a leaf" + (showIcons ? " (shown with a file icon)" : "") + ". Clicking a parent's chevron toggles its children's visibility without selecting it.");
+    lines.push("");
+    lines.push("Component properties: Root label (text, a heading shown above the node list, e.g. \"" + rootLabel + "\"); Show icons (boolean, toggles the folder/file icon next to each node) - currently " + (showIcons ? "on" : "off") + ".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== tree-select-detail.js ===
+function buildFullPrompt(selectionInfo){
+    selectionInfo = selectionInfo || {};
+    var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
+    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
+
+    var lines = [];
+    lines.push("Create a complete Tree Select component system for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a select-like trigger field showing a selected node's label (e.g. \"Engineering / Frontend\") with a trailing chevron icon, that opens a floating panel below it containing an INDENTED, EXPANDABLE TREE of options - parent nodes with a collapse/expand caret, child nodes indented beneath them, any node at any depth selectable, not just leaves. Distinct from Select (one flat list) and from Cascader (fixed side-by-side columns, one per level) - a Tree Select's hierarchy can be any depth and stays in a single scrolling list with indentation showing nesting.");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+      lines.push("  Rest: " + css.rest);
+      lines.push("  Hover: " + css.hover);
+      lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
+      lines.push("  Open: same border/outline treatment as Focus, plus an indented tree panel anchored below the field.");
+    });
+    lines.push("");
+    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("- Focus: real keyboard focus on the field, no tree panel visible yet.");
+    lines.push("- Open: the tree panel is visible directly below the field - each row is indented by depth (16px per level), parent nodes show a caret (down when expanded, right when collapsed) before the label, leaf nodes show a same-width blank spacer instead so every label still aligns in a column, and the currently selected node is highlighted.");
+    lines.push("- Filled: same appearance as Rest, showing the selected node's label with the panel closed.");
+    lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
+    lines.push("");
+    lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
+    lines.push("");
+    lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
+    lines.push("");
+    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces the single active-row highlight with a real checkbox per node, parents included, letting more than one node be picked across branches). Search (boolean - a real input inside the trigger itself, narrowing the tree to matching nodes with the matched substring highlighted).");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  
+
+=== upload-detail.js ===
+function buildFullPrompt(label, helper){
+    label = label || DEFAULT_LABEL;
+    helper = helper || DEFAULT_HELPER;
+    var palette = paletteSnapshot();
+
+    var lines = [];
+    lines.push("Create a complete Upload (file upload) component for the Agentic Design System.");
+    lines.push("");
+    lines.push("Build it as ONE reusable component controlled by properties (type, state, label, helper text) - either a large drag-and-drop dropzone or a compact trigger button for adding files, paired with a file list below it showing each added file's name, size and status (uploading with a progress bar, complete with a checkmark, or failed with an error message and reason).");
+    lines.push("");
+    lines.push("Types (2):");
+    TYPES.forEach(function(t){
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
+    });
+    lines.push("Dropzone border (every state): 1.5px dashed " + palette.lineStrong + ".");
+    lines.push("");
+    lines.push("States (4, apply to the control and its file list together):");
+    lines.push("- Empty: just the dropzone/button, no file list shown yet.");
+    lines.push("- With files: dropzone/button plus a 2-row file list - one complete file with a green checkmark (" + palette.green500 + "), one mid-upload file with a thin progress bar (fill " + palette.red500 + ") and a percentage label.");
+    lines.push("- Error: a file list row with a red error icon and short error text (color " + palette.danger500 + ") instead of a progress bar, e.g. \"" + DEMO_FILE_ERROR.error + "\".");
+    lines.push("- Disabled: the whole control, including any file list, at 40% opacity and non-interactive.");
+    lines.push("");
+    lines.push("Component properties: Label (text, default \"" + DEFAULT_LABEL + "\"); Helper text (text, default \"" + DEFAULT_HELPER + "\").");
+    lines.push("Current values - Label: \"" + label + "\", Helper text: \"" + helper + "\".");
+    return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
+  }
+
+  

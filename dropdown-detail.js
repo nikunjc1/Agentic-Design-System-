@@ -62,14 +62,14 @@
         rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         open: "border-color:" + red500 + ";background:" + redTint + ";",
-        focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
       };
     }
     return {
       rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
       hover: "background:" + graphite700 + ";",
       open: "background:" + graphite900 + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
     };
   }
 

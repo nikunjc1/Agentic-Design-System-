@@ -128,8 +128,19 @@ test('default focus follows the brand and maintains a ring in both dimensional u
   }
 });
 test('context defaults agree for single-platform and multiple-platform projects',()=>{
-  const p={productType:'Data-Heavy Application',platforms:['desktop-web']};assert.equal(M.recommendedProduct(p),'desktop-web');assert.equal(M.contextualDefault('spacing',p).system,'8px');assert.equal(M.contextualDefault('radius',p).philosophy,'compact');assert.equal(M.contextualDefault('grid-layout',p).gutter,24);
-  p.platforms.push('mobile-web');assert.equal(M.contextualDefault('spacing',p).system,'2px');assert.equal(M.contextualDefault('radius',p).philosophy,'sharp');assert.equal(M.contextualDefault('grid-layout',p).system,'columns-rows');
+  const p={productType:'Data-Heavy Application',platforms:['desktop-web']};assert.equal(M.recommendedProduct(p),'desktop-web');assert.equal(M.contextualDefault('spacing',p).system,'8px');assert.equal(M.contextualDefault('radius',p),null);assert.equal(M.contextualDefault('grid-layout',p).gutter,24);
+  p.platforms.push('mobile-web');assert.equal(M.contextualDefault('spacing',p).system,'2px');assert.equal(M.contextualDefault('radius',p),null);assert.equal(M.contextualDefault('grid-layout',p).system,'columns-rows');
+});
+test('Project Setup seeds Typography, saved choices win, and Radius stays a manual choice',()=>{
+  const profile={productType:'Consumer App',platforms:['mobile-app']};
+  const initial=M.resolve({},'light',profile);
+  assert.equal(initial.tokens['--type-h1-size'],'30px');
+  assert.equal(initial.tokens['--grid-columns'],'4');
+  assert.equal(initial.tokens['--radius-md'],'8px');
+  const saved={typography:{headingScaleVersion:2,levels:{h1:{size:'display-xl'}}},radius:{philosophy:'sharp'}};
+  const custom=M.resolve(saved,'light',profile);
+  assert.equal(custom.tokens['--type-h1-size'],'60px');
+  assert.equal(custom.tokens['--radius-md'],'4px');
 });
 test('malformed records and out-of-bounds values are rejected or safely resolved',()=>{
   for(const v of [[],null,'bad'])assert.equal(M.validRecord('ads:typography',v),false);

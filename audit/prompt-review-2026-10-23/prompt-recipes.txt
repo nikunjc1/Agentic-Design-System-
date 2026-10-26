@@ -1,0 +1,2036 @@
+=== add-on-default.html ===
+Create a complete Add-on component system for the Agentic Design System.
+
+An Add-on is a single-line text field with an optional prefix segment and/or suffix segment attached directly to it, sharing one visual control - like a protocol prefix on a URL field or a currency/unit suffix on a price field. Each segment has its own subtle background, distinct from the input area, so it reads as a separate attached zone rather than plain field background.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+Types (3):
+- Outlined: The default text field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A minimal field with only a bottom border, useful for compact inline forms or search-like inputs where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing an entered value instead of the placeholder.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Segments nest inside the control's own radius on their outer corner only.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show prefix (boolean, optional text segment attached to the left edge of the field with its own editable prefix text - e.g. a protocol or currency symbol), Show suffix (boolean, optional text segment attached to the right edge of the field with its own editable suffix text - e.g. a domain or unit).
+
+
+
+=== affix-default.html ===
+Create a complete Affix component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, offset, state, content) - a wrapper that pins its child element to the viewport once the page scrolls past the child's original position, so it stays reachable.
+
+Types (2):
+- Top: pins the element 8px from the top of the viewport once scrolled past.
+- Bottom: pins the element 8px from the bottom of the viewport once scrolled past.
+
+States (3):
+- Rest: the element sits in its normal position in the page flow - not yet affixed.
+- Affixed: the element is pinned to its edge, visually lifted with a shadow and a slightly stronger border/background so it reads as detached from the page flow beneath it.
+- Disabled: affix behavior is turned off entirely - the element always stays in its normal flow position, shown dimmed here to distinguish it from Rest.
+
+Component properties: Content label (text, e.g. "Filter toolbar" - the content being pinned, such as a toolbar or a call-to-action); Offset (number, px from the edge once affixed) - currently 8.
+
+
+
+=== alert-default.html ===
+Create a complete Alert component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state, radius) - an inline banner/message block embedded in page content (not a floating overlay like Toast), used to surface a status message such as "Your changes have been saved." It sits flush in the page flow, full width of its container, with a colored icon, title, optional description, and optional dismiss/action controls.
+
+Types (4):
+- Info: A neutral informational message - status updates, tips, and other non-urgent notices.
+  Accent color (icon, title text, left border): #4f8fe6
+  Background: #f1f1ee - ONE consistent background across every type, never tinted per type. Left border: 3px solid the accent color. Only the icon, title and left border ever carry the semantic color.
+- Success: Confirms a positive outcome - a save, a submit, or another action completing as expected.
+  Accent color (icon, title text, left border): #2fbf6e
+  Background: #f1f1ee - ONE consistent background across every type, never tinted per type. Left border: 3px solid the accent color. Only the icon, title and left border ever carry the semantic color.
+- Warning: Flags something that needs attention before it becomes a problem.
+  Accent color (icon, title text, left border): #e6a53a
+  Background: #f1f1ee - ONE consistent background across every type, never tinted per type. Left border: 3px solid the accent color. Only the icon, title and left border ever carry the semantic color.
+- Error: Reports a failure or invalid state that is blocking progress.
+  Accent color (icon, title text, left border): #ff031a
+  Background: #f1f1ee - ONE consistent background across every type, never tinted per type. Left border: 3px solid the accent color. Only the icon, title and left border ever carry the semantic color.
+
+States (4, structural - change what's rendered inside the banner, not just its color):
+- Default: title and description, no extra controls.
+- Dismissible: adds a trailing close (x) icon button.
+- With action: adds an inline text-style action button (e.g. "Undo") after the description.
+- Title only: title text only - the description is omitted entirely, regardless of whether a description value is set.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the whole banner.
+
+Component properties: Corner radius; Title (text, default "Update available"); Description (text, default "A new version is ready to install.", omitted for the Title-only state); Show icon (boolean, default checked - shows a colored status icon matching the alert's type).
+Current values - Title: "Update available", Description: "A new version is ready to install.", Show icon: yes.
+
+
+
+=== anchor-default.html ===
+Create a complete Anchor (inline text link) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, state) - a standalone piece of plain inline navigational text used for wayfinding (e.g. "Learn more", "View documentation"), distinct from Button's boxed "Link"/"Transparent" type, which reads as a boxed call-to-action.
+
+Types (2):
+- Standalone: Plain inline text link with no adornment - reads as part of the surrounding copy until it is interacted with.
+- With icon: Text plus a trailing external-link arrow icon - signals the link leaves the current context, e.g. an external reference or a documentation link.
+
+States (5, apply to the anchor text - identical across both types):
+- Rest: color:#ff4253;text-decoration:none;
+- Hover: color:#FF031A;text-decoration:underline;
+- Focused: color:#ff4253;text-decoration:none;outline:2px solid #ff4253;outline-offset:2px;border-radius:2px; Never just a color change, so keyboard focus is always visible.
+- Visited: color:#d10215; Only a color change is allowed here - browsers block every other CSS property on the real :visited pseudo-class for privacy reasons.
+- Disabled: opacity:0.5;cursor:default;pointer-events:none; Anchors have no native disabled attribute, so this is simulated with aria-disabled="true" plus pointer-events:none and reduced opacity - it is not a real browser-level disabled element.
+
+With icon type only: append this trailing external-link arrow SVG after the text with a small gap, sized to roughly match the text's line-height: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+
+What size do you want? (12px - XS / 14px - S / 16px - M / 18px - L) Anchors are sized by font-size, not height - the icon (With icon type) scales alongside it.
+
+Component properties: Label (editable text, current value "Learn more").
+
+
+
+=== autocomplete-default.html ===
+Create a complete Autocomplete component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a text input that shows a dropdown suggestion panel of matching options below it while the user types or when focused, letting them either pick a suggestion or keep typing a free-form value - distinct from Select (a closed-option picker, no typing) and from a plain Input (no suggestion panel).
+
+Types (2):
+- Outlined: The default autocomplete field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focus: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a suggestion panel anchored below the field.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focus: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a suggestion panel anchored below the field.
+
+States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.
+- Focus: real keyboard focus on the field, no suggestion panel visible yet.
+- Open: the suggestion panel is visible directly below the field while the user is actively typing - panel content is 3 example option rows, with one visually highlighted as if hovered or keyboard-focused so the user can see which option Enter/click would select.
+- Filled: same appearance as Rest, showing an entered value with the suggestion panel closed - the user already picked a value or dismissed the panel.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).
+
+
+
+=== avatar-default.html ===
+Create a complete Avatar component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, shape, presence state) - a compact circular (or square) visual identifier for a person, not a one-off image tag.
+
+Content types (3):
+- Initials: A colored circle showing the person's 1-2 letter initials - used whenever no photo is available.
+- Icon: A colored circle containing a generic person-silhouette icon - a neutral placeholder for an unknown or anonymous person.
+- Image: A circle filled with a gradient standing in for an illustrated photo placeholder - real image URLs are never fetched, so this represents where a person's photo would render.
+
+Presence states (4, a small status dot in the bottom-right corner):
+- Default: no status dot shown.
+- Online: a small green dot.
+- Away: a small amber dot.
+- Offline: a small gray/dim dot.
+These are structural/presentational variants, not interaction states - Avatar itself is not interactive.
+
+Component properties: Size (24px / 32px - default / 40px / 48px, currently 32px - Default - font-size and the status dot scale proportionally with the box size); Shape (Circle / Square, currently Circle); Initials text (Initials type only, currently "JD"). Avatar.Group (a separate composition, not a per-avatar property): a list of Avatars overlapped with negative margin and a border matching the page background, with a Max count past which the final tile becomes a "+N" overflow indicator styled like a real avatar. Show as (Avatars / Names only) - whether the group renders as that overlapping avatar-circle stack, or as a plain vertical list of full names with no avatar graphic at all, for contexts where showing the avatar image isn't worth the space; both modes represent the identical list, including the same "+N" overflow count.
+
+
+
+=== badge-default.html ===
+Create a complete Badge component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (form, color, size) - a small indicator, not a one-off number or dot hard-coded per screen.
+
+Badge is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 3 forms, each in 4 semantic colors, each in 2 sizes.
+
+Forms (3):
+- Count: a small numeric pill overlaid on the top-right corner of a host element (an icon or button). Shows the current Count value, capping the display at "99+" once Count exceeds the configured Max count.
+- Dot: a small plain dot overlaid on the top-right corner of a host element, with no number - just signals "there's something new".
+- Status: an inline dot plus a text label (e.g. "Active"), used standalone rather than overlaid on anything.
+
+Colors (5, apply to every form, matching Ant Design's own Status Badge set): Default (var(--red-500), this system's brand red), Success (var(--green-500)), Processing (var(--blue-500), pulses with an expanding-ring animation to signal something actively in progress), Warning (var(--amber-500)), Error (var(--danger-500)).
+
+What size do you want? (Default / Small) Small drops the Count pill to 16px/10px font and the Status dot+label to match - the host icon and every color stay identical at either size.
+
+Component properties: Count (number, applies only to the Count type) - currently 5. Max count (number, applies only to the Count type, caps the displayed value at "N+" once Count exceeds it) - currently 99. Status label (string, applies only to the Status type) - currently "Active".
+
+
+
+=== breadcrumb-default.html ===
+Create a complete Breadcrumb component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, state) - a horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider, with the LAST item always the current page (styled differently - not a clickable link, just text in a stronger color).
+
+Types (2):
+- Chevron: the divider between items is a small chevron-right icon.
+- Slash: the divider between items is a literal "/" character.
+
+States (4, apply to the FIRST link only - every earlier/later link besides it and the final current-page item stay at Rest):
+  Rest: color:#69707D;
+  Hover: color:#111827;text-decoration:underline;
+  Focused: outline:2px solid #ff4253;outline-offset:2px;border-radius:2px; Never just a color change, so layout never shifts.
+  Disabled: opacity:0.5;pointer-events:none; Use aria-disabled="true" on the link, not the native disabled attribute - links have no native disabled state.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Font-size scales proportionally, applied to the whole trail.
+
+Component properties: Labels (comma-separated editable text, one per breadcrumb item, current value "Home, Products, Shoes" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.
+
+
+
+=== button-destructive.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-ghost.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-link.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-neutral.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-primary-icon.html ===
+Create a complete Dual Icon Button component system, covering all 7 types below, each with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.
+
+Default size: 122 x 36px (height 36px, 16px horizontal padding), corner radius 4px, horizontal layout, 8px gap between elements - also supports the full size scale (24/28/32/36/40/44/48/56px height, padding/font-size/icon-size scaling with it) and corner radius (0/4/8/12px/full pill), same as the rest of this Button system.
+Content: left chevron-down icon, label (Inter Medium, default "Save"), right chevron-down icon.
+
+Primary:
+  Rest: Background the selected brand color, label and icons a computed black/white contrast-safe color, no border or shadow.
+  Hover: Background the selected brand color with a 20% black overlay, label and icons #FFFFFF (the overlay darkens the surface enough that white reads better here than Rest's computed color), no border.
+  Pressed: Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border.
+  Focused: Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. The label and both icon slots are replaced by one spinner; not clickable.
+Secondary:
+  Rest: Background the page surface (white in light mode, near-black in dark), inside border 1px solid the selected brand color, label and icons the selected brand color, no shadow.
+  Hover: Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border.
+  Pressed: Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border.
+  Focused: Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+Tertiary:
+  Rest: Background the page surface (white in light mode, near-black in dark), inside border 1px solid the theme's line color, label and icons the selected brand color, no shadow.
+  Hover: Background a lighter tint of the selected brand color, inside border 1px solid the selected brand color, label and icons the brand color (a lighter shade in dark mode, to stay readable against the tint).
+  Pressed: Background a lighter tint of the selected brand color with a 10% black overlay, inside border 1px solid the selected brand color, label and icons the brand color (a lighter shade in dark mode) - slightly darker than Hover.
+  Focused: Background a lighter tint of the selected brand color, label and icons the brand color (a lighter shade in dark mode), 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+Ghost:
+  Rest: Background the page surface (white in light mode, near-black in dark), label and icons the selected brand color, no border, shadow or other effects.
+  Hover: Background one step toward the panel surface, label and icons the brand color (a lighter shade in dark mode, to stay readable against the surface), no border or shadow.
+  Pressed: Background the same surface as Hover with a 15% black overlay, label and icons the brand color (a lighter shade in dark mode), no border or shadow - visibly darker than Hover.
+  Focused: Background the page surface, label and icons the selected brand color, 1px inner border in the theme's line color, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring, shadow, hover or pressed effects.
+  Loading: Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+Transparent:
+  Rest: Background fully transparent, label and icons the selected brand color, no border or shadow.
+  Hover: Background fully transparent, label and icons the selected brand color - same appearance as Rest.
+  Pressed: Background fully transparent, label and icons the selected brand color - same appearance as Rest and Hover.
+  Focused: Background fully transparent, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background fully transparent, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same appearance as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+Approve:
+  Rest: Background the fixed Approve green (--green-500), label and icons #FFFFFF, no border or shadow.
+  Hover: Background the fixed Approve green (--green-500) with a 20% black overlay, label and icons #FFFFFF, no border.
+  Pressed: Background the fixed Approve green (--green-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover.
+  Focused: Background the fixed Approve green (--green-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+Delete:
+  Rest: Background the fixed Delete red (--danger-500), label and icons #FFFFFF, no border or shadow.
+  Hover: Background the fixed Delete red (--danger-500) with a 20% black overlay, label and icons #FFFFFF, no border.
+  Pressed: Background the fixed Delete red (--danger-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover.
+  Focused: Background the fixed Delete red (--danger-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color.
+  Disabled: Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow.
+  Loading: Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable.
+
+Component properties per type:
+  State: Rest / Hover / Pressed / Focused / Disabled / Loading.
+  What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL)
+  What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill)
+  What content do you want? (Icon both sides / Icon left only / Icon right only / Text only)
+  Label: editable text, default "Save".
+Keep padding, icon size, typography, alignment and radius identical across every state and type at a given size - only change what each state specifies. Do not introduce additional colors, gradients or effects beyond what's listed.
+
+---
+
+Create an editable "CTA With Dropdown" split-button component set with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.
+
+Dimensions: 141 x 36px total - a 105x36px main action joined with no gap to a 36x36px dropdown trigger, 1px divider between them, 4px outer corner radius with the joining edge kept square.
+Main action: 16px horizontal padding, 8px gap, left chevron-down icon (20x20px), label (Inter Medium 14px/20px, shares the same Label property as the button matrix, default "Save"). Dropdown trigger: centered chevron-down icon (20x20px), 8px padding.
+
+Rest: both sections use the page surface as background (white in light mode, near-black in dark), 1px outline and divider in the selected brand color, label and icons in the selected brand color.
+Hover: both sections switch to a lighter tint of the selected brand color, outline/divider/label/icons stay the selected brand color.
+Pressed: same tint as Hover with a 10% black overlay, slightly darker than Hover.
+Focused: same background as Hover, 1px white inner border around the whole control, 2px outside focus ring in the theme's focus color.
+Disabled: both sections a dimmed panel surface, label/icons/outline/divider the theme's dim text color, no focus ring.
+Loading: same background, outline and divider color as Rest - still reads as present, not unavailable. The main action's leading icon is replaced by a spinner; neither section is clickable.
+
+Component properties: State (Rest/Hover/Pressed/Focused/Disabled/Loading), Size and Corner radius (shared with the button matrix's own Size/Corner radius properties), Label (editable text, shared with the button matrix's own Label field, default "Save"), Leading Icon (boolean, default true). The main action and dropdown trigger are two separate clickable areas, not one button.
+Keep dimensions, padding, typography, alignment and radius identical across every state - only change what each state specifies. Do not introduce additional colors, gradients or effects beyond what's listed.
+
+
+
+=== button-primary.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-secondary.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== button-tertiary.html ===
+Create a complete Button component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, content, radius, state) - not as separate one-off components for each variant.
+
+Types (8):
+- Primary: The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Pressed: background:var(--button-primary-bg-active);color:var(--button-primary-text-active);
+- Secondary: A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.
+  Rest: background:#e3e3df;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#c7c7c1;
+  Pressed: background:#f1f1ee;
+- Tertiary: A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.
+  Rest: background:transparent;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+- Ghost: An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#f1f1ee;color:#111827;
+  Pressed: background:#e3e3df;
+- Neutral: An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.
+  Rest: background:#f1f1ee;color:#111827;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Pressed: background:#fbfbfa;
+- Link: A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.
+  Rest: background:transparent;color:#ff4253;padding-inline:var(--space-8);
+  Hover: text-decoration:underline;
+  Pressed: color:#d10215;
+  Focus: 2px outline in #ff4253, 3px offset, 4px corner radius on the outline.
+- Approve: An action that confirms or approves something positive, like approving a request or accepting a change.
+  Rest: background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;
+  Hover: background:rgba(47,191,110,0.16);
+  Pressed: background:rgba(47,191,110,0.26);
+  Focus: 2px outline in #2fbf6e (fixed approve color, not the brand color), 2px offset.
+- Delete: An action with irreversible consequences, like deleting a record or discarding unsaved work.
+  Rest: background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;
+  Hover: background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;
+  Pressed: background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;
+  Focus: 2px outline in #ff031a (fixed danger color, not the brand color), 2px offset.
+
+States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.
+- Focus (default, see per-type exceptions above): 2px outline in #ff4253, 2px offset - never just a color change, so layout never shifts.
+- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What content do you want? (Text only / Icon left / Icon right / Icon both sides / Icon only) Icon only requires an accessible label for screen readers (e.g. aria-label), since there is no visible text.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied uniformly across every type.
+
+
+
+=== calendar-default.html ===
+Create a complete Calendar component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (size, month label, first day of week) - a full month grid embedded directly in the page, not a date-picker's small popup trigger.
+
+Types (2):
+- Full: larger day cells (36px), suited to a primary scheduling or booking view.
+- Compact: smaller day cells (26px), condensed for a sidebar-style mini calendar.
+
+States (3, content variations, not interaction states - Calendar is not interactive):
+- Default: plain grid, today highlighted, no events.
+- With events: 2 specific days additionally show a small event indicator dot.
+- Range preview: a run of 3 consecutive days share a highlighted background, simulating a date-range selection preview, with rounded end-caps only on the first and last day of the run.
+
+Structure: a month/year header, a row of 7 day-of-week column labels, and a 6-row grid of day cells (42 cells) including dimmed overflow days from the adjacent previous/next month so the grid is always fully populated.
+
+Component properties: Month label (text, current value "September 2026"); First day of week (Sunday/Monday - reflows which day starts each week and which days fall outside the current month at the grid's edges) - currently Sunday.
+
+
+
+=== card-default.html ===
+Create a complete Card component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state, radius) - a bordered container for grouping related content, in 3 forms and 4 states.
+
+Types (3):
+- Default: Title and body text only - the simplest form, for compact grouped content.
+- With media: Adds a cover/media area above the title and body - useful for content with a visual, like a product or article preview.
+- With actions: Adds a footer row of two action buttons below the body - useful when the card itself needs a primary action, like "View details".
+
+States (4, apply to the whole card, not per type):
+- Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+- Hover: border-color:#69707D;box-shadow:0 4px 16px rgba(0,0,0,0.3); A lifted shadow, distinct from the resting Show-shadow drop-shadow.
+- Selected: border-color:#FF031A;box-shadow:0 0 0 1px #FF031A; Reads as a persistent chosen-state border indicating this card is the chosen one in a set, not a keyboard focus ring.
+- Disabled: opacity:0.4; No interaction.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the whole card; With media's cover area follows the card's top corners only.
+
+What size do you want? (Default / Small) Small tightens body-wrap padding to 10px/12px and drops title to 13px, body to 12px - the corner radius, type and state set stay identical at either size.
+
+Component properties: Corner radius; Size; Title (text, default "Team standup"); Body (text, default "Daily sync at 9:30 AM in the main conference room."); Show shadow (boolean, default checked - adds a resting drop-shadow beneath the card, even before hover, distinct from and combinable with the Hover state's own lift shadow).
+Current values - Title: "Team standup", Body: "Daily sync at 9:30 AM in the main conference room.", Show shadow: yes.
+
+
+
+=== cascader-default.html ===
+Create a complete Cascader component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a select-like trigger field showing a selected hierarchical path (e.g. "Asia / India / Mumbai") with a trailing chevron icon, that opens a MULTI-COLUMN panel below it (one column per level: Continent, then Country, then City) where picking an option in an earlier column determines what the next column shows, letting the user drill down to a final leaf value - distinct from Select (one flat list, no drill-down) and from Autocomplete (a single suggestion list, not multiple linked columns).
+
+Types (2):
+- Outlined: The default cascader field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focus: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a multi-column panel anchored below the field.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focus: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a multi-column panel anchored below the field.
+
+States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.
+- Focus: real keyboard focus on the field, no panel visible yet.
+- Open: the multi-column panel is visible directly below the field - 3 columns side by side (Continent, Country, City), each with 3 example option rows. Each column's currently-selected option is highlighted, and a non-final column's selected option gets a trailing right-chevron to show it reveals the next column.
+- Filled: same appearance as Rest, showing the full selected path joined by " / " with the panel closed.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces each option's single active-row highlight with a real checkbox, letting more than one leaf be picked across different branches). Search (boolean - a real input inside the trigger itself, narrowing the first column to matches with the matched substring highlighted).
+
+
+
+=== checkbox-default.html ===
+Create a complete Checkbox component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - a small square selection control with 3 possible values (unchecked, checked, indeterminate), always paired with a text label, not a one-off checkbox glued to text.
+
+Types (2):
+- Standard: Just the box and its label, inline - the default treatment for a single agreement checkbox or a compact list of options.
+  Unchecked: background:transparent;border-color:rgba(15,15,10,0.15);
+  Checked: background:#FF031A;border-color:#FF031A; White checkmark icon (#FFFFFF).
+  Indeterminate: background:#FF031A;border-color:#FF031A; White horizontal dash icon (#FFFFFF) instead of the checkmark.
+  Hover: border-color:#69707D;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so the control stays visible against any background.
+- Card: The box and label wrapped in a bordered row that highlights as a whole (background var(--red-tint), border var(--red-500)) when checked - useful for settings lists or selectable option cards where the entire row should read as selected, not just the box.
+  Unchecked: background:transparent;border-color:rgba(15,15,10,0.15);
+  Checked: background:#FF031A;border-color:#FF031A; White checkmark icon (#FFFFFF).
+  Indeterminate: background:#FF031A;border-color:#FF031A; White horizontal dash icon (#FFFFFF) instead of the checkmark.
+  Hover: border-color:#69707D;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so the control stays visible against any background.
+  Card highlight (applies to the whole row, only when checked): background:rgba(255,3,26,0.08);border-color:#FF031A;
+
+States (6): Unchecked, Checked, Indeterminate, Hover, Focused, Disabled.
+- Checked and Indeterminate share the same solid-fill treatment, distinguished only by icon (checkmark vs dash).
+- Indeterminate is set via the element's `indeterminate` DOM property at runtime, not an HTML attribute.
+- Disabled applies 40% opacity and a not-allowed cursor to the control.
+
+What size do you want? (16px - S / 20px - M / 24px - L) Controls the box's width and height in px.
+
+What corner radius do you want? (2px - Sharp / 4px - Balanced / 6px - Soft / Full - Pill) Applied to the box itself.
+
+Component properties: Label (editable text next to the box).
+
+
+
+=== collapse-default.html ===
+Create a complete Collapse component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state, radius) - an accordion-style panel with a clickable header (with an optional chevron indicator) that reveals or hides a body of content beneath it when toggled, useful for progressively disclosing long or secondary content.
+
+Types (2, grouping styles):
+- Bordered: Each panel has its own full border and rounded corners, with visible gaps between stacked panels - reads as distinct, separate cards.
+- Borderless: Panels share only thin top/bottom divider lines with no side borders or radius, reading as one continuous grouped list.
+
+States (3):
+- Collapsed: header only, chevron pointing down/closed, body hidden.
+- Expanded: header plus visible body beneath it, chevron pointing up/open.
+- Disabled: header at reduced opacity, non-interactive, chevron dimmed, body hidden as if collapsed.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to the Bordered type only - Borderless panels never carry a radius.
+
+What size do you want? (Small / Medium / Large) Scales header/body padding and the header text one step - body text stays fixed at 13px regardless of size.
+
+Component properties: Corner radius (Bordered type only); Size; Header text (text, default "What's included in the free plan?"); Body text (text, default "The free plan includes up to 3 projects, 1GB of storage, and community support.", shown only in the Expanded state); Show icon (boolean, default checked - shows a chevron indicator on the right side of the header).
+Current values - Header: "What's included in the free plan?", Body: "The free plan includes up to 3 projects, 1GB of storage, and community support.", Show icon: yes.
+
+
+
+=== color-picker-default.html ===
+Create a complete Color Picker component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+It is a trigger field styled like a text field that shows the currently selected color as a small swatch plus its hex value (e.g. a red square and "#FF031A"). Focusing or clicking the field opens a small palette panel of preset swatch options below it, similar to how Autocomplete and Mention open a floating panel below their field - except this panel is a grid of color swatches instead of a list of text or people rows.
+
+Types (2):
+- Outlined: The default color picker style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focus: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a palette panel of preset color swatches anchored below the field.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focus: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a palette panel of preset color swatches anchored below the field.
+
+States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.
+- Rest/Hover/Focus/Filled: field shows the current color swatch and hex value at all times - there is no empty/placeholder state, a color is always selected.
+- Open: the field looks focused and a palette panel is visible directly below it, showing 8 preset color swatches in a grid, with the currently selected swatch visibly marked active via a ring/outline.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Color value (editable hex text shown next to the swatch, e.g. "#FF031A").
+
+
+
+=== date-picker-default.html ===
+Create a complete Date Picker component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a text field with a fixed trailing calendar icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a calendar panel rather than typed character-by-character. Scope is the trigger field itself, in all its states - not an interactive calendar popup grid.
+
+Types (2):
+- Outlined: The default date field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing the selected date value (e.g. 03/14/2026) instead of the placeholder.
+- Error: pairs with an inline error message below the field.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when no date is chosen, typically the expected date format).
+
+
+
+=== date-range-default.html ===
+Create a complete Date Range component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a single field showing a start date and an end date separated by an arrow, with a fixed trailing calendar icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a calendar panel rather than typed character-by-character. It picks a start/end pair together instead of two separate date fields. Scope is the trigger field itself, in all its states - not an interactive calendar popup grid.
+
+Types (2):
+- Outlined: The default date range field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing the selected start and end date values (e.g. Jan 4, 2026 -> Jan 9, 2026) instead of the two placeholders.
+- Error: shows an invalid/incomplete pairing (e.g. an end date before the start date) and pairs with an inline error message below the field.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Start placeholder (editable text shown for the start date when no range is chosen), End placeholder (editable text shown for the end date when no range is chosen).
+
+
+
+=== description-default.html ===
+Create a complete Description component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (form, column count, size, section title) - a read-only label/value grid for displaying a set of structured details at a glance, like a summary panel, not a one-off table hacked together per screen.
+
+Description is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 2 forms, each usable at a configurable column count and size, optionally with a section title above the grid.
+
+Forms (2):
+- Default: clean spacing between label/value pairs, no cell borders - a minimal look.
+- Bordered: each label/value pair sits in its own bordered cell, forming a compact table-like grid with 1px dividers between cells.
+
+Each pair is a label (small, uppercase, dimmed) stacked above its value (regular weight, high-contrast). Long values wrap gracefully within their cell instead of overflowing or breaking the grid layout.
+
+What size do you want? (Small / Middle / Large) Scales item padding and both label/value font one step - column count and grid gap are independent of size.
+
+Component properties: Columns (1/2/3, default 2, drives grid-template-columns for how many label/value pairs sit per row); Size; Section title (optional string, shown as a heading above the grid, currently "Account details" - With title state only, other states ignore it).
+
+
+
+=== divider-default.html ===
+Create a complete Divider component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (form, line style, size, text label, text alignment) - a thin rule that visually separates content, not a one-off <hr> or border hack rebuilt per screen.
+
+Divider is not interactive - unlike every other component in this system, it has no hover, focus or disabled state. Its variation is purely structural: 2 forms, each in 3 line styles and 3 sizes.
+
+Forms (2):
+- Horizontal: a plain full-width horizontal line with no text, used to separate stacked blocks of content.
+- Horizontal with text: a horizontal line broken by a short text label (e.g. "OR"), positioned at the chosen Text alignment.
+
+Line styles (3, apply to every form): Solid, Dashed, Dotted - set via border-style. Line color var(--line-strong), label text color var(--text-dim).
+
+What size do you want? (Small / Medium / Large) Scales line thickness and label font-size together - Medium is the line-weight shown above.
+
+Component properties: Text label (string, applies only to Horizontal with text) - currently "OR". Text alignment (Left/Center/Right, applies only to Horizontal with text, controls how much line sits on each side of the label) - currently Center. Size.
+
+
+
+=== drawer-default.html ===
+Create a complete Drawer component for the Agentic Design System.
+
+Build it as ONE reusable panel component controlled by properties (type, state, size, radius) - a panel that slides in from a screen edge (Left, Right, Top or Bottom) above a dimmed backdrop (scrim), with a title bar (optional close "x"), a body, and (usually) a footer with Cancel/Save buttons. Left/Right are full-height and their Size controls width; Top/Bottom are full-width and their Size controls height instead. It reuses the exact same header/body/footer/button visual language as this system's Modal component, just edge-anchored instead of centered - for tasks that need more room than a Modal but shouldn't fully interrupt the page layout.
+
+Types (4):
+- Right: Slides in from the right edge of the screen - the far more common real-world default for edit panels, filters and detail views.
+- Left: Slides in from the left edge of the screen - same structure as Right, used when the trigger or surrounding navigation sits on the left.
+- Top: Slides down from the top edge, full width - useful for a global filter bar or announcement that needs to span the whole screen rather than sit in a side column.
+- Bottom: Slides up from the bottom edge, full width - the standard placement on narrow/mobile viewports, where a side panel would be too cramped to read.
+
+States (3, structural):
+- Default: title bar with close X, body, and a footer with Cancel/Save buttons.
+- No footer: title bar with close X and body only - an informational panel, no footer action buttons.
+- No close: title bar has NO close X, forcing the user to pick a footer action - same concept as Modal's own No-close state.
+
+Size: Medium - on Left/Right, controls the panel's width (380px) and it stays full-height; on Top/Bottom, it controls the panel's minimum height instead (a separate, smaller scale, since Top/Bottom's own header+body+footer content sets a real floor a width-sized value would undershoot) and the panel stays full-width. Other options: Small (280px) / Medium (380px) / Large (480px).
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill)
+Corner radius applies to all 4 corners of the panel.
+
+Component properties: Title (text, e.g. "Edit profile"); Body text (text, e.g. "Update your name, photo, and contact details."); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).
+Show close button is currently: on.
+
+
+
+=== dropdown-default.html ===
+Create a complete Dropdown component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off buttons for each variant. It is a trigger button that reveals a menu of actions or commands when clicked - a real <button> element, not a form field, with no associated <label>, just its own text and a fixed trailing chevron-down icon. It is distinct from a Select trigger (which picks a form value) and from the menu panel it opens (a separate component).
+
+Types (2):
+- Outlined: The default dropdown trigger style - a bordered button that works well on any background and reads clearly among a group of other actions.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Open: border-color:#FF031A;background:rgba(255,3,26,0.08); This is the state while its menu is visible - the trigger stays visually pressed so the connection to the open menu reads clearly.
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Real keyboard focus, independent of Open - never just a color change, so layout never shifts.
+- Filled: A softer-emphasis trigger with a solid background instead of a border, useful when the button sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Open: background:#ffffff; This is the state while its menu is visible - the trigger stays visually pressed so the connection to the open menu reads clearly.
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Real keyboard focus, independent of Open - never just a color change, so layout never shifts.
+
+States (5, apply to every type): Rest, Hover, Open, Focused, Disabled.
+- Open: the menu is currently visible; the trigger takes on a pressed appearance rather than a plain hover.
+- Focused: a real :focus-visible outline for keyboard navigation, independent of Open.
+- Disabled: 50% opacity, real disabled attribute, no hover/open/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text inside the button, current value "Options").
+
+
+
+=== empty-default.html ===
+Create a complete Empty component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (icon style, title, description, action label) - a placeholder shown when there's no data to display (an empty search result, an empty inbox, a freshly-created project with nothing in it yet), so the space never looks broken or blank, not a one-off blank div left behind.
+
+Icon styles (2):
+- Default: A slightly larger, friendlier icon inside a soft circular background - the default treatment for a primary empty state, like an empty page or dashboard.
+- Simple: A smaller, bare minimal icon with no circular background - a quieter treatment for a secondary or inline empty state, like an empty panel inside a larger page.
+
+States (3, progressively more content, apply to either icon style):
+- Title only: icon + title, no description, no action.
+- With description: icon + title + a short description line explaining what to do next.
+- With action: icon + title + description + a primary action button (e.g. "Create new") that resolves the empty state.
+
+Component properties: Title (text, default "No projects yet"); Description (text, default "Create your first project to get started.", only shown from the With description state onward); Action label (text, default "Create project", only applies to the With action state).
+Current values - Title: "No projects yet", Description: "Create your first project to get started.", Action label: "Create project".
+
+
+
+=== float-button-default.html ===
+Create a complete Float Button component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, state) - a circular (or rounded-square, for the Square type) icon-only button fixed to a screen corner via CSS position:fixed in real usage (shown inline here for the matrix), used for a persistent, always-accessible primary action like "back to top", "compose", or "customer support" - distinct from a normal inline Button.
+
+Types (3):
+- Default: A neutral graphite circle with a bordered edge - reads as a secondary corner action on any background.
+  Rest: background:#f1f1ee;color:#111827;border:1px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+- Primary: A solid red circle, the strongest visual weight - reserved for the single most important corner action on a page.
+  Rest: background:var(--button-primary-bg-default);color:var(--button-primary-text-default);
+  Hover: background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);
+  Focused: undefined Never just a color change, so layout never shifts.
+- Square: Same neutral coloring as Default, but with a soft rounded-square corner radius instead of a full circle - the variant to reach for when a page's other controls are already rounded-square rather than pill-shaped.
+  Rest: background:#f1f1ee;color:#111827;border:1px solid rgba(15,15,10,0.15);
+  Hover: background:#e3e3df;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+
+States (4): Rest, Hover, Focused, Disabled (40% opacity, not-allowed cursor).
+
+What size do you want? (40px - Small / 48px - Default / 56px - Large / 64px - XL) The icon scales proportionally with the button, about 40% of its diameter.
+
+Component properties: Tooltip text (text input, default "Back to top", shown on hover in real usage); Show badge (boolean toggle, default off - shows a small red badge dot in the button's corner, for unread counts or notifications).
+Current tooltip text: "Back to top".
+
+
+
+=== group-button-default.html ===
+Create a complete Group Button (segmented control) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - a row of joined segments where exactly one is selected at a time, not separate one-off buttons glued together.
+
+Types (2):
+- Outlined: A bordered track with a divider between each segment - reads clearly on any background, no extra chrome besides the outline.
+  Rest: background:transparent;color:#111827;border-inline-end:1.5px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Pressed: background:#e3e3df;
+  Selected: background:rgba(255,3,26,0.08);color:#FF031A;
+  Focused: outline:2px solid #ff4253;outline-offset:-3px; Never just a color change, so layout never shifts.
+- Filled: A solid track where the selected segment gets its own pill highlight - useful when the group needs to stand out as one cohesive control.
+  Rest: background:transparent;color:#4B5563;
+  Hover: background:#e3e3df;color:#111827;
+  Pressed: background:#c7c7c1;
+  Selected: background:#FF031A;color:#FFFFFF;
+  Focused: outline:2px solid #ff4253;outline-offset:-3px; Never just a color change, so layout never shifts.
+
+States (6, apply per segment): Rest, Hover, Pressed, Selected, Focused, Disabled.
+- Only one segment is ever Selected at a time - selecting a new segment deselects the previous one.
+- Disabled applies to the whole group at once (40% opacity, not-allowed cursor), not one segment at a time.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height, applied to every segment.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the group's outer corners only - the joining edges between segments stay square.
+
+Component properties: Number of buttons (dropdown, 1-9, default 3 - drives both segment count and labels, one consistent lettered sequence: Option A, Option B, Option C, Option D, Option E, Option F, Option G, Option H, Option I); Field label (optional toggle, shows a label above the group, e.g. "View", mirrors the Input component's Label); Supporting text (optional toggle, shows helper text below the group, e.g. "Choose how to display your results.", mirrors Input's helper text).
+
+
+
+=== image-default.html ===
+Create a complete Image component for the Agentic Design System.
+
+Build it as ONE reusable container for displaying a photo or graphic with graceful Loading, Error and Loaded states, in a configurable aspect ratio and corner radius, instead of a bare unstyled <img> tag with no fallback handling.
+
+Types (2):
+- Default: the image frame alone, no caption.
+- With caption: the image frame plus a caption text row beneath it.
+
+States (4):
+- Loading: a pulsing shimmer skeleton block shown while the image is being fetched.
+- Error: a muted background with a small broken-image icon and "Failed to load" text, shown when the image fails to load.
+- Loaded: the photo fills the frame, with a small zoom icon overlay in the bottom-right corner hinting that the image can be clicked to preview.
+- Hover: the same as Loaded, but the zoom icon overlay becomes fully visible - in real usage this is a plain :hover rule on the frame, not a separate state class.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the frame's corners.
+
+Component properties: Corner radius; Aspect ratio (Square / Landscape / Portrait, default Square - sizes the frame); Caption (text, default "Product photo", With caption type only).
+Current values - Aspect ratio: Square (160x160px), Caption: "Product photo" (With caption type only).
+
+Important: in real usage this wraps a real <img> element, with onerror/onload handlers driving the Loading/Error/Loaded state classes above. This is a static offline design system with no network access, so every cell shown here is a fixed CSS gradient standing in for "a loaded photo" - never an actual fetched image.
+
+
+
+=== input-text-field.html ===
+Create a complete Input Text Field component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+Types (3):
+- Outlined: The default text field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A minimal field with only a bottom border, useful for compact inline forms or search-like inputs where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing an entered value instead of the placeholder.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Leading icon (boolean, optional icon before the input text), Trailing icon (boolean, optional icon after the input text - e.g. validation or a password-reveal toggle), Allow clear (boolean, shows an × button in the trailing slot once the field has a value, clearing it on click - takes over the trailing slot from Trailing icon whenever both are on and there's a value, since Ant never shows both at once).
+
+
+
+=== list-default.html ===
+Create a complete List component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, corner radius, size, show dividers) - a vertical stack of item rows for displaying a collection of similar items, each row with a title and description, an optional leading avatar, and an optional trailing action link.
+
+Container styles (2):
+- Default: No outer border - the rows stack directly against the page background, optionally divided by a thin line between each row.
+- Bordered: The whole list sits inside one bordered, corner-radius'd container box.
+
+Content states (4, apply to every row in the list at once):
+- Default: Plain rows - a title and description only, no avatar or trailing content.
+- With avatars: The same rows, each now showing a small leading initials-avatar circle.
+- With avatars + action: The same rows with avatars, plus a small trailing text-style action link (e.g. "View") on the right of each row.
+- Loading: The same row count and shape, but every value replaced with a Skeleton placeholder - so the layout doesn't jump once the real rows arrive.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to the Bordered type's outer container only - the Default type never carries a radius.
+
+What size do you want? (Small / Default / Large) Scales row padding and the leading avatar's diameter together (reusing Avatar's own h24/h32/h40 scale) - never font-size alone.
+
+Component properties: Corner radius (Bordered type only); Size; Show dividers (boolean, default checked - shows a thin line between each row).
+Current values - Show dividers: yes.
+
+
+
+=== mention-default.html ===
+Create a complete Mention component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+It is a multi-line free-form text field, styled like a compact comment box, that lets someone tag another person inline by typing "@" - a suggestion panel of matching people opens below the field, and picking one (or finishing typing a name) inserts it as an inline highlighted chip token mixed into the surrounding text. Distinct from Autocomplete, which replaces the whole field value with one chosen option - Mention inserts a token INSIDE a larger block of free-form text and can hold more than one mention in the same field.
+
+Types (2):
+- Outlined: The default mention field style - a bordered box that works well on any background and reads clearly in a dense comment thread.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focus: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a suggestion panel of people anchored below the field.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when the field sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focus: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus a suggestion panel of people anchored below the field.
+
+States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.
+- Rest/Hover/Focus: field is empty, showing the placeholder - no chip yet, nothing typed.
+- Open: the field looks focused and a suggestion panel is visible directly below it, listing 3 example people, each row showing a small round initials avatar and a full name, with one row visually highlighted as if hovered or keyboard-focused so the user can see which person Enter/click would insert.
+- Filled: same appearance as Rest, showing free-form text with one inline highlighted chip token mixed into it - the mention has already been inserted and the suggestion panel is closed.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).
+
+
+
+=== menu-default.html ===
+Create a complete Menu (floating panel of commands or actions) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, items) - the floating panel/list itself, like what appears when a dropdown trigger, a right-click, or a "..." button is activated. Not the trigger button that opens it, and not separate one-off buttons glued together.
+
+Types (2):
+- Default: text-only items.
+- With icons: each item gets a small leading icon before its label.
+
+States (4, apply per item): Rest, Hover, Focused, Disabled.
+  Rest: background:transparent;color:#111827;
+  Hover: background:#f1f1ee;
+  Focused: outline:2px solid #FF031A;outline-offset:-2px; Never just a color change, so layout never shifts.
+  Disabled: opacity:0.4;cursor:not-allowed;
+
+Destructive item: if the last item's label is literally "Delete" or "Remove" (case-insensitive), automatically style that item's text and icon (color:#ff031a;) and add a thin top border (border-top:1px solid rgba(15,15,10,0.08)) on that item itself, separating it from the regular actions above - a common pattern real menus use to set a destructive action apart. Draw the border inside the item's own box (box-sizing:border-box) so it never adds extra spacing beyond the panel's normal item gap, and zero out that item's own top-left/top-right corner radius (border-start-start-radius / border-start-end-radius) so the line stays flush edge-to-edge instead of curling in with the item's own rounded corners - its bottom corners keep the inherited radius since it's the last item, sitting at the panel's actual bottom edge.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Controls each item's row height - padding and font-size scale proportionally.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the panel's outer corners only.
+
+Component properties: Labels (comma-separated editable text, one per item, current value "Edit, Duplicate, Archive, Delete" - item count follows the number of labels entered).
+
+
+
+=== modal-default.html ===
+Create a complete Modal component for the Agentic Design System.
+
+Build it as ONE reusable dialog component controlled by properties (type, state, size, radius) - a dialog box shown above a dimmed page backdrop (scrim), blocking interaction with the rest of the page until dismissed or actioned. It has a title bar (with an optional close "x"), a body area for content, and usually a footer with Cancel/primary-action buttons.
+
+Types (2):
+- Default: A neutral dialog for standard confirmations and focused tasks - the primary action button uses this system's brand red, same as a standard Primary button.
+  Primary action button: background:#FF031A; Hover: background:#d10215;
+- Destructive: Used for irreversible or dangerous confirmations, like deleting data - the same dialog structure as Default, but the primary action button uses the fixed danger-red token and typically reads "Delete" instead of "Confirm".
+  Primary action button: background:#ff031a; Hover: background:#d10215;
+
+States (4, structural):
+- Default: title bar with close X, body, and a footer with Cancel/primary-action buttons.
+- No footer: title bar with close X and body only - a purely informational dialog, no footer action buttons.
+- Scrollable: body content has a fixed max-height with a fade-to-transparent gradient cueing more content below - footer still present.
+- No close: title bar has NO close X, forcing the user to pick a footer action - common for critical confirmations.
+
+Size: Medium - controls the dialog's max-width (440px). Other options: Small (320px) / Medium (440px) / Large (560px).
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill)
+
+Component properties: Title (text, e.g. "Delete this file?"); Body text (text, e.g. "This action cannot be undone."); Show close button (boolean toggle, default on - when off, the header renders with no close X, the same visual result as the No-close state but driven as a property rather than a fixed state).
+Show close button is currently: on.
+
+
+
+=== notification-default.html ===
+Create a complete Notification component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state) - a corner-anchored card (solid background, border, left accent border, drop shadow, fixed ~260px width) with a semantic icon, a bold title, a longer description line and a close button, used to report a background or async event.
+
+It differs from Toast by carrying more content per instance (icon + title + description + close, and optionally an action) for events the user wasn't necessarily watching for (e.g. "File uploaded successfully", "3 new messages received"), rather than Toast's brief, single-line, self-dismissing confirmation of an action the user just took.
+
+Types (4, drive the left accent border and the icon color - the card itself always stays a solid neutral elevated surface):
+- Info: Neutral, informational background event - nothing succeeded or failed, it's just worth surfacing. Accent/icon color: #4f8fe6.
+- Success: Confirms a background or async task completed successfully. Accent/icon color: #2fbf6e.
+- Warning: Flags something that needs attention but hasn't failed outright. Accent/icon color: #e6a53a.
+- Error: Reports that a background or async task failed. Accent/icon color: #ff031a.
+Card (same for every type): background:#ffffff;border:1px solid rgba(15,15,10,0.15);border-inline-start:3px solid #4f8fe6;box-shadow:0 8px 24px rgba(0,0,0,0.35);
+
+States (3, structural, apply to the whole card):
+- Default: icon, title, description and a close (x) button - no action.
+- With action: same as Default, plus an inline text-style action button ("Undo") below the description.
+- Stacked: shows two of the same notification card layered with a small gap, the second one sitting slightly behind and reduced in opacity, to demonstrate multiple simultaneous notifications.
+
+Component properties: Title (text, default "File uploaded"); Description (text, default "team-report.pdf is ready to share."); Placement (topRight/topLeft/bottomRight/bottomLeft, default topRight - which viewport corner the notification stacks in; multiple notifications in the same placement stack outward from the edge they anchor to).
+Current values - Title: "File uploaded", Description: "team-report.pdf is ready to share.".
+
+
+
+=== number-default.html ===
+Create a complete Number Field component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+The field is a single-line input restricted to numeric characters, with an optional trailing vertical stepper - two stacked buttons that increment or decrement the value by 1.
+
+Types (3):
+- Outlined: The default number field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A minimal field with only a bottom border, useful for compact inline forms where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing an entered value instead of the placeholder.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by 1), Allow clear (boolean - once the field has a value, shows an × button before the stepper that clears it).
+
+
+
+=== pagination-default.html ===
+Create a complete Pagination component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - a row of page-navigation controls with one page always shown as current, not separate one-off buttons glued together.
+
+Types (2):
+- Numbered: Prev arrow, a row of page-number buttons and a Next arrow - lets the user jump straight to a nearby page, not just step through one at a time.
+- Simple: Just a Prev arrow, a "Page X of Y" text label and a Next arrow - a compact control for when individual page numbers aren't needed.
+
+Shared visual treatment (Numbered page-number buttons and the Simple type's Prev arrow):
+  Rest: background:transparent;color:#111827;border:1px solid rgba(15,15,10,0.15);
+  Hover: background:#f1f1ee;
+  Current page: background:#FF031A;color:#FFFFFF;border-color:#FF031A;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  "Page X of Y" count text (Simple type): color:#4B5563;
+
+States (4, apply per button): Rest, Hover, Focused, Disabled.
+- For the Numbered type, the current page (always the middle of the 5 numbered buttons in this reference) stays a solid filled state regardless of row/state being demonstrated on other buttons.
+- For the Simple type, there are no individual page-number buttons, so states apply to the Prev arrow button instead.
+- Disabled means the target button is a real disabled control (40% opacity, not-allowed cursor), not just a visual style.
+
+Use a left-chevron arrow icon for Prev and the same icon mirrored horizontally for Next (both real <svg>, stroke-based, 24x24 viewBox, currentColor).
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Controls the height of every arrow/page button; padding and font-size scale proportionally.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to each individual arrow/page button.
+
+Component properties: Size, Corner radius. Page numbers/count shown are illustrative reference content, not a configurable property.
+
+
+
+=== password-default.html ===
+Create a complete Password component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+It is a single-line masked text input - dots hide the entered value by default, the same way a browser's native type="password" input renders. An optional trailing eye-icon button toggles the field between masked and plain text.
+
+Types (3):
+- Outlined: The default password field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A minimal field with only a bottom border, useful for compact inline forms like an inline PIN entry where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing an entered value (rendered as dots) instead of the placeholder.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text), Allow clear (boolean - once the field has a value, shows an × button before the reveal toggle that clears it).
+
+
+
+=== pop-confirm-default.html ===
+Create a complete Pop Confirm component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (placement, state, question, confirm label, cancel label) - a small inline confirmation popover anchored to a trigger element, showing a short question with Confirm/Cancel buttons directly inside it, for lightweight "are you sure?" moments that don't warrant a full Modal.
+
+Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.
+
+States (3): Default (a neutral confirm button, e.g. "Delete this item?" with "No"/"Yes" buttons); Destructive (same layout, but the confirm button is styled in the danger/red color, for an irreversible or delete-type action); With icon (same as Default, but adds a small warning-triangle icon inline before the question text).
+
+Visual treatment: reads as a proper elevated panel, matching this system's other floating-panel language (Menu, Autocomplete, Popover), but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow "0 8px 24px rgba(0,0,0,0.4)" alone gives it separation from the page), border-radius var(--radius-md). The trigger sits on the ordinary page background outside the bubble, so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 1.5px solid var(--line-strong), color var(--text-hi), padding 6px 14px, border-radius var(--radius-sm). The arrow is a small rotated square (transform:rotate(45deg)) matching the bubble's own inverted background color. The Confirm/Cancel buttons sit in a right-aligned row below the question - Cancel is a transparent/bordered button using the bubble's own inverted text color (var(--text-hi) would go near-invisible against it), Confirm is a solid neutral button by default or a solid red button in the Destructive state, both with their own fully opaque background so they stay legible regardless of the bubble's inversion.
+
+Component properties: Question (string, the short question shown in the bubble) - currently "Delete this item?". Confirm label (string, the text on the confirm button) - currently "Yes". Cancel label (string, the text on the cancel button) - currently "No".
+
+
+
+=== popover-default.html ===
+Create a complete Popover component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (placement, content state, trigger label, title, body) - a rich floating content panel (title + optional body text + optional close button) anchored to a real clickable trigger button, opened on click (not hover, unlike this system's Tooltip component), not a one-off floating div built from scratch each time.
+
+Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.
+
+Content states (3): Simple (a bold title line only); With body (the title plus a body paragraph below it, e.g. "Storage usage" / "8.2 GB of 15 GB used."); With close (title, body and a small "x" close button in the top-right corner of the bubble, for dismissing the popover without clicking outside it).
+
+Visual treatment: the same inverted-overlay bubble as Tooltip/Tour/Pop Confirm - near-black in light theme, near-white in dark theme, via the fixed var(--overlay-invert-bg)/-text tokens (never the user-customizable var(--graphite-900)/var(--text-hi)), so it always contrasts with the page regardless of theme or any saved brand color. No border on the bubble - box-shadow "0 8px 24px rgba(0,0,0,0.4)" (matching this system's other floating-panel language, Menu/Autocomplete) gives it enough separation from the page on its own; a border read as an unwanted outline against the inverted background. Reads as a proper elevated panel rather than Tooltip's flat single-line bubble, with border-radius var(--radius-md) and room for a title/body/close button. The trigger is a real clickable button (not a decorative circle like Tooltip's trigger), styled like a simple bordered button on the ordinary page background - background var(--graphite-800), border 1px solid var(--line-strong), color var(--text-hi), padding 8px 14px, border-radius var(--radius-sm) - since it sits outside the inverted bubble, not part of it. The arrow is a small rotated square (transform:rotate(45deg)), same background as the bubble, with only half of it showing - the rest tucked behind the bubble's own opaque background as a clean triangular point (same technique as Tooltip's arrow).
+
+Component properties: Trigger label (string, the text on the trigger button) - currently "Details". Title (string, bold text at the top of the bubble) - currently "Storage usage". Body (string, used by the With body and With close states) - currently "8.2 GB of 15 GB used.".
+
+
+
+=== progress-default.html ===
+Create a complete Progress component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (layout, state, percent, show label) - a visual indicator of completion percentage, used for uploads, multi-step processes, loading operations, or any quantifiable completion state.
+
+Layouts (2):
+- Linear: a horizontal track with a fill bar that grows left-to-right to the current percent.
+- Circular: a ring track with a fill arc that sweeps clockwise to the current percent.
+
+States (3):
+- In progress: uses the live Percent property value, filled in the accent color - represents an operation still running.
+- Success: always shows 100% complete, filled in green - represents a finished operation, regardless of the Percent property.
+- Error: always shows a fixed, partial value (40%), filled in a darker red with a diagonal hazard-stripe pattern (linear) or a dashed outline (circular) rather than a plain solid fill - represents a stalled or failed operation, visually distinct from the in-progress state even though both are red-family colors.
+
+Component properties: Percent (0-100, default 65 - drives only the In progress state's fill), Show label (boolean, default on - shows the percentage as text alongside the bar or ring).
+
+Accessibility: the track element (the one whose size represents 0-100%, not the wrapper or the fill) carries role="progressbar" with aria-valuemin="0", aria-valuemax="100", and aria-valuenow set to its current percent, plus an aria-label describing what it measures - so assistive technology can announce real progress, not just read a silent colored bar.
+
+
+
+=== radio-default.html ===
+Create a complete Radio component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, state) - a small circular selection control normally used in a mutually-exclusive group, where this prompt describes how a single radio input looks and behaves in every state.
+
+Types (2):
+- Standard: A plain circle-and-label pair, set inline - use this when a group's options sit close together and need no extra framing.
+- Card: The circle plus label wrapped in a bordered, clickable row that highlights when checked - useful for a settings list of mutually-exclusive options where the whole row should respond to a click, not just the circle.
+
+States (5, apply to the radio circle):
+- Unchecked: border:1.5px solid rgba(15,15,10,0.15);background:transparent; 1.5px border.
+- Checked: border-color:#FF031A;background:transparent; plus an inner dot (background:#FF031A;border-radius:50%;) sized to roughly 45% of the circle's diameter, centered - the ring stays an outline, the fill is never solid.
+- Hover: border-color:#69707D;
+- Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+- Disabled: opacity:0.4;cursor:not-allowed; applies to the radio itself, not the whole group.
+
+For the Card type only, the row containing the circle and label sits inside a bordered container that switches to background:rgba(255,3,26,0.08);border-color:#FF031A; once its radio is checked - the whole row is clickable, not just the circle.
+
+What size do you want? (16px - S / 20px - M / 24px - L) The inner dot scales together with the circle.
+
+Component properties: Label (editable text next to the circle).
+
+
+
+=== rating-default.html ===
+Create a complete Rating component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, icon size, state) - a row of 5 identical icon buttons that fill in as the user hovers or taps to score something from 0-5, with the current score persisting as filled icons after selection. This is not a text field - it is a tap-to-score control made of repeated icon buttons.
+
+Types (2):
+- Star: A classic 5-point star - reads instantly as a rating/score control, the most common pattern for product and service reviews.
+- Heart: A heart icon - suited to favoriting or affection-toned scoring, like a content "loved it" scale.
+
+States (4, apply per row of 5 icons):
+- Rest: all 5 icons unfilled/outline - color:#69707D;
+- Hover: all 5 icons unfilled, but the first 3 show a lighter preview tint to suggest a live hover-preview - color:#ff4253; opacity:0.6;
+- Selected: the first N icons filled (N = the Selected property, 0-5), the rest stay unfilled - filled color: color:#FF031A;
+- Disabled: all 5 icons unfilled at 40% opacity, not-allowed cursor - opacity:0.4;
+
+What icon size do you want? (16px - Small / 20px - Default / 24px - Large / 32px - XL) Applied directly to each icon's width/height.
+
+Component properties: Label (text, default "Rate this product", shown above the row); Selected (0-5, default 3, controls how many of the 5 icons appear filled/selected). Currently configured as Label: "Rate this product", Selected: 3.
+
+
+
+=== result-default.html ===
+Create a complete Result component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state) - a full-panel outcome screen (large semantic icon, bold title, description line, one or two action buttons) shown after a multi-step flow completes or fails, e.g. "Payment successful" or "Submission failed".
+
+It differs from Notification by occupying the main content area as the page's primary content (a large, centered, prominent panel), rather than Notification's small, transient card anchored to a screen corner.
+
+Types (4, drive the icon color only - same tokens as Notification's own semantic icons):
+- Info: Neutral outcome - the flow finished, but the result is informational rather than a clear success or failure. Icon color: #4f8fe6.
+- Success: Confirms a multi-step flow completed successfully. Icon color: #2fbf6e.
+- Warning: Flags an outcome that completed but needs the user's attention. Icon color: #e6a53a.
+- Error: Reports that a multi-step flow failed. Icon color: #ff031a.
+
+States (3, structural):
+- Default: icon, title, description and one primary action button ("Done").
+- With secondary: same as Default, plus a secondary/ghost action button ("View details") next to the primary "Done" button.
+- Compact: a smaller, tighter-spacing variant of the same content (smaller icon, reduced padding) for using Result inline within a card rather than as a full page.
+
+Component properties: Title (text, default "Payment successful"); Description (text, default "Your receipt has been emailed to you.").
+Current values - Title: "Payment successful", Description: "Your receipt has been emailed to you.".
+
+
+
+=== search-default.html ===
+Create a complete Search field component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+A Search field is a single-line input for querying or filtering content. It skips a visible label by convention - a placeholder and a leading magnifying-glass icon communicate its purpose instead - and shows a trailing clear ("x") button once a value is entered, letting the user reset the field in one click.
+
+Types (3):
+- Outlined: The default search field style - a bordered box that works well on any background and reads clearly above the content it filters.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline note below the field in #ff031a reporting that no results were found - this is a "no results" state, not a validation failure.
+- Filled: A softer-emphasis search field with a solid background instead of a border, useful when it sits inside a toolbar or card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline note below the field in #ff031a reporting that no results were found - this is a "no results" state, not a validation failure.
+- Underlined: A minimal search field with only a bottom border, useful for compact inline search bars where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline note below the field in #ff031a reporting that no results were found - this is a "no results" state, not a validation failure.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing an entered search value instead of the placeholder.
+- Error: represents "no results found" for the current query.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Search fields are commonly pill-shaped (full radius).
+
+Component properties: Placeholder (editable text shown when empty), Leading icon (boolean, magnifying-glass icon before the input text), Clear button (boolean, trailing "x" button shown once the field has a value, clearing it in one click).
+
+
+
+=== select-dropdown.html ===
+Create a complete Select component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a picker for choosing one value from a fixed list, visually similar to a text input but with a fixed trailing chevron-down icon and no visible text cursor, since it is not editable text.
+
+Types (4):
+- Outlined: The default select style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Borderless: No border or background until interacted with - for a toolbar or filter row where a full field chrome would be visual noise.
+  Rest: background:transparent;border:1.5px solid transparent;
+  Hover: background:#f1f1ee;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A single bottom border, no background - a lighter-weight alternative to Outlined for long, dense forms.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (8, apply to every type): Rest, Hover, Focused, Filled, Open, Error, Disabled, Loading.
+- Focused: border/outline change only, no panel - the moment before a click or Enter opens it.
+- Filled: same appearance as Rest, showing a selected value instead of the placeholder.
+- Open: the trigger plus a real role="listbox" panel below it (role="option" per item, aria-selected on the current value) - the field is role="combobox" with aria-expanded="true" while this is showing.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+- Loading: trailing chevron replaced by a spinner, aria-busy="true", not interactive until it resolves.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when nothing is selected), Allow clear (boolean - once a real value is selected, replaces the trailing chevron with an × button that clears it back to the placeholder).
+
+
+
+=== skeleton-default.html ===
+Create a complete Skeleton component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (layout, state, rows) - a loading placeholder made of shimmering gray blocks shaped like the content about to load, used to reduce perceived loading time and avoid layout jank while real content is still being fetched.
+
+Layouts (3):
+- Text: stacked paragraph-shaped placeholder lines, full width except the last line which is shorter - a generic block of loading text.
+- Avatar + text: a circular avatar placeholder to the left, with 2 shimmering text lines stacked to its right - a fixed 2 lines regardless of the Rows property, representing a typical list-item or comment loading shape.
+- Card: a rectangular media placeholder block on top, with shimmering caption lines below it (last one shorter) - representing a loading card or thumbnail.
+
+States (2):
+- Animated: a shimmering pulse sweeps across every placeholder block, left to right, on a continuous loop.
+- Reduced motion: the exact same shapes, but with no animation - a static, flat gray block - representing the prefers-reduced-motion accessibility state this system always demonstrates for any animated component.
+
+Component properties: Rows (1-5, default 3 - controls how many placeholder lines the Text layout and the Card layout's caption area show; Avatar + text always shows a fixed 2 lines, regardless of Rows).
+Current value - Rows: 3.
+
+
+
+=== slider-default.html ===
+Create a complete Slider component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, track thickness, state) - a draggable track with one thumb (Single) or two thumbs (Range) for picking a numeric value or a range of two values.
+
+Types (2):
+- Single: One thumb represents a single value along the track - drag it to set a number, like a volume level.
+  Rest: background:#f1f1ee;
+  Hover: background:#e3e3df;
+  Fill (progress from the track's start): background:#FF031A;
+  Thumb: background:#FFFFFF;border:2px solid #FF031A;
+  Focused (ring applies to the thumb, not the track): outline:2px solid #ff4253;outline-offset:2px;
+- Range: Two thumbs mark a selected span between a lower and upper bound - drag either thumb to narrow or widen the range, like a price filter.
+  Rest: background:#f1f1ee;
+  Hover: background:#e3e3df;
+  Fill (progress from the track's start, or between the two thumbs for Range): background:#FF031A;
+  Thumb: background:#FFFFFF;border:2px solid #FF031A;
+  Focused (ring applies to the thumb, not the track): outline:2px solid #ff4253;outline-offset:2px;
+
+States (4, apply to the whole control): Rest, Hover, Focused, Disabled.
+- Focused shows a focus ring on the thumb specifically, never the track, and never just a color change, so layout never shifts.
+- Disabled applies to the whole control at once (40% opacity, not-allowed cursor) - the thumb keeps its shape.
+
+What track thickness do you want? (4px - Thin / 6px - Default / 8px - Bold / 10px - Heavy) Corner radius is always a full pill on both the track and the thumb - not configurable, since a slider track has no practical use for sharp or partial corners.
+
+Component properties: Label (text input, default "Volume"); Value (number, 0-100, default 60 - drives the Single type's fill percentage and thumb position; the Range type uses two fixed example values, 30 and 70, for illustration, since there's only one Value property in this demo).
+
+
+
+=== spin-default.html ===
+Create a complete Spin component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (size, state, label) - a small, continuously-rotating ring that communicates an indeterminate loading state, used inline within a button, beside text, or centered over a section of content that is loading. It has no known completion percentage or shape - distinct from Progress (a known percentage) and Skeleton (content-shaped placeholder blocks).
+
+Sizes (3):
+- Small: a 14px ring diameter, for tight inline placements like inside a compact button.
+- Default: a 20px ring diameter, for general inline or standalone use.
+- Large: a 28px ring diameter, for more prominent standalone loading moments.
+
+States (3):
+- Spinning: just the bare ring, no label - the leanest inline case, e.g. inside a button.
+- With label: the ring plus the Label property text shown beside it, in a row.
+- Overlay: the ring and label centered over a dimmed rectangular content placeholder, representing a section of the page temporarily covered while it loads.
+
+Component properties: Label (text shown beside the ring in the With label and Overlay states, default "Loading...").
+
+
+
+=== splitter-default.html ===
+Create a complete Splitter component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, split ratio, state, panel content) - a two-panel layout separated by a draggable divider that lets the user redistribute space between the panels, not a one-off resize handle wired up per screen.
+
+Types (2):
+- Horizontal: panels sit side by side, divided by a vertical draggable line (col-resize cursor).
+- Vertical: panels stack top to bottom, divided by a horizontal draggable line (row-resize cursor).
+
+States (3):
+- Default: a static split at the configured ratio (currently 35% / 65%).
+- Dragging: the divider itself is highlighted (brand red) while the pointer is actively resizing - panel proportions mid-drag are whatever they were an instant before, not reset.
+- Collapsed: the first panel shrinks to a thin 28px strip showing only an expand chevron, temporarily reclaiming its space for the second panel.
+
+Component properties: First panel label (text, e.g. "Sidebar"); Second panel label (text, e.g. "Content"); Split ratio (number, percent given to the first panel when not collapsed) - currently 35.
+Live interaction: include splitter-runtime.js and mount ADSSplitter. Named separator with arrow/Shift/Home/End/Enter keys, 64px minimum expanded panes, 10–90% bounds, collapse/restore, pointer cancellation and versioned width persistence. Use a unique storage key per product layout. Static state comparisons remain inert.
+
+
+
+=== statistic-default.html ===
+Create a complete Statistic component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, color, title, value, prefix, suffix) - a compact, high-emphasis display for a single quantifiable number, not a one-off big number hard-coded per dashboard tile.
+
+Statistic is not interactive - it has no hover, focus or disabled state. Its variation is structural: 3 types, each in 4 states (which act as semantic colors, not interaction states).
+
+Types (3):
+- Default: a title above a large, bold value, with optional prefix/suffix.
+- With Trend: same as Default, plus a small colored up/down arrow and a percentage change on its own line below the value.
+- Countdown: same as Default, but the value renders in a monospace, timer-like style.
+
+States (4, apply to every type):
+- Default: neutral color (var(--text-hi)).
+- Positive: value (and, for With Trend, the arrow pointing up) in var(--green-500).
+- Negative: value (and, for With Trend, the arrow pointing down) in var(--danger-500).
+- Loading: title stays visible, but the value is replaced by an animated shimmering placeholder bar - never show a stale or fake value while loading.
+
+Component properties: Title (text, e.g. "Active Users"); Value (text, e.g. "112,893"); Prefix (optional text shown immediately before the value, e.g. a currency symbol) - currently ""; Suffix (optional text shown immediately after the value, e.g. a unit or percent sign) - currently "".
+
+
+
+=== steps-default.html ===
+Create a complete Steps (progress indicator) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, orientation, size, labels, per-step status) - a row showing position within a multi-step flow like checkout or onboarding, not separate one-off labels glued together. Steps are inherently sequential: every step before the current one renders as completed, every step after it renders as upcoming.
+
+Type: Numbered - Each step is a circle containing its number, or a checkmark icon once that step is completed - the clearest option when steps benefit from an at-a-glance count.
+
+States (5, apply per step):
+- Upcoming: empty ring (1.5px rgba(15,15,10,0.15) border, transparent fill), step number in #69707D, connector lines on both sides in rgba(15,15,10,0.15).
+- Current: solid #FF031A background, step number in white (never a checkmark - that's Completed only), label text in #111827 and bold.
+- Completed: solid #FF031A background with a checkmark icon in white in place of the number, connector line after it in rgba(15,15,10,0.15) (the next step is upcoming) but the connector before it in #FF031A (the previous step is completed too).
+- Error: solid #ff031a background with an X mark in white, label text in #ff031a.
+- Disabled: empty ring at 40% opacity, label text at 40% opacity - static/illustrative, not interactive.
+- A connector is only filled (brand red) when both steps it joins are completed; otherwise it stays the neutral line color.
+
+What orientation do you want? (Horizontal / Vertical) Horizontal runs left-to-right with the circle above its label and a horizontal connector between circles; Vertical stacks top-to-bottom with the circle beside its label and a vertical connector below each circle, centered under the circle column either way.
+
+What size do you want? (24px - S / 32px - M / 40px - L) Circle diameter and the number/icon size scale together, applied to every step.
+
+Component properties: Labels (comma-separated editable text, one per step, current value "Details, Shipping, Payment" - step count follows the number of labels entered).
+
+
+
+=== switch-default.html ===
+Create a complete Switch (toggle) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, state) - a pill-shaped track with a sliding circular thumb that flips a single setting on or off, not a checkbox merely styled to look like one.
+
+Types (2):
+- Compact: Just the toggle itself, with no visible text label - use where the surrounding context already explains what's being toggled, like a table row or a toolbar.
+- Labeled: Toggle plus a text label to its right - use as a standalone control where the setting needs its own visible name, like a settings panel.
+
+States (5, same visual treatment for both types):
+- Off: background:#e3e3df; thumb background:#FFFFFF, thumb sits at the left.
+- On: background:#FF031A; thumb background:#FFFFFF, thumb slides to the right.
+- Hover: background:#c7c7c1 (off-state only).
+- Focused: outline:2px solid #ff4253; outline-offset:2px; Never just a color change, so the focus ring stays visible against every other state.
+- Disabled: opacity:0.4; cursor:not-allowed;
+
+What size do you want? (20px - S / 24px - M / 32px - L) Track width scales with height (width = height x 1.75, rounded); thumb size and travel distance scale with it too.
+
+Component properties: Label (editable text next to the switch, shown for the Labeled type and used as the accessible name for both).
+
+
+
+=== table-default.html ===
+Create a complete Table component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, corner radius, size, show header) - a structured grid of rows and columns for displaying tabular data (Name / Status / Role / Email / Mobile example columns - Email and Mobile render as real mailto:/tel: links, styled in this system's defined link color, var(--red-400)), with a header row and optional cell borders, alternating row stripes, or row selection.
+
+Border styles (2):
+- Default: Minimal - only a bottom border under the header row and thin row-separator lines, no outer border or vertical cell lines.
+- Bordered: A full grid - outer border plus vertical and horizontal lines between every cell, like a spreadsheet.
+
+States (5, apply to the whole set of body rows at once):
+- Default: Plain rows - no striping, no selection.
+- Striped: The same rows, but every other row gets a subtly different background for alternating-row legibility.
+- Selected: The same rows, now each with a leading checkbox column - the first row is visually marked as selected with a red-tinted row background and a checked checkbox, the other two rows show unchecked checkboxes.
+- Loading: The same row count and column count, but every cell replaced with a Skeleton placeholder bar - so the table's shape doesn't jump once the real rows arrive.
+- Empty: No rows at all - a single spanning cell showing the Empty component (icon, title, description) instead of a blank body, so a zero-result search reads as a real answer, not a rendering failure.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to the Bordered type's outer container only - the Default type never carries a radius.
+
+What size do you want? (Small / Middle / Large) Scales cell padding only - column widths and font-size stay the same at every size.
+
+Component properties: Corner radius (Bordered type only); Size; Show header (boolean, default checked - shows the column-label header row above the body rows).
+Current values - Show header: yes.
+
+Interaction contract (real, data-backed usage, beyond this page's static demos):
+- Selection (3): None / Single-row / Multi-row (checkbox column).
+  - None: Rows aren't selectable - no checkbox column, no row highlight on click.
+  - Single-row: Clicking a row selects it exclusively, like a radio group - selecting a new row clears the previous selection.
+  - Multi-row (checkbox column): A leading checkbox column, one checkbox per row plus a header checkbox that selects/deselects every visible row. When some but not all visible rows are checked, the header checkbox is indeterminate, not checked or unchecked. Space toggles selection on a focused row.
+- Sort: Client-side sort re-orders already-loaded rows in memory - fine for small, fully-loaded datasets. Server-side sort re-requests the current page/window from the server on every sort change - required once pagination or virtualization is server-driven. Single-column sort is the default; multi-column sort (shift-click a header to add a secondary sort key) is an opt-in advanced behavior, not required of every implementation. Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header must expose its state via aria-sort="ascending|descending|none" and announce the change to assistive technology, not just show a visual arrow icon.
+- Filter: A per-column filter, scoped to just that field (e.g. a status dropdown in the Status header). A global search bar above the table, matching across every visible column at once. A "no rows match" empty state (rows exist, the current filter/search matched none of them - offer a Clear filters action) must read differently from the true empty state (no data exists at all - offer a create action).
+- Pagination vs virtualization (threshold 500 rows): Below 500 rows, client-side pagination (or simply rendering every row) is fine - the DOM cost is small and bounded. At or above 500 rows, virtualization (windowed rendering - only rows in or near the viewport are ever mounted) is required, since a table row is not a cheap DOM node and DOM/layout cost does not scale linearly with row count past a few hundred rows.
+- Density (2): Comfortable - The default row height and cell padding. Compact - Reduced row height and cell padding, for scanning more rows in the same viewport height.
+- Required states (3): Empty (no data at all) - Reuses the Empty component (icon, title, description) plus a call-to-action, never a header with a silently blank body. Loading - Skeleton rows matching the real column count, not a blank table and not the empty-state message. Error - A failed fetch shows what went wrong plus a Retry action, never silently falling back to the same empty state as a true zero-result answer.
+
+
+
+=== tabs-default.html ===
+Create a complete Tabs (tab bar) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - a horizontal row of tab triggers where exactly one is active at a time. Only the tab bar itself, not a full page with panel content underneath.
+
+Types (2):
+- Underline: A minimal bar where the active tab gets a 2px accent underline and no background change - reads as part of the page's own text hierarchy, not a separate control.
+  Rest: background:transparent;color:#4B5563;border-bottom:2px solid transparent;
+  Active: color:#111827;border-bottom:2px solid #FF031A;font-weight:600;
+  Hover: color:#111827;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+- Pill: A solid pill highlight follows the active tab - useful when the tab bar needs to stand out as its own control, separate from the page content around it.
+  Rest: background:transparent;color:#4B5563;
+  Active: background:rgba(255,3,26,0.08);color:#FF031A;font-weight:600;
+  Hover: background:#f1f1ee;color:#111827;
+  Focused: outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+
+States (4, apply per trigger): Rest, Hover, Focused, Disabled.
+- Exactly one trigger is Active at all times - a separate property from these four states, so the bar always shows realistic always-one-selected context.
+- Disabled applies to one trigger at a time (its own real disabled attribute, 40% opacity, not-allowed cursor), not the whole bar.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) This is the tab bar's height - padding and font-size scale proportionally, applied to every trigger.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Only visually affects the Pill type's active tab (its pill background) - the Underline type ignores it entirely.
+
+Component properties: Labels (comma-separated editable text, one per trigger, current value "Overview, Activity, Settings" - trigger count follows the number of labels entered).
+
+
+
+=== tag-default.html ===
+Create a complete Tag component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (color, form, radius) - a small labeled chip used for categorizing, filtering, or flagging status, not a one-off pill built from scratch each time.
+
+Types (4, semantic colors):
+- Default: Neutral labeling - general-purpose categorization with no particular semantic meaning.
+  Default look: background #e3e3df, color #4B5563.
+  Selected look (Selected form only): background #c7c7c1, color #111827 - a solid, more saturated fill showing the toggled-on appearance of a selectable/filter tag.
+- Success: Marks a positive status - completed, approved, active.
+  Default look: background rgba(47,191,110,0.12), color #2fbf6e.
+  Selected look (Selected form only): background #2fbf6e, color #FFFFFF - a solid, more saturated fill showing the toggled-on appearance of a selectable/filter tag.
+- Warning: Flags something that needs attention - pending, at-risk, in review.
+  Default look: background rgba(230,165,58,0.12), color #e6a53a.
+  Selected look (Selected form only): background #e6a53a, color #1A1400 - a solid, more saturated fill showing the toggled-on appearance of a selectable/filter tag.
+- Error: Marks a negative or blocking status - failed, rejected, overdue.
+  Default look: background rgba(255,3,26,0.12), color #ff031a.
+  Selected look (Selected form only): background #ff031a, color #FFFFFF - a solid, more saturated fill showing the toggled-on appearance of a selectable/filter tag.
+
+Forms (3, structural):
+- Default: plain label only.
+- Removable: label plus a trailing "x" remove icon button.
+- Selected: the label alone, no remove button, rendered with the type's Selected look instead of its Default look - demonstrates the toggled-on appearance of a selectable/filter-style tag.
+
+Checkable mode (Ant's Tag.CheckableTag): a real <button> with aria-pressed instead of a plain <span>, toggling the Selected look on click. Independent, not mutually exclusive - any number of tags in the same group can be pressed at once, unlike a radio group.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to each chip individually.
+
+Component properties: Corner radius; Label (text, default "In progress").
+Current values - Label: "In progress".
+
+
+
+=== text-area-default.html ===
+Create a complete Text Area component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.
+
+It is a multi-line free-form text field for longer content like comments, descriptions, or messages - it grows taller through a Rows property, not by manual dragging (resize: none, matching this system's other fields, which don't offer manual resize).
+
+Types (3):
+- Outlined: The default text area style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Underlined: A minimal field with only a bottom border, useful for compact inline forms where a full box would feel heavy.
+  Rest: border-bottom:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-bottom-color:#69707D;
+  Focused: border-bottom-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-bottom-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing entered multi-line text instead of the placeholder.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to Outlined and Filled - Underlined stays square, matching its minimal style.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Rows (2-8, default 4, controls the field's visible height - the number of text lines tall it renders).
+
+
+
+=== time-default.html ===
+Create a complete Time component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is visually a text field with a fixed trailing clock icon (not a leading icon, to match Select's chevron placement convention) and no visible text cursor, since its value is set via a time-selection UI rather than typed character-by-character. Scope is the trigger control itself, in all its states - the trigger opens a time-selection UI on click/focus in a real implementation, but that popup UI is not built out here, the same "declared but not interactively simulated" convention Date Picker itself already uses for its calendar popup.
+
+Types (2):
+- Outlined: The default time field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focused: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focused: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Error: border-color:#ff031a; Paired with an inline error message below the field in #ff031a.
+
+States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.
+- Filled: same appearance as Rest, showing the selected time value (e.g. 10:30 AM) instead of the placeholder.
+- Error: pairs with an inline error message below the field.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when no time is chosen, e.g. "Select a time").
+
+
+
+=== timeline-default.html ===
+Create a complete Timeline component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (layout, state, show icons) - a vertical list of chronological events, each with a dot (or optional status icon) connected by a continuous vertical line, used for activity logs, order status history, or a project's milestone history.
+
+Layouts (3):
+- Default: dots aligned to the left, with every event's title and timestamp to the right of the connecting line, stacked vertically.
+- Alternate: dots centered on the line, with event content alternating left and right of it for odd/even events - a classic alternating vertical timeline layout.
+- Horizontal: events flow left to right along a single horizontal line, with each dot centered above its own title and timestamp.
+
+States (3):
+- Default: plain, neutral-colored dots (or icons) - every event reads as complete/neutral, with no emphasis on any one item.
+- With events: the same events, but the current/in-progress event (the second one) gets an accent-colored dot and a bolder title, so it stands out from the events around it.
+- Pending: the same events plus a trailing, dimmed placeholder item with a dashed segment of connecting line above it and no timestamp (just "Pending..."), indicating more events are still to come.
+
+Component properties: Show icons (boolean, default off) - OFF, so every event shows a plain dot rather than an icon. The current event in the "With events" state and the pending placeholder keep their own accent/dimmed coloring regardless of this setting.
+
+
+
+=== toast-default.html ===
+Create a complete Toast (floating notification) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state, radius) - a floating, elevated notification card (solid background, border, drop shadow, fixed ~340px max-width) that appears temporarily to confirm an action or report a status.
+
+It differs from Alert by being a floating overlay element, not inline page content - in production it is typically rendered in a fixed screen corner (e.g. bottom-right), stacked above the page, rather than embedded in the content flow the way Alert is.
+
+Types (4, drive only the icon color - the card itself always stays a solid neutral elevated surface):
+- Info: Neutral, informational status update - nothing succeeded or failed, it's just worth surfacing. Icon color: color:#4f8fe6;
+- Success: Confirms an action completed successfully. Icon color: color:#2fbf6e;
+- Warning: Flags something that needs attention but hasn't failed outright. Icon color: color:#e6a53a;
+- Error: Reports that an action failed. Icon color: color:#ff031a;
+Card (same for every type): background:#fbfbfa;border:1px solid rgba(15,15,10,0.15);box-shadow:0 8px 24px rgba(0,0,0,0.4);
+
+States (4, structural, apply to the whole card):
+- Default: title and description only, no extra controls.
+- Dismissible: adds a trailing close (x) icon button in the card's top-right corner.
+- With action: adds an inline text-style action button (e.g. "View") below the description.
+- With progress: adds a thin colored progress/timer bar along the card's bottom edge, using the type's accent color at roughly 60% width to suggest a countdown in progress.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applied to the whole card, with matching inset on the bottom edge so the With-progress bar never pokes out past rounded corners.
+
+Component properties: Title (text, default "Upload complete"); Description (text, default "your-file.pdf was uploaded successfully."); Show icon (boolean toggle, default on - shows the semantic type icon beside the title/description).
+Current values - Title: "Upload complete", Description: "your-file.pdf was uploaded successfully.", Show icon: yes.
+
+
+
+=== tooltip-default.html ===
+Create a complete Tooltip component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (placement, size, content state) - a small floating label anchored to a trigger element on one of 4 sides, with a connecting arrow, not a one-off floating div built from scratch each time.
+
+Placements (4): Top, Bottom, Left, Right - the bubble sits on the given side of the trigger, with a small arrow connecting it back to the trigger. Top's arrow points down at the trigger below it, Bottom's arrow points up at the trigger above it, Left's arrow points right at the trigger beside it, Right's arrow points left at the trigger beside it.
+
+Content states (3): Plain text (a single line of text only); Rich (a bold title line plus a smaller description line below it, e.g. "Keyboard shortcut" / "Press Cmd+K to open"); Long text (wraps to 2-3 lines at a max-width around 180px instead of forcing the bubble wider).
+
+Visual treatment: one consistent look regardless of placement or content state - this is a neutral utility component, not semantically colored like Alert or Toast. Inverted against the page (near-black background in light theme, near-white in dark theme - background var(--overlay-invert-bg), color var(--overlay-invert-text), NOT the normal-surface var(--text-hi)/var(--graphite-900) pair, since those are user-customizable via Foundations and would silently break the guaranteed inversion), the arrow a small rotated square (transform:rotate(45deg)) in the same background color, positioned so it visually connects the bubble to the trigger.
+
+Component properties: Size (Small/Default/Large, controls padding and font-size) - currently Default (6px 10px padding, 12px font). Show arrow (boolean, toggles the connecting arrow) - currently shown. Text content (string, used by the Plain text state) - currently "Add to favorites".
+
+
+
+=== tour-default.html ===
+Create a complete Tour component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (placement, step-position state, target label, title, description) - a step-by-step walkthrough card (title + description + step counter + Back/Next or Back/Finish navigation) anchored to a highlighted target element, not a one-off floating div built from scratch each time.
+
+Placements (4): Top, Bottom, Left, Right - the card sits on the given side of the target, with a small arrow connecting it back to the target. Top's arrow points down at the target below it, Bottom's arrow points up at the target above it, Left's arrow points right at the target beside it, Right's arrow points left at the target beside it.
+
+Step-position states (3): First step (step counter "1 of 3", only a Next button); Middle step (step counter "2 of 3", both Back and Next buttons); Last step (step counter "3 of 3", a Back button plus a Finish button instead of Next).
+
+Visual treatment: reads as a proper elevated panel, similar in floating-panel language to this system's Tooltip and Popover components, but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow "0 8px 24px rgba(0,0,0,0.4)" alone gives it separation from the page), border-radius var(--radius-md). The target is a decorative highlighted chip (not a real interactive control), sitting on the ordinary page background outside the card so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 2px solid var(--red-500), box-shadow "0 0 0 3px var(--red-tint)" - so it reads clearly as the highlighted element the tour is pointing at. The arrow is a small rotated square (transform:rotate(45deg)) matching the card's own inverted background color. Primary actions (Next/Finish) use background var(--red-500); the Back button is a ghost/outline style using the card's own inverted text color for its border and label (var(--text-hi)/var(--line-strong) would go near-invisible against the inverted background).
+
+Component properties: Target label (string, the highlighted element's text) - currently "New feature". Title (string, bold text at the top of the card body) - currently "Try the new dashboard". Description (string, supporting text below the title) - currently "Get a quick overview of your team's activity in one place.".
+
+
+
+=== transfer-default.html ===
+Create a complete Transfer component for the Agentic Design System.
+
+Build it as ONE reusable dual-list widget controlled by properties (type, state, size, left title, right title) - two side-by-side list panels, an available-items "Source" list on the left and a chosen-items "Target" list on the right, each item with its own checkbox, with center-aligned ">" / "<" arrow buttons between the panels to move checked items from one side to the other. This is a standalone panel widget, not a text-field trigger.
+
+Types (2):
+- Default: Two plain list panels - available items on the left, chosen items on the right - no search box.
+- With search: Same two-panel layout, but each panel gets its own search input above its list, so a long source or target list can be filtered before moving items.
+
+States (4):
+- Rest: default appearance.
+- Hover: the first source item shows a hover background.
+- Focused: the right (">") transfer button shows a visible focus ring.
+- Disabled: the whole widget at reduced opacity (40%), checkboxes and arrow buttons non-interactive.
+
+Size: Default - controls each panel's list height (180px). Other options: Small (140px) / Default (180px) / Large (220px).
+
+Component properties: Size (dropdown - Small/Default/Large, controls each panel's list height); Left title (text, e.g. "Source"); Right title (text, e.g. "Target").
+
+
+
+=== tree-default.html ===
+Create a complete Tree component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, root label, icon visibility, state) - a standalone, always-visible hierarchical structure with expandable branches, like a file system or an org chart. Distinct from Tree Select, which hides the same structure behind a Select-style dropdown trigger.
+
+Types (3):
+- Default: nodes are selectable by click - clicking a node highlights it, no checkboxes.
+- Checkable: every node gets its own checkbox for multi-select; checking a parent should check all its children (and check a parent automatically when every child becomes checked).
+- Metatext: same selectable nodes as Default (no checkboxes), plus a second, smaller line of muted supplemental text under each node's label (a file size, an item count) - useful for disambiguating similarly-named nodes or surfacing a quick detail without adding a column. Modeled on Lightning Design System's Tree item metatext, which top-aligns the toggle/icon against the now-taller two-line row rather than centering it.
+
+States (4):
+- Default: top-level nodes visible, all branches collapsed.
+- Expanded: one branch expanded, showing its children.
+- Selected: one leaf node highlighted (Default type) or checked (Checkable type), with its parent branch expanded so it's visible.
+- Disabled: the whole tree dimmed and non-interactive.
+
+Each node is either a parent (has children, shown with an expand/collapse chevron and a folder icon) or a leaf (shown with a file icon). Clicking a parent's chevron toggles its children's visibility without selecting it.
+
+Component properties: Root label (text, a heading shown above the node list, e.g. "Documents"); Show icons (boolean, toggles the folder/file icon next to each node) - currently on.
+
+
+
+=== tree-select-default.html ===
+Create a complete Tree Select component system for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant. It is a select-like trigger field showing a selected node's label (e.g. "Engineering / Frontend") with a trailing chevron icon, that opens a floating panel below it containing an INDENTED, EXPANDABLE TREE of options - parent nodes with a collapse/expand caret, child nodes indented beneath them, any node at any depth selectable, not just leaves. Distinct from Select (one flat list) and from Cascader (fixed side-by-side columns, one per level) - a Tree Select's hierarchy can be any depth and stays in a single scrolling list with indentation showing nesting.
+
+Types (2):
+- Outlined: The default tree select field style - a bordered box that works well on any background and reads clearly in dense forms.
+  Rest: background:#ffffff;border:1.5px solid rgba(15,15,10,0.15);
+  Hover: border-color:#69707D;
+  Focus: border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus an indented tree panel anchored below the field.
+- Filled: A softer-emphasis field with a solid background instead of a border, useful when a form sits on a bordered card and an outline would compete visually.
+  Rest: background:#f1f1ee;border:1.5px solid transparent;
+  Hover: background:#e3e3df;
+  Focus: background:#ffffff;border-color:#FF031A;outline:2px solid #ff4253;outline-offset:2px; Never just a color change, so layout never shifts.
+  Open: same border/outline treatment as Focus, plus an indented tree panel anchored below the field.
+
+States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.
+- Focus: real keyboard focus on the field, no tree panel visible yet.
+- Open: the tree panel is visible directly below the field - each row is indented by depth (16px per level), parent nodes show a caret (down when expanded, right when collapsed) before the label, leaf nodes show a same-width blank spacer instead so every label still aligns in a column, and the currently selected node is highlighted.
+- Filled: same appearance as Rest, showing the selected node's label with the panel closed.
+- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.
+
+What size do you want? (24px - XXS / 28px - XS / 32px - S / 36px - SM / 40px - M / 44px - L / 48px - XL / 56px - XXL) Padding and font-size scale proportionally with height.
+
+What corner radius do you want? (0px - Sharp / 4px - Compact / 8px - Balanced / 12px - Soft / Full - Pill) Applies to both Outlined and Filled.
+
+Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces the single active-row highlight with a real checkbox per node, parents included, letting more than one node be picked across branches). Search (boolean - a real input inside the trigger itself, narrowing the tree to matching nodes with the matched substring highlighted).
+
+
+
+=== upload-default.html ===
+Create a complete Upload (file upload) component for the Agentic Design System.
+
+Build it as ONE reusable component controlled by properties (type, state, label, helper text) - either a large drag-and-drop dropzone or a compact trigger button for adding files, paired with a file list below it showing each added file's name, size and status (uploading with a progress bar, complete with a checkmark, or failed with an error message and reason).
+
+Types (2):
+- Dropzone: A large dashed-border drag-and-drop target with a centered upload icon and instructional text - the primary, most discoverable way to add files.
+- Button: A compact real button that opens the file picker - a minimal trigger-only variant for tight spaces or forms already crowded with dropzones elsewhere.
+Dropzone border (every state): 1.5px dashed rgba(15,15,10,0.15).
+
+States (4, apply to the control and its file list together):
+- Empty: just the dropzone/button, no file list shown yet.
+- With files: dropzone/button plus a 2-row file list - one complete file with a green checkmark (#2fbf6e), one mid-upload file with a thin progress bar (fill #FF031A) and a percentage label.
+- Error: a file list row with a red error icon and short error text (color #ff031a) instead of a progress bar, e.g. "Upload failed - file too large".
+- Disabled: the whole control, including any file list, at 40% opacity and non-interactive.
+
+Component properties: Label (text, default "Upload files"); Helper text (text, default "PNG, JPG or PDF up to 10MB").
+Current values - Label: "Upload files", Helper text: "PNG, JPG or PDF up to 10MB".
+

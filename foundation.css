@@ -1,4 +1,7 @@
 /* Foundation bindings load after page styles. Code retains its mono role. */
+.ads-foundation-editor{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);padding:var(--space-16);margin-block:var(--space-16);border:var(--border-width-1) solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface-panel)}
+.ads-foundation-editor p{flex:1 1 22rem;margin:0}
+.ads-editor-locked :is(.system-card,.product-card,.font-option){cursor:default}
 body{font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);color:var(--type-body-color)}
 /* Page roles outrank the earlier page-specific type rules. Metadata and
    component specimens retain their explicit role bindings below. */

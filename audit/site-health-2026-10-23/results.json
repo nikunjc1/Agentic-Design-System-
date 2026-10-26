@@ -1,0 +1,3659 @@
+{
+  "status": "pass",
+  "recovery": [
+    {
+      "case": "corrupt record",
+      "status": "pass"
+    },
+    {
+      "case": "future record",
+      "status": "pass"
+    },
+    {
+      "case": "saved controls lock; documentation and JSON export remain usable",
+      "status": "pass"
+    },
+    {
+      "case": "cross-tab conflict and reload",
+      "status": "pass"
+    }
+  ],
+  "pages": [
+    {
+      "file": "accessibility.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "add-on-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "add-on.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "affix-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "affix.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "ai-foundation.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "ai-generator.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "alert-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "alert.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "anchor-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "anchor.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "autocomplete-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "autocomplete.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "avatar-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "avatar.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "badge-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "badge.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "borders.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 8,
+      "guideFailures": []
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "breadcrumb.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "button-destructive.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-ghost.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-link.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-neutral.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-primary-icon.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-primary.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-secondary.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "button-tertiary.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "calendar-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "calendar.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "card-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "card.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "cascader-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "cascader.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "changelog.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "checkbox-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "checkbox.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "collapse-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "collapse.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "color-picker-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "color-picker.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "component-index.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "components.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "copywriting.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "data-format.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "date-picker-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "date-picker.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "date-range-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "date-range.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "description-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "description.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "divider-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "divider.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "drawer-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "drawer.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "dropdown-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "dropdown.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "empty-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "empty.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "figma.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "float-button-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "float-button.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "foundations.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 10,
+      "guideFailures": []
+    },
+    {
+      "file": "grid-layout.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 10,
+      "guideFailures": []
+    },
+    {
+      "file": "group-button-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "group-button.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "guidelines.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "history.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "icons.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 8,
+      "guideFailures": []
+    },
+    {
+      "file": "image-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "image.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "input-text-field.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "input.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "list-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "list.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "md-export.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "mention-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "mention.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "menu-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "menu.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "modal-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "modal.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "new-project.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "notification-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "notification.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "npm-package.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "number-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "number.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "overview.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "pagination-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "pagination.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "password-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "password.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "patterns.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "pop-confirm.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "popover-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "popover.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "principles.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "progress-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "progress.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "radio-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "radio.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "radius.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 10,
+      "guideFailures": []
+    },
+    {
+      "file": "rating-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "rating.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "result-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "result.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "search-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "search.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "select-dropdown.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "select.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "settings.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "shadows.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 6,
+      "guideFailures": []
+    },
+    {
+      "file": "skeleton-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "skeleton.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "slider-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "slider.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "spacing.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 8,
+      "guideFailures": []
+    },
+    {
+      "file": "spin-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "spin.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "splitter-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "splitter.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "statistic-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "statistic.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "steps-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "steps.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "switch-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "switch.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "table-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "table.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tabs-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tabs.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tag-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tag.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "templates.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "text-area-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "text-area.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "time-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "time.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "timeline-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "timeline.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "toast-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "toast.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tooltip-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tooltip.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tour-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tour.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "transfer-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "transfer.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tree-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tree-select-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "tree-select.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "tree.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "typography.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 6,
+      "guideFailures": []
+    },
+    {
+      "file": "upload-default.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 2,
+      "guideFailures": []
+    },
+    {
+      "file": "upload.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    },
+    {
+      "file": "values.html",
+      "widths": [
+        {
+          "width": 1440,
+          "errors": []
+        },
+        {
+          "width": 768,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "errors": []
+        }
+      ],
+      "guides": 0,
+      "guideFailures": []
+    }
+  ],
+  "errors": [],
+  "assets": []
+}

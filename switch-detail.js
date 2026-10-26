@@ -33,7 +33,7 @@
       off: "background:" + graphite700 + "; thumb background:#FFFFFF, thumb sits at the left.",
       on: "background:" + red500 + "; thumb background:#FFFFFF, thumb slides to the right.",
       hover: "background:" + graphite600 + " (off-state only).",
-      focus: "outline:2px solid " + red400 + "; outline-offset:2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:2px;",
       disabled: "opacity:0.4; cursor:not-allowed;"
     };
   }
@@ -121,12 +121,13 @@
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
     });
     lines.push("");
-    lines.push("States (5, same visual treatment for both types):");
+    lines.push("States (" + STATES.length + ", same visual treatment for both types): " + STATES.map(function(state){ return state.label; }).join(", ") + ".");
     lines.push("- Off: " + css.off);
     lines.push("- On: " + css.on);
     lines.push("- Hover: " + css.hover);
     lines.push("- Focused: " + css.focus + " Never just a color change, so the focus ring stays visible against every other state.");
     lines.push("- Disabled: " + css.disabled);
+    lines.push("- Loading: show the On track with a spinner inside the thumb, at the same 40% opacity as Disabled. Disable toggling, use a wait cursor and set aria-busy=\"true\".");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Track width scales with height (width = height x 1.75, rounded); thumb size and travel distance scale with it too.");
     lines.push("");
@@ -165,7 +166,7 @@
     lines.push("/* States (5) - Off, On, Hover, Focused, Disabled - shared by both types */");
     lines.push(".switch-demo-input:checked + .switch-demo-track{ background:" + red500 + "; }");
     lines.push(".switch-demo-track:hover, .switch-demo-track.is-hover{ background:" + graphite600 + "; }");
-    lines.push(".switch-demo-input:focus-visible + .switch-demo-track, .switch-demo-track.is-focus{ outline:2px solid " + red400 + "; outline-offset:2px; }");
+    lines.push(".switch-demo-input:focus-visible + .switch-demo-track, .switch-demo-track.is-focus{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:2px; }");
     lines.push(".switch-demo-input:disabled + .switch-demo-track, .switch-demo-track.is-disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];

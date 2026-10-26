@@ -9,6 +9,18 @@ const results=[];
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 let assertions=0;
 const clicked=new WeakSet();
+// Mirrors foundation-runtime.js's own editorScopes: these 8 pages gate edits
+// behind an explicit Edit foundation/Save foundation flow (drafts preview
+// immediately but only become durable on Save foundation; see the generated
+// "Save and edit" contract rule on each page). 'sizing' is a shared key that
+// spacing/grid-layout/icons also stage through the same Save foundation
+// control even though it isn't one of their own named editor keys.
+const EDITOR_SCOPES={
+  'foundations.html':['colors','bg-colors','status-colors','neutral-colors'],
+  'grid-layout.html':['grid-layout','sizing'],'typography.html':['typography'],
+  'spacing.html':['spacing','sizing'],'radius.html':['radius'],'borders.html':['border','border-states'],
+  'shadows.html':['shadow'],'icons.html':['icons','sizing']
+};
 function check(row,condition,message){assertions++;row.checks++;if(!condition)row.failures.push(message);}
 function label(n){return n.id||n.dataset.role||n.getAttribute('aria-label')||n.closest('label')?.textContent.trim().slice(0,70)||n.type;}
 function context(markdown){const part=markdown.split('## Current Foundation configuration')[1];return JSON.parse(part.match(/```json\n([\s\S]*?)\n```/)[1]);}
@@ -54,7 +66,23 @@ async function auditPage(page){
         await edit(f,row,n,value);
       }
     }
-    for(const b of f.d.querySelectorAll('main button[id^="save"][id$="Btn"]')){b.click();await f.flush();check(row,f.w.ADSStorage.lastWriteSucceeded,'Save failed: '+b.id);}
+    const editorKeys=EDITOR_SCOPES[page];
+    // On these 8 pages a per-section Save button only stages a draft (the
+    // page previews immediately but nothing is durable yet - the generated
+    // "Save and edit" contract rule on each page); lastWriteSucceeded==true
+    // here means "accepted as a draft," matching shell.js's safeSet/
+    // safeRemove, which only reports failure when the editor is locked.
+    for(const b of f.d.querySelectorAll('main button[id^="save"][id$="Btn"]')){b.click();await f.flush();check(row,f.w.ADSStorage.lastWriteSucceeded,(editorKeys?'Save did not stage as a draft: ':'Save failed: ')+b.id);}
+    if(editorKeys) {
+      // Only the unified Save foundation control commits the staged drafts
+      // to localStorage and re-locks the editor - exactly the flow
+      // tools/check-setup-flow.cjs exercises through a real browser.
+      const saveBar=f.d.querySelector('[data-foundation-save]');
+      check(row,!!saveBar&&!saveBar.hidden,'Save foundation control missing or hidden');
+      if(saveBar){saveBar.click();await f.flush();}
+      const editBar=f.d.querySelector('[data-foundation-edit]');
+      check(row,!!editBar&&!editBar.hidden,'Foundation did not lock after Save foundation');
+    }
     await copyCheck(f,row);
     const exportBtn=f.d.querySelector('[data-foundation-export]');
     if(exportBtn){exportBtn.click();await f.flush();const download=f.downloads.at(-1);const payload=JSON.parse(await blobText(f,f.blobs.get(download.url)));check(row,JSON.stringify(payload.resolved.tokens)===JSON.stringify(f.w.ADSFoundation.get().tokens),'Foundation JSON has stale tokens');check(row,payload.resolved.unit===context(f.markdown()).unit,'JSON/Markdown unit mismatch');}
@@ -62,7 +90,21 @@ async function auditPage(page){
     // a storage key. Reset follows after reload assertions.
     const saved=f.state(),live=f.w.ADSFoundation.get();const reloaded=await boot(page,{saved});
     check(row,JSON.stringify(reloaded.w.ADSFoundation.get())===JSON.stringify(live),'Reload changed applied settings');check(row,!reloaded.errors.length,'Reload script error');reloaded.close();
-    for(const b of f.d.querySelectorAll('main button[id^="reset"][id$="Btn"]')){b.click();await f.flush();check(row,f.w.ADSStorage.lastWriteSucceeded,'Reset failed: '+b.id);}
+    if(editorKeys) {
+      // Resets are staged the same way saves are: unlock first, then stage
+      // every reset and confirm each is accepted as a draft. Note: clicking
+      // Save foundation afterward would re-collect every legacy save
+      // button's *current* (now-default) field state - including the ones
+      // a reset just staged as null - so the durable outcome of Reset+Save
+      // is an explicit default record, not an absent key; that reconciled
+      // commit behavior isn't re-verified here (lastWriteSucceeded already
+      // confirms the reset itself was accepted as a draft).
+      const editBar=f.d.querySelector('[data-foundation-edit]');
+      if(editBar&&!editBar.hidden){editBar.click();await f.flush();}
+      for(const b of f.d.querySelectorAll('main button[id^="reset"][id$="Btn"]')){b.click();await f.flush();check(row,f.w.ADSStorage.lastWriteSucceeded,'Reset did not stage as a draft: '+b.id);}
+    } else {
+      for(const b of f.d.querySelectorAll('main button[id^="reset"][id$="Btn"]')){b.click();await f.flush();check(row,f.w.ADSStorage.lastWriteSucceeded,'Reset failed: '+b.id);}
+    }
     if(page==='data-format.html'){
       f.d.querySelector('.ads-format-actions button').click();await f.flush();check(row,!f.w.localStorage.getItem('ads:data-format'),'Data Format reset did not remove saved configuration');
     }
@@ -107,9 +149,39 @@ async function failures(){
   const row={page:'Failure recovery and assets',checks:0,edits:0,combinations:0,failures:[]};
   let f=await boot('typography.html');
   try{
-    const input=f.d.querySelector('[data-role="weight"]');await f.change(input,'600');const durable=f.w.localStorage.getItem('ads:typography');
-    f.failRemove(true);f.d.getElementById('resetTypographyBtn').click();await f.flush();check(row,f.w.localStorage.getItem('ads:typography')===durable,'Failed reset damaged durable Typography');f.failRemove(false);await f.change(input,'500');check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight==='500','Failed reset froze later auto-save');
-    f.failWrites(true);await f.change(input,'800');check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight==='500','Failed write damaged durable Typography');check(row,f.w.ADSFoundation.get().tokens['--type-h1-weight']==='800','Unsaved preview did not apply');f.failWrites(false);
+    // Typography gates edits behind Save foundation: a field edit only
+    // stages a draft, so a durable baseline requires an actual Save
+    // foundation commit first (matching tools/check-setup-flow.cjs).
+    const input=f.d.querySelector('[data-role="weight"]');
+    await f.change(input,'600');
+    f.d.querySelector('[data-foundation-save]').click();await f.flush();
+    const durable=f.w.localStorage.getItem('ads:typography');
+    check(row,!!durable&&JSON.parse(durable).levels.h1.weight==='600','Typography did not become durable after Save foundation');
+    // Reset stages a draft back to defaults; Save foundation re-collects
+    // every legacy save button's *current* (now-default) field state, so
+    // the durable outcome is an explicit default record, not an absent key.
+    f.d.querySelector('[data-foundation-edit]').click();await f.flush();
+    f.d.getElementById('resetTypographyBtn').click();await f.flush();
+    f.d.querySelector('[data-foundation-save]').click();await f.flush();
+    check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight===M.typeDefaults.h1.weight,'Reset did not commit a default Typography record on Save foundation');
+    // A later edit after a reset must not be frozen.
+    f.d.querySelector('[data-foundation-edit]').click();await f.flush();
+    await f.change(input,'500');
+    f.d.querySelector('[data-foundation-save]').click();await f.flush();
+    check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight==='500','Reset froze a later Save foundation');
+    // A failed commit must preserve the prior durable record, keep the
+    // draft editable ("Storage failure keeps the draft editable"), and a
+    // retry after the storage recovers must then succeed.
+    f.d.querySelector('[data-foundation-edit]').click();await f.flush();
+    f.failWrites(true);
+    await f.change(input,'800');
+    f.d.querySelector('[data-foundation-save]').click();await f.flush();
+    check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight==='500','Failed write damaged durable Typography');
+    check(row,f.w.ADSFoundation.get().tokens['--type-h1-weight']==='800','Unsaved preview did not apply');
+    check(row,!f.d.querySelector('[data-foundation-save]').hidden,'Failed Save foundation unexpectedly locked the editor');
+    f.failWrites(false);
+    f.d.querySelector('[data-foundation-save]').click();await f.flush();
+    check(row,JSON.parse(f.w.localStorage.getItem('ads:typography')).levels.h1.weight==='800','Retried Save foundation did not commit once storage recovered');
   }finally{f.close();}
   for(const [page,selector,value,key] of [['grid-layout.html','[data-role="grid-columns-input"]','25','ads:grid-layout'],['borders.html','[data-role="border-opacity"]','101','ads:border'],['borders.html','[data-role="border-color-hex"]','ZZZZZZ','ads:border'],['data-format.html','#format-zone','not/a-zone','ads:data-format'],['data-format.html','#format-mask','ab','ads:data-format'],['data-format.html','#format-decimals','','ads:data-format'],['data-format.html','#format-noValue','   ','ads:data-format']]){
     f=await boot(page);try{const n=f.d.querySelector(selector);n.dispatchEvent(new f.w.Event('input',{bubbles:true}));await f.flush();const previous=f.w.localStorage.getItem(key);await f.change(n,value,'input');check(row,f.w.localStorage.getItem(key)===previous,'Invalid edit overwrote saved state: '+selector);check(row,n.getAttribute('aria-invalid')==='true','Invalid edit not marked: '+selector);}finally{f.close();}
@@ -120,16 +192,29 @@ async function failures(){
   f=await boot('icons.html');try{
     const input=f.d.querySelector('[data-role="icon-upload-input"]');
     const upload=async files=>{Object.defineProperty(input,'files',{configurable:true,value:files});input.dispatchEvent(new f.w.Event('change',{bubbles:true}));await pause(60);};
+    // icons.html gates edits behind Save foundation: an upload/removal/reset
+    // only stages a draft (checked against the live preview), and becomes
+    // durable only once [data-foundation-save] commits it.
+    const commit=async()=>{f.d.querySelector('[data-foundation-save]').click();await f.flush();};
+    const reopen=async()=>{const editBar=f.d.querySelector('[data-foundation-edit]');if(editBar&&!editBar.hidden){editBar.click();await f.flush();}};
     await upload([new f.w.File(['<svg xmlns="http://www.w3.org/2000/svg"/>'],'reference.svg',{type:'image/svg+xml'})]);
-    check(row,JSON.parse(f.w.localStorage.getItem('ads:icons')).uploads.length===1,'Icon upload not saved');check(row,f.markdown().includes('reference.svg'),'Uploaded filename missing from prompt');
+    check(row,f.d.querySelectorAll('.icon-upload-thumb').length===1,'Reference icon preview missing before Save foundation');
+    await commit();
+    check(row,JSON.parse(f.w.localStorage.getItem('ads:icons')).uploads.length===1,'Icon upload not durable after Save foundation');check(row,f.markdown().includes('reference.svg'),'Uploaded filename missing from prompt');
     const reload=await boot('icons.html',{saved:f.state()});check(row,reload.d.querySelectorAll('.icon-upload-thumb').length===1,'Reference icon lost after reload');reload.close();
+    await reopen();
     await upload([new f.w.File(['hello'],'file.txt',{type:'text/plain'})]);check(row,f.d.querySelectorAll('.icon-upload-thumb').length===1,'Unsupported icon file accepted');
     await upload([new f.w.File([new Uint8Array(2000001)],'large.png',{type:'image/png'})]);check(row,f.d.querySelectorAll('.icon-upload-thumb').length===1,'Oversized icon accepted');
-    f.d.querySelector('.icon-upload-thumb-remove').click();await f.flush();check(row,JSON.parse(f.w.localStorage.getItem('ads:icons')).uploads.length===0,'Icon removal not saved');
+    f.d.querySelector('.icon-upload-thumb-remove').click();await f.flush();check(row,f.d.querySelectorAll('.icon-upload-thumb').length===0,'Icon removal preview failed');
+    await commit();
+    check(row,(JSON.parse(f.w.localStorage.getItem('ads:icons')||'{"uploads":[]}').uploads||[]).length===0,'Icon removal not durable after Save foundation');
+    await reopen();
     const NativeReader=f.w.FileReader;let pending;f.w.FileReader=class{readAsDataURL(){pending=this;}};
     input.dispatchEvent(new f.w.Event('change',{bubbles:true})); // oversized rejected
     Object.defineProperty(input,'files',{configurable:true,value:[new f.w.File(['a'],'late.png',{type:'image/png'})]});input.dispatchEvent(new f.w.Event('change',{bubbles:true}));
-    f.d.getElementById('resetIconsBtn').click();pending.result='data:image/png;base64,YQ==';pending.onload();await f.flush();check(row,!f.w.localStorage.getItem('ads:icons')&&!f.d.querySelector('.icon-upload-thumb'),'Late upload undid reset');
+    f.d.getElementById('resetIconsBtn').click();pending.result='data:image/png;base64,YQ==';pending.onload();await f.flush();check(row,!f.d.querySelector('.icon-upload-thumb'),'Late upload undid reset preview');
+    await commit();
+    check(row,!(JSON.parse(f.w.localStorage.getItem('ads:icons')||'{"uploads":[]}').uploads||[]).length,'Late upload undid durable reset');
     f.w.FileReader=NativeReader;
   }catch(e){row.failures.push(e.stack);}finally{f.close();}
   f=await boot('ai-foundation.html');try{for(const kind of ['approve','reject']){const b=f.d.querySelector('[data-role="agent-'+kind+'"]');b.click();check(row,!f.d.querySelector('[data-role="agent-result"]').hidden&&f.d.activeElement===f.d.querySelector('[data-role="agent-undo"]'),'AI result/focus failed');check(row,/No library changes/.test(f.d.querySelector('[data-role="agent-result-text"]').textContent),'AI demo implies durable change');f.d.querySelector('[data-role="agent-undo"]').click();check(row,!f.d.querySelector('[data-role="agent-actions"]').hidden&&f.d.activeElement===b,'AI Undo/focus failed');}}finally{f.close();}
@@ -146,25 +231,44 @@ async function fontAndColorWorkflows(){
   const row={page:'Font sources, presets and color picker',checks:0,edits:0,combinations:0,failures:[]};
   let f=await boot('typography.html');
   try{
+    // typography.html gates edits behind Save foundation: a font choice only
+    // stages a draft. window.ADSFoundation.read() is the draft-aware
+    // equivalent of reading 'ads:typography' directly - it returns the
+    // pending value while editing, matching what the live prompt already
+    // shows, without requiring a commit for every single option click.
+    const read=()=>f.w.ADSFoundation.read('typography');
+    const commit=async()=>{f.d.querySelector('[data-foundation-save]').click();await f.flush();};
+    const reopen=async()=>{const editBar=f.d.querySelector('[data-foundation-edit]');if(editBar&&!editBar.hidden){editBar.click();await f.flush();}};
     for(const root of f.d.querySelectorAll('.font-panel')){
       for(const method of root.querySelectorAll('.font-method-tabs button')){method.click();check(row,root.querySelector('[data-panel="'+method.dataset.method+'"]').classList.contains('is-active')&&method.getAttribute('aria-pressed')==='true','Font source switch failed');}
       root.querySelector('[data-method="category"]').click();
       for(const category of root.querySelectorAll('.font-category-chips .chip')){
-        category.click();for(const option of root.querySelectorAll('.font-option')){option.click();await f.flush();const saved=JSON.parse(f.w.localStorage.getItem('ads:typography'));check(row,saved[root.dataset.font+'Font'].family===option.textContent&&f.markdown().includes(option.textContent),'Selected font missing from saved prompt');row.edits++;}
+        category.click();for(const option of root.querySelectorAll('.font-option')){option.click();await f.flush();const saved=read();check(row,saved[root.dataset.font+'Font'].family===option.textContent&&f.markdown().includes(option.textContent),'Selected font missing from saved prompt');row.edits++;}
       }
       root.querySelector('[data-method="upload"]').click();
       const input=root.querySelector('[data-role="upload-input"]'),name=root.querySelector('[data-role="upload-name"]');name.value='Audit '+root.dataset.font;
       const upload=async file=>{Object.defineProperty(input,'files',{configurable:true,value:[file]});input.dispatchEvent(new f.w.Event('change',{bubbles:true}));for(let i=0;i<100&&root.querySelector('[data-role="upload-label"]').textContent.startsWith('Loading ');i++)await pause(20);await f.flush();};
       await upload(new f.w.File(['fake font bytes'],'audit.woff2',{type:'font/woff2'}));
-      const font=JSON.parse(f.w.localStorage.getItem('ads:typography'))[root.dataset.font+'Font'];check(row,font.family===name.value&&font.dataUrl.startsWith('data:font/woff2;base64,'),'Font bytes not persisted');check(row,f.markdown().includes('Included in Foundation JSON')&&!f.markdown().includes(font.dataUrl),'Font asset not packaged appropriately');
-      const previous=f.w.localStorage.getItem('ads:typography');await upload(new f.w.File(['a'],'invalid.txt',{type:'text/plain'}));check(row,f.w.localStorage.getItem('ads:typography')===previous,'Invalid font file changed saved settings');
-      name.value='<bad>';await upload(new f.w.File(['a'],'bad.woff2',{type:'font/woff2'}));check(row,name.getAttribute('aria-invalid')==='true','Invalid font name not marked');name.value='Valid Font';
+      const font=read()[root.dataset.font+'Font'];check(row,font.family===name.value&&font.dataUrl.startsWith('data:font/woff2;base64,'),'Font bytes not persisted');check(row,f.markdown().includes('Included in Foundation JSON')&&!f.markdown().includes(font.dataUrl),'Font asset not packaged appropriately');
+      const previous=JSON.stringify(read());await upload(new f.w.File(['a'],'invalid.txt',{type:'text/plain'}));check(row,JSON.stringify(read())===previous,'Invalid font file changed saved settings');
+      name.value='<bad>';await upload(new f.w.File(['a'],'bad.woff2',{type:'font/woff2'}));check(row,name.getAttribute('aria-invalid')==='true','Invalid font name not marked');
+      // aria-invalid only clears on the next validated upload (typography.js
+      // checks the name inside the file input's own change handler), not on
+      // an input/change event on the name field itself - retry with a valid
+      // name so this probe doesn't leave a dangling aria-invalid that would
+      // block the Save foundation commit below.
+      name.value='Valid Font';await upload(new f.w.File(['fake font bytes'],'recovered.woff2',{type:'font/woff2'}));
+      check(row,name.getAttribute('aria-invalid')!=='true','Font name stayed invalid after a valid retry');
     }
-    for(const preset of f.d.querySelectorAll('.platform-chips .chip')){preset.click();await f.flush();check(row,context(f.markdown()).settings.typography.platform===preset.dataset.platform,'Platform preset missing from prompt');row.combinations++;}
+    // Commit the uploaded fonts before the reload check - only a Save
+    // foundation commit makes them durable.
+    await commit();
     const reload=await boot('typography.html',{saved:f.state()});check(row,reload.w.ADSFoundation.get().tokens['--font-display']===f.w.ADSFoundation.get().tokens['--font-display'],'Uploaded font family lost on reload');reload.close();
+    await reopen();
+    for(const preset of f.d.querySelectorAll('.platform-chips .chip')){preset.click();await f.flush();check(row,context(f.markdown()).settings.typography.platform===preset.dataset.platform,'Platform preset missing from prompt');row.combinations++;}
     // A pending FileReader callback must not resurrect a reset font.
     let reader;f.w.FileReader=class{readAsDataURL(){reader=this;}};
-    const input=f.d.querySelector('[data-role="upload-input"]');Object.defineProperty(input,'files',{configurable:true,value:[new f.w.File(['a'],'late.woff2',{type:'font/woff2'})]});input.dispatchEvent(new f.w.Event('change',{bubbles:true}));f.d.getElementById('resetTypographyBtn').click();reader.result='data:font/woff2;base64,YQ==';reader.onload();await f.flush();check(row,!f.w.localStorage.getItem('ads:typography'),'Late font upload undid reset');
+    const input=f.d.querySelector('[data-role="upload-input"]');Object.defineProperty(input,'files',{configurable:true,value:[new f.w.File(['a'],'late.woff2',{type:'font/woff2'})]});input.dispatchEvent(new f.w.Event('change',{bubbles:true}));f.d.getElementById('resetTypographyBtn').click();reader.result='data:font/woff2;base64,YQ==';reader.onload();await f.flush();check(row,!read(),'Late font upload undid reset');
     check(row,!f.errors.length,'Font workflow script errors');
   }catch(e){row.failures.push(e.stack);}finally{f.close();}
   f=await boot('foundations.html');try{

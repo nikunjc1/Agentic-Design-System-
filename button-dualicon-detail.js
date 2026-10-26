@@ -65,7 +65,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
         focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. The label and both icon slots are replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "secondary-icon": {
@@ -76,7 +76,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
         focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "tertiary-icon": {
@@ -87,7 +87,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background a lighter tint of the selected brand color with a 10% black overlay, inside border 1px solid the selected brand color, label and icons the brand color (a lighter shade in dark mode) - slightly darker than Hover." },
         focused: { css: "background:var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background a lighter tint of the selected brand color, label and icons the brand color (a lighter shade in dark mode), 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--line-strong);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--line-strong);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "ghost-icon": {
@@ -98,7 +98,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.15)),var(--graphite-800);color:var(--color-focus-ring);", desc: "Background the same surface as Hover with a 15% black overlay, label and icons the brand color (a lighter shade in dark mode), no border or shadow - visibly darker than Hover." },
         focused: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--line-strong);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the page surface, label and icons the selected brand color, 1px inner border in the theme's line color, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring, shadow, hover or pressed effects." },
-        loading: { css: "background:var(--graphite-900);color:var(--red-500);", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--graphite-900);color:var(--red-500);", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "transparent-icon": {
@@ -109,7 +109,7 @@
         pressed: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color - same appearance as Rest and Hover." },
         focused: { css: "background:transparent;color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background fully transparent, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:transparent;color:var(--text-dim);", desc: "Background fully transparent, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:transparent;color:var(--red-500);", desc: "Same appearance as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:transparent;color:var(--red-500);", desc: "Same appearance as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "approve-icon": {
@@ -120,7 +120,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
         focused: { css: "background:var(--green-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Approve green (--green-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--green-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--green-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "delete-icon": {
@@ -131,7 +131,7 @@
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
         focused: { css: "background:var(--danger-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Delete red (--danger-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--danger-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Label and both icon slots replaced by one spinner; not clickable." }
+        loading: { css: "background:var(--danger-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     }
   };

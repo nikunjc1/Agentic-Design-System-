@@ -13,8 +13,7 @@ fail=0
 echo "== Unit tests =="
 for f in tests/*.test.cjs tests/*.test.js; do
   [ -e "$f" ] || continue
-  out="$(node "$f" 2>&1)"
-  if echo "$out" | grep -q "fail [1-9]"; then
+  if ! out="$(node "$f" 2>&1)"; then
     echo "FAILED: $f"
     echo "$out"
     fail=1
@@ -24,7 +23,7 @@ done
 
 echo
 echo "== Freshness gates =="
-for check in "generate_tokens.py" "generate_foundation.py" "audit_pages.py"; do
+for check in "generate_tokens.py" "generate_foundation.py" "generate_contract_docs.py" "audit_pages.py"; do
   if ! python3 "tools/$check" --check; then
     echo "STALE: $check --check failed."
     fail=1

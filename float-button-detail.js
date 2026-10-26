@@ -36,7 +36,7 @@
     if (typeKey === "primary") return {
       rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
       hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
-      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", "#FF3F4F") + ";outline-offset:2px;"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var textHi = getCssVar("--text-hi", "#F3F2EF");
@@ -46,20 +46,13 @@
     var red600 = getCssVar("--red-600", "#CC0215");
     var red400 = getCssVar("--red-400", "#FF3F4F");
 
-    if (typeKey === "primary"){
-      return {
-        rest: "background:" + red500 + ";color:#FFFFFF;",
-        hover: "background:" + red600 + ";",
-        focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
-      };
-    }
     // "default" and "square" share the same coloring - "square" differs only
     // by corner radius, handled by its own CSS class modifier, not a color
     // change, so this function stays the single source of truth both types read from.
     return {
       rest: "background:" + graphite800 + ";color:" + textHi + ";border:1px solid " + lineStrong + ";",
       hover: "background:" + graphite700 + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
     };
   }
 

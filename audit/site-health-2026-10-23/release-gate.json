@@ -1,0 +1,6 @@
+{
+  "case": "Test process exits with code 2 without TAP failure output",
+  "expectedReleaseExit": 1,
+  "actualReleaseExit": 1,
+  "status": "pass"
+}

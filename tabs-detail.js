@@ -57,14 +57,14 @@
         rest: "background:transparent;color:" + textMid + ";border-bottom:2px solid transparent;",
         active: "color:" + textHi + ";border-bottom:2px solid " + red500 + ";font-weight:600;",
         hover: "color:" + textHi + ";",
-        focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
       };
     }
     return {
       rest: "background:transparent;color:" + textMid + ";",
       active: "background:" + redTint + ";color:" + red500 + ";font-weight:600;",
       hover: "background:" + graphite800 + ";color:" + textHi + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
     };
   }
 

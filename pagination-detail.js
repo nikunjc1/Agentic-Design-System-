@@ -37,7 +37,7 @@
       rest: "background:transparent;color:" + textHi + ";border:1px solid " + lineStrong + ";",
       hover: "background:" + graphite800 + ";",
       current: "background:" + red500 + ";color:#FFFFFF;border-color:" + red500 + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       count: "color:" + textMid + ";"
     };
   }

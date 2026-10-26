@@ -256,11 +256,7 @@
     if (!form) return;
     const status = $('#setupStatus');
     const done = $('#setupDone');
-    // Your name/Email/Designation are optional (see project-model.js's
-    // validate() for why - no account or email service uses them), so
-    // they're deliberately excluded from this blanket required=true pass.
-    const OPTIONAL_FIELDS = ['name','email','designation'];
-    form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { if (!OPTIONAL_FIELDS.includes(input.name)) input.required = true; });
+    form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { input.required = true; });
     const field = key => form.elements.namedItem(key);
     const populate = (id, values) => values.forEach(value => { const o = el('option', value); o.value = value; $(id).append(o); });
     populate('#productType', M.PRODUCTS); populate('#role', M.ROLES);
@@ -305,7 +301,7 @@
         const discard=el('button','Discard draft','btn btn-ghost');discard.type='button';discard.id='discardDraftBtn';draftNotice.append(discard);
         const backup=el('button','Back up draft','btn btn-ghost');backup.type='button';backup.addEventListener('click',()=>downloadBackup(rawDraft,'project-draft-backup.json'));draftNotice.append(backup);
         draftNotice.hidden = false;
-        $('#resumeDraftBtn')?.addEventListener('click', () => {populateSetup(draft);draftNotice.hidden = true;field('project').focus();});
+        $('#resumeDraftBtn')?.addEventListener('click', () => {populateSetup(draft);draftNotice.hidden = true;done.hidden=true;form.hidden=false;$('.setup-steps').hidden=false;show(1);field('project').focus();});
         $('#discardDraftBtn').addEventListener('click', () => {
           try { localStorage.removeItem(M.DRAFT); } catch {status.textContent='Draft could not be discarded. Your saved data is unchanged.';return;}
           populateSetup(profile||{});
@@ -346,16 +342,20 @@
       if (step === 3) review();
       if (focus) { const h = form.querySelector(`[data-step="${step}"] h2`); h.tabIndex = -1; h.focus(); }
     }
-    function review() {
-      const p = collect(), dl = $('#setupReview'); dl.replaceChildren();
+    function writeSetupSummary(dl,p) {
+      dl.replaceChildren();
       for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name || 'Not provided'], ['Email',p.email || 'Not provided'], ['Designation',p.designation || 'Not provided'], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
+    }
+    function review() {
+      const p = collect(), dl = $('#setupReview');writeSetupSummary(dl,p);
       let changes=$('#setupFoundationChanges');if(!changes){changes=el('section','','setup-foundation-changes');changes.id='setupFoundationChanges';dl.after(changes);}changes.replaceChildren(el('h3','Foundation recommendations'));
       changes.append(el('p','Saved overrides are retained. Unsaved Foundations inherit the revised project recommendation. Review the before/after values below; customize each Foundation from its own editor.'));
       const F=window.ADSFoundationModel,table=el('table'),head=el('thead'),body=el('tbody'),tr=el('tr');
+      const describe=(key,value)=>!value?'System default':key==='typography'?(value.platform||'Custom type scale').replace(/-/g,' '):key==='grid-layout'?`${value.columns} columns, ${value.gutter}px gutter (${value.system})`:value.system||'Custom settings';
       for(const label of ['Foundation','Previous recommendation','New recommendation','Applied choice']){const cell=el('th',label);cell.scope='col';tr.append(cell);}head.append(tr);
-      for(const [key,label]of [['spacing','Spacing'],['radius','Radius'],['grid-layout','Grid & Layout']]){
+      for(const [key,label]of [['grid-layout','Grid & Layout'],['typography','Typography'],['spacing','Spacing']]){
         const row=el('tr'),saved=window.ADSStorage.safeGet('ads:'+key),previous=F.contextualDefault(key,profile),next=F.contextualDefault(key,p);
-        row.append(el('td',label),el('td',previous?JSON.stringify(previous):'System default'),el('td',next?JSON.stringify(next):'System default'),el('td',saved?'Saved override retained: '+JSON.stringify(saved):'Inherited recommendation'));body.append(row);
+        row.append(el('td',label),el('td',describe(key,previous)),el('td',describe(key,next)),el('td',saved?'Saved override retained: '+describe(key,saved):'Inherited recommendation'));body.append(row);
       }table.append(head,body);changes.append(table);
     }
     // Foundation audit NP05 - "add a summary" of what actually needs fixing,
@@ -393,7 +393,7 @@
       // Foundation audit NP03 - a timestamp here is what lets the
       // draft/profile provenance notice below say how stale a resumed
       // draft actually is, instead of just that one exists.
-      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(),version:1,updatedAt:new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
+      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(),version:2,updatedAt:new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
       catch { draftStatus.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
     });
     $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });
@@ -404,7 +404,7 @@
       // real request to resume editing: the field values are all still
       // sitting in the (merely hidden) form, so this is a genuine re-show,
       // not a reset.
-      if (!done.hidden) { done.hidden = true; form.hidden = false; $('.setup-steps').hidden = false; }
+      if (!done.hidden) return;
       const requested = Number(location.hash.match(/^#step-([123])$/)?.[1] || 1);
       if (requested > 1 && !validate(firstKeys)) { show(1,false); history.replaceState(null,'','#step-1'); return; }
       if (requested > 2 && !validate(secondKeys)) { show(2,false); history.replaceState(null,'','#step-2'); return; }
@@ -469,12 +469,25 @@
       form.hidden = true; $('.setup-steps').hidden = true;
       done.hidden = false;
       $('#savedProjectName').textContent = profile.project;
-      const [href, label, task] = ROLE_NEXT[profile.role] || DEFAULT_NEXT;
-      $('#recommendedNext').href = href; $('#recommendedNext').textContent = label;
+      writeSetupSummary($('#savedSetupReview'),profile);
+      const [, , task] = ROLE_NEXT[profile.role] || DEFAULT_NEXT;
+      $('#recommendedNext').href = 'foundations.html#colors'; $('#recommendedNext').textContent = 'Set up foundations';
       $('#roleTaskText').textContent = task;
       renderReadiness();
       done.querySelector('h2').focus();
     });
+    const editSetup=el('button','Edit project setup','btn btn-ghost');editSetup.type='button';editSetup.id='editProjectSetup';
+    done.querySelector('.setup-actions').append(editSetup);
+    const cancelEdit=el('button','Cancel changes','btn btn-ghost');cancelEdit.type='button';cancelEdit.id='cancelProjectEdit';cancelEdit.hidden=!profile;form.querySelector('.setup-actions').append(cancelEdit);
+    cancelEdit.addEventListener('click',()=>{try{localStorage.removeItem(M.DRAFT);location.reload();}catch{status.textContent='Could not discard the draft. Your saved setup is unchanged.';}});
+    editSetup.addEventListener('click',()=>{populateSetup(profile);done.hidden=true;form.hidden=false;cancelEdit.hidden=false;$('.setup-steps').hidden=false;history.replaceState(null,'','#step-1');show(1);});
+    if(profile){
+      form.hidden=true;$('.setup-steps').hidden=true;done.hidden=false;
+      $('#savedProjectName').textContent=profile.project;
+      writeSetupSummary($('#savedSetupReview'),profile);
+      const [,,task]=ROLE_NEXT[profile.role]||DEFAULT_NEXT;
+      $('#recommendedNext').href='foundations.html#colors';$('#recommendedNext').textContent='Set up foundations';$('#roleTaskText').textContent=task;renderReadiness();
+    }
   }
 
   const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons','sizing','units','data-format'];
@@ -712,9 +725,7 @@
   }
   function settings() {
     const summary = $('#profileSummary'); if (!summary) return;
-    // name/designation are optional (see project-model.js's validate()) -
-    // joined with filter(Boolean) so a blank one collapses away instead of
-    // leaving a stray " · · " gap.
+    // Older saved profiles may omit identity fields; avoid empty separators.
     const refreshSummary=()=>{
       try {profile=M.read(localStorage);storageError='';}catch(error){profile=null;storageError=error.message;}
       summary.textContent = storageError || (profile ? [profile.project, profile.name, profile.designation, profile.role].filter(Boolean).join(' · ') : 'No project setup saved yet.');

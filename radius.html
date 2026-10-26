@@ -264,7 +264,7 @@
       </div>
     </div>
     <div class="guide-view-panel" data-view-panel="human">
-    <p class="get-library-copy">The corner-rounding character every control, card and surface in this system follows. Balanced is the global default unless your product type above recommends otherwise.</p>
+    <p class="get-library-copy">The corner-rounding character every control, card and surface in this system follows. Balanced is the starting preview. Choose the radius philosophy yourself, then select Save foundation. Project Setup does not select a radius for you.</p>
     <p class="get-library-copy">Each tagline ("4-16px") names the characteristic core range - what most everyday controls actually look like under that philosophy - not the full set of values it makes available. Every philosophy's own scale below additionally always includes <code>0</code> (for the deliberate square-corner exceptions every philosophy still needs - a divider, a code block) and a generous top value or <code>Full</code> (for circular/pill elements - an avatar, a toggle thumb - which exist under every philosophy too). Neither is a contradiction of the tagline; both are values the tagline was never claiming to describe in the first place.</p>
 
     <div class="system-card-grid" data-role="foundation-overview-grid" role="group" aria-label="Radius philosophy">
@@ -507,7 +507,7 @@
 <div class="ads-contract-rule"><h3>Permission and exceptions</h3><p>Controls use sm/md according to the component recipe; panels/dialogs use md/lg. Pills use full with content width; circles require equal width/height. Attached edges and full-screen sheets set the attached corners to zero. Do not claim every third-party or native consumer is automatically tokenized.</p></div>
 <div class="ads-contract-rule"><h3>Nested geometry</h3><p>Measure the inset between the outer contour and the child&#x27;s outer contour. With border-box outer radius R, border b and padding p, an adjacent child is inset b+p: cap=max(0,R-(b+p)). For outer R=12,b=1,p=4 the cap is 7px. For the parent&#x27;s inner contour use R-b and gap p. Apply independently per corner; a child separated by at least R keeps its independent radius.</p></div>
 <div class="ads-contract-rule"><h3>States and clipping</h3><p>Hover, focus, selected and error change color/boundary but preserve corner geometry. Avoid overflow:hidden near focusable children or leave focus-ring clearance. Forced colors still expose the outline; state shape is not the only signal.</p></div>
-<div class="ads-contract-rule"><h3>Flow and export</h3><p>Choose context/philosophy, inspect active role values, edit, reset and reload. Reset returns to the current project recommendation. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.</p></div>
+<div class="ads-contract-rule"><h3>Flow and export</h3><p>Select and save the radius philosophy explicitly. Project Setup does not preselect it. Reset previews Balanced until Save foundation. Saved settings require Edit foundation before changes; Cancel retains the saved values. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -522,7 +522,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {
@@ -554,7 +554,7 @@
       &quot;Permission and exceptions&quot;: &quot;Controls use sm/md according to the component recipe; panels/dialogs use md/lg. Pills use full with content width; circles require equal width/height. Attached edges and full-screen sheets set the attached corners to zero. Do not claim every third-party or native consumer is automatically tokenized.&quot;,
       &quot;Nested geometry&quot;: &quot;Measure the inset between the outer contour and the child&#x27;s outer contour. With border-box outer radius R, border b and padding p, an adjacent child is inset b+p: cap=max(0,R-(b+p)). For outer R=12,b=1,p=4 the cap is 7px. For the parent&#x27;s inner contour use R-b and gap p. Apply independently per corner; a child separated by at least R keeps its independent radius.&quot;,
       &quot;States and clipping&quot;: &quot;Hover, focus, selected and error change color/boundary but preserve corner geometry. Avoid overflow:hidden near focusable children or leave focus-ring clearance. Forced colors still expose the outline; state shape is not the only signal.&quot;,
-      &quot;Flow and export&quot;: &quot;Choose context/philosophy, inspect active role values, edit, reset and reload. Reset returns to the current project recommendation. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.&quot;
+      &quot;Flow and export&quot;: &quot;Select and save the radius philosophy explicitly. Project Setup does not preselect it. Reset previews Balanced until Save foundation. Saved settings require Edit foundation before changes; Cancel retains the saved values. Export primitive/semantic mapping, attached/nested geometry, exceptions and px/rem equivalents.&quot;
     }
   }
 }</code></pre></details>

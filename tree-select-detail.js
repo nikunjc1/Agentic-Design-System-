@@ -74,13 +74,13 @@
       return {
         rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
-        focus: "border-color:" + red500 + ";outline:2px solid " + red400 + ";outline-offset:2px;"
+        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
       };
     }
     return {
       rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
       hover: "background:" + graphite700 + ";",
-      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + red400 + ";outline-offset:2px;"
+      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
     };
   }
 

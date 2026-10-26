@@ -62,7 +62,7 @@
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var accent = { info: blue500, success: green500, warning: amber500, error: danger500 }[typeKey];
     return {
-      card: "background:" + getCssVar("--graphite-850", "#191C20") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";box-shadow:0 8px 24px rgba(0,0,0,0.4);",
+      card: "background:" + getCssVar("--graphite-850", "#191C20") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";box-shadow:var(--shadow-xl);",
       icon: "color:" + accent + ";",
       accent: accent
     };
@@ -183,7 +183,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Toast (floating notification) component */");
-    lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:var(--space-12); padding:var(--space-14) var(--space-16); width:var(--dimension-340); background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
+    lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:var(--space-12); padding:var(--space-14) var(--space-16); width:var(--dimension-340); background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:var(--shadow-xl); overflow:hidden; }");
     lines.push(".toast-demo-icon{ flex:none; width:var(--dimension-20); height:var(--dimension-20); margin-top:var(--space-1); }");
     lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-4); padding-inline-end:var(--space-16); text-align: start; }");
     lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');

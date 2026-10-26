@@ -53,7 +53,7 @@
         checked: "background:" + red500 + ";border-color:" + red500 + ";",
         indeterminate: "background:" + red500 + ";border-color:" + red500 + ";",
         hover: "border-color:" + textDim + ";",
-        focus: "outline:2px solid " + red400 + ";outline-offset:2px;",
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         disabled: "opacity:0.4;cursor:not-allowed;"
       }
     };

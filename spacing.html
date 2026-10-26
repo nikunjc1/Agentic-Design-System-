@@ -444,6 +444,7 @@
 <div class="ads-contract-rule"><h3>Density and targets</h3><p>Comfortable/compact density affects visual spacing, never the minimum 44px product target. Glyph size, field height and hit area are separate. Reserve room for multilingual labels and validation. A 24px icon is not a 24px touch target.</p></div>
 <div class="ads-contract-rule"><h3>Context and responsive rules</h3><p>Single-platform context wins for unsaved recommendations; explicit selection wins thereafter. Cross-Platform is one active scale with documented density/layout variants, not simultaneous conflicting global bases. Logical gutters are equal. Fluid outer padding may interpolate between approved endpoint tokens; internal spacing remains token-based.</p></div>
 <div class="ads-contract-rule"><h3>Export</h3><p>Export algorithm, resolved scale, relationship roles, density/target rules, direction and exceptions. Show px/rem equivalents and explain native dp/sp adaptation rather than claiming native CSS support.</p></div>
+<div class="ads-contract-rule"><h3>Save and edit</h3><p>Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -458,7 +459,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {
@@ -491,7 +492,8 @@
       &quot;Composition examples&quot;: &quot;Use 8px label-to-field, 4px field-to-error, 16px field-to-field, 8px checkbox/radio glyph-to-label, 8px related toolbar actions, 24px panel content and 32px between major groups as semantic requests resolved by the active scale. Wrapped labels align with the first line; error text occupies its own row without moving unrelated controls.&quot;,
       &quot;Density and targets&quot;: &quot;Comfortable/compact density affects visual spacing, never the minimum 44px product target. Glyph size, field height and hit area are separate. Reserve room for multilingual labels and validation. A 24px icon is not a 24px touch target.&quot;,
       &quot;Context and responsive rules&quot;: &quot;Single-platform context wins for unsaved recommendations; explicit selection wins thereafter. Cross-Platform is one active scale with documented density/layout variants, not simultaneous conflicting global bases. Logical gutters are equal. Fluid outer padding may interpolate between approved endpoint tokens; internal spacing remains token-based.&quot;,
-      &quot;Export&quot;: &quot;Export algorithm, resolved scale, relationship roles, density/target rules, direction and exceptions. Show px/rem equivalents and explain native dp/sp adaptation rather than claiming native CSS support.&quot;
+      &quot;Export&quot;: &quot;Export algorithm, resolved scale, relationship roles, density/target rules, direction and exceptions. Show px/rem equivalents and explain native dp/sp adaptation rather than claiming native CSS support.&quot;,
+      &quot;Save and edit&quot;: &quot;Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.&quot;
     }
   }
 }</code></pre></details>

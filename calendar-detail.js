@@ -121,7 +121,7 @@
     lines.push(".calendar-demo-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-2); }");
     lines.push('.calendar-demo-day{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; position:relative; padding:0; margin:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; line-height:normal; color:' + textHi + "; background:none; border:none; border-radius:6px; cursor:pointer; }");
     lines.push(".calendar-demo-day:hover:not(.is-outside-month){ background:" + graphite800 + "; }");
-    lines.push(".calendar-demo-day:focus-visible{ outline:2px solid " + red400 + "; outline-offset:1px; }");
+    lines.push(".calendar-demo-day:focus-visible{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:1px; }");
     lines.push(".calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-day.is-outside-month{ color:" + textDim + "; opacity:0.4; }");

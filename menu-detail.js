@@ -54,7 +54,7 @@
       panel: "background:" + graphite900 + ";border:1px solid " + lineStrong + ";box-shadow:0 8px 24px rgba(0,0,0,0.4);",
       rest: "background:transparent;color:" + textHi + ";",
       hover: "background:" + graphite800 + ";",
-      focus: "outline:2px solid " + red500 + ";outline-offset:-2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red500) + ";outline-offset:-2px;",
       disabled: "opacity:0.4;cursor:not-allowed;",
       destructive: "color:" + danger500 + ";",
       line: line

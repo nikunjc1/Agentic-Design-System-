@@ -19,6 +19,83 @@
     'ai-foundation.html':[['status-colors','bg-colors'],/^--(?:agent-|color-ai-|color-agent-|green-|amber-|danger-)/]
   };
   const drafts=new Map(), previous=new Set(),unsavedKeys=new Set();
+  // Editors preview locally; only their explicit Save action writes durable
+  // records. The same boundary covers cards, native controls and font uploads.
+  const editorScopes={
+    'foundations.html':['colors','bg-colors','status-colors','neutral-colors'],
+    'grid-layout.html':['grid-layout'],'typography.html':['typography'],
+    'spacing.html':['spacing'],'radius.html':['radius'],'borders.html':['border','border-states'],
+    'shadows.html':['shadow'],'icons.html':['icons']
+  };
+  const editorPage=location.pathname.split('/').pop(),editorKeys=editorScopes[editorPage];
+  if(editorKeys) {
+    const scoped=new Set([...editorKeys,'sizing']),pending=new Map(),resetKeys=new Set();
+    let editing=!editorKeys.some(key=>{try{return ['valid','migrated'].includes(M.inspectRecord(key,localStorage.getItem('ads:'+key)).status);}catch{return false;}});
+    let ready=false,collecting=false,restoring=false,refresh=()=>{};
+    window.ADSFoundationEditor={beginEdit(){editing=true;refresh();},hasReset(key){return editing&&resetKeys.has(key.replace(/^ads:/,''));},withPersistence(operation){restoring=true;try{return operation();}finally{restoring=false;}},stage(key,value){
+      key=key.replace(/^ads:/,'');if(!scoped.has(key)) return false;
+      if(restoring)return false;
+      if(!ready&&!editing&&value!==null){try{if(JSON.stringify(M.migrateRecord(key,JSON.parse(localStorage.getItem('ads:'+key))))===JSON.stringify(value))return false;}catch{}}
+      if(!editing) return 'locked';
+      if(value===null)resetKeys.add(key);
+      pending.set(key,value);
+      window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key:'ads:'+key,value,unsaved:true}}));
+      if(ready&&!collecting) refresh('Unsaved preview. Select Save foundation to keep these changes.');
+      return true;
+    }};
+    document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{
+      const main=document.querySelector('main');if(!main)return;
+      const bar=document.createElement('section');bar.className='ads-foundation-editor';bar.setAttribute('aria-label','Foundation editing');
+      const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+      const edit=document.createElement('button');edit.type='button';edit.className='btn btn-ghost';edit.textContent='Edit foundation';edit.dataset.foundationEdit='';
+      const save=document.createElement('button');save.type='button';save.className='btn btn-primary';save.textContent='Save foundation';save.dataset.foundationSave='';
+      const cancel=document.createElement('button');cancel.type='button';cancel.className='btn btn-ghost';cancel.textContent='Cancel changes';cancel.dataset.foundationCancel='';
+      bar.append(status,edit,save,cancel);(main.querySelector('.page-lede')||main.querySelector('h1')).after(bar);
+      const disabled=new Map();
+      const permitted='.ads-foundation-editor,.ads-editor-conflict,.ads-unit-choice,[data-foundation-read-action],[data-foundation-export],.page-outline,.ads-tab-group,.guide-view-toggle,.ads-read-more,[id^="copy"],[data-role*="copy"],a[href]';
+      function lock(){
+        main.classList.toggle('ads-editor-locked',!editing);
+        for(const node of main.querySelectorAll('input,select,textarea,button')) {
+          if(node.closest(permitted)||node.matches('[id^="save"]'))continue;
+          if(!editing){if(!disabled.has(node))disabled.set(node,node.disabled);if(!node.disabled)node.disabled=true;}
+          else if(disabled.has(node)){node.disabled=disabled.get(node);disabled.delete(node);}
+        }
+      }
+      refresh=message=>{status.textContent=message||(!editing?'Saved settings. Select Edit foundation to make changes.':'Choose your settings, then select Save foundation.');edit.hidden=editing;save.hidden=!editing;cancel.hidden=!editing;lock();};
+      const legacy=[...main.querySelectorAll('button[id^="save"]')];legacy.forEach(button=>{button.hidden=true;});
+      main.querySelectorAll('.save-status[id*="SaveStatus"],#typoSaveStatus').forEach(n=>{n.hidden=true;});
+      // Cards and custom pickers also obey the saved-state lock.
+      main.addEventListener('click',event=>{if(!editing&&!collecting&&!event.target.closest(permitted)){event.preventDefault();event.stopImmediatePropagation();}},true);
+      new MutationObserver(()=>lock()).observe(main,{childList:true,subtree:true});
+      edit.addEventListener('click',()=>{window.ADSFoundationEditor.beginEdit();main.querySelector('input:not(:disabled):not([hidden]),select:not(:disabled)')?.focus();});
+      cancel.addEventListener('click',()=>location.reload());
+      save.addEventListener('click',()=>{
+        if(main.querySelector('.ads-editor-conflict')){refresh('Settings changed in another tab. Reload before saving.');return;}
+        try {
+          if(editorKeys.some(key=>['corrupt','invalid','future'].includes(M.inspectRecord(key,localStorage.getItem('ads:'+key)).status)&&!resetKeys.has(key))){
+            refresh('Back up and reset unreadable settings before saving.');return;
+          }
+        }catch{refresh('Saved settings could not be read. Keep this page open and retry.');return;}
+        collecting=true;legacy.forEach(button=>button.click());collecting=false;
+        const invalid=[...main.querySelectorAll('input,select,textarea')].find(n=>!n.disabled&&!n.hidden&&!n.readOnly&&(n.getAttribute('aria-invalid')==='true'||!n.checkValidity()));
+        if(invalid){refresh('Correct the highlighted settings before saving.');invalid.focus();return;}
+        const backup=new Map();let writing;
+        try {
+          for(const [key,value]of pending){
+            writing='ads:'+key;const raw=localStorage.getItem(writing);backup.set(writing,raw);
+            if(value!==null&&(!M.validRecord(key,value)||(['corrupt','invalid','future'].includes(M.inspectRecord(key,raw).status)&&!resetKeys.has(key))))throw new Error('Back up and reset unreadable settings before saving.');
+          }
+          for(const [key,value]of pending){writing='ads:'+key;if(value===null)localStorage.removeItem(writing);else localStorage.setItem(writing,JSON.stringify(M.migrateRecord(key,value)));}
+        }catch(error){
+          let restored=true;for(const [key,value]of backup){try{if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value);}catch{restored=false;}}
+          refresh(restored?'Could not save. Your previous saved settings are unchanged; your edits remain available.':'Save was interrupted and some settings could not be restored. Keep this page open and back up the settings.');return;
+        }
+        for(const [key,value]of pending)window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key:'ads:'+key,value,removed:value===null}}));
+        pending.clear();resetKeys.clear();editing=false;refresh('Foundation saved. Select Edit foundation to change it.');edit.focus();
+      });
+      ready=true;refresh();
+    },0);},{once:true});
+  }
   function read(key) {
     let value;
     if(drafts.has(key)) value=drafts.get(key);
@@ -54,14 +131,59 @@
     window.dispatchEvent(new CustomEvent('ads:foundation-applied',{detail:resolved}));
     return resolved;
   }
+  // Keep non-variant properties in one export path. Size/radius/content
+  // multiselects are serialized by the component's per-combination builder;
+  // reading them here would turn an exact combination back into a selection set.
+  function componentProperties() {
+    const panel=document.querySelector('[data-role="copy-prompt-action"]')?.closest('section');
+    if(!panel) return [];
+    const controls=new Set([...panel.querySelectorAll('input[data-role],select[data-role],textarea[data-role]'),...document.querySelectorAll('[data-prompt-property]')]);
+    // Export canonical pixel inputs rather than the unit editor's cloned
+    // display input/select. Conditional properties stay absent while hidden.
+    return [...controls].filter(el=>!el.closest('.multiselect')&&(!el.closest('[hidden]')||unitInputs.has(el))&&!['hidden','file','button','submit'].includes(el.type)).map(el=>{
+      const label=el.closest('.type-control')?.querySelector(':scope > span')?.cloneNode(true);
+      label?.querySelectorAll('.info-tip').forEach(n=>n.remove());
+      const property=el.dataset.promptProperty||label?.textContent.trim()||el.getAttribute('aria-label');
+      if(!property) return null;
+      let value=el.type==='checkbox'?el.checked:el.value.trim();
+      if(el.type==='number'||el.type==='range') {
+        value=Number(value||el.defaultValue);
+        if(!Number.isFinite(value)) value=Number(el.defaultValue)||0;
+        if(el.min!=='') value=Math.max(Number(el.min),value);
+        if(el.max!=='') value=Math.min(Number(el.max),value);
+      } else if(el.tagName!=='SELECT'&&el.type!=='checkbox') {
+        value=value||el.defaultValue||'';
+        if(el.dataset.role==='colorpicker-hex'&&!/^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(value)) value=el.defaultValue;
+      }
+      return {property:property+(el.type==='checkbox'?' enabled':''),value};
+    }).filter(Boolean);
+  }
+  // Include the transitive dependency set, not just names in a page allowlist.
+  // A referenced semantic token may itself alias a primitive or another role.
+  function promptTokens(text,filter) {
+    const names=new Set(Object.keys(resolved.tokens).filter(name=>filter.test(name)));
+    const references=value=>Array.from(String(value).matchAll(/var\(\s*(--[\w-]+)/g),m=>m[1]);
+    references(text).forEach(name=>names.add(name));
+    const tokens={};
+    for(const name of names) {
+      if(!(name in resolved.tokens)) continue;
+      tokens[name]=resolved.tokens[name];
+      references(tokens[name]).forEach(dependency=>names.add(dependency));
+    }
+    return tokens;
+  }
   function preparePageMarkdown(text) {
     const page=location.pathname.split('/').pop();
     const scope=pageScopes[page]||[keys,/^--(?:type-|font-|size-|icon-|grid-|agent-|color-ai-|color-agent-|graphite-|radius-(?:sm|md|lg)$|shadow-|border-|red-|green-|amber-|danger-|blue-|control-border|space-(?:4|6|8|12|16|24|32|40|48|64)$)/];
     const settings=Object.fromEntries(scope[0].map(key=>[key,read(key)]));
     // Reference assets are packaged in JSON exports, not duplicated as huge
     // data URLs inside documentation prompts.
-    const json=JSON.stringify({unit:resolved.unit,theme:resolved.theme,density:root.dataset.density,direction:root.dir,settings,unsavedPreviewKeys:[...unsavedKeys],tokens:Object.fromEntries(Object.entries(resolved.tokens).filter(([name])=>scope[1].test(name)))},(key,value)=>key==='dataUrl'?(value?'Included in Foundation JSON':null):value,2);
-    const source=String(text).replace(/\n*<!-- ads:page-foundation -->[\s\S]*?<!-- \/ads:page-foundation -->/g,'').replace(/\n*<!-- ads:contract -->[\s\S]*?<!-- \/ads:contract -->/g,'').trim()+'\n\n<!-- ads:contract -->\n'+M.contractMarkdown(page)+'\n<!-- /ads:contract -->';
+    let source=String(text).replace(/\n*<!-- ads:page-foundation -->[\s\S]*?<!-- \/ads:page-foundation -->/g,'').replace(/\n*<!-- ads:contract -->[\s\S]*?<!-- \/ads:contract -->/g,'').replace(/\n*<!-- ads:component-properties -->[\s\S]*?<!-- \/ads:component-properties -->/g,'').trim();
+    const tokens=promptTokens(source,scope[1]);
+    const properties=componentProperties();
+    if(properties.length) source+='\n\n<!-- ads:component-properties -->\n## Current component properties\n\nUse these current values when reproducing the preview. They override example/default values in the specification above. The variant choices stated above belong to the copied combination.\n\n```json\n'+JSON.stringify(properties,null,2).replace(/`/g,'\\u0060')+'\n```\n<!-- /ads:component-properties -->';
+    const json=JSON.stringify({unit:resolved.unit,theme:resolved.theme,density:root.dataset.density,direction:root.dir,settings,unsavedPreviewKeys:[...unsavedKeys],tokens},(key,value)=>key==='dataUrl'?(value?'Included in Foundation JSON':null):value,2);
+    source+='\n\n<!-- ads:contract -->\n'+M.contractMarkdown(page)+'\n<!-- /ads:contract -->';
     return M.prepareMarkdown(source+'\n\n<!-- ads:page-foundation -->\n## Current Foundation configuration\n\nThe following configuration is the applied state. Unfinished or invalid editor drafts are not applied. Reference assets are included in Foundation JSON.\n\n```json\n'+json+'\n```\n<!-- /ads:page-foundation -->',resolved);
   }
   window.ADSFoundation={ apply, get:()=>resolved, getVerification:()=>({unsavedPreviewKeys:[...unsavedKeys]}),format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), prepareMarkdown:(text,names)=>M.prepareMarkdown(text,resolved,names), preparePageMarkdown, read };
@@ -392,7 +514,7 @@
         const context=profile?{productType:profile.productType,platforms:profile.platforms}:null;
         download({schemaVersion:1,context,settings,resolved:window.ADSFoundation.get(),resolvedThemes:Object.fromEntries(['light','dark'].map(theme=>[theme,M.resolve(settings,theme,profile)])),platformProfiles:M.resolvePlatformProfiles(settings,profile),implementationContract:M.contract,iconCatalog:M.iconCatalog,verification:{records,unsavedPreviewKeys:[...unsavedKeys],renderedAcceptance:'Not established by export; attach independent acceptance evidence.'}},'damco-foundation.json');
       });
-      const backup=document.createElement('button');backup.type='button';backup.className='btn btn-ghost';backup.textContent='Back up saved settings';toolbar.prepend(backup);
+      const backup=document.createElement('button');backup.type='button';backup.className='btn btn-ghost';backup.textContent='Back up saved settings';backup.dataset.foundationReadAction='';toolbar.prepend(backup);
       backup.addEventListener('click',()=>{
         const raw={};try{for(const key of keys)raw['ads:'+key]=localStorage.getItem('ads:'+key);download({schemaVersion:1,format:'Raw recovery backup; validate before importing',records:raw},'damco-foundation-backup.json');}catch{backup.textContent='Backup unavailable — storage cannot be read';}
       });
@@ -446,7 +568,8 @@
           const previous=toApply.map(([key])=>['ads:'+key,localStorage.getItem('ads:'+key)]);
           const applied=[],failed=[];
           for(const [key,value] of toApply) {
-            const ok=value===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,value);
+            const write=()=>value===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,value);
+            const ok=window.ADSFoundationEditor?window.ADSFoundationEditor.withPersistence(write):write();
             (ok?applied:failed).push(key);
           }
           if(!failed.length){
@@ -458,7 +581,7 @@
           for(const key of applied) {
             const prior=previous.find(p=>p[0]==='ads:'+key)[1];
             let rolledBack;
-            try{ rolledBack=prior===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,JSON.parse(prior)); }
+            try{const rollback=()=>prior===null?window.ADSStorage.safeRemove('ads:'+key):window.ADSStorage.safeSet('ads:'+key,JSON.parse(prior));rolledBack=window.ADSFoundationEditor?window.ADSFoundationEditor.withPersistence(rollback):rollback(); }
             catch{ rolledBack=false; }
             if(!rolledBack) unresolved.push(key);
           }

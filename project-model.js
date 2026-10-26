@@ -44,7 +44,7 @@
   // this app, whose fields this code can't safely interpret) - never an
   // older or missing one, which existing saved projects legitimately have
   // and which LEGACY_PRODUCT_MAP above already knows how to migrate.
-  const SUPPORTED_VERSION = 1;
+  const SUPPORTED_VERSION = 2;
   // Same 1-100 character, string-typed, trimmed bound Project name already
   // enforces, and the same bound its own <input maxlength="100"> already
   // shows in the UI - this just makes the model itself the authority on
@@ -52,23 +52,19 @@
   // the inputs", so a value restored or imported some other way can't
   // bypass it.
   const isBoundedText = value => typeof value === 'string' && value.trim().length >= 1 && value.trim().length <= 100;
-  // Your name/Email/Designation are identity, not configuration - nothing
-  // downstream requires them (no account, no email sent, role alone
-  // drives the post-save routing) and Markdown only ever includes them
-  // when the user separately opts in on Markdown Export. Required would be
-  // friction with no stated purpose, so each is optional but still bound/
-  // type-checked *if* provided, the same as every other free-text field.
-  function validate(p) {
+  // New saves require the complete project brief. Older profiles remain readable
+  // until the user explicitly edits and upgrades them. Identity stays opt-in in exports.
+  function validate(p, {legacyIdentity=false} = {}) {
     const e = {};
     if (!isBoundedText(p.project)) e.project = 'Project name must contain 1–100 characters.';
     for (const [key, label] of [['name','Your name'], ['designation','Designation']]) {
-      if (p[key] && !isBoundedText(p[key])) e[key] = label + ' must contain 1–100 characters if provided.';
+      if ((!legacyIdentity || p[key]) && !isBoundedText(p[key])) e[key] = label + ' must contain 1–100 characters.';
     }
     if (!PRODUCTS.includes(p.productType)) e.productType = 'Choose the type of product you are creating.';
     if (p.productType === 'Other' && !isBoundedText(p.productOther)) e.productOther = 'Describe your product type in 1–100 characters.';
     if (!ROLES.includes(p.role)) e.role = 'Choose your role in this project.';
     if (p.role === 'Other' && !isBoundedText(p.roleOther)) e.roleOther = 'Describe your role in 1–100 characters.';
-    if (p.email && (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email) || p.email.length > 254)) e.email = 'Enter a valid email address, or leave it blank.';
+    if ((!legacyIdentity || p.email) && (typeof p.email!=='string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email) || p.email.length > 254)) e.email = 'Enter a valid email address.';
     if (!Array.isArray(p.platforms) || !p.platforms.length || p.platforms.some(k => !PLATFORMS[k])) e.platforms = 'Select at least one target platform.';
     return e;
   }
@@ -100,13 +96,13 @@
       for(const k of ['project','productType','productOther','name','email','designation','role','roleOther']) if(p[k]!=null&&(typeof p[k]!=='string'||p[k].length>(k==='email'?254:100)))throw new Error('Saved draft has invalid fields. Export a backup or discard the draft.');
       if(p.platforms!=null&&(!Array.isArray(p.platforms)||p.platforms.some(k=>!PLATFORMS[k])))throw new Error('Saved draft has invalid platforms. Export a backup or discard the draft.');
     }
-    if (key === KEY && Object.keys(validate(p)).length) throw new Error('Saved setup is incomplete. Review your project details.');
+    if (key === KEY && Object.keys(validate(p,{legacyIdentity:(p.version||0)<2})).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;
   }
   function save(storage, p) {
     if (Object.keys(validate(p)).length) throw new Error('Review the highlighted fields before saving.');
     read(storage);
-    const profile = {...p, version:1, updatedAt:new Date().toISOString()};
+    const profile = {...p, version:SUPPORTED_VERSION, updatedAt:new Date().toISOString()};
     storage.setItem(KEY, JSON.stringify(profile));
     return profile;
   }

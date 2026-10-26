@@ -44,7 +44,7 @@
     var red500 = getCssVar("--red-500", "#FF031A");
     return {
       rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
-      hover: "border-color:" + textDim + ";box-shadow:0 4px 16px rgba(0,0,0,0.3);",
+      hover: "border-color:" + textDim + ";box-shadow:var(--shadow-md);",
       selected: "border-color:" + red500 + ";box-shadow:0 0 0 1px " + red500 + ";",
       disabled: "opacity:0.4;"
     };
@@ -175,8 +175,8 @@
     var lines = [];
     lines.push("/* Agentic Design System - Card component */");
     lines.push(".card-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; width:var(--dimension-240); background:var(--graphite-900); border:1.5px solid var(--line-strong); overflow:hidden; transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }");
-    lines.push(".card-demo-panel.card-demo-shadow{ box-shadow:0 2px 8px rgba(0,0,0,0.2); }");
-    lines.push(".card-demo-panel:hover, .card-demo-panel.is-hover{ border-color:var(--text-dim); box-shadow:0 4px 16px rgba(0,0,0,0.3); }");
+    lines.push(".card-demo-panel.card-demo-shadow{ box-shadow:var(--shadow-sm); }");
+    lines.push(".card-demo-panel:hover, .card-demo-panel.is-hover{ border-color:var(--text-dim); box-shadow:var(--shadow-md); }");
     lines.push(".card-demo-panel.is-selected{ border-color:var(--red-500); box-shadow:0 0 0 1px var(--red-500); }");
     lines.push(".card-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".card-demo-media{ height:var(--dimension-80); background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");

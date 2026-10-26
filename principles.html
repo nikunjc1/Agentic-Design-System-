@@ -371,7 +371,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {

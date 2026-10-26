@@ -1,0 +1,1096 @@
+{
+  "date": "2026-10-23",
+  "scope": "Current local working tree; 69 component detail pages; 63 detail scripts",
+  "pages": 69,
+  "pagesWithConfirmedMismatch": 46,
+  "pagesWithoutMismatchInCheckedScope": 23,
+  "propertyAndOptionChecks": 974,
+  "copyPayloadFailures": 0,
+  "runtimeErrors": 0,
+  "categories": {
+    "PR-01": {
+      "priority": "P1",
+      "title": "Configured properties are missing from the prompt",
+      "pages": 32
+    },
+    "PR-02": {
+      "priority": "P1",
+      "title": "Float Button Primary focus outputs undefined",
+      "pages": 1
+    },
+    "PR-03": {
+      "priority": "P1",
+      "title": "Referenced CSS tokens are absent from the exported prompt",
+      "pages": 14
+    },
+    "PR-04": {
+      "priority": "P2",
+      "title": "Prompt focus color differs from the rendered component",
+      "pages": 33
+    },
+    "PR-05": {
+      "priority": "P2",
+      "title": "Prompt shadows use obsolete literal values",
+      "pages": 6
+    },
+    "PR-06": {
+      "priority": "P1",
+      "title": "Loading state shown in the detail page is missing from the prompt",
+      "pages": 8
+    },
+    "PR-07": {
+      "priority": "P2",
+      "title": "Dual Icon Button Loading instructions remove a label that the preview retains",
+      "pages": 1
+    },
+    "PR-08": {
+      "priority": "P2",
+      "title": "Badge prompt contradicts itself about the color count",
+      "pages": 1
+    }
+  },
+  "pagesResults": [
+    {
+      "file": "add-on-default.html",
+      "title": "Add-on",
+      "checks": 26,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Website \u2192 AuditField42; Placeholder: yourcompany \u2192 AuditField42; Show prefix: True \u2192 False; Prefix text: https:// \u2192 AuditField42; Show suffix: True \u2192 False; Suffix text: .com \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "add-on-detail.js:192"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: addon-demo-control addon-demo-control--outlined addon-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "add-on-detail.js:44"
+        }
+      ]
+    },
+    {
+      "file": "affix-default.html",
+      "title": "Affix",
+      "checks": 3,
+      "issues": []
+    },
+    {
+      "file": "alert-default.html",
+      "title": "Alert",
+      "checks": 11,
+      "issues": []
+    },
+    {
+      "file": "anchor-default.html",
+      "title": "Anchor",
+      "checks": 8,
+      "issues": [
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Standalone / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: anchor-demo-link anchor-demo-link--standalone anchor-demo-link--fs14 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "anchor-detail.js:54"
+        }
+      ]
+    },
+    {
+      "file": "autocomplete-default.html",
+      "title": "Autocomplete",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: City \u2192 AuditField42; Placeholder: Search a city... \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "autocomplete-detail.js:172"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: autocomplete-demo-control autocomplete-demo-control--outlined autocomplete-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "autocomplete-detail.js:44"
+        }
+      ]
+    },
+    {
+      "file": "avatar-default.html",
+      "title": "Avatar",
+      "checks": 5,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "Changing Avatar.Group \u201cShow as\u201d from Avatars to Names only changes the group preview, but the prompt stays identical. It lists both modes without recording the selected mode.",
+          "expected": "Serialize the current Avatar.Group display mode.",
+          "source": "avatar-detail.js:74"
+        }
+      ]
+    },
+    {
+      "file": "badge-default.html",
+      "title": "Badge",
+      "checks": 7,
+      "issues": [
+        {
+          "id": "PR-08",
+          "actual": "The introduction says \u201c3 forms, each in 4 semantic colors\u201d; the same prompt then lists Colors (5), and the preview has Default, Success, Processing, Warning and Error.",
+          "expected": "State five colors consistently.",
+          "source": "badge-detail.js:139"
+        }
+      ]
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "title": "Breadcrumb",
+      "checks": 12,
+      "issues": [
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Chevron / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: breadcrumb-demo-link is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "breadcrumb-detail.js:43"
+        }
+      ]
+    },
+    {
+      "file": "button-destructive.html",
+      "title": "Destructive Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Delete \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "button-ghost.html",
+      "title": "Ghost Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Close \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "button-link.html",
+      "title": "Link Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: View Details \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "button-neutral.html",
+      "title": "Neutral Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Filter \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "button-primary-icon.html",
+      "title": "Primary Button 36px - Dual Icon",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Save \u2192 AuditField42; CTA leading icon: True \u2192 False.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-dualicon-detail.js:231"
+        },
+        {
+          "id": "PR-07",
+          "actual": "The prompt says \u201cThe label and both icon slots are replaced by one spinner\u201d. The seven Loading previews retain \u201cSave\u201d next to the spinner. buildDemoButton emits spinnerHtml(iconSize) plus the escaped label.",
+          "expected": "Describe spinner plus retained label, without the trailing icon.",
+          "source": "button-dualicon-detail.js:569"
+        }
+      ]
+    },
+    {
+      "file": "button-primary.html",
+      "title": "Primary Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Save \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        },
+        {
+          "id": "PR-01",
+          "actual": "With Content = Icon only, setting Accessible label to \u201cOpen audit settings\u201d changes the preview aria-label but leaves the prompt identical. The prompt only asks for an accessible label generically.",
+          "expected": "Include the current accessible name in the selected configuration.",
+          "source": "button-detail.js:273"
+        }
+      ]
+    },
+    {
+      "file": "button-secondary.html",
+      "title": "Secondary Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Cancel \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "button-tertiary.html",
+      "title": "Tertiary Button",
+      "checks": 28,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Button label: Learn More \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "button-detail.js:273"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-active, --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-active, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Primary / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: btn-demo btn-demo--primary btn-demo--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "button-detail.js:231"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "button-detail.js:304"
+        }
+      ]
+    },
+    {
+      "file": "calendar-default.html",
+      "title": "Calendar",
+      "checks": 2,
+      "issues": []
+    },
+    {
+      "file": "card-default.html",
+      "title": "Card",
+      "checks": 15,
+      "issues": [
+        {
+          "id": "PR-05",
+          "actual": "Prompt Hover shadow: 0 4px 16px rgba(0,0,0,0.3). Rendered shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "card-detail.js:47"
+        }
+      ]
+    },
+    {
+      "file": "cascader-default.html",
+      "title": "Cascader",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Location \u2192 AuditField42; Placeholder: Select location \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "cascader-detail.js:184"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: cascader-demo-control cascader-demo-control--outlined cascader-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "cascader-detail.js:56"
+        }
+      ]
+    },
+    {
+      "file": "checkbox-default.html",
+      "title": "Checkbox",
+      "checks": 14,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: I agree to the terms \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "checkbox-detail.js:154"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Standard / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: checkbox-demo-box checkbox-demo-box--h20 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "checkbox-detail.js:38"
+        }
+      ]
+    },
+    {
+      "file": "collapse-default.html",
+      "title": "Collapse",
+      "checks": 17,
+      "issues": []
+    },
+    {
+      "file": "color-picker-default.html",
+      "title": "Color Picker",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Brand color \u2192 AuditField42; Color value: #FF031A \u2192 #1357AB; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "color-picker-detail.js:187"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: colorpicker-demo-control colorpicker-demo-control--outlined colorpicker-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "color-picker-detail.js:41"
+        }
+      ]
+    },
+    {
+      "file": "date-picker-default.html",
+      "title": "Date Picker",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Date of birth \u2192 AuditField42; Placeholder: MM/DD/YYYY \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "date-picker-detail.js:177"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: datepicker-demo-control datepicker-demo-control--outlined datepicker-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "date-picker-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "date-range-default.html",
+      "title": "Date Range",
+      "checks": 23,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Trip dates \u2192 AuditField42; Start placeholder: Start date \u2192 AuditField42; End placeholder: End date \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "date-range-detail.js:177"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: daterange-demo-control daterange-demo-control--outlined daterange-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "date-range-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "description-default.html",
+      "title": "Description",
+      "checks": 9,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Columns: 2 \u2192 1, 2 \u2192 3.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "description-detail.js:148"
+        }
+      ]
+    },
+    {
+      "file": "divider-default.html",
+      "title": "Divider",
+      "checks": 9,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --line-strong, --text-dim. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        }
+      ]
+    },
+    {
+      "file": "drawer-default.html",
+      "title": "Drawer",
+      "checks": 13,
+      "issues": []
+    },
+    {
+      "file": "dropdown-default.html",
+      "title": "Dropdown",
+      "checks": 20,
+      "issues": [
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: dropdown-demo-trigger dropdown-demo-trigger--outlined dropdown-demo-trigger--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "dropdown-detail.js:45"
+        }
+      ]
+    },
+    {
+      "file": "empty-default.html",
+      "title": "Empty",
+      "checks": 3,
+      "issues": []
+    },
+    {
+      "file": "float-button-default.html",
+      "title": "Float Button",
+      "checks": 9,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Show badge: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "float-button-detail.js:119"
+        },
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --button-primary-bg-default, --button-primary-bg-hover, --button-primary-text-default, --button-primary-text-hover. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Default / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: floatbutton-demo-btn floatbutton-demo-btn--default floatbutton-demo-btn--h48 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "float-button-detail.js:35"
+        },
+        {
+          "id": "PR-02",
+          "actual": "Primary section literally contains \u201cFocused: undefined Never just a color change, so layout never shifts.\u201d The preview shows a 2px solid #ff031a ring.",
+          "expected": "Output the actual Primary focus treatment.",
+          "source": "float-button-detail.js:36"
+        }
+      ]
+    },
+    {
+      "file": "group-button-default.html",
+      "title": "Group Button",
+      "checks": 29,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Number of buttons: 3 \u2192 1, 3 \u2192 2, 3 \u2192 4, 3 \u2192 5, 3 \u2192 6, 3 \u2192 7, 3 \u2192 8, 3 \u2192 9; Field label: False \u2192 True; Supporting text: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "group-button-detail.js:180"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: group-btn-segment group-btn-segment--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "group-button-detail.js:35"
+        }
+      ]
+    },
+    {
+      "file": "image-default.html",
+      "title": "Image",
+      "checks": 11,
+      "issues": []
+    },
+    {
+      "file": "input-text-field.html",
+      "title": "Input Text Field",
+      "checks": 24,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Email address \u2192 AuditField42; Placeholder: you@example.com \u2192 AuditField42; Leading icon: False \u2192 True; Trailing icon: False \u2192 True; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "input-detail.js:185"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: input-demo-control input-demo-control--outlined input-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "input-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "list-default.html",
+      "title": "List",
+      "checks": 15,
+      "issues": []
+    },
+    {
+      "file": "mention-default.html",
+      "title": "Mention",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Comment \u2192 AuditField42; Placeholder: Type @ to mention someone \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "mention-detail.js:173"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: mention-demo-control mention-demo-control--outlined mention-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "mention-detail.js:43"
+        }
+      ]
+    },
+    {
+      "file": "menu-default.html",
+      "title": "Menu",
+      "checks": 20,
+      "issues": []
+    },
+    {
+      "file": "modal-default.html",
+      "title": "Modal",
+      "checks": 13,
+      "issues": []
+    },
+    {
+      "file": "notification-default.html",
+      "title": "Notification",
+      "checks": 5,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Placement: topRight \u2192 topLeft, topRight \u2192 bottomRight, topRight \u2192 bottomLeft.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "notification-detail.js:72"
+        },
+        {
+          "id": "PR-05",
+          "actual": "Prompt Default shadow: 0 8px 24px rgba(0,0,0,0.35). Rendered shadow: rgba(0, 0, 0, 0.14) 0px 12px 24px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "notification-detail.js:63"
+        }
+      ]
+    },
+    {
+      "file": "number-default.html",
+      "title": "Number",
+      "checks": 23,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Quantity \u2192 AuditField42; Placeholder: 0 \u2192 AuditField42; Show stepper: True \u2192 False; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "number-detail.js:185"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: number-demo-control number-demo-control--outlined number-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "number-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "pagination-default.html",
+      "title": "Pagination",
+      "checks": 19,
+      "issues": [
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Numbered / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: pagination-demo-arrow pagination-demo-arrow--h40 pagination--radius-8 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "pagination-detail.js:28"
+        }
+      ]
+    },
+    {
+      "file": "password-default.html",
+      "title": "Password",
+      "checks": 23,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Password \u2192 AuditField42; Placeholder: Enter your password \u2192 AuditField42; Show reveal toggle: True \u2192 False; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "password-detail.js:185"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: password-demo-control password-demo-control--outlined password-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "password-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "title": "Pop Confirm",
+      "checks": 3,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --line-strong, --overlay-invert-bg, --text-hi. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-05",
+          "actual": "Prompt Default shadow: 0 8px 24px rgba(0,0,0,0.4). Rendered shadow: rgba(0, 0, 0, 0.14) 0px 12px 24px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "pop-confirm-detail.js:85"
+        }
+      ]
+    },
+    {
+      "file": "popover-default.html",
+      "title": "Popover",
+      "checks": 3,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --line-strong, --overlay-invert-bg, --text-hi. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-05",
+          "actual": "Prompt Simple shadow: 0 8px 24px rgba(0,0,0,0.4). Rendered shadow: rgba(0, 0, 0, 0.14) 0px 12px 24px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "popover-detail.js:79"
+        }
+      ]
+    },
+    {
+      "file": "progress-default.html",
+      "title": "Progress",
+      "checks": 2,
+      "issues": []
+    },
+    {
+      "file": "radio-default.html",
+      "title": "Radio",
+      "checks": 7,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Option A \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "radio-detail.js:104"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Standard / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: radio-demo-circle radio-demo-circle--h20 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "radio-detail.js:38"
+        }
+      ]
+    },
+    {
+      "file": "rating-default.html",
+      "title": "Rating",
+      "checks": 13,
+      "issues": []
+    },
+    {
+      "file": "result-default.html",
+      "title": "Result",
+      "checks": 2,
+      "issues": []
+    },
+    {
+      "file": "search-default.html",
+      "title": "Search",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Placeholder: Search... \u2192 AuditField42; Leading icon: True \u2192 False; Clear button: True \u2192 False.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "search-detail.js:183"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: search-demo-control search-demo-control--outlined search-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "search-detail.js:44"
+        }
+      ]
+    },
+    {
+      "file": "select-dropdown.html",
+      "title": "Select",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Country \u2192 AuditField42; Placeholder: Select a country \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "select-detail.js:202"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: select-demo-control select-demo-control--outlined select-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "select-detail.js:55"
+        }
+      ]
+    },
+    {
+      "file": "skeleton-default.html",
+      "title": "Skeleton",
+      "checks": 1,
+      "issues": []
+    },
+    {
+      "file": "slider-default.html",
+      "title": "Slider",
+      "checks": 9,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label text: Volume \u2192 AuditField42; Value: 60 \u2192 61.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "slider-detail.js:108"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Single / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: slider-demo-thumb.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "slider-detail.js:37"
+        }
+      ]
+    },
+    {
+      "file": "spin-default.html",
+      "title": "Spin",
+      "checks": 1,
+      "issues": []
+    },
+    {
+      "file": "splitter-default.html",
+      "title": "Splitter",
+      "checks": 3,
+      "issues": []
+    },
+    {
+      "file": "statistic-default.html",
+      "title": "Statistic",
+      "checks": 4,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --text-hi. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        }
+      ]
+    },
+    {
+      "file": "steps-default.html",
+      "title": "Steps",
+      "checks": 12,
+      "issues": []
+    },
+    {
+      "file": "switch-default.html",
+      "title": "Switch",
+      "checks": 7,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Enable notifications \u2192 AuditField42.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "switch-detail.js:109"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Compact / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: switch-demo-track switch-demo-track--h24 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "switch-detail.js:27"
+        },
+        {
+          "id": "PR-06",
+          "actual": "The copied recipe lists five states and never mentions Loading. The rendered detail matrix has six rows, including Loading.",
+          "expected": "Include all six displayed states.",
+          "source": "switch-detail.js:124"
+        }
+      ]
+    },
+    {
+      "file": "table-default.html",
+      "title": "Table",
+      "checks": 15,
+      "issues": []
+    },
+    {
+      "file": "tabs-default.html",
+      "title": "Tabs",
+      "checks": 20,
+      "issues": [
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Underline / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: tabs-demo-trigger tabs-demo-trigger--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "tabs-detail.js:42"
+        }
+      ]
+    },
+    {
+      "file": "tag-default.html",
+      "title": "Tag",
+      "checks": 9,
+      "issues": []
+    },
+    {
+      "file": "text-area-default.html",
+      "title": "Text Area",
+      "checks": 26,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Description \u2192 AuditField42; Placeholder: Tell us more... \u2192 AuditField42; Rows: 4 \u2192 2, 4 \u2192 3, 4 \u2192 5, 4 \u2192 6, 4 \u2192 8.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "text-area-detail.js:183"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: textarea-demo-control textarea-demo-control--outlined textarea-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "text-area-detail.js:42"
+        }
+      ]
+    },
+    {
+      "file": "time-default.html",
+      "title": "Time",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Meeting time \u2192 AuditField42; Placeholder: Select a time \u2192 AuditField42; Allow clear: True \u2192 False.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "time-detail.js:177"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focused: rgb(255, 3, 26) solid 2px (#ff031a). Element: time-demo-control time-demo-control--outlined time-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "time-detail.js:46"
+        }
+      ]
+    },
+    {
+      "file": "timeline-default.html",
+      "title": "Timeline",
+      "checks": 1,
+      "issues": []
+    },
+    {
+      "file": "toast-default.html",
+      "title": "Toast",
+      "checks": 11,
+      "issues": [
+        {
+          "id": "PR-05",
+          "actual": "Prompt Default shadow: 0 8px 24px rgba(0,0,0,0.4). Rendered shadow: rgba(0, 0, 0, 0.14) 0px 12px 24px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "toast-detail.js:65"
+        }
+      ]
+    },
+    {
+      "file": "tooltip-default.html",
+      "title": "Tooltip",
+      "checks": 4,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --overlay-invert-bg, --overlay-invert-text, --text-hi. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        }
+      ]
+    },
+    {
+      "file": "tour-default.html",
+      "title": "Tour",
+      "checks": 3,
+      "issues": [
+        {
+          "id": "PR-03",
+          "actual": "Undefined handoff dependencies: --line-strong, --overlay-invert-bg, --text-hi. The local stylesheet has these values; the copied prompt does not.",
+          "expected": "Every CSS variable referenced in the prompt must have a definition or an explicit resolved value.",
+          "source": "foundation-runtime.js:57"
+        },
+        {
+          "id": "PR-05",
+          "actual": "Prompt First step shadow: 0 8px 24px rgba(0,0,0,0.4). Rendered shadow: rgba(0, 0, 0, 0.14) 0px 12px 24px 0px.",
+          "expected": "Prompt and preview must use the same applied shadow.",
+          "source": "tour-detail.js:90"
+        }
+      ]
+    },
+    {
+      "file": "transfer-default.html",
+      "title": "Transfer",
+      "checks": 4,
+      "issues": []
+    },
+    {
+      "file": "tree-default.html",
+      "title": "Tree",
+      "checks": 2,
+      "issues": []
+    },
+    {
+      "file": "tree-select-default.html",
+      "title": "Tree Select",
+      "checks": 22,
+      "issues": [
+        {
+          "id": "PR-01",
+          "actual": "The preview changes but the prompt remains byte-for-byte identical for these edits: Label: Assignee team \u2192 AuditField42; Placeholder: Select a team \u2192 AuditField42; Allow clear: False \u2192 True.",
+          "expected": "The copied prompt must state the current property values.",
+          "source": "tree-select-detail.js:187"
+        },
+        {
+          "id": "PR-04",
+          "actual": "Prompt specifies the ordinary focus ring as #ff4253. Rendered Outlined / Focus: rgb(255, 3, 26) solid 2px (#ff031a). Element: treeselect-demo-control treeselect-demo-control--outlined treeselect-demo-control--h40 is-focus.",
+          "expected": "Use the applied semantic focus color (#ff031a in the audited default), rather than red-400 (#ff4253).",
+          "source": "tree-select-detail.js:59"
+        }
+      ]
+    },
+    {
+      "file": "upload-default.html",
+      "title": "Upload",
+      "checks": 2,
+      "issues": []
+    }
+  ]
+}

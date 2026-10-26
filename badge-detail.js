@@ -136,7 +136,7 @@
     lines.push("");
     lines.push("Build it as ONE reusable component controlled by properties (form, color, size) - a small indicator, not a one-off number or dot hard-coded per screen.");
     lines.push("");
-    lines.push("Badge is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 3 forms, each in 4 semantic colors, each in 2 sizes.");
+    lines.push("Badge is not interactive - unlike most components in this system, it has no hover, focus or disabled state. Its variation is purely structural: 3 forms, each in 5 semantic colors, each in 2 sizes.");
     lines.push("");
     lines.push("Forms (3):");
     lines.push("- Count: a small numeric pill overlaid on the top-right corner of a host element (an icon or button). Shows the current Count value, capping the display at \"" + max + "+\" once Count exceeds the configured Max count.");

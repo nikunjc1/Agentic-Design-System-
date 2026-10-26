@@ -42,7 +42,7 @@
       checked: "border-color:" + red500 + ";background:transparent;",
       dot: "background:" + red500 + ";border-radius:50%;",
       hover: "border-color:" + textDim + ";",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       disabled: "opacity:0.4;cursor:not-allowed;",
       cardChecked: "background:" + redTint + ";border-color:" + red500 + ";"
     };
@@ -165,7 +165,7 @@
     lines.push(".radio-demo-circle:hover, .radio-demo-circle.is-hover{ border-color:" + textDim + "; }");
     lines.push("");
     lines.push("/* Focused - real :focus-visible on the (visually hidden but focusable) input, combined with .is-focus */");
-    lines.push(".radio-demo-input:focus-visible + .radio-demo-circle, .radio-demo-circle.is-focus{ outline:2px solid " + red400 + "; outline-offset:2px; }");
+    lines.push(".radio-demo-input:focus-visible + .radio-demo-circle, .radio-demo-circle.is-focus{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:2px; }");
     lines.push("");
     lines.push("/* Disabled - real :disabled combined with .is-disabled */");
     lines.push(".radio-demo-input:disabled + .radio-demo-circle, .radio-demo-circle.is-disabled{ opacity:0.4; cursor:not-allowed; }");

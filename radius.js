@@ -199,12 +199,8 @@
     // recommended philosophy a moment later (previously: Reset hardcoded
     // Balanced regardless of what the project profile actually maps to).
     function applyUnsavedState(){
-      var mapped = productFromProjectProfile();
-      if (mapped){
-        var mappedCard = document.querySelector('.product-card[data-product="' + mapped + '"]');
-        if (mappedCard) { selectProduct(mappedCard); return; }
-      }
-      showProductFallbackNotice();
+      document.querySelectorAll('.product-card').forEach(function(card){card.classList.remove('is-active');card.setAttribute('aria-pressed','false');});
+      selectSystem('balanced');
     }
 
     function loadRadius(){

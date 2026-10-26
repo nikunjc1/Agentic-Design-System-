@@ -263,13 +263,13 @@
     return FULL_SPEC[typeKey].css;
   }
 
-  // Focus ring is 2px solid var(--red-400) for every type in shell.css,
+  // Focus ring is 2px solid var(--color-focus-ring) for every type in shell.css,
   // EXCEPT Destructive (fixed var(--danger-500)) and Approve (fixed
   // var(--green-500)), which intentionally don't follow the brand color,
   // and Link, whose outline uses a 3px offset plus a 4px corner radius
   // instead of the shared 2px offset (see the .btn-demo--*:focus-visible
   // rules in shell.css). Called out per type here so Copy prompt/Copy
-  // code don't silently claim a uniform red-400 ring for all 8 types.
+  // code don't silently claim a uniform focus ring for all 8 types.
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
     var sizeInfo = selectionInfo.size || selectionMode(null, SIZE_OPTIONS);
@@ -277,7 +277,7 @@
     var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
 
     var lines = [];
-    var red400 = liveRedHex()[400];
+    var red400 = getCssVar("--color-focus-ring", liveRedHex()[400]);
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     lines.push("Create a complete Button component system for the Agentic Design System.");
@@ -301,9 +301,10 @@
       }
     });
     lines.push("");
-    lines.push("States (5, apply to every type): Rest, Hover, Pressed, Focus, Disabled.");
+    lines.push("States (" + STATES.length + ", apply to every type): " + STATES.map(function(state){ return state.label; }).join(", ") + ".");
     lines.push("- Focus (default, see per-type exceptions above): 2px outline in " + red400 + ", 2px offset - never just a color change, so layout never shifts.");
     lines.push("- Disabled: 40% opacity, not-allowed cursor - except Primary at 45% opacity, and Link additionally drops its underline.");
+    lines.push("- Loading: retain the label and replace the leading icon slot with a rotating ring spinner; omit trailing icons. Icon-only content shows only the spinner. Keep the type's normal colors and the native disabled opacity (40%, except Primary at 45%), use a wait cursor, disable interaction and set aria-busy=\"true\".");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
@@ -378,7 +379,7 @@
     });
     lines.push("");
     lines.push("/* States shared by every type */");
-    lines.push(".btn:focus-visible{ outline:2px solid " + liveRedHex()[400] + "; outline-offset:2px; }");
+    lines.push(".btn:focus-visible{ outline:2px solid " + getCssVar("--color-focus-ring", liveRedHex()[400]) + "; outline-offset:2px; }");
     lines.push("/* Focus exceptions - these three types don't use the default ring above */");
     lines.push(".btn--destructive:focus-visible{ outline-color:" + getCssVar("--danger-500", "#FF031A") + "; }");
     lines.push(".btn--approve:focus-visible{ outline-color:" + getCssVar("--green-500", "#2FBF6E") + "; }");

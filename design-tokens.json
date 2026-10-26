@@ -2461,7 +2461,7 @@
         }
       }
     },
-    "button-primary-text-default": {
+    "button-primary-text-hover": {
       "$type": "color",
       "$value": {
         "colorSpace": "srgb",
@@ -2474,7 +2474,7 @@
         "hex": "#000000"
       }
     },
-    "button-primary-text-hover": {
+    "button-primary-text-default": {
       "$type": "color",
       "$value": {
         "colorSpace": "srgb",

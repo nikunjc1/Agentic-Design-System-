@@ -430,6 +430,7 @@
 <div class="ads-contract-rule"><h3>Modes and alternatives</h3><p>Dark surfaces and custom palettes must be checked for actual layer separation. Use surface and boundary tokens when shadow is invisible. Forced colors and print preserve boundaries and remove decorative shadow. Do not make a shadow the only sign of a control or modal.</p></div>
 <div class="ads-contract-rule"><h3>Layers</h3><p>Use the shared layer map: content 0, sticky 20, popover 40, scrim 60, dialog 70, toast 80, tooltip 90. Portal overlays out of clipped containers, assign focus ownership, close the top layer with Escape, restore trigger focus and test nested owners/collisions. Elevation magnitude is not z-index.</p></div>
 <div class="ads-contract-rule"><h3>Motion and export</h3><p>Apply hover/pressed effects only to actionable cards. Reduced motion removes animated elevation; touch has no hover requirement. Export both theme recipes, philosophy mapping, card variants, layer map, focus/clip rules and px/rem equivalents.</p></div>
+<div class="ads-contract-rule"><h3>Save and edit</h3><p>Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -444,7 +445,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {
@@ -476,7 +477,8 @@
       &quot;Card variants&quot;: &quot;Static bordered cards use no shadow. Explicitly elevated static cards use SM with no hover change. Interactive cards use SM at rest, MD on hover and XS when pressed. Focus uses an outline. Flat philosophy removes these shadows while borders/surfaces retain separation.&quot;,
       &quot;Modes and alternatives&quot;: &quot;Dark surfaces and custom palettes must be checked for actual layer separation. Use surface and boundary tokens when shadow is invisible. Forced colors and print preserve boundaries and remove decorative shadow. Do not make a shadow the only sign of a control or modal.&quot;,
       &quot;Layers&quot;: &quot;Use the shared layer map: content 0, sticky 20, popover 40, scrim 60, dialog 70, toast 80, tooltip 90. Portal overlays out of clipped containers, assign focus ownership, close the top layer with Escape, restore trigger focus and test nested owners/collisions. Elevation magnitude is not z-index.&quot;,
-      &quot;Motion and export&quot;: &quot;Apply hover/pressed effects only to actionable cards. Reduced motion removes animated elevation; touch has no hover requirement. Export both theme recipes, philosophy mapping, card variants, layer map, focus/clip rules and px/rem equivalents.&quot;
+      &quot;Motion and export&quot;: &quot;Apply hover/pressed effects only to actionable cards. Reduced motion removes animated elevation; touch has no hover requirement. Export both theme recipes, philosophy mapping, card variants, layer map, focus/clip rules and px/rem equivalents.&quot;,
+      &quot;Save and edit&quot;: &quot;Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.&quot;
     }
   }
 }</code></pre></details>

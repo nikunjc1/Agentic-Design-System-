@@ -716,6 +716,7 @@
 <div class="ads-contract-rule"><h3>Widths and exceptions</h3><p>Approved visual widths are 0,1,1.5,2,3,4px. Custom base widths up to 8px are allowed only as explicit configured exceptions. CSS triangles are geometry and not control boundaries. Native hairlines require the platform adapter and physical-density acceptance; 1 CSS px is not universally one device pixel.</p></div>
 <div class="ads-contract-rule"><h3>Accessible and directional behavior</h3><p>Calculate alpha-composited boundary versus its adjacent surface for 3:1 when essential to identify a control. Focus must remain visible in forced colors. Logical start/end track RTL; physical sides are only for physical geometry. Print uses explicit solid boundaries if shadow/tint disappears.</p></div>
 <div class="ads-contract-rule"><h3>Flow and export</h3><p>Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior.</p></div>
+<div class="ads-contract-rule"><h3>Save and edit</h3><p>Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -730,7 +731,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {
@@ -764,7 +765,8 @@
       &quot;Combined-state examples&quot;: &quot;Focused error: error boundary and associated message plus an independent brand focus outline. Selected hover: preserve selection marker while adjusting its tone. Loading disabled: aria-busy plus blocked activation and a readable loading label; do not announce each frame. Success focus: success message/indicator plus visible focus. Read-only is focusable and copyable where appropriate, rather than disabled. Show required status in the label and validate on the documented form trigger.&quot;,
       &quot;Widths and exceptions&quot;: &quot;Approved visual widths are 0,1,1.5,2,3,4px. Custom base widths up to 8px are allowed only as explicit configured exceptions. CSS triangles are geometry and not control boundaries. Native hairlines require the platform adapter and physical-density acceptance; 1 CSS px is not universally one device pixel.&quot;,
       &quot;Accessible and directional behavior&quot;: &quot;Calculate alpha-composited boundary versus its adjacent surface for 3:1 when essential to identify a control. Focus must remain visible in forced colors. Logical start/end track RTL; physical sides are only for physical geometry. Print uses explicit solid boundaries if shadow/tint disappears.&quot;,
-      &quot;Flow and export&quot;: &quot;Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior.&quot;
+      &quot;Flow and export&quot;: &quot;Try partial hex and invalid opacity without replacing applied values. Zero width/opacity survives reload. Export effective base recipe, fixed state recipes, color overrides, exceptions, precedence, focus and directional behavior.&quot;,
+      &quot;Save and edit&quot;: &quot;Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.&quot;
     }
   }
 }</code></pre></details>

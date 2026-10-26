@@ -11,8 +11,9 @@ test('requires project, product type, role and a valid delivery platform', () =>
   assert.ok(M.validate({...profile,productType:'Other'}).productOther);
   assert.ok(M.validate({...profile,role:'Other'}).roleOther);
 });
-test('name, email and designation are optional, but still validated when provided', () => {
-  assert.deepEqual(M.validate({...profile,name:'',email:'',designation:''}),{});
+test('new saves require name, email and designation; older saved profiles remain readable', () => {
+  for(const key of ['name','email','designation'])assert.ok(M.validate({...profile,[key]:''})[key]);
+  const old={...profile,name:'',email:'',designation:'',version:1};const storage=store();storage.setItem(M.KEY,JSON.stringify(old));assert.equal(M.read(storage).project,profile.project);assert.throws(()=>M.save(storage,old));
   assert.ok(M.validate({...profile,email:'bad'})['email']);
   assert.ok(M.validate({...profile,name:'x'.repeat(101)})['name']);
   assert.ok(M.validate({...profile,designation:'x'.repeat(101)})['designation']);

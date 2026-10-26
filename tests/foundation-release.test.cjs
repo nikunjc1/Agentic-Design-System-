@@ -73,7 +73,7 @@ test('agent lifecycle preserves partial output and idempotency on retry, require
 });
 test('project drafts reject newer schemas and handoff includes truthful assets and all nine contracts',()=>{
   const store=value=>({getItem:key=>key===P.DRAFT?JSON.stringify(value):null});
-  assert.throws(()=>P.read(store({version:2}),P.DRAFT),/newer version/);
+  assert.throws(()=>P.read(store({version:3}),P.DRAFT),/newer version/);
   assert.throws(()=>P.read(store({version:1,project:'Draft',platforms:['made-up']}),P.DRAFT),/invalid platforms/);
   const text=P.markdown(null,{icons:{uploads:[{name:'icon.svg'}]},typography:{primaryFont:{family:'Custom',source:'uploaded file',dataUrl:'data:font/woff2;base64,AA=='}}});
   assert.match(text,/Foundation JSON/);assert.match(text,/icon.svg/);assert.match(text,/font dependencies/);

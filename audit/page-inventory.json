@@ -21,7 +21,7 @@
       "Evidence"
     ],
     "issues": [],
-    "bytes": 37457
+    "bytes": 37579
   },
   {
     "file": "add-on-default.html",
@@ -99,7 +99,7 @@
       "Accessible interaction"
     ],
     "issues": [],
-    "bytes": 31406
+    "bytes": 31528
   },
   {
     "file": "ai-generator.html",
@@ -202,7 +202,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20429
+    "bytes": 20473
   },
   {
     "file": "avatar.html",
@@ -258,10 +258,11 @@
       "Combined-state examples",
       "Widths and exceptions",
       "Accessible and directional behavior",
-      "Flow and export"
+      "Flow and export",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 53211
+    "bytes": 53915
   },
   {
     "file": "breadcrumb-default.html",
@@ -608,7 +609,7 @@
       "Expansion and localization"
     ],
     "issues": [],
-    "bytes": 24295
+    "bytes": 24417
   },
   {
     "file": "data-format.html",
@@ -628,7 +629,7 @@
       "Value identity"
     ],
     "issues": [],
-    "bytes": 25872
+    "bytes": 25994
   },
   {
     "file": "date-picker-default.html",
@@ -865,10 +866,11 @@
       "Compatibility mapping",
       "Examples and recovery",
       "Responsive and interaction",
-      "Agent and export"
+      "Agent and export",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 57738
+    "bytes": 58442
   },
   {
     "file": "grid-layout.html",
@@ -897,10 +899,11 @@
       "Pattern: Split View",
       "Pattern: Card Grid",
       "Pattern: Hero + Content",
-      "Pattern: Master-Detail"
+      "Pattern: Master-Detail",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 58933
+    "bytes": 59637
   },
   {
     "file": "group-button-default.html",
@@ -947,7 +950,7 @@
       "Copy outcomes"
     ],
     "issues": [],
-    "bytes": 34469
+    "bytes": 34591
   },
   {
     "file": "history.html",
@@ -983,10 +986,11 @@
       "Accessible examples",
       "Assets and recovery",
       "RTL and motion",
-      "Agent and export"
+      "Agent and export",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 41648
+    "bytes": 42352
   },
   {
     "file": "image-default.html",
@@ -1171,7 +1175,7 @@
       "Handoff"
     ],
     "issues": [],
-    "bytes": 25016
+    "bytes": 24913
   },
   {
     "file": "notification-default.html",
@@ -1390,7 +1394,7 @@
       "Handoff"
     ],
     "issues": [],
-    "bytes": 45359
+    "bytes": 45481
   },
   {
     "file": "progress-default.html",
@@ -1463,7 +1467,7 @@
       "Flow and export"
     ],
     "issues": [],
-    "bytes": 45723
+    "bytes": 46091
   },
   {
     "file": "rating-default.html",
@@ -1597,10 +1601,11 @@
       "Card variants",
       "Modes and alternatives",
       "Layers",
-      "Motion and export"
+      "Motion and export",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 37827
+    "bytes": 38531
   },
   {
     "file": "skeleton-default.html",
@@ -1670,10 +1675,11 @@
       "Composition examples",
       "Density and targets",
       "Context and responsive rules",
-      "Export"
+      "Export",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 39260
+    "bytes": 39964
   },
   {
     "file": "spin-default.html",
@@ -2147,10 +2153,11 @@
       "Responsive usage",
       "Fonts and recovery",
       "Validation and examples",
-      "Preset changes and handoff"
+      "Preset changes and handoff",
+      "Save and edit"
     ],
     "issues": [],
-    "bytes": 114267
+    "bytes": 115015
   },
   {
     "file": "upload-default.html",

@@ -58,7 +58,7 @@
     return {
       rest: "color:" + red400 + ";text-decoration:none;",
       hover: "color:" + red500 + ";text-decoration:underline;",
-      focus: "color:" + red400 + ";text-decoration:none;outline:2px solid " + red400 + ";outline-offset:2px;border-radius:2px;",
+      focus: "color:" + red400 + ";text-decoration:none;outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:2px;",
       visited: "color:" + red600 + ";",
       disabled: "opacity:0.5;cursor:default;pointer-events:none;"
     };

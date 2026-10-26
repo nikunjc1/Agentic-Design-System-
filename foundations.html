@@ -683,6 +683,7 @@
 <div class="ads-contract-rule"><h3>Examples and recovery</h3><p>A red brand with a red Danger is two independent choices. White text on default red can fail; use the resolved on-brand foreground. For a tinted Tag calculate status text versus its tinted surface. Use label/icon/message in addition to hue. Keep full hex validation and the last valid value while typing.</p></div>
 <div class="ads-contract-rule"><h3>Responsive and interaction</h3><p>Picker numeric controls remain keyboard accessible. Escape returns focus to the trigger; outside dismissal does not trap focus. At narrow/zoomed widths keep fields and popup inside the content viewport. Use forced-color system colors rather than relying on tinted fills.</p></div>
 <div class="ads-contract-rule"><h3>Agent and export</h3><p>Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result.</p></div>
+<div class="ads-contract-rule"><h3>Save and edit</h3><p>Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -697,7 +698,7 @@
     &quot;version&quot;: 1,
     &quot;legacy&quot;: &quot;Unversioned valid records migrate in memory. Typography headingScaleVersion 2 applies the smaller six-heading scale once to older records, retaining other roles and existing font/color/style metrics. Later custom size edits are retained. Unsupported future records are preserved. The next successful write stamps the migrated version.&quot;,
     &quot;future&quot;: &quot;Reject unsupported future versions. Preserve raw data. Offer backup and explicit reset.&quot;,
-    &quot;invalid&quot;: &quot;Keep unfinished drafts separate. Invalid drafts neither apply nor save. Storage failures retain an explicitly marked local preview and the last durable record.&quot;,
+    &quot;invalid&quot;: &quot;Foundation selections preview locally until Save foundation succeeds. Saved Foundation editors require Edit foundation before changes. Cancel discards the preview. Invalid drafts never replace saved records; storage failures retain the editable preview and the last durable record.&quot;,
     &quot;concurrency&quot;: &quot;A storage event refreshes applied tokens and disables stale editor controls until reload. Never merge simultaneous edits silently.&quot;
   },
   &quot;units&quot;: {
@@ -732,7 +733,8 @@
       &quot;Compatibility mapping&quot;: &quot;Existing red-* tokens represent brand/action; danger-* represent severity. type-*-color represents text by role; graphite-950/900/850 represents page/panel/raised surfaces. Prefer the exported color-brand, color-action, color-text and color-surface aliases for new consumers. Compatibility names retain their existing meaning and are not a license to use a brand hue for error feedback.&quot;,
       &quot;Examples and recovery&quot;: &quot;A red brand with a red Danger is two independent choices. White text on default red can fail; use the resolved on-brand foreground. For a tinted Tag calculate status text versus its tinted surface. Use label/icon/message in addition to hue. Keep full hex validation and the last valid value while typing.&quot;,
       &quot;Responsive and interaction&quot;: &quot;Picker numeric controls remain keyboard accessible. Escape returns focus to the trigger; outside dismissal does not trap focus. At narrow/zoomed widths keep fields and popup inside the content viewport. Use forced-color system colors rather than relying on tinted fills.&quot;,
-      &quot;Agent and export&quot;: &quot;Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result.&quot;
+      &quot;Agent and export&quot;: &quot;Use semantic aliases and resolved light/dark values. Never infer status from brand hue or declare AA from a color alone. Export the pair, opacity, state, surface and verification result.&quot;,
+      &quot;Save and edit&quot;: &quot;Selections preview immediately. Save foundation commits valid settings in this browser and locks the editor. Select Edit foundation to revise saved settings; Cancel retains the saved settings. Storage failure keeps the draft editable.&quot;
     }
   }
 }</code></pre></details>

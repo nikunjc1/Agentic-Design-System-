@@ -1,14 +1,14 @@
 {
   "date": "2026-10-08",
   "method": "Actual page scripts in jsdom; rendered-browser QA unavailable",
-  "assertions": 2241,
+  "assertions": 2265,
   "edits": 880,
   "combinations": 817,
   "failures": 0,
   "results": [
     {
       "page": "foundations.html",
-      "checks": 95,
+      "checks": 97,
       "edits": 60,
       "combinations": 0,
       "viewSwitches": 10,
@@ -18,7 +18,7 @@
     },
     {
       "page": "grid-layout.html",
-      "checks": 64,
+      "checks": 66,
       "edits": 37,
       "combinations": 0,
       "viewSwitches": 10,
@@ -28,7 +28,7 @@
     },
     {
       "page": "typography.html",
-      "checks": 524,
+      "checks": 526,
       "edits": 532,
       "combinations": 0,
       "viewSwitches": 6,
@@ -38,7 +38,7 @@
     },
     {
       "page": "spacing.html",
-      "checks": 51,
+      "checks": 53,
       "edits": 27,
       "combinations": 0,
       "viewSwitches": 8,
@@ -48,7 +48,7 @@
     },
     {
       "page": "radius.html",
-      "checks": 29,
+      "checks": 31,
       "edits": 2,
       "combinations": 0,
       "viewSwitches": 10,
@@ -58,7 +58,7 @@
     },
     {
       "page": "borders.html",
-      "checks": 92,
+      "checks": 94,
       "edits": 68,
       "combinations": 0,
       "viewSwitches": 8,
@@ -68,7 +68,7 @@
     },
     {
       "page": "shadows.html",
-      "checks": 24,
+      "checks": 26,
       "edits": 2,
       "combinations": 0,
       "viewSwitches": 6,
@@ -78,7 +78,7 @@
     },
     {
       "page": "icons.html",
-      "checks": 71,
+      "checks": 73,
       "edits": 47,
       "combinations": 0,
       "viewSwitches": 8,
@@ -190,7 +190,7 @@
     },
     {
       "page": "Failure recovery and assets",
-      "checks": 87,
+      "checks": 93,
       "edits": 0,
       "combinations": 0,
       "failures": []
@@ -204,7 +204,7 @@
     },
     {
       "page": "Font sources, presets and color picker",
-      "checks": 128,
+      "checks": 130,
       "edits": 46,
       "combinations": 4,
       "failures": []

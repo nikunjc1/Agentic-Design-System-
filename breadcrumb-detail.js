@@ -44,7 +44,7 @@
     return {
       rest: "color:" + textDim + ";",
       hover: "color:" + textHi + ";text-decoration:underline;",
-      focus: "outline:2px solid " + red400 + ";outline-offset:2px;border-radius:2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:2px;",
       disabled: "opacity:0.5;pointer-events:none;"
     };
   }

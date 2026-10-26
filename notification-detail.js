@@ -60,7 +60,7 @@
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var accent = { info: blue500, success: green500, warning: amber500, error: danger500 }[typeKey];
     return {
-      card: "background:" + getCssVar("--graphite-900", "#14171B") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-inline-start:3px solid " + accent + ";box-shadow:0 8px 24px rgba(0,0,0,0.35);",
+      card: "background:" + getCssVar("--graphite-900", "#14171B") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-inline-start:3px solid " + accent + ";box-shadow:var(--shadow-xl);",
       icon: "color:" + accent + ";",
       accent: accent
     };
@@ -105,7 +105,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Notification component */");
-    lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:var(--space-10); width:var(--dimension-260); padding:var(--space-12) var(--space-14); background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:0 8px 24px rgba(0,0,0,0.35); position:relative; }");
+    lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:var(--space-10); width:var(--dimension-260); padding:var(--space-12) var(--space-14); background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:var(--shadow-xl); position:relative; }");
     lines.push(".notification-demo-icon{ flex:none; width:var(--dimension-18); height:var(--dimension-18); margin-top:var(--space-1); }");
     lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align: start; }");
     lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
