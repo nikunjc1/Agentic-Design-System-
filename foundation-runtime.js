@@ -187,6 +187,32 @@
     return M.prepareMarkdown(source+'\n\n<!-- ads:page-foundation -->\n## Current Foundation configuration\n\nThe following configuration is the applied state. Unfinished or invalid editor drafts are not applied. Reference assets are included in Foundation JSON.\n\n```json\n'+json+'\n```\n<!-- /ads:page-foundation -->',resolved);
   }
   window.ADSFoundation={ apply, get:()=>resolved, getVerification:()=>({unsavedPreviewKeys:[...unsavedKeys]}),format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), prepareMarkdown:(text,names)=>M.prepareMarkdown(text,resolved,names), preparePageMarkdown, read };
+  // "Draw in Figma" - a locally-running Figma Bridge Plugin (a separate
+  // project, not part of this portal) draws the component into Figma from
+  // the same contract shape its component-contract tooling already uses: a
+  // component name, its currently configured properties and the resolved
+  // design tokens it renders from - the plugin matches token names against
+  // the library's own Figma variables. Only detail pages carry the static
+  // [data-role="draw-figma-action"] mount; listing cards build their own
+  // equivalent button directly in experience.js, since a card has no
+  // configured-properties panel for componentProperties() to read.
+  document.addEventListener('DOMContentLoaded',()=>{
+    const mount=document.querySelector('[data-role="draw-figma-action"]');
+    if(!mount) return;
+    const name=()=>{
+      const h1=document.querySelector('h1');
+      if(!h1) return document.title.split(' - ')[0]||'Component';
+      const clone=h1.cloneNode(true);clone.querySelectorAll('.component-status').forEach(n=>n.remove());
+      return clone.textContent.trim()||'Component';
+    };
+    const button=document.createElement('button');
+    button.type='button';button.className='btn-demo btn-demo--tertiary btn-demo--h32 is-icon-only';
+    button.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
+    const label='Draw '+name()+' in Figma';
+    button.setAttribute('aria-label',label);button.title=label;
+    button.addEventListener('click',()=>window.ADSFigmaBridge?.draw({component:name(),props:componentProperties(),tokens:resolved.tokens},button));
+    mount.append(button);
+  },{once:true});
   window.addEventListener('ads:foundation-change',e=>{const key=e.detail.key.replace(/^ads:/,'');if(!keys.includes(key)) return;if(e.detail.unsaved)unsavedKeys.add(key);else unsavedKeys.delete(key);if(e.detail.removed) drafts.delete(key);else drafts.set(key,e.detail.value);queueMicrotask(apply);});
   window.addEventListener('storage',e=>{
     if(e.key===null) {drafts.clear();unsavedKeys.clear();root.dataset.theme=preference('theme','light',['light','dark']);root.dataset.density=preference('density','comfortable',['comfortable','compact']);root.dir=preference('direction','ltr',['ltr','rtl']);}else {const key=e.key.replace(/^ads:/,'');drafts.delete(key);unsavedKeys.delete(key);}

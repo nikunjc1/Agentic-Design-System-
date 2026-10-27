@@ -68,6 +68,58 @@
     return success;
   };
 
+  // "Draw in Figma" posts a component contract (name, configured properties,
+  // resolved tokens) to a locally-running Figma Bridge Plugin, which draws it
+  // as a real component set bound to the library's own Figma variables. This
+  // portal only produces the contract and reports whether the plugin
+  // accepted it - the plugin itself is a separate project, not shipped here.
+  // The port is the one thing to change if a given install's plugin differs.
+  // The plugin's local server must send Access-Control-Allow-Origin (even
+  // just "*") on its response - confirmed directly: without it, the browser
+  // blocks reading the response as a cross-origin request and this reports
+  // "Could not reach" even though the plugin received and drew the request.
+  const FIGMA_BRIDGE_PORT = 3333;
+  const figmaFeedback = new WeakMap();
+  window.ADSFigmaBridge = {
+    port: FIGMA_BRIDGE_PORT,
+    async draw(contract, button) {
+      let state = figmaFeedback.get(button);
+      if (!state) {
+        state = { nodes:Array.from(button.childNodes), title:button.getAttribute('title'), sequence:0 };
+        figmaFeedback.set(button,state);
+      }
+      clearTimeout(state.timer);
+      const sequence=++state.sequence;
+      let success=false;
+      try {
+        const response=await fetch('http://localhost:'+FIGMA_BRIDGE_PORT+'/draw', {
+          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(contract),
+        });
+        success=response.ok;
+      } catch {}
+      if(sequence!==state.sequence)return success;
+      // Same icon-only feedback convention as copyWithFeedback - swap the
+      // glyph rather than the (fixed-width, square) button's text.
+      button.innerHTML = success
+        ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>';
+      button.title=success?'Sent to Figma':'Could not reach the Figma Bridge Plugin. Make sure it is running on localhost:'+FIGMA_BRIDGE_PORT+'.';
+      let status=document.getElementById('ads-figma-status');
+      if(!status) {
+        status=document.createElement('p');status.id='ads-figma-status';status.className='ads-copy-status';
+        status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+        (document.body||document.documentElement).append(status);
+      }
+      status.textContent=success?'Sent to Figma.':'Could not reach the Figma Bridge Plugin. Make sure it is running on localhost:'+FIGMA_BRIDGE_PORT+'.';
+      state.timer=setTimeout(()=>{
+        if(sequence!==state.sequence)return;
+        button.replaceChildren(...state.nodes);
+        if(state.title==null)button.removeAttribute('title');else button.setAttribute('title',state.title);
+      },1800);
+      return success;
+    }
+  };
+
   // Preferences remain optional when browser storage is unavailable.
   function readPreference(key) { try { return localStorage.getItem(key); } catch { return null; } }
   function writePreference(key, value) {

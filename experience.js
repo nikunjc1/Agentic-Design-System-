@@ -201,6 +201,19 @@
           const copyCodeBtn = copyRow.querySelector('[data-role^="copy-code-"]');
           if (copyPromptBtn) copyPromptBtn.setAttribute('aria-label', 'Copy ' + cardName + ' prompt');
           if (copyCodeBtn) copyCodeBtn.setAttribute('aria-label', 'Copy ' + cardName + ' code');
+          // Same "Draw in Figma" action as every detail page's Properties
+          // panel (foundation-runtime.js), built directly here instead of
+          // through that page's generic [data-role="draw-figma-action"]
+          // mount - a card has no configured-properties panel to read, so
+          // its contract is type-level only (name + resolved tokens), not a
+          // specific configured instance.
+          const figmaBtn = el('button', '', 'btn-demo btn-demo--tertiary btn-demo--h32 is-icon-only');
+          figmaBtn.type = 'button';
+          figmaBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
+          figmaBtn.setAttribute('aria-label', 'Draw ' + cardName + ' in Figma');
+          figmaBtn.title = figmaBtn.getAttribute('aria-label');
+          figmaBtn.addEventListener('click', () => window.ADSFigmaBridge?.draw({ component: cardName, props: [], tokens: window.ADSFoundation.get().tokens }, figmaBtn));
+          copyRow.append(figmaBtn);
         } else card.append(link);
       });
       main.querySelectorAll('.button-matrix-wrap').forEach(region => {
