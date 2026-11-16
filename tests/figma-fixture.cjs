@@ -10,7 +10,8 @@ function fixture(){
   findAll(predicate){return this.children.flatMap(child=>[...(predicate(child)?[child]:[]),...child.findAll(predicate)]);}
   findAllWithCriteria({types}){return this.findAll(node=>types.includes(node.type));}
   // Real Figma: resize() on an auto-layout frame switches BOTH sizing modes to FIXED, so anything that must hug has to be (re)asserted after the last resize.
-  resize(w,h){this.width=w;this.height=h;if(this.layoutMode&&this.layoutMode!=='NONE'){this.primaryAxisSizingMode='FIXED';this.counterAxisSizingMode='FIXED';}}
+  // It also drops Fill container (layoutAlign STRETCH / layoutGrow) on a node whose size actually changes, which is how a Collapse header row lost its Fill width.
+  resize(w,h){const changed=w!==this.width||h!==this.height;this.width=w;this.height=h;if(this.layoutMode&&this.layoutMode!=='NONE'){this.primaryAxisSizingMode='FIXED';this.counterAxisSizingMode='FIXED';}if(changed&&this.layoutAlign==='STRETCH')this.layoutAlign='INHERIT';if(changed&&this.layoutGrow===1)this.layoutGrow=0;}
   clone(){const node=copyNode(this);figma.currentPage.appendChild(node);return node;}
   set lineHeight(value){if(value.unit!=='AUTO'&&!Number.isFinite(value.value))throw new Error('Figma line height must be finite');this._lineHeight=value;}
   get lineHeight(){return this._lineHeight;}

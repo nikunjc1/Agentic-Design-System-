@@ -61,8 +61,7 @@
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
     { value: "16", label: "16px - Expressive" },
-    { value: "24", label: "24px - Large" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "24", label: "24px - Large" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -209,6 +208,12 @@
   // comparison matrix) keeps the footer buttons out of the Tab sequence
   // without removing them from the accessibility tree; the exported Copy
   // code example (illustrative=false/omitted) stays real, operable markup.
+  // Heading style: which heading role (Heading 1 to Heading 6) the card title uses; Heading 6 is the default.
+  function headingClass(){
+    var select = document.querySelector('[data-role="card-heading"]');
+    var value = select ? select.value : "h6";
+    return /^h[1-6]$/.test(value) ? " card-demo-title--" + value : " card-demo-title--h6";
+  }
   function buildCardField(typeKey, stateKey, radius, title, body, showShadow, sizeKey, illustrative){
     var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var stateCls = (STATES.filter(function(s){ return s.key === stateKey; })[0] || {}).cls || "";
@@ -218,7 +223,7 @@
     var classes = "card-demo-panel card-demo-panel--" + typeKey + shadowCls + sizeCls + stateCls;
     var isLoading = stateKey === "loading";
     var mediaHtml = (typeKey === "with-media")
-      ? '<div class="card-demo-media" style="border-top-left-radius:' + radiusCss + ';border-top-right-radius:' + radiusCss + ';"' + (isLoading ? ' aria-hidden="true"' : "") + "></div>"
+      ? '<div class="card-demo-media" data-contract-part="media" data-contract-kind="container" style="border-top-left-radius:' + radiusCss + ';border-top-right-radius:' + radiusCss + ';"' + (isLoading ? ' aria-hidden="true"' : "") + "></div>"
       : "";
     // Loading swaps the real title/body for placeholder bars reusing
     // Skeleton's own line shape - one shimmer language for "content is on
@@ -228,9 +233,9 @@
         '<span class="skeleton-demo-line is-animated" style="width:60%;height:var(--dimension-14);"></span>' +
         '<span class="skeleton-demo-line is-animated" style="margin-top:var(--space-10);"></span>' +
         '<span class="skeleton-demo-line is-animated" style="width:80%;"></span></div>'
-      : '<div class="card-demo-body-wrap"><p class="card-demo-title" data-contract-part="title">' + escapeHtml(title) + '</p><p class="card-demo-text" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
+      : '<div class="card-demo-body-wrap" data-contract-part="bodyWrap"><p class="card-demo-title' + headingClass() + '" data-contract-part="title">' + escapeHtml(title) + '</p><p class="card-demo-text" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
     var footerHtml = (typeKey === "with-actions" && !isLoading)
-      ? '<div class="card-demo-footer modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel"' + tabindexAttr + '>Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="background:var(--red-500);"' + tabindexAttr + ">View details</button></div>"
+      ? '<div class="card-demo-footer modal-demo-footer" data-contract-part="footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel" data-contract-part="cancel"' + tabindexAttr + '>Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" data-contract-part="confirm" style="background:var(--red-500);"' + tabindexAttr + ">View details</button></div>"
       : "";
     return '<div class="' + classes + '" style="border-radius:' + radiusCss + ';">' + mediaHtml + bodyWrapHtml + footerHtml + "</div>";
   }
@@ -490,6 +495,10 @@
     }
     if (bodyInput){
       bodyInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    }
+    var headingInput = document.querySelector('[data-role="card-heading"]');
+    if (headingInput){
+      headingInput.addEventListener("change", render);
     }
     if (showShadowInput){
       showShadowInput.addEventListener("change", render);

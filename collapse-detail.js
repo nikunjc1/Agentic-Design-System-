@@ -41,8 +41,7 @@
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
     { value: "16", label: "16px - Expressive" },
-    { value: "24", label: "24px - Large" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "24", label: "24px - Large" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -169,7 +168,7 @@
     lines.push('.collapse-demo-header{ box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); padding:var(--space-12) var(--space-14); cursor:pointer; font-family:var(--font-body); }');
     lines.push('.collapse-demo-header-text{ font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); text-align: start; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".collapse-demo-chevron{ flex:none; width:var(--dimension-14); height:var(--dimension-14); color:var(--text-dim); transition:transform .15s ease; }");
-    lines.push(".collapse-demo-chevron.is-open{ transform:rotate(180deg); }");
+    lines.push("/* Open state draws the chevron pointing up (flipped points), no rotation needed */");
     lines.push('.collapse-demo-body{ padding:0 var(--space-14) var(--space-14); font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); text-align: start; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".collapse-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".collapse-demo-panel.is-disabled .collapse-demo-header{ cursor:not-allowed; }");
@@ -205,8 +204,14 @@
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
+  // Heading style: which heading role (Heading 1 to Heading 6) the panel header uses; Heading 6 is the default.
+  function headingClass(){
+    var select = document.querySelector('[data-role="collapse-heading"]');
+    var value = select ? select.value : "h6";
+    return /^h[1-6]$/.test(value) ? " collapse-demo-header-text--" + value : " collapse-demo-header-text--h6";
+  }
   function chevronSvg(isOpen){
-    return '<svg class="collapse-demo-chevron' + (isOpen ? " is-open" : "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    return '<svg class="collapse-demo-chevron' + (isOpen ? " is-open" : "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="' + (isOpen ? "6 15 12 9 18 15" : "6 9 12 15 18 9") + '"></polyline></svg>';
   }
 
   // The static "collapsed" panel that always leads a demo group, purely to
@@ -215,8 +220,8 @@
   function buildContextPanel(typeKey, radius, showIcon){
     var isBordered = typeKey === "bordered";
     var styleAttr = isBordered ? ' style="border-radius:' + radiusCssFor(radius) + ';"' : "";
-    var iconHtml = showIcon ? chevronSvg(false) : "";
-    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text">' + CONTEXT_HEADER + "</span>" + iconHtml + "</div>";
+    var iconHtml = showIcon ? '<span class="collapse-demo-icon' + headingClass() + '" data-contract-part="ctxIcon">' + chevronSvg(false) + "</span>" : "";
+    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text' + headingClass() + '">' + CONTEXT_HEADER + "</span>" + iconHtml + "</div>";
     return '<div class="collapse-demo-panel collapse-demo-panel--' + typeKey + '"' + styleAttr + ">" + headerHtml + "</div>";
   }
 
@@ -228,8 +233,8 @@
     var isDisabled = stateKey === "disabled";
     var styleAttr = isBordered ? ' style="border-radius:' + radiusCssFor(radius) + ';"' : "";
     var panelCls = "collapse-demo-panel collapse-demo-panel--" + typeKey + (isDisabled ? " is-disabled" : "");
-    var iconHtml = showIcon ? '<span data-contract-part="icon">' + chevronSvg(isExpanded) + "</span>" : "";
-    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text" data-contract-part="header">' + escapeHtml(header) + "</span>" + iconHtml + "</div>";
+    var iconHtml = showIcon ? '<span class="collapse-demo-icon' + headingClass() + '" data-contract-part="icon">' + chevronSvg(isExpanded) + "</span>" : "";
+    var headerHtml = '<div class="collapse-demo-header"><span class="collapse-demo-header-text' + headingClass() + '" data-contract-part="header">' + escapeHtml(header) + "</span>" + iconHtml + "</div>";
     var bodyHtml = isExpanded ? '<div class="collapse-demo-body" data-contract-part="body">' + escapeHtml(body) + "</div>" : "";
     return '<div class="' + panelCls + '"' + styleAttr + ">" + headerHtml + bodyHtml + "</div>";
   }
@@ -474,6 +479,10 @@
       });
     }
 
+    var headingInput = document.querySelector('[data-role="collapse-heading"]');
+    if (headingInput){
+      headingInput.addEventListener("change", render);
+    }
     if (headerInput){
       headerInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }

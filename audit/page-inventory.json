@@ -411,7 +411,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20305
+    "bytes": 20345
   },
   {
     "file": "calendar.html",
@@ -422,7 +422,7 @@
       "Calendar type"
     ],
     "issues": [],
-    "bytes": 17307
+    "bytes": 17347
   },
   {
     "file": "card-default.html",
@@ -436,7 +436,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20643
+    "bytes": 21126
   },
   {
     "file": "card.html",
@@ -447,7 +447,7 @@
       "Card type"
     ],
     "issues": [],
-    "bytes": 11861
+    "bytes": 11881
   },
   {
     "file": "cascader-default.html",
@@ -526,7 +526,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21005
+    "bytes": 21492
   },
   {
     "file": "collapse.html",
@@ -537,7 +537,7 @@
       "Collapse type"
     ],
     "issues": [],
-    "bytes": 12335
+    "bytes": 12375
   },
   {
     "file": "color-picker-default.html",

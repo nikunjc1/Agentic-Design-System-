@@ -4,7 +4,7 @@
 <script src="site-entry.js"></script>
 <script src="component-workbench-catalog.js"></script>
 <script src="foundation-css-bindings.js"></script>
-<script src="component-workbench.js"></script>
+<script src="component-workbench.js?cachebust=20261116p"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -204,6 +204,18 @@
       </label>
 
       <label class="type-control">
+        <span>Heading style</span>
+        <select data-role="collapse-heading">
+          <option value="h1">Heading 1</option>
+          <option value="h2">Heading 2</option>
+          <option value="h3">Heading 3</option>
+          <option value="h4">Heading 4</option>
+          <option value="h5">Heading 5</option>
+          <option value="h6" selected>Heading 6</option>
+        </select>
+      </label>
+
+      <label class="type-control">
         <span>Body text</span>
         <input type="text" data-role="collapse-body" value="The free plan includes up to 3 projects, 1GB of storage, and community support." />
       </label>
@@ -339,6 +351,6 @@
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
 <script src="multiselect.js"></script>
-<script src="collapse-detail.js"></script>
+<script src="collapse-detail.js?cachebust=20261116p"></script>
 </body>
 </html>

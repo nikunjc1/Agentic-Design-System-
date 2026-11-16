@@ -1,6 +1,6 @@
 /* The sandbox owns transport and scene work; the iframe displays status only. */
 figma.showUI(__html__,{width:400,height:260});
-const DAMCO_PLUGIN_BUILD='damco-native-bridge-2026-11-16-v77';
+const DAMCO_PLUGIN_BUILD='damco-native-bridge-2026-11-16-v79';
 let adapter;
 const bridge=createDamcoBridgeRuntime({build:DAMCO_PLUGIN_BUILD,fetch:typeof fetch==='function'?fetch:undefined,
  notify:message=>figma.ui.postMessage(message),

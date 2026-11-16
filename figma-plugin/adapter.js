@@ -666,6 +666,22 @@
     node.clipsContent=['hidden','clip'].includes(s.overflow);
    }
    if('fills'in node&&n.tag!=='svg'){const paintSource=node.type==='TEXT'?((isInput&&!n.attributes.value?s['--ads-placeholder-color']:s.color)||'#222222'):(s.backgroundColor||'transparent'),rgb=color(paintSource,c.tokens);node.fills=rgb?[{type:'SOLID',color:rgb,opacity:alpha(paintSource,c.tokens)}]:[];if(rgb)await bind(node,'fills',paintSource,'COLOR',true);}
+   // CSS linear-gradient(...) backgrounds (the Card's media area) had no mapping and drew as an empty fill. Two or more colour stops become a Figma
+   // linear gradient; the CSS angle (0deg = up, clockwise) is converted to Figma's inverse gradient transform.
+   if('fills'in node&&node.type!=='TEXT'&&n.tag!=='svg'&&/^linear-gradient\(/.test(String(s.backgroundImage||''))){try{
+    const bg=String(s.backgroundImage);let close=-1,level=0;for(let i=bg.indexOf('(');i<bg.length;i++){if(bg[i]==='(')level++;else if(bg[i]===')'&&--level===0){close=i;break;}}
+    const inner=bg.slice(bg.indexOf('(')+1,close<0?bg.length:close),parts=[];let depth=0,cur='';
+    for(const ch of inner){if(ch==='(')depth++;if(ch===')')depth--;if(ch===','&&depth===0){parts.push(cur.trim());cur='';}else cur+=ch;}
+    if(cur.trim())parts.push(cur.trim());
+    let deg=180;const dirs={'to top':0,'to right':90,'to bottom':180,'to left':270,'to top right':45,'to bottom right':135,'to bottom left':225,'to top left':315};
+    if(/^-?[\d.]+deg$/.test(parts[0]||'')){deg=parseFloat(parts.shift());}else if(/^to /.test(parts[0]||'')){deg=dirs[parts.shift()]??180;}
+    const stopsRaw=parts.map(part=>{const m=/^(.*?)(?:\s+(-?[\d.]+)%)?$/.exec(part);return{colorText:m[1].trim(),position:m[2]===undefined?null:parseFloat(m[2])/100};}).filter(stop=>color(stop.colorText,c.tokens));
+    if(stopsRaw.length>=2){
+     const stops=stopsRaw.map((stop,index)=>({color:{...color(stop.colorText,c.tokens),a:alpha(stop.colorText,c.tokens)},position:stop.position===null?index/(stopsRaw.length-1):stop.position}));
+     const rad=deg*Math.PI/180,dx=Math.sin(rad),dy=-Math.cos(rad),sx=.5-dx/2,sy=.5-dy/2;
+     node.fills=[{type:'GRADIENT_LINEAR',gradientStops:stops,gradientTransform:[[dx,dy,-(dx*sx+dy*sy)],[-dy,dx,-(-dy*sx+dx*sy)]]}];
+    }
+   }catch(e){}}
    if('cornerRadius'in node&&n.tag!=='svg'){node.cornerRadius=Math.max(0,number(s.borderRadius,c.tokens));await bind(node,'cornerRadius',s.borderRadius);for(const [field,key]of [['topLeftRadius','borderTopLeftRadius'],['topRightRadius','borderTopRightRadius'],['bottomLeftRadius','borderBottomLeftRadius'],['bottomRightRadius','borderBottomRightRadius']])if(s[key]){node[field]=Math.max(0,number(s[key],c.tokens));await bind(node,field,s[key]);}}
    if('strokes'in node&&n.tag!=='svg'){
     const sides=['Top','Right','Bottom','Left'],weights=sides.map(side=>['none','hidden'].includes(s['border'+side+'Style']||s.borderStyle)?0:number(s['border'+side+'Width']||s.borderWidth||s.border,c.tokens));
@@ -749,7 +765,7 @@
     // A frame holding a flex-grow connector line along its own axis (Steps) can't be content-sized: a hugging parent gives the growing child nothing to
     // fill (Steps' connector lines collapsed to their minimum and every step packed together). Keep it FIXED at its captured size.
     const growsMain=flow.some(k=>/^connector/.test(k.name||'')&&(number(k.styles?.flexGrow,c.tokens)||0)>0),
-    hugMain=measurableMain&&!growsMain&&mainSize>0&&near(mainSize,contentMain),hugCross=measurableCross&&crossSize>0&&near(crossSize,contentCross);
+    hugMain=measurableMain&&!growsMain&&mainSize>0&&near(mainSize,contentMain),hugCross=measurableCross&&crossSize>0&&near(crossSize,contentCross)&&!(!horizontal&&flow.some(k=>k.styles?.alignSelf==='stretch'&&k.kind!=='text'&&k.styles?.position!=='absolute'));
     node.primaryAxisSizingMode=mainSize>0&&!hugMain?'FIXED':'AUTO';node.counterAxisSizingMode=crossSize>0&&!hugCross?'FIXED':'AUTO';
    }else if('layoutMode'in node&&inlineTextRun){
     // A run of text (Badge's pill around its number) keeps whichever axis the contract does not size hugging: resize() above flipped both to FIXED.
@@ -808,10 +824,13 @@
     if(counterAxisFull&&node.type!=='TEXT'){
      // resize() on an auto-layout frame flips BOTH sizing modes to FIXED, which silently froze every stretched frame's height (Modal's
      // header, body and footer) at its captured size; put back the modes decided above once the width has been applied.
-     const keepModes=node.layoutMode&&node.layoutMode!=='NONE'&&'primaryAxisSizingMode'in node?[node.primaryAxisSizingMode,node.counterAxisSizingMode]:null;
+     const keepModes=node.layoutMode&&node.layoutMode!=='NONE'&&'primaryAxisSizingMode'in node?[node.primaryAxisSizingMode,node.counterAxisSizingMode]:null,keepAlign=node.layoutAlign,keepGrow=node.layoutGrow;
      if(parent.layoutMode==='VERTICAL'&&parent.width)node.resize(Math.max(1,parent.width-(parent.paddingLeft||0)-(parent.paddingRight||0)),node.height);
      else if(parent.layoutMode==='HORIZONTAL'&&parent.height)node.resize(node.width,Math.max(1,parent.height-(parent.paddingTop||0)-(parent.paddingBottom||0)));
      if(keepModes){node.primaryAxisSizingMode=keepModes[0];node.counterAxisSizingMode=keepModes[1];}
+     // resize() on a frame that is already Fill container resets that axis to Fixed in Figma (layoutAlign falls back to INHERIT) whenever the size
+     // actually changes - a Collapse header row ended up hugging its text with the chevron stuck to the text. Put the Fill settings back.
+     if(keepAlign==='STRETCH')node.layoutAlign='STRETCH';if(keepGrow===1)node.layoutGrow=1;
     }
     // Hug and Fill cannot both apply on one axis: a frame whose own sizing on the filled axis is still Hug (AUTO) stays hugging and ignores Fill
     // container. That is the default for any auto-layout frame given no captured size, which left Drawer's header/body/footer at their text width.
@@ -947,7 +966,7 @@
     // in Figma's own Resizing property) the same way a real flex child
     // stretching to its row's full width would.
     const ring=outlineSpec(s,c.tokens),ringInset=ring?ring.width+ring.offset:0,ringChild=ring?[{id:n.id+'-focus-ring',name:'Focus ring',kind:'container',tag:'div',ring:true,ringInset,styles:{position:'absolute',left:(-ringInset)+'px',top:(-ringInset)+'px',...(width>0?{width:(width+2*ringInset)+'px'}:{}),...(height>0?{height:(height+2*ringInset)+'px'}:{}),display:'flex',backgroundColor:'transparent',borderTopWidth:ring.width+'px',borderRightWidth:ring.width+'px',borderBottomWidth:ring.width+'px',borderLeftWidth:ring.width+'px',borderTopStyle:'solid',borderRightStyle:'solid',borderBottomStyle:'solid',borderLeftStyle:'solid',borderTopColor:ring.colorText,borderRightColor:ring.colorText,borderBottomColor:ring.colorText,borderLeftColor:ring.colorText,borderRadius:(Math.max(0,number(s.borderRadius,c.tokens))+ring.offset)+'px',opacity:'1'},attributes:{},children:[]}]:[];
-    const children=[...(n.text?[{id:n.id+'-direct-text',name:n.name+' text',kind:'text',tag:'span',text:n.text,styles:{fontFamily:s.fontFamily||'Inter',fontSize:s.fontSize||'14px',fontWeight:s.fontWeight||'400',lineHeight:s.lineHeight||'normal',color:s.color||'#222222',textAlign:s.textAlign,flexGrow:s.flexGrow,width:s.width,height:s.height},attributes:{},children:[]}]:[]),...(n.children||[]).filter(child=>!isCheckableInput(child)),...ringChild];
+    const children=[...(n.text?[{id:n.id+'-direct-text',name:n.name+' text',kind:'text',tag:'span',text:n.text,styles:{fontFamily:s.fontFamily||'Inter',fontSize:s.fontSize||'14px',fontWeight:s.fontWeight||'400',lineHeight:s.lineHeight||'normal',color:s.color||'#222222',textAlign:s.textAlign,flexGrow:s.flexGrow,width:s.width,height:s.height,...(s['--ads-fill-text']==='1'?{alignSelf:'stretch'}:{})},attributes:{},children:[]}]:[]),...(n.children||[]).filter(child=>!isCheckableInput(child)),...ringChild];
     // column-reverse / row-reverse (Tooltip's Bottom and Right placements) put the DOM's first child last: Figma has no reverse direction, so reverse the layers.
     if(/-reverse$/.test(s.flexDirection||'')&&(s.display==='flex'||s.display==='inline-flex'))children.reverse();
     for(const [index,child]of children.entries()){const updated=await update(node,child,master);if(child.id===n.id+'-direct-text')updated.setPluginData('ads-text-owner',n.id);if(node.insertChild)node.insertChild(index,updated);}

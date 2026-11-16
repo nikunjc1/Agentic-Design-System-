@@ -4710,9 +4710,10 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
    and Divider). margin-inline:auto centers the box itself. */
 .calendar-demo-grid{ box-sizing: border-box; background: var(--graphite-900); border: var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); border-radius: var(--radius-md); padding:var(--space-10); width:fit-content; margin-inline:auto; }
 .calendar-demo-header{ text-align: center;    color:var(--type-body-color); margin-bottom:var(--space-8); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.calendar-demo-weekdays{ display: grid; grid-template-columns: repeat(7,1fr); gap:var(--space-2); margin-bottom:var(--space-4); }
+.calendar-demo-weekdays{ display: flex; gap:var(--space-2); margin-bottom:var(--space-4); }
 .calendar-demo-weekday{    color:var(--type-body-color); text-align: center; text-transform: uppercase; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.calendar-demo-days{ display: grid; grid-template-columns: repeat(7,1fr); gap:var(--space-2); }
+.calendar-demo-days{ display: flex; flex-direction: column; gap:var(--space-2); }
+.calendar-demo-week{ display: flex; gap:var(--space-2); }
 /* Was a plain, inert <div> with just the bare day number as content - the
    guide claimed each cell "is independently focusable and announces its
    full date, not just the day number", which was the exact opposite of
@@ -4730,10 +4731,18 @@ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-w
 .calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26);  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .calendar-demo-day.is-outside-month{ color: var(--text-dim); cursor: default; }
+.calendar-demo-weekday{ display:flex; align-items:center; justify-content:center; flex:none; }
+.calendar-demo-grid--full .calendar-demo-weekday{ width:var(--dimension-36); height:var(--dimension-36); }
+.calendar-demo-grid--compact .calendar-demo-weekday{ width:var(--dimension-26); height:var(--dimension-26); font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+.calendar-demo-grid--compact .calendar-demo-header{ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+.calendar-demo-grid--compact .calendar-demo-day{ font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+.calendar-demo-event{ display:none; position:absolute; width:var(--dimension-4); height:var(--dimension-4); border-radius:var(--radius-full); background:var(--blue-500); }
+.calendar-demo-day.has-event .calendar-demo-event{ display:block; }
+.calendar-demo-grid--full .calendar-demo-event{ bottom:var(--dimension-3); left:var(--dimension-16); }
+.calendar-demo-grid--compact .calendar-demo-event{ top:var(--dimension-2); right:var(--dimension-2); }
+
 .calendar-demo-day.is-today{ background: var(--red-500); color: var(--button-primary-text); font-weight: var(--type-selected-weight); }
 .calendar-demo-day.is-today:hover{ background: var(--red-500); }
-.calendar-demo-day.has-event::after{ content: ""; position: absolute; bottom:var(--dimension-3); left:50%; transform: translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius: var(--radius-full); background: var(--blue-500); }
-.calendar-demo-grid--compact .calendar-demo-day.has-event::after{ bottom:auto; top:var(--dimension-2); right:var(--dimension-2); left:auto; transform: none; }
 .calendar-demo-day.is-range-start, .calendar-demo-day.is-range-middle, .calendar-demo-day.is-range-end{ background: var(--red-tint); color: var(--red-400); }
 .calendar-demo-day.is-range-start{ border-top-left-radius: var(--radius-sm); border-bottom-left-radius: var(--radius-sm); }
 .calendar-demo-day.is-range-end{ border-top-right-radius: var(--radius-sm); border-bottom-right-radius: var(--radius-sm); }
@@ -4785,6 +4794,12 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    producing a 33px gap instead of 6px - the same missing-margin-reset bug
    already found and fixed for Alert, Notification and Result. */
 .card-demo-title{    color:var(--type-body-color); text-align: start; margin:0; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.card-demo-panel .card-demo-title--h1{ font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);font-style:var(--type-h1-style);line-height:var(--type-h1-line-height);letter-spacing:var(--type-h1-tracking); }
+.card-demo-panel .card-demo-title--h2{ font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking); }
+.card-demo-panel .card-demo-title--h3{ font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking); }
+.card-demo-panel .card-demo-title--h4{ font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking); }
+.card-demo-panel .card-demo-title--h5{ font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking); }
+.card-demo-panel .card-demo-title--h6{ font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking); }
 .card-demo-text{   color:var(--type-body-color); text-align: start; margin:0; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 /* .card-demo-footer inherits modal-demo-footer's 12px 20px padding, sized
    for Modal's much wider dialog. In Card's 240px-wide panel that left
@@ -4798,7 +4813,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    content width again - worst case they'd overflow visibly, never
    silently truncate. */
 .card-demo-footer{ padding:var(--space-12) var(--space-16); }
-.card-demo-footer .modal-demo-btn{ flex-shrink: 0; }
+.card-demo-footer .modal-demo-btn{ flex-shrink: 0; padding:var(--space-8) var(--space-12); }
 .card-demo-footer .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); }
 
 /* Same "columns of very different natural height shouldn't share one
@@ -4821,8 +4836,17 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 
 .collapse-demo-header{ box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap:var(--space-8); padding:var(--space-12) var(--space-14); cursor: pointer; font-family: var(--font-body); }
 .collapse-demo-header-text{   color:var(--type-body-color); text-align: start; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.collapse-demo-header-text{ flex: 1; min-width: 0; }
+.collapse-demo-panel, .collapse-demo-header, .collapse-demo-body{ align-self: stretch; }
+.collapse-demo-header{ align-items: flex-start; }
+.collapse-demo-panel{ display: flex; flex-direction: column; }
+/* The header text wraps inside the panel instead of truncating on one line (a nowrap/ellipsis header ran past the panel in Figma and pushed the chevron out). */
+.collapse-demo-group .collapse-demo-header-text{ white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+/* 8px between the heading and the supporting text (the header's bottom padding is the gap, since the body has no top padding). */
+.collapse-demo-group .collapse-demo-header:has(+ .collapse-demo-body){ padding-bottom: var(--space-8); }
+.collapse-demo-icon{ display: flex; align-items: center; align-self: flex-start; flex: none; height: 1lh; } /* 1lh = the heading's first line: the chevron stays centred on line one, so a two-line heading leaves it in the top-right corner */
 .collapse-demo-chevron{ flex: none; width:calc(var(--dimension-14) * var(--icon-scale, 1)); height:calc(var(--dimension-14) * var(--icon-scale, 1)); color: var(--text-dim); transition: transform var(--duration-base) var(--ease-standard); }
-.collapse-demo-chevron.is-open{ transform: rotate(180deg); }
+.collapse-demo-chevron.is-open{ transform: none; } /* open state is drawn with flipped points, not rotated */
 
 .collapse-demo-body{ padding:0 var(--space-14) var(--space-14);   color:var(--type-body-color); text-align: start; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 
@@ -4834,8 +4858,20 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .collapse-demo-group--sz-small .collapse-demo-header-text{  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .collapse-demo-group--sz-small .collapse-demo-body{ padding:0 var(--space-10) var(--space-10); }
 .collapse-demo-group--sz-large .collapse-demo-header{ padding:var(--space-16) var(--space-18); }
-.collapse-demo-group--sz-large .collapse-demo-header-text{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.collapse-demo-group--sz-large .collapse-demo-header-text{ font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking);}
 .collapse-demo-group--sz-large .collapse-demo-body{ padding:0 var(--space-18) var(--space-18); }
+.collapse-demo-group .collapse-demo-header-text--h1{ font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);font-style:var(--type-h1-style);line-height:var(--type-h1-line-height);letter-spacing:var(--type-h1-tracking); }
+.collapse-demo-group .collapse-demo-header-text--h2{ font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking); }
+.collapse-demo-group .collapse-demo-header-text--h3{ font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking); }
+.collapse-demo-group .collapse-demo-header-text--h4{ font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking); }
+.collapse-demo-group .collapse-demo-header-text--h5{ font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking); }
+.collapse-demo-group .collapse-demo-header-text--h6{ font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h1{ font-size:var(--type-h1-size);line-height:var(--type-h1-line-height); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h2{ font-size:var(--type-h2-size);line-height:var(--type-h2-line-height); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h3{ font-size:var(--type-h3-size);line-height:var(--type-h3-line-height); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h4{ font-size:var(--type-h4-size);line-height:var(--type-h4-line-height); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h5{ font-size:var(--type-h5-size);line-height:var(--type-h5-line-height); }
+.collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h6{ font-size:var(--type-h6-size);line-height:var(--type-h6-line-height); }
 
 /* ---------- Description demo (description-default.html) ---------- */
 .description-demo-panel{ display: flex; flex-direction: column; gap:var(--space-10); width:var(--dimension-280); text-align: start; }

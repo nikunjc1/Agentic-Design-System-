@@ -205,8 +205,14 @@
       // (one of several full month grids), not a real date picker;
       // tabindex="-1" keeps every day out of the Tab sequence without
       // removing it from the accessibility tree.
-      var daysHtml = grid.map(function(cell, i){
-        return '<button type="button" class="' + buildDayClasses(cell, stateKey) + '" tabindex="-1" aria-label="' + fullDateLabel(grid, i, isMonday) + '">' + cell.day + "</button>";
+      // Days are laid out as 6 explicit week rows (7 cells each) rather than one 7-column CSS grid, and an event is a real dot element (shown only
+      // in the With events state) rather than a ::after pseudo-element: both are needed for Figma to receive the same structure the page draws.
+      var daysHtml = [0, 1, 2, 3, 4, 5].map(function(week){
+        return '<div class="calendar-demo-week">' + grid.slice(week * 7, week * 7 + 7).map(function(cell, k){
+          var i = week * 7 + k;
+          var dot = !cell.outside && EVENT_DAYS.indexOf(cell.day) !== -1 ? '<span class="calendar-demo-event" data-contract-kind="container" data-contract-name="Event dot"></span>' : "";
+          return '<button type="button" class="' + buildDayClasses(cell, stateKey) + '" tabindex="-1" aria-label="' + fullDateLabel(grid, i, isMonday) + '">' + cell.day + dot + "</button>";
+        }).join("") + "</div>";
       }).join("");
       return '<div class="calendar-demo-grid calendar-demo-grid--' + typeKey + '">' +
         '<div class="calendar-demo-header" data-contract-part="monthLabel">' + escapeHtml(monthLabel) + "</div>" +

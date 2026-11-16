@@ -4644,7 +4644,13 @@
     // node's visibleWhen, so it stays an orphan editable property like
     // Tabs' Equal-width.
     function captureCardProperties(){
-      const built=captureCrossedProperties();
+      // Media (With media) and the footer buttons (With actions) only exist in their own Appearance, so the base capture never has them. Each crossed
+      // entry's media/footer subtree is collected here so it can be grafted on below, visible only for its Appearance, with per-State/Size/Radius overrides.
+      const cardSnaps=[];
+      const prevHook=crossedHook;
+      crossedHook=(entry,anat,when)=>{cardSnaps.push({when:{...when},anat});if(prevHook)prevHook(entry,anat,when);};
+      let built;
+      try{built=captureCrossedProperties();}finally{crossedHook=prevHook;}
       const anatomy=built.anatomy;
       const properties=[...built.properties];const selection={...built.selection};
       const titleInput=document.querySelector('[data-role="card-title"]');
@@ -4658,7 +4664,54 @@
       if(bodyNode){bodyNode.bind='body';const def=bodyInput?.value.trim()||bodyNode.text||'Supporting card copy goes here.';properties.push({id:'body',name:'Body',type:'text',default:def});selection.body=def;}
       if(showShadowInput){properties.push({id:'showShadow',name:'Show shadow',type:'boolean',default:showShadowInput.checked});selection.showShadow=showShadowInput.checked;}
 
-      return {anatomy,properties,selection,variants:built.variants};
+      {
+        const M=window.ADSComponentContract;
+        const appearanceLabelOf=s=>s.when.appearance;
+        const findIn=(n,id)=>{if(n.id===id)return n;for(const c of n.children||[]){const r=findIn(c,id);if(r)return r;}return null;};
+        const idsIn=n=>[n.id,...(n.children||[]).flatMap(idsIn)];
+        const baseIds=new Set(idsIn(anatomy));
+        // Sweep entries are crossed variants, so the original (base) cell was skipped - the first cell of each Appearance with the part supplies the template.
+        const graftSpecs=[{id:'media',order:'before',match:/media/i},{id:'footer',order:'after',match:/action/i}];
+        const grafted=[];
+        for(const spec of graftSpecs){
+          const snaps=cardSnaps.filter(s=>spec.match.test(appearanceLabelOf(s)||'')&&findIn(s.anat,spec.id));
+          if(!snaps.length||baseIds.has(spec.id))continue;
+          // template: prefer Rest / default size / first radius = same cell as base
+          const tmplSnap=snaps.find(s=>/rest/i.test(s.when.state||''))||snaps[0];
+          const tmpl=JSON.parse(JSON.stringify(findIn(tmplSnap.anat,spec.id)));
+          tmpl.visibleWhen=[{property:'appearance',equals:appearanceLabelOf(tmplSnap)}];
+          if(spec.order==='before')anatomy.children=[tmpl,...(anatomy.children||[])];else anatomy.children=[...(anatomy.children||[]),tmpl];
+          // Hug the buttons (and footer height) instead of freezing their captured pixel sizes, so labels never clip or float.
+          const unsize=n=>{if(['cancel','confirm','footer'].includes(n.id)){const st={...n.styles};if(n.id!=='footer')delete st.width;delete st.height;n.styles=st;}(n.children||[]).forEach(unsize);};unsize(tmpl);
+          grafted.push({spec,tmpl,snaps});
+        }
+        for(const g of grafted){
+          const tmplMap=new Map();(function w(n){tmplMap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+          for(const s of g.snaps){
+            const node=findIn(s.anat,g.spec.id);const patchSet={};
+            (function walk(n){const b=tmplMap.get(n.id);
+              if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;if(['cancel','confirm','footer'].includes(n.id)){delete styles.height;if(n.id!=='footer')delete styles.width;}const patch={};if(Object.keys(styles).length)patch.styles=styles;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}
+              (n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const key=JSON.stringify(s.when);
+            let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-card-'+M.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+      }
+      // The card hugs its content vertically. Its captured pixel height came from the browser's text metrics; Figma's text is wider or taller, so a fixed
+      // height clipped the footer buttons and pushed the supporting text against the bottom border. Width stays fixed (240px).
+      {
+        const noHeight=n=>{if(n&&n.styles){const st={...n.styles};delete st.height;st.height='auto';n.styles=st;}};
+        noHeight(anatomy);
+        for(const v of built.variants){const o=v.overrides&&v.overrides[anatomy.id];if(o&&o.styles){const st={...o.styles};delete st.height;delete st.maxHeight;o.styles=st;}}
+      }
+      // Heading style (Heading 1 to 6) is a page-side choice: the chosen heading's type is captured into the title's own styles. It is not a Figma
+      // variant axis, because six heading options x the existing State/Appearance/Size/Corner radius would exceed Figma's 1000-variant limit.
+      const variants=[...built.variants];
+
+      return {anatomy,properties,selection,variants};
     }
     // Collapse: Appearance/State/Size/Corner radius already cross
     // generically via captureCrossedProperties(). Each matrix cell is
@@ -4673,7 +4726,11 @@
     // single-value visibleWhen constraint as Select's error message/
     // Divider's label.
     function captureCollapseProperties(){
-      const built=captureCrossedProperties();
+      // The body only exists in the Expanded State, so the crossed sweep can't diff it against the base; its per-Size/Appearance/Radius styles (padding)
+      // are collected from each Expanded cell here and merged into the variants after the body is grafted below.
+      const bodySnaps=[];const prevHook=crossedHook;
+      crossedHook=(entry,anat,when)=>{bodySnaps.push({when:{...when},anat});if(prevHook)prevHook(entry,anat,when);};
+      let built;try{built=captureCrossedProperties();}finally{crossedHook=prevHook;}
       const anatomy=built.anatomy;
       const properties=[...built.properties];const selection={...built.selection};
       const headerInput=document.querySelector('[data-role="collapse-header"]');
@@ -4704,12 +4761,37 @@
             const statePanel=anatomy.children?.[1];
             if(statePanel)statePanel.children=[...(statePanel.children||[]),bodyNode];
           }
+          {
+            const find=(n,id)=>{if(n.id===id)return n;for(const c of n.children||[]){const r=find(c,id);if(r)return r;}return null;};
+            const tmpl=find(anatomy,'body');
+            const all=[];(function w(n){all.push(n);(n.children||[]).forEach(w);})(tmpl);const tmap=new Map(all.map(n=>[n.id,n]));
+            for(const s of bodySnaps){
+              const node=find(s.anat,'body');if(!node)continue;const patchSet={};
+              (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v&&k!=='height'&&k!=='width')styles[k]=v;if(Object.keys(styles).length)patchSet[n.id]={styles};}(n.children||[]).forEach(walk);})(node);
+              if(!Object.keys(patchSet).length)continue;
+              const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+              if(!v){v={id:'cv-collapse-'+window.ADSComponentContract.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+              v.overrides={...v.overrides,...patchSet};
+            }
+          }
           const def=bodyInput?.value.trim()||bodyNode.text||'Panel body content goes here.';
           properties.push({id:'body',name:'Body text',type:'text',default:def});
           selection.body=def;
         }
       }
 
+      // Panels, header rows and the body hug their content vertically. Their captured pixel heights came from the browser's text metrics, so a fixed height
+      // clipped the body text (panels clip overflow) and left uneven gaps in Figma. Only the fixed-size chevron graphic keeps its height.
+      {
+        const keep=n=>n.tag==='svg'||n.id==='icon'||n.id==='ctxIcon'||n.kind==='icon'||/^(icon|ctxIcon)-/.test(n.id);
+        const skip=new Set();(function mark(n){if(keep(n))skip.add(n.id);(n.children||[]).forEach(mark);})(anatomy);
+        (function strip(n){if(!skip.has(n.id)&&n.styles){const st={...n.styles};st.height='auto';delete st.maxHeight;n.styles=st;}(n.children||[]).forEach(strip);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{})){if(!skip.has(id)&&o.styles&&'height'in o.styles){const st={...o.styles};delete st.height;o.styles=st;}}
+        // The body's own text must fill the body's width and wrap below the heading instead of running past the panel (opt-in marker read by the plugin).
+        (function mark(n){if(n.id==='body')n.styles={...n.styles,'--ads-fill-text':'1'};(n.children||[]).forEach(mark);})(anatomy);
+        // The group is a fixed 260px column; stating the width in pixels keeps it Fixed in Figma so Fill-width panels have something to fill.
+        anatomy.styles={...anatomy.styles,width:'260px'};
+      }
       return {anatomy,properties,selection,variants:built.variants};
     }
     // Description combines a manual single-select drive (Columns is a
@@ -5352,6 +5434,21 @@
       const originalType=selected.type,originalState=selected.state;
       const base=new Map();(function walk(n){base.set(n.id,n);for(const child of n.children||[])walk(child);})(baseAnatomy);
       const sweep=gatherEntries();
+      // Event dots exist only in the With events State (display:none otherwise, so they have no node in the base capture). Graft them onto their day
+      // cell, visible only for With events; the per-Appearance position (bottom centre / top right) comes from each Appearance's variant overrides.
+      {
+        const evEntry=sweep.find(e=>/event/i.test(e.state)&&e.type===originalType)||sweep.find(e=>/event/i.test(e.state));
+        if(evEntry){
+          const evAnatomy=snapshot(evEntry.root,'root',0);
+          (function walk(n,baseParent){
+            for(const child of n.children||[]){
+              const inBase=base.get(child.id);
+              if(!inBase&&baseParent&&child.kind!=='text'){const copy=JSON.parse(JSON.stringify(child));copy.visibleWhen=[{property:'state',equals:evEntry.state}];baseParent.children=[...(baseParent.children||[]),copy];base.set(copy.id,copy);}
+              else walk(child,inBase||null);
+            }
+          })(evAnatomy,baseAnatomy);
+        }
+      }
       const typeOptions=[...new Set(sweep.map(e=>e.type))];
       const stateOptions=[...new Set(sweep.map(e=>e.state))];
       const variants=[];
