@@ -1,0 +1,1157 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "add-on-default.html",
+      "name": "Add-on",
+      "family": "add-on.html",
+      "controls": [
+        {
+          "role": "addon-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "native": [
+                "28"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "32"
+              ],
+              "native": [
+                "32"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "36"
+              ],
+              "native": [
+                "36"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "40"
+              ],
+              "native": [
+                "40"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "44"
+              ],
+              "native": [
+                "44"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "48"
+              ],
+              "native": [
+                "48"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "56"
+              ],
+              "native": [
+                "56"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "native": [
+                "2"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "4"
+              ],
+              "native": [
+                "4"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "6"
+              ],
+              "native": [
+                "6"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "8"
+              ],
+              "native": [
+                "8"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "12"
+              ],
+              "native": [
+                "12"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "9999"
+              ],
+              "native": [
+                "9999"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-label",
+          "label": "Label",
+          "cases": [
+            {
+              "value": "Audit Label",
+              "native": "Audit Label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-placeholder",
+          "label": "Placeholder",
+          "cases": [
+            {
+              "value": "Audit Placeholder",
+              "native": "Audit Placeholder",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-prefix-text",
+          "label": "Prefix text",
+          "cases": [
+            {
+              "value": "USD",
+              "native": "USD",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-suffix-text",
+          "label": "Suffix text",
+          "cases": [
+            {
+              "value": "items",
+              "native": "items",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-error-text",
+          "label": "Error message",
+          "cases": [
+            {
+              "value": "Audit Error message",
+              "native": "Audit Error message",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-show-prefix",
+          "label": "Show prefix",
+          "cases": [
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            },
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-show-suffix",
+          "label": "Show suffix",
+          "cases": [
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            },
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-allow-clear",
+          "label": "Allow clear",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-suffix-dropdown",
+          "label": "Suffix dropdown",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-required",
+          "label": "Required",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-show-supporting",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "addon-supporting-text",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": "Audit Supporting text",
+              "native": "Audit Supporting text",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Outlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Loading",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Error",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Loading",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Loading",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [
+        "AssertionError [ERR_ASSERTION]: Exported HTML matches customized preview text and foundation styles\n+ actual - expected\n... Skipped lines\n\n  {\n    style: {\n      backgroundColor: 'rgba(0, 0, 0, 0)',\n      borderTopColor: 'rgb(75, 85, 99)',\n      borderTopLeftRadius: '0px',\n...\n    },\n+   text: 'Audit LabelUSDitemsAudit Supporting text'\n-   text: \"Audit LabelUSDitemsWe'll use this to generate your public profile link.\"\n  }\n\n    at /Users/user/Documents/Agentic Design System 2/tools/check-component-actions.cjs:58:614"
+      ],
+      "review": [],
+      "category": "COMPONENTS · FORMS · ADD-ON",
+      "inventory": [
+        {
+          "role": "addon-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "addon-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "addon-label",
+          "type": "text",
+          "value": "Website",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-placeholder",
+          "type": "text",
+          "value": "yourcompany",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-prefix",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show prefix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-prefix-text",
+          "type": "text",
+          "value": "https://",
+          "options": [],
+          "label": "Prefix text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-suffix",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show suffix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-suffix-text",
+          "type": "text",
+          "value": ".com",
+          "options": [],
+          "label": "Suffix text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-suffix-dropdown",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Suffix dropdown",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-supporting-text",
+          "type": "text",
+          "value": "We'll use this to generate your public profile link.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-error-text",
+          "type": "text",
+          "value": "Enter a valid website address.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "sameHTML": false,
+      "parity": {
+        "expected": {
+          "text": "Audit LabelUSDitemsWe'll use this to generate your public profile link.",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        },
+        "actual": {
+          "text": "Audit LabelUSDitemsAudit Supporting text",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        }
+      },
+      "status": "fail"
+    },
+    {
+      "file": "avatar-default.html",
+      "name": "Avatar",
+      "family": "avatar.html",
+      "controls": [
+        {
+          "role": "avatar-size-select",
+          "label": "Size",
+          "cases": [
+            {
+              "value": "24",
+              "native": "24",
+              "previewChanged": true
+            },
+            {
+              "value": "32",
+              "native": "32",
+              "previewChanged": true
+            },
+            {
+              "value": "40",
+              "native": "40",
+              "previewChanged": true
+            },
+            {
+              "value": "48",
+              "native": "48",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-shape-select",
+          "label": "Shape",
+          "cases": [
+            {
+              "value": "circle",
+              "native": "circle",
+              "previewChanged": false
+            },
+            {
+              "value": "square",
+              "native": "square",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-initials",
+          "label": "Initials",
+          "cases": [
+            {
+              "value": "QA",
+              "native": "QA",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-group-view-select",
+          "label": "Show as",
+          "cases": [
+            {
+              "value": "avatars",
+              "native": "avatars",
+              "previewChanged": false
+            },
+            {
+              "value": "names",
+              "native": "names",
+              "previewChanged": false
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Initials",
+          "state": "Default",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Online",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Away",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Default",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Online",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Away",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Default",
+          "selection": {
+            "appearance": "Image",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Online",
+          "selection": {
+            "appearance": "Image",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Away",
+          "selection": {
+            "appearance": "Image",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Image",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [
+        "AssertionError [ERR_ASSERTION]: Exported HTML matches customized preview text and foundation styles\n+ actual - expected\n... Skipped lines\n\n  {\n    style: {\n      backgroundColor: 'rgba(0, 0, 0, 0)',\n      borderTopColor: 'rgb(75, 85, 99)',\n      borderTopLeftRadius: '0px',\n...\n    },\n+   text: 'QA'\n-   text: 'JD'\n  }\n\n    at /Users/user/Documents/Agentic Design System 2/tools/check-component-actions.cjs:58:614"
+      ],
+      "review": [
+        "avatar-group-view-select produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · DATA DISPLAY · AVATAR",
+      "inventory": [
+        {
+          "role": "avatar-size-select",
+          "type": "select",
+          "value": "32",
+          "options": [
+            "24",
+            "32",
+            "40",
+            "48"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-shape-select",
+          "type": "select",
+          "value": "circle",
+          "options": [
+            "circle",
+            "square"
+          ],
+          "label": "Shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-initials",
+          "type": "text",
+          "value": "JD",
+          "options": [],
+          "label": "Initials",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-group-view-select",
+          "type": "select",
+          "value": "avatars",
+          "options": [
+            "avatars",
+            "names"
+          ],
+          "label": "Show as",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "sameHTML": true,
+      "parity": {
+        "expected": {
+          "text": "JD",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "normal"
+          }
+        },
+        "actual": {
+          "text": "QA",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "normal"
+          }
+        }
+      },
+      "status": "fail"
+    }
+  ],
+  "errors": [],
+  "status": "fail"
+}

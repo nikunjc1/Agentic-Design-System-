@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  var ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -20,7 +20,10 @@
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "open", cls: " is-open", label: "Open" },
     { key: "focus", cls: " is-focus", label: "Focused" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "error", cls: " is-error", label: "Error" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: "", label: "Loading" },
+    { key: "empty", cls: " is-open", label: "Empty" }
   ];
 
   // Purpose text per type, used by Copy Prompt - the actual colors come
@@ -49,27 +52,30 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.1)");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.08)");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var danger500 = getCssVar("--danger-500", "#FF031A");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         open: "border-color:" + red500 + ";background:" + redTint + ";",
-        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+        error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
       open: "background:" + graphite900 + ";",
-      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+      error: "border-color:" + danger500 + ";"
     };
   }
 
@@ -104,9 +110,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -140,7 +150,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as
@@ -194,10 +204,13 @@
       lines.push("  Focused: " + css.focus + " Real keyboard focus, independent of Open - never just a color change, so layout never shifts.");
     });
     lines.push("");
-    lines.push("States (5, apply to every type): Rest, Hover, Open, Focused, Disabled.");
+    lines.push("States (8, apply to every type): Rest, Hover, Open, Focused, Error, Disabled, Loading, Empty.");
     lines.push("- Open: the menu is currently visible; the trigger takes on a pressed appearance rather than a plain hover.");
     lines.push("- Focused: a real :focus-visible outline for keyboard navigation, independent of Open.");
+    lines.push("- Error: the trigger's associated action or menu data failed to load.");
     lines.push("- Disabled: 50% opacity, real disabled attribute, no hover/open/focus feedback.");
+    lines.push("- Loading: a spinner replaces the chevron while menu options are being retrieved asynchronously.");
+    lines.push("- Empty: the menu is open but there are no options to show; the panel displays a centered, dimmed \"No options available.\" message instead of menu items.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
@@ -224,7 +237,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Dropdown (trigger button) component (all types, states, sizes) */");
-    lines.push(".dropdown-trigger{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; gap:var(--space-8); border-radius:8px; cursor:pointer; font-family:\"Inter\",ui-sans-serif,system-ui,sans-serif; font-weight:500; white-space:nowrap; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push(".dropdown-trigger{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; gap:var(--space-8); border-radius:var(--radius-md); cursor:pointer; font-family:var(--font-body); font-weight:var(--type-active-weight); white-space:nowrap; transition:background-color .15s ease, border-color .15s ease; }");
     lines.push(".dropdown-trigger-icon{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -238,7 +251,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".dropdown-trigger--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -252,6 +265,7 @@
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ".is-open{ " + css.open + " }");
       lines.push(cls + ":focus-visible{ " + css.focus + " }");
+      lines.push(cls + ".is-error{ " + css.error + " }");
     });
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
@@ -315,12 +329,12 @@
       card.setAttribute("tabindex", "0");
       var href = "dropdown-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -518,16 +532,38 @@
 
     function buildDropdownTrigger(typeKey, stateKey, stateCls, size, radius, label){
       var isDisabled = stateKey === "disabled";
+      var isLoading = stateKey === "loading";
+      var isEmpty = stateKey === "empty";
       var triggerClasses = "dropdown-demo-trigger dropdown-demo-trigger--" + typeKey + " dropdown-demo-trigger--h" + size + stateCls;
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
       var disabledAttr = isDisabled ? " disabled" : "";
+      var trailingHtml = isLoading
+        ? '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>'
+        : '<span class="dropdown-demo-icon" data-contract-part="chevron" aria-hidden="true">' + ICON_CHEVRON + "</span>";
       // Foundation audit UX10 - one cell of a side-by-side state comparison,
       // not a real dropdown trigger; tabindex="-1" keeps it out of the Tab
       // sequence without removing it from the accessibility tree.
-      return '<button type="button" class="' + triggerClasses + '"' + radiusStyle + ' tabindex="-1"' + disabledAttr + ">" +
-        escapeHtml(label) +
-        '<span class="dropdown-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>" +
+      var triggerHtml = '<button type="button" class="' + triggerClasses + '"' + radiusStyle + ' tabindex="-1"' + disabledAttr + ">" +
+        '<span class="dropdown-demo-label" data-contract-part="label">' + escapeHtml(label) + "</span>" +
+        trailingHtml +
         "</button>";
+      // Every state sits in the same wrapper so the Figma export has one stable
+      // structure (wrapper > trigger [+ menu]); only Empty also holds the menu.
+      if (!isEmpty) return '<div class="dropdown-demo-cell-wrap" data-contract-name="dropdown">' + triggerHtml + "</div>";
+      // Empty - the menu is open but has no options to show. Reuses the
+      // exact open-panel shell the Interactive Example below already
+      // establishes (.dropdown-demo-interactive-wrap/.dropdown-demo-menu),
+      // left visibly open (no [hidden] attribute) rather than only ever
+      // existing while a real click is driving it, with the real
+      // .dropdown-demo-menuitem rows swapped for a single centered, dimmed
+      // message. This component has no Figma-push capture function (see
+      // component-workbench.js), so this is a documentation/showcase-only
+      // addition - nothing to graft or scan for here.
+      return '<div class="dropdown-demo-cell-wrap" data-contract-name="dropdown">' + triggerHtml +
+        '<ul class="dropdown-demo-menu" role="menu" data-contract-part="panel">' +
+          '<li class="dropdown-demo-empty" role="presentation">No options available.</li>' +
+        "</ul>" +
+      "</div>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){

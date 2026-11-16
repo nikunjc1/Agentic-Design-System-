@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "Preferences opens by keyboard, exposes labeled native controls, and Escape returns focus.",
+    "Theme, density and direction apply immediately and persist across navigation and reload.",
+    "Existing cross-tab preference synchronization updates the header controls.",
+    "Old Settings navigation opens Overview preferences; legacy guide exports resolve and omit the retired screen.",
+    "Preferences fits three widths in both themes and directions, and closes on an outside click.",
+    "Unavailable storage keeps the controls usable and reports that changes cannot persist.",
+    "Fresh external visits still land on the required project-choice screen.",
+    "Legacy Settings redirects and Preferences work when opened through file://."
+  ],
+  "errors": [],
+  "status": "pass"
+}

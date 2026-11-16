@@ -1,3 +1,4 @@
+const {visit}=require('./visit-project.cjs');
 // Browser regression coverage for the prompt -> configured preview handoff.
 // ADS_PLAYWRIGHT_PACKAGE may point to an existing playwright-core installation.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
@@ -27,7 +28,7 @@ const results=[];
   await context.route(/^https?:\/\/(?!127\.0\.0\.1)/,r=>r.abort());
   await context.addInitScript(()=>{window.__promptCopies=[];Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>window.__promptCopies.push(text)}});});
   const page=await context.newPage();page.setDefaultTimeout(10000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  async function load(file){await page.goto(origin+'/'+file);await settle(page);}
+  async function load(file){await visit(page,origin+'/'+file);await settle(page);}
   for(const file of files){
    await load(file);
    for(const theme of ['light','dark']){

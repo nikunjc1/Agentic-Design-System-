@@ -31,8 +31,8 @@
   if(editorKeys) {
     const scoped=new Set([...editorKeys,'sizing']),pending=new Map(),resetKeys=new Set();
     let editing=!editorKeys.some(key=>{try{return ['valid','migrated'].includes(M.inspectRecord(key,localStorage.getItem('ads:'+key)).status);}catch{return false;}});
-    let ready=false,collecting=false,restoring=false,refresh=()=>{};
-    window.ADSFoundationEditor={beginEdit(){editing=true;refresh();},hasReset(key){return editing&&resetKeys.has(key.replace(/^ads:/,''));},withPersistence(operation){restoring=true;try{return operation();}finally{restoring=false;}},stage(key,value){
+    let ready=false,collecting=false,restoring=false,dirty=false,refresh=()=>{};
+    window.ADSFoundationEditor={getState(){return {editing,dirty};},beginEdit(){editing=true;refresh();},hasReset(key){return editing&&resetKeys.has(key.replace(/^ads:/,''));},withPersistence(operation){restoring=true;try{return operation();}finally{restoring=false;}},stage(key,value){
       key=key.replace(/^ads:/,'');if(!scoped.has(key)) return false;
       if(restoring)return false;
       if(!ready&&!editing&&value!==null){try{if(JSON.stringify(M.migrateRecord(key,JSON.parse(localStorage.getItem('ads:'+key))))===JSON.stringify(value))return false;}catch{}}
@@ -40,19 +40,49 @@
       if(value===null)resetKeys.add(key);
       pending.set(key,value);
       window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key:'ads:'+key,value,unsaved:true}}));
-      if(ready&&!collecting) refresh('Unsaved preview. Select Save foundation to keep these changes.');
+      if(ready&&!collecting){dirty=true;refresh('Unsaved preview. Select Save foundation to keep these changes.');}
       return true;
     }};
     document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{
       const main=document.querySelector('main');if(!main)return;
       const bar=document.createElement('section');bar.className='ads-foundation-editor';bar.setAttribute('aria-label','Foundation editing');
+      // A plain gray/ghost "Edit foundation" button reads as just another
+      // low-priority control, easy to skim past on a page whose fields are
+      // now all disabled - two separate pages caused the same "nothing
+      // responds when I try to change it" report before a reader noticed
+      // this exact button. It's the only action available while locked
+      // (hidden the rest of the time), so it gets the same visual weight as
+      // the save action that unlocked it, plus a lock glyph on the status
+      // line itself naming the actual reason fields aren't responding.
+      const lockIcon=document.createElement('span');lockIcon.className='ads-foundation-lock-icon';lockIcon.setAttribute('aria-hidden','true');
+      lockIcon.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
       const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-      const edit=document.createElement('button');edit.type='button';edit.className='btn btn-ghost';edit.textContent='Edit foundation';edit.dataset.foundationEdit='';
+      const edit=document.createElement('button');edit.type='button';edit.className='btn btn-primary';edit.textContent='Edit foundation';edit.dataset.foundationEdit='';
       const save=document.createElement('button');save.type='button';save.className='btn btn-primary';save.textContent='Save foundation';save.dataset.foundationSave='';
       const cancel=document.createElement('button');cancel.type='button';cancel.className='btn btn-ghost';cancel.textContent='Cancel changes';cancel.dataset.foundationCancel='';
-      bar.append(status,edit,save,cancel);(main.querySelector('.page-lede')||main.querySelector('h1')).after(bar);
+      bar.append(lockIcon,status,edit,save,cancel);
+      const journey=main.querySelector('.setup-journey');
+      if(journey)journey.append(bar);
+      else{
+        // Standalone Foundation pages (Colors, Typography, ...) run several
+        // screens long - a bar that only ever sat once near the top meant a
+        // trip back up to find Save/Cancel after editing something further
+        // down. True position:sticky on an element this close to the top of
+        // a long scrolling panel doesn't give a persistently-visible bar (it
+        // only engages near the end of the scroll range, the opposite of
+        // what's needed) - instead, main's own scrolling is handed to a new
+        // inner wrapper around its existing content, leaving this bar as a
+        // non-scrolling flex sibling pinned to the bottom of main's own
+        // area. Scoped to just these pages via JS rather than changing
+        // .app-main's shared overflow behavior, which every one of the
+        // site's other pages also relies on.
+        const scroll=document.createElement('div');scroll.className='ads-foundation-scroll';
+        scroll.append(...main.childNodes);
+        main.append(scroll,bar);
+        main.classList.add('ads-foundation-shell');
+      }
       const disabled=new Map();
-      const permitted='.ads-foundation-editor,.ads-editor-conflict,.ads-unit-choice,[data-foundation-read-action],[data-foundation-export],.page-outline,.ads-tab-group,.guide-view-toggle,.ads-read-more,[id^="copy"],[data-role*="copy"],a[href]';
+      const permitted='.ads-foundation-editor,.ads-editor-conflict,.ads-unit-choice,.setup-journey,[data-foundation-read-action],[data-foundation-export],.page-outline,.ads-tab-group,.guide-view-toggle,.ads-read-more,[id^="copy"],[data-role*="copy"],a[href]';
       function lock(){
         main.classList.toggle('ads-editor-locked',!editing);
         for(const node of main.querySelectorAll('input,select,textarea,button')) {
@@ -61,14 +91,15 @@
           else if(disabled.has(node)){node.disabled=disabled.get(node);disabled.delete(node);}
         }
       }
-      refresh=message=>{status.textContent=message||(!editing?'Saved settings. Select Edit foundation to make changes.':'Choose your settings, then select Save foundation.');edit.hidden=editing;save.hidden=!editing;cancel.hidden=!editing;lock();};
+      refresh=message=>{status.textContent=(message||(!editing?'Saved settings. Select Edit foundation to make changes.':journey?'':'Choose your settings, then select Save foundation.')).replaceAll('Save foundation',journey?'Save & continue':'Save foundation');edit.hidden=editing;save.hidden=!editing;cancel.hidden=!editing;lockIcon.hidden=editing;lock();window.dispatchEvent(new CustomEvent('ads:foundation-editor-state',{detail:{editing,dirty}}));};
       const legacy=[...main.querySelectorAll('button[id^="save"]')];legacy.forEach(button=>{button.hidden=true;});
       main.querySelectorAll('.save-status[id*="SaveStatus"],#typoSaveStatus').forEach(n=>{n.hidden=true;});
       // Cards and custom pickers also obey the saved-state lock.
       main.addEventListener('click',event=>{if(!editing&&!collecting&&!event.target.closest(permitted)){event.preventDefault();event.stopImmediatePropagation();}},true);
       new MutationObserver(()=>lock()).observe(main,{childList:true,subtree:true});
       edit.addEventListener('click',()=>{window.ADSFoundationEditor.beginEdit();main.querySelector('input:not(:disabled):not([hidden]),select:not(:disabled)')?.focus();});
-      cancel.addEventListener('click',()=>location.reload());
+      cancel.addEventListener('click',()=>{dirty=false;(window.ADSNavigation ? window.ADSNavigation.reload() : location.reload());});
+      window.addEventListener('beforeunload',event=>{if(dirty){event.preventDefault();event.returnValue='';}});
       save.addEventListener('click',()=>{
         if(main.querySelector('.ads-editor-conflict')){refresh('Settings changed in another tab. Reload before saving.');return;}
         try {
@@ -91,7 +122,7 @@
           refresh(restored?'Could not save. Your previous saved settings are unchanged; your edits remain available.':'Save was interrupted and some settings could not be restored. Keep this page open and back up the settings.');return;
         }
         for(const [key,value]of pending)window.dispatchEvent(new CustomEvent('ads:foundation-change',{detail:{key:'ads:'+key,value,removed:value===null}}));
-        pending.clear();resetKeys.clear();editing=false;refresh('Foundation saved. Select Edit foundation to change it.');edit.focus();
+        pending.clear();resetKeys.clear();editing=false;dirty=false;refresh('Foundation saved. Select Edit foundation to change it.');edit.focus();window.dispatchEvent(new CustomEvent('ads:foundation-saved',{detail:{page:editorPage}}));
       });
       ready=true;refresh();
     },0);},{once:true});
@@ -186,7 +217,7 @@
     source+='\n\n<!-- ads:contract -->\n'+M.contractMarkdown(page)+'\n<!-- /ads:contract -->';
     return M.prepareMarkdown(source+'\n\n<!-- ads:page-foundation -->\n## Current Foundation configuration\n\nThe following configuration is the applied state. Unfinished or invalid editor drafts are not applied. Reference assets are included in Foundation JSON.\n\n```json\n'+json+'\n```\n<!-- /ads:page-foundation -->',resolved);
   }
-  window.ADSFoundation={ apply, get:()=>resolved, getVerification:()=>({unsavedPreviewKeys:[...unsavedKeys]}),format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), prepareMarkdown:(text,names)=>M.prepareMarkdown(text,resolved,names), preparePageMarkdown, read };
+  window.ADSFoundation={ apply, setUnit, preparePreview:scope=>{bindExamples(scope);renderData(scope);}, get:()=>resolved, getVerification:()=>({unsavedPreviewKeys:[...unsavedKeys]}),format:(value,kind,options)=>M.format(value,kind,resolved.dataFormat,options), prepareCode:text=>M.prepareCode(text,resolved), prepareMarkdown:(text,names)=>M.prepareMarkdown(text,resolved,names), preparePageMarkdown, read };
   // "Draw in Figma" - a locally-running Figma Bridge Plugin (a separate
   // project, not part of this portal) draws the component into Figma from
   // the same contract shape its component-contract tooling already uses: a
@@ -199,19 +230,27 @@
   document.addEventListener('DOMContentLoaded',()=>{
     const mount=document.querySelector('[data-role="draw-figma-action"]');
     if(!mount) return;
-    const name=()=>{
-      const h1=document.querySelector('h1');
-      if(!h1) return document.title.split(' - ')[0]||'Component';
-      const clone=h1.cloneNode(true);clone.querySelectorAll('.component-status').forEach(n=>n.remove());
-      return clone.textContent.trim()||'Component';
-    };
     const button=document.createElement('button');
-    button.type='button';button.className='btn-demo btn-demo--tertiary btn-demo--h32 is-icon-only';
-    button.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
-    const label='Draw '+name()+' in Figma';
+    // This sits in .panel-title-actions beside "Copy prompt"/"Copy code"/
+    // "Edit component contract" - all .btn.btn-ghost, not .btn-demo (that
+    // family belongs to the component preview/stage, a different row).
+    button.type='button';button.className='btn btn-ghost is-icon-only';
+    // The real, official 4-color Figma mark (not a monochrome currentColor
+    // glyph) - a visitor should recognize this as "Figma" specifically, the
+    // same reasoning a colorful third-party integration badge usually gets.
+    button.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" aria-hidden="true" focusable="false"><path d="M50 300c27.6 0 50-22.4 50-50v-50H50c-27.6 0-50 22.4-50 50s22.4 50 50 50z" fill="#0ACF83"/><path d="M0 150c0-27.6 22.4-50 50-50h50v100H50c-27.6 0-50-22.4-50-50z" fill="#A259FF"/><path d="M0 50C0 22.4 22.4 0 50 0h50v100H50C22.4 100 0 77.6 0 50z" fill="#F24E1E"/><path d="M100 0h50c27.6 0 50 22.4 50 50s-22.4 50-50 50h-50V0z" fill="#FF7262"/><path d="M200 150c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50z" fill="#1ABCFE"/></svg>';
+    const label='Draw in Figma';
     button.setAttribute('aria-label',label);button.title=label;
-    button.addEventListener('click',()=>window.ADSFigmaBridge?.draw({component:name(),props:componentProperties(),tokens:resolved.tokens},button));
+    button.addEventListener('click',()=>{try{window.ADSFigmaBridge?.drawCurrentPage(button);}catch(error){button.title=error.message;window.alert(error.message);}});
     mount.append(button);
+    // "Send to Claude Design": same contract, copied as a prompt (shell.js).
+    const claudeButton=document.createElement('button');
+    claudeButton.type='button';claudeButton.className='btn btn-ghost is-icon-only claude-design-action';
+    claudeButton.innerHTML=window.ADSClaudeDesign?.mark||'';
+    const claudeLabel='Send to Claude Design';
+    claudeButton.setAttribute('aria-label',claudeLabel);claudeButton.title=claudeLabel;
+    claudeButton.addEventListener('click',()=>window.ADSClaudeDesign?.sendCurrentPage(claudeButton));
+    mount.append(claudeButton);
   },{once:true});
   window.addEventListener('ads:foundation-change',e=>{const key=e.detail.key.replace(/^ads:/,'');if(!keys.includes(key)) return;if(e.detail.unsaved)unsavedKeys.add(key);else unsavedKeys.delete(key);if(e.detail.removed) drafts.delete(key);else drafts.set(key,e.detail.value);queueMicrotask(apply);});
   window.addEventListener('storage',e=>{
@@ -222,15 +261,16 @@
     if(!editor||!document.body||!(e.key===null||editorKeys[editor].some(k=>e.key==='ads:'+k))) return;
     const main=document.querySelector('main');if(main.querySelector('.ads-editor-conflict'))return;
     const notice=document.createElement('div');notice.className='ads-editor-conflict';notice.setAttribute('role','status');notice.textContent='Foundation changed in another tab. Reload to refresh these controls before editing. ';
-    const reload=document.createElement('button');reload.type='button';reload.className='btn btn-ghost';reload.textContent='Reload controls';reload.addEventListener('click',()=>location.reload());notice.append(reload);
+    const reload=document.createElement('button');reload.type='button';reload.className='btn btn-ghost';reload.textContent='Reload controls';reload.addEventListener('click',()=>(window.ADSNavigation ? window.ADSNavigation.reload() : location.reload()));notice.append(reload);
     main.querySelectorAll('input,select,textarea,button').forEach(el=>{if(!el.closest('.ads-foundation-toolbar,.page-outline')&&!el.matches('.ads-read-more,.guide-toggle-btn'))el.disabled=true;});
     main.prepend(notice);
   });
   new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:['data-theme']});
   // Boot before the stylesheet is parsed, with the same resolver used later.
   apply();
-  function renderData() {
-    document.querySelectorAll('[data-format]').forEach(el=>{
+  function scopedNodes(scope,selector){return [...(scope.matches?.(selector)?[scope]:[]),...scope.querySelectorAll(selector)];}
+  function renderData(scope=document) {
+    scopedNodes(scope,'[data-format]').forEach(el=>{
       const kind=el.dataset.format;
       let value=el.dataset.value;if(kind==='range') {try{value=JSON.parse(value);}catch{value=null;}}
       if(el.dataset.missing==='true') value=null;
@@ -243,12 +283,12 @@
       if(kind==='large') {const exact=window.ADSFoundation.format(value,'number');el.title=exact;el.setAttribute('aria-label',exact);el.tabIndex=0;}
       if(el.matches('td,th')&&['number','currency','unit','large','percent'].includes(kind)) el.style.textAlign=resolved.dataFormat.tableAlign;
     });
-    document.querySelectorAll('[data-format-space]').forEach(el=>{const chars={space:' ',nbsp:'\u00a0',narrow:'\u202f'};const value='Before'+chars[resolved.dataFormat.escapedSpace]+'After';if(el.textContent!==value) el.textContent=value;});
-    document.querySelectorAll('.daterange-demo-arrow').forEach(el=>{if(el.textContent!==resolved.dataFormat.range)el.textContent=resolved.dataFormat.range;});
+    scopedNodes(scope,'[data-format-space]').forEach(el=>{const chars={space:' ',nbsp:'\u00a0',narrow:'\u202f'};const value='Before'+chars[resolved.dataFormat.escapedSpace]+'After';if(el.textContent!==value) el.textContent=value;});
+    scopedNodes(scope,'.daterange-demo-arrow').forEach(el=>{if(el.textContent!==resolved.dataFormat.range)el.textContent=resolved.dataFormat.range;});
   }
-  function bindExamples() {
+  function bindExamples(scope=document) {
     // Annotate actual value surfaces only; prose, IDs, phone numbers and code stay literal.
-    document.querySelectorAll('main td, main .statistic-demo-value-text, main .description-demo-value').forEach(el=>{
+    scopedNodes(scope,'main td, main .statistic-demo-value-text, main .description-demo-value').forEach(el=>{
       if(el.dataset.format||el.children.length) return;
       const value=el.textContent.trim();
       const column=el.matches('td')?el.closest('table')?.querySelector('thead tr')?.children[el.cellIndex]?.textContent.trim():null;
@@ -259,16 +299,19 @@
       else if(/^[£$€₹]-?[\d,]+(?:\.\d+)?$/.test(value)) {el.dataset.format='currency';el.dataset.value=value.slice(1).replaceAll(',','');}
       else if(value==='–'||value==='—') {el.dataset.format='number';el.dataset.missing='true';}
     });
-    document.querySelectorAll('.datepicker-demo-value.is-filled,.time-demo-value.is-filled,.daterange-demo-segment:not(.is-placeholder)').forEach(el=>{
-      if(el.dataset.format) return;
+    scopedNodes(scope,'.datepicker-demo-value.is-filled,.time-demo-value.is-filled,.daterange-demo-segment:not(.is-placeholder)').forEach(el=>{
+      // data-own-format: the component page renders this value in its own,
+      // user-selected Date format (date-picker-default); the project-wide data
+      // format must neither re-parse nor re-render it.
+      if(el.dataset.format||el.dataset.ownFormat) return;
       const raw=el.textContent.trim();let value;
       if(el.matches('.time-demo-value')) {const m=raw.match(/^(\d{1,2}):(\d{2}) (AM|PM)$/);if(m){const hour=Number(m[1])%12+(m[3]==='PM'?12:0);value='2026-03-14T'+String(hour).padStart(2,'0')+':'+m[2]+':00Z';}}
-      else {const m=raw.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);if(m)value=m[3]+'-'+m[1]+'-'+m[2];else if(/^[A-Z][a-z]{2} \d{1,2}, \d{4}$/.test(raw)){const date=new Date(raw+' 12:00:00 UTC');if(Number.isFinite(date.getTime()))value=date.toISOString().slice(0,10);}}
+      else {const m=raw.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);if(m)value=Number(m[1])>12?m[3]+'-'+m[2]+'-'+m[1]:m[3]+'-'+m[1]+'-'+m[2];else if(/^[A-Z][a-z]{2} \d{1,2}, \d{4}$/.test(raw)){const date=new Date(raw+' 12:00:00 UTC');if(Number.isFinite(date.getTime()))value=date.toISOString().slice(0,10);}}
       if(value){el.dataset.format=el.matches('.time-demo-value')?'time':'date';el.dataset.value=value;}
     });
-    document.querySelectorAll('.statistic-demo-skeleton,.table-demo-table td .skeleton-demo-line').forEach(el=>{if(!el.dataset.format){el.dataset.format='loading';el.dataset.value='';}});
-    document.querySelectorAll('main [style]').forEach(el=>{
-      if(el.closest('.type-row,.font-preview,pre,code,svg')||el.matches('.ads-text-content,.ads-read-more')) return;
+    scopedNodes(scope,'.statistic-demo-skeleton,.table-demo-table td .skeleton-demo-line').forEach(el=>{if(!el.dataset.format){el.dataset.format='loading';el.dataset.value='';}});
+    scopedNodes(scope,'main [style]').forEach(el=>{
+      if(el.closest('.type-row,.font-preview,pre,code,svg,[data-ads-component]')||el.matches('.ads-text-content,.ads-read-more')) return;
       const size=el.style.fontSize, roleMatch=size.match(/--type-(\w+)-size/);
       const roles={11:'caption',12:'caption',13:'body',14:'body',16:'body',18:'h6',20:'h5',24:'h4',30:'h3',36:'h2',48:'h1'};
       const role=/^H[1-6]$/.test(el.tagName)?el.tagName.toLowerCase():roleMatch?roleMatch[1]:/px$/.test(size)?roles[parseFloat(size)]||'body':null;
@@ -327,10 +370,16 @@
       if(!input.hasAttribute('step')) display.step=String(M.convert(1,'px',resolved.unit));
       display.disabled=input.disabled;select.value=resolved.unit;
     });
-    document.querySelectorAll('main option').forEach(opt=>{
-      if(!unitTexts.has(opt)&&/\d(?:px|\s+px)\b/.test(opt.textContent)) unitTexts.set(opt,opt.textContent);
-    });
-    unitTexts.forEach((original,el)=>{if(el.nodeType===Node.TEXT_NODE||el.matches('.system-card-scale')) return;const text=original.replace(/(-?\d+(?:\.\d+)?(?:\/\d+(?:\.\d+)?)*)\s*px\b/g,(_,group)=>group.split('/').map(n=>String(M.convert(n,'px',resolved.unit))).join('/')+resolved.unit);if(el.textContent!==text) el.textContent=text;});
+    function presentUnitText(node) {
+      const current=node.textContent, cached=unitTexts.get(node);
+      if(!cached&&!/\d\s*px\b/.test(current))return;
+      // Renderers reuse label nodes after selection. Refresh their source when
+      // the current text differs from the last unit presentation.
+      const original=cached&&current===cached.rendered?cached.original:current.replace(/(-?\d+(?:\.\d+)?)\s*rem\b/g,(_,n)=>String(M.convert(n,'rem','px'))+'px');
+      const text=original.replace(/(-?\d+(?:\.\d+)?(?:\/\d+(?:\.\d+)?)*)\s*px\b/g,(_,group)=>group.split('/').map(n=>String(M.convert(n,'px',resolved.unit))).join('/')+resolved.unit);
+      unitTexts.set(node,{original,rendered:text});if(current!==text)node.textContent=text;
+    }
+    document.querySelectorAll('main option').forEach(presentUnitText);
     document.querySelectorAll('[data-dimension-value]').forEach(el=>{const text=M.dimension(Number(el.dataset.dimensionValue),resolved.unit);if(el.textContent!==text) el.textContent=text;});
     document.querySelectorAll('.system-card-scale[data-role=scale]').forEach(el=>{
       if(!unitTexts.has(el)&&/^\d/.test(el.textContent.trim())) unitTexts.set(el,el.textContent);
@@ -339,13 +388,12 @@
     });
     const main=document.querySelector('main');if(!main) return;
     const walker=document.createTreeWalker(main,NodeFilter.SHOW_TEXT);
-    while(walker.nextNode()) {const node=walker.currentNode;if(node.parentElement.closest('pre,code,script,style,option,.system-card-scale,.ads-foundation-toolbar,.ads-unit-control,[data-dimension-value]')) continue;if(!unitTexts.has(node)&&/\dpx\b/.test(node.textContent)) unitTexts.set(node,node.textContent);}
-    unitTexts.forEach((original,node)=>{
-      if(!node.isConnected) {unitTexts.delete(node);return;}
-      if(node.nodeType!==Node.TEXT_NODE) return;
-      const text=original.replace(/(-?\d+(?:\.\d+)?(?:\/\d+(?:\.\d+)?)*)\s*px\b/g,(_,group)=>group.split('/').map(n=>String(M.convert(n,'px',resolved.unit))).join('/')+resolved.unit);
-      if(node.textContent!==text) node.textContent=text;
-    });
+    while(walker.nextNode()) {
+      const node=walker.currentNode;
+      if(node.parentElement.closest('pre,code,script,style,option,.system-card-scale,.ads-foundation-toolbar,.ads-unit-control,[data-dimension-value],[data-unit-managed]'))continue;
+      presentUnitText(node);
+    }
+    unitTexts.forEach((original,node)=>{if(!node.isConnected)unitTexts.delete(node);});
   }
   const READ_MORE_LINES=4;
   const observedText=new WeakSet();
@@ -383,7 +431,7 @@
     document.querySelectorAll('main p, main .usage-desc, main .guide-copy, main .system-card-desc').forEach(el=>{
       // Documentation prose can expand. Component specimens, structured
       // readouts and metadata must keep their authored children and layout.
-      const structured=el.closest('pre,code,button,a,label,summary,[role=button],.type-row,.font-preview,[role=alert],[role=status],.setup-error,.ads-no-clamp,[class*="-demo-"],.guide-dodont-demo')||el.matches('.panel-title,.guide-subhead,.page-title,.color-contrast,.color-popover-contrast,.color-rgba')||/(?:^|\s)[\w-]*(?:-label|-eyebrow|-meta|-status|-title|-value|-scale|-caption|-time)(?:\s|$)/.test(el.className)||el.querySelector('input,select,textarea,svg,img,button:not(.ads-read-more)');
+      const structured=el.closest('pre,code,button,a,label,summary,[role=button],.type-row,.font-preview,[role=alert],[role=status],.setup-error,.setup-layout,.ads-no-clamp,[data-ads-component],[class*="-demo-"],.guide-dodont-demo')||el.matches('.panel-title,.guide-subhead,.page-title,.color-contrast,.color-popover-contrast,.color-rgba')||/(?:^|\s)[\w-]*(?:-label|-eyebrow|-meta|-status|-title|-value|-scale|-caption|-time)(?:\s|$)/.test(el.className)||el.querySelector('input,select,textarea,svg,img,button:not(.ads-read-more)');
       if(structured) return;
       if(!el.getClientRects().length) return;
       const style=getComputedStyle(el);
@@ -499,15 +547,28 @@
     document.querySelectorAll('.badge-required').forEach(el=>{el.className='ads-required';el.textContent='*';el.setAttribute('aria-label','Required');});
     document.querySelectorAll('.badge-optional').forEach(el=>el.remove());
     document.querySelectorAll('label').forEach(label=>{
+      // Skip the Workbench's own Live Preview stage and every component's
+      // Live Preview matrix - both are real <label>/<input required> DOM
+      // (so this scan would otherwise match them too), but they're demo
+      // content illustrating a component's OWN Required feature, not a
+      // real app form field this site-wide indicator is meant for. Left
+      // unscoped, this injected a second, unbound ".ads-required" asterisk
+      // right alongside whichever asterisk the component's own Required
+      // property already renders - a real, user-visible duplicate mark on
+      // the live page itself (confirmed on Checkbox's Showcase view),
+      // independent of the same stray node also leaking into the Figma
+      // capture (fixed separately in component-workbench.js's snapshot()).
+      if(label.closest('.wb-stage,.button-matrix-wrap,.button-matrix-cell'))return;
       const input=label.control||label.querySelector('input,select,textarea');if(!input||!input.required) return;
-      if(!label.querySelector('.ads-required')) {const star=document.createElement('span');star.className='ads-required';star.textContent='*';star.setAttribute('aria-hidden','true');const text=label.querySelector('span:not(.setup-error)');if(text) text.append(star);else input.before(star);}
+      if(!label.querySelector('.ads-required,.input-demo-required')) {const star=document.createElement('span');star.className='ads-required';star.textContent='*';star.setAttribute('aria-hidden','true');const text=label.querySelector('span:not(.setup-error)');if(text) text.append(star);else if(label.contains(input)) input.before(star);else label.append(star);}
     });
   }
   document.addEventListener('DOMContentLoaded',()=>{
     const main=document.querySelector('main');if(!main) return;
-    const typography=window.ADSStorage.safeGet('ads:typography');
+    // Redirect stubs load this file without shell.js, so ADSStorage may be absent.
+    const typography=window.ADSStorage?window.ADSStorage.safeGet('ads:typography'):null;
     let legacyHeading=false;try {legacyHeading=JSON.parse(localStorage.getItem('ads:typography')||'null')?.headingScaleVersion!==M.headingScaleVersion;} catch {}
-    if(typography&&legacyHeading) window.ADSStorage.safeSet('ads:typography',typography);
+    if(typography&&legacyHeading&&window.ADSStorage) window.ADSStorage.safeSet('ads:typography',typography);
     const page=location.pathname.split('/').pop();
     let toolbar;
     if(foundationPages.has(page)) {
@@ -600,7 +661,7 @@
           }
           if(!failed.length){
             restoreStatus.textContent='Restored '+applied.length+' setting'+(applied.length===1?'':'s')+'.'+skippedNote+' Reloading…';
-            setTimeout(()=>location.reload(),600);
+            setTimeout(()=>(window.ADSNavigation ? window.ADSNavigation.reload() : location.reload()),600);
             return;
           }
           const unresolved=[];

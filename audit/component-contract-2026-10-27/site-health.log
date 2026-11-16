@@ -1,0 +1,9 @@
+Recovery, locked views, exports and cross-tab checks passed
+Checked 20/159 pages at four widths
+Checked 40/159 pages at four widths
+Checked 60/159 pages at four widths
+Checked 80/159 pages at four widths
+Checked 100/159 pages at four widths
+Checked 120/159 pages at four widths
+Checked 140/159 pages at four widths
+{"status":"pass","pages":159,"viewports":636,"guides":208,"recovery":4,"errors":[],"assets":[]}

@@ -25,12 +25,14 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
+    { key: "visited", cls: " is-visited", label: "Visited" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
+  var MAX_VISIBLE_ITEMS = 4;
 
   // Exact divider SVG as specified - literal, not resized per breadcrumb
   // size (the size property scales the trail's text only).
-  var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M9 18l6-6-6-6"/></svg>';
+  var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg>';
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -38,23 +40,41 @@
   }
 
   function linkStateCss(){
-    var textDim = getCssVar("--text-dim", "#64686F");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var textDim = getCssVar("--text-dim", "#69707D");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var red600 = getCssVar("--red-600", "#D10215");
     return {
       rest: "color:" + textDim + ";",
       hover: "color:" + textHi + ";text-decoration:underline;",
-      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:2px;",
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:var(--radius-2);",
+      visited: "color:" + red600 + ";",
       disabled: "opacity:0.5;pointer-events:none;"
     };
   }
 
+  // Collapses a long label list down to MAX_VISIBLE_ITEMS, keeping the
+  // first item and the last two (the parent and current page) visible and
+  // replacing everything in between with a single non-interactive "..."
+  // marker - the bounded, static version of the spec's overflow/truncation
+  // ask. A real implementation would make that marker an expandable "more"
+  // menu revealing the hidden ancestors; that interactive menu is a
+  // separate, larger feature and isn't built here.
+  function collapseLabels(labels){
+    if (labels.length <= MAX_VISIBLE_ITEMS) return labels.map(function(l){ return { label: l, collapsed: false }; });
+    var head = labels.slice(0, 1);
+    var tail = labels.slice(-2);
+    return head.map(function(l){ return { label: l, collapsed: false }; })
+      .concat([{ label: "…", collapsed: true }])
+      .concat(tail.map(function(l){ return { label: l, collapsed: false }; }));
+  }
+
   function dividerCss(){
-    return { color: getCssVar("--text-dim", "#64686F") };
+    return { color: getCssVar("--text-dim", "#69707D") };
   }
 
   function currentCss(){
-    return { color: getCssVar("--text-hi", "#F3F2EF") };
+    return { color: getCssVar("--text-hi", "#111827") };
   }
 
   // Size scale - a Breadcrumb is a plain text trail, not a button, so
@@ -69,23 +89,15 @@
   var SIZE_SCALE = {
     "24": 12,
     "28": 13,
-    "32": 13,
     "36": 14,
-    "40": 15,
-    "44": 16,
-    "48": 17,
-    "56": 19
+    "40": 15
   };
 
   var SIZE_OPTIONS = [
     { value: "24", label: "24px - XXS" },
     { value: "28", label: "28px - XS" },
-    { value: "32", label: "32px - S" },
     { value: "36", label: "36px - SM" },
-    { value: "40", label: "40px - M" },
-    { value: "44", label: "44px - L" },
-    { value: "48", label: "48px - XL" },
-    { value: "56", label: "56px - XXL" }
+    { value: "40", label: "40px - M" }
   ];
   var FALLBACK_DEFAULTS = { size: "40" };
   var DEFAULT_LABELS = ["Home", "Products", "Shoes"];
@@ -141,15 +153,18 @@
     lines.push("- Chevron: the divider between items is a small chevron-right icon.");
     lines.push("- Slash: the divider between items is a literal \"/\" character.");
     lines.push("");
-    lines.push("States (4, apply to the FIRST link only - every earlier/later link besides it and the final current-page item stay at Rest):");
+    lines.push("States (5, apply to the FIRST link only - every earlier/later link besides it and the final current-page item stay at Rest):");
     lines.push("  Rest: " + css.rest);
     lines.push("  Hover: " + css.hover);
     lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    lines.push("  Visited: " + css.visited + " Only a color change is allowed here - browsers block every other CSS property on the real :visited pseudo-class for privacy reasons.");
     lines.push("  Disabled: " + css.disabled + " Use aria-disabled=\"true\" on the link, not the native disabled attribute - links have no native disabled state.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Font-size scales proportionally, applied to the whole trail.");
     lines.push("");
     lines.push("Component properties: Labels (comma-separated editable text, one per breadcrumb item, current value \"" + labels.join(", ") + "\" - item count follows the number of labels entered). The last label is always rendered as the current page (a non-link span); every earlier label is a real link.");
+    lines.push("");
+    lines.push("Overflow: when more than " + MAX_VISIBLE_ITEMS + " items are entered, collapse the middle ones into a single non-interactive \"…\" marker, keeping the first item and the last two (parent and current page) visible, e.g. \"Home … Product Shoes\". A real implementation would make that marker an expandable menu revealing the hidden ancestors - that interactive menu is a separate, larger feature not built here.");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
@@ -163,7 +178,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Breadcrumb component */");
-    lines.push('.breadcrumb{ display:inline-flex; align-items:center; flex-wrap:wrap; box-sizing:border-box; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; }');
+    lines.push('.breadcrumb{ display:inline-flex; align-items:center; flex-wrap:wrap; box-sizing:border-box; font-family:var(--font-body); font-weight:var(--type-active-weight); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -181,21 +196,30 @@
     lines.push(".breadcrumb-link{ " + link.rest + " text-decoration:none; cursor:pointer; transition:color .15s ease; }");
     lines.push(".breadcrumb-link:hover, .breadcrumb-link.is-hover{ " + link.hover + " }");
     lines.push(".breadcrumb-link:focus-visible, .breadcrumb-link.is-focus{ " + link.focus + " }");
+    lines.push("/* :visited only allows a color change - browsers block every other property for privacy */");
+    lines.push(".breadcrumb-link:visited, .breadcrumb-link.is-visited{ " + link.visited + " }");
     lines.push('.breadcrumb-link[aria-disabled="true"], .breadcrumb-link.is-disabled{ ' + link.disabled + " }");
     lines.push("");
     lines.push("/* Current page - always the last item, never a link */");
     lines.push(".breadcrumb-current{ color:" + current.color + "; cursor:default; }");
     lines.push("");
+    lines.push("/* Overflow - a non-interactive marker replacing collapsed middle items */");
+    lines.push(".breadcrumb-overflow{ color:" + dividerCss().color + "; cursor:default; }");
+    lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
-    lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " -->");
+    var collapsed = collapseLabels(labels);
+    lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + (labels.length > MAX_VISIBLE_ITEMS ? ", overflow collapsed since more than " + MAX_VISIBLE_ITEMS + " items were entered" : "") + " -->");
     TYPES.forEach(function(t){
       lines.push('<nav class="breadcrumb breadcrumb--' + t.key + " breadcrumb--" + exampleSize + '" aria-label="Breadcrumb">');
-      labels.forEach(function(label, i){
-        var isLast = i === labels.length - 1;
-        if (isLast){
-          lines.push('  <span class="breadcrumb-current">' + escapeHtml(label) + "</span>");
+      collapsed.forEach(function(item, i){
+        var isLast = i === collapsed.length - 1;
+        if (item.collapsed){
+          lines.push('  <span class="breadcrumb-overflow" aria-hidden="true">' + escapeHtml(item.label) + "</span>");
+          lines.push('  <span class="breadcrumb-divider" aria-hidden="true">' + (t.key === "chevron" ? CHEVRON_SVG : "/") + "</span>");
+        } else if (isLast){
+          lines.push('  <span class="breadcrumb-current">' + escapeHtml(item.label) + "</span>");
         } else {
-          lines.push('  <a class="breadcrumb-link" href="#">' + escapeHtml(label) + "</a>");
+          lines.push('  <a class="breadcrumb-link" href="#">' + escapeHtml(item.label) + "</a>");
           lines.push('  <span class="breadcrumb-divider" aria-hidden="true">' + (t.key === "chevron" ? CHEVRON_SVG : "/") + "</span>");
         }
       });
@@ -243,12 +267,12 @@
       card.setAttribute("tabindex", "0");
       var href = "breadcrumb-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -364,21 +388,28 @@
       var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
       var isDisabled = stateKey === "disabled";
       var trailCls = "breadcrumb-demo-trail breadcrumb-demo-trail--" + typeKey + " breadcrumb-demo-trail--" + size;
+      var collapsed = collapseLabels(labels);
+      var firstLinkIndex = collapsed.findIndex(function(item){ return !item.collapsed; });
       var parts = [];
-      labels.forEach(function(label, i){
-        var isLast = i === labels.length - 1;
-        if (isLast){
-          parts.push('<span class="breadcrumb-demo-current">' + escapeHtml(label) + "</span>");
+      collapsed.forEach(function(item, i){
+        var isLast = i === collapsed.length - 1;
+        if (item.collapsed){
+          parts.push('<span class="breadcrumb-demo-overflow" aria-hidden="true">' + escapeHtml(item.label) + "</span>");
+          parts.push('<span class="breadcrumb-demo-divider" data-contract-name="divider" aria-hidden="true">' + (typeKey === "chevron" ? CHEVRON_SVG : "/") + "</span>");
           return;
         }
-        if (i === 0){
-          var linkCls = "breadcrumb-demo-link" + stateCls;
-          var disabledAttr = (i === 0 && isDisabled) ? ' aria-disabled="true"' : "";
-          parts.push('<a class="' + linkCls + '" href="#"' + tabindexAttr + disabledAttr + ">" + escapeHtml(label) + "</a>");
-        } else {
-          parts.push('<a class="breadcrumb-demo-link" href="#"' + tabindexAttr + ">" + escapeHtml(label) + "</a>");
+        if (isLast){
+          parts.push('<span class="breadcrumb-demo-current" data-contract-name="crumb">' + escapeHtml(item.label) + "</span>");
+          return;
         }
-        parts.push('<span class="breadcrumb-demo-divider" aria-hidden="true">' + (typeKey === "chevron" ? CHEVRON_SVG : "/") + "</span>");
+        if (i === firstLinkIndex){
+          var linkCls = "breadcrumb-demo-link" + stateCls;
+          var disabledAttr = isDisabled ? ' aria-disabled="true"' : "";
+          parts.push('<a class="' + linkCls + '" href="#" data-contract-name="crumb"' + tabindexAttr + disabledAttr + ">" + escapeHtml(item.label) + "</a>");
+        } else {
+          parts.push('<a class="breadcrumb-demo-link" href="#" data-contract-name="crumb"' + tabindexAttr + ">" + escapeHtml(item.label) + "</a>");
+        }
+        parts.push('<span class="breadcrumb-demo-divider" data-contract-name="divider" aria-hidden="true">' + (typeKey === "chevron" ? CHEVRON_SVG : "/") + "</span>");
       });
       return '<nav class="' + trailCls + '" aria-label="Breadcrumb">' + parts.join("") + "</nav>";
     }

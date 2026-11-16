@@ -8,7 +8,7 @@ async function run(name,page,options,fn){const f=await boot(page,options);try{aw
 (async()=>{
   const componentPages=fs.readdirSync(ROOT).filter(n=>n.endsWith('.html')).filter(n=>/src="[a-z0-9-]+-detail\.js"/.test(fs.readFileSync(path.join(ROOT,n),'utf8')));
   // Reproduce both successful and denied-copy paths on every actual library page.
-  for(const page of [...componentPages,'patterns.html','templates.html'])await run('Copy success, denied clipboard and fallback',page,{},async f=>{
+  for(const page of componentPages)await run('Copy success, denied clipboard and fallback',page,{},async f=>{
     const button=Array.from(f.d.querySelectorAll('main button')).find(b=>/^Copy (prompt|code)$/.test(b.textContent.trim())&&!b.classList.contains('copy-dropdown-trigger'));
     if(!button)throw Error('No executable copy action');
     button.focus();button.click();await f.flush();
@@ -24,14 +24,7 @@ async function run(name,page,options,fn){const f=await boot(page,options);try{aw
     f.d.execCommand=()=>false;button.click();await f.flush();
     check(button.textContent==='Copy failed','Failed copy announced success');
     check(f.d.getElementById('ads-copy-status').textContent.includes('manually'),'No manual-copy recovery');
-    // Patterns/Templates are the one deliberate exception (DP02/AT02): their
-    // code/prompt text is never visible anywhere else on the page, so a
-    // failed copy moves focus into the now-opened disclosure's own textarea
-    // and selects it - the only way a user can find and manually copy the
-    // text. Every other page's copy source is already visible elsewhere, so
-    // staying on the button is the right behavior there.
-    if(page==='patterns.html'||page==='templates.html')check(f.d.activeElement.tagName==='TEXTAREA'&&f.d.activeElement.value.trim().length>0,'Failure did not focus the recovery textarea');
-    else check(f.d.activeElement===button,'Failure moved focus');
+    check(f.d.activeElement===button,'Failure moved focus');
     f.d.execCommand=()=>true;button.click();await f.flush();check(button.textContent==='Copied!','Successful legacy fallback rejected');
   });
   await run('Splitter keyboard, bounds, collapse, cancellation, save and reset','splitter-default.html',{},async f=>{

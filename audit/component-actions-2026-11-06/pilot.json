@@ -1,0 +1,1902 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "avatar-default.html",
+      "name": "Avatar",
+      "family": "avatar.html",
+      "controls": [
+        {
+          "role": "avatar-size-select",
+          "label": "Size",
+          "cases": [
+            {
+              "value": "24",
+              "native": "24",
+              "previewChanged": true
+            },
+            {
+              "value": "32",
+              "native": "32",
+              "previewChanged": true
+            },
+            {
+              "value": "40",
+              "native": "40",
+              "previewChanged": true
+            },
+            {
+              "value": "48",
+              "native": "48",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-shape-select",
+          "label": "Shape",
+          "cases": [
+            {
+              "value": "circle",
+              "native": "circle",
+              "previewChanged": false
+            },
+            {
+              "value": "square",
+              "native": "square",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-initials",
+          "label": "Initials",
+          "cases": [
+            {
+              "value": "QA",
+              "native": "QA",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "avatar-group-view-select",
+          "label": "Show as",
+          "cases": [
+            {
+              "value": "avatars",
+              "native": "avatars",
+              "previewChanged": false
+            },
+            {
+              "value": "names",
+              "native": "names",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Initials",
+          "state": "Default",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Online",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Away",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Default",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Online",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Away",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Default",
+          "selection": {
+            "appearance": "Image",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Online",
+          "selection": {
+            "appearance": "Image",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Away",
+          "selection": {
+            "appearance": "Image",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Image",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [
+        "avatar-initials produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · DATA DISPLAY · AVATAR",
+      "inventory": [
+        {
+          "role": "avatar-size-select",
+          "type": "select",
+          "value": "32",
+          "options": [
+            "24",
+            "32",
+            "40",
+            "48"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-shape-select",
+          "type": "select",
+          "value": "circle",
+          "options": [
+            "circle",
+            "square"
+          ],
+          "label": "Shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-initials",
+          "type": "text",
+          "value": "JD",
+          "options": [],
+          "label": "Initials",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-group-view-select",
+          "type": "select",
+          "value": "avatars",
+          "options": [
+            "avatars",
+            "names"
+          ],
+          "label": "Show as",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 5,
+        "variants": 95
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "name": "Primary Button",
+      "family": "components.html",
+      "controls": [
+        {
+          "role": "size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "error": "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"size-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "content-mount",
+          "label": "Content",
+          "cases": [
+            {
+              "value": [
+                "text"
+              ],
+              "error": "locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"content-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-4\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-5\" class=\"multiselect-trigger\" aria-labelledby=\"content-dropdown-label ms-trigger-4\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "error": "locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"radius-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-7\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-8\" class=\"multiselect-trigger\" aria-labelledby=\"radius-dropdown-label ms-trigger-7\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "button-label",
+          "label": "Button label",
+          "cases": [
+            {
+              "value": "Audit Button label",
+              "native": "Audit Button label",
+              "previewChanged": false
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Primary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Link",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Link",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Link",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Link",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Link",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Link",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [
+        "size-mount: locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"size-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n",
+        "content-mount: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"content-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-4\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-5\" class=\"multiselect-trigger\" aria-labelledby=\"content-dropdown-label ms-trigger-4\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+        "radius-mount: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"radius-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-7\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-8\" class=\"multiselect-trigger\" aria-labelledby=\"radius-dropdown-label ms-trigger-7\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+        "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"content-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n\n    at change (/Users/user/Documents/Agentic Design System 2/tools/check-component-actions.cjs:15:349)\n    at async /Users/user/Documents/Agentic Design System 2/tools/check-component-actions.cjs:45:65"
+      ],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "file": "input-text-field.html",
+      "name": "Input Text Field",
+      "family": "input.html",
+      "controls": [
+        {
+          "role": "input-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "error": "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-size-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "input-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "error": "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-radius-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "input-label",
+          "label": "Label",
+          "cases": [
+            {
+              "value": "Audit Label",
+              "native": "Audit Label",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "input-placeholder",
+          "label": "Placeholder",
+          "cases": [
+            {
+              "value": "Audit Placeholder",
+              "native": "Audit Placeholder",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "input-icon-placement-mount",
+          "label": "Icon placement",
+          "cases": [
+            {
+              "value": [
+                "none"
+              ],
+              "native": [
+                "none"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "leading"
+              ],
+              "error": "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-icon-placement-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "input-type-select",
+          "label": "Input type",
+          "cases": [
+            {
+              "value": "text",
+              "native": "text",
+              "previewChanged": true
+            },
+            {
+              "value": "email",
+              "native": "email",
+              "previewChanged": true
+            },
+            {
+              "value": "password",
+              "native": "password",
+              "previewChanged": true
+            },
+            {
+              "value": "search",
+              "native": "search",
+              "previewChanged": true
+            },
+            {
+              "value": "tel",
+              "native": "tel",
+              "previewChanged": true
+            },
+            {
+              "value": "url",
+              "native": "url",
+              "previewChanged": true
+            },
+            {
+              "value": "number",
+              "native": "number",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-max-length",
+          "label": "Maximum length",
+          "cases": [
+            {
+              "value": 1,
+              "native": "1",
+              "previewChanged": false
+            },
+            {
+              "value": 0,
+              "native": "0",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "input-error-text",
+          "label": "Error message",
+          "cases": [
+            {
+              "value": "Audit Error message",
+              "native": "Audit Error message",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "input-allow-clear",
+          "label": "Allow clear",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-required",
+          "label": "Required",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-show-supporting",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-supporting-text",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": "Audit Supporting text",
+              "native": "Audit Supporting text",
+              "previewChanged": false
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Outlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Success",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Success",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Error",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Success",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [
+        "input-size-mount: locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-size-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n",
+        "input-radius-mount: locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-radius-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n",
+        "input-icon-placement-mount: locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"input-icon-placement-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+      ],
+      "review": [
+        "input-label produced no matrix/geometry change; inspect conditional or metadata-only use.",
+        "input-placeholder produced no matrix/geometry change; inspect conditional or metadata-only use.",
+        "input-max-length produced no matrix/geometry change; inspect conditional or metadata-only use.",
+        "input-error-text produced no matrix/geometry change; inspect conditional or metadata-only use.",
+        "input-supporting-text produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · FORMS · INPUT",
+      "inventory": [
+        {
+          "role": "input-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "input-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "input-label",
+          "type": "text",
+          "value": "Email address",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-placeholder",
+          "type": "text",
+          "value": "you@example.com",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-icon-placement-mount",
+          "type": "multi",
+          "value": [
+            "none"
+          ],
+          "options": [
+            "none",
+            "leading",
+            "trailing",
+            "both"
+          ],
+          "label": "Icon placement",
+          "unit": false
+        },
+        {
+          "role": "input-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-type-select",
+          "type": "select",
+          "value": "text",
+          "options": [
+            "text",
+            "email",
+            "password",
+            "search",
+            "tel",
+            "url",
+            "number"
+          ],
+          "label": "Input type",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-max-length",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-supporting-text",
+          "type": "text",
+          "value": "We'll only use this to send you a receipt.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-error-text",
+          "type": "text",
+          "value": "Enter a valid email address.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 18,
+        "variants": 38
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "file": "table-default.html",
+      "name": "Table",
+      "family": "table.html",
+      "controls": [
+        {
+          "role": "table-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "error": "locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-radius-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "table-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "small"
+              ],
+              "error": "locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-size-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-4\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-5\" class=\"multiselect-trigger\" aria-labelledby=\"table-size-dropdown-label ms-trigger-4\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+            }
+          ]
+        },
+        {
+          "role": "table-show-header",
+          "label": "Show header",
+          "cases": [
+            {
+              "value": false,
+              "error": "locator.setChecked: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-show-header\"]')\u001b[22m\n\u001b[2m    - locator resolved to <input checked type=\"checkbox\" data-role=\"table-show-header\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Default",
+          "state": "Default",
+          "selection": {
+            "appearance": "Default",
+            "state": "Default",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Striped",
+          "selection": {
+            "appearance": "Default",
+            "state": "Striped",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Default",
+            "state": "Selected",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Default",
+            "state": "Loading",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Empty",
+          "selection": {
+            "appearance": "Default",
+            "state": "Empty",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Default",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Default",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Striped",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Striped",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Selected",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Loading",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Empty",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Empty",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [
+        "table-radius-mount: locator.inputValue: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-radius-mount\"]').locator('.multiselect-options input:checked').nth(1)\u001b[22m\n",
+        "table-size-mount: locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-size-mount\"]').locator('.multiselect-trigger')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"ms-trigger-4\" aria-haspopup=\"true\" aria-expanded=\"false\" aria-controls=\"ms-panel-5\" class=\"multiselect-trigger\" aria-labelledby=\"table-size-dropdown-label ms-trigger-4\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <fieldset class=\"multiselect-fieldset\">…</fieldset> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+        "table-show-header: locator.setChecked: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-inspector [data-role=\"table-show-header\"]')\u001b[22m\n\u001b[2m    - locator resolved to <input checked type=\"checkbox\" data-role=\"table-show-header\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <label class=\"multiselect-option is-selected\">…</label> from <div class=\"type-control\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+        "locator.click: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.wb-savebar').getByRole('button', { name: 'Save', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"btn-demo btn-demo--primary btn-demo--h36\">Save</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option\">…</label> from <section id=\"wb-properties\" class=\"panel color-foundation\">…</section> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <label class=\"multiselect-option\">…</label> from <section id=\"wb-properties\" class=\"panel color-foundation\">…</section> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    15 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <label class=\"multiselect-option\">…</label> from <section id=\"wb-properties\" class=\"panel color-foundation\">…</section> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/user/Documents/Agentic Design System 2/tools/check-component-actions.cjs:50:83"
+      ],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TABLE",
+      "inventory": [
+        {
+          "role": "table-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "table-size-mount",
+          "type": "multi",
+          "value": [
+            "large"
+          ],
+          "options": [
+            "small",
+            "middle",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "table-show-header",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show header",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "status": "fail"
+    }
+  ],
+  "errors": [],
+  "status": "fail"
+}

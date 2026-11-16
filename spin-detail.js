@@ -39,7 +39,7 @@
       return ring;
     }
 
-    var row = '<div class="spin-demo-row">' + ring + '<span class="spin-demo-label">' + escapeHtml(label) + "</span></div>";
+    var row = '<div class="spin-demo-row">' + ring + '<span class="spin-demo-label" data-contract-part="label">' + escapeHtml(label) + "</span></div>";
 
     if (stateKey === "with-label"){
       return row;
@@ -72,7 +72,7 @@
     var lines = [];
     lines.push("/* Agentic Design System - Spin component */");
     lines.push("@keyframes spin-demo-rotate{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }");
-    lines.push(".spin-demo-ring{ box-sizing:border-box; border-radius:9999px; border:2.5px solid var(--graphite-700); border-top-color:var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex:none; }");
+    lines.push(".spin-demo-ring{ box-sizing:border-box; border-radius:var(--radius-full); border:2.5px solid var(--graphite-700); border-top-color:var(--red-500); animation: spin-demo-rotate var(--duration-slow) var(--ease-linear) infinite; flex:none; }");
     lines.push("/* The rotation IS the loading signal here, so reduced motion slows it rather than freezing it - a stopped spinner reads as a hung interface. */");
     lines.push("@media (prefers-reduced-motion: reduce){ .spin-demo-ring{ animation-duration:3s; } }");
     lines.push(".spin-demo-ring--small{ width:var(--dimension-14); height:var(--dimension-14); border-width:2px; }");
@@ -120,12 +120,12 @@
       card.setAttribute("tabindex", "0");
       var href = "spin-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Retired Patterns/Templates links and selected-guide exports reach Overview; neither retired page appears in navigation or the export catalog.",
+    "Legacy Design Values links reach the merged introduction; page Markdown contains the values.",
+    "Redundant navigation is removed and AI & Agents remains available.",
+    "Legacy AI Generator links reach the practical AI handoff instructions in Markdown Export.",
+    "Old selected-guide export URLs resolve; complete Markdown downloads include merged guidance without redirect-stub entries.",
+    "Both destination pages fit desktop and mobile in light and dark themes.",
+    "Fresh external visits still open the welcome choices."
+  ],
+  "errors": [],
+  "status": "pass"
+}

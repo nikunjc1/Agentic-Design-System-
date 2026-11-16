@@ -20,7 +20,7 @@ def expected_model():
     return re.sub(r'/\* BEGIN GENERATED PRIMITIVES \*/.*?/\* END GENERATED PRIMITIVES \*/', lambda _:block, MODEL.read_text(), flags=re.S)
 
 def snapshot():
-    script = "const M=require('./foundation-model.js');process.stdout.write(JSON.stringify({schemaVersion:1,format:'Damco CSS custom property snapshot; not a DTCG token document',light:M.resolve({},'light'),dark:M.resolve({},'dark')},null,2)+'\\n')"
+    script = "const M=require('./foundation-model.js');process.stdout.write(JSON.stringify({schemaVersion:1,format:'CSS custom property snapshot; not a DTCG token document',light:M.resolve({},'light'),dark:M.resolve({},'dark')},null,2)+'\\n')"
     return subprocess.run(['node','-e',script],cwd=ROOT,check=True,capture_output=True,text=True).stdout
 
 def hashes():

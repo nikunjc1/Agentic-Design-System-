@@ -1,0 +1,250 @@
+{
+  "file": "date-picker-default.html",
+  "name": "Date Picker",
+  "category": "Components · Forms · Date Picker",
+  "controls": [
+    {
+      "index": 0,
+      "role": "datepicker-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "datepicker-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "datepicker-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "datepicker-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "datepicker-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Date of birth",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "datepicker-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "MM/DD/YYYY",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "datepicker-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces icon once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Date Picker is a text field with a fixed trailing calendar icon that opens a calendar panel for selecting a single date - it prevents free-form date typos and formatting inconsistencies by letting the user pick from an actual calendar instead of typing a date string by hand. When to Use Collecting a single specific date - date of birth, a booking date, a deadline. Any date that benefits from calendar context - seeing the day of the week, nearby dates, or today's position. Filtering by a single date - \"show records on this date\". When Not to Use A start and end date together as one pair - use Date Range instead of two separate Date Pickers. A time of day rather than a calendar date - use Time. A date the user would rather type freely in an unusual format - a plain Input may fit better for unconstrained historical or approximate dates. Best Practices Show the selected date in the field using an unambiguous, locale-appropriate format (avoid all-numeric formats that can be misread as day/month vs. month/day). Default the calendar panel to open on today or on the currently selected date, not always the current month. Disable or visually de-emphasize out-of-range dates (past dates for a future booking, for example) rather than allowing an invalid selection to be corrected after the fact. Do and Don't Do Delivery date14 Mar 2026📅Weekdays only. An unambiguous written-out month, so the date reads the same to a reader in London and one in Chicago. Don't Delivery date03/14/26📅 All-numeric dates flip meaning between locales - 03/04 is two different days depending on where the reader is. Spell the month out. Accessibility The calendar panel is reachable and fully operable by keyboard (arrow keys to move between days, Enter to select, Escape to close). The current, focused, and selected day are each visually and programmatically distinguishable, not just by color. The field's accessible name states what date is being collected (e.g. \"Date of birth\"), not just \"Date\". Related Components Date Range, Time, Calendar (the always-visible grid this component's panel is based on), Input. { \"component\": \"Date Picker\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Date Picker is a text field with a fixed trailing calendar icon that opens a calendar panel for selecting a single date - it prevents free-form date typos and formatting inconsistencies by letting the user pick from an actual calendar instead of typing a date string by hand.\", \"whenToUse\": [ \"Collecting a single specific date - date of birth, a booking date, a deadline.\", \"Any date that benefits from calendar context - seeing the day of the week, nearby dates, or today's position.\", \"Filtering by a single date - \\\"show records on this date\\\".\" ], \"whenNotToUse\": [ \"A start and end date together as one pair - use Date Range instead of two separate Date Pickers.\", \"A time of day rather than a calendar date - use Time.\", \"A date the user would rather type freely in an unusual format - a plain Input may fit better for unconstrained historical or approximate dates.\" ], \"bestPractices\": [ \"Show the selected date in the field using an unambiguous, locale-appropriate format (avoid all-numeric formats that can be misread as day/month vs. month/day).\", \"Default the calendar panel to open on today or on the currently selected date, not always the current month.\", \"Disable or visually de-emphasize out-of-range dates (past dates for a future booking, for example) rather than allowing an invalid selection to be corrected after the fact.\" ], \"doAndDont\": { \"do\": \"An unambiguous written-out month, so the date reads the same to a reader in London and one in Chicago.\", \"dont\": \"All-numeric dates flip meaning between locales - 03/04 is two different days depending on where the reader is. Spell the month out.\" }, \"accessibility\": [ \"The calendar panel is reachable and fully operable by keyboard (arrow keys to move between days, Enter to select, Escape to close).\", \"The current, focused, and selected day are each visually and programmatically distinguishable, not just by color.\", \"The field's accessible name states what date is being collected (e.g. \\\"Date of birth\\\"), not just \\\"Date\\\".\" ], \"relatedComponents\": [ \"Date Range\", \"Time\", \"Calendar\", \"Input\" ] }",
+  "tests": []
+}

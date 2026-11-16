@@ -1,0 +1,2819 @@
+{
+  "status": "Design recommendations, not implemented or newly approved component APIs",
+  "priorityLegend": {
+    "P0": "Confirmed existing functionality defect needing repair",
+    "P1": "Core component-authoring capability absent from the simple detail panel",
+    "P2": "Advanced or context-dependent capability; validate demand before implementation"
+  },
+  "aliases": {
+    "input-text-field": "input",
+    "select-dropdown": "select",
+    "text-area-default": "textarea",
+    "date-picker-default": "date-picker",
+    "date-range-default": "date-range",
+    "color-picker-default": "color-picker",
+    "tree-select-default": "tree-select",
+    "pop-confirm-default": "pop-confirm",
+    "float-button-default": "float-button",
+    "group-button-default": "group-button",
+    "add-on-default": "add-on"
+  },
+  "families": {
+    "button": [
+      {
+        "property": "Leading icon reference",
+        "control": "searchable icon picker",
+        "priority": "P1",
+        "proposedDefault": "Keep the current example icon",
+        "validation": "Choose a valid Foundation icon ID or approved slot",
+        "previewAcceptance": "Changing the icon changes only the leading icon and its exported reference"
+      },
+      {
+        "property": "Trailing icon reference",
+        "control": "searchable icon picker",
+        "priority": "P1",
+        "proposedDefault": "Keep the current example icon",
+        "validation": "Independent of the leading icon and hidden without its slot",
+        "previewAcceptance": "Trailing icon swaps independently in both single and dual icon content"
+      },
+      {
+        "property": "Width mode",
+        "control": "segmented choice and dimension",
+        "priority": "P1",
+        "proposedDefault": "Auto",
+        "validation": "Auto or full container or positive custom width with valid unit",
+        "previewAcceptance": "Preview responds inside narrow and wide containers without clipping the label"
+      },
+      {
+        "property": "Button semantics",
+        "control": "choice and action metadata",
+        "priority": "P1",
+        "proposedDefault": "Native button type button",
+        "validation": "Button or submit or reset, or a real navigation href when rendered as a link",
+        "previewAcceptance": "Export the correct element and native type rather than inferring an action from label text"
+      },
+      {
+        "property": "Loading announcement",
+        "control": "text and toggle",
+        "priority": "P2",
+        "proposedDefault": "Loading",
+        "validation": "Nonempty accessible status when busy and no duplicate announcements",
+        "previewAcceptance": "Busy state keeps a useful accessible name and prevents repeated activation"
+      }
+    ],
+    "add-on": [
+      {
+        "property": "Input value",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Preserve text independently from placeholder and prefix/suffix",
+        "previewAcceptance": "Entered value appears between the add-ons and survives clear/reset correctly"
+      },
+      {
+        "property": "Input type",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Text",
+        "validation": "Allow supported native types with compatible validation",
+        "previewAcceptance": "Email, URL and numeric intent produce appropriate semantics and input behavior"
+      },
+      {
+        "property": "Prefix content kind",
+        "control": "choice and slot",
+        "priority": "P2",
+        "proposedDefault": "Text",
+        "validation": "Text or named icon or approved component slot",
+        "previewAcceptance": "Prefix can be a non-text reusable part without editing source"
+      },
+      {
+        "property": "Suffix content kind",
+        "control": "choice and slot",
+        "priority": "P2",
+        "proposedDefault": "Text",
+        "validation": "Text or named icon or approved component slot",
+        "previewAcceptance": "Suffix can be configured independently from the prefix"
+      },
+      {
+        "property": "Required and error rules",
+        "control": "toggle and linked text",
+        "priority": "P1",
+        "proposedDefault": "Optional with no error",
+        "validation": "Error text required when invalid and associated with the field",
+        "previewAcceptance": "Required/error configuration changes labels, semantics and relevant preview states"
+      }
+    ],
+    "affix": [
+      {
+        "property": "Affix edge",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Top",
+        "validation": "Top or bottom, using logical placement where appropriate",
+        "previewAcceptance": "A single test specimen pins to the selected edge"
+      },
+      {
+        "property": "Scroll container",
+        "control": "container picker",
+        "priority": "P1",
+        "proposedDefault": "Preview sandbox",
+        "validation": "Target must exist and be scrollable",
+        "previewAcceptance": "Demonstrate pinning within the chosen scroll region rather than only a static state"
+      },
+      {
+        "property": "Affixed content",
+        "control": "slot editor",
+        "priority": "P1",
+        "proposedDefault": "Current toolbar",
+        "validation": "Preserve reading order and focusable descendants",
+        "previewAcceptance": "Replace the toolbar with the intended action or navigation component"
+      },
+      {
+        "property": "Stacking layer",
+        "control": "token picker",
+        "priority": "P2",
+        "proposedDefault": "Existing overlay layer",
+        "validation": "Use a named layer and avoid covering focused content",
+        "previewAcceptance": "Pinned element resolves correctly beside headers and overlays"
+      }
+    ],
+    "alert": [
+      {
+        "property": "Severity",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example severity",
+        "validation": "Choose supported severity and retain a non-color cue",
+        "previewAcceptance": "Inspect one chosen severity instead of only a fixed comparison matrix"
+      },
+      {
+        "property": "Closable",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Dismiss action needs an accessible name",
+        "previewAcceptance": "Preview dismisses and restores predictably"
+      },
+      {
+        "property": "Action label",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "No action",
+        "validation": "Nonempty when an action is enabled",
+        "previewAcceptance": "Optional inline action uses user-authored text"
+      },
+      {
+        "property": "Icon reference",
+        "control": "searchable icon picker",
+        "priority": "P2",
+        "proposedDefault": "Current severity icon",
+        "validation": "Icon must agree with severity or be explicitly decorative",
+        "previewAcceptance": "Swap the icon without replacing the severity message"
+      },
+      {
+        "property": "Live announcement policy",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Informational policy appropriate to context",
+        "validation": "Avoid forcing assertive announcements for routine updates",
+        "previewAcceptance": "Export explicit role/live behavior with a focused interaction example"
+      }
+    ],
+    "anchor": [
+      {
+        "property": "Destination URL",
+        "control": "URL or fragment field",
+        "priority": "P1",
+        "proposedDefault": "Current example destination",
+        "validation": "Validate allowed schemes and require an existing fragment in the sandbox",
+        "previewAcceptance": "Link navigates to the authored destination rather than only changing its label"
+      },
+      {
+        "property": "Open in new tab",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Explain the new context and add appropriate rel metadata",
+        "previewAcceptance": "Export target and rel consistently"
+      },
+      {
+        "property": "Underline policy",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Current Foundation treatment",
+        "validation": "Links remain distinguishable without relying only on color",
+        "previewAcceptance": "Preview default, hover and focus treatment together"
+      },
+      {
+        "property": "Current-page state",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Apply aria-current only to the actual current destination",
+        "previewAcceptance": "Selected navigation semantics appear in preview/export"
+      }
+    ],
+    "autocomplete": [
+      {
+        "property": "Suggestion data",
+        "control": "editable option list",
+        "priority": "P1",
+        "proposedDefault": "Current example cities",
+        "validation": "Stable unique IDs, label and value for every item",
+        "previewAcceptance": "Authored suggestions populate the open panel and copied outputs"
+      },
+      {
+        "property": "Input value",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Keep entered value independent from selected option",
+        "previewAcceptance": "Selected and freely typed values are represented distinctly"
+      },
+      {
+        "property": "Minimum query length",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Zero",
+        "validation": "Nonnegative integer with an explained trigger",
+        "previewAcceptance": "Suggestions appear only after the configured number of characters"
+      },
+      {
+        "property": "Filter mode",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Client-side text match",
+        "validation": "Choose local filtering or declared remote results without claiming a live service",
+        "previewAcceptance": "Query changes update visible suggestions consistently"
+      },
+      {
+        "property": "No-results message",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "No matches",
+        "validation": "Distinguish no results from loading and failure",
+        "previewAcceptance": "Unmatched queries display the authored empty message"
+      }
+    ],
+    "avatar": [
+      {
+        "property": "Image source",
+        "control": "URL or image asset picker",
+        "priority": "P1",
+        "proposedDefault": "Current placeholder",
+        "validation": "Accept supported image types and provide a load-failure route",
+        "previewAcceptance": "A real chosen image replaces the placeholder"
+      },
+      {
+        "property": "Alternative text and decoration",
+        "control": "text and toggle",
+        "priority": "P1",
+        "proposedDefault": "Context-dependent",
+        "validation": "Require an accessible name for informative avatars and empty alt for decorative images",
+        "previewAcceptance": "Correct accessible image treatment survives export"
+      },
+      {
+        "property": "Fallback content",
+        "control": "choice and text",
+        "priority": "P1",
+        "proposedDefault": "Existing initials",
+        "validation": "Preserve initials when the image is missing or fails",
+        "previewAcceptance": "Failed image loading switches to the intended fallback"
+      },
+      {
+        "property": "Group items",
+        "control": "editable people list",
+        "priority": "P1",
+        "proposedDefault": "Current demonstration people",
+        "validation": "Each item needs stable ID and appropriate name/image data",
+        "previewAcceptance": "Group contents and accessible names are authorable"
+      },
+      {
+        "property": "Group overflow limit",
+        "control": "number",
+        "priority": "P2",
+        "proposedDefault": "Current example count",
+        "validation": "Positive integer and a meaningful overflow label",
+        "previewAcceptance": "Excess people collapse into a count with accessible disclosure"
+      }
+    ],
+    "badge": [
+      {
+        "property": "Badge mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Count or dot or status with compatible fields",
+        "previewAcceptance": "Configure a single intended badge rather than copying all examples"
+      },
+      {
+        "property": "Semantic status",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example status",
+        "validation": "Use supported semantic colors and text labels",
+        "previewAcceptance": "Status selection updates the same preview and exported value"
+      },
+      {
+        "property": "Show zero",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Zero visibility must be explicit",
+        "previewAcceptance": "Count zero is either displayed or suppressed as configured"
+      },
+      {
+        "property": "Host content",
+        "control": "slot editor",
+        "priority": "P1",
+        "proposedDefault": "Current example host",
+        "validation": "Do not remove the host accessible name",
+        "previewAcceptance": "Attach the badge to the intended icon or avatar or action"
+      },
+      {
+        "property": "Count announcement",
+        "control": "text formatter",
+        "priority": "P2",
+        "proposedDefault": "Context-specific count description",
+        "validation": "Avoid reading an unexplained isolated number",
+        "previewAcceptance": "Badge updates have a useful accessible meaning"
+      }
+    ],
+    "breadcrumb": [
+      {
+        "property": "Item destinations",
+        "control": "structured link list",
+        "priority": "P1",
+        "proposedDefault": "Current labels mapped to sample paths",
+        "validation": "Every non-current item needs a valid destination",
+        "previewAcceptance": "Clicking ancestors and exporting preserve each authored URL"
+      },
+      {
+        "property": "Current item",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Last item",
+        "validation": "Exactly one item is current and it is not an ambiguous duplicate link",
+        "previewAcceptance": "Preview/export agree about aria-current"
+      },
+      {
+        "property": "Separator",
+        "control": "icon or text picker",
+        "priority": "P1",
+        "proposedDefault": "Current separator",
+        "validation": "Decorative separators stay out of accessible names",
+        "previewAcceptance": "Change separator without changing item labels"
+      },
+      {
+        "property": "Overflow policy",
+        "control": "select and threshold",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Keep first/current destinations reachable and explain collapsed items",
+        "previewAcceptance": "Narrow specimens collapse predictably without losing ancestors"
+      }
+    ],
+    "calendar": [
+      {
+        "property": "Displayed month and year",
+        "control": "month/year input",
+        "priority": "P1",
+        "proposedDefault": "September 2026 example",
+        "validation": "Derive a real date grid with valid month boundaries and leap years",
+        "previewAcceptance": "Changing month updates day positions, overflow dates and full-date accessible labels together"
+      },
+      {
+        "property": "Selected date",
+        "control": "date input",
+        "priority": "P1",
+        "proposedDefault": "Current highlighted example",
+        "validation": "Value must be a valid enabled date in the configured mode",
+        "previewAcceptance": "Selection highlight corresponds to the authored date"
+      },
+      {
+        "property": "Today reference",
+        "control": "date input",
+        "priority": "P1",
+        "proposedDefault": "Fixed demo reference unless explicitly live",
+        "validation": "Keep the demo clock deterministic and separate from selected date",
+        "previewAcceptance": "Today marker moves independently of selection"
+      },
+      {
+        "property": "Events",
+        "control": "editable dated event list",
+        "priority": "P1",
+        "proposedDefault": "Current two sample events",
+        "validation": "ISO dates, stable IDs and accessible event names",
+        "previewAcceptance": "Authored events appear on their actual dates"
+      },
+      {
+        "property": "Disabled dates",
+        "control": "date/range rules",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Minimum must not exceed maximum and disabled dates cannot be selected",
+        "previewAcceptance": "Disabled days look and behave consistently"
+      },
+      {
+        "property": "Selection mode",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Single date",
+        "validation": "Single or range with ordered endpoints",
+        "previewAcceptance": "Range rendering follows actual chosen endpoints"
+      }
+    ],
+    "card": [
+      {
+        "property": "Header actions",
+        "control": "editable action list",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Each action needs a name and stable intent ID",
+        "previewAcceptance": "Actions render in the header and are included in the contract"
+      },
+      {
+        "property": "Footer content",
+        "control": "slot editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Keep footer order and action hierarchy explicit",
+        "previewAcceptance": "Configure real footer buttons or metadata"
+      },
+      {
+        "property": "Media",
+        "control": "asset and aspect-ratio picker",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Informative media needs alt text and a loading/fallback state",
+        "previewAcceptance": "Chosen image/media fits the card correctly"
+      },
+      {
+        "property": "Whole-card interaction",
+        "control": "select and destination",
+        "priority": "P1",
+        "proposedDefault": "Static",
+        "validation": "Avoid nested competing links and buttons",
+        "previewAcceptance": "Static, link and selectable cards expose different correct semantics"
+      },
+      {
+        "property": "Width constraints",
+        "control": "dimension controls",
+        "priority": "P2",
+        "proposedDefault": "Current sample width",
+        "validation": "Respect min/max and narrow-container behavior",
+        "previewAcceptance": "Card body wraps without losing its footer/actions"
+      }
+    ],
+    "cascader": [
+      {
+        "property": "Hierarchy data",
+        "control": "tree-data editor",
+        "priority": "P1",
+        "proposedDefault": "Existing example location tree",
+        "validation": "Stable IDs, labels and parent/child relationships without cycles",
+        "previewAcceptance": "Every panel shows the user's actual hierarchy"
+      },
+      {
+        "property": "Selected path",
+        "control": "hierarchical value picker",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Values must reference an existing valid path",
+        "previewAcceptance": "Trigger and highlighted nodes agree on selection"
+      },
+      {
+        "property": "Parent selectable",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Define leaf-only versus parent selection explicitly",
+        "previewAcceptance": "Clicking a parent either expands or selects according to the setting"
+      },
+      {
+        "property": "Expand trigger",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Click",
+        "validation": "Pointer hover must have an equivalent keyboard path",
+        "previewAcceptance": "Expansion behavior matches the declared trigger"
+      },
+      {
+        "property": "Searchable",
+        "control": "toggle and search behavior",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Preserve full path context in filtered matches",
+        "previewAcceptance": "Search results can locate deep nodes without losing ancestry"
+      }
+    ],
+    "checkbox": [
+      {
+        "property": "Checked value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Boolean value independent of visual hover/focus",
+        "previewAcceptance": "A single configured specimen toggles its actual checked state"
+      },
+      {
+        "property": "Indeterminate value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Define its relationship to checked and expose mixed semantics",
+        "previewAcceptance": "Mixed selection is represented programmatically and visually"
+      },
+      {
+        "property": "Disabled value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Disabled option remains understandable and non-interactive",
+        "previewAcceptance": "Current-instance disabled behavior can be exercised"
+      },
+      {
+        "property": "Group options",
+        "control": "editable option list",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Unique values and shared labelled group",
+        "previewAcceptance": "Multiple checkboxes use real authored option content"
+      },
+      {
+        "property": "Required/error message",
+        "control": "toggle and text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Associate group errors with the group and individual target where necessary",
+        "previewAcceptance": "Submit validation names the missing consent or choice"
+      }
+    ],
+    "collapse": [
+      {
+        "property": "Panels",
+        "control": "reorderable header/body list",
+        "priority": "P1",
+        "proposedDefault": "Current example panel",
+        "validation": "Stable IDs and unique control/panel relationships",
+        "previewAcceptance": "Authors can add, remove and reorder actual panels"
+      },
+      {
+        "property": "Expanded panels",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current default",
+        "validation": "Reference valid panel IDs",
+        "previewAcceptance": "Expanded state is inspectable independently of content"
+      },
+      {
+        "property": "Accordion mode",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "At most one panel open when enabled",
+        "previewAcceptance": "Opening one panel closes the prior panel only in accordion mode"
+      },
+      {
+        "property": "Disabled panel",
+        "control": "per-panel toggle",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Disabled headers cannot toggle and remain labelled",
+        "previewAcceptance": "A disabled panel is not simulated only by opacity"
+      },
+      {
+        "property": "Expand icon reference",
+        "control": "icon picker",
+        "priority": "P2",
+        "proposedDefault": "Existing chevron",
+        "validation": "Preserve expanded state naming and keyboard operation",
+        "previewAcceptance": "Icon replacement does not break panel controls"
+      }
+    ],
+    "color-picker": [
+      {
+        "property": "Color format",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "HEX",
+        "validation": "Supported formats round-trip without silently losing alpha",
+        "previewAcceptance": "The trigger, input and copied values use the chosen representation"
+      },
+      {
+        "property": "Alpha value",
+        "control": "percentage or slider",
+        "priority": "P1",
+        "proposedDefault": "Opaque",
+        "validation": "Clamp to a documented range and retain alpha in exports",
+        "previewAcceptance": "Transparency changes swatch and actual color value"
+      },
+      {
+        "property": "Preset colors",
+        "control": "editable swatch list",
+        "priority": "P1",
+        "proposedDefault": "Existing palette",
+        "validation": "Validate each swatch and provide an accessible name",
+        "previewAcceptance": "Authored presets can be chosen from the panel"
+      },
+      {
+        "property": "Required/error state",
+        "control": "toggle and text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Invalid values keep the last valid color and explain the error",
+        "previewAcceptance": "Bad input is recoverable without a silent reset"
+      },
+      {
+        "property": "Open/placement",
+        "control": "toggle and placement selector",
+        "priority": "P2",
+        "proposedDefault": "Closed with automatic placement",
+        "validation": "Popup remains within the viewport and returns focus",
+        "previewAcceptance": "A configured picker can be tested as a real popup"
+      }
+    ],
+    "date-picker": [
+      {
+        "property": "Selected date",
+        "control": "date input",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Parse a real date rather than a placeholder string",
+        "previewAcceptance": "Trigger and calendar agree on the selected date"
+      },
+      {
+        "property": "Date format",
+        "control": "format selector",
+        "priority": "P1",
+        "proposedDefault": "Existing sample format",
+        "validation": "Accepted input and displayed output must agree",
+        "previewAcceptance": "Changing format updates all formatted dates coherently"
+      },
+      {
+        "property": "Locale",
+        "control": "locale selector",
+        "priority": "P1",
+        "proposedDefault": "Existing example locale",
+        "validation": "Define date order, labels and week start explicitly",
+        "previewAcceptance": "Calendar and accessible names use the same locale"
+      },
+      {
+        "property": "Date bounds",
+        "control": "paired date inputs",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Minimum no later than maximum",
+        "previewAcceptance": "Out-of-range dates cannot be selected"
+      },
+      {
+        "property": "Disabled-date rules",
+        "control": "rule editor",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Resolve rules deterministically against sample dates",
+        "previewAcceptance": "Disabled choices are shown and blocked"
+      },
+      {
+        "property": "Required/error rules",
+        "control": "toggle and text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Validation runs at a defined interaction point",
+        "previewAcceptance": "Missing/invalid date receives an associated actionable message"
+      }
+    ],
+    "date-range": [
+      {
+        "property": "Selected range",
+        "control": "paired date inputs",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Both dates valid and start not after end",
+        "previewAcceptance": "Both trigger values and range highlight agree"
+      },
+      {
+        "property": "Date format and locale",
+        "control": "structured format settings",
+        "priority": "P1",
+        "proposedDefault": "Existing format",
+        "validation": "Match input parsing and accessible date names",
+        "previewAcceptance": "Both endpoints use the same format rules"
+      },
+      {
+        "property": "Minimum/maximum range",
+        "control": "paired duration inputs",
+        "priority": "P1",
+        "proposedDefault": "No additional limit",
+        "validation": "Nonnegative ordered durations in explicit units",
+        "previewAcceptance": "Disallowed ranges are explained and cannot be committed"
+      },
+      {
+        "property": "Disabled dates",
+        "control": "date/range editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Range crossing a disabled day follows an explicit policy",
+        "previewAcceptance": "Calendar and range validation agree"
+      },
+      {
+        "property": "Partial range policy",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Require both endpoints",
+        "validation": "Define open-ended ranges explicitly",
+        "previewAcceptance": "Empty end date is not confused with malformed input"
+      },
+      {
+        "property": "Required/error messages",
+        "control": "toggle and linked text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Differentiate missing start, missing end and reversed order",
+        "previewAcceptance": "Errors point to the endpoint that needs correction"
+      }
+    ],
+    "description": [
+      {
+        "property": "Description items",
+        "control": "editable term/value list",
+        "priority": "P1",
+        "proposedDefault": "Current account example",
+        "validation": "Each item needs a term and value or explicit missing value",
+        "previewAcceptance": "Actual product data replaces the fixed account fields"
+      },
+      {
+        "property": "Item spans",
+        "control": "per-item number",
+        "priority": "P1",
+        "proposedDefault": "One column",
+        "validation": "Positive spans cannot exceed current column count",
+        "previewAcceptance": "Long rows span predictably without breaking term/value order"
+      },
+      {
+        "property": "Label placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current placement",
+        "validation": "Preserve semantic term/value association",
+        "previewAcceptance": "Horizontal and stacked labels work at narrow widths"
+      },
+      {
+        "property": "Missing-value display",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Existing missing-value convention",
+        "validation": "Distinguish absent from zero and empty string",
+        "previewAcceptance": "Missing values render consistently with Data Format"
+      },
+      {
+        "property": "Copyable values",
+        "control": "per-item toggle",
+        "priority": "P2",
+        "proposedDefault": "False",
+        "validation": "Copy actions have item-specific names and truthful feedback",
+        "previewAcceptance": "Copy only the intended value"
+      }
+    ],
+    "divider": [
+      {
+        "property": "Orientation",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Horizontal",
+        "validation": "Horizontal or vertical with appropriate context",
+        "previewAcceptance": "Configure one intended divider rather than only fixed variants"
+      },
+      {
+        "property": "Line style",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current Foundation border style",
+        "validation": "Use supported line styles and preserve contrast",
+        "previewAcceptance": "Line style changes without overriding unrelated Foundation values"
+      },
+      {
+        "property": "Label placement offset",
+        "control": "token or dimension picker",
+        "priority": "P2",
+        "proposedDefault": "Current alignment spacing",
+        "validation": "Bound offset to the available width",
+        "previewAcceptance": "Authored text placement works with long labels"
+      },
+      {
+        "property": "Decorative semantics",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "Context-dependent",
+        "validation": "Distinguish structural separator from decoration",
+        "previewAcceptance": "Export role/orientation only when appropriate"
+      }
+    ],
+    "drawer": [
+      {
+        "property": "Placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example placement",
+        "validation": "Top, bottom and logical start/end with RTL behavior",
+        "previewAcceptance": "Chosen edge controls animation and panel position"
+      },
+      {
+        "property": "Open value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "Open demo",
+        "validation": "Keep open state separate from content and disabled state",
+        "previewAcceptance": "Drawer opens and closes in a real interaction specimen"
+      },
+      {
+        "property": "Footer actions",
+        "control": "editable labelled action list",
+        "priority": "P1",
+        "proposedDefault": "Current example actions",
+        "validation": "Define primary/cancel intent and pending behavior",
+        "previewAcceptance": "Footer labels and actions are authored rather than fixed"
+      },
+      {
+        "property": "Mask close policy",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "Explicit project policy",
+        "validation": "Do not accidentally discard unfinished work",
+        "previewAcceptance": "Clicking outside follows the configured rule"
+      },
+      {
+        "property": "Escape/focus return policy",
+        "control": "structured behavior controls",
+        "priority": "P1",
+        "proposedDefault": "Escape closes and returns focus where appropriate",
+        "validation": "Preserve focus containment and a named trigger",
+        "previewAcceptance": "Keyboard open/close returns to the correct element"
+      },
+      {
+        "property": "Custom width/height",
+        "control": "dimensions and responsive rule",
+        "priority": "P2",
+        "proposedDefault": "Existing size preset",
+        "validation": "Clamp to viewport and respect safe edges",
+        "previewAcceptance": "Large content scrolls inside a usable drawer"
+      }
+    ],
+    "dropdown": [
+      {
+        "property": "Menu items",
+        "control": "reorderable item editor",
+        "priority": "P1",
+        "proposedDefault": "Existing option labels",
+        "validation": "Stable item IDs, label and disabled/destructive metadata",
+        "previewAcceptance": "Add, remove and reorder the real command list"
+      },
+      {
+        "property": "Trigger mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Click",
+        "validation": "Pointer and keyboard activation must both work",
+        "previewAcceptance": "Trigger behavior matches the selected mode"
+      },
+      {
+        "property": "Placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Automatic",
+        "validation": "Keep the menu visible at viewport edges",
+        "previewAcceptance": "Open specimen repositions without clipping"
+      },
+      {
+        "property": "Selected/checked item",
+        "control": "item selector",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Selection mode must be declared",
+        "previewAcceptance": "Checked items use appropriate menu-item semantics"
+      },
+      {
+        "property": "Item icon and shortcut",
+        "control": "per-item icon/text controls",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Shortcuts need real documented meaning and decorative icon treatment",
+        "previewAcceptance": "Authored icons/shortcuts appear with the correct items"
+      }
+    ],
+    "empty": [
+      {
+        "property": "Illustration reference",
+        "control": "asset or icon picker",
+        "priority": "P1",
+        "proposedDefault": "Existing illustration",
+        "validation": "Decorative images have empty alt and meaningful images have useful descriptions",
+        "previewAcceptance": "Change the illustration without editing HTML"
+      },
+      {
+        "property": "Show action",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "True when an action label exists",
+        "validation": "Hide both visual control and interactive target when disabled",
+        "previewAcceptance": "Empty state can intentionally have no action"
+      },
+      {
+        "property": "Action intent",
+        "control": "action metadata or URL",
+        "priority": "P1",
+        "proposedDefault": "Current example intent",
+        "validation": "Destination/action must be explicit and valid",
+        "previewAcceptance": "Copied component knows what the authored action represents"
+      },
+      {
+        "property": "Secondary action",
+        "control": "optional action editor",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Keep hierarchy subordinate to the primary action",
+        "previewAcceptance": "Add a help or reset route without competing primary buttons"
+      }
+    ],
+    "float-button": [
+      {
+        "property": "Action icon reference",
+        "control": "icon picker",
+        "priority": "P1",
+        "proposedDefault": "Current example icon",
+        "validation": "Icon-only action requires a purpose-specific accessible name",
+        "previewAcceptance": "Swap the action icon without changing unrelated badges"
+      },
+      {
+        "property": "Accessible action name",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Current action meaning",
+        "validation": "Never rely only on tooltip visibility",
+        "previewAcceptance": "Button remains named with the tooltip closed"
+      },
+      {
+        "property": "Placement and offset",
+        "control": "logical corner and dimensions",
+        "priority": "P1",
+        "proposedDefault": "Existing bottom corner",
+        "validation": "Respect safe areas, RTL and other overlays",
+        "previewAcceptance": "Floating action stays reachable without covering important content"
+      },
+      {
+        "property": "Badge value",
+        "control": "number or text",
+        "priority": "P1",
+        "proposedDefault": "Current example badge",
+        "validation": "Follow count/max/zero rules",
+        "previewAcceptance": "Authored badge content appears independently of visibility"
+      },
+      {
+        "property": "Group actions",
+        "control": "action list",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Each action needs its own name and focus order",
+        "previewAcceptance": "A floating group uses actual authored actions"
+      }
+    ],
+    "group-button": [
+      {
+        "property": "Button items",
+        "control": "labelled item editor",
+        "priority": "P1",
+        "proposedDefault": "Current generated item labels",
+        "validation": "Stable item IDs, labels and optional icon references",
+        "previewAcceptance": "Each segment can have its own real product label"
+      },
+      {
+        "property": "Selection mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Single selection",
+        "validation": "Single or multiple or action group must be explicit",
+        "previewAcceptance": "Selection behavior matches the chosen mode"
+      },
+      {
+        "property": "Selected values",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current first selection",
+        "validation": "Selected IDs must exist and obey selection mode",
+        "previewAcceptance": "Preview can inspect the user's intended selection"
+      },
+      {
+        "property": "Orientation",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Horizontal",
+        "validation": "Vertical retains reading and keyboard order",
+        "previewAcceptance": "Layout changes without changing item identity"
+      },
+      {
+        "property": "Per-item disabled state",
+        "control": "item toggles",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Disabled segments cannot activate",
+        "previewAcceptance": "Mixed enabled/disabled groups are testable"
+      }
+    ],
+    "image": [
+      {
+        "property": "Image source",
+        "control": "URL or asset picker",
+        "priority": "P1",
+        "proposedDefault": "Existing placeholder",
+        "validation": "Supported file types and an explicit load-failure path",
+        "previewAcceptance": "Author can preview their own actual image"
+      },
+      {
+        "property": "Alternative text",
+        "control": "text and decoration toggle",
+        "priority": "P1",
+        "proposedDefault": "Context-dependent",
+        "validation": "Require appropriate text for meaningful images",
+        "previewAcceptance": "Informative image remains understandable without pixels"
+      },
+      {
+        "property": "Object fit",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current fit",
+        "validation": "Cover or contain with an explained crop",
+        "previewAcceptance": "Image framing responds correctly to aspect ratio"
+      },
+      {
+        "property": "Object position",
+        "control": "focal-point picker",
+        "priority": "P2",
+        "proposedDefault": "Center",
+        "validation": "Keep focal point within the image bounds",
+        "previewAcceptance": "Important subject remains visible when cropped"
+      },
+      {
+        "property": "Fallback image",
+        "control": "asset picker",
+        "priority": "P1",
+        "proposedDefault": "Current error illustration",
+        "validation": "Do not create an endless fallback error loop",
+        "previewAcceptance": "Failed source produces the configured fallback"
+      },
+      {
+        "property": "Preview/lightbox behavior",
+        "control": "toggle",
+        "priority": "P2",
+        "proposedDefault": "Existing demo policy",
+        "validation": "Provide keyboard close and focus return",
+        "previewAcceptance": "Enlarged image interaction is actually usable"
+      }
+    ],
+    "input": [
+      {
+        "property": "Input value",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Value must remain independent of label and placeholder",
+        "previewAcceptance": "Current value appears in preview and is exported"
+      },
+      {
+        "property": "Native input type",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Text",
+        "validation": "Use supported types with compatible formatting",
+        "previewAcceptance": "Email/URL/text/password intent yields correct native semantics"
+      },
+      {
+        "property": "Required",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Associate required and error instructions programmatically",
+        "previewAcceptance": "Required marking and validation behavior agree"
+      },
+      {
+        "property": "Helper/error text",
+        "control": "two linked text fields",
+        "priority": "P1",
+        "proposedDefault": "Current example messages",
+        "validation": "Show appropriate message without replacing the visible label",
+        "previewAcceptance": "User-authored messages render and export with stable IDs"
+      },
+      {
+        "property": "Read-only",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Keep readable content selectable while preventing edits",
+        "previewAcceptance": "Read-only differs from disabled"
+      },
+      {
+        "property": "Leading/trailing icon reference",
+        "control": "named icon pickers",
+        "priority": "P2",
+        "proposedDefault": "Current example icons",
+        "validation": "Icons obey slot visibility and accessible decoration rules",
+        "previewAcceptance": "Visible icon can be changed beyond a Boolean on/off flag"
+      }
+    ],
+    "list": [
+      {
+        "property": "List items",
+        "control": "structured item editor",
+        "priority": "P1",
+        "proposedDefault": "Current sample people",
+        "validation": "Stable IDs with title, description and optional media",
+        "previewAcceptance": "List contains the user's actual items"
+      },
+      {
+        "property": "Item actions",
+        "control": "per-item action list",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Item-specific action names and stable intents",
+        "previewAcceptance": "Repeated row actions remain distinguishable"
+      },
+      {
+        "property": "Selection mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Single/multiple selection use correct semantics",
+        "previewAcceptance": "Selected items can be configured and exercised"
+      },
+      {
+        "property": "Layout",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Current vertical list",
+        "validation": "Preserve reading order at breakpoints",
+        "previewAcceptance": "Horizontal/grid arrangements adapt to width"
+      },
+      {
+        "property": "Empty/loading messages",
+        "control": "linked text and state controls",
+        "priority": "P1",
+        "proposedDefault": "Existing examples",
+        "validation": "Separate no content from loading and failure",
+        "previewAcceptance": "Authored fallback content appears in appropriate states"
+      }
+    ],
+    "mention": [
+      {
+        "property": "Mention candidates",
+        "control": "editable user/entity list",
+        "priority": "P1",
+        "proposedDefault": "Current examples",
+        "validation": "Stable ID, display label and insertion value",
+        "previewAcceptance": "The suggestion panel uses actual author-provided candidates"
+      },
+      {
+        "property": "Input value",
+        "control": "multiline text",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Preserve committed mention IDs separately from display text",
+        "previewAcceptance": "Value can contain authored mentions and surrounding text"
+      },
+      {
+        "property": "Trigger characters",
+        "control": "list of characters",
+        "priority": "P1",
+        "proposedDefault": "At sign",
+        "validation": "Prevent empty/ambiguous triggers and document escaping",
+        "previewAcceptance": "Different triggers open the correct candidate source"
+      },
+      {
+        "property": "Search policy",
+        "control": "select and threshold",
+        "priority": "P2",
+        "proposedDefault": "Local filtering",
+        "validation": "State when and how matching occurs",
+        "previewAcceptance": "Query and empty results are testable"
+      },
+      {
+        "property": "Helper/error rules",
+        "control": "linked text and validation controls",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Keep errors associated with the field",
+        "previewAcceptance": "Invalid mention values get an actionable message"
+      }
+    ],
+    "menu": [
+      {
+        "property": "Structured items",
+        "control": "tree/item editor",
+        "priority": "P1",
+        "proposedDefault": "Existing labels",
+        "validation": "Stable IDs and item/group/submenu types",
+        "previewAcceptance": "Add submenus, groups and real commands rather than comma-separated text alone"
+      },
+      {
+        "property": "Selected item",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Reference an existing selectable item",
+        "previewAcceptance": "Current route/selection has the correct semantics"
+      },
+      {
+        "property": "Expanded submenus",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current examples",
+        "validation": "Only submenu IDs may be expanded",
+        "previewAcceptance": "Expansion follows authored hierarchy"
+      },
+      {
+        "property": "Item destinations/actions",
+        "control": "per-item metadata",
+        "priority": "P1",
+        "proposedDefault": "Existing example intent",
+        "validation": "Links and commands retain distinct semantics",
+        "previewAcceptance": "Authored menu can support real navigation"
+      },
+      {
+        "property": "Per-item disabled/destructive state",
+        "control": "item controls",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Destructive meaning cannot rely only on color",
+        "previewAcceptance": "Item behavior matches its declared state"
+      }
+    ],
+    "modal": [
+      {
+        "property": "Open state and trigger",
+        "control": "toggle with trigger label",
+        "priority": "P1",
+        "proposedDefault": "Closed interactive specimen",
+        "validation": "Opening and closing must preserve a meaningful focus return target",
+        "previewAcceptance": "User can test a real dialog rather than a fixed open snapshot"
+      },
+      {
+        "property": "Primary action label",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Current example primary label",
+        "validation": "Nonempty when primary action is present",
+        "previewAcceptance": "Export and preview use the user's actual action wording"
+      },
+      {
+        "property": "Secondary action label",
+        "control": "text and toggle",
+        "priority": "P1",
+        "proposedDefault": "Current example secondary label",
+        "validation": "Secondary intent and visibility must be explicit",
+        "previewAcceptance": "Footer adapts without empty interactive controls"
+      },
+      {
+        "property": "Footer content",
+        "control": "slot or action editor",
+        "priority": "P1",
+        "proposedDefault": "Current footer",
+        "validation": "Support no footer without losing a close route",
+        "previewAcceptance": "Modal can host the intended product-specific actions"
+      },
+      {
+        "property": "Mask/Escape policy",
+        "control": "behavior toggles",
+        "priority": "P1",
+        "proposedDefault": "Context-appropriate close policy",
+        "validation": "Preserve changes or warn before destructive dismissal",
+        "previewAcceptance": "Each dismissal route follows the same policy"
+      },
+      {
+        "property": "Initial focus target",
+        "control": "part selector",
+        "priority": "P1",
+        "proposedDefault": "Safe logical target",
+        "validation": "Target must exist and be focusable in the open dialog",
+        "previewAcceptance": "Keyboard starts in the intended part and stays contained"
+      }
+    ],
+    "notification": [
+      {
+        "property": "Severity",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Supported semantic status with non-color cue",
+        "previewAcceptance": "Inspect a chosen notification status"
+      },
+      {
+        "property": "Auto-dismiss duration",
+        "control": "number and persistent toggle",
+        "priority": "P1",
+        "proposedDefault": "Current demo policy",
+        "validation": "Nonnegative duration and an explicit persistent mode",
+        "previewAcceptance": "Timing and pause behavior are testable"
+      },
+      {
+        "property": "Closable",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "True where appropriate",
+        "validation": "A persistent notice needs a clear dismiss route unless intentionally blocking",
+        "previewAcceptance": "Close behavior is configurable and named"
+      },
+      {
+        "property": "Action label/intent",
+        "control": "action editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "User action must have a valid stable intent",
+        "previewAcceptance": "Optional action is not hardcoded example content"
+      },
+      {
+        "property": "Announcement priority",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Context-dependent",
+        "validation": "Avoid treating routine completion as an assertive alert",
+        "previewAcceptance": "Copied semantics match the notification's urgency"
+      }
+    ],
+    "number": [
+      {
+        "property": "Numeric value",
+        "control": "number input",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Accept only a valid finite number or declared empty value",
+        "previewAcceptance": "Value is independent of placeholder and updates the specimen"
+      },
+      {
+        "property": "Minimum",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Cannot exceed maximum",
+        "previewAcceptance": "Decrement and typed validation respect the lower bound"
+      },
+      {
+        "property": "Maximum",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Cannot be lower than minimum",
+        "previewAcceptance": "Increment and typed validation respect the upper bound"
+      },
+      {
+        "property": "Step",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "One",
+        "validation": "Positive nonzero increment with defined rounding",
+        "previewAcceptance": "Stepper uses the declared increment"
+      },
+      {
+        "property": "Precision/format",
+        "control": "integer and format selector",
+        "priority": "P2",
+        "proposedDefault": "Existing Data Format",
+        "validation": "Nonnegative precision and no hidden unit conversion",
+        "previewAcceptance": "Displayed and exported numeric values round-trip predictably"
+      },
+      {
+        "property": "Required/error rules",
+        "control": "toggle and text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Distinguish empty from zero",
+        "previewAcceptance": "Missing and out-of-range values show specific errors"
+      }
+    ],
+    "pagination": [
+      {
+        "property": "Current page",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Existing example page",
+        "validation": "Integer from one through the computed last page",
+        "previewAcceptance": "Active page and navigation disabled states update together"
+      },
+      {
+        "property": "Total items",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Current fixture total",
+        "validation": "Nonnegative integer",
+        "previewAcceptance": "Page count follows total rather than a fixed demo list"
+      },
+      {
+        "property": "Page size",
+        "control": "number or option list",
+        "priority": "P1",
+        "proposedDefault": "Current fixture size",
+        "validation": "Positive integer and a documented size-change policy",
+        "previewAcceptance": "Changing page size recomputes available pages"
+      },
+      {
+        "property": "Show total label",
+        "control": "toggle and format text",
+        "priority": "P1",
+        "proposedDefault": "Current demo policy",
+        "validation": "Explain total versus visible range",
+        "previewAcceptance": "Range text remains correct on first/last/empty pages"
+      },
+      {
+        "property": "Quick jump",
+        "control": "toggle",
+        "priority": "P2",
+        "proposedDefault": "False",
+        "validation": "Reject out-of-range page requests with feedback",
+        "previewAcceptance": "Jump control navigates to a valid page"
+      }
+    ],
+    "password": [
+      {
+        "property": "Password value",
+        "control": "secure input",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Do not include real credentials in shared examples or automatic exports",
+        "previewAcceptance": "A synthetic value can be tested in masked and revealed modes"
+      },
+      {
+        "property": "Required",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Associate the requirement with the input",
+        "previewAcceptance": "Missing password is distinct from a strength failure"
+      },
+      {
+        "property": "Minimum/maximum length",
+        "control": "paired integers",
+        "priority": "P1",
+        "proposedDefault": "Project-defined",
+        "validation": "Nonnegative ordered bounds with a clear policy",
+        "previewAcceptance": "Validation messages reflect the configured length rule"
+      },
+      {
+        "property": "Strength/help text",
+        "control": "text and optional meter",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Avoid inventing a security guarantee from a visual strength meter",
+        "previewAcceptance": "Authored guidance appears without exposing a real password"
+      },
+      {
+        "property": "Autocomplete purpose",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Context-dependent",
+        "validation": "Distinguish current-password from new-password intent",
+        "previewAcceptance": "Export includes the correct browser-autofill hint"
+      }
+    ],
+    "pop-confirm": [
+      {
+        "property": "Open/trigger behavior",
+        "control": "toggle and trigger selector",
+        "priority": "P1",
+        "proposedDefault": "Click",
+        "validation": "Keyboard must expose the confirmation without hover dependence",
+        "previewAcceptance": "Test opening, confirming and cancelling a real popover"
+      },
+      {
+        "property": "Placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Automatic",
+        "validation": "Keep the confirmation in view",
+        "previewAcceptance": "Chosen placement respects edges"
+      },
+      {
+        "property": "Severity/icon",
+        "control": "select and icon picker",
+        "priority": "P1",
+        "proposedDefault": "Current warning meaning",
+        "validation": "Destructive meaning also appears in text",
+        "previewAcceptance": "User can configure a safe versus destructive confirmation"
+      },
+      {
+        "property": "Confirm pending state",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Prevent duplicate submission while pending",
+        "previewAcceptance": "Confirm action shows progress without losing Cancel/close policy"
+      },
+      {
+        "property": "Dismissal policy",
+        "control": "behavior toggles",
+        "priority": "P2",
+        "proposedDefault": "Explicit project policy",
+        "validation": "Escape and outside click do not accidentally confirm",
+        "previewAcceptance": "Every dismissal route is testable"
+      }
+    ],
+    "popover": [
+      {
+        "property": "Trigger behavior",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Click",
+        "validation": "Keyboard equivalent required for pointer interactions",
+        "previewAcceptance": "Open/close behavior can be exercised from the trigger"
+      },
+      {
+        "property": "Placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Automatic",
+        "validation": "Reposition within the available viewport",
+        "previewAcceptance": "Content remains visible beside edges"
+      },
+      {
+        "property": "Open state",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "Closed specimen",
+        "validation": "Keep controlled open state separate from hover styling",
+        "previewAcceptance": "Author can inspect one open/closed state"
+      },
+      {
+        "property": "Interactive content",
+        "control": "slot editor",
+        "priority": "P1",
+        "proposedDefault": "Current text body",
+        "validation": "Focusable descendants need a coherent focus/close policy",
+        "previewAcceptance": "Popover can contain actual links/actions rather than only plain text"
+      },
+      {
+        "property": "Maximum width",
+        "control": "dimension or token",
+        "priority": "P2",
+        "proposedDefault": "Current sample width",
+        "validation": "Bound width to the containing viewport",
+        "previewAcceptance": "Long content wraps without clipping controls"
+      }
+    ],
+    "progress": [
+      {
+        "property": "Progress mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current bar",
+        "validation": "Determinate or indeterminate and compatible semantics",
+        "previewAcceptance": "Unknown progress is not represented as a fake percentage"
+      },
+      {
+        "property": "Status",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Normal",
+        "validation": "Normal, success and exception use text plus color",
+        "previewAcceptance": "Status changes actual semantics and visible label"
+      },
+      {
+        "property": "Shape",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Supported line/circle types only",
+        "previewAcceptance": "Choose the intended shape rather than exporting all examples"
+      },
+      {
+        "property": "Stroke thickness",
+        "control": "dimension or token",
+        "priority": "P2",
+        "proposedDefault": "Current stroke",
+        "validation": "Positive thickness that fits the chosen shape",
+        "previewAcceptance": "Track and fill scale together"
+      },
+      {
+        "property": "Accessible progress label",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Context-specific task name",
+        "validation": "Determinate progress has a useful name and valid value bounds",
+        "previewAcceptance": "Exported progress communicates task and completion"
+      }
+    ],
+    "radio": [
+      {
+        "property": "Option items",
+        "control": "editable option list",
+        "priority": "P1",
+        "proposedDefault": "Existing example options",
+        "validation": "Unique values with clear labels",
+        "previewAcceptance": "Group contains actual product choices"
+      },
+      {
+        "property": "Selected value",
+        "control": "option picker",
+        "priority": "P1",
+        "proposedDefault": "None or current example",
+        "validation": "At most one selected option",
+        "previewAcceptance": "Preview reflects the intended current value"
+      },
+      {
+        "property": "Group name",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Stable generated group name",
+        "validation": "Nonempty and unique in a composite form",
+        "previewAcceptance": "Native radio inputs form the correct single-selection group"
+      },
+      {
+        "property": "Required/error rules",
+        "control": "toggle and text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Associate an error with the labelled group",
+        "previewAcceptance": "Missing selection is recoverable on submit"
+      },
+      {
+        "property": "Per-option disabled",
+        "control": "item toggle",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Disabled options cannot be selected by keyboard or pointer",
+        "previewAcceptance": "Mixed groups remain understandable"
+      }
+    ],
+    "rating": [
+      {
+        "property": "Maximum rating",
+        "control": "integer",
+        "priority": "P1",
+        "proposedDefault": "Five",
+        "validation": "Positive bounded count with value no greater than maximum",
+        "previewAcceptance": "Number of rating choices follows the chosen scale"
+      },
+      {
+        "property": "Allow half values",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Selected value must follow the configured step",
+        "previewAcceptance": "Half selections render and announce accurately"
+      },
+      {
+        "property": "Read-only",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Read-only summary differs from a disabled input",
+        "previewAcceptance": "Value remains understandable without suggesting editability"
+      },
+      {
+        "property": "Icon reference",
+        "control": "icon picker",
+        "priority": "P2",
+        "proposedDefault": "Existing star",
+        "validation": "Shape choices retain the rating meaning and accessible names",
+        "previewAcceptance": "Author can replace the icon without editing SVG source"
+      },
+      {
+        "property": "Per-value descriptions",
+        "control": "editable text list",
+        "priority": "P1",
+        "proposedDefault": "Current numeric labels",
+        "validation": "One useful description for every selectable value",
+        "previewAcceptance": "Keyboard and screen-reader users receive meaningful choices"
+      }
+    ],
+    "result": [
+      {
+        "property": "Result status",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Supported success/error/warning/info types",
+        "previewAcceptance": "A single chosen result has matching icon and message"
+      },
+      {
+        "property": "Primary action label/intent",
+        "control": "action editor",
+        "priority": "P1",
+        "proposedDefault": "Existing example action",
+        "validation": "Require explicit intent and meaningful text",
+        "previewAcceptance": "Result can offer the actual next task"
+      },
+      {
+        "property": "Secondary action",
+        "control": "optional action editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Keep secondary hierarchy clear",
+        "previewAcceptance": "Offer back/help without duplicate primary actions"
+      },
+      {
+        "property": "Illustration/icon",
+        "control": "asset or icon picker",
+        "priority": "P2",
+        "proposedDefault": "Existing status illustration",
+        "validation": "Match semantics or mark decoration correctly",
+        "previewAcceptance": "Asset is configurable without hardcoded markup"
+      },
+      {
+        "property": "Details content",
+        "control": "text or slot",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Sensitive diagnostic details must not be automatically exposed",
+        "previewAcceptance": "Authored details are expandable and accessible where needed"
+      }
+    ],
+    "search": [
+      {
+        "property": "Query value",
+        "control": "text",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Preserve query independently from placeholder",
+        "previewAcceptance": "Entered query is reflected in preview and copied output"
+      },
+      {
+        "property": "Submission trigger",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Explicit submit",
+        "validation": "Enter or button or debounced change must be clear",
+        "previewAcceptance": "Interaction specimen performs the declared trigger"
+      },
+      {
+        "property": "Debounce delay",
+        "control": "number",
+        "priority": "P2",
+        "proposedDefault": "Project-defined for live filtering",
+        "validation": "Nonnegative milliseconds and only active for live mode",
+        "previewAcceptance": "Repeated typing coalesces updates appropriately"
+      },
+      {
+        "property": "Search button label",
+        "control": "text and toggle",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Icon-only search still needs an accessible name",
+        "previewAcceptance": "Search can use product-specific action text"
+      },
+      {
+        "property": "Loading/no-result/error text",
+        "control": "linked state text controls",
+        "priority": "P1",
+        "proposedDefault": "Current examples",
+        "validation": "Distinguish pending, no matches and failed request",
+        "previewAcceptance": "Users can inspect realistic search feedback"
+      }
+    ],
+    "select": [
+      {
+        "property": "Options",
+        "control": "editable option list",
+        "priority": "P1",
+        "proposedDefault": "Current country examples",
+        "validation": "Stable unique values with label, optional group and disabled metadata",
+        "previewAcceptance": "User-authored choices replace the fixed countries"
+      },
+      {
+        "property": "Selected value",
+        "control": "option picker",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Selected values must reference existing enabled options",
+        "previewAcceptance": "Trigger and selected menu item stay consistent"
+      },
+      {
+        "property": "Selection mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Single",
+        "validation": "Single or multiple with explicit clear semantics",
+        "previewAcceptance": "Selected-value representation follows the mode"
+      },
+      {
+        "property": "Searchable",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Explain filtering and preserve accessible keyboard navigation",
+        "previewAcceptance": "Large option sets can be searched"
+      },
+      {
+        "property": "Helper/error/required rules",
+        "control": "grouped field controls",
+        "priority": "P1",
+        "proposedDefault": "Optional with no error",
+        "validation": "Messages must be linked and meaningful",
+        "previewAcceptance": "Product-specific form validation is previewable"
+      },
+      {
+        "property": "Empty/loading text",
+        "control": "linked text fields",
+        "priority": "P2",
+        "proposedDefault": "Current examples",
+        "validation": "Never use the same message for no results and failed loading",
+        "previewAcceptance": "Each state displays authored feedback"
+      }
+    ],
+    "skeleton": [
+      {
+        "property": "Skeleton structure",
+        "control": "editable block list",
+        "priority": "P1",
+        "proposedDefault": "Current text rows",
+        "validation": "Supported text/avatar/image/control block types",
+        "previewAcceptance": "Placeholder geometry can match the real component anatomy"
+      },
+      {
+        "property": "Line widths",
+        "control": "per-row percentage list",
+        "priority": "P1",
+        "proposedDefault": "Current example widths",
+        "validation": "Percentages in a documented range and one value per row",
+        "previewAcceptance": "Different text lengths can be modeled without source edits"
+      },
+      {
+        "property": "Animation",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "Respect reduced motion",
+        "validation": "Animation stops under reduced-motion preferences",
+        "previewAcceptance": "Animated and static loading specimens are distinguishable"
+      },
+      {
+        "property": "Avatar/media placeholder",
+        "control": "toggle and shape/size",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Decorative placeholders stay out of focus and accessible names",
+        "previewAcceptance": "User can model media alongside text"
+      },
+      {
+        "property": "Loading announcement",
+        "control": "text or status policy",
+        "priority": "P1",
+        "proposedDefault": "Context-appropriate",
+        "validation": "Announce loading once without reading decorative blocks",
+        "previewAcceptance": "Copied semantics remain useful"
+      }
+    ],
+    "slider": [
+      {
+        "property": "Minimum",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Zero",
+        "validation": "Finite and less than maximum",
+        "previewAcceptance": "Scale begins at the authored bound"
+      },
+      {
+        "property": "Maximum",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "One hundred",
+        "validation": "Finite and greater than minimum",
+        "previewAcceptance": "Scale ends at the authored bound"
+      },
+      {
+        "property": "Step",
+        "control": "positive number",
+        "priority": "P1",
+        "proposedDefault": "One",
+        "validation": "Positive step compatible with bounds and value",
+        "previewAcceptance": "Keyboard and pointer movement follow the same increment"
+      },
+      {
+        "property": "Range mode",
+        "control": "toggle and endpoint values",
+        "priority": "P1",
+        "proposedDefault": "Single value",
+        "validation": "Ordered enabled endpoints inside bounds",
+        "previewAcceptance": "Two-thumb range can be configured and exercised"
+      },
+      {
+        "property": "Marks",
+        "control": "editable value/label list",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Mark values lie inside bounds",
+        "previewAcceptance": "Meaningful labelled stops appear at the right positions"
+      },
+      {
+        "property": "Value text format",
+        "control": "format and unit text",
+        "priority": "P2",
+        "proposedDefault": "Raw number",
+        "validation": "Accessible value text describes units without replacing numeric semantics",
+        "previewAcceptance": "Volume, price and duration sliders announce useful values"
+      }
+    ],
+    "spin": [
+      {
+        "property": "Spinner size",
+        "control": "size or dimension picker",
+        "priority": "P1",
+        "proposedDefault": "Current size",
+        "validation": "Supported sizes fit the target and inline text",
+        "previewAcceptance": "Spinner can fit small controls and larger loading regions"
+      },
+      {
+        "property": "Indicator reference",
+        "control": "icon or approved slot",
+        "priority": "P2",
+        "proposedDefault": "Existing spinner",
+        "validation": "Avoid decorative indicator being read as meaningful content",
+        "previewAcceptance": "Indicator asset is configurable"
+      },
+      {
+        "property": "Delay",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Zero",
+        "validation": "Nonnegative milliseconds with clear cancellation behavior",
+        "previewAcceptance": "Brief loads can avoid unnecessary flashing"
+      },
+      {
+        "property": "Loading state",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "True demo",
+        "validation": "Busy state belongs to the intended region",
+        "previewAcceptance": "Specimen can transition between content and loading"
+      },
+      {
+        "property": "Overlay mode",
+        "control": "toggle and target region",
+        "priority": "P2",
+        "proposedDefault": "Inline",
+        "validation": "Do not block unrelated controls and preserve focus",
+        "previewAcceptance": "Overlay loading affects only the intended content"
+      }
+    ],
+    "splitter": [
+      {
+        "property": "Orientation",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current horizontal split",
+        "validation": "Horizontal or vertical with correct separator semantics",
+        "previewAcceptance": "One configured splitter uses the intended axis"
+      },
+      {
+        "property": "Panel minimum size",
+        "control": "paired dimensions",
+        "priority": "P1",
+        "proposedDefault": "Current example minimums",
+        "validation": "Each bound must leave feasible room for the other panel",
+        "previewAcceptance": "Dragging never collapses an essential panel below its minimum"
+      },
+      {
+        "property": "Panel maximum size",
+        "control": "paired dimensions",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Compatible minimum/maximum constraints",
+        "previewAcceptance": "Resize stays within authored limits"
+      },
+      {
+        "property": "Collapsible panels",
+        "control": "per-panel toggles",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Collapsed content is not accidentally focusable",
+        "previewAcceptance": "Collapse/restore has an accessible control"
+      },
+      {
+        "property": "Panel contents",
+        "control": "two slots",
+        "priority": "P1",
+        "proposedDefault": "Existing labels",
+        "validation": "Preserve focus and reading order inside panels",
+        "previewAcceptance": "Preview can contain actual navigation and detail content"
+      },
+      {
+        "property": "Keyboard resize step",
+        "control": "number",
+        "priority": "P1",
+        "proposedDefault": "Documented default",
+        "validation": "Positive increment and correctly oriented arrow commands",
+        "previewAcceptance": "Keyboard resizing updates announced values"
+      }
+    ],
+    "statistic": [
+      {
+        "property": "Numeric source value",
+        "control": "number input separate from formatted text",
+        "priority": "P1",
+        "proposedDefault": "Current example number",
+        "validation": "Finite number or explicit missing state",
+        "previewAcceptance": "Formatting never destroys the underlying numeric value"
+      },
+      {
+        "property": "Precision",
+        "control": "integer",
+        "priority": "P1",
+        "proposedDefault": "Data Format default",
+        "validation": "Nonnegative documented precision",
+        "previewAcceptance": "Decimal presentation follows the selected precision"
+      },
+      {
+        "property": "Locale/number format",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current Data Format",
+        "validation": "Explicit decimal/grouping/currency choices",
+        "previewAcceptance": "Sample numbers format consistently across preview/export"
+      },
+      {
+        "property": "Trend/delta",
+        "control": "numeric value and direction",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Direction is not conveyed by color alone",
+        "previewAcceptance": "Optional change indicator includes useful text"
+      },
+      {
+        "property": "Loading/missing treatment",
+        "control": "state controls and text",
+        "priority": "P2",
+        "proposedDefault": "Current examples",
+        "validation": "Distinguish zero, missing and loading",
+        "previewAcceptance": "Each state is represented without fabricated numeric content"
+      }
+    ],
+    "steps": [
+      {
+        "property": "Current step",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current first step",
+        "validation": "Reference a valid step and define zero/one based indexing",
+        "previewAcceptance": "Highlight follows the authored current item"
+      },
+      {
+        "property": "Step items and descriptions",
+        "control": "reorderable item editor",
+        "priority": "P1",
+        "proposedDefault": "Existing labels",
+        "validation": "Stable IDs with optional descriptions and status",
+        "previewAcceptance": "Adding/reordering steps keeps the active step identity"
+      },
+      {
+        "property": "Per-step status",
+        "control": "item status selector",
+        "priority": "P1",
+        "proposedDefault": "Current state",
+        "validation": "Waiting, current, complete and error states must be coherent",
+        "previewAcceptance": "A failure can be located on a specific step"
+      },
+      {
+        "property": "Clickable navigation",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Future-step access follows validation policy",
+        "previewAcceptance": "Only allowed navigation targets activate"
+      },
+      {
+        "property": "Icons",
+        "control": "per-step icon picker",
+        "priority": "P2",
+        "proposedDefault": "Existing number markers",
+        "validation": "Retain step status and position information accessibly",
+        "previewAcceptance": "Authored icons do not obscure progression"
+      }
+    ],
+    "switch": [
+      {
+        "property": "Checked value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Boolean current value independent of hover/loading visuals",
+        "previewAcceptance": "A single switch can be turned on and off"
+      },
+      {
+        "property": "Disabled value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Prevent state changes while disabled",
+        "previewAcceptance": "Disabled behavior can be tested directly"
+      },
+      {
+        "property": "Loading value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Prevent repeated commits and expose busy feedback",
+        "previewAcceptance": "Pending update differs from a settled on/off state"
+      },
+      {
+        "property": "On/off descriptions",
+        "control": "paired text",
+        "priority": "P1",
+        "proposedDefault": "Current convention",
+        "validation": "Label remains stable while state is announced separately",
+        "previewAcceptance": "Authored state meaning stays understandable"
+      },
+      {
+        "property": "Validation/help text",
+        "control": "linked text",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Explain consequences where an immediate change matters",
+        "previewAcceptance": "State change can show the intended confirmation/error feedback"
+      }
+    ],
+    "table": [
+      {
+        "property": "Columns",
+        "control": "reorderable column editor",
+        "priority": "P1",
+        "proposedDefault": "Existing example columns",
+        "validation": "Unique keys with header, data path and declared cell type",
+        "previewAcceptance": "Add, remove and reorder actual columns"
+      },
+      {
+        "property": "Rows",
+        "control": "structured data editor",
+        "priority": "P1",
+        "proposedDefault": "Current three sample people",
+        "validation": "Stable row keys matching declared columns",
+        "previewAcceptance": "User data replaces the fixture records"
+      },
+      {
+        "property": "Cell renderer",
+        "control": "per-column type choice",
+        "priority": "P1",
+        "proposedDefault": "Current text/status cells",
+        "validation": "Choose only supported semantic renderers or approved slots",
+        "previewAcceptance": "Numbers, links, statuses and actions render as declared"
+      },
+      {
+        "property": "Column width",
+        "control": "per-column dimension",
+        "priority": "P1",
+        "proposedDefault": "Existing widths",
+        "validation": "Respect min/max and total container constraints",
+        "previewAcceptance": "Columns resize without clipping essential values"
+      },
+      {
+        "property": "Sort configuration",
+        "control": "per-column toggle and direction",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Define sortable fields and local/server intent",
+        "previewAcceptance": "Header interaction updates aria-sort and the sample order"
+      },
+      {
+        "property": "Filter configuration",
+        "control": "per-column rule editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Distinguish no matching rows from no data",
+        "previewAcceptance": "Authored filters affect only declared fields"
+      },
+      {
+        "property": "Selection mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Single or multiple needs stable selected row IDs",
+        "previewAcceptance": "Header and row selection remain coherent"
+      },
+      {
+        "property": "Selected row keys",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Keys must exist and match the selection mode",
+        "previewAcceptance": "Selection survives sorting/filtering by ID"
+      },
+      {
+        "property": "Pagination",
+        "control": "page/size/total settings",
+        "priority": "P1",
+        "proposedDefault": "Current fixture policy",
+        "validation": "Valid page and size with an explicit local/server contract",
+        "previewAcceptance": "Footer controls operate on the authored rows"
+      },
+      {
+        "property": "Density",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Comfortable",
+        "validation": "Preserve target sizes and readable cells",
+        "previewAcceptance": "Compact/comfortable applies consistently"
+      },
+      {
+        "property": "Row actions",
+        "control": "action list",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Item-specific names with stable intent IDs",
+        "previewAcceptance": "Actions are attached to the correct row"
+      },
+      {
+        "property": "Empty/error/loading content",
+        "control": "state content editor",
+        "priority": "P1",
+        "proposedDefault": "Current examples",
+        "validation": "Distinct copy and a retry intent for failures",
+        "previewAcceptance": "Failure does not masquerade as an empty dataset"
+      },
+      {
+        "property": "Sticky/scroll behavior",
+        "control": "toggles and dimensions",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Maintain header association and keyboard-accessible scrolling",
+        "previewAcceptance": "Large tables stay usable in a bounded container"
+      }
+    ],
+    "tabs": [
+      {
+        "property": "Tab items and panel content",
+        "control": "reorderable item/slot editor",
+        "priority": "P1",
+        "proposedDefault": "Current labels",
+        "validation": "Unique tab/panel IDs and actual associated content",
+        "previewAcceptance": "Tabs switch between user-authored panels"
+      },
+      {
+        "property": "Active tab",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current first tab",
+        "validation": "Active ID must exist and be enabled",
+        "previewAcceptance": "One tab and one panel are active"
+      },
+      {
+        "property": "Activation mode",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Automatic for instant local content",
+        "validation": "Manual activation when content is slow",
+        "previewAcceptance": "Arrow/focus and activation behavior match the declared mode"
+      },
+      {
+        "property": "Disabled tabs",
+        "control": "per-item toggle",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Disabled tabs cannot activate",
+        "previewAcceptance": "Enabled tab remains reachable"
+      },
+      {
+        "property": "Closable/addable tabs",
+        "control": "per-item controls",
+        "priority": "P2",
+        "proposedDefault": "False",
+        "validation": "Closing the active tab has a predictable focus destination",
+        "previewAcceptance": "Dynamic tabs preserve selection and focus"
+      },
+      {
+        "property": "Overflow policy",
+        "control": "select",
+        "priority": "P2",
+        "proposedDefault": "Current horizontal scroll",
+        "validation": "Keep every tab reachable at narrow widths",
+        "previewAcceptance": "Overflow is discoverable and keyboard accessible"
+      }
+    ],
+    "tag": [
+      {
+        "property": "Semantic color/status",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current example",
+        "validation": "Use semantic tokens and non-color meaning where status matters",
+        "previewAcceptance": "Inspect one authored status rather than only a fixed matrix"
+      },
+      {
+        "property": "Closable",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Close button has a useful accessible name",
+        "previewAcceptance": "Tag can be removed and restored in the specimen"
+      },
+      {
+        "property": "Icon reference",
+        "control": "icon picker",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Decorative versus meaningful icon treatment is explicit",
+        "previewAcceptance": "Author can add the intended icon"
+      },
+      {
+        "property": "Selectable value",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Declare whether tag is interactive or purely descriptive",
+        "previewAcceptance": "Selected tags use correct pressed/selection semantics"
+      },
+      {
+        "property": "Destination",
+        "control": "URL",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Linked tags use real link semantics",
+        "previewAcceptance": "Navigation is not simulated with inert markup"
+      }
+    ],
+    "textarea": [
+      {
+        "property": "Text value",
+        "control": "multiline input",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Preserve line breaks independently of placeholder",
+        "previewAcceptance": "Authored long text appears in the field"
+      },
+      {
+        "property": "Maximum length",
+        "control": "integer and optional limit",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Nonnegative limit and a clear overflow policy",
+        "previewAcceptance": "Character limit is enforceable and explained"
+      },
+      {
+        "property": "Character count",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Associate count without overwhelming announcements",
+        "previewAcceptance": "Count follows the actual entered text"
+      },
+      {
+        "property": "Auto-resize bounds",
+        "control": "minimum/maximum row settings",
+        "priority": "P1",
+        "proposedDefault": "Current fixed rows",
+        "validation": "Ordered positive row bounds",
+        "previewAcceptance": "Text grows to the intended maximum without hiding content"
+      },
+      {
+        "property": "Required/helper/error rules",
+        "control": "grouped field controls",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Linked messages with defined validation timing",
+        "previewAcceptance": "Missing/invalid text has meaningful feedback"
+      },
+      {
+        "property": "Read-only",
+        "control": "toggle",
+        "priority": "P2",
+        "proposedDefault": "False",
+        "validation": "Keep content readable and selectable",
+        "previewAcceptance": "Read-only differs from disabled and loading"
+      }
+    ],
+    "time": [
+      {
+        "property": "Selected time",
+        "control": "time input",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Valid time under the configured hour/minute/second precision",
+        "previewAcceptance": "Trigger and panel agree on the value"
+      },
+      {
+        "property": "Clock format",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current format",
+        "validation": "Explicit 12/24-hour choice and meridiem behavior",
+        "previewAcceptance": "Display and parsing use the same clock convention"
+      },
+      {
+        "property": "Minute/second step",
+        "control": "positive integer settings",
+        "priority": "P1",
+        "proposedDefault": "Current interval",
+        "validation": "Steps divide the supported precision appropriately",
+        "previewAcceptance": "Pickable times follow the authored interval"
+      },
+      {
+        "property": "Disabled times",
+        "control": "rule editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Cannot commit a disabled interval",
+        "previewAcceptance": "Disabled choices have consistent visual and keyboard behavior"
+      },
+      {
+        "property": "Timezone context",
+        "control": "timezone field and display policy",
+        "priority": "P2",
+        "proposedDefault": "Unspecified local time",
+        "validation": "Never silently reinterpret an instant as a wall-clock time",
+        "previewAcceptance": "Output explicitly states whether timezone conversion is supported"
+      },
+      {
+        "property": "Required/error messages",
+        "control": "toggle and linked text",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Invalid time is distinct from missing time",
+        "previewAcceptance": "Recoverable field errors match the configured rules"
+      }
+    ],
+    "timeline": [
+      {
+        "property": "Timeline items",
+        "control": "reorderable event editor",
+        "priority": "P1",
+        "proposedDefault": "Current sample events",
+        "validation": "Stable IDs, titles and optional descriptions",
+        "previewAcceptance": "User can author actual event content"
+      },
+      {
+        "property": "Timestamps",
+        "control": "per-item date/time fields",
+        "priority": "P1",
+        "proposedDefault": "Current fixture dates",
+        "validation": "Define ordering/timezone and explicit missing values",
+        "previewAcceptance": "Dates display consistently with Data Format"
+      },
+      {
+        "property": "Per-item status/icon",
+        "control": "item controls",
+        "priority": "P1",
+        "proposedDefault": "Existing markers",
+        "validation": "Status has a non-color cue",
+        "previewAcceptance": "Event meaning is independently configurable"
+      },
+      {
+        "property": "Orientation/alignment",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current layout",
+        "validation": "Preserve chronological reading order",
+        "previewAcceptance": "Alternating/vertical layout remains understandable"
+      },
+      {
+        "property": "Pending/error event",
+        "control": "optional event state",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Do not invent a completed event while work is pending",
+        "previewAcceptance": "Future and failed events are distinct"
+      }
+    ],
+    "toast": [
+      {
+        "property": "Semantic status",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Current status",
+        "validation": "Supported type with a non-color message",
+        "previewAcceptance": "Inspect one chosen toast status"
+      },
+      {
+        "property": "Duration",
+        "control": "number with persistent mode",
+        "priority": "P1",
+        "proposedDefault": "Current demo policy",
+        "validation": "Nonnegative timing with an explicit persistent value",
+        "previewAcceptance": "Toast can be timed or intentionally persistent"
+      },
+      {
+        "property": "Placement",
+        "control": "logical placement selector",
+        "priority": "P1",
+        "proposedDefault": "Existing location",
+        "validation": "Respect safe areas and other live regions",
+        "previewAcceptance": "Toast does not cover essential controls"
+      },
+      {
+        "property": "Action label/intent",
+        "control": "optional action editor",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Do not hide a necessary action behind too-short a timeout",
+        "previewAcceptance": "Undo/retry action uses authored copy"
+      },
+      {
+        "property": "Dismissal and announcements",
+        "control": "structured policy",
+        "priority": "P2",
+        "proposedDefault": "Context-appropriate",
+        "validation": "Provide accessible close where appropriate and avoid duplicate live announcements",
+        "previewAcceptance": "Keyboard and assistive feedback remain coherent"
+      }
+    ],
+    "tooltip": [
+      {
+        "property": "Trigger content",
+        "control": "text or approved slot",
+        "priority": "P1",
+        "proposedDefault": "Current example trigger",
+        "validation": "Trigger must be keyboard reachable if it conveys essential help",
+        "previewAcceptance": "Author can attach the tooltip to their real control"
+      },
+      {
+        "property": "Placement",
+        "control": "select",
+        "priority": "P1",
+        "proposedDefault": "Automatic",
+        "validation": "Keep tooltip within the available viewport",
+        "previewAcceptance": "Direction changes without clipping"
+      },
+      {
+        "property": "Open/close delay",
+        "control": "paired numbers",
+        "priority": "P1",
+        "proposedDefault": "Current demo policy",
+        "validation": "Nonnegative milliseconds and cancellable delayed actions",
+        "previewAcceptance": "Pointer entry/exit follows the authored timing"
+      },
+      {
+        "property": "Open value",
+        "control": "toggle",
+        "priority": "P2",
+        "proposedDefault": "Closed",
+        "validation": "Do not replace hover/focus reachability with a forced-only preview",
+        "previewAcceptance": "Author can inspect the exact open state"
+      },
+      {
+        "property": "Maximum width/wrapping",
+        "control": "dimension and wrapping choice",
+        "priority": "P2",
+        "proposedDefault": "Current width",
+        "validation": "Long content remains readable without obscuring the trigger",
+        "previewAcceptance": "Tooltip adapts to narrow containers"
+      }
+    ],
+    "tour": [
+      {
+        "property": "Tour steps",
+        "control": "reorderable step editor",
+        "priority": "P1",
+        "proposedDefault": "Current single example",
+        "validation": "Stable IDs, title, description and valid target per step",
+        "previewAcceptance": "User can author an entire sequence"
+      },
+      {
+        "property": "Target binding",
+        "control": "element/part selector",
+        "priority": "P1",
+        "proposedDefault": "Current target label",
+        "validation": "Target must exist and be visible before positioning",
+        "previewAcceptance": "Spotlight points to a real intended element"
+      },
+      {
+        "property": "Current/open step",
+        "control": "step selector and toggle",
+        "priority": "P1",
+        "proposedDefault": "Closed",
+        "validation": "Step ID valid and missing targets recoverable",
+        "previewAcceptance": "Tour can start, advance and resume predictably"
+      },
+      {
+        "property": "Next/back/finish labels",
+        "control": "text fields",
+        "priority": "P1",
+        "proposedDefault": "Current examples",
+        "validation": "Every enabled action has a meaningful label",
+        "previewAcceptance": "Sequence controls use product-specific copy"
+      },
+      {
+        "property": "Placement/spotlight padding",
+        "control": "select and dimension",
+        "priority": "P2",
+        "proposedDefault": "Automatic/current padding",
+        "validation": "Keep content and focus within the viewport",
+        "previewAcceptance": "Spotlight geometry follows the target"
+      },
+      {
+        "property": "Skip/close policy",
+        "control": "toggles",
+        "priority": "P1",
+        "proposedDefault": "Explicit product policy",
+        "validation": "Users can leave a nonessential tour and focus returns sensibly",
+        "previewAcceptance": "Tour does not trap the user"
+      }
+    ],
+    "transfer": [
+      {
+        "property": "Source items",
+        "control": "editable option list",
+        "priority": "P1",
+        "proposedDefault": "Current fixture items",
+        "validation": "Stable unique IDs and meaningful labels",
+        "previewAcceptance": "Source list contains user-authored entities"
+      },
+      {
+        "property": "Target keys",
+        "control": "item selector",
+        "priority": "P1",
+        "proposedDefault": "Current fixture target",
+        "validation": "Keys must exist in the source dataset",
+        "previewAcceptance": "Moving items updates actual membership by ID"
+      },
+      {
+        "property": "Selected keys",
+        "control": "per-list item selectors",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Selection remains separate from target membership",
+        "previewAcceptance": "Move controls act only on selected eligible items"
+      },
+      {
+        "property": "Search/filter",
+        "control": "toggle and placeholder",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Filtered counts and no-results states stay clear",
+        "previewAcceptance": "Users can find items in large lists"
+      },
+      {
+        "property": "Disabled items",
+        "control": "per-item toggles",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Disabled items cannot be transferred",
+        "previewAcceptance": "Mixed eligibility is respected"
+      },
+      {
+        "property": "Move button labels",
+        "control": "paired text",
+        "priority": "P2",
+        "proposedDefault": "Current arrows with accessible names",
+        "validation": "Direction remains clear in RTL and without icons",
+        "previewAcceptance": "Controls announce source/target meaning"
+      }
+    ],
+    "tree": [
+      {
+        "property": "Tree nodes",
+        "control": "nested item editor",
+        "priority": "P1",
+        "proposedDefault": "Existing document fixture",
+        "validation": "Stable unique keys without cycles",
+        "previewAcceptance": "User can build the intended hierarchy"
+      },
+      {
+        "property": "Expanded keys",
+        "control": "node selector",
+        "priority": "P1",
+        "proposedDefault": "Current example expansion",
+        "validation": "Reference expandable nodes only",
+        "previewAcceptance": "Expansion persists by ID when labels change"
+      },
+      {
+        "property": "Selected keys",
+        "control": "node selector",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Follow declared single/multiple selection",
+        "previewAcceptance": "Selected nodes are inspectable separately from expansion"
+      },
+      {
+        "property": "Checkable/mixed state",
+        "control": "toggle and node values",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Parent/child propagation and mixed-state policy explicit",
+        "previewAcceptance": "Checking branches updates descendants coherently"
+      },
+      {
+        "property": "Disabled nodes",
+        "control": "per-node toggle",
+        "priority": "P1",
+        "proposedDefault": "None",
+        "validation": "Define disabled selection versus expansion separately",
+        "previewAcceptance": "Keyboard skips or announces disabled nodes appropriately"
+      },
+      {
+        "property": "Async children",
+        "control": "declared loading/error fixture",
+        "priority": "P2",
+        "proposedDefault": "None",
+        "validation": "Loading is not confused with a leaf node",
+        "previewAcceptance": "Branch loading and retry can be demonstrated"
+      }
+    ],
+    "tree-select": [
+      {
+        "property": "Tree options",
+        "control": "nested data editor",
+        "priority": "P1",
+        "proposedDefault": "Current team fixture",
+        "validation": "Stable keys/values without cycles",
+        "previewAcceptance": "Popup tree uses the author's real options"
+      },
+      {
+        "property": "Selected values",
+        "control": "node selector",
+        "priority": "P1",
+        "proposedDefault": "Empty",
+        "validation": "Values must refer to selectable enabled nodes",
+        "previewAcceptance": "Trigger chips/text match selected nodes"
+      },
+      {
+        "property": "Multiple/checkable mode",
+        "control": "selection controls",
+        "priority": "P1",
+        "proposedDefault": "Single",
+        "validation": "Define parent-child propagation and selection cardinality",
+        "previewAcceptance": "Multiple values are represented and removable coherently"
+      },
+      {
+        "property": "Search",
+        "control": "toggle and matching behavior",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Preserve ancestry in matches",
+        "previewAcceptance": "Users can locate deep options"
+      },
+      {
+        "property": "Expanded node keys",
+        "control": "node selector",
+        "priority": "P2",
+        "proposedDefault": "Current example",
+        "validation": "Only valid branch IDs may be expanded",
+        "previewAcceptance": "Author can inspect the desired subtree"
+      },
+      {
+        "property": "Required/helper/error rules",
+        "control": "grouped field controls",
+        "priority": "P1",
+        "proposedDefault": "Optional",
+        "validation": "Programmatically associate required and invalid messages",
+        "previewAcceptance": "Validation matches the selection mode"
+      }
+    ],
+    "upload": [
+      {
+        "property": "Accepted file types",
+        "control": "MIME/extension list",
+        "priority": "P1",
+        "proposedDefault": "Existing helper-text example only until validated",
+        "validation": "Parse supported accept entries and keep helper copy synchronized",
+        "previewAcceptance": "Picker restrictions and visible instructions agree"
+      },
+      {
+        "property": "Maximum file size",
+        "control": "positive dimension",
+        "priority": "P1",
+        "proposedDefault": "Existing 10 MB wording only until validated",
+        "validation": "Explicit bytes/MB convention and a recoverable oversize message",
+        "previewAcceptance": "Oversize fixture is rejected with the declared reason"
+      },
+      {
+        "property": "Maximum file count",
+        "control": "integer",
+        "priority": "P1",
+        "proposedDefault": "Project-defined",
+        "validation": "Positive bound with replacement versus add policy",
+        "previewAcceptance": "Adding files respects the configured count"
+      },
+      {
+        "property": "Multiple selection",
+        "control": "toggle",
+        "priority": "P1",
+        "proposedDefault": "False",
+        "validation": "Compatible with max count and accessible picker behavior",
+        "previewAcceptance": "File chooser allows the intended number of files"
+      },
+      {
+        "property": "File list",
+        "control": "editable upload fixture list",
+        "priority": "P1",
+        "proposedDefault": "Current sample files",
+        "validation": "Stable IDs, filename, size and explicit status",
+        "previewAcceptance": "User can author real sample names and progress/error states"
+      },
+      {
+        "property": "Upload progress/status",
+        "control": "per-file number and status",
+        "priority": "P1",
+        "proposedDefault": "Current fixtures",
+        "validation": "Percentage in range and success/error must agree",
+        "previewAcceptance": "Each file can demonstrate pending, uploading, success and failure"
+      },
+      {
+        "property": "Remove/retry actions",
+        "control": "per-file action controls",
+        "priority": "P1",
+        "proposedDefault": "Current demo policy",
+        "validation": "Actions are named for the specific file and have explicit intent",
+        "previewAcceptance": "Failed uploads can show meaningful retry/removal controls"
+      },
+      {
+        "property": "Network execution contract",
+        "control": "declarative adapter metadata",
+        "priority": "P2",
+        "proposedDefault": "No live endpoint",
+        "validation": "Never claim real upload without a configured service",
+        "previewAcceptance": "Export distinguishes a demo fixture from executable upload behavior"
+      }
+    ]
+  }
+}

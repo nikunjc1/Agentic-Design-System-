@@ -26,7 +26,9 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "error", cls: " is-error", label: "Error" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: "", label: "Loading" }
   ];
 
   var FULL_SPEC = {
@@ -45,26 +47,29 @@
       hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var textMid = getCssVar("--text-mid", "#A7ABB2");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var textMid = getCssVar("--text-mid", "#4B5563");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.1)");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.08)");
 
+    var danger500 = getCssVar("--danger-500", "#FF031A");
     if (typeKey === "underline"){
       return {
         rest: "background:transparent;color:" + textMid + ";border-bottom:2px solid transparent;",
-        active: "color:" + textHi + ";border-bottom:2px solid " + red500 + ";font-weight:600;",
+        active: "color:" + textHi + ";border-bottom:2px solid " + getCssVar("--border-state-selected", getCssVar("--border-state-active", red500)) + ";font-weight:var(--type-selected-weight);",
         hover: "color:" + textHi + ";",
-        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+        focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+        error: "color:" + danger500 + ";border-bottom:2px solid " + danger500 + ";"
       };
     }
     return {
       rest: "background:transparent;color:" + textMid + ";",
-      active: "background:" + redTint + ";color:" + red500 + ";font-weight:600;",
+      active: "background:" + redTint + ";color:" + red500 + ";font-weight:var(--type-selected-weight);",
       hover: "background:" + graphite800 + ";color:" + textHi + ";",
-      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+      focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+      error: "color:" + danger500 + ";"
     };
   }
 
@@ -100,9 +105,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -137,7 +146,15 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
+  }
+
+  // The Pill radius options ARE Foundation radius tokens; reference the token
+  // (so Foundation edits and the Figma variable binding follow) and only fall
+  // back to the unit-converted literal for a value no token covers.
+  var RADIUS_TOKENS = { 0: "var(--radius-none)", 2: "var(--radius-2)", 4: "var(--radius-4)", 6: "var(--radius-6)", 8: "var(--radius-8)", 12: "var(--radius-12)", 16: "var(--radius-16)", 24: "var(--radius-24)", 9999: "var(--radius-full)" };
+  function radiusTokenFor(value){
+    return RADIUS_TOKENS[Number(value)] || radiusCssFor(value);
   }
 
   function parseLabels(raw){
@@ -192,15 +209,20 @@
       lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
     });
     lines.push("");
-    lines.push("States (4, apply per trigger): Rest, Hover, Focused, Disabled.");
-    lines.push("- Exactly one trigger is Active at all times - a separate property from these four states, so the bar always shows realistic always-one-selected context.");
+    lines.push("States (6, apply per trigger): Rest, Hover, Focused, Error, Disabled, Loading.");
+    lines.push("- Exactly one trigger is Active at all times - a separate property from these states, so the bar always shows realistic always-one-selected context.");
+    lines.push("- Error: the tab's associated content failed to load - text and underline/background tint shift to the danger color.");
     lines.push("- Disabled applies to one trigger at a time (its own real disabled attribute, 40% opacity, not-allowed cursor), not the whole bar.");
+    lines.push("- Loading: a small spinner replaces the trigger's own content while its associated panel loads.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " This is the tab bar's height - padding and font-size scale proportionally, applied to every trigger.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Only visually affects the Pill type's active tab (its pill background) - the Underline type ignores it entirely.");
     lines.push("");
-    lines.push("Component properties: Labels (comma-separated editable text, one per trigger, current value \"" + labels.join(", ") + "\" - trigger count follows the number of labels entered).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Labels (comma-separated editable text, one per trigger, current value \"" + labels.join(", ") + "\" - trigger count follows the number of labels entered); Equal-width tabs (boolean - each trigger grows to share the bar's width equally instead of sizing to its own label); Badge (boolean - shows a small count badge on one tab, e.g. for an unread/pending count).");
+    lines.push("");
+    lines.push("Out of scope for this static bar: Vertical orientation, per-tab leading icons, and overflow handling (horizontal scroll or a \"More\" menu for more tabs than fit) - each is a separable, larger feature.");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
@@ -213,9 +235,9 @@
     var lines = [];
     lines.push("/* Agentic Design System - Tabs component */");
     lines.push(".tabs-demo-bar{ display:inline-flex; align-items:stretch; box-sizing:border-box; }");
-    lines.push(".tabs-demo-bar--underline{ gap:var(--space-24); border-bottom:1.5px solid var(--line-strong); }");
+    lines.push(".tabs-demo-bar--underline{ gap:var(--space-24); border-bottom:var(--border-width-1) var(--border-style) var(--line-strong); }");
     lines.push(".tabs-demo-bar--pill{ gap:var(--space-4); align-items:center; }");
-    lines.push('.tabs-demo-trigger{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; border:none; background:transparent; border-bottom:2px solid transparent; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; white-space:nowrap; cursor:pointer; color:var(--text-mid); transition:background-color .15s ease, border-color .15s ease, color .15s ease; }');
+    lines.push('.tabs-demo-trigger{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; border:none; background:transparent; border-bottom:2px solid transparent; font-family:var(--font-body); font-weight:var(--type-active-weight); white-space:nowrap; cursor:pointer; color:var(--text-mid); transition:background-color .15s ease, border-color .15s ease, color .15s ease; }');
     lines.push(".tabs-demo-trigger:disabled{ cursor:not-allowed; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -227,7 +249,7 @@
       lines.push(".tabs-demo-trigger--h" + size + "{ height:" + size + "px; padding:0 " + scale.pad + "px; font-size:" + scale.font + "px; }");
     });
     lines.push("");
-    lines.push("/* Types (2) - rest / active / hover / focus per type */");
+    lines.push("/* Types (2) - rest / active / hover / focus / error per type */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       var barCls = ".tabs-demo-bar--" + t.key + " .tabs-demo-trigger";
@@ -235,25 +257,36 @@
       lines.push(barCls + ".is-active{ " + css.active + " }");
       lines.push(barCls + ":hover, " + barCls + ".is-hover{ " + css.hover + " }");
       lines.push(barCls + ":focus-visible, " + barCls + ".is-focus{ " + css.focus + " }");
+      lines.push(barCls + ".is-error{ " + css.error + " }");
       lines.push(barCls + ":disabled, " + barCls + ".is-disabled{ opacity:0.4; }");
     });
     lines.push("");
+    lines.push("/* Equal-width tabs - each trigger shares the bar's width equally */");
+    lines.push(".tabs-demo-bar.is-equal-width{ display:flex; }");
+    lines.push(".tabs-demo-bar.is-equal-width .tabs-demo-trigger{ flex:1 1 0; }");
+    lines.push("");
+    lines.push("/* Badge - a small count indicator on one tab */");
+    lines.push(".tabs-demo-badge{ display:inline-flex; align-items:center; justify-content:center; min-width:var(--dimension-16); height:var(--dimension-16); margin-inline-start:var(--space-6); padding:0 var(--space-4); border-radius:var(--radius-full); background:" + getCssVar("--danger-500", "#FF031A") + "; color:#FFFFFF; font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); }");
+    lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - Pill type's active tab only, the joining .tabs-demo-bar--radius-* class does nothing on the Underline type */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - Pill type's active tab only, the joining .tabs-demo-bar--radius-* class does nothing on the Underline type */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - Pill type's active tab only */");
     radiiToEmit.forEach(function(radius){
       lines.push(".tabs-demo-bar--radius-" + radiusClassSuffix(radius) + ".tabs-demo-bar--pill .tabs-demo-trigger.is-active{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
+    var opts2 = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
+    var barClsSuffix = opts2.equalWidth ? " is-equal-width" : "";
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push('<div class="tabs-demo-bar tabs-demo-bar--' + t.key + " tabs-demo-bar--radius-" + radiusClassSuffix(exampleRadius) + '">');
+      lines.push('<div class="tabs-demo-bar tabs-demo-bar--' + t.key + " tabs-demo-bar--radius-" + radiusClassSuffix(exampleRadius) + barClsSuffix + '">');
       labels.forEach(function(label, i){
         var activeCls = i === 1 ? " is-active" : "";
-        lines.push('  <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h' + exampleSize + activeCls + '">' + escapeHtml(label) + "</button>");
+        var badgeHtml = (opts2.badge && i === 2) ? '<span class="tabs-demo-badge">3</span>' : "";
+        lines.push('  <button type="button" class="tabs-demo-trigger tabs-demo-trigger--h' + exampleSize + activeCls + '">' + escapeHtml(label) + badgeHtml + "</button>");
       });
       lines.push("</div>");
     });
@@ -263,19 +296,21 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius, labels){
+  function buildComboPrompt(size, radius, labels, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
       radius: { mode: "specific", values: [radius] },
-      labels: labels
+      labels: labels,
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius, labels){
+  function buildComboCode(size, radius, labels, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
       radius: { mode: "specific", values: [radius] },
-      labels: labels
+      labels: labels,
+      opts: opts
     });
   }
 
@@ -307,12 +342,12 @@
       card.setAttribute("tabindex", "0");
       var href = "tabs-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -392,23 +427,31 @@
     if (!matrixContainer) return;
 
     var labelsInput = document.querySelector('[data-role="tabs-label"]');
+    var equalWidthInput = document.querySelector('[data-role="tabs-equal-width"]');
+    var badgeInput = document.querySelector('[data-role="tabs-badge"]');
     var sizeMount = document.querySelector('[data-role="tabs-size-mount"]');
     var radiusMount = document.querySelector('[data-role="tabs-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildTabsBar(typeKey, stateKey, stateCls, size, radius, labels){
+    function buildTabsBar(typeKey, stateKey, stateCls, size, radius, labels, opts){
+      opts = opts || {};
+      var isLoading = stateKey === "loading";
       var triggers = labels.map(function(label, i){
         var cls = "tabs-demo-trigger tabs-demo-trigger--h" + size;
         if (i === 1) cls += " is-active";
         if (i === 0) cls += stateCls;
         var disabledAttr = (i === 0 && stateKey === "disabled") ? " disabled" : "";
+        var content = (i === 0 && isLoading) ? '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>' : '<span class="tabs-demo-label">' + escapeHtml(label) + "</span>";
+        var badgeHtml = (opts.badge && i === 2) ? '<span class="tabs-demo-badge" data-contract-part="badge">3</span>' : "";
         // Foundation audit UX10 - one cell of a side-by-side state
         // comparison, not a real tab bar; tabindex="-1" keeps it out of the
         // Tab sequence without removing it from the accessibility tree.
-        return '<button type="button" class="' + cls + '" tabindex="-1"' + disabledAttr + ">" + escapeHtml(label) + "</button>";
+        var radiusStyle = typeKey === "pill" && i === 1 ? ' style="border-radius:' + radiusTokenFor(radius) + '"' : "";
+        return '<button type="button" class="' + cls + '" tabindex="-1"' + disabledAttr + radiusStyle + ">" + content + badgeHtml + "</button>";
       }).join("");
-      return '<div class="tabs-demo-bar tabs-demo-bar--' + typeKey + " tabs-demo-bar--radius-" + radiusClassSuffix(radius) + '">' + triggers + "</div>";
+      var barCls = "tabs-demo-bar tabs-demo-bar--" + typeKey + " tabs-demo-bar--radius-" + radiusClassSuffix(radius) + (opts.equalWidth ? " is-equal-width" : "");
+      return '<div class="' + barCls + '">' + triggers + "</div>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){
@@ -424,10 +467,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, labels){
+    function buildMatrixSection(size, radius, labels, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTabsBar(t.key, state.key, state.cls, size, radius, labels) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTabsBar(t.key, state.key, state.cls, size, radius, labels, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -438,16 +481,25 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        equalWidth: equalWidthInput ? equalWidthInput.checked : false,
+        badge: badgeInput ? badgeInput.checked : false
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
         radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
-        labels: parseLabels(labelsInput.value)
+        labels: parseLabels(labelsInput.value),
+        opts: currentOpts()
       };
     }
 
     function render(){
       var labels = parseLabels(labelsInput.value);
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -456,14 +508,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, labels);
+          html += buildMatrixSection(size, radius, labels, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius), labels: labels });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.labels); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.labels); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, c.labels, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, c.labels, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -489,6 +541,8 @@
     }
 
     labelsInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (equalWidthInput) equalWidthInput.addEventListener("change", render);
+    if (badgeInput) badgeInput.addEventListener("change", render);
 
     render();
   });

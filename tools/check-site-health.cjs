@@ -1,7 +1,8 @@
+const {visit}=require('./visit-project.cjs');
 // Whole-site browser smoke check and Foundation recovery regressions.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
 const {chromium}=require(process.env.ADS_PLAYWRIGHT_PACKAGE||'playwright-core');
-const ROOT=path.resolve(__dirname,'..'),OUT=path.join(ROOT,'audit/site-health-2026-10-23');
+const ROOT=path.resolve(__dirname,'..'),OUT=path.resolve(process.env.ADS_SITE_HEALTH_OUT||path.join(ROOT,'audit/site-health-2026-10-23'));
 const results={status:'running',recovery:[],pages:[],errors:[],assets:[]};
 const server=http.createServer((req,res)=>{
  const file=path.resolve(ROOT,'.'+decodeURIComponent(req.url.split('?')[0]));
@@ -15,14 +16,14 @@ const server=http.createServer((req,res)=>{
  const page=await context.newPage();page.setDefaultTimeout(10000);
  page.on('pageerror',e=>results.errors.push({file:page.url().split('/').pop(),message:e.message}));
  page.on('response',r=>{if(r.url().startsWith(origin)&&r.status()>=400&&!r.url().endsWith('/favicon.ico'))results.assets.push({url:r.url().slice(origin.length),status:r.status()});});
- await page.goto(origin+'/icons.html');
+ await visit(page,origin+'/icons.html');
  // Corrupt/newer records require an explicit reset, then a durable Save.
  for(const raw of ['{broken',JSON.stringify({schemaVersion:999,system:'line'})]){
-  await page.evaluate(raw=>{localStorage.clear();localStorage.setItem('ads:icons',raw);},raw);await page.reload();await page.locator('[data-foundation-save]:visible').waitFor();
+  await page.evaluate(raw=>{localStorage.clear();localStorage.setItem('ads:icons',raw);},raw);await visit(page,page.url());await page.locator('[data-foundation-save]:visible').waitFor();
   await page.locator('[data-foundation-save]').click();assert.equal(await page.evaluate(()=>localStorage.getItem('ads:icons')),raw,'Unreadable record preserved before reset');
   await page.locator('#resetIconsBtn').click();await page.locator('.system-card[data-system="line"]').click();await page.locator('[data-foundation-save]').click();
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('ads:icons')));assert.equal(saved?.system,'line','Reset permits saving the newly chosen icon family');
-  await page.reload();await page.locator('[data-foundation-edit]:visible').waitFor();assert.equal(await page.locator('.system-card[data-system="line"]').getAttribute('aria-pressed'),'true');
+  await visit(page,page.url());await page.locator('[data-foundation-edit]:visible').waitFor();assert.equal(await page.locator('.system-card[data-system="line"]').getAttribute('aria-pressed'),'true');
   results.recovery.push({case:raw.startsWith('{broken')?'corrupt record':'future record',status:'pass'});
  }
  // Saved controls stay locked while documentation and exports remain usable.
@@ -34,7 +35,7 @@ const server=http.createServer((req,res)=>{
  await download.saveAs(path.join(OUT,'foundation-export.json'));const exported=JSON.parse(fs.readFileSync(path.join(OUT,'foundation-export.json')));assert.equal(exported.settings.icons.system,'line');
  results.recovery.push({case:'saved controls lock; documentation and JSON export remain usable',status:'pass'});
  // A real storage event from another tab must prevent overwriting its changes.
- const other=await context.newPage();await other.goto(origin+'/overview.html');await page.locator('[data-foundation-edit]').click();
+ const other=await context.newPage();await visit(other,origin+'/overview.html');await page.locator('[data-foundation-edit]').click();
  await other.evaluate(()=>{const value=JSON.parse(localStorage.getItem('ads:icons'));value.system='flat';localStorage.setItem('ads:icons',JSON.stringify(value));});
  await page.locator('.ads-editor-conflict').waitFor();assert.equal(await page.locator('[data-foundation-save]').isDisabled(),true);
  await page.getByRole('button',{name:'Reload controls'}).click();await page.locator('[data-foundation-edit]:visible').waitFor();assert.equal(await page.locator('.system-card[data-system="flat"]').getAttribute('aria-pressed'),'true');
@@ -42,7 +43,7 @@ const server=http.createServer((req,res)=>{
  await page.evaluate(()=>localStorage.clear());
  const catalog=JSON.parse(fs.readFileSync(path.join(ROOT,'docs-catalog.json')));
  for(const [index,doc]of catalog.entries()){
-  await page.setViewportSize({width:1440,height:1000});await page.goto(origin+'/'+doc.file);await page.waitForTimeout(80);
+  await page.setViewportSize({width:1440,height:1000});await visit(page,origin+'/'+doc.file);await page.waitForTimeout(80);
   const row={file:doc.file,widths:[],guides:0};
   for(const width of [1440,768,390,320]){
    await page.setViewportSize({width,height:1000});

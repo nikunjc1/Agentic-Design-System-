@@ -1,0 +1,79 @@
+{
+  "method": "Real Chrome controls → Save foundation → open component tab → reload both pages → rendered styles and saved tokens",
+  "groups": [
+    {
+      "name": "Radius",
+      "file": "radius.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "sharp radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"sharp\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "compact radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"compact\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "soft radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"soft\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "expressive radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"expressive\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "balanced radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"balanced\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Compact radius on Button and pill Tabs",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"compact\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Explicit component radius survives foundation change",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"expressive\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Reset component restores foundation following",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"balanced\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": []
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

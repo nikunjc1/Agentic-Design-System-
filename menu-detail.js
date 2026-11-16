@@ -24,13 +24,16 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "selected", cls: "", label: "Selected" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: "", label: "Loading" },
+    { key: "empty", cls: "", label: "Empty" }
   ];
 
   // Generic leading icon reused per item (doesn't need to be meaningfully
   // different per item) - uses currentColor so it automatically follows an
   // item's text color, including the destructive item's red.
-  var ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
+  var ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>';
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -42,19 +45,20 @@
   // only in icon presence, not palette), so this isn't split per-type the
   // way Group Button's outlined/filled palettes are.
   function liveCssFor(){
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var line = getCssVar("--line", "rgba(255,255,255,0.08)");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
+    var textHi = getCssVar("--text-hi", "#111827");
     var red500 = getCssVar("--red-500", "#FF031A");
     var danger500 = getCssVar("--danger-500", "#FF031A");
 
     return {
-      panel: "background:" + graphite900 + ";border:1px solid " + lineStrong + ";box-shadow:0 8px 24px rgba(0,0,0,0.4);",
+      panel: "background:" + graphite900 + ";border:1px solid " + lineStrong + ";box-shadow:var(--shadow-md);",
       rest: "background:transparent;color:" + textHi + ";",
       hover: "background:" + graphite800 + ";",
       focus: "outline:2px solid " + getCssVar("--color-focus-ring", red500) + ";outline-offset:-2px;",
+      selected: "color:" + red500 + ";",
       disabled: "opacity:0.4;cursor:not-allowed;",
       destructive: "color:" + danger500 + ";",
       line: line
@@ -92,10 +96,11 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
-    { value: "12", label: "12px - Soft" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "12", label: "12px - Soft" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -129,7 +134,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function parseLabels(raw){
@@ -189,11 +194,14 @@
     lines.push("- Default: text-only items.");
     lines.push("- With icons: each item gets a small leading icon before its label.");
     lines.push("");
-    lines.push("States (4, apply per item): Rest, Hover, Focused, Disabled.");
+    lines.push("States (7, apply per item): Rest, Hover, Focused, Selected, Disabled, Loading, Empty.");
     lines.push("  Rest: " + css.rest);
     lines.push("  Hover: " + css.hover);
     lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
+    lines.push("  Selected: " + css.selected + " plus a leading checkmark - for a Checkbox or Radio item type, showing it's currently enabled/chosen.");
     lines.push("  Disabled: " + css.disabled);
+    lines.push("  Loading: a spinner replaces the whole item list while menu data is being retrieved asynchronously.");
+    lines.push("  Empty: a centered, dimmed \"No menu items.\" message replaces the whole item list when there are no items to show.");
     lines.push("");
     lines.push("Destructive item: if the last item's label is literally \"Delete\" or \"Remove\" (case-insensitive), automatically style that item's text and icon (" + css.destructive + ") and add a thin top border (border-top:1px solid " + css.line + ") on that item itself, separating it from the regular actions above - a common pattern real menus use to set a destructive action apart. Draw the border inside the item's own box (box-sizing:border-box) so it never adds extra spacing beyond the panel's normal item gap, and zero out that item's own top-left/top-right corner radius (border-start-start-radius / border-start-end-radius) so the line stays flush edge-to-edge instead of curling in with the item's own rounded corners - its bottom corners keep the inherited radius since it's the last item, sitting at the panel's actual bottom edge.");
     lines.push("");
@@ -215,12 +223,14 @@
     var lines = [];
     lines.push("/* Agentic Design System - Menu (floating panel) component */");
     lines.push(".menu-demo-panel{ display:flex; flex-direction:column; gap:var(--space-2); box-sizing:border-box; padding:var(--space-6); " + css.panel + " }");
-    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); width:100%; border:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; text-align: start; border-radius:4px; cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
+    lines.push('.menu-demo-item{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); width:100%; border:none; font-family:var(--font-body); font-weight:var(--type-active-weight); text-align: start; border-radius:var(--radius-sm); cursor:pointer; transition:background-color .15s ease, color .15s ease; ' + css.rest + ' }');
     lines.push(".menu-demo-item svg{ width:var(--dimension-16); height:var(--dimension-16); flex:none; }");
     lines.push(".menu-demo-item:hover, .menu-demo-item.is-hover{ " + css.hover + " }");
     lines.push(".menu-demo-item:focus-visible, .menu-demo-item.is-focus{ " + css.focus + " }");
     lines.push(".menu-demo-item:disabled, .menu-demo-item.is-disabled{ " + css.disabled + " }");
     lines.push(".menu-demo-item.is-destructive{ " + css.destructive + " border-top:1px solid " + css.line + "; border-start-start-radius:0; border-start-end-radius:0; }");
+    lines.push(".menu-demo-item.is-selected{ " + css.selected + " }");
+    lines.push(".menu-demo-item-check{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -233,7 +243,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - panel's outer corners only */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - panel's outer corners only */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - panel's outer corners only */");
     radiiToEmit.forEach(function(radius){
       lines.push(".menu-demo-panel--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -304,12 +314,12 @@
       card.setAttribute("tabindex", "0");
       var href = "menu-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -396,22 +406,42 @@
 
     function buildMenuPanel(typeKey, stateKey, stateCls, size, radius, labels){
       var isDisabledState = stateKey === "disabled";
+      var isSelectedState = stateKey === "selected";
+      var isLoading = stateKey === "loading";
+      var isEmpty = stateKey === "empty";
       var radiusCss = radiusCssFor(radius);
+      if (isLoading){
+        return '<div class="menu-demo-panel menu-demo-panel--loading" style="border-radius:' + radiusCss + ';--nested-radius:max(0px, calc(' + radiusCss + ' - var(--space-6)))"><span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span></div>';
+      }
+      // Empty replaces the whole item list with a single centered, dimmed
+      // message, same treatment as Loading's spinner above - real users
+      // would never see rows AND an empty message at once. The
+      // data-contract-part="menu-items-empty" marker gives this content a
+      // stable id regardless of which state is selected when a capture
+      // happens, so captureMenuProperties() in component-workbench.js can
+      // find it and graft it onto the base anatomy (same fix Transfer's own
+      // status slot already uses).
+      if (isEmpty){
+        return '<div class="menu-demo-panel menu-demo-panel--empty" style="border-radius:' + radiusCss + ';--nested-radius:max(0px, calc(' + radiusCss + ' - var(--space-6)))"><div class="menu-demo-empty" data-contract-part="menu-items-empty">No menu items.</div></div>';
+      }
       var destructiveIndex = destructiveIndexFor(labels);
       var itemsHtml = labels.map(function(label, i){
         var out = "";
+        var isSelectedItem = i === 0 && isSelectedState;
         var itemCls = "menu-demo-item menu-demo-item--h" + size +
           (i === destructiveIndex ? " is-destructive" : "") +
-          (i === 0 ? stateCls : "");
+          (isSelectedItem ? " is-selected" : "") +
+          (i === 0 && !isSelectedState ? stateCls : "");
         var disabledAttr = (i === 0 && isDisabledState) ? " disabled" : "";
         var icon = typeKey === "icons" ? ICON_SVG : "";
+        var checkHtml = isSelectedItem ? '<svg class="menu-demo-item-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>' : "";
         // Foundation audit UX10 - one cell of a side-by-side state
         // comparison, not a real menu; tabindex="-1" keeps it out of the
         // Tab sequence without removing it from the accessibility tree.
-        out += '<button type="button" class="' + itemCls + '" tabindex="-1"' + disabledAttr + ">" + icon + escapeHtml(label) + "</button>";
+        out += '<button type="button" class="' + itemCls + '" tabindex="-1"' + disabledAttr + ">" + icon + '<span class="menu-demo-item-label">' + escapeHtml(label) + "</span>" + checkHtml + "</button>";
         return out;
       }).join("");
-      return '<div class="menu-demo-panel" style="border-radius:' + radiusCss + '">' + itemsHtml + "</div>";
+      return '<div class="menu-demo-panel" style="border-radius:' + radiusCss + ';--nested-radius:max(0px, calc(' + radiusCss + ' - var(--space-6)))">' + itemsHtml + "</div>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){

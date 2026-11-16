@@ -1,0 +1,208 @@
+{
+  "file": "menu-default.html",
+  "name": "Menu",
+  "category": "Components · Navigation · Menu",
+  "controls": [
+    {
+      "index": 0,
+      "role": "menu-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "menu-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "menu-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "menu-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With icons",
+          "label": "With icons"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "menu-label",
+      "id": null,
+      "label": "Labels",
+      "type": "text",
+      "value": "Edit, Duplicate, Archive, Delete",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Labels",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius and labels are properties of the same component, not separate buttons - change them below to check this menu's style and states in the Live Preview. Item count follows the number of labels entered.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Menu is the floating panel of commands or actions itself - what appears when a Dropdown trigger, a right-click, or a \"...\" button is activated. This component is the panel/list content, not the trigger that opens it, which is a separate concern handled by Dropdown or a custom trigger. When to Use The panel opened by a Dropdown trigger - the list of commands itself. A right-click context menu - actions relevant to whatever was right-clicked. A user account menu or bulk-actions panel - any floating list of clickable commands triggered from elsewhere. When Not to Use The trigger button itself - that's Dropdown's responsibility - Menu is only the panel content. A form value picker - use Select - Menu items are commands to run, not values to store. Persistent, always-visible navigation - use a nav bar or sidebar rather than a menu that must be triggered open. Best Practices Group related items with dividers, and visually separate destructive actions (e.g. \"Delete\") at the bottom. Keep item labels as short, specific verbs (\"Duplicate\", \"Archive\") so the whole menu scans quickly. Close on selection, outside click, and Escape, consistent with Dropdown's expected behavior. Do and Don't Do RenameDuplicateDelete A top border separates the destructive action from the routine ones, so it cannot be clicked by momentum. Don't DeleteRenameDuplicate Placing Delete first, right where the pointer lands on open, makes the riskiest action the easiest one to trigger by accident. Accessibility Implemented with menu/menuitem roles, so arrow keys move between items and Home/End jump to the first/last item. Disabled items are exposed as unavailable to assistive technology, not just visually dimmed. Opening the menu moves focus into it, and closing it returns focus to whatever triggered it. Related Components Dropdown (its trigger), Tag, Button. { \"component\": \"Menu\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Menu is the floating panel of commands or actions itself - what appears when a Dropdown trigger, a right-click, or a \\\"...\\\" button is activated. This component is the panel/list content, not the trigger that opens it, which is a separate concern handled by Dropdown or a custom trigger.\", \"whenToUse\": [ \"The panel opened by a Dropdown trigger - the list of commands itself.\", \"A right-click context menu - actions relevant to whatever was right-clicked.\", \"A user account menu or bulk-actions panel - any floating list of clickable commands triggered from elsewhere.\" ], \"whenNotToUse\": [ \"The trigger button itself - that's Dropdown's responsibility - Menu is only the panel content.\", \"A form value picker - use Select - Menu items are commands to run, not values to store.\", \"Persistent, always-visible navigation - use a nav bar or sidebar rather than a menu that must be triggered open.\" ], \"bestPractices\": [ \"Group related items with dividers, and visually separate destructive actions (e.g. \\\"Delete\\\") at the bottom.\", \"Keep item labels as short, specific verbs (\\\"Duplicate\\\", \\\"Archive\\\") so the whole menu scans quickly.\", \"Close on selection, outside click, and Escape, consistent with Dropdown's expected behavior.\" ], \"doAndDont\": { \"do\": \"A divider separates the destructive action from the routine ones, so it cannot be clicked by momentum.\", \"dont\": \"Placing Delete first, right where the pointer lands on open, makes the riskiest action the easiest one to trigger by accident.\" }, \"accessibility\": [ \"Implemented with menu/menuitem roles, so arrow keys move between items and Home/End jump to the first/last item.\", \"Disabled items are exposed as unavailable to assistive technology, not just visually dimmed.\", \"Opening the menu moves focus into it, and closing it returns focus to whatever triggered it.\" ], \"relatedComponents\": [ \"Dropdown\", \"Tag\", \"Button\" ] }",
+  "tests": []
+}

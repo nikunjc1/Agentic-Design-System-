@@ -1,0 +1,189 @@
+{
+  "file": "toast-default.html",
+  "name": "Toast",
+  "category": "Components · Feedback · Toast",
+  "controls": [
+    {
+      "index": 0,
+      "role": "toast-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "toast-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Info",
+      "options": [
+        {
+          "value": "Info",
+          "label": "Info"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Dismissible",
+          "label": "Dismissible"
+        },
+        {
+          "value": "With action",
+          "label": "With action"
+        },
+        {
+          "value": "With progress",
+          "label": "With progress"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "toast-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Upload complete",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "toast-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "your-file.pdf was uploaded successfully.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "toast-show-icon",
+      "id": null,
+      "label": "Show icon",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown beside the title",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, title, description and the icon toggle are properties of the same component, not separate cards - change them below to check this toast's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Toast is a temporary, floating confirmation of an action or status change, typically surfaced in a fixed screen corner rather than embedded inline like Alert - it appears, communicates its message, and disappears on its own without requiring the user to stay put. When to Use A brief confirmation after an action - upload complete, copy-to-clipboard confirmation. An undo prompt - a short window to reverse the action just taken. A background job completing or a connection status change - events the user doesn't need to actively wait for. When Not to Use A message that needs to stay visible until manually dismissed or resolved - use Alert, which is embedded and persistent, not self-dismissing. Anything requiring a decision before the user can continue - use Modal or Pop Confirm - a self-dismissing Toast is the wrong place for a choice with consequences. Detailed or long-form content - use Notification, which is built for a longer title/description pairing. Best Practices Keep the message short enough to read in the few seconds before it disappears. Stack multiple toasts rather than replacing one before the user has had a chance to read it. Give an undo action a genuinely sufficient window before the toast dismisses, if undo is offered at all. Do and Don't Do Draft saved Short enough to read in the couple of seconds it is on screen, confirming something the user just did. Don't Delete this workspace?This removes all 240 files permanently. A decision inside a toast can vanish before it is answered. Anything with consequences belongs in a Modal or Pop Confirm. Accessibility Announced via an aria-live region so screen-reader users are told about it without needing to be focused on it. Long enough on-screen duration (or a pause-on-hover/focus behavior) so it doesn't disappear before it can be read or acted on. Any inline action (like Undo) is a real, independently focusable control. Related Components Alert, Notification, Result. { \"component\": \"Toast\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Toast is a temporary, floating confirmation of an action or status change, typically surfaced in a fixed screen corner rather than embedded inline like Alert - it appears, communicates its message, and disappears on its own without requiring the user to stay put.\", \"whenToUse\": [ \"A brief confirmation after an action - upload complete, copy-to-clipboard confirmation.\", \"An undo prompt - a short window to reverse the action just taken.\", \"A background job completing or a connection status change - events the user doesn't need to actively wait for.\" ], \"whenNotToUse\": [ \"A message that needs to stay visible until manually dismissed or resolved - use Alert, which is embedded and persistent, not self-dismissing.\", \"Anything requiring a decision before the user can continue - use Modal or Pop Confirm - a self-dismissing Toast is the wrong place for a choice with consequences.\", \"Detailed or long-form content - use Notification, which is built for a longer title/description pairing.\" ], \"bestPractices\": [ \"Keep the message short enough to read in the few seconds before it disappears.\", \"Stack multiple toasts rather than replacing one before the user has had a chance to read it.\", \"Give an undo action a genuinely sufficient window before the toast dismisses, if undo is offered at all.\" ], \"doAndDont\": { \"do\": \"Short enough to read in the couple of seconds it is on screen, confirming something the user just did.\", \"dont\": \"A decision inside a toast can vanish before it is answered. Anything with consequences belongs in a Modal or Pop Confirm.\" }, \"accessibility\": [ \"Announced via an aria-live region so screen-reader users are told about it without needing to be focused on it.\", \"Long enough on-screen duration (or a pause-on-hover/focus behavior) so it doesn't disappear before it can be read or acted on.\", \"Any inline action (like Undo) is a real, independently focusable control.\" ], \"relatedComponents\": [ \"Alert\", \"Notification\", \"Result\" ] }",
+  "tests": []
+}

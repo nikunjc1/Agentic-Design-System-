@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "dataFormat": {
+    "locale": "fr-FR",
+    "grouping": true,
+    "separator": "locale",
+    "unit": "kg",
+    "unitSpace": "none",
+    "currency": "EUR",
+    "currencyDisplay": "symbol",
+    "decimals": 2,
+    "large": "compact",
+    "tableAlign": "end",
+    "date": "iso",
+    "hourCycle": "h23",
+    "seconds": false,
+    "combined": "space",
+    "relative": true,
+    "zone": "UTC",
+    "showZone": true,
+    "range": " – ",
+    "noValue": "–",
+    "loading": "skeleton",
+    "redaction": "partial",
+    "mask": "*",
+    "reveal": 4,
+    "escapedSpace": "space"
+  }
+}

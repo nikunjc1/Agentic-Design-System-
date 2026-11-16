@@ -2,9 +2,9 @@
   "use strict";
 
   var ICON_SIZE_BY_HEIGHT = { "24": 12, "28": 14, "32": 14, "36": 16, "40": 16, "44": 18, "48": 20, "56": 22 };
-  var ICON_PLUS = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
-  var ICON_ARROW = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  var ICON_GEAR = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15z"/></svg>';
+  var ICON_PLUS = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>';
+  var ICON_ARROW = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var ICON_GEAR = '<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15z"/></svg>';
 
   function icon(svgTpl, size){ return svgTpl.replace(/\{s\}/g, size); }
 
@@ -12,7 +12,15 @@
   // bespoke spinner per component) so "something is in flight" reads the
   // same way everywhere in the system.
   function spinnerHtml(size){
-    return '<span class="btn-demo-spinner" style="width:' + size + 'px;height:' + size + 'px;" aria-hidden="true"></span>';
+    // data-contract-part gives the spinner a stable identity for the Figma
+    // capture's positional diffing (component-workbench.js's snapshot()) -
+    // without it, Loading's spinner and every other state's leading-icon/
+    // label share the same purely positional id ("root-0" etc.), so the
+    // capture diffed the spinner's styles onto whatever happened to occupy
+    // that slot in the state the capture started from (often the label
+    // text), producing a garbled "Save" rendered with spinner borders
+    // instead of a real spinner in the Figma component.
+    return '<span class="btn-demo-spinner" data-contract-part="spinner" style="width:' + size + 'px;height:' + size + 'px;" aria-hidden="true"></span>';
   }
 
   function escapeHtml(str){
@@ -33,7 +41,7 @@
     { key: "neutral", label: "Neutral" },
     { key: "link", label: "Link" },
     { key: "approve", label: "Approve" },
-    { key: "destructive", label: "Delete" }
+    { key: "destructive", label: "Destructive" }
   ];
   var STATES = [
     { key: "rest", cls: "", label: "Rest" },
@@ -50,42 +58,42 @@
   var FULL_SPEC = {
     primary: {
       purpose: "The button that carries the main call to action on a screen, like saving a form, submitting a purchase, or confirming a change.",
-      sample: "Save",
-      css: { rest: "background:#FF031A;color:#FFFFFF;", hover: "background:#FF3F4F;", pressed: "background:#D80016;" }
+      sample: "Button",
+      css: { rest: "background:var(--red-500);color:var(--on-brand-text);", hover: "background:var(--red-400);", pressed: "background:var(--red-600);" }
     },
     secondary: {
       purpose: "A supporting action that sits alongside a Primary button, like canceling, going back, or exporting.",
-      sample: "Cancel",
-      css: { rest: "background:#262A2F;color:#F3F2EF;border:1.5px solid rgba(255,255,255,0.16);", hover: "background:#383D44;", pressed: "background:#1C1F23;" }
+      sample: "Button",
+      css: { rest: "background:#262A2F;color:#F3F2EF;border:var(--border-width-1) var(--border-style) rgba(255,255,255,0.16);", hover: "background:#383D44;", pressed: "background:#1C1F23;" }
     },
     tertiary: {
       purpose: "A lower-emphasis action that doesn't need to compete for attention, like learning more or skipping a step.",
-      sample: "Learn More",
-      css: { rest: "background:transparent;color:#F3F2EF;border:1.5px solid rgba(255,255,255,0.16);", hover: "background:#1C1F23;", pressed: "background:#262A2F;" }
+      sample: "Button",
+      css: { rest: "background:transparent;color:#F3F2EF;border:var(--border-width-1) var(--border-style) rgba(255,255,255,0.16);", hover: "background:#1C1F23;", pressed: "background:#262A2F;" }
     },
     ghost: {
       purpose: "An action placed inside toolbars, cards, or dense layouts where a bordered button would add unnecessary weight, like closing or dismissing something.",
-      sample: "Close",
+      sample: "Button",
       css: { rest: "background:transparent;color:#A7ABB2;", hover: "background:#1C1F23;color:#F3F2EF;", pressed: "background:#262A2F;" }
     },
     neutral: {
       purpose: "An action that needs clear affordance without strong brand emphasis, like filtering, sorting, or opening options.",
-      sample: "Filter",
-      css: { rest: "background:#1C1F23;color:#F3F2EF;border:1.5px solid rgba(255,255,255,0.16);", hover: "background:#262A2F;", pressed: "background:#191C20;" }
+      sample: "Button",
+      css: { rest: "background:#1C1F23;color:#F3F2EF;border:var(--border-width-1) var(--border-style) rgba(255,255,255,0.16);", hover: "background:#262A2F;", pressed: "background:#191C20;" }
     },
     link: {
       purpose: "A navigation-style action that behaves like a hyperlink rather than a boxed command, like viewing details or opening a page.",
-      sample: "View Details",
+      sample: "Button",
       css: { rest: "background:transparent;color:#FF3F4F;padding-inline:var(--space-8);", hover: "text-decoration:underline;", pressed: "color:#D80016;" }
     },
     approve: {
       purpose: "An action that confirms or approves something positive, like approving a request or accepting a change.",
-      sample: "Approve",
+      sample: "Button",
       css: { rest: "background:rgba(47,191,110,0.1);color:#2FBF6E;border:2px solid #2FBF6E;", hover: "background:rgba(47,191,110,0.16);", pressed: "background:rgba(47,191,110,0.26);" }
     },
     destructive: {
       purpose: "An action with irreversible consequences, like deleting a record or discarding unsaved work.",
-      sample: "Delete",
+      sample: "Button",
       css: { rest: "background:rgba(255,3,26,0.1);color:#FF031A;border:2px solid #FF031A;", hover: "background:rgba(255,3,26,0.16);color:#FF3F4F;border-color:#FF3F4F;", pressed: "background:rgba(255,3,26,0.26);color:#D80016;border-color:#D80016;" }
     }
   };
@@ -121,14 +129,18 @@
     { value: "text", label: "Text only" },
     { value: "icon-left", label: "Icon left" },
     { value: "icon-right", label: "Icon right" },
-    { value: "icon-both", label: "Icon both sides" },
+    { value: "icon-both", label: "Icons on both sides" },
     { value: "icon-only", label: "Icon only" }
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -165,7 +177,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Determines whether a property counts as "configured" for prompt/code
@@ -215,8 +227,8 @@
   function liveRedHex(){
     return {
       500: getCssVar("--red-500", "#FF031A"),
-      400: getCssVar("--red-400", "#FF3F4F"),
-      600: getCssVar("--red-600", "#D80016")
+      400: getCssVar("--red-400", "#FF4253"),
+      600: getCssVar("--red-600", "#D10215")
     };
   }
   // Secondary/Tertiary/Ghost are graphite/text tokens, not brand-red ones,
@@ -229,36 +241,31 @@
   // have a light-theme override (see theme.css), so FULL_SPEC's hardcoded
   // values for them are always correct regardless of theme.
   function liveCssFor(typeKey){
-    if (typeKey === "primary") return {
-      rest: "background:var(--button-primary-bg-default);color:var(--button-primary-text-default);",
-      hover: "background:var(--button-primary-bg-hover);color:var(--button-primary-text-hover);",
-      pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
-    };
     var red = liveRedHex();
     if (typeKey === "primary"){
-      return { rest: "background:" + red[500] + ";color:#FFFFFF;", hover: "background:" + red[400] + ";", pressed: "background:" + red[600] + ";" };
+      return { rest: "background:" + red[500] + ";color:var(--on-brand-text);", hover: "background:" + red[400] + ";", pressed: "background:" + red[600] + ";" };
     }
     if (typeKey === "link"){
       return { rest: "background:transparent;color:" + red[400] + ";padding-inline:var(--space-8);", hover: "text-decoration:underline;", pressed: "color:" + red[600] + ";" };
     }
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var graphite600 = getCssVar("--graphite-600", "#383D44");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
-    var graphite850 = getCssVar("--graphite-850", "#191C20");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var textMid = getCssVar("--text-mid", "#A7ABB2");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
+    var graphite850 = getCssVar("--graphite-850", "#FBFBFA");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var textMid = getCssVar("--text-mid", "#4B5563");
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     if (typeKey === "secondary"){
-      return { rest: "background:" + graphite700 + ";color:" + textHi + ";border:1.5px solid " + lineStrong + ";", hover: "background:" + graphite600 + ";", pressed: "background:" + graphite800 + ";" };
+      return { rest: "background:" + graphite700 + ";color:" + textHi + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";", hover: "background:" + graphite600 + ";", pressed: "background:" + graphite800 + ";" };
     }
     if (typeKey === "tertiary"){
-      return { rest: "background:transparent;color:" + textHi + ";border:1.5px solid " + lineStrong + ";", hover: "background:" + graphite800 + ";", pressed: "background:" + graphite700 + ";" };
+      return { rest: "background:transparent;color:" + textHi + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";", hover: "background:" + graphite800 + ";", pressed: "background:" + graphite700 + ";" };
     }
     if (typeKey === "ghost"){
       return { rest: "background:transparent;color:" + textMid + ";", hover: "background:" + graphite800 + ";color:" + textHi + ";", pressed: "background:" + graphite700 + ";" };
     }
     if (typeKey === "neutral"){
-      return { rest: "background:" + graphite800 + ";color:" + textHi + ";border:1.5px solid " + lineStrong + ";", hover: "background:" + graphite700 + ";", pressed: "background:" + graphite850 + ";" };
+      return { rest: "background:" + graphite800 + ";color:" + textHi + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";", hover: "background:" + graphite700 + ";", pressed: "background:" + graphite850 + ";" };
     }
     return FULL_SPEC[typeKey].css;
   }
@@ -346,10 +353,10 @@
     lines.push("/* Agentic Design System - Button component (all types, states, sizes) */");
     lines.push(".btn{");
     lines.push("  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-8);");
-    lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:600;');
+    lines.push('  font-family:var(--font-body); font-weight:var(--type-selected-weight);');
     lines.push("  white-space:nowrap; cursor:pointer; user-select:none;");
     lines.push("  max-width:var(--dimension-320); overflow:hidden; text-overflow:ellipsis;");
-    lines.push("  border:1.5px solid transparent;");
+    lines.push("  border:var(--border-width-1) var(--border-style) transparent;");
     lines.push("  transition:background-color .15s ease, border-color .15s ease, color .15s ease;");
     lines.push("}");
     lines.push(".btn > span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }");
@@ -383,7 +390,7 @@
     lines.push("/* Focus exceptions - these three types don't use the default ring above */");
     lines.push(".btn--destructive:focus-visible{ outline-color:" + getCssVar("--danger-500", "#FF031A") + "; }");
     lines.push(".btn--approve:focus-visible{ outline-color:" + getCssVar("--green-500", "#2FBF6E") + "; }");
-    lines.push(".btn--link:focus-visible{ outline-offset:3px; border-radius:4px; }");
+    lines.push(".btn--link:focus-visible{ outline-offset:3px; border-radius:var(--radius-sm); }");
     lines.push(".btn:disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("/* Disabled exceptions - Primary is slightly less faded than the rest, Link also drops its underline */");
     lines.push(".btn--primary:disabled{ opacity:0.45; }");
@@ -391,7 +398,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px */"
+      ? "/* Corner radius (7 options) - not chosen yet, default is 8px */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " */");
     radiiToEmit.forEach(function(radius){
       lines.push(".btn--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -406,7 +413,7 @@
       ? "<!-- Content (5) - not chosen yet, example usage shown for every option on a Primary button -->"
       : "<!-- Content - explicitly chosen: " + contentInfo.values.map(function(v){ return optionLabelFor(CONTENT_OPTIONS, v); }).join(", ") + " -->");
     contentsToShow.forEach(function(contentValue){
-      lines.push(exampleMarkupFor(contentValue, exampleSize, sizeClass, radiusClass, "Save"));
+      lines.push(exampleMarkupFor(contentValue, exampleSize, sizeClass, radiusClass, "Button"));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -460,7 +467,7 @@
 
     var type = document.body.dataset.buttonType;
     if (!type) return;
-    var defaultLabel = document.body.dataset.defaultLabel || "Save";
+    var defaultLabel = document.body.dataset.defaultLabel || "Button";
 
     var sizeMount = document.querySelector('[data-role="size-mount"]');
     var contentMount = document.querySelector('[data-role="content-mount"]');
@@ -558,22 +565,27 @@
       var safeLabel = escapeHtml(label);
       var isLoading = / is-loading\b/.test(stateCls);
 
+      // data-contract-part gives each slot (label/leading-icon/trailing-icon)
+      // a stable identity so the Figma capture's positional diffing
+      // (component-workbench.js's snapshot()) tracks the same logical part
+      // across content/state combos instead of matching by child index -
+      // see spinnerHtml() above for why that matters.
       if (isLoading){
         // The spinner replaces the leading icon slot and disables the
         // trailing one - a button mid-request doesn't also promise a second
         // action (icon-right) is still available to click.
-        inner = spinnerHtml(iconSize) + (content === "icon-only" ? "" : "<span>" + safeLabel + "</span>");
+        inner = spinnerHtml(iconSize) + (content === "icon-only" ? "" : '<span data-contract-part="label">' + safeLabel + "</span>");
       } else if (content === "text"){
-        inner = "<span>" + safeLabel + "</span>";
+        inner = '<span data-contract-part="label">' + safeLabel + "</span>";
       } else if (content === "icon-left"){
-        inner = icon(ICON_PLUS, iconSize) + "<span>" + safeLabel + "</span>";
+        inner = icon(ICON_PLUS, iconSize).replace("<svg ", '<svg data-contract-part="leading-icon" ') + '<span data-contract-part="label">' + safeLabel + "</span>";
       } else if (content === "icon-right"){
-        inner = "<span>" + safeLabel + "</span>" + icon(ICON_ARROW, iconSize);
+        inner = '<span data-contract-part="label">' + safeLabel + "</span>" + icon(ICON_ARROW, iconSize).replace("<svg ", '<svg data-contract-part="trailing-icon" ');
       } else if (content === "icon-both"){
-        inner = icon(ICON_PLUS, iconSize) + "<span>" + safeLabel + "</span>" + icon(ICON_ARROW, iconSize);
+        inner = icon(ICON_PLUS, iconSize).replace("<svg ", '<svg data-contract-part="leading-icon" ') + '<span data-contract-part="label">' + safeLabel + "</span>" + icon(ICON_ARROW, iconSize).replace("<svg ", '<svg data-contract-part="trailing-icon" ');
       } else {
         classes += " is-icon-only";
-        inner = isLoading ? spinnerHtml(iconSize) : icon(ICON_GEAR, iconSize);
+        inner = isLoading ? spinnerHtml(iconSize) : icon(ICON_GEAR, iconSize).replace("<svg ", '<svg data-contract-part="icon-only-icon" ');
       }
 
       var attrs = (content === "icon-only" && ariaLabel) ? ' aria-label="' + ariaLabel.replace(/"/g, "&quot;") + '"' : "";

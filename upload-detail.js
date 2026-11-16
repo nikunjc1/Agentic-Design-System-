@@ -12,9 +12,11 @@
   // Simple inline SVG icon set - viewBox 0 0 24 24, stroke currentColor,
   // stroke-width 2, fill none - same convention as toast-detail.js /
   // alert-detail.js's icon sets.
-  var UPLOAD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg>';
-  var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
-  var ERROR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  var UPLOAD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg>';
+  var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  var ERROR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  var CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  var RETRY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
 
   var TYPES = [
     { key: "dropzone", label: "Dropzone" },
@@ -22,8 +24,14 @@
   ];
   var STATES = [
     { key: "empty", label: "Empty" },
+    { key: "hover", label: "Hover" },
+    { key: "focus", label: "Focused" },
+    { key: "dragging", label: "Dragging" },
     { key: "with-files", label: "With files" },
+    { key: "uploading", label: "Uploading" },
+    { key: "success", label: "Success" },
     { key: "error", label: "Error" },
+    { key: "readonly", label: "Read-Only" },
     { key: "disabled", label: "Disabled" }
   ];
 
@@ -60,7 +68,7 @@
     };
   }
 
-  function buildFullPrompt(label, helper){
+  function buildFullPrompt(label, helper, required){
     label = label || DEFAULT_LABEL;
     helper = helper || DEFAULT_HELPER;
     var palette = paletteSnapshot();
@@ -76,20 +84,27 @@
     });
     lines.push("Dropzone border (every state): 1.5px dashed " + palette.lineStrong + ".");
     lines.push("");
-    lines.push("States (4, apply to the control and its file list together):");
+    lines.push("States (10, apply to the control and its file list together):");
     lines.push("- Empty: just the dropzone/button, no file list shown yet.");
-    lines.push("- With files: dropzone/button plus a 2-row file list - one complete file with a green checkmark (" + palette.green500 + "), one mid-upload file with a thin progress bar (fill " + palette.red500 + ") and a percentage label.");
-    lines.push("- Error: a file list row with a red error icon and short error text (color " + palette.danger500 + ") instead of a progress bar, e.g. \"" + DEMO_FILE_ERROR.error + "\".");
+    lines.push("- Hover: the dropzone border or button background shows a hover tint, no file list.");
+    lines.push("- Focused: a visible focus ring on the dropzone or button, no file list.");
+    lines.push("- Dragging: a file is being dragged over the dropzone - the border and background highlight and the instructional text changes to \"Drop files to upload\" (Button has no dropzone to drag onto, so this state looks the same as Hover for that type).");
+    lines.push("- With files: dropzone/button plus one completed file row with a green checkmark (" + palette.green500 + "), a file size, and a Remove (" + "×" + ") button.");
+    lines.push("- Uploading: a single mid-upload file row with a thin progress bar (fill " + palette.red500 + "), a percentage label, and a Cancel button in place of Remove.");
+    lines.push("- Success: a completed file row, same shape as With files, with its size replaced by an explicit \"Uploaded successfully\" status.");
+    lines.push("- Error: a file list row with a red error icon and short error text (color " + palette.danger500 + ") instead of a progress bar, e.g. \"" + DEMO_FILE_ERROR.error + "\", with a Retry button.");
+    lines.push("- Read-Only: shows existing files with their Remove button disabled; the dropzone/button itself is not clickable, but - unlike Disabled - is not dimmed.");
     lines.push("- Disabled: the whole control, including any file list, at 40% opacity and non-interactive.");
     lines.push("");
-    lines.push("Component properties: Label (text, default \"" + DEFAULT_LABEL + "\"); Helper text (text, default \"" + DEFAULT_HELPER + "\").");
+    lines.push("Component properties: Label (text, default \"" + DEFAULT_LABEL + "\", with an optional required indicator - currently " + (required ? "shown" : "hidden") + "); Helper text (text, default \"" + DEFAULT_HELPER + "\").");
     lines.push("Current values - Label: \"" + label + "\", Helper text: \"" + helper + "\".");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function buildFullCode(label, helper){
+  function buildFullCode(label, helper, required){
     label = label || DEFAULT_LABEL;
     helper = helper || DEFAULT_HELPER;
+    var requiredHtml = required ? '<span class="upload-demo-required" aria-hidden="true"> *</span>' : "";
 
     var lines = [];
     lines.push("/* Agentic Design System - Upload (file upload) component */");
@@ -97,24 +112,34 @@
     lines.push("");
     lines.push(".upload-demo-dropzone{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-6); padding:var(--space-20) var(--space-16); border:1.5px dashed var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); text-align:center; }");
     lines.push(".upload-demo-dropzone svg{ width:var(--dimension-24); height:var(--dimension-24); color:var(--text-dim); }");
-    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.upload-demo-dropzone-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.upload-demo-dropzone-helper{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("");
-    lines.push(".upload-demo-trigger-btn{ display:inline-flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; cursor:pointer; width:fit-content; }");
-    lines.push(".upload-demo-trigger-btn:hover{ background:var(--graphite-700); }");
+    lines.push(".upload-demo-dropzone.is-hover, .upload-demo-dropzone:hover{ border-color:var(--text-dim); }");
+    lines.push(".upload-demo-dropzone.is-focus{ outline:2px solid var(--color-focus-ring); outline-offset:2px; }");
+    lines.push(".upload-demo-dropzone.is-dragging{ border-color:var(--red-500); background:var(--red-tint); }");
+    lines.push("");
+    lines.push(".upload-demo-trigger-btn{ display:inline-flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); cursor:pointer; width:fit-content; }");
+    lines.push(".upload-demo-trigger-btn:hover, .upload-demo-trigger-btn.is-hover{ background:var(--graphite-700); }");
+    lines.push(".upload-demo-trigger-btn.is-focus{ outline:2px solid var(--color-focus-ring); outline-offset:2px; }");
     lines.push(".upload-demo-trigger-btn:disabled{ opacity:0.5; cursor:not-allowed; }");
+    lines.push("");
+    lines.push(".upload-demo-file-remove{ flex:none; width:var(--dimension-16); height:var(--dimension-16); display:flex; align-items:center; justify-content:center; padding:0; border:none; background:transparent; color:var(--text-dim); cursor:pointer; }");
+    lines.push(".upload-demo-file-remove:hover{ color:var(--text-hi); }");
+    lines.push(".upload-demo-file-remove:disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("");
     lines.push(".upload-demo-file-list{ display:flex; flex-direction:column; gap:var(--space-6); }");
     lines.push(".upload-demo-file-row{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); padding:var(--space-8) var(--space-10); background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); }");
     lines.push(".upload-demo-file-info{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-3); }");
-    lines.push('.upload-demo-file-name{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:500; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.upload-demo-file-name{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-active-weight); color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.upload-demo-file-size{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); }');
     lines.push(".upload-demo-file-status{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push(".upload-demo-file-row.is-complete .upload-demo-file-status{ color:var(--green-500); }");
     lines.push(".upload-demo-file-row.is-error .upload-demo-file-status{ color:var(--danger-500); }");
-    lines.push(".upload-demo-file-progress{ width:100%; height:var(--dimension-4); background:var(--graphite-700); border-radius:9999px; overflow:hidden; margin-top:var(--space-2); }");
+    lines.push(".upload-demo-file-progress{ width:100%; height:var(--dimension-4); background:var(--graphite-700); border-radius:var(--radius-full); overflow:hidden; margin-top:var(--space-2); }");
     lines.push(".upload-demo-file-progress-fill{ height:100%; background:var(--red-500); }");
     lines.push('.upload-demo-file-error-text{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--danger-500); margin-top:var(--space-2); }');
+    lines.push(".upload-demo-required{ color:var(--danger-500); }");
     lines.push("");
     lines.push("/* Disabled - applies to the whole control, dropzone/button and file list together */");
     lines.push(".upload-demo-field.is-disabled{ opacity:0.4; pointer-events:none; }");
@@ -123,7 +148,7 @@
     lines.push('<div class="upload-demo-field">');
     lines.push('  <div class="upload-demo-dropzone">');
     lines.push("    " + UPLOAD_ICON);
-    lines.push('    <p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>");
+    lines.push('    <p class="upload-demo-dropzone-title">' + escapeHtml(label) + requiredHtml + "</p>");
     lines.push('    <p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>");
     lines.push("  </div>");
     lines.push('  <div class="upload-demo-file-list">');
@@ -147,7 +172,7 @@
     lines.push("");
     lines.push("<!-- Example usage - Button type, Empty state -->");
     lines.push('<div class="upload-demo-field">');
-    lines.push('  <p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>");
+    lines.push('  <p class="upload-demo-dropzone-title">' + escapeHtml(label) + requiredHtml + "</p>");
     lines.push('  <button type="button" class="upload-demo-trigger-btn">' + UPLOAD_ICON + "<span>Upload file</span></button>");
     lines.push('  <p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>");
     lines.push("</div>");
@@ -158,25 +183,56 @@
   // given type/state combination - used by the Live Preview matrix only.
   // buildFullCode above reconstructs its own formatted example separately,
   // matching group-button-detail.js / toast-detail.js's convention.
-  function buildUploadField(typeKey, stateKey, label, helper){
+  // States beyond the original 4 (Empty/With files/Error/Disabled) map onto
+  // this same dropzone+file-list shape without adding new DOM structure:
+  // Hover/Focus/Dragging only change the control's own styling (no file
+  // list), Uploading/Success are each a single-purpose file-list row
+  // (vs. "With files" showing one of each as a general mixed-state
+  // illustration), and Read-Only shows an existing file with its Remove
+  // button disabled rather than absent. Real drag-and-drop, file
+  // validation and upload progress wiring are a much larger feature and
+  // are intentionally out of scope for this static matrix - see the
+  // "Try it" section's absence and the Component Guide for what a real
+  // implementation still needs to add.
+  function buildUploadField(typeKey, stateKey, label, helper, required){
     var isDisabled = stateKey === "disabled";
+    var isReadonly = stateKey === "readonly";
+    var isDragging = stateKey === "dragging";
+    var isHover = stateKey === "hover";
+    var isFocus = stateKey === "focus";
     var fieldCls = "upload-demo-field" + (isDisabled ? " is-disabled" : "");
+    var controlStateCls = (isDragging ? " is-dragging" : "") + (isHover ? " is-hover" : "") + (isFocus ? " is-focus" : "");
+    // data-contract-part gives the Figma capture a stable identity for
+    // each part, independent of DOM position - same reasoning as
+    // checkbox-detail.js's own buildCheckboxCell().
+    var requiredHtml = required ? '<span class="upload-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
 
     var controlHtml;
     if (typeKey === "dropzone"){
-      controlHtml = '<div class="upload-demo-dropzone">' + UPLOAD_ICON +
-        '<p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>" +
-        '<p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>" +
+      var dropzoneText = isDragging ? "Drop files to upload" : escapeHtml(label);
+      controlHtml = '<div class="upload-demo-dropzone' + controlStateCls + '" data-contract-part="dropzone">' + UPLOAD_ICON +
+        '<p class="upload-demo-dropzone-title" data-contract-part="label">' + dropzoneText + requiredHtml + "</p>" +
+        '<p class="upload-demo-dropzone-helper" data-contract-part="helper">' + escapeHtml(helper) + "</p>" +
         "</div>";
     } else {
       var disabledAttr = isDisabled ? " disabled" : "";
-      controlHtml = '<p class="upload-demo-dropzone-title">' + escapeHtml(label) + "</p>" +
-        '<button type="button" class="upload-demo-trigger-btn" tabindex="-1"' + disabledAttr + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-14);height:var(--dimension-14);"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg><span>Upload file</span></button>' +
-        '<p class="upload-demo-dropzone-helper">' + escapeHtml(helper) + "</p>";
+      // The Button appearance has no box around its label/trigger/helper, so
+      // wrap them in one group (same stacked layout as before) that the Figma
+      // export can show/hide as a whole when Appearance changes. Its parts
+      // carry their own ids so they never collide with the Dropzone's.
+      var buttonRequiredHtml = required ? '<span class="upload-demo-required" data-contract-part="button-required" aria-hidden="true"> *</span>' : "";
+      controlHtml = '<div class="upload-demo-trigger-group" data-contract-part="button-group">' +
+        '<p class="upload-demo-dropzone-title" data-contract-part="button-label">' + escapeHtml(label) + buttonRequiredHtml + "</p>" +
+        '<button type="button" class="upload-demo-trigger-btn' + controlStateCls + '" tabindex="-1" data-contract-part="trigger"' + disabledAttr + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-14);height:var(--dimension-14);"><path d="M7 17a4 4 0 0 1-.6-7.96A5 5 0 0 1 16 8.5a3.5 3.5 0 0 1 1 6.86"/><polyline points="9 13 12 10 15 13"/><line x1="12" y1="10" x2="12" y2="19"/></svg><span>Upload file</span></button>' +
+        '<p class="upload-demo-dropzone-helper" data-contract-part="button-helper">' + escapeHtml(helper) + "</p>" +
+        "</div>";
     }
 
+    var removeAttr = (isDisabled || isReadonly) ? " disabled" : "";
+    var removeBtn = '<button type="button" class="upload-demo-file-remove" tabindex="-1" aria-label="Remove file"' + removeAttr + ">" + CLOSE_ICON + "</button>";
+
     var fileListHtml = "";
-    if (stateKey === "with-files" || stateKey === "disabled"){
+    if (stateKey === "with-files" || stateKey === "disabled" || isReadonly){
       fileListHtml = '<div class="upload-demo-file-list">' +
         '<div class="upload-demo-file-row is-complete">' +
           '<div class="upload-demo-file-info">' +
@@ -184,7 +240,11 @@
             '<span class="upload-demo-file-size">' + DEMO_FILE_COMPLETE.size + "</span>" +
           "</div>" +
           '<span class="upload-demo-file-status">' + CHECK_ICON + "</span>" +
+          removeBtn +
         "</div>" +
+      "</div>";
+    } else if (stateKey === "uploading"){
+      fileListHtml = '<div class="upload-demo-file-list">' +
         '<div class="upload-demo-file-row is-uploading">' +
           '<div class="upload-demo-file-info">' +
             '<span class="upload-demo-file-name">' + DEMO_FILE_UPLOADING.name + "</span>" +
@@ -192,6 +252,18 @@
             '<div class="upload-demo-file-progress"><div class="upload-demo-file-progress-fill" style="width:' + DEMO_FILE_UPLOADING.percent + '%;"></div></div>' +
           "</div>" +
           '<span class="upload-demo-file-status" style="width:auto;height:auto;font-family:var(--font-mono);font-size:var(--type-body-size);color:var(--text-dim);">' + DEMO_FILE_UPLOADING.percent + "%</span>" +
+          '<button type="button" class="upload-demo-file-remove" tabindex="-1" aria-label="Cancel upload">' + CLOSE_ICON + "</button>" +
+        "</div>" +
+      "</div>";
+    } else if (stateKey === "success"){
+      fileListHtml = '<div class="upload-demo-file-list">' +
+        '<div class="upload-demo-file-row is-complete">' +
+          '<div class="upload-demo-file-info">' +
+            '<span class="upload-demo-file-name">' + DEMO_FILE_COMPLETE.name + "</span>" +
+            '<span class="upload-demo-file-size">Uploaded successfully</span>' +
+          "</div>" +
+          '<span class="upload-demo-file-status">' + CHECK_ICON + "</span>" +
+          removeBtn +
         "</div>" +
       "</div>";
     } else if (stateKey === "error"){
@@ -202,6 +274,7 @@
             '<span class="upload-demo-file-error-text">' + DEMO_FILE_ERROR.error + "</span>" +
           "</div>" +
           '<span class="upload-demo-file-status">' + ERROR_ICON + "</span>" +
+          '<button type="button" class="upload-demo-file-remove" tabindex="-1" aria-label="Retry upload">' + RETRY_ICON + "</button>" +
         "</div>" +
       "</div>";
     }
@@ -237,12 +310,12 @@
       card.setAttribute("tabindex", "0");
       var href = "upload-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -324,6 +397,7 @@
 
     var labelInput = document.querySelector('[data-role="upload-label"]');
     var helperInput = document.querySelector('[data-role="upload-helper"]');
+    var requiredInput = document.querySelector('[data-role="upload-required"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
@@ -333,10 +407,11 @@
     function render(){
       var label = labelInput ? (labelInput.value.trim() || DEFAULT_LABEL) : DEFAULT_LABEL;
       var helper = helperInput ? (helperInput.value.trim() || DEFAULT_HELPER) : DEFAULT_HELPER;
+      var required = !!(requiredInput && requiredInput.checked);
 
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildUploadField(t.key, state.key, label, helper) + "</td>";
+          return '<td class="button-matrix-cell">' + buildUploadField(t.key, state.key, label, helper, required) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -345,8 +420,8 @@
         '<table class="button-matrix"><thead><tr><th class="button-matrix-rowhead"></th>' + headCells + "</tr></thead>" +
         "<tbody>" + rows + "</tbody></table></div>";
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(label, helper); }, [], function(){});
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(label, helper); }, [], function(){});
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(label, helper, required); }, [], function(){});
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(label, helper, required); }, [], function(){});
     }
 
     if (labelInput){
@@ -355,6 +430,7 @@
     if (helperInput){
       helperInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
+    if (requiredInput) requiredInput.addEventListener("change", render);
 
     render();
   });

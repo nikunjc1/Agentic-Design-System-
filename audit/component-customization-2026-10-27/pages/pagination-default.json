@@ -1,0 +1,195 @@
+{
+  "file": "pagination-default.html",
+  "name": "Pagination",
+  "category": "Components · Navigation · Pagination",
+  "controls": [
+    {
+      "index": 0,
+      "role": "pagination-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "pagination-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "pagination-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "pagination-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Numbered",
+      "options": [
+        {
+          "value": "Numbered",
+          "label": "Numbered"
+        },
+        {
+          "value": "Simple",
+          "label": "Simple"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size and corner radius are properties of the same component, not separate buttons - change them below to check this control's style and states in the Live Preview. Page numbers and the \"Page X of Y\" count shown are fixed reference content, not editable properties.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    },
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Pagination lets someone navigate through pages of a large result set, like search results or a data table - numbered page controls (or a simple Prev/Next pair) plus a page count, so a huge dataset stays browsable without loading everything at once. When to Use Search results split across pages - a results list too long to show all at once. A data table with many rows - an admin grid or report view. A product listing or blog archive - any large, ordered collection browsed a page at a time. When Not to Use A small result set that fits on one screen - pagination adds unnecessary interaction for a handful of items. A feed the user scrolls continuously through - use infinite scroll or a \"load more\" pattern instead of discrete pages, if that better matches the content type. Navigating between unrelated sections of a product - use Tabs, a nav bar, or Breadcrumb - Pagination is only for moving within one ordered result set. Best Practices Always show which page is currently active and, when feasible, the total number of pages or results. Provide direct jump controls (first/last, or a page-number input) for very large result sets, not just Prev/Next. Keep the control's position consistent (commonly below the content it paginates) across every paginated view. Do and Don't Do ‹123›128 results The current page is visibly distinct and the total result count is stated, so the user knows both where they are and how much further there is. Don't ‹123› With no page marked current, the control on its own cannot tell the user which of the results they are currently looking at. Accessibility The current page is marked with aria-current=\"page\", not communicated by color alone. Prev/Next controls have clear accessible names (\"Previous page\", \"Next page\"), not just arrow glyphs. Disabled Prev/Next controls (on the first or last page) use the native disabled state so they're correctly skipped by assistive technology. Related Components Table, List, Tabs. { \"component\": \"Pagination\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Pagination lets someone navigate through pages of a large result set, like search results or a data table - numbered page controls (or a simple Prev/Next pair) plus a page count, so a huge dataset stays browsable without loading everything at once.\", \"whenToUse\": [ \"Search results split across pages - a results list too long to show all at once.\", \"A data table with many rows - an admin grid or report view.\", \"A product listing or blog archive - any large, ordered collection browsed a page at a time.\" ], \"whenNotToUse\": [ \"A small result set that fits on one screen - pagination adds unnecessary interaction for a handful of items.\", \"A feed the user scrolls continuously through - use infinite scroll or a \\\"load more\\\" pattern instead of discrete pages, if that better matches the content type.\", \"Navigating between unrelated sections of a product - use Tabs, a nav bar, or Breadcrumb - Pagination is only for moving within one ordered result set.\" ], \"bestPractices\": [ \"Always show which page is currently active and, when feasible, the total number of pages or results.\", \"Provide direct jump controls (first/last, or a page-number input) for very large result sets, not just Prev/Next.\", \"Keep the control's position consistent (commonly below the content it paginates) across every paginated view.\" ], \"doAndDont\": { \"do\": \"The current page is visibly distinct and the total result count is stated, so the user knows both where they are and how much further there is.\", \"dont\": \"With no page marked current, the control on its own cannot tell the user which of the results they are currently looking at.\" }, \"accessibility\": [ \"The current page is marked with aria-current=\\\"page\\\", not communicated by color alone.\", \"Prev/Next controls have clear accessible names (\\\"Previous page\\\", \\\"Next page\\\"), not just arrow glyphs.\", \"Disabled Prev/Next controls (on the first or last page) use the native disabled state so they're correctly skipped by assistive technology.\" ], \"relatedComponents\": [ \"Table\", \"List\", \"Tabs\" ] }",
+  "tests": []
+}

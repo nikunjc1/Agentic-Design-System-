@@ -1,0 +1,212 @@
+{
+  "file": "dropdown-default.html",
+  "name": "Dropdown",
+  "category": "Components · Navigation · Dropdown",
+  "controls": [
+    {
+      "index": 0,
+      "role": "dropdown-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "dropdown-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "dropdown-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "dropdown-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "dropdown-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Options",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius and label are properties of the same component, not separate buttons - change them below to check this trigger's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Dropdown is a trigger button that reveals a list of actions or commands when clicked, like \"More actions\" or \"Sort by\" - distinct from Select, which picks a form value, and from the Menu panel it opens, which is a separate component in its own right. When to Use A row-level actions menu - opening a list of commands for a single table row. A bulk-actions or sort-by trigger - acting on multiple selected items, or choosing a sort order from a command list. A catch-all \"more options\" trigger - when several secondary actions don't fit as individual buttons. When Not to Use Picking a value that gets stored or submitted as form data - use Select - Dropdown triggers actions, it doesn't hold a form value. A single, common action that deserves its own visible button - don't bury a frequently-used action inside a Dropdown just to reduce button count. Persistent, always-visible navigation - use a nav bar, sidebar, or Tabs instead of hiding primary navigation behind a click. Best Practices Order menu items by frequency of use or logical grouping, with destructive actions visually separated at the bottom. Keep the trigger's label descriptive (\"Sort by\", not just an icon) unless the icon convention is already well established. Close the menu on selection, on outside click, and on Escape - never leave it open after an action fires. Do and Don't Do Sort by: Newest▾ The trigger states the current selection, so the control still reads correctly closed, without needing to be opened first. Don't Options▾ A generic \"Options\" label never reflects what has actually been chosen, so the user has to reopen the menu just to check the current state. Accessibility The trigger exposes aria-haspopup and aria-expanded, reflecting whether the menu is currently open. The opened menu is fully keyboard-navigable (arrow keys, Enter to activate, Escape to close) without requiring a mouse. Focus returns to the trigger when the menu closes, so keyboard users don't lose their place. Related Components Menu (the panel it opens), Select, Button. { \"component\": \"Dropdown\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Dropdown is a trigger button that reveals a list of actions or commands when clicked, like \\\"More actions\\\" or \\\"Sort by\\\" - distinct from Select, which picks a form value, and from the Menu panel it opens, which is a separate component in its own right.\", \"whenToUse\": [ \"A row-level actions menu - opening a list of commands for a single table row.\", \"A bulk-actions or sort-by trigger - acting on multiple selected items, or choosing a sort order from a command list.\", \"A catch-all \\\"more options\\\" trigger - when several secondary actions don't fit as individual buttons.\" ], \"whenNotToUse\": [ \"Picking a value that gets stored or submitted as form data - use Select - Dropdown triggers actions, it doesn't hold a form value.\", \"A single, common action that deserves its own visible button - don't bury a frequently-used action inside a Dropdown just to reduce button count.\", \"Persistent, always-visible navigation - use a nav bar, sidebar, or Tabs instead of hiding primary navigation behind a click.\" ], \"bestPractices\": [ \"Order menu items by frequency of use or logical grouping, with destructive actions visually separated at the bottom.\", \"Keep the trigger's label descriptive (\\\"Sort by\\\", not just an icon) unless the icon convention is already well established.\", \"Close the menu on selection, on outside click, and on Escape - never leave it open after an action fires.\" ], \"doAndDont\": { \"do\": \"The trigger states the current selection, so the control still reads correctly closed, without needing to be opened first.\", \"dont\": \"A generic \\\"Options\\\" label never reflects what has actually been chosen, so the user has to reopen the menu just to check the current state.\" }, \"accessibility\": [ \"The trigger exposes aria-haspopup and aria-expanded, reflecting whether the menu is currently open.\", \"The opened menu is fully keyboard-navigable (arrow keys, Enter to activate, Escape to close) without requiring a mouse.\", \"Focus returns to the trigger when the menu closes, so keyboard users don't lose their place.\" ], \"relatedComponents\": [ \"Menu\", \"Select\", \"Button\" ] }",
+  "tests": []
+}

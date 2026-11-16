@@ -46,9 +46,9 @@
   --border-width-3: 3px;
   --border-width-4: 4px;
 
-  --text-hi: #f3f2ef;
-  --text-mid: #a7abb2;
-  --text-dim: #64686f;
+  --text-hi: #d8dfee;
+  --text-mid: #9ca6b4;
+  --text-dim: #7f8694;
 
   /* For an overlay that must always invert against the page (Tooltip's
      bubble) - never reuse --text-hi/--graphite-900 for this. Both are
@@ -73,7 +73,8 @@
   /* Focus ring - 76 of 82 sitewide focus-visible outlines already use
      this exact color; the other 6 are deliberate per-component variants
      (destructive/success/info), not something this alias should absorb. */
-  --color-focus-ring: var(--red-400);
+  --color-focus-ring: var(--border-state-focus);
+  --border-state-focus: var(--red-400);
 
   /* Text that sits ON a brand-colored surface (a primary button's own
      label) - was hardcoded #fff at the one place it was needed; naming
@@ -88,14 +89,14 @@
      system's own default red needs it too - #15171A, computed for the
      real default, is the correct static value before any JS runs). The
      fallback keeps every page safe even where foundations.js never loads. */
-  --on-brand-text: #15171A;
+  --on-brand-text: #FFFFFF;
 
   /* Brand red */
   --red-500: #ff031a;
-  --red-400: #ff3f4f;
-  --red-600: #d80016;
+  --red-400: #ff4253;
+  --red-600: #d10215;
   --red-glow: rgba(255,3,26,0.35);
-  --red-tint: rgba(255,3,26,0.1);
+  --red-tint: rgba(255,3,26,0.08);
   /* Semantic aliases for the above - "red" is this system's own current
      default, but Brand (foundations.html) is editable to any hue, so a
      --red-* reference silently keeps that literal name even once its
@@ -122,8 +123,8 @@
   --green-500: #2fbf6e;
   --amber-500: #e6a53a;
   --danger-500: #ff031a;
-  --danger-400: #ff3f4f;
-  --danger-600: #d80016;
+  --danger-400: #ff4253;
+  --danger-600: #d10215;
   --blue-500: #4f8fe6;
 
   /* Letter-spacing was used 48 times across 10 distinct values with no
@@ -166,6 +167,16 @@
      parsing, generate_tokens.py included. Fixed as part of Foundation
      audit X03/X04 - said in prose here on purpose, not symbols, so this
      exact comment can't retrigger the same bug it's describing.) */
+  /* Icon defaults (the Icons page overrides these at runtime). --icon-scale = --icon-size / 24px and lets every component glyph keep its own proportion while following the Icons size. */
+  --icon-size: 24px;
+  --icon-scale: 1;
+  --icon-stroke: 1.8;
+  --icon-cap: round;
+  --icon-join: round;
+  /* Border and focus-ring defaults (the Borders page overrides these at runtime). */
+  --border-style: solid;
+  --border-sides: all;
+  --focus-ring-width: 2px;
   --radius-none: 0px;
   --radius-2: 2px;
   --radius-sm: 4px;
@@ -175,6 +186,13 @@
   --radius-16: 16px;
   --radius-24: 24px;
   --radius-full: 9999px;
+  /* Fixed primitives and the philosophy-dependent large step; the runtime overrides --radius-sm/md/lg per philosophy. */
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-20: 20px;
+  --radius-32: 32px;
+  --radius-40: 40px;
+  --radius-lg: 16px;
 
   /* Spacing - the "Balanced (4px)" scale from the Spacing foundation page,
      as real tokens. Every padding/margin/gap value elsewhere in this file
@@ -207,15 +225,26 @@
      documents; this just makes them var()-able instead of copy-pasted
      literals. */
   --shadow-none: none;
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 8px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
-  --shadow-xl: 0 12px 24px rgba(0,0,0,0.14);
-  --shadow-2xl: 0 16px 32px rgba(0,0,0,0.16);
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.15);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.20);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.25);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.30);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.35);
+  --shadow-2xl: 0 16px 32px rgba(0,0,0,0.40);
 
   /* Modal/drawer backdrop - was hardcoded separately wherever a scrim
      appeared; one token so every overlay dims the page the same amount. */
+  /* Sizing and grid fallbacks. The Spacing and Grid & Layout pages override these at runtime; without them
+     (before the runtime script, or if it fails) min(100%,var(--size-content)), the sidebar column and the
+     control sizes would be invalid. */
+  --size-control: 40px;
+  --size-target: 44px;
+  --size-icon: 24px;
+  --size-content: 1200px;
+  --size-sidebar: 264px;
+  --size-topbar: 64px;
+  --grid-columns: 12;
+  --grid-gutter: 24px;
   --overlay-scrim: rgba(0,0,0,0.55);
 
   /* Motion - every transition and animation in the system resolves to one
@@ -246,6 +275,9 @@
   --button-primary-bg-hover: var(--red-400);
   --button-primary-bg-active: var(--red-600);
   --button-primary-text: var(--color-on-brand);
+  --button-primary-text-default: var(--button-primary-text);
+  --button-primary-text-hover: var(--button-primary-text);
+  --button-primary-text-active: var(--button-primary-text);
   --button-primary-focus-ring: var(--color-focus-ring);
   --button-primary-disabled-opacity: 0.45;
 
@@ -297,7 +329,7 @@
      and "succeeded/failed" are already exactly what those tokens mean.
      Theme-independent, same reasoning as brand/status: an AI-generated
      badge should read as the same color regardless of light/dark. */
-  --color-ai-accent: #8b5cf6;
+  --color-ai-accent: #a78bfa;
   /* Text use (badge label, "Why this suggestion?" link) needs its own,
      lighter shade in dark theme - the deep #7c3aed that reads fine on a
      light page only clears ~3.0-3.4:1 against this theme's dark page and
@@ -329,16 +361,29 @@
   --line: rgba(15,15,10,0.08);
   --line-strong: rgba(15,15,10,0.15);
 
-  --text-hi: #15171a;
-  --text-mid: #53565c;
-  --text-dim: #85888d;
+  --text-hi: #111827;
+  --text-mid: #4b5563;
+  --text-dim: #69707d;
 
   --overlay-invert-bg: #15171a;
   --overlay-invert-text: #ffffff;
   --overlay-invert-amber: #e6a53a;
 
-  --red-tint: rgba(255,3,26,0.07);
+  --red-tint: rgba(255,3,26,0.08);
+  --border-state-focus: var(--red-500);
+  /* Light-theme elevation (the base block above carries the stronger dark-theme alphas). */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.14);
+  --shadow-2xl: 0 16px 32px rgba(0,0,0,0.16);
+
+  --color-ai-confidence-high: #21864d;
+  --color-ai-confidence-medium: #986d26;
+  --color-ai-confidence-low: #eb0318;
 
   --link-text: #e60317;
+  --color-ai-accent: #7c3aed;
   --color-ai-accent-strong: #7c3aed;
 }

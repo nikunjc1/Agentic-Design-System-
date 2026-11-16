@@ -3,7 +3,7 @@
 
   // Small "x" remove icon - viewBox 0 0 24 24, stroke currentColor so it
   // inherits the chip's own text color rather than a hard-coded fill.
-  var REMOVE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>';
+  var REMOVE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>';
 
   var TYPES = [
     { key: "default", label: "Default" },
@@ -45,16 +45,16 @@
   function colorsFor(typeKey){
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var graphite600 = getCssVar("--graphite-600", "#383D44");
-    var textMid = getCssVar("--text-mid", "#A7ABB2");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
+    var textMid = getCssVar("--text-mid", "#4B5563");
+    var textHi = getCssVar("--text-hi", "#111827");
     var green500 = getCssVar("--green-500", "#2FBF6E");
     var amber500 = getCssVar("--amber-500", "#E6A53A");
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var map = {
       default: { background: graphite700, color: textMid, selectedBackground: graphite600, selectedColor: textHi },
-      success: { background: "rgba(47,191,110,0.12)", color: green500, selectedBackground: green500, selectedColor: "#FFFFFF" },
-      warning: { background: "rgba(230,165,58,0.12)", color: amber500, selectedBackground: amber500, selectedColor: "#1A1400" },
-      error: { background: "rgba(255,3,26,0.12)", color: danger500, selectedBackground: danger500, selectedColor: "#FFFFFF" }
+      success: { background: "color-mix(in srgb, " + green500 + " 12%, transparent)", color: green500, selectedBackground: green500, selectedColor: "var(--status-success-text)" },
+      warning: { background: "color-mix(in srgb, " + amber500 + " 12%, transparent)", color: amber500, selectedBackground: amber500, selectedColor: "var(--status-warning-text)" },
+      error: { background: "color-mix(in srgb, " + danger500 + " 12%, transparent)", color: danger500, selectedBackground: danger500, selectedColor: "var(--status-danger-text)" }
     };
     return map[typeKey];
   }
@@ -64,9 +64,13 @@
   // dropdown and the Copy Prompt/Copy Code generators below.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -96,7 +100,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -167,17 +171,17 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Tag component */");
-    lines.push(".tag-demo-chip{ box-sizing:border-box; display:inline-flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-10); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; white-space:nowrap; }");
+    lines.push(".tag-demo-chip{ box-sizing:border-box; display:inline-flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-10); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); white-space:nowrap; }");
     lines.push(".tag-demo-chip--default{ background:var(--graphite-700); color:var(--text-mid); }");
-    lines.push(".tag-demo-chip--success{ background:rgba(47,191,110,0.12); color:var(--green-500); }");
-    lines.push(".tag-demo-chip--warning{ background:rgba(230,165,58,0.12); color:var(--amber-500); }");
-    lines.push(".tag-demo-chip--error{ background:rgba(255,3,26,0.12); color:var(--danger-500); }");
+    lines.push(".tag-demo-chip--success{ background:color-mix(in srgb, var(--green-500) 12%, transparent); color:var(--green-500); }");
+    lines.push(".tag-demo-chip--warning{ background:color-mix(in srgb, var(--amber-500) 12%, transparent); color:var(--amber-500); }");
+    lines.push(".tag-demo-chip--error{ background:color-mix(in srgb, var(--danger-500) 12%, transparent); color:var(--danger-500); }");
     lines.push("");
     lines.push("/* Selected form - solid, more saturated fill instead of the light tint */");
     lines.push(".tag-demo-chip--default.is-selected{ background:var(--graphite-600); color:var(--text-hi); }");
-    lines.push(".tag-demo-chip--success.is-selected{ background:var(--green-500); color:#FFFFFF; }");
-    lines.push(".tag-demo-chip--warning.is-selected{ background:var(--amber-500); color:#1A1400; }");
-    lines.push(".tag-demo-chip--error.is-selected{ background:var(--danger-500); color:#FFFFFF; }");
+    lines.push(".tag-demo-chip--success.is-selected{ background:var(--green-500); color:var(--status-success-text); }");
+    lines.push(".tag-demo-chip--warning.is-selected{ background:var(--amber-500); color:var(--status-warning-text); }");
+    lines.push(".tag-demo-chip--error.is-selected{ background:var(--danger-500); color:var(--status-danger-text); }");
     lines.push("");
     lines.push(".tag-demo-remove{ flex:none; width:var(--dimension-12); height:var(--dimension-12); background:none; border:none; color:inherit; opacity:0.7; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }");
     lines.push(".tag-demo-remove:hover{ opacity:1; }");
@@ -197,7 +201,7 @@
     var radiusCss = radiusCssFor(radius);
     var selectedCls = stateKey === "selected" ? " is-selected" : "";
     var labelText = escapeHtml(label);
-    var labelHtml = "<span>" + labelText + "</span>";
+    var labelHtml = '<span data-contract-part="label">' + labelText + "</span>";
     var removeHtml = (stateKey === "removable")
       ? '<button type="button" class="tag-demo-remove"' + tabindexAttr + ' aria-label="Remove ' + labelText + '">' + REMOVE_ICON + "</button>"
       : "";
@@ -268,12 +272,12 @@
       card.setAttribute("tabindex", "0");
       var href = "tag-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

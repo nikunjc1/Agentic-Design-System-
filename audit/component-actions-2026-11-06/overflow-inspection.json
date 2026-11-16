@@ -1,0 +1,899 @@
+[
+  {
+    "file": "group-button-default",
+    "width": 1440,
+    "main": {
+      "width": 1176,
+      "scroll": 1176
+    },
+    "page": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "nodes": [
+      {
+        "tag": "DIV",
+        "cls": "group-btn-field",
+        "width": 1913.96875,
+        "right": 2250.96875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group-btn group-btn--outlined",
+        "width": 1913.96875,
+        "right": 2250.96875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.796875,
+        "right": 1586.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.796875,
+        "right": 1531.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1561.625,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1557.9583740234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 220.71875,
+        "right": 1807.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 141.71875,
+        "right": 1752.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1782.34375,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1778.6771240234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.828125,
+        "right": 2029.171875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.828125,
+        "right": 1974.171875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 2004.171875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 2000.5052490234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 220.796875,
+        "right": 2249.96875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.796875,
+        "right": 2195.96875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 2225.96875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.66650390625,
+        "right": 2222.302001953125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group-btn group-btn--outlined",
+        "width": 1913.96875,
+        "right": 2251.96875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.796875,
+        "right": 1587.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.796875,
+        "right": 1532.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1562.625,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1558.9583740234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 220.71875,
+        "right": 1808.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 141.71875,
+        "right": 1753.34375,
+        "overflow": "visible"
+      }
+    ]
+  },
+  {
+    "file": "group-button-default",
+    "width": 390,
+    "main": {
+      "width": 390,
+      "scroll": 390
+    },
+    "page": {
+      "width": 390,
+      "scroll": 390
+    },
+    "nodes": [
+      {
+        "tag": "DIV",
+        "cls": "group-btn-field",
+        "width": 1913.96875,
+        "right": 1954.96875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group-btn group-btn--outlined",
+        "width": 1913.96875,
+        "right": 1954.96875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.265625,
+        "right": 482.296875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.265625,
+        "right": 427.296875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 457.296875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.66668701171875,
+        "right": 453.6302185058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 143.125,
+        "right": 625.421875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 64.125,
+        "right": 570.421875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 600.421875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.6666259765625,
+        "right": 596.7551879882812,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.90625,
+        "right": 847.328125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.90625,
+        "right": 792.328125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 822.328125,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.6666259765625,
+        "right": 818.6614379882812,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.5,
+        "right": 1068.828125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.5,
+        "right": 1013.828125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1043.828125,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1040.1614990234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.796875,
+        "right": 1290.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.796875,
+        "right": 1235.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1265.625,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1261.9583740234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 220.71875,
+        "right": 1511.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 141.71875,
+        "right": 1456.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1486.34375,
+        "overflow": "hidden"
+      }
+    ]
+  },
+  {
+    "file": "group-button-default",
+    "width": 320,
+    "main": {
+      "width": 320,
+      "scroll": 320
+    },
+    "page": {
+      "width": 320,
+      "scroll": 320
+    },
+    "nodes": [
+      {
+        "tag": "BUTTON",
+        "cls": "wb-button ",
+        "width": 140,
+        "right": 324,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group-btn-field",
+        "width": 1913.96875,
+        "right": 1954.96875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "group-btn group-btn--outlined",
+        "width": 1913.96875,
+        "right": 1954.96875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.265625,
+        "right": 482.296875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.265625,
+        "right": 427.296875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 457.296875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.66668701171875,
+        "right": 453.6302185058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 143.125,
+        "right": 625.421875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 64.125,
+        "right": 570.421875,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 600.421875,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.6666259765625,
+        "right": 596.7551879882812,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.90625,
+        "right": 847.328125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.90625,
+        "right": 792.328125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 822.328125,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.6666259765625,
+        "right": 818.6614379882812,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.5,
+        "right": 1068.828125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.5,
+        "right": 1013.828125,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1043.828125,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1040.1614990234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 221.796875,
+        "right": 1290.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 142.796875,
+        "right": 1235.625,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 22,
+        "right": 1265.625,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 14.666748046875,
+        "right": 1261.9583740234375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "group-btn-segment group-btn-segment--h56",
+        "width": 220.71875,
+        "right": 1511.34375,
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "",
+        "width": 141.71875,
+        "right": 1456.34375,
+        "overflow": "visible"
+      }
+    ]
+  },
+  {
+    "file": "rating-default",
+    "width": 1440,
+    "main": {
+      "width": 1176,
+      "scroll": 1176
+    },
+    "page": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "nodes": []
+  },
+  {
+    "file": "rating-default",
+    "width": 390,
+    "main": {
+      "width": 390,
+      "scroll": 390
+    },
+    "page": {
+      "width": 390,
+      "scroll": 390
+    },
+    "nodes": [
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-field",
+        "width": 396,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-row",
+        "width": 396,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 397,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 395,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 392.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 435,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 432.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-field",
+        "width": 396,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-row",
+        "role": "rating-interactive-row",
+        "width": 396,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 422,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 420,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 417.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 460,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 457.3333435058594,
+        "overflow": "visible"
+      }
+    ]
+  },
+  {
+    "file": "rating-default",
+    "width": 320,
+    "main": {
+      "width": 320,
+      "scroll": 320
+    },
+    "page": {
+      "width": 320,
+      "scroll": 320
+    },
+    "nodes": [
+      {
+        "tag": "BUTTON",
+        "cls": "wb-button ",
+        "width": 140,
+        "right": 324,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-field",
+        "width": 396,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-row",
+        "width": 396,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 357,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 355,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 352.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 397,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 395,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 392.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 437,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 435,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 432.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-field",
+        "width": 396,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "cls": "rating-demo-row",
+        "role": "rating-interactive-row",
+        "width": 396,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 342,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 340,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 337.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 382,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 380,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 377.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 422,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 420,
+        "overflow": "hidden"
+      },
+      {
+        "tag": "path",
+        "cls": {},
+        "width": 26.66668701171875,
+        "right": 417.3333435058594,
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "cls": "rating-demo-icon",
+        "width": 36,
+        "right": 462,
+        "overflow": "visible"
+      },
+      {
+        "tag": "svg",
+        "cls": {},
+        "width": 32,
+        "right": 460,
+        "overflow": "hidden"
+      }
+    ]
+  }
+]

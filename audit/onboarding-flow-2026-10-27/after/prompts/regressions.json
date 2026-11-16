@@ -1,0 +1,813 @@
+{
+  "pages": 69,
+  "checks": 161,
+  "status": "pass",
+  "results": [
+    {
+      "file": "add-on-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "add-on-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "affix-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "affix-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "alert-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "alert-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "anchor-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "anchor-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "autocomplete-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "autocomplete-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "avatar-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "avatar-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "badge-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "badge-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-destructive.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-destructive.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-ghost.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-ghost.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-link.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-link.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-neutral.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-neutral.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-primary-icon.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-primary-icon.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-secondary.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-secondary.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "button-tertiary.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "button-tertiary.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "calendar-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "calendar-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "card-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "card-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "cascader-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "cascader-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "checkbox-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "checkbox-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "collapse-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "collapse-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "date-picker-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "date-picker-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "date-range-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "date-range-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "description-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "description-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "divider-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "divider-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "drawer-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "drawer-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "dropdown-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "dropdown-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "empty-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "empty-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "float-button-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "float-button-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "group-button-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "group-button-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "image-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "image-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "list-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "list-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "mention-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "mention-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "menu-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "menu-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "modal-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "modal-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "notification-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "notification-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "number-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "number-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "pagination-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "pagination-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "password-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "password-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "popover-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "popover-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "progress-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "progress-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "radio-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "radio-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "rating-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "rating-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "result-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "result-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "search-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "search-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "select-dropdown.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "select-dropdown.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "skeleton-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "skeleton-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "slider-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "slider-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "spin-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "spin-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "splitter-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "splitter-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "statistic-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "statistic-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "steps-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "steps-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "switch-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "switch-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "table-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "table-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tabs-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tabs-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tag-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tag-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "text-area-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "text-area-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "time-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "time-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "timeline-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "timeline-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "toast-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "toast-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tooltip-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tooltip-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tour-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tour-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "transfer-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "transfer-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tree-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tree-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "tree-select-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "tree-select-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "upload-default.html",
+      "theme": "light",
+      "status": "pass"
+    },
+    {
+      "file": "upload-default.html",
+      "theme": "dark",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Label",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Placeholder",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Leading icon enabled",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Trailing icon enabled",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Allow clear enabled",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "Label",
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "property": "Color value",
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "property": "Color value",
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "property": "Color value",
+      "status": "pass"
+    },
+    {
+      "file": "description-default.html",
+      "property": "Columns",
+      "status": "pass"
+    },
+    {
+      "file": "float-button-default.html",
+      "property": "Show badge enabled",
+      "status": "pass"
+    },
+    {
+      "file": "group-button-default.html",
+      "property": "Number of buttons",
+      "status": "pass"
+    },
+    {
+      "file": "notification-default.html",
+      "property": "Placement",
+      "status": "pass"
+    },
+    {
+      "file": "avatar-default.html",
+      "property": "Avatar.Group display",
+      "status": "pass"
+    },
+    {
+      "file": "slider-default.html",
+      "property": "Value",
+      "status": "pass"
+    },
+    {
+      "file": "text-area-default.html",
+      "property": "Rows",
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "property": "icon-only accessible name",
+      "status": "pass"
+    },
+    {
+      "file": "group-button-default.html",
+      "property": "conditional text",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "exact combination menus",
+      "status": "pass"
+    },
+    {
+      "file": "affix-default.html",
+      "property": "canonical dimension without cloned unit controls",
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "property": "custom focus and shadow Foundations",
+      "status": "pass"
+    },
+    {
+      "file": "card-default.html",
+      "property": "custom focus and shadow Foundations",
+      "status": "pass"
+    },
+    {
+      "file": "notification-default.html",
+      "property": "custom focus and shadow Foundations",
+      "status": "pass"
+    }
+  ],
+  "errors": []
+}

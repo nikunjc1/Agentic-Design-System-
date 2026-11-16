@@ -108,7 +108,7 @@
     var lines = [];
     lines.push("/* Agentic Design System - Avatar component */");
     lines.push(".avatar-demo-wrap{ display:inline-flex; position:relative; }");
-    lines.push(".avatar-demo-circle{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; border-radius:9999px; font-family:var(--font-body); font-weight:600; color:#FFFFFF; overflow:hidden; flex:none; }");
+    lines.push(".avatar-demo-circle{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-full); font-family:var(--font-body); font-weight:var(--type-selected-weight); color:var(--on-brand-text); overflow:hidden; flex:none; }");
     lines.push(".avatar-demo-circle--square{ border-radius:var(--radius-md); }");
     lines.push(".avatar-demo-circle--initials{ background:var(--red-500); }");
     lines.push(".avatar-demo-circle--icon{ background:var(--graphite-700); color:var(--text-hi); }");
@@ -119,7 +119,7 @@
     lines.push(".avatar-demo-circle--h" + size + "{ width:" + sizeInfo.box + "px; height:" + sizeInfo.box + "px; font-size:" + sizeInfo.font + "px; }");
     lines.push("");
     lines.push("/* Status dot - bottom-right corner */");
-    lines.push(".avatar-demo-status{ position:absolute; bottom:-1px; right:-1px; border-radius:9999px; border:2px solid var(--graphite-950); box-sizing:border-box; }");
+    lines.push(".avatar-demo-status{ position:absolute; bottom:-1px; right:-1px; border-radius:var(--radius-full); border:2px solid var(--graphite-950); box-sizing:border-box; }");
     var dotInfo = STATUS_DOT_MAP[size] || STATUS_DOT_MAP[FALLBACK_DEFAULTS.size];
     lines.push('.avatar-demo-wrap[data-size="' + size + '"] .avatar-demo-status{ width:' + dotInfo.size + "px; height:" + dotInfo.size + "px; border-width:" + dotInfo.border + "px; }");
     lines.push(".avatar-demo-status--online{ background:var(--green-500); }");
@@ -161,10 +161,10 @@
     // against the red badge. Setting color inline keeps the sync pass from
     // touching it (it only overrides when no inline color is set, or it is
     // one of its own inferred values).
-    if (typeKey === "initials" || typeKey === "image") circleStyle += "color:#FFFFFF;";
+    if (typeKey === "initials" || typeKey === "image") circleStyle += "color:var(--on-brand-text);";
     var inner = "";
     if (typeKey === "initials"){
-      inner = "<span>" + escapeHtml(initials || FALLBACK_DEFAULTS.initials) + "</span>";
+      inner = '<span data-contract-part="initials">' + escapeHtml(initials || FALLBACK_DEFAULTS.initials) + "</span>";
     } else if (typeKey === "icon"){
       inner = PERSON_ICON_SVG;
     }
@@ -207,12 +207,12 @@
       card.setAttribute("tabindex", "0");
       var href = "avatar-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

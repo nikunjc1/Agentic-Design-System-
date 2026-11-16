@@ -1,0 +1,148 @@
+{
+  "file": "tooltip-default.html",
+  "name": "Tooltip",
+  "category": "Components · Feedback · Tooltip",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Top",
+      "options": [
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "Left",
+          "label": "Left"
+        },
+        {
+          "value": "Right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Plain text",
+      "options": [
+        {
+          "value": "Plain text",
+          "label": "Plain text"
+        },
+        {
+          "value": "Rich",
+          "label": "Rich"
+        },
+        {
+          "value": "Long text",
+          "label": "Long text"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "tooltip-size-select",
+      "id": null,
+      "label": "Size",
+      "type": "select",
+      "value": "default",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Size Small Default Large",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "tooltip-text",
+      "id": null,
+      "label": "Text content",
+      "type": "text",
+      "value": "Add to favorites",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Text content",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "tooltip-show-arrow",
+      "id": null,
+      "label": "Show arrow",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "pointing at the trigger",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, text content and the arrow are properties of the same component, not separate tooltips built by hand - change them below to check every placement and content state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Tooltip adds a short hint next to a trigger element, like an icon-only button, without needing to click anything - a small floating label that appears on hover or focus and disappears when attention moves elsewhere. When to Use Labeling an icon-only control - explaining what an unlabeled icon button does. Disclosing truncated text - showing the full value of text cut off with an ellipsis. A keyboard shortcut hint or a brief explanation for a disabled control - why an action currently can't be taken. When Not to Use Essential information the user must see to complete a task - hover-only content is easy to miss, especially on touch devices; put critical information visibly on screen instead. Long or multi-paragraph content - use Popover, which supports richer content and stays open until dismissed. Content that needs to remain visible while the user interacts with it - a tooltip disappears when hover/focus moves away, so it can't hold interactive controls of its own. Best Practices Keep the text to a single short phrase or sentence - if it needs more, use Popover instead. Trigger it on both hover and keyboard focus, never hover alone, so keyboard users get the same information. Avoid delaying its appearance so long that it feels unresponsive, or so little that it flickers on incidental mouse movement. Do and Don't Do Archive□ Supplies the name of an icon-only control - exactly the gap a tooltip exists to fill. Don't Required. Must be 8+ characters with a number and a symbol.□ Rules the user needs while typing should not be hidden behind hover - they are invisible on touch and gone the moment the pointer moves. Put them in the field's help text. Accessibility Associated with its trigger via aria-describedby pointing at the tooltip bubble's id, so screen readers announce it as supplementary information about the focused control, not as an unrelated interruption. Appears on keyboard focus, not just mouse hover - the trigger must be focusable (tabindex=\"0\" if it isn't natively) so keyboard-only users get exactly the same hint sighted mouse users do. Deliberately carries no aria-live/role=\"alert\"/role=\"status\": Tooltip is this system's lowest interruption level, a supplementary hint tied to whatever already has focus, not an event that needs to interrupt and announce itself elsewhere on the page. Never the only source of essential information - it must supplement, not replace, a visible accessible name. Related Components Popover, Pop Confirm, Tour. { \"component\": \"Tooltip\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Tooltip adds a short hint next to a trigger element, like an icon-only button, without needing to click anything - a small floating label that appears on hover or focus and disappears when attention moves elsewhere.\", \"whenToUse\": [ \"Labeling an icon-only control - explaining what an unlabeled icon button does.\", \"Disclosing truncated text - showing the full value of text cut off with an ellipsis.\", \"A keyboard shortcut hint or a brief explanation for a disabled control - why an action currently can't be taken.\" ], \"whenNotToUse\": [ \"Essential information the user must see to complete a task - hover-only content is easy to miss, especially on touch devices; put critical information visibly on screen instead.\", \"Long or multi-paragraph content - use Popover, which supports richer content and stays open until dismissed.\", \"Content that needs to remain visible while the user interacts with it - a tooltip disappears when hover/focus moves away, so it can't hold interactive controls of its own.\" ], \"bestPractices\": [ \"Keep the text to a single short phrase or sentence - if it needs more, use Popover instead.\", \"Trigger it on both hover and keyboard focus, never hover alone, so keyboard users get the same information.\", \"Avoid delaying its appearance so long that it feels unresponsive, or so little that it flickers on incidental mouse movement.\" ], \"doAndDont\": { \"do\": \"Supplies the name of an icon-only control - exactly the gap a tooltip exists to fill.\", \"dont\": \"Rules the user needs while typing should not be hidden behind hover - they are invisible on touch and gone the moment the pointer moves. Put them in the field's help text.\" }, \"accessibility\": [ \"Associated with its trigger via aria-describedby pointing at the tooltip bubble's id, so screen readers announce it as supplementary information about the focused control, not as an unrelated interruption.\", \"Appears on keyboard focus, not just mouse hover - the trigger must be focusable (tabindex=\\\"0\\\" if it isn't natively) so keyboard-only users get exactly the same hint sighted mouse users do.\", \"Deliberately carries no aria-live/role=\\\"alert\\\"/role=\\\"status\\\": Tooltip is this system's lowest interruption level, a supplementary hint tied to whatever already has focus, not an event that needs to interrupt and announce itself elsewhere on the page.\", \"Never the only source of essential information - it must supplement, not replace, a visible accessible name.\" ], \"relatedComponents\": [ \"Popover\", \"Pop Confirm\", \"Tour\" ] }",
+  "tests": []
+}

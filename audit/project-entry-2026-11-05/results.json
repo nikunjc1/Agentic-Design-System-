@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "checks": [
+    "Blank onboarding canvas centers the heading, supporting copy and both choices",
+    "Existing project opens searchable History with an honest empty state",
+    "New project expands below the choices by keyboard, starts blank and preserves the active project until Save",
+    "A resumed new-project draft saves a separate project and archives previous Foundation choices",
+    "History searches names without case sensitivity, shows no-match feedback and reopens the correct project with its Foundation snapshot",
+    "Cancelling a new project retains the active project and its history",
+    "Choice, expanded setup and History fit desktop, tablet and mobile in both themes"
+  ],
+  "errors": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Agentic Contract Bridge (v2)",
+  "id": "damco-contract-bridge-development-v2",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "devAllowedDomains": ["http://localhost:3333"],
+    "reasoning": "Exchange user-requested component contracts with the local editor, a localhost-only development server - never a production domain."
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "file": "statistic-default.html",
+  "name": "Statistic",
+  "category": "Components · Data Display · Statistic",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With Trend",
+          "label": "With Trend"
+        },
+        {
+          "value": "Countdown",
+          "label": "Countdown"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Positive",
+          "label": "Positive"
+        },
+        {
+          "value": "Negative",
+          "label": "Negative"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "statistic-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Active Users",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "statistic-value",
+      "id": null,
+      "label": "Value",
+      "type": "text",
+      "value": "112,893",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Value",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "statistic-prefix",
+      "id": null,
+      "label": "Prefix",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Prefix",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "statistic-suffix",
+      "id": null,
+      "label": "Suffix",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Suffix",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Title, value, prefix and suffix are properties of the same component, not separate tiles - change them below to check every type and color in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Statistic displays a single quantifiable number prominently - a title above a large, bold value, with an optional prefix (like a currency symbol), suffix (like a unit or percent sign), and a colored trend indicator - built for dashboard tiles and summary cards where one number needs to stand out at a glance. When to Use A dashboard KPI tile - active users, total revenue, open tickets. A metric with a trend - growth or decline versus a prior period, shown with a colored arrow. A live counter or a countdown - a value that updates over time but is always shown as one prominent number. When Not to Use Several related numbers that need to be compared side by side in rows and columns - use Table or Description instead of several standalone Statistic tiles. A number the user needs to edit - use Number or Input; Statistic is read-only, display-only. A value with no real numeric significance - a plain label or Tag communicates a status better than dressing it up as a number. Best Practices Keep the title short and unambiguous - a viewer should know exactly what the number represents without extra context. Format large numbers with separators (112,893, not 112893) so they're readable at a glance - use the locale-correct separator from Data Format rather than hard-coding a comma, since Statistic itself doesn't define number formatting. Reserve the positive/negative trend coloring for values that are genuinely good or bad news - don't color a neutral count green or red by default. Do and Don't Do Monthly active users48,204▲ 12% One number, labelled plainly, with the trend that gives it meaning - up from what, and by how much. Don't Users48,204.37 Raw unrounded precision on a headline number reads as noise, not confidence - it forces the reader to mentally truncate it themselves. Accessibility The title and value are both real text, read together by screen readers as one meaningful statement, not conveyed by size or color alone. Trend direction is stated in text or via an icon with an accessible label (\"up 12.5%\"), not communicated by arrow shape or color alone. The loading state is marked so assistive technology announces that the value is not yet available, rather than reading an empty placeholder. Related Components Description, Progress, Badge. { \"component\": \"Statistic\", \"status\": \"Experimental\", \"category\": \"Data Display\", \"summary\": \"Statistic displays a single quantifiable number prominently - a title above a large, bold value, with an optional prefix, suffix, and a colored trend indicator - built for dashboard tiles and summary cards.\", \"whenToUse\": [ \"A dashboard KPI tile - active users, total revenue, open tickets.\", \"A metric with a trend - growth or decline versus a prior period, shown with a colored arrow.\", \"A live counter or a countdown - a value that updates over time but is always shown as one prominent number.\" ], \"whenNotToUse\": [ \"Several related numbers that need to be compared side by side in rows and columns - use Table or Description instead of several standalone Statistic tiles.\", \"A number the user needs to edit - use Number or Input; Statistic is read-only, display-only.\", \"A value with no real numeric significance - a plain label or Tag communicates a status better than dressing it up as a number.\" ], \"bestPractices\": [ \"Keep the title short and unambiguous.\", \"Format large numbers with separators (112,893, not 112893).\", \"Reserve positive/negative trend coloring for values that are genuinely good or bad news.\" ], \"doAndDont\": { \"do\": \"One number, labelled plainly, with the trend that gives it meaning - up from what, and by how much.\", \"dont\": \"Raw unrounded precision on a headline number reads as noise, not confidence - it forces the reader to mentally truncate it themselves.\" }, \"accessibility\": [ \"Title and value are read together by screen readers as one meaningful statement.\", \"Trend direction is stated in text or an accessible label, not color/shape alone.\", \"The loading state is marked so assistive technology announces the value is not yet available.\" ], \"relatedComponents\": [ \"Description\", \"Progress\", \"Badge\" ] }",
+  "tests": []
+}

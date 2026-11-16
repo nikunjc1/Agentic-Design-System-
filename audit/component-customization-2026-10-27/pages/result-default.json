@@ -1,0 +1,118 @@
+{
+  "file": "result-default.html",
+  "name": "Result",
+  "category": "Components · Feedback · Result",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Info",
+      "options": [
+        {
+          "value": "Info",
+          "label": "Info"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With secondary",
+          "label": "With secondary"
+        },
+        {
+          "value": "Compact",
+          "label": "Compact"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "result-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Payment successful",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "result-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "Your receipt has been emailed to you.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Title and description are properties of the same component, not separate panels - change them below to check this result's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Result is a full-panel outcome screen that reports a multi-step flow completing or failing - a large semantic icon, bold title, description, and one or two action buttons occupying the main content area, so the user gets a clear, prominent outcome instead of an ambiguous blank or half-updated screen. When to Use Checkout or payment completion - a clear success screen after a purchase. The outcome of a multi-step form submission - success or failure as the flow's final screen. An error page (404/403) or a bulk operation summary - any full-page outcome, positive or negative. When Not to Use A minor, in-flow confirmation that doesn't warrant a dedicated full-page screen - use Toast, Alert, or Notification instead. An intermediate step where the user still has more to do - use Steps or Progress to show partial completion, not Result, which implies an ending. A quick inline validation message - Result is for the end of a flow, not error feedback on individual fields. Best Practices Make the primary next action unmistakable (\"Go to dashboard\", \"Try again\") rather than leaving the user without a clear path forward. Match the icon and tone precisely to the outcome - a success icon on a failed operation is actively confusing. Keep the description specific about what happened and, for failures, what the user can do next. Do and Don't Do Payment failedYour card was declined. Try another card.Try again Ends the flow with a clear outcome and one obvious way forward. Don't Payment failedError code 402. An outcome screen with no next step strands the user at a dead end holding a code that means nothing to them. Accessibility No aria-live region is added here on purpose. Result is a static post-action page occupying the main content area - like an order-confirmation screen - not a status dynamically injected into an otherwise-unchanged page the user might not be looking at. It is reached the same way any new page/view is: by a route change or full content swap, so the ordinary mechanism for that (moving focus to the page, e.g. its heading, and/or updating the document title) already tells screen-reader users the flow has ended. Wrapping it in aria-live would be redundant with, and can even fight, that page-level announcement. Because of that, the outcome (success/failure) is communicated in text, not by icon or color alone. As the primary content of the page, its heading receives focus (or is otherwise announced via the page's normal load/route-change handling) so screen-reader users immediately know the flow has ended, without relying on a live region to do that job. Action buttons use specific, descriptive labels, not generic \"OK\" or \"Continue\" with no context. Related Components Alert, Toast, Empty. { \"component\": \"Result\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Result is a full-panel outcome screen that reports a multi-step flow completing or failing - a large semantic icon, bold title, description, and one or two action buttons occupying the main content area, so the user gets a clear, prominent outcome instead of an ambiguous blank or half-updated screen.\", \"whenToUse\": [ \"Checkout or payment completion - a clear success screen after a purchase.\", \"The outcome of a multi-step form submission - success or failure as the flow's final screen.\", \"An error page (404/403) or a bulk operation summary - any full-page outcome, positive or negative.\" ], \"whenNotToUse\": [ \"A minor, in-flow confirmation that doesn't warrant a dedicated full-page screen - use Toast, Alert, or Notification instead.\", \"An intermediate step where the user still has more to do - use Steps or Progress to show partial completion, not Result, which implies an ending.\", \"A quick inline validation message - Result is for the end of a flow, not error feedback on individual fields.\" ], \"bestPractices\": [ \"Make the primary next action unmistakable (\\\"Go to dashboard\\\", \\\"Try again\\\") rather than leaving the user without a clear path forward.\", \"Match the icon and tone precisely to the outcome - a success icon on a failed operation is actively confusing.\", \"Keep the description specific about what happened and, for failures, what the user can do next.\" ], \"doAndDont\": { \"do\": \"Ends the flow with a clear outcome and one obvious way forward.\", \"dont\": \"An outcome screen with no next step strands the user at a dead end holding a code that means nothing to them.\" }, \"accessibility\": [ \"No aria-live region is added here on purpose. Result is a static post-action page occupying the main content area - like an order-confirmation screen - not a status dynamically injected into an otherwise-unchanged page the user might not be looking at. It is reached the same way any new page/view is, so the ordinary mechanism for that (moving focus to the page, e.g. its heading, and/or updating the document title) already tells screen-reader users the flow has ended; wrapping it in aria-live would be redundant with, and can even fight, that page-level announcement.\", \"Because of that, the outcome (success/failure) is communicated in text, not by icon or color alone.\", \"As the primary content of the page, its heading receives focus (or is otherwise announced via the page's normal load/route-change handling) so screen-reader users immediately know the flow has ended, without relying on a live region to do that job.\", \"Action buttons use specific, descriptive labels, not generic \\\"OK\\\" or \\\"Continue\\\" with no context.\" ], \"relatedComponents\": [ \"Alert\", \"Toast\", \"Empty\" ] }",
+  "tests": []
+}

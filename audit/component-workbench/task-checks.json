@@ -1,0 +1,15 @@
+{
+  "checks": 10,
+  "results": [
+    "Native properties survive Save and reload",
+    "Cancel restores the saved native configuration",
+    "Native property changes reach JSON, prompt, compiler and copied HTML",
+    "Comparison and showcase modes switch without losing edits",
+    "All Button detail styles remain reachable",
+    "Reset clears this component settings and restores defaults",
+    "Unreadable saved settings are preserved until explicit Reset",
+    "Cross-tab changes block stale overwrites",
+    "All 63 old listing URLs redirect to a working detail page",
+    "Dark theme and RTL workspace remain within viewport"
+  ]
+}

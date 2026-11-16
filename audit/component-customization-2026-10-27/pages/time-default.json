@@ -1,0 +1,250 @@
+{
+  "file": "time-default.html",
+  "name": "Time",
+  "category": "Components · Forms · Time",
+  "controls": [
+    {
+      "index": 0,
+      "role": "time-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "time-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "time-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "time-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "time-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Meeting time",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "time-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Select a time",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "time-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces icon once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Time is a text field with a fixed trailing clock icon that opens a time picker for selecting a time of day - the temporal counterpart to Date Picker, used whenever the value is a time rather than a calendar date. When to Use A meeting or event start time - any specific time of day. A reminder or alarm - a time with no associated calendar date. Store hours or an appointment slot - a time chosen from within a day. When Not to Use A calendar date - use Date Picker. Both a date and a time together - pair Date Picker and Time as two fields, or use a combined date-time pattern if the product defines one - Time alone doesn't carry a date. A duration rather than a point in time - e.g. \"2 hours\" - use Number with a unit label instead. Best Practices Respect the user's locale for 12-hour vs. 24-hour display, rather than hard-coding one format. Snap the picker to a sensible interval (e.g. 15 minutes) when exact-to-the-second precision isn't meaningful. Let the user type a time directly as an alternative to scrolling/clicking through the picker. Do and Don't Do Meeting starts09:30Your local time (GMT+1). Names the timezone the number is in, which is the only thing that makes a time shared between people actionable. Don't Meeting starts09:30 A bare time is ambiguous the moment two people in different places read it, and neither of them will notice until one misses the meeting. Accessibility The time picker is fully keyboard-operable (arrow keys or typing to adjust hour/minute, Enter to confirm). The field's accessible name states what the time represents (\"Meeting start time\"), not just \"Time\". AM/PM (in 12-hour format) is exposed as its own clearly labeled control, not bundled invisibly into the hour value. Related Components Date Picker, Date Range, Number. { \"component\": \"Time\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Time is a text field with a fixed trailing clock icon that opens a time picker for selecting a time of day - the temporal counterpart to Date Picker, used whenever the value is a time rather than a calendar date.\", \"whenToUse\": [ \"A meeting or event start time - any specific time of day.\", \"A reminder or alarm - a time with no associated calendar date.\", \"Store hours or an appointment slot - a time chosen from within a day.\" ], \"whenNotToUse\": [ \"A calendar date - use Date Picker.\", \"Both a date and a time together - pair Date Picker and Time as two fields, or use a combined date-time pattern if the product defines one - Time alone doesn't carry a date.\", \"A duration rather than a point in time - e.g. \\\"2 hours\\\" - use Number with a unit label instead.\" ], \"bestPractices\": [ \"Respect the user's locale for 12-hour vs. 24-hour display, rather than hard-coding one format.\", \"Snap the picker to a sensible interval (e.g. 15 minutes) when exact-to-the-second precision isn't meaningful.\", \"Let the user type a time directly as an alternative to scrolling/clicking through the picker.\" ], \"doAndDont\": { \"do\": \"Names the timezone the number is in, which is the only thing that makes a time shared between people actionable.\", \"dont\": \"A bare time is ambiguous the moment two people in different places read it, and neither of them will notice until one misses the meeting.\" }, \"accessibility\": [ \"The time picker is fully keyboard-operable (arrow keys or typing to adjust hour/minute, Enter to confirm).\", \"The field's accessible name states what the time represents (\\\"Meeting start time\\\"), not just \\\"Time\\\".\", \"AM/PM (in 12-hour format) is exposed as its own clearly labeled control, not bundled invisibly into the hour value.\" ], \"relatedComponents\": [ \"Date Picker\", \"Date Range\", \"Number\" ] }",
+  "tests": []
+}

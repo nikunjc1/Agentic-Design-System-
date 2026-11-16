@@ -1,0 +1,127 @@
+{
+  "file": "empty-default.html",
+  "name": "Empty",
+  "category": "Components · Data Display · Empty",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Simple",
+          "label": "Simple"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Title only",
+      "options": [
+        {
+          "value": "Title only",
+          "label": "Title only"
+        },
+        {
+          "value": "With description",
+          "label": "With description"
+        },
+        {
+          "value": "With action",
+          "label": "With action"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "empty-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "No projects yet",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "empty-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "Create your first project to get started.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "empty-action-label",
+      "id": null,
+      "label": "Action label",
+      "type": "text",
+      "value": "Create project",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Action label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Title, description and action label are properties of the same component, not separate placeholders - change them below to check both icon styles and all 3 states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Empty stands in whenever a list, table, or search result has no data to show, so the space reads as intentionally empty rather than broken - an icon, a title, an optional description, and an optional action to resolve the empty state. When to Use A search with no matching results - explaining that nothing matched, not leaving a blank area. A brand-new or unused feature area - before the user has created their first item. An empty inbox, notification list, or shopping cart - any collection with genuinely zero items. When Not to Use Content that's still loading - use Skeleton or Spin - Empty means \"confirmed nothing here,\" not \"still checking.\" An error that prevented data from loading at all - use Result or an explicit error message - a failed fetch isn't the same as a legitimately empty result. A brief, non-blocking status update - use Toast or Alert instead of a full empty-state panel for something transient. Best Practices Explain why the space is empty and, when possible, what the user can do about it (e.g. \"No results - try a different search\"). Offer a direct action to resolve the state when one exists (\"Create your first project\"), not just a passive message. Keep the tone matter-of-fact rather than apologetic - an empty state is often a normal, expected condition, not a failure. Do and Don't Do No invoices yetInvoices you send will show up here.Create invoice Explains why the space is blank and offers the one action that would fill it, rather than leaving a dead end. Don't No data \"No data\" does not say whether that is because nothing has happened yet, a filter is hiding everything, or something failed - three states that each need a different message. Accessibility The message is real text, not baked into an illustration, so screen readers can announce it. Any resolving action is a real, keyboard-operable control, not just a static graphic. Decorative illustrations are marked so assistive technology doesn't announce them as meaningful content. Related Components Result, Skeleton, List. { \"component\": \"Empty\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Empty stands in whenever a list, table, or search result has no data to show, so the space reads as intentionally empty rather than broken - an icon, a title, an optional description, and an optional action to resolve the empty state.\", \"whenToUse\": [ \"A search with no matching results - explaining that nothing matched, not leaving a blank area.\", \"A brand-new or unused feature area - before the user has created their first item.\", \"An empty inbox, notification list, or shopping cart - any collection with genuinely zero items.\" ], \"whenNotToUse\": [ \"Content that's still loading - use Skeleton or Spin - Empty means \\\"confirmed nothing here,\\\" not \\\"still checking.\\\"\", \"An error that prevented data from loading at all - use Result or an explicit error message - a failed fetch isn't the same as a legitimately empty result.\", \"A brief, non-blocking status update - use Toast or Alert instead of a full empty-state panel for something transient.\" ], \"bestPractices\": [ \"Explain why the space is empty and, when possible, what the user can do about it (e.g. \\\"No results - try a different search\\\").\", \"Offer a direct action to resolve the state when one exists (\\\"Create your first project\\\"), not just a passive message.\", \"Keep the tone matter-of-fact rather than apologetic - an empty state is often a normal, expected condition, not a failure.\" ], \"doAndDont\": { \"do\": \"Explains why the space is blank and offers the one action that would fill it, rather than leaving a dead end.\", \"dont\": \"\\\"No data\\\" does not say whether that is because nothing has happened yet, a filter is hiding everything, or something failed - three states that each need a different message.\" }, \"accessibility\": [ \"The message is real text, not baked into an illustration, so screen readers can announce it.\", \"Any resolving action is a real, keyboard-operable control, not just a static graphic.\", \"Decorative illustrations are marked so assistive technology doesn't announce them as meaningful content.\" ], \"relatedComponents\": [ \"Result\", \"Skeleton\", \"List\" ] }",
+  "tests": []
+}

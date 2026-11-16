@@ -1,0 +1,34 @@
+{
+  "liveFigmaVerified": true,
+  "verificationScope": [
+    "actual Input page Draw in Figma CTA, HTTP 200",
+    "24 existing-set variants and all requested native property types",
+    "migration from State-only masters",
+    "successful readback after nested-reference repair",
+    "seven inspected unreferenced failed-import properties removed",
+    "repeated redraw keeps node IDs and counts; warnings empty",
+    "read-only inspection confirms actual definitions and layer bindings"
+  ],
+  "componentId": "input-text-field",
+  "nodeId": "55:9549",
+  "previewNodeId": "55:9550",
+  "variantCount": 24,
+  "propertySummary": {
+    "TEXT": 5,
+    "BOOLEAN": 5,
+    "INSTANCE_SWAP": 2,
+    "SLOT": 1,
+    "VARIANT": 4
+  },
+  "warnings": [],
+  "bindingCount": 168,
+  "checks": {
+    "release": "PASS: all unit suites and freshness gates",
+    "browserFiveExports": "PASS: zero page errors"
+  },
+  "notVerified": [
+    "pixel-perfect Figma canvas comparison",
+    "every native property editing combination",
+    "clean new-document workflow"
+  ]
+}

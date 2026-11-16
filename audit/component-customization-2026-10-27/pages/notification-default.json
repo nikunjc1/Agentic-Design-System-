@@ -1,0 +1,152 @@
+{
+  "file": "notification-default.html",
+  "name": "Notification",
+  "category": "Components · Feedback · Notification",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Info",
+      "options": [
+        {
+          "value": "Info",
+          "label": "Info"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With action",
+          "label": "With action"
+        },
+        {
+          "value": "Stacked",
+          "label": "Stacked"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "notification-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "File uploaded",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "notification-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "team-report.pdf is ready to share.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "notification-placement-select",
+      "id": null,
+      "label": "Placement",
+      "type": "select",
+      "value": "topRight",
+      "options": [
+        {
+          "value": "topRight",
+          "label": "Top right"
+        },
+        {
+          "value": "topLeft",
+          "label": "Top left"
+        },
+        {
+          "value": "bottomRight",
+          "label": "Bottom right"
+        },
+        {
+          "value": "bottomLeft",
+          "label": "Bottom left"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placement Top right Top left Bottom right Bottom left",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Title and description are properties of the same component, not separate cards - change them below to check this notification's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Notification is a corner-anchored card that reports a background or async event - an icon, bold title, longer description, and a close button, with an optional action - used for events the user wasn't necessarily watching for, unlike Toast's brief confirmation of an action just taken. When to Use A background task completing - an async upload or export finishing while the user was doing something else. A new message or mention alert - an event unrelated to what's currently on screen. A system status change or a stack of several notifications - more content or more persistence than Toast is built for. When Not to Use A quick confirmation of an action the user just took - use Toast - it's lighter and self-dismisses faster. A message embedded in the page's own content flow - use Alert. A decision the user must make before continuing - use Modal or Pop Confirm - Notification is informational, not a blocking choice. Best Practices Give it a real title and description, not just a one-line message - that extra structure is what distinguishes it from Toast. Stack multiple notifications clearly rather than replacing one before it's been read. Only include an action button when there's a genuinely useful next step (e.g. \"View\"), not by default. Do and Don't Do Export finishedreport-q1.csv is ready to download. Reports a background job the user was not watching, with enough detail to act on later. Don't Saved A one-word confirmation of something the user just did belongs in a Toast. Notification's weight is meant for events they did not initiate. Accessibility Announced via an aria-live region so it reaches screen-reader users even if their focus is elsewhere on the page. The close control is independently focusable and labeled (\"Dismiss notification\"). Persists long enough (or until manually dismissed) to be read in full, unlike Toast's short auto-dismiss window. Related Components Toast, Alert, Badge. { \"component\": \"Notification\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Notification is a corner-anchored card that reports a background or async event - an icon, bold title, longer description, and a close button, with an optional action - used for events the user wasn't necessarily watching for, unlike Toast's brief confirmation of an action just taken.\", \"whenToUse\": [ \"A background task completing - an async upload or export finishing while the user was doing something else.\", \"A new message or mention alert - an event unrelated to what's currently on screen.\", \"A system status change or a stack of several notifications - more content or more persistence than Toast is built for.\" ], \"whenNotToUse\": [ \"A quick confirmation of an action the user just took - use Toast - it's lighter and self-dismisses faster.\", \"A message embedded in the page's own content flow - use Alert.\", \"A decision the user must make before continuing - use Modal or Pop Confirm - Notification is informational, not a blocking choice.\" ], \"bestPractices\": [ \"Give it a real title and description, not just a one-line message - that extra structure is what distinguishes it from Toast.\", \"Stack multiple notifications clearly rather than replacing one before it's been read.\", \"Only include an action button when there's a genuinely useful next step (e.g. \\\"View\\\"), not by default.\" ], \"doAndDont\": { \"do\": \"Reports a background job the user was not watching, with enough detail to act on later.\", \"dont\": \"A one-word confirmation of something the user just did belongs in a Toast. Notification's weight is meant for events they did not initiate.\" }, \"accessibility\": [ \"Announced via an aria-live region so it reaches screen-reader users even if their focus is elsewhere on the page.\", \"The close control is independently focusable and labeled (\\\"Dismiss notification\\\").\", \"Persists long enough (or until manually dismissed) to be read in full, unlike Toast's short auto-dismiss window.\" ], \"relatedComponents\": [ \"Toast\", \"Alert\", \"Badge\" ] }",
+  "tests": []
+}

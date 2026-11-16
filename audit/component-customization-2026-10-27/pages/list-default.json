@@ -1,0 +1,188 @@
+{
+  "file": "list-default.html",
+  "name": "List",
+  "category": "Components · Data Display · List",
+  "controls": [
+    {
+      "index": 0,
+      "role": "list-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "list-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "list-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "default"
+      ],
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "list-size-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Bordered",
+          "label": "Bordered"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With avatars",
+          "label": "With avatars"
+        },
+        {
+          "value": "With avatars + action",
+          "label": "With avatars + action"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "list-show-dividers",
+      "id": null,
+      "label": "Show dividers",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "a thin line between each row",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, size and row dividers are properties of the same component, not separate lists - change them below to check this list's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview List displays a collection of similar items as stacked rows, like a notification feed, a team member roster, or a file browser - a straightforward vertical arrangement, simpler than Table's fixed columns and lighter than wrapping every item in its own Card. When to Use A notification feed or activity log - chronological or otherwise ordered similar entries. A team member roster or file browser - a stack of comparable items, each following the same row layout. A search results list - results that don't need Table's rigid column structure. When Not to Use Data organized around several comparable columns per row - use Table, which is built for column-aligned structured data. A small number of visually distinct, self-contained content blocks - use Card, or a grid of Cards, when items need their own visual containment. A single set of label/value pairs describing one thing - use Description instead of a list of one. Best Practices Keep row layout consistent across every item, even when some items have more content than others (use consistent placeholders/spacing). Show dividers or subtle spacing between rows so individual items stay scannable in a long list. Pair with Pagination or infinite scroll once the list grows beyond a comfortably scrollable length. Do and Don't Do MKMaya KhanCommented on Invoice #4021 One event per row, each with an actor and a specific object, so scanning the list tells a clear story. Don't UpdateSomething changed in the system related to a record that was recently modified by a user in the workspace. A vague title with a paragraph explaining nothing concrete forces the user to read every row in full to find out what actually happened. Accessibility Implemented with real list semantics (ul/li or role=\"list\"/\"listitem\"), so screen readers announce item count and position. Interactive rows (clickable to open a detail view) are real links or buttons, not divs with only a click handler. Any per-row action (like a remove or edit icon) has an accessible name identifying which item it applies to. Related Components Table, Card, Empty. { \"component\": \"List\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"List displays a collection of similar items as stacked rows, like a notification feed, a team member roster, or a file browser - a straightforward vertical arrangement, simpler than Table's fixed columns and lighter than wrapping every item in its own Card.\", \"whenToUse\": [ \"A notification feed or activity log - chronological or otherwise ordered similar entries.\", \"A team member roster or file browser - a stack of comparable items, each following the same row layout.\", \"A search results list - results that don't need Table's rigid column structure.\" ], \"whenNotToUse\": [ \"Data organized around several comparable columns per row - use Table, which is built for column-aligned structured data.\", \"A small number of visually distinct, self-contained content blocks - use Card, or a grid of Cards, when items need their own visual containment.\", \"A single set of label/value pairs describing one thing - use Description instead of a list of one.\" ], \"bestPractices\": [ \"Keep row layout consistent across every item, even when some items have more content than others (use consistent placeholders/spacing).\", \"Show dividers or subtle spacing between rows so individual items stay scannable in a long list.\", \"Pair with Pagination or infinite scroll once the list grows beyond a comfortably scrollable length.\" ], \"doAndDont\": { \"do\": \"One event per row, each with an actor and a specific object, so scanning the list tells a clear story.\", \"dont\": \"A vague title with a paragraph explaining nothing concrete forces the user to read every row in full to find out what actually happened.\" }, \"accessibility\": [ \"Implemented with real list semantics (ul/li or role=\\\"list\\\"/\\\"listitem\\\"), so screen readers announce item count and position.\", \"Interactive rows (clickable to open a detail view) are real links or buttons, not divs with only a click handler.\", \"Any per-row action (like a remove or edit icon) has an accessible name identifying which item it applies to.\" ], \"relatedComponents\": [ \"Table\", \"Card\", \"Empty\" ] }",
+  "tests": []
+}

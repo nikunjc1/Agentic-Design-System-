@@ -1,0 +1,151 @@
+{
+  "file": "tag-default.html",
+  "name": "Tag",
+  "category": "Components · Data Display · Tag",
+  "controls": [
+    {
+      "index": 0,
+      "role": "tag-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "tag-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Removable",
+          "label": "Removable"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "tag-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "In progress",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius and label text are properties of the same component, not separate chips - change them below to check this tag's colors and forms in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Tag is a small labeled chip that categorizes, filters, or flags a status - like \"In progress\" or an active filter pill - a standalone piece of metadata, unlike Badge, which is meant to overlay or sit attached to another element. When to Use A status label - \"In progress\", \"Active\", \"Archived\". A category or filter chip - showing an applied filter, removable with its own close control. A skill/keyword tag or a priority flag - any standalone piece of categorical metadata attached to an item. When Not to Use A count or dot overlaid on another element - use Badge instead - Tag stands alone, Badge attaches to something else. A clickable action rather than a label - use Button - a Tag communicates a static attribute, not an action to take (unless it's specifically a removable filter chip). Long, multi-word descriptive text - keep Tags short; use Description or plain text for longer explanatory content. Best Practices Use consistent colors for the same status or category everywhere it appears, so users learn the color-meaning mapping. Keep tag text short - a word or two - so several can sit together without wrapping awkwardly. Only add a remove ('x') control on tags the user can actually remove (like an active filter), not on static status labels. Do and Don't Do ActiveDraft A one or two-word state name, colour reinforcing the status rather than carrying it alone. Don't Last edited 3 days ago by a teammate A full sentence inside a chip fights the pill shape it is rendered in and forces the row to wrap. Move detail like this into body text. Accessibility Status or category meaning is conveyed by text, not color alone, for users with color-vision deficiencies. A removable tag's close control has an accessible name identifying which tag it removes (\"Remove filter: In progress\"). Purely informational tags (not removable, not clickable) are marked up as plain text/labels, not interactive controls with no real behavior. Related Components Badge, Tabs, Group Button. { \"component\": \"Tag\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Tag is a small labeled chip that categorizes, filters, or flags a status - like \\\"In progress\\\" or an active filter pill - a standalone piece of metadata, unlike Badge, which is meant to overlay or sit attached to another element.\", \"whenToUse\": [ \"A status label - \\\"In progress\\\", \\\"Active\\\", \\\"Archived\\\".\", \"A category or filter chip - showing an applied filter, removable with its own close control.\", \"A skill/keyword tag or a priority flag - any standalone piece of categorical metadata attached to an item.\" ], \"whenNotToUse\": [ \"A count or dot overlaid on another element - use Badge instead - Tag stands alone, Badge attaches to something else.\", \"A clickable action rather than a label - use Button - a Tag communicates a static attribute, not an action to take (unless it's specifically a removable filter chip).\", \"Long, multi-word descriptive text - keep Tags short; use Description or plain text for longer explanatory content.\" ], \"bestPractices\": [ \"Use consistent colors for the same status or category everywhere it appears, so users learn the color-meaning mapping.\", \"Keep tag text short - a word or two - so several can sit together without wrapping awkwardly.\", \"Only add a remove ('x') control on tags the user can actually remove (like an active filter), not on static status labels.\" ], \"doAndDont\": { \"do\": \"A one or two-word state name, colour reinforcing the status rather than carrying it alone.\", \"dont\": \"A full sentence inside a chip fights the pill shape it is rendered in and forces the row to wrap. Move detail like this into body text.\" }, \"accessibility\": [ \"Status or category meaning is conveyed by text, not color alone, for users with color-vision deficiencies.\", \"A removable tag's close control has an accessible name identifying which tag it removes (\\\"Remove filter: In progress\\\").\", \"Purely informational tags (not removable, not clickable) are marked up as plain text/labels, not interactive controls with no real behavior.\" ], \"relatedComponents\": [ \"Badge\", \"Tabs\", \"Group Button\" ] }",
+  "tests": []
+}

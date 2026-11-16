@@ -1,0 +1,144 @@
+{
+  "file": "transfer-default.html",
+  "name": "Transfer",
+  "category": "Components · Forms · Transfer",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With search",
+          "label": "With search"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "transfer-size-select",
+      "id": null,
+      "label": "Size",
+      "type": "select",
+      "value": "default",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Size Small Default Large",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "transfer-left-title",
+      "id": null,
+      "label": "Left title",
+      "type": "text",
+      "value": "Source",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Left title",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "transfer-right-title",
+      "id": null,
+      "label": "Right title",
+      "type": "text",
+      "value": "Target",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Right title",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, and the left/right panel titles are properties of the same component, not two unrelated lists - change them below to check this widget's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Transfer shows two side-by-side list panels with checkboxes, moved between with center arrow buttons - used for choosing a subset of items from a larger pool when seeing both the available and chosen items at once helps the user decide, unlike a multi-select dropdown that hides one side. When to Use Permission or role assignment - moving specific permissions into an assigned list. Building a subset from a larger pool - a playlist builder, a team member picker. Choosing visible columns or tags - column visibility chooser, a tag selector. When Not to Use A single value chosen from a list - use Select - Transfer is for choosing several items, not one. A small option set - a handful of items rarely justifies two full panels; use Checkbox group instead. Hierarchical, nested data - use Tree Select so the structure itself stays visible, rather than flattening it into two plain lists. Best Practices Support search/filter within each panel once the pool of items grows beyond a quick scan. Show a live count of selected items in each panel's header. Keep the moved-to panel's order meaningful (e.g. order added) rather than silently re-sorting it. Do and Don't Do Available (2)BillingReports›‹Granted (1)Admin Both sides named for what membership means, with counts, so the user can see the result of the move without counting rows. Don't List ABilling›‹List BAdmin \"List A\" and \"List B\" never say which side is the one that takes effect, so moving an item is a guess. Accessibility Each row's checkbox is independently focusable and labeled with the item's name. The arrow buttons that move items between panels have accessible names (\"Move selected to chosen\"), not just an arrow glyph. Moving items announces the change (e.g. via an aria-live region) so screen-reader users know the panels updated. Related Components Checkbox, Tree Select, Select. { \"component\": \"Transfer\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Transfer shows two side-by-side list panels with checkboxes, moved between with center arrow buttons - used for choosing a subset of items from a larger pool when seeing both the available and chosen items at once helps the user decide, unlike a multi-select dropdown that hides one side.\", \"whenToUse\": [ \"Permission or role assignment - moving specific permissions into an assigned list.\", \"Building a subset from a larger pool - a playlist builder, a team member picker.\", \"Choosing visible columns or tags - column visibility chooser, a tag selector.\" ], \"whenNotToUse\": [ \"A single value chosen from a list - use Select - Transfer is for choosing several items, not one.\", \"A small option set - a handful of items rarely justifies two full panels; use Checkbox group instead.\", \"Hierarchical, nested data - use Tree Select so the structure itself stays visible, rather than flattening it into two plain lists.\" ], \"bestPractices\": [ \"Support search/filter within each panel once the pool of items grows beyond a quick scan.\", \"Show a live count of selected items in each panel's header.\", \"Keep the moved-to panel's order meaningful (e.g. order added) rather than silently re-sorting it.\" ], \"doAndDont\": { \"do\": \"Both sides named for what membership means, with counts, so the user can see the result of the move without counting rows.\", \"dont\": \"\\\"List A\\\" and \\\"List B\\\" never say which side is the one that takes effect, so moving an item is a guess.\" }, \"accessibility\": [ \"Each row's checkbox is independently focusable and labeled with the item's name.\", \"The arrow buttons that move items between panels have accessible names (\\\"Move selected to chosen\\\"), not just an arrow glyph.\", \"Moving items announces the change (e.g. via an aria-live region) so screen-reader users know the panels updated.\" ], \"relatedComponents\": [ \"Checkbox\", \"Tree Select\", \"Select\" ] }",
+  "tests": []
+}

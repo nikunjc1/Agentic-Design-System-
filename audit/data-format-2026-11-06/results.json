@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "checks": [
+    "All 24 controls render; typed edits save once, checkbox status tracks state, simultaneous invalid inputs preserve storage, and calendar ranges and masking update correctly.",
+    "Imported Spanish/CAD settings stay selected; Spanish decimal-comma conflicts are rejected; reset clears values and error attributes.",
+    "Copy Markdown contains specific guidance and current settings without dropdown-option noise; downloaded JSON matches runtime settings and survives reload.",
+    "Storage failure reports an unsaved preview and preserves durable settings; reverting the failed edit restores the resolved configuration.",
+    "No horizontal overflow at 320, 390, 768 and 1440px in both themes, or with RTL and doubled root text; standard inputs meet the 44px minimum height.",
+    "A change in another tab disables stale controls; reload restores the latest settings."
+  ],
+  "errors": []
+}

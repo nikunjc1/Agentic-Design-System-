@@ -1,0 +1,226 @@
+{
+  "file": "card-default.html",
+  "name": "Card",
+  "category": "Components · Data Display · Card",
+  "controls": [
+    {
+      "index": 0,
+      "role": "card-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "card-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "card-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "default"
+      ],
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "card-size-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With media",
+          "label": "With media"
+        },
+        {
+          "value": "With actions",
+          "label": "With actions"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "card-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Team standup",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "card-body",
+      "id": null,
+      "label": "Body",
+      "type": "text",
+      "value": "Daily sync at 9:30 AM in the main conference room.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Body",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "card-show-shadow",
+      "id": null,
+      "label": "Show shadow",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "resting drop-shadow beneath the card",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, size, title, body text and resting shadow are properties of the same component, not separate cards - change them below to check this card's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Card groups related content into a bordered container, with an optional cover/media area or a footer row of action buttons - a general-purpose content grouping used across dashboards, listings, and profiles wherever a distinct, self-contained unit of information needs visual containment. When to Use A dashboard summary tile - a self-contained block of related metrics or info. A product listing item or a team member profile - grouping an image, title, and details together. A settings section grouping or a blog post preview - any distinct, self-contained unit of content. When Not to Use Content that's actually a single flat list of similar rows - use List instead - wrapping every row in its own Card adds unnecessary visual weight. A small piece of contextual detail tied to a specific trigger - use Popover instead of a full Card. Structured label/value data with no need for a border or media area - use Description. Best Practices Keep one Card focused on one coherent unit of content - avoid stuffing unrelated information into the same card. Use the media/cover area only when a visual genuinely represents the card's subject, not as decoration. Keep footer actions limited to the one or two most relevant actions for that card's content. Do and Don't Do Q1 revenue reportSummary of bookings, churn and expansion for the first quarter. One subject per card, with a title short enough to scan and body copy that fits without truncating. Don't Q1 revenue report, churn analysis, and next quarter's hiring planEverything from this quarter and some notes on hiring too, plus a few other things worth mentioning here. Stacking unrelated subjects into one card makes the title wrap past recognition and the card unclickable as a single unit - split it into two. Accessibility When a whole card is clickable, it's implemented as a real link or button, not a div with only a visual hover style. Heading structure inside a card follows the page's real hierarchy (an h2/h3, not just bold text) so screen-reader navigation stays meaningful. Interactive elements inside a clickable card (like a footer button) remain independently reachable and don't get swallowed by the card's own click handler. Related Components List, Collapse, Description. { \"component\": \"Card\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Card groups related content into a bordered container, with an optional cover/media area or a footer row of action buttons - a general-purpose content grouping used across dashboards, listings, and profiles wherever a distinct, self-contained unit of information needs visual containment.\", \"whenToUse\": [ \"A dashboard summary tile - a self-contained block of related metrics or info.\", \"A product listing item or a team member profile - grouping an image, title, and details together.\", \"A settings section grouping or a blog post preview - any distinct, self-contained unit of content.\" ], \"whenNotToUse\": [ \"Content that's actually a single flat list of similar rows - use List instead - wrapping every row in its own Card adds unnecessary visual weight.\", \"A small piece of contextual detail tied to a specific trigger - use Popover instead of a full Card.\", \"Structured label/value data with no need for a border or media area - use Description.\" ], \"bestPractices\": [ \"Keep one Card focused on one coherent unit of content - avoid stuffing unrelated information into the same card.\", \"Use the media/cover area only when a visual genuinely represents the card's subject, not as decoration.\", \"Keep footer actions limited to the one or two most relevant actions for that card's content.\" ], \"doAndDont\": { \"do\": \"One subject per card, with a title short enough to scan and body copy that fits without truncating.\", \"dont\": \"Stacking unrelated subjects into one card makes the title wrap past recognition and the card unclickable as a single unit - split it into two.\" }, \"accessibility\": [ \"When a whole card is clickable, it's implemented as a real link or button, not a div with only a visual hover style.\", \"Heading structure inside a card follows the page's real hierarchy (an h2/h3, not just bold text) so screen-reader navigation stays meaningful.\", \"Interactive elements inside a clickable card (like a footer button) remain independently reachable and don't get swallowed by the card's own click handler.\" ], \"relatedComponents\": [ \"List\", \"Collapse\", \"Description\" ] }",
+  "tests": []
+}

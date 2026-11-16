@@ -1,0 +1,97 @@
+{
+  "file": "timeline-default.html",
+  "name": "Timeline",
+  "category": "Components · Data Display · Timeline",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Alternate",
+          "label": "Alternate"
+        },
+        {
+          "value": "Horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With events",
+          "label": "With events"
+        },
+        {
+          "value": "Pending",
+          "label": "Pending"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "timeline-show-icons",
+      "id": null,
+      "label": "Show icons",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "small status icons instead of dots",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Show icons swaps the plain dot markers for small colored status icons across every event. Change it below to check both layouts and every state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Timeline shows a sequence of events in chronological order, each with a dot connected by a continuous line - used for activity logs, order status history, or a project's milestone history, so the reader can see what happened, when, and in what order. When to Use Order status history - showing each stage a shipment or order has passed through. An activity or audit log - chronological events tied to a record. Project milestone tracking or onboarding progress - a sequence of events, each with a point in time. When Not to Use A fixed sequence the user is actively moving through right now - use Steps instead - Timeline is a historical record, Steps is an in-progress flow. Unordered or non-chronological content - a Timeline's core value is chronological order; don't use it for a list with no meaningful sequence. A simple list with no time dimension at all - use List. Best Practices Keep each entry's timestamp visible and consistently formatted, since chronology is the whole point of a Timeline. Use distinct icons or colors sparingly, reserved for genuinely different event types, not decoration. For very long histories, consider collapsing older entries or paginating rather than rendering the entire history at once. Do and Don't Do Order shipped14 Mar, 09:12Out for deliveryExpected 16 Mar Events in chronological order, each with a timestamp, so the sequence and its pacing are both readable. Don't Out for deliveryOrder shipped Events out of order with no timestamps leave the reader unable to tell what actually happened when - the one thing a timeline exists to show. Accessibility Each entry's timestamp and description are real text, read in order by screen readers, not implied only by visual position on the line. The connecting line and dots are decorative and hidden from assistive technology - the meaningful content is the entry text itself. Event type (success, error, pending) is distinguishable by more than color, using an icon or text label as well. Related Components Steps, List, Result. { \"component\": \"Timeline\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Timeline shows a sequence of events in chronological order, each with a dot connected by a continuous line - used for activity logs, order status history, or a project's milestone history, so the reader can see what happened, when, and in what order.\", \"whenToUse\": [ \"Order status history - showing each stage a shipment or order has passed through.\", \"An activity or audit log - chronological events tied to a record.\", \"Project milestone tracking or onboarding progress - a sequence of events, each with a point in time.\" ], \"whenNotToUse\": [ \"A fixed sequence the user is actively moving through right now - use Steps instead - Timeline is a historical record, Steps is an in-progress flow.\", \"Unordered or non-chronological content - a Timeline's core value is chronological order; don't use it for a list with no meaningful sequence.\", \"A simple list with no time dimension at all - use List.\" ], \"bestPractices\": [ \"Keep each entry's timestamp visible and consistently formatted, since chronology is the whole point of a Timeline.\", \"Use distinct icons or colors sparingly, reserved for genuinely different event types, not decoration.\", \"For very long histories, consider collapsing older entries or paginating rather than rendering the entire history at once.\" ], \"doAndDont\": { \"do\": \"Events in chronological order, each with a timestamp, so the sequence and its pacing are both readable.\", \"dont\": \"Events out of order with no timestamps leave the reader unable to tell what actually happened when - the one thing a timeline exists to show.\" }, \"accessibility\": [ \"Each entry's timestamp and description are real text, read in order by screen readers, not implied only by visual position on the line.\", \"The connecting line and dots are decorative and hidden from assistive technology - the meaningful content is the entry text itself.\", \"Event type (success, error, pending) is distinguishable by more than color, using an icon or text label as well.\" ], \"relatedComponents\": [ \"Steps\", \"List\", \"Result\" ] }",
+  "tests": []
+}

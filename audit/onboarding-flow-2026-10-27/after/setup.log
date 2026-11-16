@@ -1,0 +1,14 @@
+Project: required identity, save, reload and explicit Edit passed
+foundations.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+grid-layout.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+typography.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+spacing.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+radius.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+borders.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+shadows.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+icons.html: recommended defaults, explicit Save, lock, Edit, draft and Cancel passed
+Icon family edit saves only on Save and survives reload
+Invalid grid values block Save; correcting the value permits Save
+Backup, invalid restore rejection and successful restore passed
+A failed multi-section Save retains every previous saved color record
+Failed Save preserves editable draft; no page errors.

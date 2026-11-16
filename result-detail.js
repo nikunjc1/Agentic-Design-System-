@@ -14,10 +14,10 @@
   // ICONS object so Result reads as the same semantic language
   // (Info/Success/Warning/Error), just rendered much larger.
   var ICONS = {
-    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
-    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
-    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
   };
 
   var TYPES = [
@@ -65,6 +65,16 @@
 
   var DEFAULT_TITLE = "Payment successful";
   var DEFAULT_DESCRIPTION = "Your receipt has been emailed to you.";
+  var DEFAULT_HEADING_LEVEL = "h6";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the title always traces back to a
+  // real Foundation value, exactly like every other Foundation-bound style
+  // in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
 
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
@@ -113,7 +123,7 @@
     lines.push('.result-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:700; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.result-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".result-demo-actions{ display:flex; gap:var(--space-8); margin-top:var(--space-12); justify-content:center; }");
-    lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
+    lines.push(".result-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); padding:var(--space-8) var(--space-16); border-radius:var(--radius-sm); cursor:pointer; border:var(--border-width-1) var(--border-style) transparent; }");
     lines.push(".result-demo-btn--primary{ background:var(--red-500); color:var(--button-primary-text); }");
     lines.push(".result-demo-btn--secondary{ background:transparent; border-color:var(--line-strong); color:var(--text-hi); }");
     lines.push("");
@@ -152,17 +162,19 @@
   // Renders one .result-demo-panel for a given type/state combination -
   // icon, title, description and an actions row (one primary button for
   // Default/Compact, plus a secondary button for With secondary).
-  function buildResultField(typeKey, stateKey, title, description){
+  function buildResultField(typeKey, stateKey, title, description, headingLevel){
     var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="result-demo-icon" ');
     var secondaryHtml = stateKey === "with-secondary"
       ? '<button type="button" class="result-demo-btn result-demo-btn--secondary" tabindex="-1">View details</button>'
       : "";
     var extraClass = stateKey === "compact" ? " result-demo-panel--compact" : "";
+    var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
+    var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
 
     return '<div class="result-demo-panel result-demo-panel--' + typeKey + extraClass + '">' +
       iconHtml +
-      '<p class="result-demo-title">' + escapeHtml(title) + "</p>" +
-      '<p class="result-demo-description">' + escapeHtml(description) + "</p>" +
+      "<" + headingTag + ' class="result-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" +
+      '<p class="result-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>" +
       '<div class="result-demo-actions">' +
         '<button type="button" class="result-demo-btn result-demo-btn--primary" tabindex="-1">Done</button>' +
         secondaryHtml +
@@ -198,12 +210,12 @@
       card.setAttribute("tabindex", "0");
       var href = "result-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -284,6 +296,7 @@
     if (!matrixContainer) return;
 
     var titleInput = document.querySelector('[data-role="result-title"]');
+    var headingLevelInput = document.querySelector('[data-role="result-heading-level"]');
     var descriptionInput = document.querySelector('[data-role="result-description"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
@@ -291,10 +304,10 @@
     // No combo property exists (no Size/Radius-style multiselect), so
     // render() always builds exactly ONE matrix - TYPES x STATES, 4x3 = 12
     // cells - directly, with no combos array to loop over.
-    function buildMatrix(title, description){
+    function buildMatrix(title, description, headingLevel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildResultField(t.key, state.key, title, description) + "</td>";
+          return '<td class="button-matrix-cell">' + buildResultField(t.key, state.key, title, description, headingLevel) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -306,15 +319,17 @@
     function currentSelectionInfo(){
       return {
         title: titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE,
+        headingLevel: headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL,
         description: descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION
       };
     }
 
     function render(){
       var title = titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE;
+      var headingLevel = headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL;
       var description = descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION;
 
-      matrixContainer.innerHTML = buildMatrix(title, description);
+      matrixContainer.innerHTML = buildMatrix(title, description, headingLevel);
 
       var combos = [{ label: "Result", title: title, description: description }];
 
@@ -324,6 +339,9 @@
 
     if (titleInput){
       titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    }
+    if (headingLevelInput){
+      headingLevelInput.addEventListener("change", render);
     }
     if (descriptionInput){
       descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });

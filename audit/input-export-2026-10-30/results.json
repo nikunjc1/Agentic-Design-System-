@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "24 appearance/state variants; selected size/radius; conditional anatomy; validation and label semantics",
+    "Copy prompt/code, downloaded JSON/HTML and Draw in Figma carry identical contracts; 24 adapter masters and typed properties",
+    "Downloaded HTML matches control geometry and appearance; required/maxlength semantics, editable value and Clear work",
+    "Immediate exports flush pending edits; maximum length zero is retained",
+    "rem conversion preserves radius/height/line-height, empty fields bind Placeholder, redraw preserves masters, save/reload retains settings",
+    "Focused, read-only, disabled and dark RTL exports compile and reach the adapter"
+  ],
+  "errors": [],
+  "liveFigmaVerified": false
+}

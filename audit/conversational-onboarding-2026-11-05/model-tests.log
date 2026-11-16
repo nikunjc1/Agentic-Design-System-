@@ -1,0 +1,29 @@
+✔ all questions validate independently, including conditional Other details and multiple platforms (1.1155ms)
+✔ a confirmed brief produces valid Foundation records and resolved themes matching explicit design answers (12.842333ms)
+✔ conversation drafts retain confirmed answers, unfinished input and the original project baseline (0.363042ms)
+✔ confirmed setup saves the profile and Foundation snapshot together, clears its draft and reopens without leaking settings (2.893208ms)
+✔ a Foundation write failure or stale confirmation preserves the complete previous project and conversation draft (2.19175ms)
+✔ requires project, product type, role and a valid delivery platform (1.059958ms)
+✔ new saves require name, email and designation; older saved profiles remain readable (0.285833ms)
+✔ profile survives reload and malformed storage is not overwritten (1.593625ms)
+✔ a profile saved under the old product-type list still reads back, remapped (0.068625ms)
+✔ Other descriptions are bounded and type-checked like the other free-text fields (0.078583ms)
+✔ a profile saved by a newer app version is rejected, not silently misread (0.134791ms)
+✔ a stale project edit cannot replace another tab’s saved profile (0.164625ms)
+✔ Foundation progress distinguishes missing, partial, saved and unreadable records without writing (0.469292ms)
+✔ drafts retain a bounded step while older drafts remain readable (0.094041ms)
+✔ Markdown contains saved tokens, selected platforms and source guides; identity is opt-in (8.280209ms)
+✔ Markdown states provenance - which keys are a real save versus a documented default (3.049416ms)
+✔ metadata quotes punctuation and newlines, and project filenames have safe fallbacks (0.621959ms)
+✔ Markdown omits embedded binary assets while preserving dependency references (0.679ms)
+✔ new projects preserve previous Foundation records and can be reopened by stable id (0.342584ms)
+✔ failed archive or active profile writes roll back every changed record (0.201709ms)
+✔ unreadable history and unsaved drafts are preserved instead of overwritten (0.086209ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52.231791

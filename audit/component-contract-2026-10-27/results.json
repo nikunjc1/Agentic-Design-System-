@@ -1,0 +1,499 @@
+{
+  "status": "pass",
+  "captures": [
+    {
+      "file": "add-on-default.html",
+      "id": "add-on-default",
+      "properties": 11,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "affix-default.html",
+      "id": "affix-default",
+      "properties": 4,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "alert-default.html",
+      "id": "alert-default",
+      "properties": 6,
+      "variants": 16,
+      "errors": []
+    },
+    {
+      "file": "anchor-default.html",
+      "id": "anchor-default",
+      "properties": 4,
+      "variants": 10,
+      "errors": []
+    },
+    {
+      "file": "autocomplete-default.html",
+      "id": "autocomplete-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "avatar-default.html",
+      "id": "avatar-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "badge-default.html",
+      "id": "badge-default",
+      "properties": 6,
+      "variants": 15,
+      "errors": []
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "id": "breadcrumb-default",
+      "properties": 4,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "button-destructive.html",
+      "id": "button-destructive",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-ghost.html",
+      "id": "button-ghost",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-link.html",
+      "id": "button-link",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-neutral.html",
+      "id": "button-neutral",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-primary-icon.html",
+      "id": "button-primary-icon",
+      "properties": 7,
+      "variants": 48,
+      "errors": []
+    },
+    {
+      "file": "button-primary.html",
+      "id": "button-primary",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-secondary.html",
+      "id": "button-secondary",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "button-tertiary.html",
+      "id": "button-tertiary",
+      "properties": 11,
+      "variants": 62,
+      "errors": []
+    },
+    {
+      "file": "calendar-default.html",
+      "id": "calendar-default",
+      "properties": 4,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "card-default.html",
+      "id": "card-default",
+      "properties": 7,
+      "variants": 15,
+      "errors": []
+    },
+    {
+      "file": "cascader-default.html",
+      "id": "cascader-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "checkbox-default.html",
+      "id": "checkbox-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "collapse-default.html",
+      "id": "collapse-default",
+      "properties": 7,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "color-picker-default.html",
+      "id": "color-picker-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "date-picker-default.html",
+      "id": "date-picker-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "date-range-default.html",
+      "id": "date-range-default",
+      "properties": 8,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "description-default.html",
+      "id": "description-default",
+      "properties": 5,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "divider-default.html",
+      "id": "divider-default",
+      "properties": 5,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "drawer-default.html",
+      "id": "drawer-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "dropdown-default.html",
+      "id": "dropdown-default",
+      "properties": 5,
+      "variants": 10,
+      "errors": []
+    },
+    {
+      "file": "empty-default.html",
+      "id": "empty-default",
+      "properties": 5,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "float-button-default.html",
+      "id": "float-button-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "group-button-default.html",
+      "id": "group-button-default",
+      "properties": 9,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "image-default.html",
+      "id": "image-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "input-text-field.html",
+      "id": "input-text-field",
+      "properties": 9,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "list-default.html",
+      "id": "list-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "mention-default.html",
+      "id": "mention-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "menu-default.html",
+      "id": "menu-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "modal-default.html",
+      "id": "modal-default",
+      "properties": 7,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "notification-default.html",
+      "id": "notification-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "number-default.html",
+      "id": "number-default",
+      "properties": 8,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "pagination-default.html",
+      "id": "pagination-default",
+      "properties": 4,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "password-default.html",
+      "id": "password-default",
+      "properties": 8,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "id": "pop-confirm-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "popover-default.html",
+      "id": "popover-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "progress-default.html",
+      "id": "progress-default",
+      "properties": 4,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "radio-default.html",
+      "id": "radio-default",
+      "properties": 4,
+      "variants": 10,
+      "errors": []
+    },
+    {
+      "file": "rating-default.html",
+      "id": "rating-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "result-default.html",
+      "id": "result-default",
+      "properties": 4,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "search-default.html",
+      "id": "search-default",
+      "properties": 7,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "select-dropdown.html",
+      "id": "select-dropdown",
+      "properties": 7,
+      "variants": 32,
+      "errors": []
+    },
+    {
+      "file": "skeleton-default.html",
+      "id": "skeleton-default",
+      "properties": 3,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "slider-default.html",
+      "id": "slider-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "spin-default.html",
+      "id": "spin-default",
+      "properties": 3,
+      "variants": 9,
+      "errors": []
+    },
+    {
+      "file": "splitter-default.html",
+      "id": "splitter-default",
+      "properties": 5,
+      "variants": 6,
+      "errors": []
+    },
+    {
+      "file": "statistic-default.html",
+      "id": "statistic-default",
+      "properties": 6,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "steps-default.html",
+      "id": "steps-default",
+      "properties": 6,
+      "variants": 5,
+      "errors": []
+    },
+    {
+      "file": "switch-default.html",
+      "id": "switch-default",
+      "properties": 4,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "table-default.html",
+      "id": "table-default",
+      "properties": 5,
+      "variants": 10,
+      "errors": []
+    },
+    {
+      "file": "tabs-default.html",
+      "id": "tabs-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "tag-default.html",
+      "id": "tag-default",
+      "properties": 4,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "text-area-default.html",
+      "id": "text-area-default",
+      "properties": 7,
+      "variants": 18,
+      "errors": []
+    },
+    {
+      "file": "time-default.html",
+      "id": "time-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "timeline-default.html",
+      "id": "timeline-default",
+      "properties": 3,
+      "variants": 9,
+      "errors": []
+    },
+    {
+      "file": "toast-default.html",
+      "id": "toast-default",
+      "properties": 6,
+      "variants": 16,
+      "errors": []
+    },
+    {
+      "file": "tooltip-default.html",
+      "id": "tooltip-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "tour-default.html",
+      "id": "tour-default",
+      "properties": 5,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "transfer-default.html",
+      "id": "transfer-default",
+      "properties": 5,
+      "variants": 8,
+      "errors": []
+    },
+    {
+      "file": "tree-default.html",
+      "id": "tree-default",
+      "properties": 4,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "tree-select-default.html",
+      "id": "tree-select-default",
+      "properties": 7,
+      "variants": 12,
+      "errors": []
+    },
+    {
+      "file": "upload-default.html",
+      "id": "upload-default",
+      "properties": 4,
+      "variants": 8,
+      "errors": []
+    }
+  ],
+  "checks": [
+    "All component detail pages produce validated contracts including multiselect properties.",
+    "Button states, shared prompt/preview, Save, saved locking, draft resume and Cancel.",
+    "Behavior, conditional parts, variant style overrides and reusable library references render from the contract.",
+    "Property/anatomy authoring and revision restoration create new revisions.",
+    "Portable HTML exported from the contract matches rendered-DOM comparison.",
+    "Implementation drift is identified by part; uploaded scripts do not execute.",
+    "Full contract push acknowledgment and source-controlled Figma pull create reviewable drafts.",
+    "Cross-tab edits block stale saves; editor fits desktop and mobile."
+  ],
+  "errors": []
+}

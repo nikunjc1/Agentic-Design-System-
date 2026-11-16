@@ -1,0 +1,143 @@
+{
+  "file": "radio-default.html",
+  "name": "Radio",
+  "category": "Components · Forms · Radio",
+  "controls": [
+    {
+      "index": 0,
+      "role": "radio-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "20"
+      ],
+      "options": [
+        {
+          "value": "16",
+          "label": "16px - S"
+        },
+        {
+          "value": "20",
+          "label": "20px - M"
+        },
+        {
+          "value": "24",
+          "label": "24px - L"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radio-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Standard",
+      "options": [
+        {
+          "value": "Standard",
+          "label": "Standard"
+        },
+        {
+          "value": "Card",
+          "label": "Card"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Unchecked",
+      "options": [
+        {
+          "value": "Unchecked",
+          "label": "Unchecked"
+        },
+        {
+          "value": "Checked",
+          "label": "Checked"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "radio-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Option A",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size and label are properties of the same component, not separate controls - change them below to check this radio's style and states in the Live Preview. Radios are always fully round, so there is no corner radius property.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "20px - M",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Radio Button is for picking exactly one option from a small, fully visible set - every option stays on screen at once so the user can compare them directly, unlike Select, which hides the options behind a collapsed trigger. When to Use A single choice among visible alternatives - payment method, shipping speed. A single-choice survey or form question - where seeing every option side by side helps the user decide. A plan or tier picker - a small set of comparable options. When Not to Use More than one selection should be allowed - use Checkbox instead. A long list of options that would be unwieldy to show all at once - use Select. An instantly-applied single setting with no form submission - use Switch. Best Practices Pre-select a sensible default when one genuinely exists, rather than leaving the group unselected. Keep the option set mutually exclusive and exhaustive - add an \"Other\" option if the list isn't complete. Align options in a single visual list (not a grid) when their order or relative ranking matters. Do and Don't Do Standard - 3 to 5 daysExpress - next day A small set of mutually exclusive options, all visible, with one sensible default already chosen. Don't EmailSMS Two radios selected at once is a state the control cannot actually reach. If more than one answer is valid, these should be Checkboxes. Accessibility Options share one native group so only one can ever be checked, and arrow keys move both focus and selection between them. Each option's label is clickable and associated with its input. Every option shows a visible focus ring as keyboard focus moves through the group. Related Components Checkbox, Switch, Select, Group Button. { \"component\": \"Radio\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Radio Button is for picking exactly one option from a small, fully visible set - every option stays on screen at once so the user can compare them directly, unlike Select, which hides the options behind a collapsed trigger.\", \"whenToUse\": [ \"A single choice among visible alternatives - payment method, shipping speed.\", \"A single-choice survey or form question - where seeing every option side by side helps the user decide.\", \"A plan or tier picker - a small set of comparable options.\" ], \"whenNotToUse\": [ \"More than one selection should be allowed - use Checkbox instead.\", \"A long list of options that would be unwieldy to show all at once - use Select.\", \"An instantly-applied single setting with no form submission - use Switch.\" ], \"bestPractices\": [ \"Pre-select a sensible default when one genuinely exists, rather than leaving the group unselected.\", \"Keep the option set mutually exclusive and exhaustive - add an \\\"Other\\\" option if the list isn't complete.\", \"Align options in a single visual list (not a grid) when their order or relative ranking matters.\" ], \"doAndDont\": { \"do\": \"A small set of mutually exclusive options, all visible, with one sensible default already chosen.\", \"dont\": \"Two radios selected at once is a state the control cannot actually reach. If more than one answer is valid, these should be Checkboxes.\" }, \"accessibility\": [ \"Options share one native group so only one can ever be checked, and arrow keys move both focus and selection between them.\", \"Each option's label is clickable and associated with its input.\", \"Every option shows a visible focus ring as keyboard focus moves through the group.\" ], \"relatedComponents\": [ \"Checkbox\", \"Switch\", \"Select\", \"Group Button\" ] }",
+  "tests": []
+}

@@ -10,9 +10,9 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
-  var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -24,7 +24,12 @@
     { key: "focus", cls: " is-focus", label: "Focus" },
     { key: "open", cls: " is-open", label: "Open" },
     { key: "filled", cls: " is-filled", label: "Filled" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "error", cls: " is-error", label: "Error" },
+    { key: "success", cls: " is-success", label: "Success" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" },
+    { key: "empty", cls: " is-empty", label: "Empty" }
   ];
 
   // Multi-level columns shown in the Open state's panel - one column per
@@ -60,24 +65,30 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var danger500 = getCssVar("--danger-500", "#FF031A");
+    var green500 = getCssVar("--green-500", "#2FBF6E");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
-        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+        error: "border-color:" + danger500 + ";",
+        success: "border-color:" + green500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
-      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+      error: "border-color:" + danger500 + ";",
+      success: "border-color:" + green500 + ";"
     };
   }
 
@@ -112,9 +123,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -148,7 +163,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -199,30 +214,39 @@
       lines.push("  Hover: " + css.hover);
       lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
       lines.push("  Open: same border/outline treatment as Focus, plus a multi-column panel anchored below the field.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field.");
+      lines.push("  Success: " + css.success + " Optional, for an explicitly validated selection.");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("States (11, apply to every type): Rest, Hover, Focus, Open, Filled, Error, Success, Read-Only, Disabled, Loading, Empty.");
     lines.push("- Focus: real keyboard focus on the field, no panel visible yet.");
     lines.push("- Open: the multi-column panel is visible directly below the field - 3 columns side by side (Continent, Country, City), each with 3 example option rows. Each column's currently-selected option is highlighted, and a non-final column's selected option gets a trailing right-chevron to show it reveals the next column.");
     lines.push("- Filled: same appearance as Rest, showing the full selected path joined by \" / \" with the panel closed.");
+    lines.push("- Read-Only: shows the selected path but can't be changed; still focusable, unlike Disabled - clicking it never opens the panel.");
+    lines.push("- Loading: a spinner replaces the chevron while options are being retrieved asynchronously.");
+    lines.push("- Empty: the multi-column panel is visible but its columns are replaced by a single centered \"No options available.\" message - there is nothing to drill into.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces each option's single active-row highlight with a real checkbox, letting more than one leaf be picked across different branches). Search (boolean - a real input inside the trigger itself, narrowing the first column to matches with the matched substring highlighted).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error). Multiple selection (boolean - replaces each option's single active-row highlight with a real checkbox, letting more than one leaf be picked across different branches). Search (boolean - a real input inside the trigger itself, narrowing the first column to matches with the matched substring highlighted).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
+    var requiredHtml = opts.required ? '<span class="cascader-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="cascader-field">');
-    lines.push('  <label class="cascader-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="cascader-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="cascader-control cascader-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
     lines.push('    <input type="text" readonly placeholder="' + escapeHtml(placeholder) + '" value="Asia / India / Mumbai" />');
     lines.push('    <span class="cascader-chevron">&#9660;</span>');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="cascader-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("  <!-- Multi-column panel - only rendered while the field is in the Open state -->");
     lines.push('  <div class="cascader-panel">');
     lines.push('    <div class="cascader-column">');
@@ -253,9 +277,9 @@
     var lines = [];
     lines.push("/* Agentic Design System - Cascader component (all types, states, sizes) */");
     lines.push(".cascader-field{ position:relative; display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.cascader-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".cascader-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.cascader-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
+    lines.push('.cascader-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".cascader-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.cascader-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; }');
     lines.push(".cascader-chevron{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -269,7 +293,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".cascader-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -283,26 +307,35 @@
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-within{ " + css.focus + " }");
       lines.push(cls + ".is-open{ " + css.focus + " } /* multi-column panel visible - same border/outline treatment as focus */");
+      lines.push(cls + ".is-error{ " + css.error + " }");
+      lines.push(cls + ".is-success{ " + css.success + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - keeps its selected path, but can't be clicked open; still focusable, unlike Disabled */");
+    lines.push(".cascader-control:has(input:read-only){ cursor:default; }");
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".cascader-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".cascader-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
-    var panelBg = getCssVar("--graphite-900", "#15171A");
+    lines.push("/* Required indicator + supporting/error text */");
+    lines.push(".cascader-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push(".cascader-note.is-error{ color:" + getCssVar("--danger-700", "#EB0318") + "; }");
+    lines.push("");
+    var panelBg = getCssVar("--graphite-900", "#FFFFFF");
     var panelBorder = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var optionActiveBg = getCssVar("--graphite-800", "#1C1F23");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var optionActiveBg = getCssVar("--graphite-800", "#F1F1EE");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var line = getCssVar("--line", "rgba(255,255,255,0.1)");
     lines.push("/* Multi-column panel - anchored below the field, shown only while Open. Same");
     lines.push("   floating-panel visual language as this system's other panels (Menu, Autocomplete,");
     lines.push("   the multi-select dropdowns): graphite background, 1px line-strong border, rounded");
     lines.push("   corners and a soft drop shadow - laid out as a row of columns, no wrap, each");
     lines.push("   column separated by a hairline divider except the last. */");
-    lines.push(".cascader-panel{ position:absolute; top:calc(100% + 4px); left:0; z-index:5; box-sizing:border-box; display:flex; min-width:var(--dimension-360); background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); overflow:hidden; }");
+    lines.push(".cascader-panel{ position:absolute; top:calc(100% + 4px); left:0; z-index:5; box-sizing:border-box; display:flex; min-width:var(--dimension-360); background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:var(--radius-md); box-shadow:var(--shadow-md); overflow:hidden; }");
     lines.push(".cascader-column{ flex:1 1 0; min-width:var(--dimension-110); padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2); border-inline-end:1px solid " + line + "; }");
     lines.push(".cascader-column:last-child{ border-inline-end:none; }");
-    lines.push('.cascader-option{ box-sizing:border-box; padding:var(--space-8) var(--space-10); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); cursor:default; user-select:none; display:flex; align-items:center; justify-content:space-between; gap:var(--space-6); }');
+    lines.push('.cascader-option{ box-sizing:border-box; padding:var(--space-8) var(--space-10); border-radius:var(--radius-6); font-family:var(--font-body); font-size:var(--type-body-size); cursor:default; user-select:none; display:flex; align-items:center; justify-content:space-between; gap:var(--space-6); }');
     lines.push(".cascader-option.is-active{ background:" + optionActiveBg + "; color:" + red400 + "; }");
     lines.push(".cascader-option-arrow{ flex:none; width:var(--dimension-12); height:var(--dimension-12); }");
     lines.push("");
@@ -310,9 +343,10 @@
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "cascader-control--h" + exampleSize;
     var radiusClassAttr = "cascader-control--radius-" + radiusClassSuffix(exampleRadius);
+    var opts = selectionInfo.opts || {};
     lines.push("<!-- Example usage - one per type, shown in the Open state" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Location", "Select location"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Location", "Select location", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -320,17 +354,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -362,12 +398,12 @@
       card.setAttribute("tabindex", "0");
       var href = "cascader-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -496,6 +532,11 @@
     var labelInput = document.querySelector('[data-role="cascader-label"]');
     var placeholderInput = document.querySelector('[data-role="cascader-placeholder"]');
     var allowClearInput = document.querySelector('[data-role="cascader-allow-clear"]');
+    var requiredInput = document.querySelector('[data-role="cascader-required"]');
+    var showSupportingInput = document.querySelector('[data-role="cascader-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="cascader-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="cascader-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="cascader-error-text"]');
     var sizeMount = document.querySelector('[data-role="cascader-size-mount"]');
     var radiusMount = document.querySelector('[data-role="cascader-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -511,30 +552,60 @@
         }).join("");
         return '<div class="cascader-demo-column">' + optionsHtml + "</div>";
       }).join("");
-      return '<div class="cascader-demo-panel">' + columnsHtml + "</div>";
+      return '<div class="cascader-demo-panel" data-contract-part="panel">' + columnsHtml + "</div>";
     }
 
-    function buildCascaderField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
+    // Empty state - same panel shell as the Open state (buildCascaderPanel
+    // above), but with the real columns replaced entirely by a single
+    // centered, dimmed message - same "override, don't composite" rule as
+    // Loading's spinner swap, and the same data-contract-part="panel"
+    // marker kept on the outer shell so it stays findable regardless of
+    // which state built it. The message itself gets its own
+    // data-contract-part so it can be harvested independently if a Figma
+    // capture function is ever added for this component.
+    function buildCascaderEmptyPanel(){
+      return '<div class="cascader-demo-panel" data-contract-part="panel">' +
+        '<div class="cascader-demo-empty" data-contract-part="cascader-options-empty">No options available.</div>' +
+        "</div>";
+    }
+
+    function buildCascaderField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
-      var hasValue = isOpen || isFilled;
+      var isReadonly = stateKey === "readonly";
+      var isLoading = stateKey === "loading";
+      var isError = stateKey === "error";
+      var isEmpty = stateKey === "empty";
+      var hasValue = isOpen || isFilled || isReadonly;
       var controlClasses = "cascader-demo-control cascader-demo-control--" + typeKey + " cascader-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="' + SELECTED_PATH_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadonly ? " readonly" : "";
       // tabindex="-1" + a real for/id label association: static state-
       // comparison matrix, not an operable field, but still exposed to a
       // screen reader's virtual cursor regardless of tab order.
       var fieldId = "cascader-demo-field-" + (++cascaderFieldCounter);
-      var inputHtml = '<input type="text" id="' + fieldId + '" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
-      var trailingHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="cascader-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
-        : '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="cascader-demo-input" readonly placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + ' tabindex="-1" />';
+      var trailingHtml = isLoading
+        ? '<span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>'
+        : (allowClear && hasValue && !isDisabled && !isReadonly)
+          ? '<button type="button" class="cascader-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
+          : '<span class="cascader-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var panelHtml = isOpen ? buildCascaderPanel() : "";
+      var panelHtml = isOpen ? buildCascaderPanel() : (isEmpty ? buildCascaderEmptyPanel() : "");
+      var requiredHtml = opts.required ? '<span class="cascader-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = "";
+      if (isError){
+        noteHtml = '<p class="cascader-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Select a location to continue.") + "</p>";
+      } else if (opts.supportingText){
+        noteHtml = '<p class="cascader-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>";
+      }
       return '<div class="cascader-demo-field">' +
-        '<label class="cascader-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
+        '<label class="cascader-demo-label" for="' + fieldId + '" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + trailingHtml + "</div>" +
+        noteHtml +
         panelHtml +
         "</div>";
     }
@@ -552,10 +623,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildCascaderField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildCascaderField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -566,10 +637,19 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        required: requiredInput ? requiredInput.checked : false,
+        supportingText: (showSupportingInput && showSupportingInput.checked && supportingTextInput) ? supportingTextInput.value.trim() : "",
+        errorText: (errorTextInput && errorTextInput.value.trim()) || "Select a location to continue."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -577,6 +657,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -585,14 +666,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -620,6 +701,15 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

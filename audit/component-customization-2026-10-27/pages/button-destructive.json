@@ -1,0 +1,344 @@
+{
+  "file": "button-destructive.html",
+  "name": "Destructive Button",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right"
+        },
+        {
+          "value": "icon-both",
+          "label": "Icons on both sides"
+        },
+        {
+          "value": "icon-only",
+          "label": "Icon only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "content-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radius-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-destructive.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Primary",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Neutral",
+          "label": "Neutral"
+        },
+        {
+          "value": "Link",
+          "label": "Link"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "button-label",
+      "id": null,
+      "label": "Button label",
+      "type": "text",
+      "value": "Delete",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "accessible-label",
+      "id": null,
+      "label": "Accessible label (required for icon-only)",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Accessible label (required for icon-only)?",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Destructive Button is a deliberately alarming, danger-colored button reserved for actions that cause irreversible consequences - deleting a record, discarding unsaved work, or canceling a subscription. Its color is the first and fastest signal a user gets that the action can't be easily undone. When to Use Deleting or permanently removing data - Delete, Remove, Terminate. Actions that discard the user's own work - Discard changes, Reset a form. Canceling something with real consequences - Cancel Subscription, Revoke access. When Not to Use Any action that is easily reversible - use Primary or Secondary instead - reserving red for real danger keeps it meaningful. As a generic \"important\" button - Destructive communicates risk, not priority; a merely important-but-safe action should stay Primary. Multiple destructive actions competing in the same view - surface only the one the user is actually about to take, typically behind a confirmation step. Best Practices Pair it with an explicit confirmation step (a Modal or Pop Confirm) for anything truly irreversible, rather than firing on a single click. Use a specific verb, not a bare \"Yes\" - \"Delete project\" communicates the consequence, \"Yes\" does not. Never use Destructive styling for a safe action just to make it stand out - it trains users to distrust the color's warning. Do and Don't Do CancelDelete project Paired with an easy way out, and used only for the one action that actually destroys something. Don't Log out Logging out is reversible in one click. Reserving red for genuinely destructive actions is what makes it trustworthy when it does appear. Accessibility Never rely on color alone to communicate danger - the label text itself should name the consequence (Delete, not just a trash icon). Same native <button> keyboard and focus behavior as every other type, with a visible focus ring in the danger color. When paired with a confirmation dialog, focus should move into that dialog so keyboard and screen-reader users aren't left on the original trigger. Related Components Primary Button, Modal (for a confirmation step), Pop Confirm (for a lightweight inline confirmation). { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Destructive\", \"category\": \"Actions\", \"summary\": \"Destructive Button is a deliberately alarming, danger-colored button reserved for actions that cause irreversible consequences - deleting a record, discarding unsaved work, or canceling a subscription. Its color is the first and fastest signal a user gets that the action can't be easily undone.\", \"whenToUse\": [ \"Deleting or permanently removing data - Delete, Remove, Terminate.\", \"Actions that discard the user's own work - Discard changes, Reset a form.\", \"Canceling something with real consequences - Cancel Subscription, Revoke access.\" ], \"whenNotToUse\": [ \"Any action that is easily reversible - use Primary or Secondary instead - reserving red for real danger keeps it meaningful.\", \"As a generic \\\"important\\\" button - Destructive communicates risk, not priority; a merely important-but-safe action should stay Primary.\", \"Multiple destructive actions competing in the same view - surface only the one the user is actually about to take, typically behind a confirmation step.\" ], \"bestPractices\": [ \"Pair it with an explicit confirmation step (a Modal or Pop Confirm) for anything truly irreversible, rather than firing on a single click.\", \"Use a specific verb, not a bare \\\"Yes\\\" - \\\"Delete project\\\" communicates the consequence, \\\"Yes\\\" does not.\", \"Never use Destructive styling for a safe action just to make it stand out - it trains users to distrust the color's warning.\" ], \"doAndDont\": { \"do\": \"Paired with an easy way out, and used only for the one action that actually destroys something.\", \"dont\": \"Logging out is reversible in one click. Reserving red for genuinely destructive actions is what makes it trustworthy when it does appear.\" }, \"accessibility\": [ \"Never rely on color alone to communicate danger - the label text itself should name the consequence (Delete, not just a trash icon).\", \"Same native <button> keyboard and focus behavior as every other type, with a visible focus ring in the danger color.\", \"When paired with a confirmation dialog, focus should move into that dialog so keyboard and screen-reader users aren't left on the original trigger.\" ], \"relatedComponents\": [ \"Primary Button\", \"Modal\", \"Pop Confirm\" ] }",
+  "tests": []
+}

@@ -29,6 +29,9 @@ for check in "generate_tokens.py" "generate_foundation.py" "generate_contract_do
     fail=1
   fi
 done
+if ! node tools/build_figma_plugin.cjs --check; then
+  fail=1
+fi
 
 echo
 if [ "$fail" -eq 0 ]; then

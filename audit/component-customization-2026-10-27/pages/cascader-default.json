@@ -1,0 +1,250 @@
+{
+  "file": "cascader-default.html",
+  "name": "Cascader",
+  "category": "Components · Forms · Cascader",
+  "controls": [
+    {
+      "index": 0,
+      "role": "cascader-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "cascader-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "cascader-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "cascader-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "cascader-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Location",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "cascader-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Select location",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "cascader-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces chevron once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Cascader selects hierarchical, multi-level data - like Country / State / City - through a multi-column panel where picking an option in one column reveals the next column's choices, letting the user drill down step by step to a final value. When to Use A hierarchical address or location field - Country, then State/Province, then City. A category drill-down - a top-level category narrowing into subcategories. An org chart or file-path picker - any strictly nested structure with a clear parent-to-child relationship. When Not to Use A single flat list with no hierarchy - use Select instead - Cascader's multi-column panel adds unneeded complexity for a non-nested choice. Data that's nested but the user needs to see the whole tree at once, expanding and collapsing branches freely - use Tree Select instead of Cascader's linked-column drill-down. Free-form text with a suggestion list - use Autocomplete, not a fixed hierarchical structure. Best Practices Show the full selected path in the closed trigger (e.g. \"Asia / India / Mumbai\"), not just the final leaf value. Keep each column's option count reasonable - if the deepest level has hundreds of items, add search/filtering within the column. Let users jump back to an earlier column to change a prior choice without restarting the whole selection. Do and Don't Do CategoryAudio / Headphones▾Audio›Video›HeadphonesSpeakers A genuine hierarchy, two levels deep, with the chosen path spelled out in the control so the selection is readable without reopening it. Don't CountryPortugal▾PortugalSpain A single flat level in a Cascader is a Select wearing extra machinery. Only reach for it when the options genuinely nest. Accessibility Each column is independently reachable and operable by keyboard, with arrow keys moving within a column and revealing the next one on selection. The currently selected path at every level is announced as the user drills down, not only shown visually. The trigger's accessible name reflects the full selected path once a choice is made. Related Components Select, Tree Select, Autocomplete. { \"component\": \"Cascader\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Cascader selects hierarchical, multi-level data - like Country / State / City - through a multi-column panel where picking an option in one column reveals the next column's choices, letting the user drill down step by step to a final value.\", \"whenToUse\": [ \"A hierarchical address or location field - Country, then State/Province, then City.\", \"A category drill-down - a top-level category narrowing into subcategories.\", \"An org chart or file-path picker - any strictly nested structure with a clear parent-to-child relationship.\" ], \"whenNotToUse\": [ \"A single flat list with no hierarchy - use Select instead - Cascader's multi-column panel adds unneeded complexity for a non-nested choice.\", \"Data that's nested but the user needs to see the whole tree at once, expanding and collapsing branches freely - use Tree Select instead of Cascader's linked-column drill-down.\", \"Free-form text with a suggestion list - use Autocomplete, not a fixed hierarchical structure.\" ], \"bestPractices\": [ \"Show the full selected path in the closed trigger (e.g. \\\"Asia / India / Mumbai\\\"), not just the final leaf value.\", \"Keep each column's option count reasonable - if the deepest level has hundreds of items, add search/filtering within the column.\", \"Let users jump back to an earlier column to change a prior choice without restarting the whole selection.\" ], \"doAndDont\": { \"do\": \"A genuine hierarchy, two levels deep, with the chosen path spelled out in the control so the selection is readable without reopening it.\", \"dont\": \"A single flat level in a Cascader is a Select wearing extra machinery. Only reach for it when the options genuinely nest.\" }, \"accessibility\": [ \"Each column is independently reachable and operable by keyboard, with arrow keys moving within a column and revealing the next one on selection.\", \"The currently selected path at every level is announced as the user drills down, not only shown visually.\", \"The trigger's accessible name reflects the full selected path once a choice is made.\" ], \"relatedComponents\": [ \"Select\", \"Tree Select\", \"Autocomplete\" ] }",
+  "tests": []
+}

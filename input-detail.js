@@ -10,9 +10,9 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
-  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -24,7 +24,9 @@
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
+    { key: "success", cls: " is-success", label: "Success" },
     { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
 
@@ -50,35 +52,39 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var green500 = getCssVar("--green-500", "#2FBF6E");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-        error: "border-color:" + danger500 + ";"
+        error: "border-color:" + danger500 + ";",
+        success: "border-color:" + green500 + ";"
       };
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-        error: "border-color:" + danger500 + ";"
+        error: "border-color:" + danger500 + ";",
+        success: "border-color:" + green500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-      error: "border-bottom-color:" + danger500 + ";"
+      error: "border-bottom-color:" + danger500 + ";",
+      success: "border-bottom-color:" + green500 + ";"
     };
   }
 
@@ -113,10 +119,20 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
+  ];
+  var ICON_PLACEMENT_OPTIONS = [
+    { value: "none", label: "None" },
+    { value: "leading", label: "Leading icon" },
+    { value: "trailing", label: "Trailing icon" },
+    { value: "both", label: "Both" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -149,7 +165,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -202,26 +218,38 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (8, apply to every type): Rest, Hover, Focused, Filled, Success, Error, Read-Only, Disabled.");
     lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Success: border recolored to a positive/green tone, paired with a passed-validation indicator.");
+    lines.push("- Read-Only: shows its current value but can't be edited (the readonly attribute, not disabled) - still focusable and selectable, still submits with the form.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Leading icon (boolean, optional icon before the input text), Trailing icon (boolean, optional icon after the input text - e.g. validation or a password-reveal toggle), Allow clear (boolean, shows an × button in the trailing slot once the field has a value, clearing it on click - takes over the trailing slot from Trailing icon whenever both are on and there's a value, since Ant never shows both at once).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Icon placement (choice of None, Leading icon, Trailing icon, or Both - Leading shows an icon before the input text, Trailing shows one after it, e.g. validation or a password-reveal toggle), Allow clear (boolean, shows an × button in the trailing slot once the field has a value, clearing it on click - takes over the trailing slot from a trailing icon whenever both are on and there's a value, since Ant never shows both at once), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
+    lines.push("");
+    lines.push("Input behavior: Input type (" + (opts.inputType || "text") + " - changes the native input type/keyboard/validation, e.g. email/password/tel/url/number), Maximum length (" + (opts.maxLength ? opts.maxLength + " characters" : "no limit") + "), Required (" + (opts.required ? "yes" : "no") + ").");
+    lines.push("Validation: the Error state's message is customizable (currently \"" + (opts.errorText || "Enter a valid email address.") + "\"), displayed below the field and programmatically associated with it (aria-describedby).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
+    var requiredHtml = opts.required ? '<span class="input-demo-required" aria-hidden="true"> *</span>' : "";
+    var typeAttr = opts.inputType && opts.inputType !== "text" ? ' type="' + opts.inputType + '"' : ' type="text"';
+    var maxLengthAttr = opts.maxLength ? ' maxlength="' + opts.maxLength + '"' : "";
+    var requiredAttr = opts.required ? " required" : "";
     var lines = [];
     lines.push('<div class="input-field">');
-    lines.push('  <label class="input-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="input-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="input-control input-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '" />');
+    lines.push('    <input' + typeAttr + ' placeholder="' + escapeHtml(placeholder) + '"' + maxLengthAttr + requiredAttr + ' />');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="input-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -234,10 +262,10 @@
     var lines = [];
     lines.push("/* Agentic Design System - Input Text Field component (all types, states, sizes) */");
     lines.push(".input-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.input-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".input-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.input-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
-    lines.push('.input-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.input-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".input-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.input-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; }');
+    lines.push('.input-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -250,33 +278,39 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to Outlined/Filled only, Underlined stays square */");
     radiiToEmit.forEach(function(radius){
       lines.push(".input-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
-    lines.push("/* Types (3) - rest / hover / focus / error per type */");
+    lines.push("/* Types (3) - rest / hover / focus / success / error per type */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       var cls = ".input-control--" + t.key;
       lines.push(cls + "{ " + css.rest + " }");
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-within{ " + css.focus + " }");
+      lines.push(cls + ".is-success{ " + css.success + " }");
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - visually unchanged from Rest, cursor signals it isn't editable; still focusable/selectable, unlike Disabled */");
+    lines.push(".input-control input:read-only{ cursor:default; }");
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".input-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".input-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
+    var opts = selectionInfo.opts || {};
+    if (opts.required) lines.push(".input-field-label .input-demo-required{ color:var(--danger-500); }\n");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "input-control--h" + exampleSize;
     var radiusClassAttr = "input-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Email address", "you@example.com"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Email address", "you@example.com", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -284,17 +318,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -326,12 +362,12 @@
       card.setAttribute("tabindex", "0");
       var href = "input-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -414,29 +450,43 @@
     var defaultPlaceholder = document.body.dataset.defaultPlaceholder || "you@example.com";
     var labelInput = document.querySelector('[data-role="input-label"]');
     var placeholderInput = document.querySelector('[data-role="input-placeholder"]');
-    var leadingIconInput = document.querySelector('[data-role="input-leading-icon"]');
-    var trailingIconInput = document.querySelector('[data-role="input-trailing-icon"]');
+    var iconPlacementMount = document.querySelector('[data-role="input-icon-placement-mount"]');
     var allowClearInput = document.querySelector('[data-role="input-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="input-size-mount"]');
     var radiusMount = document.querySelector('[data-role="input-radius-mount"]');
+    var inputTypeSelect = document.querySelector('[data-role="input-type-select"]');
+    var maxLengthInput = document.querySelector('[data-role="input-max-length"]');
+    var requiredInput = document.querySelector('[data-role="input-required"]');
+    var showSupportingInput = document.querySelector('[data-role="input-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="input-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="input-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="input-error-text"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildInputField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear){
+    function buildInputField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
+      var isReadOnly = stateKey === "readonly";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
-      var hasValue = isFilled || isError;
+      var isSuccess = stateKey === "success";
+      var hasValue = isFilled || isError || isSuccess || isReadOnly;
       var controlClasses = "input-demo-control input-demo-control--" + typeKey + " input-demo-control--h" + size + stateCls;
       var leadingHtml = showLeadingIcon ? '<span class="input-demo-icon">' + ICON_MAIL + "</span>" : "";
       // allowClear takes over the trailing slot once there's a value to
       // clear - a static trailing icon and a clear button would otherwise
       // compete for the same spot, and Ant's own Input never shows both.
-      var trailingHtml = (allowClear && hasValue && !isDisabled)
+      var trailingHtml = (allowClear && hasValue && !isDisabled && !isReadOnly)
         ? '<button type="button" class="input-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : (showTrailingIcon ? '<span class="input-demo-icon input-demo-icon--trailing">' + ICON_CHECK + "</span>" : "");
-      var valueAttr = isFilled ? ' value="jane@example.com"' : (isError ? ' value="not-an-email"' : "");
+      var sampleValue = isError && (opts.inputType || "text") === "email" ? "not-an-email" : "jane@example.com";
+      var valueAttr = hasValue ? ' value="' + escapeHtml(sampleValue) + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadOnly ? " readonly" : "";
+      var typeAttr = opts.inputType && opts.inputType !== "text" ? ' type="' + opts.inputType + '"' : ' type="text"';
+      var maxLengthAttr = opts.maxLength != null ? ' maxlength="' + opts.maxLength + '"' : "";
+      var requiredAttr = opts.required ? " required" : "";
       // tabindex="-1": every state/type combination here is a static side-
       // by-side comparison (same convention as Modal/Rating's own matrices),
       // not an operable field - a real tab stop would land on dozens of
@@ -446,11 +496,15 @@
       // by tabindex) reaches an unlabeled blank field, same gap Rating's
       // own matrix was fixed for.
       var fieldId = "input-demo-field-" + (++inputFieldCounter);
-      var inputHtml = '<input type="text" id="' + fieldId + '" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      var describedBy = isError || opts.supportingText ? ' aria-describedby="' + fieldId + '-note"' : '';
+      var inputHtml = '<input' + typeAttr + ' id="' + fieldId + '" class="input-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + maxLengthAttr + requiredAttr + describedBy + (isError ? ' aria-invalid="true"' : '') + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="input-demo-note is-error">Enter a valid email address.</p>' : "";
+      var requiredHtml = opts.required ? '<span class="input-demo-required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = isError
+        ? '<p id="' + fieldId + '-note" class="input-demo-note is-error">' + escapeHtml(opts.errorText || "Enter a valid email address.") + "</p>"
+        : (opts.supportingText ? '<p id="' + fieldId + '-note" class="input-demo-note">' + escapeHtml(opts.supportingText) + "</p>" : "");
       return '<div class="input-demo-field">' +
-        '<label class="input-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
+        '<label class="input-demo-label" for="' + fieldId + '"><span class="input-demo-label-text">' + escapeHtml(label) + '</span>' + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + leadingHtml + inputHtml + trailingHtml + "</div>" +
         noteHtml +
         "</div>";
@@ -469,10 +523,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildInputField(t.key, state.key, state.cls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildInputField(t.key, state.key, state.cls, size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -483,19 +537,32 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        inputType: inputTypeSelect ? inputTypeSelect.value : "text",
+        maxLength: maxLengthInput && maxLengthInput.value !== '' ? parseInt(maxLengthInput.value, 10) : null,
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "We'll only use this to send you a receipt.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Enter a valid email address.") : "Enter a valid email address."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
-      var showLeadingIcon = leadingIconInput ? leadingIconInput.checked : false;
-      var showTrailingIcon = trailingIconInput ? trailingIconInput.checked : false;
+      var iconSelection = propertyMultiSelects.iconPlacement ? propertyMultiSelects.iconPlacement.getSelected() : [];
+      var showLeadingIcon = iconSelection.indexOf("leading") !== -1 || iconSelection.indexOf("both") !== -1;
+      var showTrailingIcon = iconSelection.indexOf("trailing") !== -1 || iconSelection.indexOf("both") !== -1;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -504,14 +571,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, showLeadingIcon, showTrailingIcon, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -535,13 +602,53 @@
         onChange: render
       });
     }
+    if (iconPlacementMount && window.createMultiSelect){
+      propertyMultiSelects.iconPlacement = window.createMultiSelect({
+        root: iconPlacementMount,
+        options: ICON_PLACEMENT_OPTIONS,
+        defaultSelected: ["none"],
+        ariaLabel: "Icon placement options",
+        labelledBy: "input-icon-placement-dropdown-label",
+        onChange: render
+      });
+    }
 
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
-    if (leadingIconInput) leadingIconInput.addEventListener("change", render);
-    if (trailingIconInput) trailingIconInput.addEventListener("change", render);
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (inputTypeSelect) inputTypeSelect.addEventListener("change", render);
+    if (maxLengthInput) maxLengthInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
+    // Export from the current controls synchronously, including edits made
+    // before the debounced preview has rendered. Samples use this same renderer.
+    window.ADSInput = { renderNow: render, buildField: buildInputField, types: TYPES, states: STATES,
+      options: currentOpts, sizes: SIZE_OPTIONS, radii: RADIUS_OPTIONS };
+    matrixContainer.addEventListener('input', function(event){
+      if (!event.target.matches('.input-demo-input')) return;
+      var input = event.target, control = input.closest('.input-demo-control');
+      var icons = propertyMultiSelects.iconPlacement.getSelected();
+      var showClear = allowClearInput.checked && input.value && !input.disabled && !input.readOnly;
+      control.querySelectorAll('.input-demo-clear,.input-demo-icon--trailing').forEach(function(n){ n.remove(); });
+      if (showClear) control.insertAdjacentHTML('beforeend','<button type="button" class="input-demo-clear" aria-label="Clear">' + ICON_CLEAR + '</button>');
+      else if (icons.indexOf('trailing') !== -1 || icons.indexOf('both') !== -1) control.insertAdjacentHTML('beforeend','<span class="input-demo-icon input-demo-icon--trailing">' + ICON_CHECK + '</span>');
+    });
+    matrixContainer.addEventListener('click', function(event){
+      var clear = event.target.closest('.input-demo-clear');
+      if (!clear) return;
+      var field = clear.closest('.input-demo-field').querySelector('input');
+      if (field.disabled || field.readOnly) return;
+      field.value = ''; clear.hidden = true; field.focus();
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+    });
     render();
   });
 })();

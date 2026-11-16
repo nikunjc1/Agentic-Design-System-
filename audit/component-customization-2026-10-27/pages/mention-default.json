@@ -1,0 +1,250 @@
+{
+  "file": "mention-default.html",
+  "name": "Mention",
+  "category": "Components · Forms · Mention",
+  "controls": [
+    {
+      "index": 0,
+      "role": "mention-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "mention-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "mention-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "mention-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "mention-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Comment",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "mention-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Type @ to mention someone",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "mention-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Mention is a free-form text field that lets someone tag another person inline by typing \"@\" followed by a name, inserting a distinct chip in the middle of otherwise normal text - used for comments, chat, and any message field where notifying a specific person matters. When to Use Comments and team chat - tagging a teammate inline within a message. Task assignment through free text - \"assign to @Jordan\" inside a longer note. Code review and support ticket threads - notifying a specific reviewer or agent. When Not to Use A field whose sole purpose is picking one person from a list - use Select or Autocomplete instead of a full free-text field with an embedded picker. Plain free-form text with no need to tag anyone - use Input or Text Area - the \"@\" trigger adds complexity that's wasted if never used. Tagging concepts, labels, or categories rather than people - use Tag or a multi-select Select instead of overloading the mention pattern. Best Practices Trigger the suggestion panel immediately on \"@\" and filter it live as the user keeps typing a name. Render an inserted mention as a visually distinct chip, not plain text, so it's unambiguous who was tagged. Let the user keep typing free-form text before and after a mention - it should never take over the whole field. Do and Don't Do CommentPing @aliAKAli KhanARAlice Reed Full name alongside the handle, so the right person is picked when two accounts start the same way. Don't CommentPing @ali@ali@ali2 Handles alone give the user no way to tell the two apart, so the notification goes to the wrong person. Accessibility The suggestion panel is reachable by keyboard (arrow keys to move, Enter to insert, Escape to dismiss) without ever requiring a mouse. An inserted mention chip is announced as a distinct, named entity by screen readers, not read as raw \"@username\" text. The field's placeholder or label makes the \"@\" trigger discoverable for first-time users. Related Components Autocomplete, Text Area, Input, Tag. { \"component\": \"Mention\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Mention is a free-form text field that lets someone tag another person inline by typing \\\"@\\\" followed by a name, inserting a distinct chip in the middle of otherwise normal text - used for comments, chat, and any message field where notifying a specific person matters.\", \"whenToUse\": [ \"Comments and team chat - tagging a teammate inline within a message.\", \"Task assignment through free text - \\\"assign to @Jordan\\\" inside a longer note.\", \"Code review and support ticket threads - notifying a specific reviewer or agent.\" ], \"whenNotToUse\": [ \"A field whose sole purpose is picking one person from a list - use Select or Autocomplete instead of a full free-text field with an embedded picker.\", \"Plain free-form text with no need to tag anyone - use Input or Text Area - the \\\"@\\\" trigger adds complexity that's wasted if never used.\", \"Tagging concepts, labels, or categories rather than people - use Tag or a multi-select Select instead of overloading the mention pattern.\" ], \"bestPractices\": [ \"Trigger the suggestion panel immediately on \\\"@\\\" and filter it live as the user keeps typing a name.\", \"Render an inserted mention as a visually distinct chip, not plain text, so it's unambiguous who was tagged.\", \"Let the user keep typing free-form text before and after a mention - it should never take over the whole field.\" ], \"doAndDont\": { \"do\": \"Full name alongside the handle, so the right person is picked when two accounts start the same way.\", \"dont\": \"Handles alone give the user no way to tell the two apart, so the notification goes to the wrong person.\" }, \"accessibility\": [ \"The suggestion panel is reachable by keyboard (arrow keys to move, Enter to insert, Escape to dismiss) without ever requiring a mouse.\", \"An inserted mention chip is announced as a distinct, named entity by screen readers, not read as raw \\\"@username\\\" text.\", \"The field's placeholder or label makes the \\\"@\\\" trigger discoverable for first-time users.\" ], \"relatedComponents\": [ \"Autocomplete\", \"Text Area\", \"Input\", \"Tag\" ] }",
+  "tests": []
+}

@@ -1,0 +1,7 @@
+PASS Completed real onboarding; Project setup shows all 11 saved answers through sidebar navigation.
+PASS Edit prefills values; Cancel leaves profile, history and foundations unchanged.
+PASS Validation blocks invalid saves; all project/identity fields, Other values and platforms persist without resetting foundations.
+PASS Design edits update only their foundations, preserve custom details/dark color, reach Input, and retain project identity.
+PASS Read and edit views fit desktop, 390px and 320px in both themes.
+PASS Cross-tab conflict blocks stale saves; Cancel loads the latest saved setup.
+PASS No-project state offers New project and Existing projects.

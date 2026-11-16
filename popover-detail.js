@@ -33,9 +33,9 @@
   }
 
   function bubbleContentFor(stateKey, title, body){
-    var html = '<p class="popover-demo-title">' + escapeHtml(title) + "</p>";
+    var html = '<p class="popover-demo-title" data-contract-part="title">' + escapeHtml(title) + "</p>";
     if (stateKey !== "simple"){
-      html += '<p class="popover-demo-body">' + escapeHtml(body) + "</p>";
+      html += '<p class="popover-demo-body" data-contract-part="body">' + escapeHtml(body) + "</p>";
     }
     if (stateKey === "with-close"){
       html += '<button type="button" class="popover-demo-close" tabindex="-1" aria-hidden="true">&times;</button>';
@@ -58,7 +58,7 @@
   function buildPopoverField(typeKey, stateKey, triggerLabel, title, body){
     var bubbleHtml = '<div class="popover-demo-bubble">' + bubbleContentFor(stateKey, title, body) + "</div>";
     var arrowHtml = '<div class="popover-demo-arrow" aria-hidden="true"></div>';
-    var triggerHtml = '<button type="button" class="popover-demo-trigger" tabindex="-1" aria-hidden="true">' + escapeHtml(triggerLabel) + "</button>";
+    var triggerHtml = '<button type="button" class="popover-demo-trigger" data-contract-part="trigger" tabindex="-1" aria-hidden="true">' + escapeHtml(triggerLabel) + "</button>";
     return '<div class="popover-demo-wrap popover-demo-wrap--' + typeKey + '">' + bubbleHtml + arrowHtml + triggerHtml + "</div>";
   }
 
@@ -97,7 +97,7 @@
     lines.push(".popover-demo-wrap--left{ flex-direction:row; }");
     lines.push(".popover-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".popover-demo-trigger{ padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; cursor:pointer; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popover-demo-trigger{ padding:var(--space-8) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); cursor:pointer; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".popover-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
     lines.push("/* Inverted-overlay treatment, same as Tooltip/Tour/Pop Confirm's bubble -");
@@ -115,7 +115,7 @@
     lines.push("   reserves a small gutter for it only when one actually exists, instead");
     lines.push("   of permanently upsizing every bubble the way the old min-width did. */");
     lines.push(".popover-demo-bubble{ box-sizing:border-box; position:relative; z-index:2; background:var(--overlay-invert-bg); box-shadow:var(--shadow-xl); padding:var(--space-10) var(--space-12); border-radius:var(--radius-md); max-width:var(--dimension-220); text-align: start; }");
-    lines.push(".popover-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popover-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".popover-demo-body{ font-family:var(--font-body); font-size:var(--type-caption-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin:var(--space-4) 0 0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
     lines.push(".popover-demo-close{ position:absolute; top:6px; right:6px; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); cursor:pointer; padding:0; }");
     lines.push("/* padding-right alone doesn't work here: overflow:hidden/text-overflow:");
@@ -172,12 +172,12 @@
       card.setAttribute("tabindex", "0");
       var href = "popover-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

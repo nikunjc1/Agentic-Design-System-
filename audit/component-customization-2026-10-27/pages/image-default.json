@@ -1,0 +1,177 @@
+{
+  "file": "image-default.html",
+  "name": "Image",
+  "category": "Components · Data Display · Image",
+  "controls": [
+    {
+      "index": 0,
+      "role": "image-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "image-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With caption",
+          "label": "With caption"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Loaded",
+      "options": [
+        {
+          "value": "Loaded",
+          "label": "Loaded"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "image-aspect-select",
+      "id": null,
+      "label": "Aspect ratio",
+      "type": "select",
+      "value": "square",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Aspect ratio Square Landscape Portrait",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "image-caption",
+      "id": null,
+      "label": "Caption text",
+      "type": "text",
+      "value": "Product photo",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Caption text",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, aspect ratio and caption are properties of the same component, not separate markup - change them below to check this frame's states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Image displays a photo or graphic with graceful loading, error, and hover-preview states built in - a styled wrapper around a real image with defined placeholder, broken-image, and zoom-preview behavior, instead of a bare, unstyled <img> tag with no fallback handling. When to Use A product gallery or article cover photo - any primary visual content that benefits from a defined loading/error state. User-generated content previews - images uploaded by users, which may occasionally fail to load. Document thumbnails or an avatar upload preview - anywhere an image needs consistent framing and fallback handling. When Not to Use A small identity graphic representing a person - use Avatar, which is purpose-built for that role, including initials fallback. A purely decorative background graphic with no meaningful content - a plain CSS background may be simpler than the full Image component's loading/error machinery. An icon - use the system's icon set rather than the Image component for small vector glyphs. Best Practices Always define a visible loading placeholder that matches the image's eventual aspect ratio, so the layout doesn't jump once it loads. Show a clear, distinct broken-image state (not just a blank box) when a URL fails to resolve. Use the hover-zoom/preview behavior only where inspecting detail actually matters (a product photo), not on every image site-wide. Do and Don't Do Warehouse floor plan, Level 2 A caption that says what the image actually is, useful the moment the picture itself fails to load. Don't Image No caption and no alt text means a failed image leaves nothing behind but an empty box - the content is simply gone for that user. Accessibility Every image carries meaningful alt text describing its content, or an empty alt when it's purely decorative. The broken-image fallback state is still announced meaningfully, not left as an unlabeled empty box. Zoom/preview interactions are reachable and dismissible by keyboard, not mouse-hover-only. Related Components Avatar, Empty, Skeleton. { \"component\": \"Image\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Image displays a photo or graphic with graceful loading, error, and hover-preview states built in - a styled wrapper around a real image with defined placeholder, broken-image, and zoom-preview behavior, instead of a bare, unstyled <img> tag with no fallback handling.\", \"whenToUse\": [ \"A product gallery or article cover photo - any primary visual content that benefits from a defined loading/error state.\", \"User-generated content previews - images uploaded by users, which may occasionally fail to load.\", \"Document thumbnails or an avatar upload preview - anywhere an image needs consistent framing and fallback handling.\" ], \"whenNotToUse\": [ \"A small identity graphic representing a person - use Avatar, which is purpose-built for that role, including initials fallback.\", \"A purely decorative background graphic with no meaningful content - a plain CSS background may be simpler than the full Image component's loading/error machinery.\", \"An icon - use the system's icon set rather than the Image component for small vector glyphs.\" ], \"bestPractices\": [ \"Always define a visible loading placeholder that matches the image's eventual aspect ratio, so the layout doesn't jump once it loads.\", \"Show a clear, distinct broken-image state (not just a blank box) when a URL fails to resolve.\", \"Use the hover-zoom/preview behavior only where inspecting detail actually matters (a product photo), not on every image site-wide.\" ], \"doAndDont\": { \"do\": \"A caption that says what the image actually is, useful the moment the picture itself fails to load.\", \"dont\": \"No caption and no alt text means a failed image leaves nothing behind but an empty box - the content is simply gone for that user.\" }, \"accessibility\": [ \"Every image carries meaningful alt text describing its content, or an empty alt when it's purely decorative.\", \"The broken-image fallback state is still announced meaningfully, not left as an unlabeled empty box.\", \"Zoom/preview interactions are reachable and dismissible by keyboard, not mouse-hover-only.\" ], \"relatedComponents\": [ \"Avatar\", \"Empty\", \"Skeleton\" ] }",
+  "tests": []
+}

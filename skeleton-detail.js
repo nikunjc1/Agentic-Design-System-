@@ -84,10 +84,10 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Skeleton component */");
-    lines.push(".skeleton-demo-line{ height:var(--dimension-10); border-radius:4px; background:var(--graphite-700); width:100%; }");
+    lines.push(".skeleton-demo-line{ height:var(--dimension-10); border-radius:var(--radius-sm); background:var(--graphite-700); width:100%; }");
     lines.push(".skeleton-demo-line + .skeleton-demo-line{ margin-top:var(--space-8); }");
     lines.push(".skeleton-demo-line--short{ width:60%; }");
-    lines.push(".skeleton-demo-avatar{ width:var(--dimension-40); height:var(--dimension-40); border-radius:9999px; background:var(--graphite-700); flex:none; }");
+    lines.push(".skeleton-demo-avatar{ width:var(--dimension-40); height:var(--dimension-40); border-radius:var(--radius-full); background:var(--graphite-700); flex:none; }");
     lines.push(".skeleton-demo-media{ width:100%; height:var(--dimension-100); border-radius:var(--radius-md); background:var(--graphite-700); margin-bottom:var(--space-10); }");
     lines.push(".skeleton-demo-row{ display:flex; gap:var(--space-12); align-items:flex-start; }");
     lines.push(".skeleton-demo-col{ flex:1 1 auto; min-width:0; }");
@@ -141,12 +141,12 @@
       card.setAttribute("tabindex", "0");
       var href = "skeleton-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

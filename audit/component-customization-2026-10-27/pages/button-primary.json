@@ -1,0 +1,344 @@
+{
+  "file": "button-primary.html",
+  "name": "Primary Button",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right"
+        },
+        {
+          "value": "icon-both",
+          "label": "Icons on both sides"
+        },
+        {
+          "value": "icon-only",
+          "label": "Icon only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "content-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radius-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-primary.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Primary",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Neutral",
+          "label": "Neutral"
+        },
+        {
+          "value": "Link",
+          "label": "Link"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "button-label",
+      "id": null,
+      "label": "Button label",
+      "type": "text",
+      "value": "Save",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "accessible-label",
+      "id": null,
+      "label": "Accessible label (required for icon-only)",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Accessible label (required for icon-only)?",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview The Primary Button is the highest-emphasis action in the Agentic Design System - a solid, brand-red filled button reserved for the single most important action on a screen or within a section. Its strong fill and contrast are what make it read as \"the one thing to do here,\" so its impact depends on staying rare: a screen with more than one Primary Button no longer tells the user where to look first.Read More When to Use The main call to action on a form or page - Save, Submit, Continue, Buy Now. The action that completes or advances a flow - Create, Generate, Start, Confirm. Exactly one per screen or logical section - a modal footer, a form, a card - never two Primary Buttons competing in the same view. Paired with a Secondary Button for the alternate action - e.g. \"Save\" (Primary) next to \"Cancel\" (Secondary). When Not to Use Supporting or optional actions - use Secondary or Tertiary instead, so the visual hierarchy still points at the real primary action. Irreversible or data-loss actions - use the Destructive type so risk is communicated by color, not just position. Plain navigation or wayfinding - use Anchor (inline text link) or Link-type Button instead of a boxed, high-emphasis button. Repeated per-row actions in a table or list - a Primary Button repeated many times in a view dilutes its meaning; use Ghost or Tertiary for row-level actions. Best Practices Keep the label a specific verb or verb phrase (\"Save changes\", not \"OK\" or \"Submit\" in isolation) so the action is unambiguous out of context. Place it in a predictable, consistent position (e.g. bottom-right of a modal/form footer) so users build muscle memory across the product. Never rely on color alone to convey the Disabled state - it also loses interactivity (cursor, pointer-events) and drops opacity. Don't change a Primary Button's color per screen to \"match a theme\" - the brand-red fill is what signals primacy; recoloring it breaks that signal everywhere else it's used correctly. Do and Don't Do Save changesCancel One Primary carrying the main action, paired with a Secondary for the alternative. The eye lands on the important one immediately. Don't SaveExportShare Three Primaries compete, so none of them reads as primary. Once everything is emphasised, nothing is. Accessibility Renders as a real <button> element, so it's reachable by keyboard (Tab) and activates with Enter/Space by default - no extra ARIA role needed. Focus state uses a visible 2px outline, never a color-only change, so keyboard users can always tell which control is focused. Text and icon colors meet WCAG 2.2 AA contrast against the red fill in both light and dark theme. Disabled buttons use the native disabled attribute (removed from the tab order and announced as unavailable by screen readers), not just a visual dim. Minimum touch target is 40px (Medium size) or larger, meeting WCAG 2.2's target-size guidance for pointer input. Related Components Secondary Button (the paired alternate action), Tertiary Button and Ghost Button (lower-emphasis actions), Link Button and Anchor (text-only navigation), Destructive Button (irreversible actions), Group Button (mutually exclusive option sets), Float Button (a persistent corner-anchored action). { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Primary\", \"category\": \"Actions\", \"summary\": \"The highest-emphasis action button - a solid brand-red fill reserved for the single most important action on a screen or section.\", \"whenToUse\": [ \"The main call to action on a form or page (Save, Submit, Continue, Buy Now)\", \"The action that completes or advances a flow (Create, Generate, Start, Confirm)\", \"Exactly one per screen or logical section\", \"Paired with a Secondary Button for the alternate action\" ], \"whenNotToUse\": [ \"Supporting or optional actions - use Secondary or Tertiary\", \"Irreversible or data-loss actions - use the Destructive type\", \"Plain navigation or wayfinding - use Anchor or the Link type\", \"Repeated per-row actions in a table or list - use Ghost or Tertiary\" ], \"bestPractices\": [ \"Use a specific verb label, not a generic \\\"OK\\\"\", \"Place it in a consistent, predictable position (e.g. bottom-right of a footer)\", \"Never rely on color alone for the Disabled state\", \"Do not recolor it per screen - the brand-red fill is the primacy signal\" ], \"doAndDont\": { \"do\": \"One Primary carrying the main action, paired with a Secondary for the alternative. The eye lands on the important one immediately.\", \"dont\": \"Three Primaries compete, so none of them reads as primary. Once everything is emphasised, nothing is.\" }, \"accessibility\": [ \"Renders as a native <button> element - keyboard reachable and Enter/Space activatable by default\", \"Visible 2px focus outline, never a color-only focus change\", \"Text/icon contrast meets WCAG 2.2 AA against the fill in both themes\", \"Disabled state uses the native disabled attribute, removed from the tab order\", \"Minimum 40px touch target at Medium size, meeting WCAG 2.2 target-size guidance\" ], \"relatedComponents\": [\"Secondary Button\", \"Tertiary Button\", \"Ghost Button\", \"Link Button\", \"Anchor\", \"Destructive Button\", \"Group Button\", \"Float Button\"] }",
+  "tests": []
+}

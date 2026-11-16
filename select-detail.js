@@ -9,8 +9,8 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -24,6 +24,7 @@
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
     { key: "open", cls: " is-open", label: "Open" },
+    { key: "empty", cls: " is-empty", label: "Empty" },
     { key: "error", cls: " is-error", label: "Error" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" },
     { key: "loading", cls: " is-loading", label: "Loading" }
@@ -59,17 +60,17 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
@@ -77,7 +78,7 @@
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
@@ -85,14 +86,14 @@
     }
     if (typeKey === "borderless"){
       return {
-        rest: "background:transparent;border:1.5px solid transparent;",
+        rest: "background:transparent;border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite800 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-bottom-color:" + danger500 + ";"
@@ -130,9 +131,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -166,7 +171,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as Input:
@@ -219,10 +224,11 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (8, apply to every type): Rest, Hover, Focused, Filled, Open, Error, Disabled, Loading.");
+    lines.push("States (9, apply to every type): Rest, Hover, Focused, Filled, Open, Empty, Error, Disabled, Loading.");
     lines.push("- Focused: border/outline change only, no panel - the moment before a click or Enter opens it.");
     lines.push("- Filled: same appearance as Rest, showing a selected value instead of the placeholder.");
     lines.push("- Open: the trigger plus a real role=\"listbox\" panel below it (role=\"option\" per item, aria-selected on the current value) - the field is role=\"combobox\" with aria-expanded=\"true\" while this is showing.");
+    lines.push("- Empty: same open trigger and panel as Open, but the list has nothing to show - a single dimmed \"No options found.\" row replaces the real options.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("- Loading: trailing chevron replaced by a spinner, aria-busy=\"true\", not interactive until it resolves.");
     lines.push("");
@@ -230,26 +236,35 @@
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when nothing is selected), Allow clear (boolean - once a real value is selected, replaces the trailing chevron with an × button that clears it back to the placeholder).");
+    var opts = selectionInfo.opts || {};
+    var options = opts.options || OPTION_DATA;
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when nothing is selected), Allow clear (boolean - once a real value is selected, replaces the trailing chevron with an × button that clears it back to the placeholder), Options (an editable, ordered list of string options - add, edit, remove or reorder by editing the list - currently: " + options.map(function(o){ return "\"" + o + "\""; }).join(", ") + "), Default selected value (currently \"" + (opts.defaultValue || options[0]) + "\"), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error, currently \"" + (opts.errorText || "") + "\").");
+    lines.push("");
+    lines.push("Search: a text input at the top of the open options panel that filters the list as the user types (case-insensitive substring match against each option's label), showing a \"No results found\" message when nothing matches - can be disabled entirely via a boolean property.");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, open){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, open, opts){
+    opts = opts || {};
+    var options = opts.options || OPTION_DATA;
+    var defaultValue = opts.defaultValue || options[0];
+    var requiredHtml = opts.required ? '<span class="select-demo-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="select-field">');
-    lines.push('  <label class="select-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="select-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="select-control select-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + (open ? " is-open" : "") +
       '" role="combobox" aria-haspopup="listbox" aria-expanded="' + (open ? "true" : "false") + '" tabindex="0">');
-    lines.push('    <span class="select-control-value">' + escapeHtml(open ? OPTION_DATA[0] : placeholder) + "</span>");
+    lines.push('    <span class="select-control-value">' + escapeHtml(open ? defaultValue : placeholder) + "</span>");
     lines.push('    <span class="select-control-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>");
     lines.push("  </div>");
     if (open){
       lines.push('  <ul class="select-panel" role="listbox" aria-label="' + escapeHtml(label) + '">');
-      OPTION_DATA.forEach(function(opt, i){
-        lines.push('    <li role="option" aria-selected="' + (i === 0) + '" class="select-option">' + escapeHtml(opt) + "</li>");
+      options.forEach(function(opt, i){
+        lines.push('    <li role="option" aria-selected="' + (opt === defaultValue) + '" class="select-option">' + escapeHtml(opt) + "</li>");
       });
       lines.push("  </ul>");
     }
+    if (opts.supportingText) lines.push('  <p class="select-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -262,11 +277,11 @@
     var lines = [];
     lines.push("/* Agentic Design System - Select component (all types, states, sizes) */");
     lines.push(".select-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.select-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".select-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.select-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.select-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".select-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.select-control-value{ flex:1 1 auto; min-width:0; font-family:var(--font-body); }');
     lines.push(".select-control-icon{ margin-inline-start:auto; flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
-    lines.push('.select-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.select-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -279,7 +294,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".select-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -300,43 +315,57 @@
     lines.push("");
     lines.push("/* Open - the real options panel, not just an aria-expanded claim */");
     lines.push(".select-field{ position:relative; }");
-    lines.push(".select-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); margin:0; padding:var(--space-4); list-style:none; background:" + getCssVar("--graphite-900", "#15171A") + "; border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); }");
-    lines.push(".select-option{ box-sizing:border-box; padding:var(--space-8) var(--space-10); border-radius:6px; font-size:var(--type-body-size); cursor:default; }");
-    lines.push(".select-option[aria-selected=\"true\"]{ background:" + getCssVar("--red-tint", "rgba(255,3,26,0.08)") + "; color:" + getCssVar("--red-400", "#FF3F4F") + "; font-weight:600; }");
+    lines.push(".select-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); margin:0; padding:var(--space-4); list-style:none; background:" + getCssVar("--graphite-900", "#FFFFFF") + "; border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-radius:var(--radius-md); box-shadow:var(--shadow-md); }");
+    lines.push(".select-option{ box-sizing:border-box; padding:var(--space-8) var(--space-10); border-radius:var(--radius-6); font-size:var(--type-body-size); cursor:default; }");
+    lines.push(".select-option[aria-selected=\"true\"]{ background:" + getCssVar("--red-tint", "rgba(255,3,26,0.08)") + "; color:" + getCssVar("--red-400", "#FF4253") + "; font-weight:var(--type-selected-weight); }");
+    lines.push("");
+    lines.push("/* Empty - the open panel shows a single dimmed row instead of real options */");
+    lines.push(".select-demo-empty{ box-sizing:border-box; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); color:" + getCssVar("--text-dim", "#69707D") + "; }");
     lines.push("");
     lines.push("/* Loading - trailing icon replaced by a spinner, not interactive */");
     lines.push(".select-control.is-loading{ cursor:wait; }");
-    lines.push(".select-spinner{ width:var(--dimension-14); height:var(--dimension-14); box-sizing:border-box; border-radius:9999px; border:1.5px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-top-color:" + getCssVar("--text-dim", "#64686F") + "; animation:spin 0.8s linear infinite; }");
+    lines.push(".select-spinner{ width:var(--dimension-14); height:var(--dimension-14); box-sizing:border-box; border-radius:var(--radius-full); border:var(--border-width-1) var(--border-style) " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-top-color:" + getCssVar("--text-dim", "#69707D") + "; animation:spin 0.8s linear infinite; }");
     lines.push("@keyframes spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }");
     lines.push("");
+    lines.push("/* Required indicator / supporting+error text below the field */");
+    lines.push(".select-demo-required{ color:var(--danger-500); }");
+    lines.push(".select-note.is-error{ color:var(--danger-700); }");
+    lines.push("");
+    lines.push("/* Search - a text input pinned to the top of the open options panel, filtering the list below it as the user types */");
+    lines.push(".select-panel-search{ box-sizing:border-box; width:100%; margin-bottom:var(--space-4); padding:var(--space-6) var(--space-8); border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-radius:var(--radius-6); background:transparent; font-size:var(--type-body-size); }");
+    lines.push(".select-panel-empty{ padding:var(--space-8) var(--space-10); font-size:var(--type-caption-size); color:" + getCssVar("--text-dim", "#69707D") + "; }");
+    lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "select-control--h" + exampleSize;
     var radiusClassAttr = "select-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Country", "Select a country"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Country", "Select a country", false, opts));
     });
     lines.push("");
     lines.push("<!-- Open state - the real options panel -->");
-    lines.push(exampleMarkupFor(TYPES[0].key, sizeClass, radiusClassAttr, "Country", "Select a country", true));
+    lines.push(exampleMarkupFor(TYPES[0].key, sizeClass, radiusClassAttr, "Country", "Select a country", true, opts));
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -368,12 +397,12 @@
       card.setAttribute("tabindex", "0");
       var href = "select-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -459,20 +488,50 @@
     var allowClearInput = document.querySelector('[data-role="select-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="select-size-mount"]');
     var radiusMount = document.querySelector('[data-role="select-radius-mount"]');
+    var optionsTextarea = document.querySelector('[data-role="select-options"]');
+    var defaultValueSelect = document.querySelector('[data-role="select-default-value"]');
+    var requiredInput = document.querySelector('[data-role="select-required"]');
+    var showSupportingInput = document.querySelector('[data-role="select-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="select-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="select-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="select-error-text"]');
+    var enableSearchInput = document.querySelector('[data-role="select-enable-search"]');
+    var searchPlaceholderInput = document.querySelector('[data-role="select-search-placeholder"]');
+    var interactiveMount = document.querySelector('[data-role="select-interactive"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    var FILLED_VALUE = "Canada";
+    function currentOptionsList(){
+      if (!optionsTextarea) return OPTION_DATA.slice();
+      var lines = optionsTextarea.value.split("\n").map(function(s){ return s.trim(); }).filter(Boolean);
+      return lines.length ? lines : OPTION_DATA.slice();
+    }
 
-    function buildSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
+    function syncDefaultValueOptions(){
+      if (!defaultValueSelect) return;
+      var options = currentOptionsList();
+      var previous = defaultValueSelect.value;
+      defaultValueSelect.innerHTML = options.map(function(opt){ return '<option value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + "</option>"; }).join("");
+      defaultValueSelect.value = options.indexOf(previous) !== -1 ? previous : options[0];
+    }
+
+    function buildSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear, opts){
+      opts = opts || {};
+      var options = opts.options || OPTION_DATA;
+      var filledValue = opts.defaultValue || options[0];
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
-      var isOpen = stateKey === "open";
+      var isEmpty = stateKey === "empty";
+      // Empty renders the exact same open-panel shell as Open (trigger
+      // expanded, real listbox panel below it) - only the panel's own
+      // content differs (a single "No options found." row instead of the
+      // real OPTION_DATA options), built in the panelHtml branch below.
+      var isOpen = stateKey === "open" || isEmpty;
       var isLoading = stateKey === "loading";
       var hasValue = isFilled || isOpen;
       var controlClasses = "select-demo-control select-demo-control--" + typeKey + " select-demo-control--h" + size + stateCls;
-      var text = hasValue ? FILLED_VALUE : placeholder;
+      var text = hasValue ? filledValue : placeholder;
       var valueClasses = "select-demo-value" + (hasValue ? " is-filled" : "");
       // tabindex is always -1: this matrix is a static state comparison,
       // not an operable field - role/aria-* stay so a real implementation
@@ -482,13 +541,19 @@
         : ' role="combobox" aria-haspopup="listbox" aria-expanded="' + (isOpen ? "true" : "false") + '" tabindex="-1"';
       if (isLoading) interactiveAttrs += ' aria-busy="true"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="select-demo-note is-error">Please select a country.</p>' : "";
+      // data-contract-part gives the Figma capture a stable identity for
+      // each part, independent of DOM position - same reasoning as
+      // checkbox-detail.js's own buildCheckboxCell().
+      var requiredHtml = opts.required ? '<span class="select-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = isError
+        ? '<p class="select-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Please select a value.") + "</p>"
+        : (opts.supportingText ? '<p class="select-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>" : "");
       // allowClear takes over the chevron's slot once there's a real value
       // to clear (not the placeholder) - the chevron comes back once the
       // value is cleared, since there's nothing left to clear.
       var iconHtml;
       if (isLoading){
-        iconHtml = '<span class="select-demo-spinner" aria-hidden="true"></span>';
+        iconHtml = '<span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>';
       } else if (allowClear && hasValue && !isDisabled){
         iconHtml = '<button type="button" class="select-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>";
       } else {
@@ -502,16 +567,24 @@
       // whose panel you can never actually see.
       var panelHtml = "";
       if (isOpen){
-        var optionsHtml = OPTION_DATA.map(function(opt){
-          var isSelected = opt === FILLED_VALUE;
-          return '<li role="option" aria-selected="' + isSelected + '" class="select-demo-option' + (isSelected ? " is-selected" : "") + '">' + escapeHtml(opt) + "</li>";
-        }).join("");
+        // data-contract-part="select-options-empty" gives this slot a
+        // stable identity regardless of which state built it, same reason
+        // as every other data-contract-part marker in this file - there is
+        // no Figma-push capture function for Select yet to harvest it with,
+        // but the marker costs nothing to add now and keeps this file
+        // consistent with its own convention.
+        var optionsHtml = isEmpty
+          ? '<li class="select-demo-empty" data-contract-part="select-options-empty">No options found.</li>'
+          : options.map(function(opt){
+              var isSelected = opt === filledValue;
+              return '<li role="option" aria-selected="' + isSelected + '" class="select-demo-option' + (isSelected ? " is-selected" : "") + '">' + escapeHtml(opt) + "</li>";
+            }).join("");
         panelHtml = '<ul class="select-demo-panel" role="listbox" aria-label="' + escapeHtml(label) + '">' + optionsHtml + "</ul>";
       }
       return '<div class="select-demo-field">' +
-        '<label class="select-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="select-demo-label" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
-          '<span class="' + valueClasses + '">' + escapeHtml(text) + "</span>" +
+          '<span class="' + valueClasses + '" data-contract-part="value">' + escapeHtml(text) + "</span>" +
           iconHtml +
         "</div>" +
         panelHtml +
@@ -532,10 +605,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildSelectField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildSelectField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -546,17 +619,97 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      var options = currentOptionsList();
+      return {
+        options: options,
+        defaultValue: defaultValueSelect && options.indexOf(defaultValueSelect.value) !== -1 ? defaultValueSelect.value : options[0],
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "You can change this later in settings.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Please select a value.") : "",
+        enableSearch: !enableSearchInput || enableSearchInput.checked,
+        searchPlaceholder: searchPlaceholderInput ? (searchPlaceholderInput.value.trim() || "Search...") : "Search..."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
+    }
+
+    // The comparison matrix above freezes one state per row (including a
+    // static Open row) to show every combination at once - a real, working
+    // open/close/search/select interaction doesn't fit that format, so it
+    // lives here instead, in its own always-interactive instance, the same
+    // "Try it" pattern Affix/Splitter/Tree/Group Button use.
+    var interactiveOpen = false, interactiveValue = null, interactiveSearch = "";
+    function renderInteractive(){
+      if (!interactiveMount) return;
+      var opts = currentOpts();
+      var label = labelInput.value.trim() || defaultLabel;
+      var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
+      var filtered = opts.enableSearch && interactiveSearch
+        ? opts.options.filter(function(o){ return o.toLowerCase().indexOf(interactiveSearch.toLowerCase()) !== -1; })
+        : opts.options;
+      var text = interactiveValue || placeholder;
+      var searchHtml = opts.enableSearch
+        ? '<input type="text" class="select-panel-search" placeholder="' + escapeHtml(opts.searchPlaceholder) + '" value="' + escapeHtml(interactiveSearch) + '" />'
+        : "";
+      var optionsHtml = filtered.length
+        ? '<ul class="select-demo-panel" role="listbox" aria-label="' + escapeHtml(label) + '" style="position:static;">' +
+            filtered.map(function(opt){ return '<li role="option" aria-selected="' + (opt === interactiveValue) + '" class="select-demo-option' + (opt === interactiveValue ? " is-selected" : "") + '" data-value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + "</li>"; }).join("") +
+          "</ul>"
+        : '<p class="select-panel-empty">No results found.</p>';
+      var panelHtml = interactiveOpen
+        ? '<div class="select-demo-panel-wrap" style="position:static;margin-top:var(--space-4);">' + searchHtml + optionsHtml + "</div>"
+        : "";
+      interactiveMount.innerHTML = '<div class="select-demo-field">' +
+        '<label class="select-demo-label">' + escapeHtml(label) + (opts.required ? '<span class="select-demo-required" aria-hidden="true"> *</span>' : "") + "</label>" +
+        '<div class="select-demo-control select-demo-control--outlined select-demo-control--h40' + (interactiveOpen ? " is-open" : "") + '" role="combobox" aria-haspopup="listbox" aria-expanded="' + interactiveOpen + '" tabindex="0">' +
+          '<span class="select-demo-value' + (interactiveValue ? " is-filled" : "") + '">' + escapeHtml(text) + "</span>" +
+          '<span class="select-demo-icon" aria-hidden="true">' + ICON_CHEVRON + "</span>" +
+        "</div>" +
+        panelHtml +
+        "</div>";
+
+      var trigger = interactiveMount.querySelector(".select-demo-control");
+      // Rebuilding via innerHTML below detaches this very trigger node before
+      // the click event finishes bubbling to the document-level "click
+      // outside closes it" listener added at the bottom of this function -
+      // without stopPropagation() that listener would see a detached target,
+      // fail its containment check, and close the panel immediately on the
+      // same click that opened it.
+      trigger.addEventListener("click", function(e){ e.stopPropagation(); interactiveOpen = !interactiveOpen; interactiveSearch = ""; renderInteractive(); if (interactiveOpen) interactiveMount.querySelector(".select-panel-search, .select-demo-option")?.focus(); });
+      trigger.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); trigger.click(); } });
+      var searchField = interactiveMount.querySelector(".select-panel-search");
+      if (searchField){
+        searchField.addEventListener("click", function(e){ e.stopPropagation(); });
+        // Re-rendering on every keystroke replaces this very input, which
+        // would otherwise drop focus/cursor mid-type - refocus the NEW
+        // element (same fix Group Button's per-button label inputs needed).
+        searchField.addEventListener("input", function(){
+          interactiveSearch = searchField.value;
+          renderInteractive();
+          var next = interactiveMount.querySelector(".select-panel-search");
+          if (next){ next.focus(); next.setSelectionRange(next.value.length, next.value.length); }
+        });
+      }
+      interactiveMount.querySelectorAll(".select-demo-option").forEach(function(opt){
+        opt.addEventListener("click", function(e){ e.stopPropagation(); interactiveValue = opt.dataset.value; interactiveOpen = false; renderInteractive(); });
+      });
+      function onDocClick(e){ if (!interactiveMount.contains(e.target)){ interactiveOpen = false; renderInteractive(); document.removeEventListener("click", onDocClick); } }
+      if (interactiveOpen) document.addEventListener("click", onDocClick);
     }
 
     function render(){
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      syncDefaultValueOptions();
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -565,14 +718,15 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
+      renderInteractive();
     }
 
     var propertyMultiSelects = {};
@@ -600,6 +754,19 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (optionsTextarea) optionsTextarea.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (defaultValueSelect) defaultValueSelect.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (enableSearchInput) enableSearchInput.addEventListener("change", function(){ interactiveSearch = ""; render(); });
+    if (searchPlaceholderInput) searchPlaceholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

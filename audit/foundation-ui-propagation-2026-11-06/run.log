@@ -1,0 +1,47 @@
+Colors / Light brand hex: pass 
+Colors / Surface, status and neutral colors: pass 
+Colors / Custom dark brand: pass 
+Grid & Layout / custom with 6 columns and 36px gutter: pass 
+Grid & Layout / rows with 6 columns and 36px gutter: pass 
+Grid & Layout / columns-rows with 6 columns and 36px gutter: pass 
+Grid & Layout / columns with 6 columns and 36px gutter: pass 
+Grid & Layout / Baseline toggle: pass 
+Typography / Body size, weight, line height and italic: pass 
+Typography / Body font family and tracking: pass 
+Typography / Body text color: pass 
+Spacing / 2px spacing: pass 
+Spacing / 8px spacing: pass 
+Spacing / adaptive spacing: pass 
+Spacing / 4px spacing: pass 
+Spacing / Shared control size 48px: pass 
+Radius / sharp radius: pass 
+Radius / compact radius: pass 
+Radius / soft radius: pass 
+Radius / expressive radius: pass 
+Radius / balanced radius: pass 
+Radius / Compact radius on Button and pill Tabs: fail tabs-default.html compact radius: expected "6px", got "0px"; After component reload: tabs-default.html compact radius: expected "6px", got "0px"
+Radius / Explicit component radius survives foundation change: pass 
+Radius / Reset component restores foundation following: pass 
+Borders / Width, style, opacity and color: pass 
+Borders / bottom border sides: pass 
+Borders / start border sides: pass 
+Borders / all border sides: pass 
+Borders / default state color: pass 
+Borders / hover state color: pass 
+Borders / focus state color: pass 
+Borders / disabled state color: pass 
+Borders / error state color: pass 
+Borders / success state color: pass 
+Borders / warning state color: pass 
+Borders / info state color: pass 
+Borders / selected state color: pass 
+Borders / active state color: pass 
+Shadows / flat shadow: pass 
+Shadows / subtle shadow: pass 
+Shadows / soft shadow: pass 
+Shadows / expressive shadow: pass 
+Shadows / balanced shadow: pass 
+Icons / Line glyph size, stroke and sharp corners: pass 
+Icons / Dashed icon style: pass 
+Icons / Rounded line icons: pass 
+UI PROPAGATION: fail

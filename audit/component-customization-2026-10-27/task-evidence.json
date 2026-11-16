@@ -1,0 +1,611 @@
+{
+  "tasks": [
+    {
+      "file": "button-primary.html",
+      "task": "Change label and copy matching code",
+      "property": "button-label",
+      "value": "Publish product",
+      "previewContainsValue": true,
+      "promptContainsValue": true,
+      "codeContainsValue": false,
+      "codeExcerpt": "der-radius:4px; }\n.btn:disabled{ opacity:0.4; cursor:not-allowed; }\n/* Disabled exceptions - Primary is slightly less faded than the rest, Link also drops its underline */\n.btn--primary:disabled{ opacity:0.45; }\n.btn--link:disabled{ text-decoration:none; }\n\n/* Corner radius (5 options) - not chosen yet, default is 8px */\n.btn--radius-0{ border-radius:0px; }\n.btn--radius-4{ border-radius:4px; }\n.btn--radius-8{ border-radius:8px; }\n.btn--radius-12{ border-radius:12px; }\n.btn--radius-pill{ border-radius:9999px; }\n\n<!-- Content (5) - not chosen yet, example usage shown for every option on a Primary button -->\n<button class=\"btn btn--primary btn--h40 btn--radius-8\">Save</button>\n<button class=\"btn btn--primary btn--h40 btn--radius-8\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M12 5v14M5 12h14\"/></svg><span>Save</span></button>\n<button class=\"btn btn--primary btn--h40 btn--radius-8\"><span>Save</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>\n<button class=\"btn btn--primary btn--h40 btn--radius-8\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M12 5v14M5 12h14\"/></svg><span>Save</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>\n<button class=\"btn btn--primary btn--h40 btn--radius-8 is-icon-only\" aria-label=\"Save\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15z\"/></svg></button>"
+    },
+    {
+      "file": "add-on-default.html",
+      "task": "Change label and copy matching code",
+      "property": "addon-label",
+      "value": "Company domain",
+      "previewContainsValue": true,
+      "promptContainsValue": true,
+      "codeContainsValue": false,
+      "codeExcerpt": "adius:9999px 0 0 9999px; }\n.addon-control--radius-pill .addon-segment--suffix{ border-radius:0 9999px 9999px 0; }\n\n/* Types (3) - rest / hover / focus / error per type */\n.addon-control--outlined{ background:#ffffff;border:var(--border-width-1) var(--border-style) rgba(15,15,10,0.15); }\n.addon-control--outlined:hover{ border-color:#69707D; }\n.addon-control--outlined:focus-within{ border-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.addon-control--outlined.is-error{ border-color:#ff031a; }\n.addon-control--filled{ background:#f1f1ee;border:var(--border-width-1) var(--border-style) transparent; }\n.addon-control--filled:hover{ background:#e3e3df; }\n.addon-control--filled:focus-within{ background:#ffffff;border-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.addon-control--filled.is-error{ border-color:#ff031a; }\n.addon-control--underlined{ border-bottom:var(--border-width-1) var(--border-style) rgba(15,15,10,0.15); }\n.addon-control--underlined:hover{ border-bottom-color:#69707D; }\n.addon-control--underlined:focus-within{ border-bottom-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.addon-control--underlined.is-error{ border-bottom-color:#ff031a; }\n\n/* Disabled - shared by every type */\n.addon-control:has(input:disabled){ opacity:0.5; }\n.addon-control input:disabled{ cursor:not-allowed; }\n\n<!-- Example usage - one per type -->\n<div class=\"addon-field\">\n  <label class=\"addon-field-label\">Website</label>\n  <div class=\"addon-control addon-control--outlined addon-control--h40 addon-control--radius-8\">\n    <span class=\"addon-segment addon-segment--prefix\">https://</span>\n    <input type=\"text\" placeholder=\"yourcompany\" />\n    <span class=\"addon-segment addon-segment--suffix\">.com</span>\n  </div>\n</div>\n<div class=\"addon-field\">\n  <label class=\"addon-field-label\">Website</label>\n  <div class=\"addon-control addon-control--filled addon-control--h40 addon-control--radius-8\">\n    <span class=\"addon-segment addon-segment--prefix\">https://</span>\n    <input type=\"text\" placeholder=\"yourcompany\" />\n    <span class=\"addon-segment addon-segment--suffix\">.com</span>\n  </div>\n</div>\n<div class=\"addon-field\">\n  <label class=\"addon-field-label\">Website</label>\n  <div class=\"addon-control addon-control--underlined addon-control--h40\">\n    <span class=\"addon-segment addon-segment--prefix\">https://</span>\n    <input type=\"text\" placeholder=\"yourcompany\" />\n    <span class=\"addon-segment addon-segment--suffix\">.com</span>\n  </div>\n</div>"
+    },
+    {
+      "file": "input-text-field.html",
+      "task": "Change label and copy matching code",
+      "property": "input-label",
+      "value": "Work email",
+      "previewContainsValue": true,
+      "promptContainsValue": true,
+      "codeContainsValue": false,
+      "codeExcerpt": "-space-20); font-size:16px; }\n.input-control--h56{ height:var(--dimension-56); padding:0 var(--space-24); font-size:17px; }\n\n/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */\n.input-control--radius-0{ border-radius:0px; }\n.input-control--radius-4{ border-radius:4px; }\n.input-control--radius-8{ border-radius:8px; }\n.input-control--radius-12{ border-radius:12px; }\n.input-control--radius-pill{ border-radius:9999px; }\n\n/* Types (3) - rest / hover / focus / error per type */\n.input-control--outlined{ background:#ffffff;border:var(--border-width-1) var(--border-style) rgba(15,15,10,0.15); }\n.input-control--outlined:hover{ border-color:#69707D; }\n.input-control--outlined:focus-within{ border-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.input-control--outlined.is-error{ border-color:#ff031a; }\n.input-control--filled{ background:#f1f1ee;border:var(--border-width-1) var(--border-style) transparent; }\n.input-control--filled:hover{ background:#e3e3df; }\n.input-control--filled:focus-within{ background:#ffffff;border-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.input-control--filled.is-error{ border-color:#ff031a; }\n.input-control--underlined{ border-bottom:var(--border-width-1) var(--border-style) rgba(15,15,10,0.15); }\n.input-control--underlined:hover{ border-bottom-color:#69707D; }\n.input-control--underlined:focus-within{ border-bottom-color:#FF031A;outline:2px solid #FF031A;outline-offset:2px; }\n.input-control--underlined.is-error{ border-bottom-color:#ff031a; }\n\n/* Disabled - shared by every type */\n.input-control:has(input:disabled){ opacity:0.5; }\n.input-control input:disabled{ cursor:not-allowed; }\n\n<!-- Example usage - one per type -->\n<div class=\"input-field\">\n  <label class=\"input-field-label\">Email address</label>\n  <div class=\"input-control input-control--outlined input-control--h40 input-control--radius-8\">\n    <input type=\"text\" placeholder=\"you@example.com\" />\n  </div>\n</div>\n<div class=\"input-field\">\n  <label class=\"input-field-label\">Email address</label>\n  <div class=\"input-control input-control--filled input-control--h40 input-control--radius-8\">\n    <input type=\"text\" placeholder=\"you@example.com\" />\n  </div>\n</div>\n<div class=\"input-field\">\n  <label class=\"input-field-label\">Email address</label>\n  <div class=\"input-control input-control--underlined input-control--h40\">\n    <input type=\"text\" placeholder=\"you@example.com\" />\n  </div>\n</div>"
+    },
+    {
+      "file": "calendar-default.html",
+      "task": "Configure a different real month",
+      "observed": {
+        "header": "February 2028",
+        "firstDate": "Sunday, August 30, 2026",
+        "days": 252,
+        "contains2028Date": false
+      }
+    },
+    {
+      "file": "select-dropdown.html",
+      "task": "Replace example countries with product options",
+      "observed": {
+        "controls": [
+          {
+            "role": "select-size-mount",
+            "type": "multiselect"
+          },
+          {
+            "role": "select-radius-mount",
+            "type": "multiselect"
+          },
+          {
+            "role": "select-label",
+            "type": "text"
+          },
+          {
+            "role": "select-placeholder",
+            "type": "text"
+          },
+          {
+            "role": "select-allow-clear",
+            "type": "checkbox"
+          }
+        ],
+        "matchingConfigurationControls": [],
+        "fileInputs": 0
+      }
+    },
+    {
+      "file": "table-default.html",
+      "task": "Author columns and rows for a real dataset",
+      "observed": {
+        "controls": [
+          {
+            "role": "table-radius-mount",
+            "type": "multiselect"
+          },
+          {
+            "role": "table-size-mount",
+            "type": "multiselect"
+          },
+          {
+            "role": "table-show-header",
+            "type": "checkbox"
+          }
+        ],
+        "matchingConfigurationControls": [],
+        "fileInputs": 0
+      }
+    },
+    {
+      "file": "upload-default.html",
+      "task": "Configure enforceable file acceptance",
+      "observed": {
+        "controls": [
+          {
+            "role": "upload-label",
+            "type": "text"
+          },
+          {
+            "role": "upload-helper",
+            "type": "text"
+          }
+        ],
+        "matchingConfigurationControls": [],
+        "fileInputs": 0
+      }
+    }
+  ],
+  "keyboard": [
+    {
+      "file": "add-on-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "affix-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "alert-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "anchor-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "autocomplete-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "avatar-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "badge-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-destructive.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-ghost.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-link.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-neutral.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-primary-icon.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-primary.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-secondary.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "button-tertiary.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "calendar-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "card-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "cascader-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "checkbox-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "collapse-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "color-picker-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "date-picker-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "date-range-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "description-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "divider-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "drawer-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "dropdown-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "empty-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "float-button-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "group-button-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "image-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "input-text-field.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "list-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "mention-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "menu-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "modal-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "notification-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "number-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "pagination-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "password-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "popover-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "progress-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "radio-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "rating-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "result-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "search-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "select-dropdown.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "skeleton-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "slider-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "spin-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "splitter-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "statistic-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "steps-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "switch-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "table-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "tabs-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "tag-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "text-area-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "time-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "timeline-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "toast-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "tooltip-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "tour-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "transfer-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "tree-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    },
+    {
+      "file": "tree-select-default.html",
+      "status": "pass",
+      "opened": "true",
+      "closed": "false",
+      "focusReturned": true
+    },
+    {
+      "file": "upload-default.html",
+      "status": "not-applicable",
+      "reason": "No shared multiselect property control."
+    }
+  ],
+  "additionalControls": [
+    {
+      "file": "avatar-default.html",
+      "control": {
+        "role": "avatar-group-view-select",
+        "id": null,
+        "label": "Avatar.Group display",
+        "type": "select",
+        "value": "avatars",
+        "options": [
+          {
+            "value": "avatars",
+            "label": "Avatars"
+          },
+          {
+            "value": "names",
+            "label": "Names only"
+          }
+        ],
+        "min": null,
+        "max": null,
+        "step": null,
+        "disabled": false,
+        "conditional": false,
+        "location": "Avatar.Group"
+      },
+      "test": {
+        "property": "Avatar.Group display",
+        "role": "avatar-group-view-select",
+        "status": "tested",
+        "cases": [
+          {
+            "value": "names",
+            "native": {
+              "value": "names"
+            },
+            "previewDOMChanged": true,
+            "previewTextChanged": null,
+            "previewStylesChanged": null,
+            "promptAvailable": true,
+            "promptChanged": true,
+            "codeAvailable": true,
+            "codeChanged": false,
+            "promptProperties": null
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

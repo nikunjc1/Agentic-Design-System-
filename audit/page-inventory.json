@@ -21,14 +21,14 @@
       "Evidence"
     ],
     "issues": [],
-    "bytes": 37579
+    "bytes": 37867
   },
   {
     "file": "add-on-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Add-on Stable",
+      "Add-on",
       "Properties",
       "Live Preview",
       "When to use",
@@ -36,7 +36,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 22983
+    "bytes": 25166
   },
   {
     "file": "add-on.html",
@@ -47,7 +47,7 @@
       "Add-on type"
     ],
     "issues": [],
-    "bytes": 11928
+    "bytes": 12324
   },
   {
     "file": "affix-default.html",
@@ -62,7 +62,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19769
+    "bytes": 20330
   },
   {
     "file": "affix.html",
@@ -73,7 +73,7 @@
       "Affix type"
     ],
     "issues": [],
-    "bytes": 11687
+    "bytes": 12083
   },
   {
     "file": "ai-foundation.html",
@@ -99,33 +99,31 @@
       "Accessible interaction"
     ],
     "issues": [],
-    "bytes": 31528
+    "bytes": 31928
   },
   {
     "file": "ai-generator.html",
     "kind": "Tab",
-    "status": "Reference / planned",
+    "status": "Available",
     "sections": [
-      "AI Generator",
-      "Reuse first, generate second",
-      "Build with your AI tool today"
+      "AI tool handoff"
     ],
     "issues": [],
-    "bytes": 11413
+    "bytes": 10183
   },
   {
     "file": "alert-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Alert Stable",
+      "Alert",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21225
+    "bytes": 23479
   },
   {
     "file": "alert.html",
@@ -136,21 +134,21 @@
       "Alert type"
     ],
     "issues": [],
-    "bytes": 11846
+    "bytes": 12242
   },
   {
     "file": "anchor-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Anchor Stable",
+      "Anchor",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 18962
+    "bytes": 19799
   },
   {
     "file": "anchor.html",
@@ -161,14 +159,14 @@
       "Anchor type"
     ],
     "issues": [],
-    "bytes": 11358
+    "bytes": 11754
   },
   {
     "file": "autocomplete-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Autocomplete Stable",
+      "Autocomplete",
       "Properties",
       "Live Preview",
       "When to use",
@@ -176,7 +174,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21735
+    "bytes": 23448
   },
   {
     "file": "autocomplete.html",
@@ -187,14 +185,14 @@
       "Autocomplete type"
     ],
     "issues": [],
-    "bytes": 12074
+    "bytes": 12470
   },
   {
     "file": "avatar-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Avatar Stable",
+      "Avatar",
       "Properties",
       "Live Preview",
       "Avatar.Group",
@@ -202,7 +200,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20543
+    "bytes": 21027
   },
   {
     "file": "avatar.html",
@@ -213,21 +211,21 @@
       "Avatar type"
     ],
     "issues": [],
-    "bytes": 11937
+    "bytes": 12333
   },
   {
     "file": "badge-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Badge Stable",
+      "Badge",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19499
+    "bytes": 19983
   },
   {
     "file": "badge.html",
@@ -238,7 +236,7 @@
       "Badge type"
     ],
     "issues": [],
-    "bytes": 11814
+    "bytes": 12210
   },
   {
     "file": "borders.html",
@@ -262,21 +260,21 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 53915
+    "bytes": 54311
   },
   {
     "file": "breadcrumb-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Breadcrumb Stable",
+      "Breadcrumb",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19649
+    "bytes": 20326
   },
   {
     "file": "breadcrumb.html",
@@ -287,133 +285,133 @@
       "Breadcrumb type"
     ],
     "issues": [],
-    "bytes": 11321
+    "bytes": 11717
   },
   {
     "file": "button-destructive.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Destructive Button Stable",
+      "Destructive Button",
       "Properties",
       "Live Preview",
       "When to use Destructive",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20158
+    "bytes": 20631
   },
   {
     "file": "button-ghost.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Ghost Button Stable",
+      "Ghost Button",
       "Properties",
       "Live Preview",
       "When to use Ghost",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20141
+    "bytes": 20616
   },
   {
     "file": "button-link.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Link Button Stable",
+      "Link Button",
       "Properties",
       "Live Preview",
       "When to use Link",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19892
+    "bytes": 20353
   },
   {
     "file": "button-neutral.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Neutral Button Stable",
+      "Neutral Button",
       "Properties",
       "Live Preview",
       "When to use Neutral",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19750
+    "bytes": 20223
   },
   {
     "file": "button-primary-icon.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Primary Button 36px - Dual Icon Stable",
+      "Primary Button 36px - Dual Icon",
       "Properties",
       "Live Preview",
       "When to use Primary",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20674
+    "bytes": 21147
   },
   {
     "file": "button-primary.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Primary Button Stable",
+      "Primary Button",
       "Properties",
       "Live Preview",
       "When to use Primary",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21207
+    "bytes": 21684
   },
   {
     "file": "button-secondary.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Secondary Button Stable",
+      "Secondary Button",
       "Properties",
       "Live Preview",
       "When to use Secondary",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19806
+    "bytes": 20279
   },
   {
     "file": "button-tertiary.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tertiary Button Stable",
+      "Tertiary Button",
       "Properties",
       "Live Preview",
       "When to use Tertiary",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19714
+    "bytes": 20179
   },
   {
     "file": "calendar-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Calendar Stable",
+      "Calendar",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19846
+    "bytes": 20322
   },
   {
     "file": "calendar.html",
@@ -424,21 +422,21 @@
       "Calendar type"
     ],
     "issues": [],
-    "bytes": 16981
+    "bytes": 17377
   },
   {
     "file": "card-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Card Stable",
+      "Card",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20176
+    "bytes": 20660
   },
   {
     "file": "card.html",
@@ -449,14 +447,14 @@
       "Card type"
     ],
     "issues": [],
-    "bytes": 11539
+    "bytes": 11935
   },
   {
     "file": "cascader-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Cascader Stable",
+      "Cascader",
       "Properties",
       "Live Preview",
       "Multiple selection + Search",
@@ -465,7 +463,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 22847
+    "bytes": 24557
   },
   {
     "file": "cascader.html",
@@ -476,7 +474,7 @@
       "Cascader type"
     ],
     "issues": [],
-    "bytes": 11989
+    "bytes": 12385
   },
   {
     "file": "changelog.html",
@@ -488,14 +486,14 @@
       "Known gaps"
     ],
     "issues": [],
-    "bytes": 10744
+    "bytes": 11056
   },
   {
     "file": "checkbox-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Checkbox Stable",
+      "Checkbox",
       "Properties",
       "Live Preview",
       "When to use",
@@ -503,7 +501,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20372
+    "bytes": 22632
   },
   {
     "file": "checkbox.html",
@@ -514,21 +512,21 @@
       "Checkbox type"
     ],
     "issues": [],
-    "bytes": 11843
+    "bytes": 12239
   },
   {
     "file": "collapse-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Collapse Stable",
+      "Collapse",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20421
+    "bytes": 20905
   },
   {
     "file": "collapse.html",
@@ -539,22 +537,23 @@
       "Collapse type"
     ],
     "issues": [],
-    "bytes": 12009
+    "bytes": 12405
   },
   {
     "file": "color-picker-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Color Picker Stable",
+      "Color Picker",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Validation",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21720
+    "bytes": 24713
   },
   {
     "file": "color-picker.html",
@@ -565,7 +564,26 @@
       "Color Picker type"
     ],
     "issues": [],
-    "bytes": 11774
+    "bytes": 12170
+  },
+  {
+    "file": "component-editor.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Component Contract Editor",
+      "Component and revisions",
+      "Properties",
+      "Stage and variants",
+      "Anatomy",
+      "Behavior",
+      "Contract JSON",
+      "Review and export",
+      "Compare implementation",
+      "Figma synchronization"
+    ],
+    "issues": [],
+    "bytes": 17940
   },
   {
     "file": "component-index.html",
@@ -580,7 +598,7 @@
       "Data Display"
     ],
     "issues": [],
-    "bytes": 19721
+    "bytes": 20596
   },
   {
     "file": "components.html",
@@ -591,7 +609,7 @@
       "Button type"
     ],
     "issues": [],
-    "bytes": 13764
+    "bytes": 14160
   },
   {
     "file": "copywriting.html",
@@ -609,7 +627,7 @@
       "Expansion and localization"
     ],
     "issues": [],
-    "bytes": 24417
+    "bytes": 24782
   },
   {
     "file": "data-format.html",
@@ -620,23 +638,23 @@
       "Numbers and currency",
       "Dates and times",
       "Missing and sensitive data",
-      "Empty vs. missing vs. loading",
       "Data Format - Markdown export",
       "Implementation contract",
       "Flow",
       "Constraints",
       "Layout and accessibility",
-      "Value identity"
+      "Value identity",
+      "Localized display"
     ],
     "issues": [],
-    "bytes": 25994
+    "bytes": 28966
   },
   {
     "file": "date-picker-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Date Picker Stable",
+      "Date Picker",
       "Properties",
       "Live Preview",
       "When to use",
@@ -644,7 +662,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21830
+    "bytes": 24132
   },
   {
     "file": "date-picker.html",
@@ -655,14 +673,14 @@
       "Date Picker type"
     ],
     "issues": [],
-    "bytes": 12027
+    "bytes": 12423
   },
   {
     "file": "date-range-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Date Range Stable",
+      "Date Range",
       "Properties",
       "Live Preview",
       "When to use",
@@ -670,7 +688,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 22159
+    "bytes": 23873
   },
   {
     "file": "date-range.html",
@@ -681,21 +699,21 @@
       "Date Range type"
     ],
     "issues": [],
-    "bytes": 12236
+    "bytes": 12632
   },
   {
     "file": "description-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Description Stable",
+      "Description",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19898
+    "bytes": 20382
   },
   {
     "file": "description.html",
@@ -706,21 +724,21 @@
       "Description type"
     ],
     "issues": [],
-    "bytes": 12252
+    "bytes": 12648
   },
   {
     "file": "divider-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Divider Stable",
+      "Divider",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20584
+    "bytes": 21068
   },
   {
     "file": "divider.html",
@@ -731,21 +749,21 @@
       "Divider type"
     ],
     "issues": [],
-    "bytes": 11769
+    "bytes": 12165
   },
   {
     "file": "drawer-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Drawer Stable",
+      "Drawer",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21190
+    "bytes": 22157
   },
   {
     "file": "drawer.html",
@@ -756,14 +774,14 @@
       "Drawer type"
     ],
     "issues": [],
-    "bytes": 12187
+    "bytes": 12583
   },
   {
     "file": "dropdown-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Dropdown Stable",
+      "Dropdown",
       "Properties",
       "Live Preview",
       "Interactive Example",
@@ -771,7 +789,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19953
+    "bytes": 20477
   },
   {
     "file": "dropdown.html",
@@ -782,21 +800,21 @@
       "Dropdown type"
     ],
     "issues": [],
-    "bytes": 11688
+    "bytes": 12084
   },
   {
     "file": "empty-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Empty Stable",
+      "Empty",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20160
+    "bytes": 20644
   },
   {
     "file": "empty.html",
@@ -807,33 +825,45 @@
       "Empty type"
     ],
     "issues": [],
-    "bytes": 12041
+    "bytes": 12437
+  },
+  {
+    "file": "figma-export.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Figma export has moved"
+    ],
+    "issues": [],
+    "bytes": 761
   },
   {
     "file": "figma.html",
     "kind": "Tab",
-    "status": "Reference / planned",
+    "status": "Available",
     "sections": [
       "Figma",
-      "Prepare a manual Figma handoff",
-      "Manual handoff"
+      "Start the bridge",
+      "Edit, compare and pull",
+      "Tokens and library references",
+      "Connection and recovery"
     ],
     "issues": [],
-    "bytes": 10828
+    "bytes": 13158
   },
   {
     "file": "float-button-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Float Button Stable",
+      "Float Button",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19565
+    "bytes": 21939
   },
   {
     "file": "float-button.html",
@@ -844,7 +874,7 @@
       "Float Button type"
     ],
     "issues": [],
-    "bytes": 11884
+    "bytes": 12280
   },
   {
     "file": "foundations.html",
@@ -870,7 +900,7 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 58442
+    "bytes": 58838
   },
   {
     "file": "grid-layout.html",
@@ -903,21 +933,22 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 59637
+    "bytes": 60033
   },
   {
     "file": "group-button-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Group Button Stable",
+      "Group Button",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20903
+    "bytes": 23618
   },
   {
     "file": "group-button.html",
@@ -928,7 +959,7 @@
       "Group Button type"
     ],
     "issues": [],
-    "bytes": 11650
+    "bytes": 12044
   },
   {
     "file": "guidelines.html",
@@ -950,23 +981,17 @@
       "Copy outcomes"
     ],
     "issues": [],
-    "bytes": 34591
+    "bytes": 35203
   },
   {
     "file": "history.html",
     "kind": "Tab",
-    "status": "Reference / planned",
+    "status": "Available",
     "sections": [
-      "History Mockup",
-      "Example project \u00b7 Sample version 3.2.0",
-      "Empty state - no published versions yet",
-      "Version detail",
-      "Compare",
-      "Restore",
-      "Component Guide"
+      "Projects have moved to Overview"
     ],
     "issues": [],
-    "bytes": 27717
+    "bytes": 10179
   },
   {
     "file": "icons.html",
@@ -990,21 +1015,21 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 42352
+    "bytes": 42748
   },
   {
     "file": "image-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Image Stable",
+      "Image",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19819
+    "bytes": 20303
   },
   {
     "file": "image.html",
@@ -1015,21 +1040,31 @@
       "Image type"
     ],
     "issues": [],
-    "bytes": 11715
+    "bytes": 12111
+  },
+  {
+    "file": "index.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Open your design system"
+    ],
+    "issues": [],
+    "bytes": 730
   },
   {
     "file": "input-text-field.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Input Text Field Stable",
+      "Input Text Field",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20984
+    "bytes": 22744
   },
   {
     "file": "input.html",
@@ -1040,21 +1075,21 @@
       "Input type"
     ],
     "issues": [],
-    "bytes": 11626
+    "bytes": 12022
   },
   {
     "file": "list-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "List Stable",
+      "List",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19855
+    "bytes": 20339
   },
   {
     "file": "list.html",
@@ -1065,26 +1100,29 @@
       "List type"
     ],
     "issues": [],
-    "bytes": 12446
+    "bytes": 12842
   },
   {
     "file": "md-export.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Take your design system with you",
-      "Choose your export",
-      "Ready for your next tool"
+      "Export & Handoff",
+      "Choose what to include",
+      "Preview",
+      "Connect to Figma",
+      "What\u2019s included",
+      "Use with your AI tool"
     ],
     "issues": [],
-    "bytes": 14021
+    "bytes": 18700
   },
   {
     "file": "mention-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Mention Stable",
+      "Mention",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1092,7 +1130,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21929
+    "bytes": 23642
   },
   {
     "file": "mention.html",
@@ -1103,21 +1141,21 @@
       "Mention type"
     ],
     "issues": [],
-    "bytes": 11714
+    "bytes": 12110
   },
   {
     "file": "menu-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Menu Stable",
+      "Menu",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19364
+    "bytes": 19896
   },
   {
     "file": "menu.html",
@@ -1128,14 +1166,14 @@
       "Menu type"
     ],
     "issues": [],
-    "bytes": 11711
+    "bytes": 12107
   },
   {
     "file": "modal-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Modal Stable",
+      "Modal",
       "Properties",
       "Live Preview",
       "Confirm-type shortcuts",
@@ -1143,7 +1181,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21702
+    "bytes": 23780
   },
   {
     "file": "modal.html",
@@ -1154,35 +1192,36 @@
       "Modal type"
     ],
     "issues": [],
-    "bytes": 12164
+    "bytes": 12560
   },
   {
     "file": "new-project.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Let\u2019s build around your product",
-      "Your product and platforms",
-      "About you",
-      "Review your setup",
-      "Your setup is ready",
-      "From idea to implementation",
+      "What will you build today?",
+      "Design companion",
+      "",
+      "Your brief. Ready to build?",
+      "Setting up your design system",
+      "Your project is ready",
       "Implementation contract",
       "User and task flow",
       "Navigation and recovery",
       "Context and readiness",
       "Categories and identity",
-      "Handoff"
+      "Handoff",
+      "Review and edit saved setup"
     ],
     "issues": [],
-    "bytes": 24913
+    "bytes": 36017
   },
   {
     "file": "notification-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Notification Stable",
+      "Notification",
       "Properties",
       "Live Preview",
       "Placement",
@@ -1190,7 +1229,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19794
+    "bytes": 20767
   },
   {
     "file": "notification.html",
@@ -1201,7 +1240,7 @@
       "Notification type"
     ],
     "issues": [],
-    "bytes": 12268
+    "bytes": 12664
   },
   {
     "file": "npm-package.html",
@@ -1216,14 +1255,14 @@
       "Publish safety"
     ],
     "issues": [],
-    "bytes": 20702
+    "bytes": 20561
   },
   {
     "file": "number-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Number Stable",
+      "Number",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1231,7 +1270,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21647
+    "bytes": 23804
   },
   {
     "file": "number.html",
@@ -1242,33 +1281,32 @@
       "Number type"
     ],
     "issues": [],
-    "bytes": 12244
+    "bytes": 12640
   },
   {
     "file": "overview.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Agentic Design System",
-      "Start here",
-      "Guidelines & governance"
+      "Overview",
+      "No saved projects yet"
     ],
     "issues": [],
-    "bytes": 14080
+    "bytes": 12582
   },
   {
     "file": "pagination-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Pagination Stable",
+      "Pagination",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20008
+    "bytes": 20570
   },
   {
     "file": "pagination.html",
@@ -1279,14 +1317,14 @@
       "Pagination type"
     ],
     "issues": [],
-    "bytes": 12288
+    "bytes": 12684
   },
   {
     "file": "password-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Password Stable",
+      "Password",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1294,7 +1332,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 23541
+    "bytes": 25622
   },
   {
     "file": "password.html",
@@ -1305,36 +1343,31 @@
       "Password type"
     ],
     "issues": [],
-    "bytes": 11988
+    "bytes": 12384
   },
   {
     "file": "patterns.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Patterns",
-      "Filter bar",
-      "KPI row",
-      "Search + results",
-      "Empty state layout",
-      "Form section"
+      "Patterns is no longer available"
     ],
     "issues": [],
-    "bytes": 21402
+    "bytes": 737
   },
   {
     "file": "pop-confirm-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Pop Confirm Stable",
+      "Pop Confirm",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20905
+    "bytes": 21876
   },
   {
     "file": "pop-confirm.html",
@@ -1345,21 +1378,21 @@
       "Pop Confirm type"
     ],
     "issues": [],
-    "bytes": 12077
+    "bytes": 12473
   },
   {
     "file": "popover-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Popover Stable",
+      "Popover",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19676
+    "bytes": 20160
   },
   {
     "file": "popover.html",
@@ -1370,7 +1403,7 @@
       "Popover type"
     ],
     "issues": [],
-    "bytes": 11681
+    "bytes": 12077
   },
   {
     "file": "principles.html",
@@ -1378,37 +1411,63 @@
     "status": "Available",
     "sections": [
       "Design Principles",
+      "Design values",
+      "Legible",
+      "Consistent",
+      "Honest",
+      "Adaptive",
       "1. Proximity",
+      "Do",
+      "Don't",
       "2. Alignment",
+      "Do",
+      "Don't",
       "3. Contrast",
+      "Do",
+      "Don't",
       "4. Repetition",
+      "Do",
+      "Don't",
       "5. Make it Direct",
+      "Do",
+      "Don't",
       "6. Stay on the Page",
+      "Do",
+      "Don't",
       "7. Keep it Lightweight",
+      "Do",
+      "Don't",
       "8. Provide an Invitation",
+      "Do",
+      "Don't",
       "9. Use Transition",
+      "Do",
+      "Don't",
       "10. React Immediately",
-      "Design Principles - Markdown export",
+      "Do",
+      "Don't",
+      "Use these principles",
       "Implementation contract",
       "Flow and use",
-      "Handoff"
+      "Handoff",
+      "Values"
     ],
     "issues": [],
-    "bytes": 45481
+    "bytes": 48934
   },
   {
     "file": "progress-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Progress Stable",
+      "Progress",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21391
+    "bytes": 21875
   },
   {
     "file": "progress.html",
@@ -1419,14 +1478,25 @@
       "Progress type"
     ],
     "issues": [],
-    "bytes": 11699
+    "bytes": 12095
+  },
+  {
+    "file": "project-setup.html",
+    "kind": "Tab",
+    "status": "Available",
+    "sections": [
+      "Project setup",
+      "No active project yet"
+    ],
+    "issues": [],
+    "bytes": 11607
   },
   {
     "file": "radio-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Radio Stable",
+      "Radio",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1434,7 +1504,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19707
+    "bytes": 22057
   },
   {
     "file": "radio.html",
@@ -1445,7 +1515,7 @@
       "Radio type"
     ],
     "issues": [],
-    "bytes": 11550
+    "bytes": 11946
   },
   {
     "file": "radius.html",
@@ -1467,22 +1537,23 @@
       "Flow and export"
     ],
     "issues": [],
-    "bytes": 46091
+    "bytes": 46487
   },
   {
     "file": "rating-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Rating Stable",
+      "Rating",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Validation",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 32090
+    "bytes": 36102
   },
   {
     "file": "rating.html",
@@ -1493,21 +1564,21 @@
       "Rating type"
     ],
     "issues": [],
-    "bytes": 13530
+    "bytes": 13926
   },
   {
     "file": "result-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Result Stable",
+      "Result",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21208
+    "bytes": 22175
   },
   {
     "file": "result.html",
@@ -1518,14 +1589,14 @@
       "Result type"
     ],
     "issues": [],
-    "bytes": 12037
+    "bytes": 12433
   },
   {
     "file": "search-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Search Stable",
+      "Search",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1533,7 +1604,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 22089
+    "bytes": 23441
   },
   {
     "file": "search.html",
@@ -1544,22 +1615,23 @@
       "Search type"
     ],
     "issues": [],
-    "bytes": 11800
+    "bytes": 12196
   },
   {
     "file": "select-dropdown.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Select Stable",
+      "Select",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Validation",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21131
+    "bytes": 24219
   },
   {
     "file": "select.html",
@@ -1570,20 +1642,17 @@
       "Select type"
     ],
     "issues": [],
-    "bytes": 11889
+    "bytes": 12285
   },
   {
     "file": "settings.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Settings",
-      "Project and profile",
-      "Foundations",
-      "Appearance and integrations"
+      "Preferences have moved"
     ],
     "issues": [],
-    "bytes": 12337
+    "bytes": 774
   },
   {
     "file": "shadows.html",
@@ -1605,21 +1674,21 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 38531
+    "bytes": 38927
   },
   {
     "file": "skeleton-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Skeleton Stable",
+      "Skeleton",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19834
+    "bytes": 20318
   },
   {
     "file": "skeleton.html",
@@ -1630,22 +1699,23 @@
       "Skeleton type"
     ],
     "issues": [],
-    "bytes": 11657
+    "bytes": 12053
   },
   {
     "file": "slider-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Slider Stable",
+      "Slider",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Validation",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20796
+    "bytes": 24993
   },
   {
     "file": "slider.html",
@@ -1656,7 +1726,7 @@
       "Slider type"
     ],
     "issues": [],
-    "bytes": 11619
+    "bytes": 12015
   },
   {
     "file": "spacing.html",
@@ -1679,21 +1749,21 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 39964
+    "bytes": 40360
   },
   {
     "file": "spin-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Spin Stable",
+      "Spin",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19649
+    "bytes": 20133
   },
   {
     "file": "spin.html",
@@ -1704,7 +1774,7 @@
       "Spin type"
     ],
     "issues": [],
-    "bytes": 11648
+    "bytes": 12044
   },
   {
     "file": "splitter-default.html",
@@ -1719,7 +1789,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19917
+    "bytes": 20478
   },
   {
     "file": "splitter.html",
@@ -1730,7 +1800,7 @@
       "Splitter type"
     ],
     "issues": [],
-    "bytes": 11756
+    "bytes": 12152
   },
   {
     "file": "statistic-default.html",
@@ -1744,7 +1814,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19644
+    "bytes": 20205
   },
   {
     "file": "statistic.html",
@@ -1755,21 +1825,21 @@
       "Statistic type"
     ],
     "issues": [],
-    "bytes": 11492
+    "bytes": 11888
   },
   {
     "file": "steps-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Steps Stable",
+      "Steps",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21253
+    "bytes": 21737
   },
   {
     "file": "steps.html",
@@ -1780,22 +1850,23 @@
       "Steps type"
     ],
     "issues": [],
-    "bytes": 14046
+    "bytes": 14442
   },
   {
     "file": "switch-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Switch Stable",
+      "Switch",
       "Properties",
       "Live Preview",
+      "Try it",
       "When to use",
       "Validation",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20386
+    "bytes": 24350
   },
   {
     "file": "switch.html",
@@ -1806,14 +1877,14 @@
       "Switch type"
     ],
     "issues": [],
-    "bytes": 11534
+    "bytes": 11930
   },
   {
     "file": "table-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Table Stable",
+      "Table",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1826,7 +1897,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 34820
+    "bytes": 35304
   },
   {
     "file": "table.html",
@@ -1837,21 +1908,21 @@
       "Table type"
     ],
     "issues": [],
-    "bytes": 12362
+    "bytes": 12758
   },
   {
     "file": "tabs-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tabs Stable",
+      "Tabs",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20362
+    "bytes": 21844
   },
   {
     "file": "tabs.html",
@@ -1862,14 +1933,14 @@
       "Tabs type"
     ],
     "issues": [],
-    "bytes": 11584
+    "bytes": 11980
   },
   {
     "file": "tag-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tag Stable",
+      "Tag",
       "Properties",
       "Live Preview",
       "Checkable",
@@ -1877,7 +1948,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19346
+    "bytes": 19830
   },
   {
     "file": "tag.html",
@@ -1888,29 +1959,24 @@
       "Tag type"
     ],
     "issues": [],
-    "bytes": 11698
+    "bytes": 12094
   },
   {
     "file": "templates.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Templates",
-      "Dashboard",
-      "Settings",
-      "Record detail",
-      "List + detail",
-      "Auth"
+      "Templates is no longer available"
     ],
     "issues": [],
-    "bytes": 22470
+    "bytes": 738
   },
   {
     "file": "text-area-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Text Area Stable",
+      "Text Area",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1918,7 +1984,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20952
+    "bytes": 24020
   },
   {
     "file": "text-area.html",
@@ -1929,14 +1995,14 @@
       "Text Area type"
     ],
     "issues": [],
-    "bytes": 11659
+    "bytes": 12055
   },
   {
     "file": "time-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Time Stable",
+      "Time",
       "Properties",
       "Live Preview",
       "When to use",
@@ -1944,7 +2010,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21539
+    "bytes": 23478
   },
   {
     "file": "time.html",
@@ -1955,21 +2021,21 @@
       "Time type"
     ],
     "issues": [],
-    "bytes": 11864
+    "bytes": 12260
   },
   {
     "file": "timeline-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Timeline Stable",
+      "Timeline",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 19860
+    "bytes": 20344
   },
   {
     "file": "timeline.html",
@@ -1980,21 +2046,21 @@
       "Timeline type"
     ],
     "issues": [],
-    "bytes": 12639
+    "bytes": 13035
   },
   {
     "file": "toast-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Toast Stable",
+      "Toast",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20098
+    "bytes": 22325
   },
   {
     "file": "toast.html",
@@ -2005,21 +2071,21 @@
       "Toast type"
     ],
     "issues": [],
-    "bytes": 11872
+    "bytes": 12268
   },
   {
     "file": "tooltip-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tooltip Stable",
+      "Tooltip",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20869
+    "bytes": 21353
   },
   {
     "file": "tooltip.html",
@@ -2030,21 +2096,21 @@
       "Tooltip type"
     ],
     "issues": [],
-    "bytes": 11482
+    "bytes": 11878
   },
   {
     "file": "tour-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tour Stable",
+      "Tour",
       "Properties",
       "Live Preview",
       "When to use",
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20805
+    "bytes": 21770
   },
   {
     "file": "tour.html",
@@ -2055,14 +2121,14 @@
       "Tour type"
     ],
     "issues": [],
-    "bytes": 11926
+    "bytes": 12322
   },
   {
     "file": "transfer-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Transfer Stable",
+      "Transfer",
       "Properties",
       "Live Preview",
       "When to use",
@@ -2070,7 +2136,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 21727
+    "bytes": 22394
   },
   {
     "file": "transfer.html",
@@ -2081,7 +2147,7 @@
       "Transfer type"
     ],
     "issues": [],
-    "bytes": 13395
+    "bytes": 13791
   },
   {
     "file": "tree-default.html",
@@ -2096,14 +2162,14 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 20360
+    "bytes": 20921
   },
   {
     "file": "tree-select-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Tree Select Stable",
+      "Tree Select",
       "Properties",
       "Live Preview",
       "Multiple selection + Search",
@@ -2112,7 +2178,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 23796
+    "bytes": 25548
   },
   {
     "file": "tree-select.html",
@@ -2123,7 +2189,7 @@
       "Tree Select type"
     ],
     "issues": [],
-    "bytes": 11956
+    "bytes": 12352
   },
   {
     "file": "tree.html",
@@ -2134,7 +2200,7 @@
       "Tree type"
     ],
     "issues": [],
-    "bytes": 14359
+    "bytes": 14755
   },
   {
     "file": "typography.html",
@@ -2157,14 +2223,14 @@
       "Save and edit"
     ],
     "issues": [],
-    "bytes": 115015
+    "bytes": 115411
   },
   {
     "file": "upload-default.html",
     "kind": "Detail",
     "status": "Available",
     "sections": [
-      "Upload Stable",
+      "Upload",
       "Properties",
       "Live Preview",
       "When to use",
@@ -2172,7 +2238,7 @@
       "Component Guide"
     ],
     "issues": [],
-    "bytes": 22268
+    "bytes": 23376
   },
   {
     "file": "upload.html",
@@ -2183,19 +2249,16 @@
       "Upload type"
     ],
     "issues": [],
-    "bytes": 13180
+    "bytes": 13576
   },
   {
     "file": "values.html",
     "kind": "Tab",
     "status": "Available",
     "sections": [
-      "Design Values",
-      "The four values",
-      "Where each value shows up",
-      "What this is not"
+      "Design Values"
     ],
     "issues": [],
-    "bytes": 14475
+    "bytes": 10187
   }
 ]

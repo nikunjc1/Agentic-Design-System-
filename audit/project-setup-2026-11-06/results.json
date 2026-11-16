@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Completed real onboarding; Project setup shows all 11 saved answers through sidebar navigation.",
+    "Edit prefills values; Cancel leaves profile, history and foundations unchanged.",
+    "Validation blocks invalid saves; all project/identity fields, Other values and platforms persist without resetting foundations.",
+    "Design edits update only their foundations, preserve custom details/dark color, reach Input, and retain project identity.",
+    "Read and edit views fit desktop, 390px and 320px in both themes.",
+    "Cross-tab conflict blocks stale saves; Cancel loads the latest saved setup.",
+    "No-project state offers New project and Existing projects."
+  ],
+  "errors": [],
+  "status": "pass"
+}

@@ -1,0 +1,19 @@
+== Unit tests ==
+All unit test suites pass.
+
+== Freshness gates ==
+{
+  "status": "fresh",
+  "generatedAt": "2026-10-23T09:59:10.424640+00:00",
+  "tokenCount": 624
+}
+Foundation defaults: fresh
+Implementation contracts: fresh
+{
+  "status": "fresh",
+  "generatedAt": "2026-10-27T10:49:09.632381+00:00",
+  "pageCount": 159
+}
+Figma plugin bundle: fresh
+
+RELEASE CHECK: PASS - tests and all freshness gates are current.

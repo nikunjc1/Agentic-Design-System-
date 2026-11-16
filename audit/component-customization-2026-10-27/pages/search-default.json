@@ -1,0 +1,258 @@
+{
+  "file": "search-default.html",
+  "name": "Search",
+  "category": "Components · Forms · Search",
+  "controls": [
+    {
+      "index": 0,
+      "role": "search-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "search-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "search-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "search-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "search-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Search...",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "search-leading-icon",
+      "id": null,
+      "label": "Leading icon",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "icon on the left",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "search-clear-button",
+      "id": null,
+      "label": "Clear button",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "clears the field",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Search fields skip a visible label by convention - the placeholder and a leading icon communicate purpose. Size, corner radius, placeholder, leading icon and clear button are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    },
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Search is a text field purpose-built for querying or filtering a set of content - it intentionally skips a visible label by convention, since a search icon and placeholder text make its purpose obvious in the contexts it's used. When to Use Global or site-wide search - a top-level search bar. Filtering a table, list, or dataset already on screen - narrowing visible rows as the user types. A command palette or inbox search - any live-filtering query field. When Not to Use A value submitted as part of a larger form - use Input - Search implies live querying, not form submission. A field that needs a visible, persistent label for clarity (e.g. in a dense settings form) - use Input with a label instead of relying on the search icon alone. A field that should suggest specific matching values as you type - use Autocomplete if suggestions, not just filtering, are the goal. Best Practices Debounce the query as the user types rather than searching on every keystroke, especially for server-side search. Always include a visible clear ('x') control once text has been entered. Show a clear empty-results state when a query returns nothing, rather than leaving a blank list. Do and Don't Do ×Searches file names and contents. Says what is being searched, and offers a clear affordance so the user can get back to the unfiltered list in one action. Don't With no scope stated and no way to clear, an empty result set is unreadable - the user cannot tell whether nothing matched or they searched the wrong thing. Accessibility Even without a visible label, the field carries an accessible name (via aria-label or a visually hidden label) so screen readers announce its purpose. The clear button is independently focusable and labeled (\"Clear search\"), not just an icon with no accessible name. Live-updating results are announced via an aria-live region so screen-reader users know the list changed. Related Components Input, Autocomplete, Table, List. { \"component\": \"Search\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Search is a text field purpose-built for querying or filtering a set of content - it intentionally skips a visible label by convention, since a search icon and placeholder text make its purpose obvious in the contexts it's used.\", \"whenToUse\": [ \"Global or site-wide search - a top-level search bar.\", \"Filtering a table, list, or dataset already on screen - narrowing visible rows as the user types.\", \"A command palette or inbox search - any live-filtering query field.\" ], \"whenNotToUse\": [ \"A value submitted as part of a larger form - use Input - Search implies live querying, not form submission.\", \"A field that needs a visible, persistent label for clarity (e.g. in a dense settings form) - use Input with a label instead of relying on the search icon alone.\", \"A field that should suggest specific matching values as you type - use Autocomplete if suggestions, not just filtering, are the goal.\" ], \"bestPractices\": [ \"Debounce the query as the user types rather than searching on every keystroke, especially for server-side search.\", \"Always include a visible clear ('x') control once text has been entered.\", \"Show a clear empty-results state when a query returns nothing, rather than leaving a blank list.\" ], \"doAndDont\": { \"do\": \"Says what is being searched, and offers a clear affordance so the user can get back to the unfiltered list in one action.\", \"dont\": \"With no scope stated and no way to clear, an empty result set is unreadable - the user cannot tell whether nothing matched or they searched the wrong thing.\" }, \"accessibility\": [ \"Even without a visible label, the field carries an accessible name (via aria-label or a visually hidden label) so screen readers announce its purpose.\", \"The clear button is independently focusable and labeled (\\\"Clear search\\\"), not just an icon with no accessible name.\", \"Live-updating results are announced via an aria-live region so screen-reader users know the list changed.\" ], \"relatedComponents\": [ \"Input\", \"Autocomplete\", \"Table\", \"List\" ] }",
+  "tests": []
+}

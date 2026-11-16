@@ -10,9 +10,9 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
-  var ICON_CHEVRON_UP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>';
-  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CHEVRON_UP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 22L6 16L7.425 14.575L12 19.15L16.575 14.575L18 16L12 22ZM7.45 9.4L6 8L12 2L18 8L16.55 9.4L12 4.85L7.45 9.4Z"/></svg>';
+  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -25,6 +25,7 @@
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
     { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
 
@@ -50,17 +51,17 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
@@ -68,14 +69,14 @@
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-bottom-color:" + danger500 + ";"
@@ -113,9 +114,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -149,7 +154,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -204,26 +209,37 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (7, apply to every type): Rest, Hover, Focused, Filled, Error, Read-Only, Disabled.");
     lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Read-Only: shows its current value but can't be edited; still focusable, unlike Disabled - the stepper buttons are hidden since there's nothing to step.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by 1), Allow clear (boolean - once the field has a value, shows an × button before the stepper that clears it).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Show stepper (boolean - shows or hides trailing increment/decrement buttons that adjust the value by the configured Step, clamped to Minimum/Maximum - the Increment button disables at Maximum, Decrement disables at Minimum), Allow clear (boolean - once the field has a value, shows an × button before the stepper that clears it), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
+    lines.push("");
+    lines.push("Numeric constraints: Minimum value (" + (opts.min != null ? opts.min : "none") + "), Maximum value (" + (opts.max != null ? opts.max : "none") + "), Step value (" + (opts.step != null ? opts.step : 1) + ").");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
+    var requiredHtml = opts.required ? '<span class="number-demo-required" aria-hidden="true"> *</span>' : "";
+    var minAttr = opts.min != null ? ' min="' + opts.min + '"' : "";
+    var maxAttr = opts.max != null ? ' max="' + opts.max + '"' : "";
+    var stepAttr = ' step="' + (opts.step != null ? opts.step : 1) + '"';
+    var requiredAttr = opts.required ? " required" : "";
     var lines = [];
     lines.push('<div class="number-field">');
-    lines.push('  <label class="number-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="number-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="number-control number-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="number" placeholder="' + escapeHtml(placeholder) + '" />');
+    lines.push('    <input type="number" placeholder="' + escapeHtml(placeholder) + '"' + minAttr + maxAttr + stepAttr + requiredAttr + ' />');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="number-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -236,10 +252,10 @@
     var lines = [];
     lines.push("/* Agentic Design System - Number Field component (all types, states, sizes) */");
     lines.push(".number-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.number-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".number-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.number-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
-    lines.push('.number-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.number-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".number-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.number-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; }');
+    lines.push('.number-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -252,7 +268,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to Outlined/Filled only, Underlined stays square */");
     radiiToEmit.forEach(function(radius){
       lines.push(".number-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -268,17 +284,22 @@
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
     lines.push("");
+    lines.push("/* Read-Only - visually unchanged from Rest, cursor signals it isn't editable; stepper hidden since there's nothing to step */");
+    lines.push(".number-control input:read-only{ cursor:default; }");
+    lines.push(".number-demo-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".number-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".number-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "number-control--h" + exampleSize;
     var radiusClassAttr = "number-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Quantity", "0"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Quantity", "0", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -286,16 +307,18 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
+      opts: opts,
       radius: { mode: "specific", values: [radius] }
     });
   }
@@ -320,8 +343,17 @@
       var direction = step.classList.contains("number-demo-step-up") ? 1 : -1;
       var current = parseFloat(input.value);
       if (isNaN(current)) current = 0;
-      input.value = current + direction;
+      var step = parseFloat(input.step) || 1;
+      var next = current + direction * step;
+      if (input.min !== "" && next < parseFloat(input.min)) next = parseFloat(input.min);
+      if (input.max !== "" && next > parseFloat(input.max)) next = parseFloat(input.max);
+      input.value = next;
       input.dispatchEvent(new Event("input", { bubbles: true }));
+      // Reflect the Maximum/Minimum boundary immediately - don't wait for
+      // the next full re-render to disable the button that's now a no-op.
+      var upBtn = control.querySelector(".number-demo-step-up"), downBtn = control.querySelector(".number-demo-step-down");
+      if (upBtn) upBtn.disabled = input.max !== "" && next >= parseFloat(input.max);
+      if (downBtn) downBtn.disabled = input.min !== "" && next <= parseFloat(input.min);
     }, true);
 
     // Gallery-card copy CTA + click-to-navigate (number.html's listing
@@ -347,12 +379,12 @@
       card.setAttribute("tabindex", "0");
       var href = "number-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -439,32 +471,61 @@
     var allowClearInput = document.querySelector('[data-role="number-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="number-size-mount"]');
     var radiusMount = document.querySelector('[data-role="number-radius-mount"]');
+    var minInput = document.querySelector('[data-role="number-min"]');
+    var maxInput = document.querySelector('[data-role="number-max"]');
+    var stepInput = document.querySelector('[data-role="number-step"]');
+    var requiredInput = document.querySelector('[data-role="number-required"]');
+    var showSupportingInput = document.querySelector('[data-role="number-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="number-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="number-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="number-error-text"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildNumberField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showStepper, allowClear){
+    function currentOpts(){
+      return {
+        min: minInput && minInput.value !== "" ? parseFloat(minInput.value) : null,
+        max: maxInput && maxInput.value !== "" ? parseFloat(maxInput.value) : null,
+        step: stepInput && stepInput.value !== "" ? parseFloat(stepInput.value) : 1,
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "Enter the number of units you need.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Enter a number of 0 or more.") : "Enter a number of 0 or more."
+      };
+    }
+
+    function buildNumberField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showStepper, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
+      var isReadOnly = stateKey === "readonly";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
-      var hasValue = isFilled || isError;
+      var hasValue = isFilled || isError || isReadOnly;
       var controlClasses = "number-demo-control number-demo-control--" + typeKey + " number-demo-control--h" + size + stateCls;
-      var stepperHtml = showStepper
+      var stepperHtml = (showStepper && !isReadOnly)
         ? '<div class="number-demo-stepper"><button type="button" class="number-demo-step number-demo-step-up" aria-label="Increase value" tabindex="-1">' + ICON_CHEVRON_UP + '</button><button type="button" class="number-demo-step number-demo-step-down" aria-label="Decrease value" tabindex="-1">' + ICON_CHEVRON_DOWN + "</button></div>"
         : "";
-      var clearHtml = (allowClear && hasValue && !isDisabled)
+      var clearHtml = (allowClear && hasValue && !isDisabled && !isReadOnly)
         ? '<button type="button" class="number-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
-      var valueAttr = isFilled ? ' value="3"' : (isError ? ' value="-5"' : "");
+      var valueAttr = isFilled || isReadOnly ? ' value="3"' : (isError ? ' value="-5"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadOnly ? " readonly" : "";
+      var minAttr = opts.min != null ? ' min="' + opts.min + '"' : "";
+      var maxAttr = opts.max != null ? ' max="' + opts.max + '"' : "";
+      var stepAttr = ' step="' + (opts.step != null ? opts.step : 1) + '"';
+      var requiredAttr = opts.required ? " required" : "";
       // tabindex="-1" + a real for/id label association: static comparison
       // matrix, not an operable field, but still exposed to a screen
       // reader's virtual cursor regardless of tab order.
       var fieldId = "number-demo-field-" + (++numberFieldCounter);
-      var inputHtml = '<input type="number" id="' + fieldId + '" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      var inputHtml = '<input type="number" id="' + fieldId + '" class="number-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + minAttr + maxAttr + stepAttr + requiredAttr + ' tabindex="-1" />';
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="number-demo-note is-error">Enter a number of 0 or more.</p>' : "";
+      var requiredHtml = opts.required ? '<span class="number-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = isError
+        ? '<p class="number-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Enter a number of 0 or more.") + "</p>"
+        : (opts.supportingText ? '<p class="number-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>" : "");
       return '<div class="number-demo-field">' +
-        '<label class="number-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
+        '<label class="number-demo-label" for="' + fieldId + '" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + stepperHtml + "</div>" +
         noteHtml +
         "</div>";
@@ -483,10 +544,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildNumberField(t.key, state.key, state.cls, size, radius, label, placeholder, showStepper, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildNumberField(t.key, state.key, state.cls, size, radius, label, placeholder, showStepper, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -500,7 +561,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -509,6 +571,7 @@
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var showStepper = showStepperInput ? showStepperInput.checked : false;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -517,14 +580,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, showStepper, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -553,6 +616,18 @@
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (showStepperInput) showStepperInput.addEventListener("change", render);
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (minInput) minInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (maxInput) maxInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (stepInput) stepInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

@@ -1,0 +1,34 @@
+✔ all questions validate independently, including conditional Other details and multiple platforms (1.664375ms)
+✔ a confirmed brief produces valid Foundation records and resolved themes matching explicit design answers (19.1425ms)
+✔ conversation drafts retain confirmed answers, unfinished input and the original project baseline (0.535167ms)
+✔ confirmed setup saves the profile and Foundation snapshot together, clears its draft and reopens without leaking settings (4.219709ms)
+✔ a Foundation write failure or stale confirmation preserves the complete previous project and conversation draft (3.102042ms)
+✔ requires project, product type, role and a valid delivery platform (1.584167ms)
+✔ new saves require name, email and designation; older saved profiles remain readable (0.456417ms)
+✔ profile survives reload and malformed storage is not overwritten (2.299416ms)
+✔ a profile saved under the old product-type list still reads back, remapped (0.115542ms)
+✔ Other descriptions are bounded and type-checked like the other free-text fields (0.116958ms)
+✔ a profile saved by a newer app version is rejected, not silently misread (0.21275ms)
+✔ a stale project edit cannot replace another tab’s saved profile (0.257ms)
+✔ Foundation progress distinguishes missing, partial, saved and unreadable records without writing (0.729625ms)
+✔ drafts retain a bounded step while older drafts remain readable (0.144ms)
+✔ Markdown contains saved tokens, selected platforms and source guides; identity is opt-in (12.873208ms)
+✔ Markdown states provenance - which keys are a real save versus a documented default (3.90675ms)
+✔ metadata quotes punctuation and newlines, and project filenames have safe fallbacks (1.012125ms)
+✔ Markdown omits embedded binary assets while preserving dependency references (1.074042ms)
+✔ new projects preserve previous Foundation records and can be reopened by stable id (0.517209ms)
+✔ failed archive or active profile writes roll back every changed record (0.301125ms)
+✔ unreadable history and unsaved drafts are preserved instead of overwritten (0.141334ms)
+✔ fresh and returning deep links, including saved conversation URLs, always start at project choices (2.75975ms)
+✔ a single-use navigation handoff allows browsing, then is consumed (1.541708ms)
+✔ file links still work when browser session storage is unavailable (0.73225ms)
+✔ manual reload returns to entry; explicit in-app reload preserves an editor (1.2675ms)
+✔ internal history navigation remains available and preview frames are never redirected (0.606458ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.607667

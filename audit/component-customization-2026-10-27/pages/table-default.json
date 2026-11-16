@@ -1,0 +1,192 @@
+{
+  "file": "table-default.html",
+  "name": "Table",
+  "category": "Components · Data Display · Table",
+  "controls": [
+    {
+      "index": 0,
+      "role": "table-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "table-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "table-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "large"
+      ],
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "middle",
+          "label": "Middle"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "table-size-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Bordered",
+          "label": "Bordered"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Striped",
+          "label": "Striped"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        },
+        {
+          "value": "Empty",
+          "label": "Empty"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "table-show-header",
+      "id": null,
+      "label": "Show header",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "column labels above the rows",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, size and the header row are properties of the same component, not separate tables - change them below to check this table's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "Large",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Table displays structured data across fixed columns, like an admin data grid or a report view - rows and columns that let a user compare values across many records at once, unlike List's simpler stacked-row layout with no column alignment. When to Use An admin data grid or user management list - structured records compared across shared columns. Order history or a report/analytics view - tabular data where column alignment aids comparison. An inventory listing - any dataset naturally organized into consistent fields per row. When Not to Use A simple stack of similar items with no meaningful column structure - use List instead - Table's column overhead isn't worth it for unstructured rows. A small number of visually distinct content blocks - use Card or a grid of Cards. Data better suited to a single set of label/value pairs - use Description for one record's details rather than a one-row table. Best Practices Keep column headers concise and consistently aligned with their column's data type (numbers right-aligned, text left-aligned). Support sorting on columns where order genuinely helps comparison, and clearly indicate the active sort. Pair large tables with pagination, virtualized scrolling, or both - virtualize once a table is showing 500+ rows, rather than rendering thousands of rows at once. Do and Don't Do NameStatusAria ChenActiveLeo FischerInvited Column headers that name exactly one kind of value each, so every cell in a column is comparable to the one above it. Don't DetailsAria Chen - active - joined Jan 2024 - adminLeo Fischer, invited, pending since last week Collapsing several fields into one free-text column removes the ability to sort, filter or scan by any single attribute - it stops being a table. Accessibility Uses real table semantics (thead/tbody/th with proper scope), so screen readers can announce row/column context for each cell. Sortable column headers are real, keyboard-operable buttons that announce the current sort direction. Row selection checkboxes are independently labeled with which row they apply to. Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header sets aria-sort=\"ascending\", aria-sort=\"descending\" or aria-sort=\"none\" and announces the change - a visual arrow icon alone is not sufficient. Related Components List, Pagination, Description. { \"component\": \"Table\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Table displays structured data across fixed columns, like an admin data grid or a report view - rows and columns that let a user compare values across many records at once, unlike List's simpler stacked-row layout with no column alignment.\", \"whenToUse\": [ \"An admin data grid or user management list - structured records compared across shared columns.\", \"Order history or a report/analytics view - tabular data where column alignment aids comparison.\", \"An inventory listing - any dataset naturally organized into consistent fields per row.\" ], \"whenNotToUse\": [ \"A simple stack of similar items with no meaningful column structure - use List instead - Table's column overhead isn't worth it for unstructured rows.\", \"A small number of visually distinct content blocks - use Card or a grid of Cards.\", \"Data better suited to a single set of label/value pairs - use Description for one record's details rather than a one-row table.\" ], \"bestPractices\": [ \"Keep column headers concise and consistently aligned with their column's data type (numbers right-aligned, text left-aligned).\", \"Support sorting on columns where order genuinely helps comparison, and clearly indicate the active sort.\", \"Pair large tables with pagination, virtualized scrolling, or both - virtualize once a table is showing 500+ rows, rather than rendering thousands of rows at once.\" ], \"doAndDont\": { \"do\": \"Column headers that name exactly one kind of value each, so every cell in a column is comparable to the one above it.\", \"dont\": \"Collapsing several fields into one free-text column removes the ability to sort, filter or scan by any single attribute - it stops being a table.\" }, \"accessibility\": [ \"Uses real table semantics (thead/tbody/th with proper scope), so screen readers can announce row/column context for each cell.\", \"Sortable column headers are real, keyboard-operable buttons that announce the current sort direction.\", \"Row selection checkboxes are independently labeled with which row they apply to.\", \"Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header sets aria-sort=\\\"ascending|descending|none\\\" and announces the change - a visual arrow icon alone is not sufficient.\" ], \"selection\": { \"modes\": [\"none\", \"single-row\", \"multi-row\"], \"multiRowCheckboxHeader\": \"Indeterminate (not checked, not unchecked) when some but not all visible rows are selected.\", \"keyboard\": \"Space toggles selection on a focused row.\" }, \"sort\": { \"clientSide\": \"Re-orders already-loaded rows in memory - fine for small, fully-loaded datasets.\", \"serverSide\": \"Re-requests the current page/window from the server on every sort change - required once pagination or virtualization is server-driven.\", \"multiColumn\": \"Not on by default - single-column sort unless explicitly extended with shift-click to add a secondary sort key.\", \"accessibility\": \"Per WCAG 2.1 Success Criterion 4.1.3 (Status Messages), a sortable header must expose aria-sort=\\\"ascending|descending|none\\\" and announce the change to assistive technology.\" }, \"filter\": { \"perColumn\": \"A filter control scoped to a single column's field.\", \"global\": \"A global search bar above the table, matching across every visible column.\", \"emptyStates\": \"\\\"No rows match\\\" (filtered-to-zero, offer Clear filters) must read differently from the true empty state (no data exists at all, offer a create action).\" }, \"paginationAndVirtualization\": { \"thresholdRows\": 500, \"belowThreshold\": \"Client-side pagination (or simple full rendering) is sufficient.\", \"atOrAboveThreshold\": \"Virtualization (windowed rendering) is required - a table row is not a cheap DOM node, and DOM/layout cost does not scale linearly with row count past a few hundred rows.\" }, \"density\": { \"modes\": [\"comfortable\", \"compact\"], \"note\": \"Two-value property local to Table's own Size control, not yet wired to the sitewide data-density attribute (Settings -> Density) that now exists for the shell frame/panels.\" }, \"requiredStates\": [\"empty\", \"loading\", \"error\"], \"relatedComponents\": [ \"List\", \"Pagination\", \"Description\" ] }",
+  "tests": []
+}

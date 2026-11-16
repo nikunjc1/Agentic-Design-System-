@@ -1,0 +1,250 @@
+{
+  "file": "color-picker-default.html",
+  "name": "Color Picker",
+  "category": "Components · Forms · Color Picker",
+  "controls": [
+    {
+      "index": 0,
+      "role": "colorpicker-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "colorpicker-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "colorpicker-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "colorpicker-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "colorpicker-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Brand color",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "colorpicker-hex",
+      "id": null,
+      "label": "Color value",
+      "type": "text",
+      "value": "#FF031A",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Color value",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "colorpicker-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button resets to default",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and color value are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Color Picker shows the currently selected color as a swatch plus its hex value, and opens a palette of preset swatch options when focused or clicked - used for any field where the user chooses or edits a color rather than typing arbitrary text. When to Use Brand color selection - picking a primary accent color for a theme. Theme customization - letting a user personalize colors in a settings panel. Assigning a color to a chart series or a label - so categories are visually distinguishable. When Not to Use A value that isn't actually a color - use Input or Select for plain text or fixed options. A fixed, non-customizable color defined by the design system itself - there's no need for a picker when the value can never change. Selecting from a very large, unconstrained color space with precise numeric control (e.g. exact RGB channel entry) as the primary use case - pair the swatch picker with a text hex input, which this component already provides, rather than building a separate numeric-only control. Best Practices Always show the current value as both a visual swatch and its hex code, since color alone can be hard to communicate precisely. Offer a curated preset palette in addition to free hex entry, so most users never need to type a hex value. Validate typed hex values immediately and fall back to the last valid color on invalid input, rather than letting the field go blank. Do and Don't Do Brand colour#FF031A The swatch is paired with the hex value, so the choice can be read, copied and checked without trusting the screen's calibration. Don't Brand colour A swatch with no value is unreadable to anyone who cannot distinguish it from the neighbouring shade, and impossible to reproduce elsewhere. Accessibility The swatch alone never conveys the selected value - the hex text is always present for anyone who can't distinguish it visually. Preset swatches in the open panel are reachable and selectable by keyboard, not just by mouse click. The field's accessible name states what the color controls (\"Brand color\"), not just \"Color\". Related Components Input, Select, Slider. { \"component\": \"Color Picker\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Color Picker shows the currently selected color as a swatch plus its hex value, and opens a palette of preset swatch options when focused or clicked - used for any field where the user chooses or edits a color rather than typing arbitrary text.\", \"whenToUse\": [ \"Brand color selection - picking a primary accent color for a theme.\", \"Theme customization - letting a user personalize colors in a settings panel.\", \"Assigning a color to a chart series or a label - so categories are visually distinguishable.\" ], \"whenNotToUse\": [ \"A value that isn't actually a color - use Input or Select for plain text or fixed options.\", \"A fixed, non-customizable color defined by the design system itself - there's no need for a picker when the value can never change.\", \"Selecting from a very large, unconstrained color space with precise numeric control (e.g. exact RGB channel entry) as the primary use case - pair the swatch picker with a text hex input, which this component already provides, rather than building a separate numeric-only control.\" ], \"bestPractices\": [ \"Always show the current value as both a visual swatch and its hex code, since color alone can be hard to communicate precisely.\", \"Offer a curated preset palette in addition to free hex entry, so most users never need to type a hex value.\", \"Validate typed hex values immediately and fall back to the last valid color on invalid input, rather than letting the field go blank.\" ], \"doAndDont\": { \"do\": \"The swatch is paired with the hex value, so the choice can be read, copied and checked without trusting the screen's calibration.\", \"dont\": \"A swatch with no value is unreadable to anyone who cannot distinguish it from the neighbouring shade, and impossible to reproduce elsewhere.\" }, \"accessibility\": [ \"The swatch alone never conveys the selected value - the hex text is always present for anyone who can't distinguish it visually.\", \"Preset swatches in the open panel are reachable and selectable by keyboard, not just by mouse click.\", \"The field's accessible name states what the color controls (\\\"Brand color\\\"), not just \\\"Color\\\".\" ], \"relatedComponents\": [ \"Input\", \"Select\", \"Slider\" ] }",
+  "tests": []
+}

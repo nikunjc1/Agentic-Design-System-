@@ -1,0 +1,98 @@
+{
+  "file": "skeleton-default.html",
+  "name": "Skeleton",
+  "category": "Components · Feedback · Skeleton",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Text",
+      "options": [
+        {
+          "value": "Text",
+          "label": "Text"
+        },
+        {
+          "value": "Avatar + text",
+          "label": "Avatar + text"
+        },
+        {
+          "value": "Card",
+          "label": "Card"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Animated",
+      "options": [
+        {
+          "value": "Animated",
+          "label": "Animated"
+        },
+        {
+          "value": "Reduced motion",
+          "label": "Reduced motion"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "skeleton-rows-input",
+      "id": null,
+      "label": "Rows",
+      "type": "number",
+      "value": "3",
+      "options": [],
+      "min": "1",
+      "max": "5",
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Rows",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Rows is a property of the same component, not a separate skeleton - change it below to check every layout and state in the Live Preview. Avatar + text always shows a fixed 2 lines regardless of Rows, since it represents a single list-item/comment shape rather than a variable block of text.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Skeleton stands in for content that hasn't finished loading yet - stacked text lines, an avatar with text, or a card-shaped placeholder - so the layout doesn't jump once real content arrives, and the wait feels shorter than a blank screen or a generic spinner. When to Use Initial page or data load - showing the eventual layout's shape before content arrives. Infinite scroll or async feed content - placeholders for rows or cards not yet loaded. Profile/avatar loading or dashboard widgets - any content whose eventual shape is known in advance. When Not to Use A loading state with no predictable content shape - use Spin - Skeleton relies on knowing roughly what will appear. A brief, sub-second load - a flash of skeleton UI can feel more distracting than a near-instant content swap; reserve it for loads long enough to actually help. An operation with a known percentage of completion - use Progress, which communicates real completion, not just \"still loading.\" Best Practices Match the skeleton's shape closely to the real content's eventual layout, so the transition feels seamless rather than jarring. Use a subtle shimmer or pulse animation to signal \"still loading\" rather than a static gray block that could be mistaken for an error. Swap it out the moment real content is ready - don't hold it past the actual load time. Do and Don't Do Placeholders shaped like the content that is coming, so nothing jumps when it arrives. Don't A single generic bar that looks nothing like the eventual layout gives no hint of what is loading, and the page still lurches when it lands. Accessibility The containing placeholder carries aria-busy=\"true\" and aria-live=\"polite\" (shown on the demo markup above), not just visual shimmer - silence during load reads as broken to a screen-reader user, who gets no equivalent of seeing shapes animate on screen. Once real content replaces it, the same live region's contents are swapped for the real DOM, so its arrival is announced too, and aria-busy is cleared to false. Purely decorative beyond that announcement - it never receives keyboard focus itself. Related Components Spin, Progress, Empty. { \"component\": \"Skeleton\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Skeleton stands in for content that hasn't finished loading yet - stacked text lines, an avatar with text, or a card-shaped placeholder - so the layout doesn't jump once real content arrives, and the wait feels shorter than a blank screen or a generic spinner.\", \"whenToUse\": [ \"Initial page or data load - showing the eventual layout's shape before content arrives.\", \"Infinite scroll or async feed content - placeholders for rows or cards not yet loaded.\", \"Profile/avatar loading or dashboard widgets - any content whose eventual shape is known in advance.\" ], \"whenNotToUse\": [ \"A loading state with no predictable content shape - use Spin - Skeleton relies on knowing roughly what will appear.\", \"A brief, sub-second load - a flash of skeleton UI can feel more distracting than a near-instant content swap; reserve it for loads long enough to actually help.\", \"An operation with a known percentage of completion - use Progress, which communicates real completion, not just \\\"still loading.\\\"\" ], \"bestPractices\": [ \"Match the skeleton's shape closely to the real content's eventual layout, so the transition feels seamless rather than jarring.\", \"Use a subtle shimmer or pulse animation to signal \\\"still loading\\\" rather than a static gray block that could be mistaken for an error.\", \"Swap it out the moment real content is ready - don't hold it past the actual load time.\" ], \"doAndDont\": { \"do\": \"Placeholders shaped like the content that is coming, so nothing jumps when it arrives.\", \"dont\": \"A single generic bar that looks nothing like the eventual layout gives no hint of what is loading, and the page still lurches when it lands.\" }, \"accessibility\": [ \"The containing placeholder carries aria-busy=\\\"true\\\" and aria-live=\\\"polite\\\", not just visual shimmer - silence during load reads as broken to a screen-reader user, who gets no equivalent of seeing shapes animate on screen.\", \"Once real content replaces it, the same live region's contents are swapped for the real DOM, so its arrival is announced too, and aria-busy is cleared to false.\", \"Purely decorative beyond that announcement - it never receives keyboard focus itself.\" ], \"relatedComponents\": [ \"Spin\", \"Progress\", \"Empty\" ] }",
+  "tests": []
+}

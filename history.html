@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="site-entry.js"></script>
+<script src="history-redirect.js"></script>
+<script src="component-workbench-catalog.js"></script>
+<script src="component-workbench.js"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -14,6 +18,7 @@
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
 <link rel="stylesheet" href="foundation.css" />
+<link rel="stylesheet" href="component-workbench.css" />
 </head>
 <body>
 
@@ -26,8 +31,7 @@
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Preferences" aria-label="Preferences" id="preferences" data-preferences-toggle aria-haspopup="dialog" aria-expanded="false" aria-controls="adsPreferencesPanel"><span aria-hidden="true">&#9881;</span></button>
   </div>
 </header>
 
@@ -44,8 +48,8 @@
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
-      <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link" href="new-project.html">Project setup</a>
+
+      <a class="nav-link" href="project-setup.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -77,229 +81,97 @@
     <div class="nav-group is-collapsible" data-group="components">
       <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
-        <a class="nav-link" href="component-index.html">All components</a>
+
         <span class="nav-subgroup-label">Actions</span>
-        <a class="nav-link" href="components.html#button">Button</a>
-        <a class="nav-link" href="group-button.html">Group Button</a>
-        <a class="nav-link" href="float-button.html">Float Button</a>
+        <a class="nav-link" href="button-primary.html">Button</a>
+        <a class="nav-link" href="group-button-default.html">Group Button</a>
+        <a class="nav-link" href="float-button-default.html">Float Button</a>
 
         <span class="nav-subgroup-label">Forms</span>
-        <a class="nav-link" href="input.html">Input</a>
-        <a class="nav-link" href="select.html">Select</a>
-        <a class="nav-link" href="checkbox.html">Checkbox</a>
-        <a class="nav-link" href="radio.html">Radio</a>
-        <a class="nav-link" href="switch.html">Switch</a>
-        <a class="nav-link" href="date-picker.html">Date Picker</a>
-        <a class="nav-link" href="password.html">Password</a>
-        <a class="nav-link" href="number.html">Number</a>
-        <a class="nav-link" href="mention.html">Mention</a>
-        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
-        <a class="nav-link" href="date-range.html">Date Range</a>
-        <a class="nav-link" href="time.html">Time</a>
-        <a class="nav-link" href="text-area.html">Text Area</a>
-        <a class="nav-link" href="search.html">Search</a>
-        <a class="nav-link" href="add-on.html">Add-on</a>
-        <a class="nav-link" href="color-picker.html">Color Picker</a>
-        <a class="nav-link" href="slider.html">Slider</a>
-        <a class="nav-link" href="rating.html">Rating</a>
-        <a class="nav-link" href="cascader.html">Cascader</a>
-        <a class="nav-link" href="transfer.html">Transfer</a>
-        <a class="nav-link" href="tree-select.html">Tree Select</a>
-        <a class="nav-link" href="upload.html">Upload</a>
+        <a class="nav-link" href="input-text-field.html">Input</a>
+        <a class="nav-link" href="select-dropdown.html">Select</a>
+        <a class="nav-link" href="checkbox-default.html">Checkbox</a>
+        <a class="nav-link" href="radio-default.html">Radio</a>
+        <a class="nav-link" href="switch-default.html">Switch</a>
+        <a class="nav-link" href="date-picker-default.html">Date Picker</a>
+        <a class="nav-link" href="password-default.html">Password</a>
+        <a class="nav-link" href="number-default.html">Number</a>
+        <a class="nav-link" href="mention-default.html">Mention</a>
+        <a class="nav-link" href="autocomplete-default.html">Autocomplete</a>
+        <a class="nav-link" href="date-range-default.html">Date Range</a>
+        <a class="nav-link" href="time-default.html">Time</a>
+        <a class="nav-link" href="text-area-default.html">Text Area</a>
+        <a class="nav-link" href="search-default.html">Search</a>
+        <a class="nav-link" href="add-on-default.html">Add-on</a>
+        <a class="nav-link" href="color-picker-default.html">Color Picker</a>
+        <a class="nav-link" href="slider-default.html">Slider</a>
+        <a class="nav-link" href="rating-default.html">Rating</a>
+        <a class="nav-link" href="cascader-default.html">Cascader</a>
+        <a class="nav-link" href="transfer-default.html">Transfer</a>
+        <a class="nav-link" href="tree-select-default.html">Tree Select</a>
+        <a class="nav-link" href="upload-default.html">Upload</a>
 
         <span class="nav-subgroup-label">Navigation</span>
-        <a class="nav-link" href="tabs.html">Tabs</a>
-        <a class="nav-link" href="anchor.html">Anchor</a>
-        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
-        <a class="nav-link" href="dropdown.html">Dropdown</a>
-        <a class="nav-link" href="pagination.html">Pagination</a>
-        <a class="nav-link" href="menu.html">Menu</a>
-        <a class="nav-link" href="steps.html">Steps</a>
-        <a class="nav-link" href="affix.html">Affix</a>
+        <a class="nav-link" href="tabs-default.html">Tabs</a>
+        <a class="nav-link" href="anchor-default.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb-default.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown-default.html">Dropdown</a>
+        <a class="nav-link" href="pagination-default.html">Pagination</a>
+        <a class="nav-link" href="menu-default.html">Menu</a>
+        <a class="nav-link" href="steps-default.html">Steps</a>
 
         <span class="nav-subgroup-label">Feedback</span>
-        <a class="nav-link" href="alert.html">Alert</a>
-        <a class="nav-link" href="toast.html">Toast</a>
-        <a class="nav-link" href="modal.html">Modal</a>
-        <a class="nav-link" href="tooltip.html">Tooltip</a>
-        <a class="nav-link" href="tour.html">Tour</a>
-        <a class="nav-link" href="drawer.html">Drawer</a>
-        <a class="nav-link" href="notification.html">Notification</a>
-        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
-        <a class="nav-link" href="progress.html">Progress</a>
-        <a class="nav-link" href="result.html">Result</a>
-        <a class="nav-link" href="skeleton.html">Skeleton</a>
-        <a class="nav-link" href="spin.html">Spin</a>
+        <a class="nav-link" href="alert-default.html">Alert</a>
+        <a class="nav-link" href="toast-default.html">Toast</a>
+        <a class="nav-link" href="modal-default.html">Modal</a>
+        <a class="nav-link" href="tooltip-default.html">Tooltip</a>
+        <a class="nav-link" href="tour-default.html">Tour</a>
+        <a class="nav-link" href="drawer-default.html">Drawer</a>
+        <a class="nav-link" href="notification-default.html">Notification</a>
+        <a class="nav-link" href="pop-confirm-default.html">Pop Confirm</a>
+        <a class="nav-link" href="progress-default.html">Progress</a>
+        <a class="nav-link" href="result-default.html">Result</a>
+        <a class="nav-link" href="skeleton-default.html">Skeleton</a>
+        <a class="nav-link" href="spin-default.html">Spin</a>
 
         <span class="nav-subgroup-label">Data Display</span>
-        <a class="nav-link" href="divider.html">Divider</a>
-        <a class="nav-link" href="avatar.html">Avatar</a>
-        <a class="nav-link" href="badge.html">Badge</a>
-        <a class="nav-link" href="calendar.html">Calendar</a>
-        <a class="nav-link" href="card.html">Card</a>
-        <a class="nav-link" href="collapse.html">Collapse</a>
-        <a class="nav-link" href="description.html">Description</a>
-        <a class="nav-link" href="empty.html">Empty</a>
-        <a class="nav-link" href="image.html">Image</a>
-        <a class="nav-link" href="list.html">List</a>
-        <a class="nav-link" href="popover.html">Popover</a>
-        <a class="nav-link" href="splitter.html">Splitter</a>
-        <a class="nav-link" href="statistic.html">Statistic</a>
-        <a class="nav-link" href="table.html">Table</a>
-        <a class="nav-link" href="tag.html">Tag</a>
-        <a class="nav-link" href="timeline.html">Timeline</a>
-        <a class="nav-link" href="tree.html">Tree</a>
+        <a class="nav-link" href="divider-default.html">Divider</a>
+        <a class="nav-link" href="avatar-default.html">Avatar</a>
+        <a class="nav-link" href="badge-default.html">Badge</a>
+        <a class="nav-link" href="calendar-default.html">Calendar</a>
+        <a class="nav-link" href="card-default.html">Card</a>
+        <a class="nav-link" href="collapse-default.html">Collapse</a>
+        <a class="nav-link" href="description-default.html">Description</a>
+        <a class="nav-link" href="empty-default.html">Empty</a>
+        <a class="nav-link" href="image-default.html">Image</a>
+        <a class="nav-link" href="list-default.html">List</a>
+        <a class="nav-link" href="popover-default.html">Popover</a>
+        <a class="nav-link" href="splitter-default.html">Splitter</a>
+        <a class="nav-link" href="statistic-default.html">Statistic</a>
+        <a class="nav-link" href="table-default.html">Table</a>
+        <a class="nav-link" href="tag-default.html">Tag</a>
+        <a class="nav-link" href="timeline-default.html">Timeline</a>
+        <a class="nav-link" href="tree-default.html">Tree</a>
       </div>
     </div>
 
     <div class="nav-group">
-      <a class="nav-link" href="patterns.html">Patterns</a>
-      <a class="nav-link" href="templates.html">Templates</a>
-      <a class="nav-link" href="ai-generator.html">AI Generator</a>
-      <a class="nav-link" href="md-export.html">Markdown Export</a>
+
+
+
+      <a class="nav-link" href="md-export.html">Export &amp; Handoff</a>
+
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link is-active" href="history.html">History</a>
+
       <a class="nav-link" href="changelog.html">Changelog</a>
-      <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
 <main class="app-main">
-  <p class="page-eyebrow">Design System &middot; History</p>
-  <h1 class="page-title">History <span class="component-status is-draft">Mockup</span></h1>
-  <p class="component-meta">Owner: Design System Team &middot; Version: v3.5.0 &middot; <a href="changelog.html">Changelog</a></p>
-  <p class="page-lede">The release list and activity trail below use fictional sample data to illustrate a future workflow. They do not show this browser’s saved project, actual publications or an immutable event log.</p>
-
-  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
-    <div class="panel-title-row">
-      <h2 class="panel-title">Example project &middot; Sample version 3.2.0</h2>
-      <div class="guide-view-toggle" role="group" aria-label="History view">
-        <button type="button" class="guide-toggle-btn is-active" data-view="versions" aria-pressed="true">Versions</button>
-        <button type="button" class="guide-toggle-btn" data-view="activity" aria-pressed="false">Activity</button>
-      </div>
-    </div>
-
-    <div class="guide-view-panel" data-view-panel="versions">
-      <p class="get-library-copy">Change counts are typed (+added ~changed &minus;removed), not one number that says nothing. The NPM column shows the actual package version, not a checkmark - package and system versions drift, and hiding that causes the worst class of bug.</p>
-      <div style="overflow-x:auto;">
-        <table class="table-demo-table table-demo-table--bordered" style="width:100%;">
-          <thead>
-            <tr><th scope="col">Version</th><th scope="col">Date &amp; time</th><th scope="col">By</th><th scope="col">Changes</th><th scope="col">NPM</th><th scope="col">MD</th><th scope="col">AI</th><th scope="col">Status</th></tr>
-          </thead>
-          <tbody>
-            <tr class="table-demo-row"><td><a href="#version-3-2-0" style="color:var(--red-400);">3.2.0</a></td><td>23 Sep 2026 14:20</td><td>A. Dev</td><td>+4 ~12 &minus;2</td><td>3.2.0</td><td>&#10003;</td><td>&#10003;</td><td><span class="component-status is-published">Published</span></td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td><span style="color:var(--red-400);">3.1.0</span></td><td>20 Sep 2026 09:05</td><td>A. Dev</td><td>+2 ~6</td><td>3.1.0</td><td>&#10003;</td><td>&#10003;</td><td><span class="component-status is-published">Published</span></td></tr>
-            <tr class="table-demo-row"><td><span style="color:var(--red-400);">3.0.0</span></td><td>12 Sep 2026 16:40</td><td>A. Dev</td><td>Initial</td><td>3.0.0</td><td>&#10003;</td><td>&#10003;</td><td><span class="component-status is-published">Published</span></td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td><span style="color:var(--red-400);">2.9.1</span></td><td>02 Sep 2026 11:12</td><td>A. Dev</td><td>~3</td><td>&mdash;</td><td>&#10003;</td><td>&#10003;</td><td><span class="component-status is-deprecated">Deprecated</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="get-library-copy" style="margin-top:var(--space-10);">Planned: checkbox selection on each row will drive Compare directly - no separate version-picker screen. Planned search, status filter, and date range will sit above the table; a two-year-old system has hundreds of versions, so the future implementation needs pagination (these four rows are examples). Planned row menu: View &middot; Export MD &middot; View changelog &middot; Compare with current &middot; Restore &middot; Copy version link.</p>
-
-      <div style="margin-top:var(--space-16);">
-        <h2 class="panel-title">Empty state - no published versions yet</h2>
-        <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
-          <div style="max-width:var(--dimension-400);">
-            <p style="margin:0 0 var(--space-6);font-weight:600;color:var(--text-hi);">No published versions yet</p>
-            <p style="margin:0 0 var(--space-10);color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">InsureEdge 3.0 is in draft. Your first version will appear here once you publish.</p>
-            <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Draft changes: 62 components, 9 foundations &middot; [ Publish v1.0.0 ]</p>
-          </div>
-        </div>
-        <p class="get-library-copy" style="margin-top:var(--space-8);">The proposed published-release empty state is "no <em>published</em> versions yet, draft in progress."</p>
-      </div>
-    </div>
-
-    <div class="guide-view-panel" data-view-panel="activity" hidden>
-      <p class="get-library-copy">Append-only and immutable. Planned events must record actor (human or agent), timestamp, object ID, before/after reference, and outcome. The table contains examples only.</p>
-      <div style="overflow-x:auto;">
-        <table class="table-demo-table table-demo-table--bordered" style="width:100%;">
-          <thead><tr><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Event</th><th scope="col">Detail</th></tr></thead>
-          <tbody>
-            <tr class="table-demo-row"><td>23 Sep</td><td>14:20</td><td>A. Dev</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>Version published</td><td>3.2.0</td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>14:18</td><td>A. Dev</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>NPM package published</td><td>3.2.0</td></tr>
-            <tr class="table-demo-row"><td>23 Sep</td><td>14:15</td><td>A. Dev</td><td><span class="badge-demo-status-dot--success" style="display:inline-block;margin-inline-end:var(--space-6);"></span>AI context synced</td><td>3.2.0 &middot; 14 changes</td></tr>
-            <tr class="table-demo-row table-demo-row--striped"><td>23 Sep</td><td>11:02</td><td>A. Dev</td><td><span class="badge-demo-status-dot--processing" style="display:inline-block;margin-inline-end:var(--space-6);"></span>Component updated</td><td>Button / focus state</td></tr>
-            <tr class="table-demo-row"><td>22 Sep</td><td>16:30</td><td>Claude</td><td><span class="badge-demo-status-dot--warning" style="display:inline-block;margin-inline-end:var(--space-6);"></span>AI change proposed</td><td>Button focus (approved)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="get-library-copy" style="margin-top:var(--space-10);">Tracked event groups: Project (created/settings/archived/restored) &middot; System (generated/regenerated/failed) &middot; Content (foundation/component/pattern/template/AI rule/documentation changed) &middot; Outputs (MD/NPM/Figma/AI sync) &middot; Version (published/deprecated/restored/compared) &middot; Governance (proposed/approved/rejected/role changed). Exportable as CSV/JSON. Retention: versions forever, activity events 24 months, then rolled into monthly summaries.</p>
-      <p class="get-library-copy">For a brand-new project's Activity tab: shows the project-creation and generation events - never a blank table.</p>
-    </div>
-  </section>
-
-  <section class="panel spacing-model-panel" id="version-3-2-0">
-    <h2 class="panel-title">Version detail</h2>
-    <p class="get-library-copy">Opens as its own linkable, citable page (<code>/history/3.1.0</code>), never trapped inside a drawer with no URL.</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
-      <div style="width:100%;max-width:var(--dimension-520);">
-        <p style="margin:0 0 var(--space-4);font-weight:700;color:var(--text-hi);">Version 3.1.0 <span class="component-status is-published">Published</span></p>
-        <p style="margin:0 0 var(--space-10);color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Created 20 Sep 2026, 09:05 by A. Dev &middot; Summary: 8 changes: +2 added, ~6 updated, 0 removed</p>
-        <p style="margin:0 0 var(--space-6);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Outputs at this version</p>
-        <div class="chip-row" style="margin-bottom:var(--space-12);"><span class="chip">Design system 3.1.0</span><span class="chip">NPM 3.1.0</span><span class="chip">MD 3.1.0</span><span class="chip">Figma 3.1.0</span><span class="chip">AI context 3.1.0</span></div>
-        <p style="margin:0 0 var(--space-4);color:var(--green-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">+ Date Range (component)</p>
-        <p style="margin:0 0 var(--space-4);color:var(--green-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">+ Table pattern &mdash; search, filter, bulk actions</p>
-        <p style="margin:0 0 var(--space-4);color:var(--amber-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ Button / focus state &mdash; 2px &rarr; 2px + 2px offset (a11y: SC 1.4.11)</p>
-        <p style="margin:0 0 var(--space-4);color:var(--amber-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ Input / error state &mdash; message position (a11y: SC 3.3.1)</p>
-        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">None removed</p>
-      </div>
-    </div>
-    <p class="get-library-copy">Output-version alignment belongs here and on the Overview: when outputs are misaligned, it's shown plainly (e.g. "NPM 3.0.0 &#9888; behind") rather than implying everything moves in lockstep.</p>
-  </section>
-
-  <section class="panel spacing-model-panel">
-    <h2 class="panel-title">Compare</h2>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
-      <div style="width:100%;max-width:var(--dimension-520);">
-        <p style="margin:0 0 var(--space-10);font-weight:600;color:var(--text-hi);">3.1.0 &rarr; 3.2.0 &middot; 18 differences</p>
-        <p style="margin:0 0 var(--space-4);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Foundations (3)</p>
-        <p style="margin:0 0 var(--space-8);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Colors ~ color.primary #1D4ED8 &rarr; #1A45B8 (a11y fix) &middot; Typography ~ heading.h3 24px &rarr; 22px &middot; Spacing: no change</p>
-        <p style="margin:0 0 var(--space-4);color:var(--text-hi);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Components (11)</p>
-        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Button ~ height (md) 40px &rarr; 44px, focus ring 2px &rarr; 2px + 2px offset &middot; Date Range + added</p>
-        <p style="margin:0;color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Transfer &minus; removed &rarr; replaced by Tree Select (migration available)</p>
-      </div>
-    </div>
-    <ul class="guide-list">
-      <li>Compare any two versions, not only adjacent ones.</li>
-      <li>Detect renames as <code>renamed</code>, not <code>removed + added</code> - otherwise every rename reads as a breaking change.</li>
-      <li>Grouped by object type, collapsed by default, with counts. Breaking changes are flagged explicitly and link to migration notes.</li>
-      <li>"Copy as AI prompt" produces a migration instruction an agent can execute.</li>
-    </ul>
-  </section>
-
-  <section class="panel spacing-model-panel">
-    <h2 class="panel-title">Restore</h2>
-    <p class="get-library-copy">Restore creates a new version. It never overwrites - nothing is deleted, and the impact is previewed before confirming.</p>
-    <div class="guide-dodont-demo" style="justify-content:flex-start;padding:var(--space-16);">
-      <div style="width:100%;max-width:var(--dimension-520);">
-        <p style="margin:0 0 var(--space-8);font-weight:600;color:var(--text-hi);">Restore version 3.1.0?</p>
-        <p style="margin:0 0 var(--space-10);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">This creates a new version from the 3.1.0 configuration. Nothing is deleted - 3.2.0 remains in your history. Current 3.2.0 &rarr; New version 3.3.0.</p>
-        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">~ 11 components revert to their 3.1.0 definition</p>
-        <p style="margin:0 0 var(--space-4);color:var(--text-mid);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&minus; Date Range (added in 3.2.0) will be removed</p>
-        <p style="margin:0 0 var(--space-8);color:var(--danger-500);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">&#9888; This reintroduces a known contrast failure (SC 1.4.11)</p>
-        <p style="margin:0;color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Impact: this breaking NPM change requires version 4.0.0 &middot; AI context requires re-sync &middot; Figma library requires re-push. A written reason is required before confirming.</p>
-      </div>
-    </div>
-    <ul class="guide-list">
-      <li>Restore is Owner / DS-Admin only.</li>
-      <li>Objects created after the restored version are <strong>removed, not orphaned</strong> - stated explicitly in the preview, never a silent surprise.</li>
-      <li>The new version starts as draft and follows the normal publish path.</li>
-    </ul>
-  </section>
-
-  <section class="panel spacing-model-panel component-guide" data-role="component-guide">
-    <div class="panel-title-row"><h2 class="panel-title">Component Guide</h2></div>
-    <p class="guide-subhead">Accessibility</p>
-    <ul class="guide-list">
-      <li>Proper <code>&lt;th scope="col"&gt;</code>, sort state announced, row actions keyboard-reachable (SC 1.3.1, 4.1.2).</li>
-      <li>Compare diffs are not color-only - +/~/&minus; and text carry the meaning (SC 1.4.1).</li>
-      <li>Row action menus meet a 24&times;24px target with adequate spacing (SC 2.5.8).</li>
-      <li>A sticky table header must not obscure a focused row (SC 2.4.11 Focus Not Obscured).</li>
-    </ul>
-    <p class="guide-subhead">Related</p>
-    <p class="guide-body-text">Planned: stored version snapshots will be served separately from <a href="md-export.html">Markdown Export</a>'s immutability rule. Planned: publishing a version will move <a href="npm-package.html">NPM Package</a> out of drift. <a href="new-project.html">Project setup</a> currently saves a local profile only; it does not create a versioned release. <a href="changelog.html">Read the actual implementation changelog.</a></p>
-  </section>
+  <h1 class="page-title">Projects have moved to Overview</h1>
+  <p class="page-lede">Find and reopen your saved projects in one place.</p>
+  <a class="btn btn-primary" href="overview.html#projects">Open Overview</a>
 </main>
 
 <script src="shell.js"></script>

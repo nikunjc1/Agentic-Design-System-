@@ -1,6 +1,6 @@
 # Create Design — Usability and QA Audit Report
 
-**Product:** Damco Agentic Design System  
+**Product:** Agentic Design System  
 **Audit date:** 1 October 2026  
 **Audit type:** Tab-by-tab usability, task-flow, accessibility, and source-level QA audit  
 **Overall status:** **Not ready for a complete Create Design workflow**  

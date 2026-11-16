@@ -19,7 +19,7 @@
   var DEFAULT_PANEL2_LABEL = "Content";
   var DEFAULT_RATIO = 35;
 
-  var EXPAND_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-12);height:var(--dimension-12);"><polyline points="9 18 15 12 9 6"/></svg>';
+  var EXPAND_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:var(--dimension-12);height:var(--dimension-12);"><polyline points="9 18 15 12 9 6"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -52,12 +52,12 @@
     if (isCollapsed){
       panel1Html = '<div class="splitter-demo-panel is-collapsed" style="flex:0 0 28px;">' + EXPAND_ICON_SVG + "</div>";
     } else {
-      panel1Html = '<div class="splitter-demo-panel" style="flex:0 0 ' + ratio + '%;"><span class="splitter-demo-panel-text">' + escapeHtml(panel1Label) + "</span></div>";
+      panel1Html = '<div class="splitter-demo-panel" style="flex:0 0 ' + ratio + '%;"><span class="splitter-demo-panel-text" data-contract-part="panel1">' + escapeHtml(panel1Label) + "</span></div>";
     }
     // Labels are wrapped rather than inlined as bare text nodes because
     // .splitter-demo-panel is a flex container - an ellipsis cannot apply to
     // an anonymous flex item, so a long label would clip with no indicator.
-    var panel2Html = '<div class="splitter-demo-panel" style="flex:1 1 auto;"><span class="splitter-demo-panel-text">' + escapeHtml(panel2Label) + "</span></div>";
+    var panel2Html = '<div class="splitter-demo-panel" style="flex:1 1 auto;"><span class="splitter-demo-panel-text" data-contract-part="panel2">' + escapeHtml(panel2Label) + "</span></div>";
     var dividerHtml = '<div class="' + dividerCls + '"><span class="splitter-demo-handle"></span></div>';
 
     return '<div class="' + wrapCls + '">' + panel1Html + dividerHtml + panel2Html + "</div>";
@@ -111,7 +111,7 @@
     lines.push(".splitter-demo-wrap--horizontal .splitter-demo-divider{ width:var(--dimension-6); cursor:col-resize; }");
     lines.push(".splitter-demo-wrap--vertical .splitter-demo-divider{ height:var(--dimension-6); cursor:row-resize; }");
     lines.push(".splitter-demo-divider.is-dragging{ background:var(--red-500); }");
-    lines.push(".splitter-demo-handle{ width:var(--dimension-3); height:var(--dimension-16); border-radius:2px; background:var(--text-dim); }");
+    lines.push(".splitter-demo-handle{ width:var(--dimension-3); height:var(--dimension-16); border-radius:var(--radius-2); background:var(--text-dim); }");
     lines.push(".splitter-demo-wrap--vertical .splitter-demo-handle{ width:var(--dimension-16); height:var(--dimension-3); }");
     lines.push(".splitter-demo-divider.is-dragging .splitter-demo-handle{ background:#FFFFFF; }");
     lines.push("");
@@ -149,12 +149,12 @@
       card.setAttribute("tabindex", "0");
       var href = "splitter-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

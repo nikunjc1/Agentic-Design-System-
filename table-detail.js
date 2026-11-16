@@ -1,6 +1,9 @@
 (() => {
   "use strict";
 
+  var CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
+  var DASH_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>';
+
   var TYPES = [
     { key: "default", label: "Default" },
     { key: "bordered", label: "Bordered" }
@@ -83,9 +86,13 @@
   // type only - the Default type never carries a radius.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -137,7 +144,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -220,7 +227,7 @@
     lines.push("   Name/Role into wrapping onto a second line, same as the checkbox");
     lines.push("   column did before table-demo-table--has-checkbox existed. */");
     lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); width:var(--dimension-630); }");
-    lines.push(".table-demo-table th{ text-align: start; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:1.5px solid var(--line-strong); }");
+    lines.push(".table-demo-table th{ text-align: start; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:var(--border-width-1) var(--border-style) var(--line-strong); }");
     lines.push(".table-demo-table td{ padding:var(--space-8) var(--space-10); border-bottom:1px solid var(--line); text-align: start; }");
     lines.push(".table-demo-table--bordered{ border:1px solid var(--line-strong); overflow:hidden; }");
     lines.push(".table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end:1px solid var(--line); }");
@@ -228,6 +235,12 @@
     lines.push(".table-demo-row--striped{ background:var(--graphite-850); }");
     lines.push(".table-demo-row--selected{ background:var(--red-tint); }");
     lines.push(".table-demo-status-cell{ display:flex; align-items:center; gap:var(--space-6); }");
+    lines.push(".table-demo-checkbox-label{ display:flex; }");
+    lines.push(".table-demo-checkbox-input{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
+    lines.push(".table-demo-checkbox{ flex:none; width:var(--dimension-16); height:var(--dimension-16); border-radius:var(--radius-sm); border:var(--border-width-1) var(--border-style) var(--line-strong); display:flex; align-items:center; justify-content:center; color:#FFFFFF; }");
+    lines.push(".table-demo-checkbox.is-checked, .table-demo-checkbox.is-indeterminate{ background:var(--red-500); border-color:var(--red-500); }");
+    lines.push(".table-demo-checkbox-input:focus-visible + .table-demo-checkbox{ outline:2px solid var(--red-400); outline-offset:2px; }");
+    lines.push(".table-demo-checkbox svg{ width:var(--dimension-11); height:var(--dimension-11); }");
     lines.push("/* Status dot reuses the Badge component's own .badge-demo-status-dot--success/--warning classes directly - no separate dot styling defined here. */");
     lines.push("");
     lines.push("/* Email/Mobile render as real mailto:/tel: links styled in this");
@@ -289,10 +302,22 @@
 
     var theadHtml = "";
     if (showHeader){
-      var checkboxTh = isSelected ? "<th></th>" : "";
+      // A native <input type="checkbox"> has no CSS-capturable visual of its
+      // own (it's OS-painted chrome, not styleable background/border/
+      // checkmark content) - pushed to Figma as-is it has nothing to render,
+      // so it simply vanishes (reported: table's selection checkboxes
+      // missing entirely). Same fix as Transfer's own checkbox column: hide
+      // the real input (sr-only, keeps real semantics/ARIA) and give it a
+      // sibling span that's actually CSS-painted (border/background/
+      // checkmark icon), the only part Figma can see. The header checkbox
+      // was also never implemented at all (a bare empty <th></th>, despite
+      // this page's own purpose text describing a working select-all/
+      // indeterminate header checkbox) - added here, indeterminate since
+      // exactly one of the three demo rows is checked.
+      var checkboxTh = isSelected ? '<th data-contract-part="checkbox-header"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select all rows" tabindex="-1" /><span class="table-demo-checkbox is-indeterminate">' + DASH_ICON_SVG + "</span></label></th>" : "";
       // scope="col" so a screen reader announces the column a cell belongs
       // to when navigating row by row, not just when reading the header row.
-      theadHtml = "<thead><tr>" + checkboxTh + '<th scope="col">Name</th><th scope="col">Status</th><th scope="col">Role</th><th scope="col">Email</th><th scope="col">Mobile</th></tr></thead>';
+      theadHtml = '<thead data-contract-part="header"><tr>' + checkboxTh + '<th scope="col">Name</th><th scope="col">Status</th><th scope="col">Role</th><th scope="col">Email</th><th scope="col">Mobile</th></tr></thead>';
     }
 
     if (isLoading){
@@ -326,7 +351,8 @@
       // every other component's own matrix in this system), not one
       // operable table - without it, a keyboard user hits a real checkbox
       // and real mailto:/tel: links on every one of these repeated rows.
-      var checkboxTd = isSelected ? '<td><input type="checkbox" aria-label="Select ' + person.name + '" tabindex="-1"' + (i === 0 ? " checked" : "") + " /></td>" : "";
+      var isRowChecked = i === 0;
+      var checkboxTd = isSelected ? '<td data-contract-part="checkbox-cell-' + i + '"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select ' + person.name + '" tabindex="-1"' + (isRowChecked ? " checked" : "") + ' /><span class="table-demo-checkbox' + (isRowChecked ? " is-checked" : "") + '">' + (isRowChecked ? CHECK_ICON_SVG : "") + "</span></label></td>" : "";
       var statusDotClass = "badge-demo-status-dot--" + person.statusColor;
       var statusHtml = '<td><span class="table-demo-status-cell"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
       // Email/Mobile render as real links (mailto:/tel:) styled in this
@@ -411,12 +437,12 @@
       card.setAttribute("tabindex", "0");
       var href = "table-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

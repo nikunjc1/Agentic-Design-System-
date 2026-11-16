@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "checks": [
+    "Permanent setup entry survives banner dismissal; invalid forward jumps stay on the required step",
+    "A partially completed identity draft resumes at its saved step with entered values",
+    "Review shortcuts retain values; failed Save retains the form; successful Save separates project details from Foundation completion",
+    "Guided Save failure does not advance or report a completed Foundation",
+    "Eight guided Save & continue steps persist contextual choices and reach a real identity-free Markdown download",
+    "Returning-user next task reflects saved progress; explicit edit/cancel preserves the saved project",
+    "Cross-tab project change blocks a stale edit and offers explicit reload",
+    "Skipping a Foundation does not silently save or count defaults as customized",
+    "A dirty Foundation preview blocks setup-link navigation until saved or cancelled",
+    "Future saved project data is preserved and exposes recovery actions",
+    "Recovery takes priority in the next task; guided Save preserves unreadable Foundation records",
+    "Five flow destinations fit four widths in both themes and keep task instructions expanded"
+  ],
+  "errors": []
+}

@@ -1,0 +1,189 @@
+{
+  "file": "alert-default.html",
+  "name": "Alert",
+  "category": "Components · Feedback · Alert",
+  "controls": [
+    {
+      "index": 0,
+      "role": "alert-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "alert-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Info",
+      "options": [
+        {
+          "value": "Info",
+          "label": "Info"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Dismissible",
+          "label": "Dismissible"
+        },
+        {
+          "value": "With action",
+          "label": "With action"
+        },
+        {
+          "value": "Title only",
+          "label": "Title only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "alert-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Update available",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "alert-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "A new version is ready to install.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "alert-show-icon",
+      "id": null,
+      "label": "Show icon",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown at the start of the banner",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, title, description and icon visibility are properties of the same component, not separate banners - change them below to check this alert's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Alert surfaces a status message inline within page content, like \"Your changes have been saved.\" - it sits flush in the normal page flow, full width of its container, unlike Toast which floats above the page in a fixed corner. When to Use A save or action confirmation embedded in the page - \"Your changes have been saved.\" System status or a maintenance notice - a persistent banner that stays until dismissed or resolved. A form-level validation summary - listing every error at the top of a form. When Not to Use A temporary confirmation that shouldn't require the user to stay on the page - use Toast, which floats and self-dismisses. A message that must block interaction until acknowledged - use Modal - Alert never interrupts the page, it just sits within it. A short hint tied to a specific control - use Tooltip instead of a full-width banner for a small, localized hint. Best Practices Match the type (info/success/warning/error) to the actual severity - overusing error styling for minor notices trains users to ignore it. Keep the message specific and actionable (\"Your card expired - update payment details\"), not a vague \"Something happened.\" Only make it dismissible when the information genuinely stops being relevant after being read once. Do and Don't Do Card expiredUpdate your payment details to avoid interruption. Names what happened and what to do about it, so the message is actionable on its own. Don't ErrorSomething went wrong. Tells the user only that they are stuck. With no cause and no next step, the alert costs attention and returns nothing. Accessibility role=\"alert\" is not universal here - it belongs only on an Alert that is dynamically inserted in response to something, such as \"3 validation errors\" appearing after a failed form submit, where the assertive announcement is the point. The Alert shown in the Live Preview and in the Do/Don't demos above is static markup, present when the page renders rather than injected afterward, so it intentionally carries no role=\"alert\" here - adding one would fire a disruptive assistive-technology announcement every time the page loads, which is a real anti-pattern, not a safe default to copy onto every Alert. When an Alert genuinely is inserted dynamically, use role=\"alert\" (assertive) for errors that need immediate attention, or role=\"status\" (polite) for a lower-urgency dynamic update - and apply it in code at the point of insertion, not as a permanent attribute on a banner that's simply always there. Type is communicated by an icon and text, not color alone, for users with color-vision deficiencies. The dismiss control (when present) has an accessible name (\"Dismiss this alert\"), not just an X icon. Related Components Toast, Notification, Result. { \"component\": \"Alert\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Alert surfaces a status message inline within page content, like \\\"Your changes have been saved.\\\" - it sits flush in the normal page flow, full width of its container, unlike Toast which floats above the page in a fixed corner.\", \"whenToUse\": [ \"A save or action confirmation embedded in the page - \\\"Your changes have been saved.\\\"\", \"System status or a maintenance notice - a persistent banner that stays until dismissed or resolved.\", \"A form-level validation summary - listing every error at the top of a form.\" ], \"whenNotToUse\": [ \"A temporary confirmation that shouldn't require the user to stay on the page - use Toast, which floats and self-dismisses.\", \"A message that must block interaction until acknowledged - use Modal - Alert never interrupts the page, it just sits within it.\", \"A short hint tied to a specific control - use Tooltip instead of a full-width banner for a small, localized hint.\" ], \"bestPractices\": [ \"Match the type (info/success/warning/error) to the actual severity - overusing error styling for minor notices trains users to ignore it.\", \"Keep the message specific and actionable (\\\"Your card expired - update payment details\\\"), not a vague \\\"Something happened.\\\"\", \"Only make it dismissible when the information genuinely stops being relevant after being read once.\" ], \"doAndDont\": { \"do\": \"Names what happened and what to do about it, so the message is actionable on its own.\", \"dont\": \"Tells the user only that they are stuck. With no cause and no next step, the alert costs attention and returns nothing.\" }, \"accessibility\": [ \"role=\\\"alert\\\" is not universal here - it belongs only on an Alert that is dynamically inserted in response to something, such as \\\"3 validation errors\\\" appearing after a failed form submit, where the assertive announcement is the point. The Alert shown in this page's Live Preview and Do/Don't demos is static markup, present when the page renders rather than injected afterward, so it intentionally carries no role=\\\"alert\\\" - adding one would fire a disruptive assistive-technology announcement every time the page loads, which is a real anti-pattern, not a safe default to copy onto every Alert.\", \"When an Alert genuinely is inserted dynamically, use role=\\\"alert\\\" (assertive) for errors that need immediate attention, or role=\\\"status\\\" (polite) for a lower-urgency dynamic update - applied in code at the point of insertion, not as a permanent attribute on a banner that's simply always there.\", \"Type is communicated by an icon and text, not color alone, for users with color-vision deficiencies.\", \"The dismiss control (when present) has an accessible name (\\\"Dismiss this alert\\\"), not just an X icon.\" ], \"relatedComponents\": [ \"Toast\", \"Notification\", \"Result\" ] }",
+  "tests": []
+}

@@ -1,0 +1,115 @@
+{
+  "file": "progress-default.html",
+  "name": "Progress",
+  "category": "Components · Feedback · Progress",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Linear",
+      "options": [
+        {
+          "value": "Linear",
+          "label": "Linear"
+        },
+        {
+          "value": "Circular",
+          "label": "Circular"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "In progress",
+      "options": [
+        {
+          "value": "In progress",
+          "label": "In progress"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "progress-percent-input",
+      "id": null,
+      "label": "Percent",
+      "type": "number",
+      "value": "65",
+      "options": [],
+      "min": "0",
+      "max": "100",
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Percent",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "progress-show-label",
+      "id": null,
+      "label": "Show label",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown alongside the bar or ring",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Percent and label visibility are properties of the same component, not separate bars - change them below to check both layouts and every state in the Live Preview. Success is always complete regardless of Percent, and Error always shows a fixed, partial value, since those two states represent a finished or stalled operation rather than the live one Percent describes.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Progress shows how far a quantifiable operation has gotten toward completion, like an upload or a multi-step setup flow, rendered as either a linear bar or a circular ring - used whenever a real percentage or fraction is known, unlike Spin which has no known completion point. When to Use A file upload or download - a measurable percentage complete. Multi-step onboarding completion or storage/quota usage - a proportion of a known total. Skill/profile completeness or a long-running task with a known percentage - anywhere \"how much is done\" is the useful information. When Not to Use An operation with no known duration or percentage - use Spin instead - Progress implies a measurable fraction, and showing a fake one is misleading. A step-based flow better represented by discrete stages than a continuous percentage - use Steps. A single instantaneous action with no meaningful \"in progress\" period - Progress adds nothing for actions that resolve immediately. Best Practices Only show a percentage or fill amount that reflects real, measured progress - never a fake or purely cosmetic animation. Pair the bar/ring with a visible percentage or fraction label when precision matters to the user. Use the circular ring for compact spaces and the linear bar when there's room for a full-width indicator. Do and Don't Do 65% One bar for the whole operation, carrying a real measured fraction, so the user can answer \"how much longer\" at a glance. Don't 100%40%0% A bar per sub-step makes the user add up the pieces to work out where the operation actually is. Report one number for the whole job. Accessibility Exposed with role=\"progressbar\", including aria-valuenow, aria-valuemin, and aria-valuemax - visible in the Do/Don't demo markup above - so assistive technology can read the current, minimum and maximum values on demand. No separate aria-live region is layered on top of role=\"progressbar\": the widget's value attributes already let a screen reader announce progress when the user chooses to check it, and a role=\"progressbar\" element is exposed with an implicit live-region-like behavior in most screen readers, so adding an explicit aria-live would just risk duplicate or overly chatty announcements as the value updates. Color is never the only way completion or error state is communicated. Updates are announced at reasonable intervals, not so frequently that they become noisy for screen-reader users. Related Components Spin, Skeleton, Steps. { \"component\": \"Progress\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Progress shows how far a quantifiable operation has gotten toward completion, like an upload or a multi-step setup flow, rendered as either a linear bar or a circular ring - used whenever a real percentage or fraction is known, unlike Spin which has no known completion point.\", \"whenToUse\": [ \"A file upload or download - a measurable percentage complete.\", \"Multi-step onboarding completion or storage/quota usage - a proportion of a known total.\", \"Skill/profile completeness or a long-running task with a known percentage - anywhere \\\"how much is done\\\" is the useful information.\" ], \"whenNotToUse\": [ \"An operation with no known duration or percentage - use Spin instead - Progress implies a measurable fraction, and showing a fake one is misleading.\", \"A step-based flow better represented by discrete stages than a continuous percentage - use Steps.\", \"A single instantaneous action with no meaningful \\\"in progress\\\" period - Progress adds nothing for actions that resolve immediately.\" ], \"bestPractices\": [ \"Only show a percentage or fill amount that reflects real, measured progress - never a fake or purely cosmetic animation.\", \"Pair the bar/ring with a visible percentage or fraction label when precision matters to the user.\", \"Use the circular ring for compact spaces and the linear bar when there's room for a full-width indicator.\" ], \"doAndDont\": { \"do\": \"One bar for the whole operation, carrying a real measured fraction, so the user can answer \\\"how much longer\\\" at a glance.\", \"dont\": \"A bar per sub-step makes the user add up the pieces to work out where the operation actually is. Report one number for the whole job.\" }, \"accessibility\": [ \"Exposed with role=\\\"progressbar\\\", including aria-valuenow, aria-valuemin, and aria-valuemax - visible in the Do/Don't demo markup - so assistive technology can read the current, minimum and maximum values on demand.\", \"No separate aria-live region is layered on top of role=\\\"progressbar\\\": the widget's value attributes already let a screen reader announce progress when the user chooses to check it, so an explicit aria-live would just risk duplicate or overly chatty announcements as the value updates.\", \"Color is never the only way completion or error state is communicated.\", \"Updates are announced at reasonable intervals, not so frequently that they become noisy for screen-reader users.\" ], \"relatedComponents\": [ \"Spin\", \"Skeleton\", \"Steps\" ] }",
+  "tests": []
+}

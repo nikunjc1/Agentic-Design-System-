@@ -1,0 +1,161 @@
+{
+  "file": "avatar-default.html",
+  "name": "Avatar",
+  "category": "Components · Data Display · Avatar",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Initials",
+      "options": [
+        {
+          "value": "Initials",
+          "label": "Initials"
+        },
+        {
+          "value": "Icon",
+          "label": "Icon"
+        },
+        {
+          "value": "Image",
+          "label": "Image"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Online",
+          "label": "Online"
+        },
+        {
+          "value": "Away",
+          "label": "Away"
+        },
+        {
+          "value": "Offline",
+          "label": "Offline"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "avatar-size-select",
+      "id": null,
+      "label": "Size",
+      "type": "select",
+      "value": "32",
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - Small"
+        },
+        {
+          "value": "32",
+          "label": "32px - Default"
+        },
+        {
+          "value": "40",
+          "label": "40px - Large"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Size 24px - Small 32px - Default 40px - Large 48px - XL",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "avatar-shape-select",
+      "id": null,
+      "label": "Shape",
+      "type": "select",
+      "value": "circle",
+      "options": [
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Shape Circle Square",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "avatar-initials",
+      "id": null,
+      "label": "Initials",
+      "type": "text",
+      "value": "JD",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Initials",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, shape and initials text are properties of the same component, not separate avatars - change them below to check this avatar's types and presence states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Avatar represents a person throughout the product - in a profile menu, a comment, a team list, or an assignee indicator - a compact circular (or square) visual identifier shown as an image, initials, or a generic icon placeholder. When to Use A user profile menu or comment author - identifying who's associated with an action or piece of content. A team member list or an assignee indicator - showing who's involved at a glance. A chat participant list - compact identification across many people at once. When Not to Use Representing something that isn't a person or team - use Image or an icon instead - Avatar specifically implies identity. A context where a full name is more useful than a small visual - pair Avatar with a name rather than relying on the image alone when precision matters. A large, detailed profile photo display - use Image - Avatar is built for small, compact identification, not a full photo viewer. Best Practices Fall back to initials or a generic icon gracefully when no photo is available, rather than showing a broken image. Keep sizing consistent within any one context (all comments the same avatar size, for example). Use the presence/status dot sparingly and only when online/away/offline genuinely matters in that context. Do and Don't Do JD Two solid initials at a size that stays legible, with presence shown as a small status dot rather than competing text. Don't JOHNATHAN A full name crammed into a 40px circle is unreadable at any size. Avatars carry one or two initials - use a name label beside it for the rest. Accessibility Carries an accessible name identifying the person (\"Jordan Lee's avatar\" or simply the person's name), not left unlabeled. A presence dot's meaning (online/away/offline) is exposed in text or an accessible label, not communicated by color alone. Initials fallback text meets sufficient contrast against its background circle. Related Components Badge, Image, List. { \"component\": \"Avatar\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Avatar represents a person throughout the product - in a profile menu, a comment, a team list, or an assignee indicator - a compact circular (or square) visual identifier shown as an image, initials, or a generic icon placeholder.\", \"whenToUse\": [ \"A user profile menu or comment author - identifying who's associated with an action or piece of content.\", \"A team member list or an assignee indicator - showing who's involved at a glance.\", \"A chat participant list - compact identification across many people at once.\" ], \"whenNotToUse\": [ \"Representing something that isn't a person or team - use Image or an icon instead - Avatar specifically implies identity.\", \"A context where a full name is more useful than a small visual - pair Avatar with a name rather than relying on the image alone when precision matters.\", \"A large, detailed profile photo display - use Image - Avatar is built for small, compact identification, not a full photo viewer.\" ], \"bestPractices\": [ \"Fall back to initials or a generic icon gracefully when no photo is available, rather than showing a broken image.\", \"Keep sizing consistent within any one context (all comments the same avatar size, for example).\", \"Use the presence/status dot sparingly and only when online/away/offline genuinely matters in that context.\" ], \"doAndDont\": { \"do\": \"Two solid initials at a size that stays legible, with presence shown as a small status dot rather than competing text.\", \"dont\": \"A full name crammed into a 40px circle is unreadable at any size. Avatars carry one or two initials - use a name label beside it for the rest.\" }, \"accessibility\": [ \"Carries an accessible name identifying the person (\\\"Jordan Lee's avatar\\\" or simply the person's name), not left unlabeled.\", \"A presence dot's meaning (online/away/offline) is exposed in text or an accessible label, not communicated by color alone.\", \"Initials fallback text meets sufficient contrast against its background circle.\" ], \"relatedComponents\": [ \"Badge\", \"Image\", \"List\" ] }",
+  "tests": []
+}

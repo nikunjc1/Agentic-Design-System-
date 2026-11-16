@@ -1,0 +1,127 @@
+{
+  "file": "splitter-default.html",
+  "name": "Splitter",
+  "category": "Components · Data Display · Splitter",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Horizontal",
+      "options": [
+        {
+          "value": "Horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "Vertical",
+          "label": "Vertical"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Dragging",
+          "label": "Dragging"
+        },
+        {
+          "value": "Collapsed",
+          "label": "Collapsed"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "splitter-panel1-label",
+      "id": null,
+      "label": "First panel label",
+      "type": "text",
+      "value": "Sidebar",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "First panel label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "splitter-panel2-label",
+      "id": null,
+      "label": "Second panel label",
+      "type": "text",
+      "value": "Content",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Second panel label",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "splitter-ratio",
+      "id": null,
+      "label": "Split ratio (%)",
+      "type": "number",
+      "value": "35",
+      "options": [],
+      "min": "10",
+      "max": "90",
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Split ratio (%)",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Panel labels and split ratio are properties of the same component, not separate layouts - change them below to check both types and every state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Splitter is a resizable two-panel layout with a draggable divider between them - the user drags the divider to redistribute space between the two panels, and either panel can optionally collapse to a thin strip to temporarily reclaim its space. When to Use A resizable sidebar next to a main content area - a file tree, a navigation panel, or a filters panel. A code editor and its live preview pane - both panels visible, resizable to taste. A master/detail layout - a list panel and a detail panel, like a chat list next to a conversation pane. When Not to Use A fixed layout where resizing adds no value - don't add a Splitter just because two things sit side by side; only when the user genuinely benefits from adjusting the ratio. Narrow or mobile viewports - a draggable divider is impractical on touch-first layouts; stack the panels instead. More than two panels needing independent resizing - nest multiple Splitters deliberately rather than trying to force one divider to manage three or more regions. Best Practices Persist the user's chosen split ratio across sessions when the layout is one they'll return to repeatedly. Enforce sensible minimum sizes on both panels so neither can be dragged down to an unusable sliver. Make the divider's hit target noticeably wider than its visible line, so it's easy to grab precisely. Do and Don't Do File treeEditor Two panels the user genuinely wants to resize against each other, with a visible drag handle marking the boundary. Don't IconsMain content A 15%-wide panel gives the user almost nothing to drag toward - there is no meaningful second layout to resize into. Use a fixed Sidebar instead. Accessibility The divider is a real, keyboard-operable control (arrow keys nudge the split ratio), not a mouse-only drag handle. The divider exposes its current position and valid range to assistive technology, similar to a slider. A collapsed panel's expand control has an accessible name identifying which panel it restores. Related Components Transfer, Card, Tabs. { \"component\": \"Splitter\", \"status\": \"Experimental\", \"category\": \"Data Display\", \"summary\": \"Splitter is a resizable two-panel layout with a draggable divider between them, letting the user redistribute space between the two panels.\", \"whenToUse\": [ \"A resizable sidebar next to a main content area.\", \"A code editor and its live preview pane, both resizable.\", \"A master/detail layout, like a chat list next to a conversation pane.\" ], \"whenNotToUse\": [ \"A fixed layout where resizing adds no real value.\", \"Narrow or mobile viewports where a draggable divider is impractical.\", \"More than two panels needing independent resizing - nest multiple Splitters instead.\" ], \"bestPractices\": [ \"Persist the user's chosen split ratio across sessions for layouts they return to.\", \"Enforce sensible minimum sizes on both panels.\", \"Make the divider's hit target wider than its visible line.\" ], \"doAndDont\": { \"do\": \"Two panels the user genuinely wants to resize against each other, with a visible drag handle marking the boundary.\", \"dont\": \"A 15%-wide panel gives the user almost nothing to drag toward - there is no meaningful second layout to resize into. Use a fixed Sidebar instead.\" }, \"accessibility\": [ \"The divider is keyboard-operable (arrow keys nudge the split ratio), not mouse-only.\", \"The divider exposes its current position and valid range, similar to a slider.\", \"A collapsed panel's expand control has an accessible name identifying which panel it restores.\" ], \"relatedComponents\": [ \"Transfer\", \"Card\", \"Tabs\" ] }",
+  "tests": []
+}

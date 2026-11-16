@@ -1,0 +1,165 @@
+{
+  "file": "divider-default.html",
+  "name": "Divider",
+  "category": "Components · Data Display · Divider",
+  "controls": [
+    {
+      "index": 0,
+      "role": "divider-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "medium"
+      ],
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "divider-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Horizontal",
+      "options": [
+        {
+          "value": "Horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "Horizontal with text",
+          "label": "Horizontal with text"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Solid",
+      "options": [
+        {
+          "value": "Solid",
+          "label": "Solid"
+        },
+        {
+          "value": "Dashed",
+          "label": "Dashed"
+        },
+        {
+          "value": "Dotted",
+          "label": "Dotted"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "divider-text",
+      "id": null,
+      "label": "Text label",
+      "type": "text",
+      "value": "OR",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Text label",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "divider-align-select",
+      "id": null,
+      "label": "Text alignment",
+      "type": "select",
+      "value": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Text alignment Left Center Right",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Divider has no hover/focus/disabled states - it is not interactive. Text label and Text alignment below only visibly apply to the Horizontal with text form; the other forms ignore them. Change them below to check every form and line style in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Medium",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Divider visually separates sections of content with a horizontal rule, with an optional text label breaking the line - a lightweight, low-emphasis break between related but distinct groups of content. When to Use A section separator - marking a clear boundary between two content blocks. A form group boundary or an \"Or\" split between two actions - e.g. \"Sign in with email\" / \"Or\" / \"Continue with Google\". A separator between inline items - adjacent to a Breadcrumb, or between items in a row. When Not to Use Spacing alone would already communicate the separation - don't add a visible line where whitespace is sufficient - overusing dividers adds visual clutter. A boundary that also needs to be interactive or collapsible - use Collapse instead of a plain static Divider. Separating truly unrelated content that shouldn't appear together at all - a Divider implies related-but-distinct groups; unrelated content belongs on separate pages or panels. Best Practices Use a labeled Divider (with text) only when the label adds real information (\"Or\"), not as decoration. Keep its weight and color subtle - a Divider should recede, not compete with the content it separates. Do and Don't Do Personal detailsBilling details Marks a real boundary between two distinct groups of fields, so the eye knows where one section ends. Don't First nameLast nameEmail A divider between every single field turns a short form into a fence of lines, drowning out the one grouping boundary that would actually help. Accessibility Purely decorative in most cases, so it's hidden from assistive technology rather than announced as content. When it also carries a semantic heading-like label, that label is exposed as real text, not baked into a background image. Never used as the sole way to convey a structural boundary that should really be a heading or landmark. Related Components Card, Collapse, Description. { \"component\": \"Divider\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Divider visually separates sections of content with a horizontal rule, with an optional text label breaking the line - a lightweight, low-emphasis break between related but distinct groups of content.\", \"whenToUse\": [ \"A section separator - marking a clear boundary between two content blocks.\", \"A form group boundary or an \\\"Or\\\" split between two actions - e.g. \\\"Sign in with email\\\" / \\\"Or\\\" / \\\"Continue with Google\\\".\", \"A separator between inline items - adjacent to a Breadcrumb, or between items in a row.\" ], \"whenNotToUse\": [ \"Spacing alone would already communicate the separation - don't add a visible line where whitespace is sufficient - overusing dividers adds visual clutter.\", \"A boundary that also needs to be interactive or collapsible - use Collapse instead of a plain static Divider.\", \"Separating truly unrelated content that shouldn't appear together at all - a Divider implies related-but-distinct groups; unrelated content belongs on separate pages or panels.\" ], \"bestPractices\": [ \"Use a labeled Divider (with text) only when the label adds real information (\\\"Or\\\"), not as decoration.\", \"Keep its weight and color subtle - a Divider should recede, not compete with the content it separates.\" ], \"doAndDont\": { \"do\": \"Marks a real boundary between two distinct groups of fields, so the eye knows where one section ends.\", \"dont\": \"A divider between every single field turns a short form into a fence of lines, drowning out the one grouping boundary that would actually help.\" }, \"accessibility\": [ \"Purely decorative in most cases, so it's hidden from assistive technology rather than announced as content.\", \"When it also carries a semantic heading-like label, that label is exposed as real text, not baked into a background image.\", \"Never used as the sole way to convey a structural boundary that should really be a heading or landmark.\" ], \"relatedComponents\": [ \"Card\", \"Collapse\", \"Description\" ] }",
+  "tests": []
+}

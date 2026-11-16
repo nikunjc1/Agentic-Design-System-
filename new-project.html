@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="site-entry.js"></script>
+<script src="component-workbench-catalog.js"></script>
+<script src="component-workbench.js"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -14,8 +17,11 @@
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
 <link rel="stylesheet" href="foundation.css" />
+<link rel="stylesheet" href="component-workbench.css" />
+<link rel="stylesheet" href="onboarding.css" />
+<link rel="stylesheet" href="welcome-mascot.css" />
 </head>
-<body>
+<body class="onboarding-page">
 
 <header class="app-topbar">
   <a class="brand" href="overview.html">
@@ -26,8 +32,7 @@
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Preferences" aria-label="Preferences" id="preferences" data-preferences-toggle aria-haspopup="dialog" aria-expanded="false" aria-controls="adsPreferencesPanel"><span aria-hidden="true">&#9881;</span></button>
   </div>
 </header>
 
@@ -44,8 +49,8 @@
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
-      <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link is-active" href="new-project.html">Project setup</a>
+
+      <a class="nav-link" href="project-setup.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -77,126 +82,205 @@
     <div class="nav-group is-collapsible" data-group="components">
       <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
-        <a class="nav-link" href="component-index.html">All components</a>
+
         <span class="nav-subgroup-label">Actions</span>
-        <a class="nav-link" href="components.html#button">Button</a>
-        <a class="nav-link" href="group-button.html">Group Button</a>
-        <a class="nav-link" href="float-button.html">Float Button</a>
+        <a class="nav-link" href="button-primary.html">Button</a>
+        <a class="nav-link" href="group-button-default.html">Group Button</a>
+        <a class="nav-link" href="float-button-default.html">Float Button</a>
 
         <span class="nav-subgroup-label">Forms</span>
-        <a class="nav-link" href="input.html">Input</a>
-        <a class="nav-link" href="select.html">Select</a>
-        <a class="nav-link" href="checkbox.html">Checkbox</a>
-        <a class="nav-link" href="radio.html">Radio</a>
-        <a class="nav-link" href="switch.html">Switch</a>
-        <a class="nav-link" href="date-picker.html">Date Picker</a>
-        <a class="nav-link" href="password.html">Password</a>
-        <a class="nav-link" href="number.html">Number</a>
-        <a class="nav-link" href="mention.html">Mention</a>
-        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
-        <a class="nav-link" href="date-range.html">Date Range</a>
-        <a class="nav-link" href="time.html">Time</a>
-        <a class="nav-link" href="text-area.html">Text Area</a>
-        <a class="nav-link" href="search.html">Search</a>
-        <a class="nav-link" href="add-on.html">Add-on</a>
-        <a class="nav-link" href="color-picker.html">Color Picker</a>
-        <a class="nav-link" href="slider.html">Slider</a>
-        <a class="nav-link" href="rating.html">Rating</a>
-        <a class="nav-link" href="cascader.html">Cascader</a>
-        <a class="nav-link" href="transfer.html">Transfer</a>
-        <a class="nav-link" href="tree-select.html">Tree Select</a>
-        <a class="nav-link" href="upload.html">Upload</a>
+        <a class="nav-link" href="input-text-field.html">Input</a>
+        <a class="nav-link" href="select-dropdown.html">Select</a>
+        <a class="nav-link" href="checkbox-default.html">Checkbox</a>
+        <a class="nav-link" href="radio-default.html">Radio</a>
+        <a class="nav-link" href="switch-default.html">Switch</a>
+        <a class="nav-link" href="date-picker-default.html">Date Picker</a>
+        <a class="nav-link" href="password-default.html">Password</a>
+        <a class="nav-link" href="number-default.html">Number</a>
+        <a class="nav-link" href="mention-default.html">Mention</a>
+        <a class="nav-link" href="autocomplete-default.html">Autocomplete</a>
+        <a class="nav-link" href="date-range-default.html">Date Range</a>
+        <a class="nav-link" href="time-default.html">Time</a>
+        <a class="nav-link" href="text-area-default.html">Text Area</a>
+        <a class="nav-link" href="search-default.html">Search</a>
+        <a class="nav-link" href="add-on-default.html">Add-on</a>
+        <a class="nav-link" href="color-picker-default.html">Color Picker</a>
+        <a class="nav-link" href="slider-default.html">Slider</a>
+        <a class="nav-link" href="rating-default.html">Rating</a>
+        <a class="nav-link" href="cascader-default.html">Cascader</a>
+        <a class="nav-link" href="transfer-default.html">Transfer</a>
+        <a class="nav-link" href="tree-select-default.html">Tree Select</a>
+        <a class="nav-link" href="upload-default.html">Upload</a>
 
         <span class="nav-subgroup-label">Navigation</span>
-        <a class="nav-link" href="tabs.html">Tabs</a>
-        <a class="nav-link" href="anchor.html">Anchor</a>
-        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
-        <a class="nav-link" href="dropdown.html">Dropdown</a>
-        <a class="nav-link" href="pagination.html">Pagination</a>
-        <a class="nav-link" href="menu.html">Menu</a>
-        <a class="nav-link" href="steps.html">Steps</a>
-        <a class="nav-link" href="affix.html">Affix</a>
+        <a class="nav-link" href="tabs-default.html">Tabs</a>
+        <a class="nav-link" href="anchor-default.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb-default.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown-default.html">Dropdown</a>
+        <a class="nav-link" href="pagination-default.html">Pagination</a>
+        <a class="nav-link" href="menu-default.html">Menu</a>
+        <a class="nav-link" href="steps-default.html">Steps</a>
 
         <span class="nav-subgroup-label">Feedback</span>
-        <a class="nav-link" href="alert.html">Alert</a>
-        <a class="nav-link" href="toast.html">Toast</a>
-        <a class="nav-link" href="modal.html">Modal</a>
-        <a class="nav-link" href="tooltip.html">Tooltip</a>
-        <a class="nav-link" href="tour.html">Tour</a>
-        <a class="nav-link" href="drawer.html">Drawer</a>
-        <a class="nav-link" href="notification.html">Notification</a>
-        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
-        <a class="nav-link" href="progress.html">Progress</a>
-        <a class="nav-link" href="result.html">Result</a>
-        <a class="nav-link" href="skeleton.html">Skeleton</a>
-        <a class="nav-link" href="spin.html">Spin</a>
+        <a class="nav-link" href="alert-default.html">Alert</a>
+        <a class="nav-link" href="toast-default.html">Toast</a>
+        <a class="nav-link" href="modal-default.html">Modal</a>
+        <a class="nav-link" href="tooltip-default.html">Tooltip</a>
+        <a class="nav-link" href="tour-default.html">Tour</a>
+        <a class="nav-link" href="drawer-default.html">Drawer</a>
+        <a class="nav-link" href="notification-default.html">Notification</a>
+        <a class="nav-link" href="pop-confirm-default.html">Pop Confirm</a>
+        <a class="nav-link" href="progress-default.html">Progress</a>
+        <a class="nav-link" href="result-default.html">Result</a>
+        <a class="nav-link" href="skeleton-default.html">Skeleton</a>
+        <a class="nav-link" href="spin-default.html">Spin</a>
 
         <span class="nav-subgroup-label">Data Display</span>
-        <a class="nav-link" href="divider.html">Divider</a>
-        <a class="nav-link" href="avatar.html">Avatar</a>
-        <a class="nav-link" href="badge.html">Badge</a>
-        <a class="nav-link" href="calendar.html">Calendar</a>
-        <a class="nav-link" href="card.html">Card</a>
-        <a class="nav-link" href="collapse.html">Collapse</a>
-        <a class="nav-link" href="description.html">Description</a>
-        <a class="nav-link" href="empty.html">Empty</a>
-        <a class="nav-link" href="image.html">Image</a>
-        <a class="nav-link" href="list.html">List</a>
-        <a class="nav-link" href="popover.html">Popover</a>
-        <a class="nav-link" href="splitter.html">Splitter</a>
-        <a class="nav-link" href="statistic.html">Statistic</a>
-        <a class="nav-link" href="table.html">Table</a>
-        <a class="nav-link" href="tag.html">Tag</a>
-        <a class="nav-link" href="timeline.html">Timeline</a>
-        <a class="nav-link" href="tree.html">Tree</a>
+        <a class="nav-link" href="divider-default.html">Divider</a>
+        <a class="nav-link" href="avatar-default.html">Avatar</a>
+        <a class="nav-link" href="badge-default.html">Badge</a>
+        <a class="nav-link" href="calendar-default.html">Calendar</a>
+        <a class="nav-link" href="card-default.html">Card</a>
+        <a class="nav-link" href="collapse-default.html">Collapse</a>
+        <a class="nav-link" href="description-default.html">Description</a>
+        <a class="nav-link" href="empty-default.html">Empty</a>
+        <a class="nav-link" href="image-default.html">Image</a>
+        <a class="nav-link" href="list-default.html">List</a>
+        <a class="nav-link" href="popover-default.html">Popover</a>
+        <a class="nav-link" href="splitter-default.html">Splitter</a>
+        <a class="nav-link" href="statistic-default.html">Statistic</a>
+        <a class="nav-link" href="table-default.html">Table</a>
+        <a class="nav-link" href="tag-default.html">Tag</a>
+        <a class="nav-link" href="timeline-default.html">Timeline</a>
+        <a class="nav-link" href="tree-default.html">Tree</a>
       </div>
     </div>
 
     <div class="nav-group">
-      <a class="nav-link" href="patterns.html">Patterns</a>
-      <a class="nav-link" href="templates.html">Templates</a>
-      <a class="nav-link" href="ai-generator.html">AI Generator</a>
-      <a class="nav-link" href="md-export.html">Markdown Export</a>
+
+
+
+      <a class="nav-link" href="md-export.html">Export &amp; Handoff</a>
+
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link" href="history.html">History</a>
+
       <a class="nav-link" href="changelog.html">Changelog</a>
-      <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
 <main class="app-main">
 
-<p class="page-eyebrow">Your design system</p>
-<h1 class="page-title">Let’s build around your product</h1>
-<p class="page-lede">Tell us what you’re creating and how you work. Get a tailored brief, customize your foundations, and export Markdown for your team or AI tool.</p>
-<p class="setup-help" id="existingProfileNotice" role="status" hidden></p>
-<p class="setup-help" id="draftProvenanceNotice" role="status" hidden></p>
-<ol class="setup-steps" aria-label="Setup progress"><li aria-current="step">1. Your product</li><li>2. About you</li><li>3. Review</li></ol>
-<div class="setup-layout"><section class="setup-panel">
-<form id="projectSetup" novalidate>
-<div data-step="1"><h2>Your product and platforms</h2><p>Product type describes what you are building. Platforms describe where people will use it. Pick "Other" only if none of the listed product types fit - everything you choose here stays fully editable from Settings later, so there's no wrong answer to get stuck on.</p>
-<div class="setup-fields"><label class="setup-field"><span>Project name <span class="ads-required" aria-label="Required">*</span></span><input id="project" name="project" aria-describedby="error-project" type="text" maxlength="100"><span class="setup-error" id="error-project" data-error="project"></span></label><label class="setup-field"><span>What type of product are you creating? <span class="ads-required" aria-label="Required">*</span></span><select id="productType" name="productType" aria-describedby="error-productType"><option value="">Choose an option</option></select><span class="setup-error" id="error-productType" data-error="productType"></span></label><label class="setup-field" hidden>Describe your product type<input id="productOther" name="productOther" aria-describedby="error-productOther" type="text" maxlength="100"><span class="setup-error" id="error-productOther" data-error="productOther"></span></label></div>
-<fieldset class="setup-platforms" aria-describedby="error-platforms"><legend>Where will your product be used? Select all that apply. <span class="ads-required" aria-label="Required">*</span></legend><div class="setup-options" id="platformOptions"></div><p class="setup-error" id="error-platforms" data-error="platforms"></p></fieldset></div>
-<div data-step="2" hidden><h2>About you</h2><p>Enter your name, email ID, designation and role to complete your project setup. These details stay in this browser; including them in an export remains optional.</p><div class="setup-fields"><label class="setup-field"><span>Your name</span><input id="name" name="name" required aria-describedby="error-name" type="text" maxlength="100" autocomplete="name"><span class="setup-error" id="error-name" data-error="name"></span></label><label class="setup-field"><span>Email ID</span><input id="email" name="email" required aria-describedby="error-email" type="email" maxlength="254" autocomplete="email"><span class="setup-error" id="error-email" data-error="email"></span></label><label class="setup-field"><span>Designation</span><input id="designation" name="designation" required aria-describedby="error-designation" type="text" maxlength="100" autocomplete="organization-title"><span class="setup-error" id="error-designation" data-error="designation"></span></label><label class="setup-field">Your role in this project<select id="role" name="role" aria-describedby="error-role"><option value="">Choose an option</option></select><span class="setup-error" id="error-role" data-error="role"></span></label><label class="setup-field" hidden>Describe your role<input id="roleOther" name="roleOther" aria-describedby="error-roleOther" type="text" maxlength="100"><span class="setup-error" id="error-roleOther" data-error="roleOther"></span></label></div></div>
-<div data-step="3" hidden><h2>Review your setup</h2><p>After saving, select Edit project setup to change these details. Your foundation choices remain available across the portal.</p><dl class="setup-review" id="setupReview"></dl></div>
-<div class="setup-actions"><button class="btn btn-ghost" id="setupBack" type="button" hidden>Back</button><button class="btn btn-primary" id="setupNext" type="submit">Continue</button><a href="overview.html">Browse without setup</a></div>
-<p class="setup-status" id="setupStatus" role="status" aria-live="polite"></p>
-<p class="setup-status" id="draftSaveStatus" role="status" aria-live="polite"></p>
-<p class="setup-help">Your draft and profile stay in this browser. No account is created and no email is sent. Contact details are excluded from Markdown unless you choose to include them.</p>
-</form>
-<div id="setupDone" hidden><h2 tabindex="-1">Your setup is ready</h2><p><strong id="savedProjectName"></strong> now has a tailored product brief and platform guidance.</p><dl class="setup-review" id="savedSetupReview" aria-label="Saved project details"></dl><p class="setup-help" id="roleTaskText" style="margin-top:var(--space-8);"></p><p class="setup-field" id="readinessLabel" style="margin-top:var(--space-20);">Foundation readiness</p><ul class="setup-readiness" id="foundationReadiness"></ul><div class="setup-actions" style="margin-top:var(--space-20);"><a class="btn btn-primary" id="recommendedNext" href="foundations.html#colors">Customize foundations</a><a class="btn btn-ghost" href="md-export.html">Export Markdown</a></div><p class="setup-help">You can export immediately, even with every Foundation still at its default - the readiness list above is informational, not a requirement.</p></div>
-</section><aside class="setup-panel" aria-label="What happens next"><h2>From idea to implementation</h2><p><strong>1. Set your context</strong><br>Product, platforms and role guide your handoff.</p><p><strong>2. Make it yours</strong><br>Save your brand colors and foundation values.</p><p><strong>3. Take it with you</strong><br>Export a brief or the documentation as Markdown.</p><p class="setup-help">One active project per browser, not a list: there's no separate create, switch or duplicate here - saving this form always edits and replaces that same one profile, it never creates an isolated second one alongside it. Saved Foundation choices belong to this workspace and are retained when you edit Project Setup. Grid & Layout, Typography and Spacing use the project recommendation until you save an explicit choice in their editors.</p></aside></div>
-
+<section class="project-choice ads-no-clamp" id="projectChoice" aria-labelledby="projectChoiceTitle">
+  <div class="project-choice-copy">
+    <div class="welcome-mascot" id="welcomeMascot" data-paused="false">
+      <span class="mascot-greeting" aria-hidden="true">Let’s make something great.</span>
+      <div class="mascot-halo" aria-hidden="true"></div>
+      <div class="mascot-ground" aria-hidden="true"></div>
+      <div class="mascot-turn">
+        <div class="mascot-sway">
+          <img class="mascot-art" src="assets/mascot/agentic-companion.png" width="1199" height="1312" alt="Agentic Design System companion: a smiling robot wearing headphones and a purple hoodie, holding a stylus and raising its articulated hand." decoding="async" fetchpriority="high" draggable="false" />
+          <span class="mascot-hologram" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="mascot-particle" aria-hidden="true"></span>
+        </div>
+      </div>
+      <button class="mascot-toggle" id="mascotMotionToggle" type="button" aria-label="Pause mascot animation" aria-pressed="false" title="Pause mascot animation">
+        <svg data-mascot-pause viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2v8M8 2v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg data-mascot-play viewBox="0 0 12 12" aria-hidden="true" hidden><path d="M4 2l6 4-6 4z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <p class="page-eyebrow">Welcome to Agentic Design System</p>
+    <h1 class="page-title" id="projectChoiceTitle">What will you build today?</h1>
+    <p class="page-lede">Start a new design system or pick up where you left off.</p>
+    <div class="project-choice-actions">
+      <a class="btn btn-ghost" id="existingProjectChoice" href="overview.html#projects">Existing project</a>
+      <button class="btn btn-primary" id="newProjectChoice" type="button" aria-expanded="false" aria-controls="projectSetupArea">New project</button>
+    </div>
+  </div>
+</section>
+<section class="project-setup-area ads-no-clamp" id="projectSetupArea" aria-labelledby="projectSetupTitle" hidden>
+<section class="conversation" id="onboardingConversation" aria-label="Project setup conversation">
+  <header class="conversation-header">
+    <a class="conversation-back" href="new-project.html" id="conversationBack" aria-label="Back to project choices">←</a>
+    <span class="assistant-mark" aria-hidden="true">✦</span>
+    <div class="chat-identity"><h2 id="projectSetupTitle">Design companion</h2><p>Let’s build your design system</p></div>
+    <div class="chat-header-actions"><button class="chat-pins-toggle" id="togglePinnedAnswers" type="button" aria-expanded="false" aria-controls="conversationPinned">Your brief <span id="chatAnswerCount">0</span></button><button type="button" id="cancelConversation" class="chat-exit" aria-label="Cancel setup" title="Cancel setup and discard this draft">Cancel</button></div>
+  </header>
+  <ol class="conversation-stages" id="conversationStages" aria-label="Setup stages"><li data-stage="0"><span>01</span>Project</li><li data-stage="1"><span>02</span>About you</li><li data-stage="2"><span>03</span>Design</li><li data-stage="3"><span>04</span>Review</li></ol>
+  <section class="conversation-recovery setup-notice" id="conversationRecovery" aria-label="Saved setup recovery" hidden></section>
+  <div class="conversation-layout" id="conversationWorkspace">
+    <div class="conversation-thread">
+      <div class="chat-messages" id="chatMessages" role="log" aria-label="Conversation with your design companion" aria-live="polite" aria-relevant="additions">
+        <div class="conversation-transcript" id="conversationTranscript"></div>
+        <section class="conversation-turn" id="conversationTurn" aria-labelledby="conversationQuestion">
+          <span class="assistant-mark" aria-hidden="true">✦</span>
+          <div class="assistant-message">
+            <span class="conversation-speaker">Design companion</span>
+            <p class="setup-help" id="conversationCount"></p>
+            <h3 id="conversationQuestion" tabindex="-1"></h3>
+            <p id="conversationHelp"></p>
+            <div id="conversationOptions"></div>
+          </div>
+        </section>
+        <div class="chat-typing" id="assistantTyping" role="status" aria-label="Your design companion is preparing the next question" hidden><span class="assistant-mark" aria-hidden="true">✦</span><span class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        <section class="conversation-review" id="conversationReview" aria-labelledby="conversationReviewTitle" hidden>
+          <span class="assistant-mark" aria-hidden="true">✦</span>
+          <div class="assistant-message"><span class="conversation-speaker">Design companion</span>
+            <h3 id="conversationReviewTitle" tabindex="-1">Your brief. Ready to build?</h3>
+            <p>Review your choices. You can change any answer before we set things up.</p>
+            <dl id="conversationSummary"></dl>
+            <div class="conversation-plan" id="conversationPlan"></div>
+            <div class="setup-actions"><button type="button" class="btn btn-primary" id="confirmConversation">Confirm &amp; create</button><button type="button" class="btn btn-ghost" id="changeConversation">Edit my answers</button></div>
+          </div>
+        </section>
+      </div>
+      <div class="chat-composer" id="chatComposer">
+        <form id="chatAnswerForm" novalidate aria-labelledby="conversationQuestion">
+          <div class="composer-label" id="composerLabel">Your reply</div>
+          <div id="conversationInput"></div>
+          <div class="conversation-composer-actions"><button type="button" id="conversationPrevious" aria-label="Edit previous answer" title="Edit previous answer">↶</button><span id="chatComposerHint">Enter to send · Shift + Enter for a new line</span><button type="submit" id="sendAnswer" aria-label="Send answer" title="Send answer"><span>Send</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></div>
+        </form>
+        <p class="conversation-error" id="conversationError" role="alert"></p>
+      </div>
+    </div>
+    <details class="conversation-pinned" id="conversationPinned">
+      <summary>Your project brief <span id="pinnedAnswerCount">0</span></summary>
+      <p class="brief-description">Built from your answers. Editable at any time.</p>
+      <div class="brief-progress"><span id="briefProgressLabel">0 of 11 answers</span><progress id="briefProgress" max="11" value="0" aria-label="Project brief completion"></progress></div>
+      <div id="pinnedAnswers"></div>
+      <div class="brief-next"><span class="brief-next-icon" aria-hidden="true">✦</span><div><strong>From brief to foundations</strong><p>Your brand, layout and components start with the choices you make here.</p></div></div>
+    </details>
+  </div>
+  <section class="setup-build" id="setupBuild" aria-labelledby="setupBuildTitle" hidden>
+    <div class="build-mark" aria-hidden="true">✦</div>
+    <p class="page-eyebrow">Made for your project</p>
+    <h3 id="setupBuildTitle" tabindex="-1">Setting up your design system</h3>
+    <p id="setupBuildCopy">Turning your answers into your project’s Foundation settings.</p>
+    <progress id="setupBuildProgress" max="6" value="0" aria-label="Design system setup progress"></progress>
+    <ol id="setupBuildSteps"></ol>
+    <p class="conversation-error" id="setupBuildError" role="alert"></p>
+    <div class="setup-actions" id="setupBuildRetry" hidden><button class="btn btn-primary" type="button" id="retrySetup">Retry setup</button><button class="btn btn-ghost" type="button" id="backToSummary">Back to summary</button></div>
+    <div class="setup-actions" id="setupBuildDone" hidden><a class="btn btn-primary" href="overview.html">Open my design system</a><a class="btn btn-ghost" href="foundations.html">Review Foundations</a></div>
+  </section>
+  <section class="setup-panel" id="setupDone" aria-labelledby="savedSetupTitle" hidden>
+    <h2 id="savedSetupTitle" tabindex="-1">Your project is ready</h2>
+    <p><strong id="savedProjectName"></strong> — your saved project and Foundation settings.</p>
+    <dl class="setup-review" id="savedSetupReview"></dl>
+    <div class="setup-actions"><a class="btn btn-primary" href="foundations.html" id="recommendedNext">Review Foundations</a><a class="btn btn-ghost" href="md-export.html" id="projectExportAction">Export handoff</a><button class="btn btn-ghost" type="button" id="editProjectSetup">Edit project setup</button></div>
+  </section>
+  <footer class="conversation-footer"><p id="conversationDraftStatus" role="status" aria-live="polite"></p><button type="button" id="reloadConversation" class="btn btn-ghost" hidden>Reload page</button><a href="overview.html">Browse without setup</a></footer>
+</section>
+<details class="onboarding-contract"><summary>Project setup documentation</summary>
 <!-- BEGIN GENERATED CONTRACT -->
 <section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
 <h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
 <p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
-<div class="ads-contract-rule"><h3>User and task flow</h3><p>Enter project name, product type, target platforms, name, email, designation and role; review and save. Saved setup requires Edit project setup before changes. Resume or discard an existing draft explicitly. One project profile shares the workspace Foundation settings.</p></div>
-<div class="ads-contract-rule"><h3>Navigation and recovery</h3><p>Step links advance only after earlier required fields validate. Back preserves entries while editing. After saving or reloading, project details stay in a read-only summary until Edit project setup is selected. Invalid or future drafts have backup/discard actions. Final submit rechecks all required fields; failed save retains entries.</p></div>
-<div class="ads-contract-rule"><h3>Context and readiness</h3><p>Grid &amp; Layout, Typography and Spacing start from Project Setup recommendations. Explicit saved Foundation overrides win. Radius, colors, borders, shadows and icon family are chosen and saved by the user. Readiness distinguishes a saved setting from a recommendation.</p></div>
+<div class="ads-contract-rule"><h3>User and task flow</h3><p>Every fresh or returning top-level visit starts at new-project.html with both project choices visible, including the launcher, directory index, local server root, direct bookmarks and reopened conversation URLs. Choose Existing project to search saved projects in the unified Overview project hub, or New project to open a full-height chatbot. Use a scrollable conversation with unboxed assistant messages, user reply bubbles and a reply composer anchored below it. Show Project, About you, Design and Review stages with the current stage marked. Use the library’s resolved type, color, radius, spacing and focus tokens. Ask project, product, platforms, identity and design preferences one question at a time. Single-choice option cards send immediately; show available descriptions and visual spacing/corner samples. Brand color supports a native color picker synchronized with the hex reply. The multi-select Platforms question shows a selected-count status and an explicit Continue button directly beneath its chips, disabled until the selection is valid; text replies support Enter to send and Shift+Enter for a new line, while focused buttons retain their native keyboard actions. Clicking a single-choice card takes precedence over any earlier typed choice. A brief typing transition introduces the next local question. Show the live editable project brief and answered-count progress in a persistent desktop side panel; on narrower screens keep pinned answers in a header-controlled panel with Escape and focus return. Summarize the complete brief and require explicit confirmation before saving. Show centered progress for actual brief, palette, typography/layout, component Foundation, theme and save operations. Save the profile and validated Foundation records together, preserving the previous project in local history. Overview lists saved projects, supports name search and reopening, shows unfinished drafts and the active project’s next Foundation/export action. Keep one contextual header action: New project when there is no draft, or Continue draft when unfinished work exists; library and guideline navigation stays in the sidebar. Legacy History URLs redirect to Overview after normal application entry; omit the redundant History navigation item.</p></div>
+<div class="ads-contract-rule"><h3>Navigation and recovery</h3><p>Validate each submitted answer. Changing a pinned answer returns to the next unanswered question or summary without erasing other replies. Drafts preserve confirmed replies, unfinished input per question even while editing earlier answers, creation/edit intent and the source-project baseline. Batch text autosaves with a 200ms debounce; flush pending input on blur, page hide and backgrounding, and save selections and submissions immediately. Compare the stored draft and profile baseline before writing; conflicts cancel queued saves and cannot overwrite newer work. Cancel clears queued autosaves; selecting New project automatically restores a readable unfinished draft directly into the chatbot without a Resume/Discard screen. Failed saves restore previous project and Foundation records and retain the conversation. Reject stale cross-tab profile, draft or Foundation changes. Preserve unreadable and future records with backup/discard recovery. First entry never auto-opens a saved profile or draft; New project restores readable drafts directly; only unreadable or unsupported saved data requires a recovery screen. One-use in-app navigation handoffs preserve normal browsing and explicit editor reloads. Browser refresh starts at choices. Component preview frames retain their requested page.</p></div>
+<div class="ads-contract-rule"><h3>Context and readiness</h3><p>Product and platforms inform Grid &amp; Layout and Typography. Explicit brand color, spacing, corner-radius philosophy and icon style override recommendations. Confirmation authorizes the prepared Foundation settings and library defaults for remaining choices. Progress checkmarks reflect completed preparation or a verified save, never a simulated external AI request. All saved settings remain editable in Foundations; per-platform handoff guidance remains available.</p></div>
 <div class="ads-contract-rule"><h3>Categories and identity</h3><p>Dashboard describes a data-focused product; Desktop web describes delivery. All project details are required for new saves. Older profiles remain readable until explicitly edited. Identity remains excluded from handoff unless opted in.</p></div>
 <div class="ads-contract-rule"><h3>Handoff</h3><p>Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example.</p></div>
+<div class="ads-contract-rule"><h3>Review and edit saved setup</h3><p>Project setup navigation opens project-setup.html, where the active project’s eleven onboarding answers appear in Project details, About you and Design choices. Edit setup prefills the existing answers; Save changes validates and updates the same project, while Cancel preserves saved data. Project and identity edits do not reapply Foundation defaults. Changed brand, spacing, corners and icon choices patch only their corresponding Foundation records and preserve unrelated customizations. Respect unfinished onboarding drafts and cross-tab conflicts. New visits still enter through the welcome choices.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -239,20 +323,26 @@
   &quot;section&quot;: {
     &quot;title&quot;: &quot;Project setup&quot;,
     &quot;rules&quot;: {
-      &quot;User and task flow&quot;: &quot;Enter project name, product type, target platforms, name, email, designation and role; review and save. Saved setup requires Edit project setup before changes. Resume or discard an existing draft explicitly. One project profile shares the workspace Foundation settings.&quot;,
-      &quot;Navigation and recovery&quot;: &quot;Step links advance only after earlier required fields validate. Back preserves entries while editing. After saving or reloading, project details stay in a read-only summary until Edit project setup is selected. Invalid or future drafts have backup/discard actions. Final submit rechecks all required fields; failed save retains entries.&quot;,
-      &quot;Context and readiness&quot;: &quot;Grid &amp; Layout, Typography and Spacing start from Project Setup recommendations. Explicit saved Foundation overrides win. Radius, colors, borders, shadows and icon family are chosen and saved by the user. Readiness distinguishes a saved setting from a recommendation.&quot;,
+      &quot;User and task flow&quot;: &quot;Every fresh or returning top-level visit starts at new-project.html with both project choices visible, including the launcher, directory index, local server root, direct bookmarks and reopened conversation URLs. Choose Existing project to search saved projects in the unified Overview project hub, or New project to open a full-height chatbot. Use a scrollable conversation with unboxed assistant messages, user reply bubbles and a reply composer anchored below it. Show Project, About you, Design and Review stages with the current stage marked. Use the library\u2019s resolved type, color, radius, spacing and focus tokens. Ask project, product, platforms, identity and design preferences one question at a time. Single-choice option cards send immediately; show available descriptions and visual spacing/corner samples. Brand color supports a native color picker synchronized with the hex reply. The multi-select Platforms question shows a selected-count status and an explicit Continue button directly beneath its chips, disabled until the selection is valid; text replies support Enter to send and Shift+Enter for a new line, while focused buttons retain their native keyboard actions. Clicking a single-choice card takes precedence over any earlier typed choice. A brief typing transition introduces the next local question. Show the live editable project brief and answered-count progress in a persistent desktop side panel; on narrower screens keep pinned answers in a header-controlled panel with Escape and focus return. Summarize the complete brief and require explicit confirmation before saving. Show centered progress for actual brief, palette, typography/layout, component Foundation, theme and save operations. Save the profile and validated Foundation records together, preserving the previous project in local history. Overview lists saved projects, supports name search and reopening, shows unfinished drafts and the active project\u2019s next Foundation/export action. Keep one contextual header action: New project when there is no draft, or Continue draft when unfinished work exists; library and guideline navigation stays in the sidebar. Legacy History URLs redirect to Overview after normal application entry; omit the redundant History navigation item.&quot;,
+      &quot;Navigation and recovery&quot;: &quot;Validate each submitted answer. Changing a pinned answer returns to the next unanswered question or summary without erasing other replies. Drafts preserve confirmed replies, unfinished input per question even while editing earlier answers, creation/edit intent and the source-project baseline. Batch text autosaves with a 200ms debounce; flush pending input on blur, page hide and backgrounding, and save selections and submissions immediately. Compare the stored draft and profile baseline before writing; conflicts cancel queued saves and cannot overwrite newer work. Cancel clears queued autosaves; selecting New project automatically restores a readable unfinished draft directly into the chatbot without a Resume/Discard screen. Failed saves restore previous project and Foundation records and retain the conversation. Reject stale cross-tab profile, draft or Foundation changes. Preserve unreadable and future records with backup/discard recovery. First entry never auto-opens a saved profile or draft; New project restores readable drafts directly; only unreadable or unsupported saved data requires a recovery screen. One-use in-app navigation handoffs preserve normal browsing and explicit editor reloads. Browser refresh starts at choices. Component preview frames retain their requested page.&quot;,
+      &quot;Context and readiness&quot;: &quot;Product and platforms inform Grid &amp; Layout and Typography. Explicit brand color, spacing, corner-radius philosophy and icon style override recommendations. Confirmation authorizes the prepared Foundation settings and library defaults for remaining choices. Progress checkmarks reflect completed preparation or a verified save, never a simulated external AI request. All saved settings remain editable in Foundations; per-platform handoff guidance remains available.&quot;,
       &quot;Categories and identity&quot;: &quot;Dashboard describes a data-focused product; Desktop web describes delivery. All project details are required for new saves. Older profiles remain readable until explicitly edited. Identity remains excluded from handoff unless opted in.&quot;,
-      &quot;Handoff&quot;: &quot;Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example.&quot;
+      &quot;Handoff&quot;: &quot;Export all nine Foundations, effective values in both themes, rules, font dependencies, icon-reference assets and unresolved acceptance checks. Do not claim a published release or send an invitation from a local example.&quot;,
+      &quot;Review and edit saved setup&quot;: &quot;Project setup navigation opens project-setup.html, where the active project\u2019s eleven onboarding answers appear in Project details, About you and Design choices. Edit setup prefills the existing answers; Save changes validates and updates the same project, while Cancel preserves saved data. Project and identity edits do not reapply Foundation defaults. Changed brand, spacing, corners and icon choices patch only their corresponding Foundation records and preserve unrelated customizations. Respect unfinished onboarding drafts and cross-tab conflicts. New visits still enter through the welcome choices.&quot;
     }
   }
 }</code></pre></details>
 </section>
 <!-- END GENERATED CONTRACT -->
+</details>
+</section>
 </main>
 
 <script src="shell.js"></script>
 <script src="project-model.js"></script>
 <script src="experience.js"></script>
+<script src="onboarding-model.js"></script>
+<script src="onboarding.js"></script>
+<script src="welcome-mascot.js"></script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "views": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 900,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "height": 640,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 900,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "height": 640,
+      "aboveWelcome": true,
+      "centered": true,
+      "overflow": false,
+      "animations": 3
+    }
+  ],
+  "checks": [
+    "Pause and Play control the actual animations.",
+    "Whole-body sway changes over time without scaling or separating body parts.",
+    "Pointer movement produces a restrained whole-body tilt.",
+    "Reduced motion presents a static mascot.",
+    "New project opens the existing chatbot without mascot interference."
+  ],
+  "errors": []
+}

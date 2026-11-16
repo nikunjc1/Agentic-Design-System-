@@ -7,7 +7,7 @@
   // a Type x State matrix - mirroring how the flexible Button system's own
   // Live Preview matrix compares every type side by side on one page,
   // rather than one page per type.
-  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
 
   // Same spinner used by the flexible Button system (button-detail.js) -
   // currentColor so it self-adjusts to whichever type's own label color is
@@ -61,9 +61,9 @@
       name: "Primary Button 36px - Dual Icon",
       states: {
         rest: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, no border or shadow." },
-        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF (the overlay darkens the surface enough that white reads better here than Rest's computed color), no border." },
-        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
-        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:var(--on-brand-text);", desc: "Background the selected brand color with a 20% black overlay, label and icons in the on-fill text color (the overlay darkens the surface enough that white reads better here than Rest's computed color), no border." },
+        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:var(--on-brand-text);", desc: "Background the selected brand color with a 40% black overlay, label and icons in the on-fill text color, no border." },
+        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
         loading: { css: "background:var(--red-500);color:var(--button-primary-text);", desc: "Same background and label color as Rest - a button mid-request still reads as present, not unavailable the way Disabled does. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
@@ -72,9 +72,9 @@
       name: "Secondary Button 36px - Dual Icon",
       states: {
         rest: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background the page surface (white in light mode, near-black in dark), inside border 1px solid the selected brand color, label and icons the selected brand color, no shadow." },
-        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 20% black overlay, label and icons #FFFFFF, no border." },
-        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:#FFFFFF;", desc: "Background the selected brand color with a 40% black overlay, label and icons #FFFFFF, no border." },
-        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--red-500);color:var(--on-brand-text);", desc: "Background the selected brand color with a 20% black overlay, label and icons in the on-fill text color, no border." },
+        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--red-500);color:var(--on-brand-text);", desc: "Background the selected brand color with a 40% black overlay, label and icons in the on-fill text color, no border." },
+        focused: { css: "background:var(--red-500);color:var(--button-primary-text);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the selected brand color, label and icons a computed black/white contrast-safe color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
         loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
@@ -85,7 +85,7 @@
         rest: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--line-strong);", desc: "Background the page surface (white in light mode, near-black in dark), inside border 1px solid the theme's line color, label and icons the selected brand color, no shadow." },
         hover: { css: "background:var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background a lighter tint of the selected brand color, inside border 1px solid the selected brand color, label and icons the brand color (a lighter shade in dark mode, to stay readable against the tint)." },
         pressed: { css: "background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px var(--red-500);", desc: "Background a lighter tint of the selected brand color with a 10% black overlay, inside border 1px solid the selected brand color, label and icons the brand color (a lighter shade in dark mode) - slightly darker than Hover." },
-        focused: { css: "background:var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background a lighter tint of the selected brand color, label and icons the brand color (a lighter shade in dark mode), 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        focused: { css: "background:var(--red-tint);color:var(--color-focus-ring);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background a lighter tint of the selected brand color, label and icons the brand color (a lighter shade in dark mode), 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
         loading: { css: "background:var(--graphite-900);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--line-strong);", desc: "Same background, border and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
@@ -107,7 +107,7 @@
         rest: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color, no border or shadow." },
         hover: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color - same appearance as Rest." },
         pressed: { css: "background:transparent;color:var(--red-500);", desc: "Background fully transparent, label and icons the selected brand color - same appearance as Rest and Hover." },
-        focused: { css: "background:transparent;color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background fully transparent, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        focused: { css: "background:transparent;color:var(--red-500);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background fully transparent, label and icons the selected brand color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:transparent;color:var(--text-dim);", desc: "Background fully transparent, label and icons the theme's dim text color, no border, focus ring or shadow." },
         loading: { css: "background:transparent;color:var(--red-500);", desc: "Same appearance as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
@@ -115,23 +115,23 @@
     "approve-icon": {
       name: "Approve Button 36px - Dual Icon",
       states: {
-        rest: { css: "background:var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500), label and icons #FFFFFF, no border or shadow." },
-        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500) with a 20% black overlay, label and icons #FFFFFF, no border." },
-        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--green-500);color:#FFFFFF;", desc: "Background the fixed Approve green (--green-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
-        focused: { css: "background:var(--green-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Approve green (--green-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        rest: { css: "background:var(--green-500);color:var(--status-success-text);", desc: "Background the fixed Approve green (--green-500), label and icons in the on-fill text color, no border or shadow." },
+        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--green-500);color:var(--status-success-text);", desc: "Background the fixed Approve green (--green-500) with a 20% black overlay, label and icons in the on-fill text color, no border." },
+        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--green-500);color:var(--status-success-text);", desc: "Background the fixed Approve green (--green-500) with a 40% black overlay, label and icons in the on-fill text color, no border - darker than Hover." },
+        focused: { css: "background:var(--green-500);color:var(--status-success-text);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Approve green (--green-500), label and icons in the on-fill text color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--green-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
+        loading: { css: "background:var(--green-500);color:var(--status-success-text);", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     },
     "delete-icon": {
       name: "Delete Button 36px - Dual Icon",
       states: {
-        rest: { css: "background:var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500), label and icons #FFFFFF, no border or shadow." },
-        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500) with a 20% black overlay, label and icons #FFFFFF, no border." },
-        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--danger-500);color:#FFFFFF;", desc: "Background the fixed Delete red (--danger-500) with a 40% black overlay, label and icons #FFFFFF, no border - darker than Hover." },
-        focused: { css: "background:var(--danger-500);color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Delete red (--danger-500), label and icons #FFFFFF, 1px white inner border, 2px outside focus ring in the theme's focus color." },
+        rest: { css: "background:var(--danger-500);color:var(--status-danger-text);", desc: "Background the fixed Delete red (--danger-500), label and icons in the on-fill text color, no border or shadow." },
+        hover: { css: "background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),var(--danger-500);color:var(--status-danger-text);", desc: "Background the fixed Delete red (--danger-500) with a 20% black overlay, label and icons in the on-fill text color, no border." },
+        pressed: { css: "background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--danger-500);color:var(--status-danger-text);", desc: "Background the fixed Delete red (--danger-500) with a 40% black overlay, label and icons in the on-fill text color, no border - darker than Hover." },
+        focused: { css: "background:var(--danger-500);color:var(--status-danger-text);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", desc: "Background the fixed Delete red (--danger-500), label and icons in the on-fill text color, 1px white inner border, 2px outside focus ring in the theme's focus color." },
         disabled: { css: "background:var(--graphite-700);color:var(--text-dim);", desc: "Background a dimmed panel surface, label and icons the theme's dim text color, no border, focus ring or shadow." },
-        loading: { css: "background:var(--danger-500);color:#FFFFFF;", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
+        loading: { css: "background:var(--danger-500);color:var(--status-danger-text);", desc: "Same background and label color as Rest - still reads as present, not unavailable. Retain the label beside one leading spinner and omit the trailing icon; not clickable." }
       }
     }
   };
@@ -151,9 +151,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -237,7 +241,7 @@
     var lines = [];
     lines.push("Create a complete Dual Icon Button component system, covering all 7 types below, each with six states: Rest, Hover, Pressed, Focused, Disabled, Loading.");
     lines.push("");
-    lines.push("Default size: 122 x 36px (height 36px, 16px horizontal padding), corner radius 4px, horizontal layout, 8px gap between elements - also supports the full size scale (24/28/32/36/40/44/48/56px height, padding/font-size/icon-size scaling with it) and corner radius (0/4/8/12px/full pill), same as the rest of this Button system.");
+    lines.push("Default size: 122 x 36px (height 36px, 16px horizontal padding), corner radius 4px, horizontal layout, 8px gap between elements - also supports the full size scale (24/28/32/36/40/44/48/56px height, padding/font-size/icon-size scaling with it) and corner radius (0/2/4/6/8/12/16px/full pill), same as the rest of this Button system.");
     lines.push("Content: left chevron-down icon, label (Inter Medium, default \"Save\"), right chevron-down icon.");
     lines.push("");
     TYPES.forEach(function(typeKey){
@@ -281,7 +285,7 @@
     lines.push(".dualicon-btn{");
     lines.push("  display:inline-flex; align-items:center; justify-content:center;");
     lines.push("  width:auto; max-width:var(--dimension-320); border:none;");
-    lines.push('  font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500;');
+    lines.push('  font-family:var(--font-body); font-weight:var(--type-active-weight);');
     lines.push("  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer;");
     lines.push("}");
     lines.push(".dualicon-btn > span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }");
@@ -297,7 +301,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 4px */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 4px */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " */");
     radiiToEmit.forEach(function(radius){
       var suffix = radiusClassSuffix(radius);
@@ -355,7 +359,7 @@
     rest: { wrap: "background:var(--graphite-900);color:var(--red-500);border:1px solid var(--red-500);", divider: "background:var(--red-500);" },
     hover: { wrap: "background:var(--red-tint);color:var(--red-500);border:1px solid var(--red-500);", divider: "background:var(--red-500);" },
     pressed: { wrap: "background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--red-tint);color:var(--red-500);border:1px solid var(--red-500);", divider: "background:var(--red-500);" },
-    focused: { wrap: "background:var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px #FFFFFF;outline:2px solid var(--color-focus-ring);outline-offset:2px;", divider: "background:var(--red-500);" },
+    focused: { wrap: "background:var(--red-tint);color:var(--red-500);box-shadow:inset 0 0 0 1px var(--on-brand-text);outline:2px solid var(--color-focus-ring);outline-offset:2px;", divider: "background:var(--red-500);" },
     disabled: { wrap: "background:var(--graphite-700);color:var(--text-dim);border:1px solid var(--text-dim);", divider: "background:var(--text-dim);" },
     // Same background/border/label color as Rest (still reads as present, not
     // unavailable) - only the main action's leading slot becomes a spinner;
@@ -412,8 +416,8 @@
   function buildSplitCode(){
     var lines = [];
     lines.push("/* CTA With Dropdown - split button */");
-    lines.push(".splitcta{ display:inline-flex; align-items:stretch; width:var(--dimension-141); height:var(--dimension-36); border-radius:4px; overflow:hidden; box-sizing:border-box; }");
-    lines.push(".splitcta-main{ display:inline-flex; align-items:center; gap:var(--space-8); width:var(--dimension-105); padding:0 var(--space-16); border:none; background:transparent; color:inherit; font-weight:500; font-size:var(--type-body-size); line-height:20px; cursor:pointer; }");
+    lines.push(".splitcta{ display:inline-flex; align-items:stretch; width:var(--dimension-141); height:var(--dimension-36); border-radius:var(--radius-sm); overflow:hidden; box-sizing:border-box; }");
+    lines.push(".splitcta-main{ display:inline-flex; align-items:center; gap:var(--space-8); width:var(--dimension-105); padding:0 var(--space-16); border:none; background:transparent; color:inherit; font-weight:var(--type-active-weight); font-size:var(--type-body-size); line-height:20px; cursor:pointer; }");
     lines.push(".splitcta-divider{ width:var(--dimension-1); }");
     lines.push(".splitcta-trigger{ display:flex; align-items:center; justify-content:center; width:var(--dimension-36); padding:var(--space-8); border:none; background:transparent; color:inherit; cursor:pointer; }");
     lines.push("");

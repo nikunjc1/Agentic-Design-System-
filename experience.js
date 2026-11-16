@@ -37,11 +37,11 @@
       heading.append(...p.childNodes);
       p.replaceWith(heading);
     });
-    const headings = Array.from(main.querySelectorAll('section > h2,section > .panel-title-row > h2'));
+    const headings = Array.from(main.querySelectorAll('section > h2,section > .panel-title-row > h2')).filter(h=>file!=='principles.html'||!h.closest('[data-outline-skip],.ads-implementation-contract'));
     if (headings.length > 2) {
       const nav = el('nav', '', 'page-outline');
       nav.setAttribute('aria-label', 'On this page');
-      const group=el('div','','group-btn group-btn--outlined ads-tab-group');
+      const group=el('div','','group-btn group-btn--filled ads-tab-group');
       group.setAttribute('aria-label','Page sections');nav.append(group);
       const links = headings.map((h, i) => {
         h.id ||= 'section-' + (i + 1);
@@ -84,6 +84,23 @@
         });
       }, { root: main, rootMargin: '-15% 0px -70% 0px', threshold: 0 });
       sections.forEach(s => spy.observe(s));
+      // This strip scrolls horizontally once its tabs don't fit (.page-outline
+      // is overflow-x:auto; .ads-tab-group itself stays width:max-content so
+      // the outer nav is what actually scrolls - confirmed by testing
+      // scrollLeft directly, not assumed) - but nothing signaled that before:
+      // the last tab just stopped dead at the viewport edge, mid-label, with
+      // no fade, arrow or scrollbar to suggest there was more. A page with
+      // few sections never showed it; Accessibility's 11 and Design
+      // Principles' 10 did. Toggling a fade mask on whichever edge still has
+      // unscrolled content turns "looks cut off" into "reads as scrollable."
+      const updateScrollEdges = () => {
+        const max = nav.scrollWidth - nav.clientWidth;
+        nav.classList.toggle('has-overflow-start', nav.scrollLeft > 2);
+        nav.classList.toggle('has-overflow-end', nav.scrollLeft < max - 2);
+      };
+      updateScrollEdges();
+      nav.addEventListener('scroll', updateScrollEdges, { passive: true });
+      window.addEventListener('resize', updateScrollEdges);
     }
     // Persisted, not re-asked every page load - a visitor who intentionally
     // browses without setup was closing this exact message on every single
@@ -98,13 +115,14 @@
     // what "resets" the no-profile key, same as before.
     let bannerDismissed = false;
     try { bannerDismissed = localStorage.getItem(profile ? 'ads:setup-context-dismissed' : 'ads:setup-banner-dismissed') === '1'; } catch {}
-    if (!['new-project.html', 'settings.html'].includes(file) && !bannerDismissed) {
+    const guidedFoundation=new URLSearchParams(location.search).get('setup')==='1'&&M.FOUNDATION_STEPS.some(section=>section.file===file);
+    if (!['overview.html','new-project.html','project-setup.html','history.html','principles.html','md-export.html'].includes(file) && !guidedFoundation && !bannerDismissed) {
       const notice = el('section', '', 'setup-notice setup-context');
       notice.setAttribute('aria-label', 'Your design system');
       const copy = profile ? `${profile.project} · ${profile.productType === 'Other' ? profile.productOther : profile.productType} · ${profile.platforms.map(k => M.PLATFORMS[k].label).join(', ')}` : 'What are you creating? Set up your product, role and target platforms to get a tailored design-system brief.';
       notice.append(el('p', copy));
       const actions = el('div', '', 'setup-actions');
-      const setup = el('a', profile ? '' : 'Customize your system', 'btn btn-ghost btn-sm');
+      const setup = el('a', profile ? '' : 'Set up project', 'btn btn-ghost btn-sm');
       if (profile) {
         setup.classList.add('setup-edit');
         setup.setAttribute('aria-label', 'Edit setup');
@@ -113,7 +131,7 @@
         // Adapted with inherited color and accessible decoration attributes.
         setup.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
       }
-      setup.href = 'new-project.html';
+      setup.href = profile?'project-setup.html?edit=1':'new-project.html';
       if (!profile) actions.append(setup);
       if (profile || main.querySelector('.back-link')) {
         const detail = Boolean(main.querySelector('.back-link'));
@@ -156,8 +174,18 @@
       requestAnimationFrame(syncBannerHeight);
     }
     if (profile && main.querySelector('.back-link')) {
+      // Same bordered-accordion treatment as the MD Export category list
+      // (.export-category-details/.export-category-summary): display:flex
+      // on <summary> drops the native disclosure triangle, which the plain
+      // <details> version relied on and which rendered flush against the
+      // box's left edge with no inset - the same .chev SVG restores a
+      // clearly-inset, rotating indicator instead.
       const details = el('details', '', 'platform-guidance');
-      details.append(el('summary', 'Guidance for your target platforms'));
+      const summary = el('summary', 'Guidance for your target platforms', 'platform-guidance-summary');
+      const chev = el('span', '', 'chev');
+      chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      summary.append(chev);
+      details.append(summary);
       for (const key of profile.platforms) details.append(el('p', M.PLATFORMS[key].label + ': ' + M.PLATFORMS[key].guidance));
       (main.querySelector(':scope > .component-meta') || main.querySelector(':scope > .page-lede'))?.after(details);
     }
@@ -209,11 +237,19 @@
           // specific configured instance.
           const figmaBtn = el('button', '', 'btn-demo btn-demo--tertiary btn-demo--h32 is-icon-only');
           figmaBtn.type = 'button';
-          figmaBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
-          figmaBtn.setAttribute('aria-label', 'Draw ' + cardName + ' in Figma');
+          figmaBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" aria-hidden="true" focusable="false"><path d="M50 300c27.6 0 50-22.4 50-50v-50H50c-27.6 0-50 22.4-50 50s22.4 50 50 50z" fill="#0ACF83"/><path d="M0 150c0-27.6 22.4-50 50-50h50v100H50c-27.6 0-50-22.4-50-50z" fill="#A259FF"/><path d="M0 50C0 22.4 22.4 0 50 0h50v100H50C22.4 100 0 77.6 0 50z" fill="#F24E1E"/><path d="M100 0h50c27.6 0 50 22.4 50 50s-22.4 50-50 50h-50V0z" fill="#FF7262"/><path d="M200 150c0 27.6-22.4 50-50 50s-50-22.4-50-50 22.4-50 50-50 50 22.4 50 50z" fill="#1ABCFE"/></svg>';
+          figmaBtn.setAttribute('aria-label', 'Draw in Figma');
           figmaBtn.title = figmaBtn.getAttribute('aria-label');
-          figmaBtn.addEventListener('click', () => window.ADSFigmaBridge?.draw({ component: cardName, props: [], tokens: window.ADSFoundation.get().tokens }, figmaBtn));
+          figmaBtn.addEventListener('click', () => window.ADSFigmaBridge?.drawFromPage(card.dataset.detailHref,figmaBtn));
           copyRow.append(figmaBtn);
+          // Same contract as Draw in Figma, copied as a Claude Design prompt.
+          const claudeBtn = el('button', '', 'btn-demo btn-demo--tertiary btn-demo--h32 is-icon-only claude-design-action');
+          claudeBtn.type = 'button';
+          claudeBtn.innerHTML = window.ADSClaudeDesign?.mark || '';
+          claudeBtn.setAttribute('aria-label', 'Send ' + cardName + ' to Claude Design');
+          claudeBtn.title = 'Send to Claude Design';
+          claudeBtn.addEventListener('click', () => window.ADSClaudeDesign?.sendFromPage(card.dataset.detailHref, claudeBtn));
+          copyRow.append(claudeBtn);
         } else card.append(link);
       });
       main.querySelectorAll('.button-matrix-wrap').forEach(region => {
@@ -224,9 +260,7 @@
     });
     const roadmap = {
       'npm-package.html': ['NPM publishing is not connected', 'You can use this design system now by exporting its Markdown documentation. The package workflow below is a design reference.'],
-      'figma.html': ['Figma connection is not available yet', 'Use the foundation editors and export a Markdown handoff for your design team.'],
-      'ai-generator.html': ['Use this system with your AI tool', 'Export your product brief and component guides as Markdown, then attach the file to your AI tool with a description of the screen you want to build.'],
-      'history.html': ['Release history is a design reference', 'There are no published releases in this local workspace. Export the current working draft to keep a snapshot of your setup.']
+      'figma.html': ['Connect through the local Figma bridge', 'Run the local bridge and development plugin before pushing a saved component contract. This does not publish a Figma library.'],
     }[file];
     if (roadmap) {
       const section = el('section', '', 'setup-notice');
@@ -241,8 +275,6 @@
     // enough to fit a nav list; the full explanation stays on each page.
     const navStatus = {
       'npm-package.html': 'Mockup',
-      'ai-generator.html': 'Reference',
-      'history.html': 'Mockup',
     };
     document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
       const label = navStatus[link.getAttribute('href')];
@@ -264,243 +296,122 @@
     });
   }
 
-  function setupForm() {
-    const form = $('#projectSetup');
-    if (!form) return;
-    const status = $('#setupStatus');
-    const done = $('#setupDone');
-    form.querySelectorAll('input:not([type=checkbox]), select').forEach(input => { input.required = true; });
-    const field = key => form.elements.namedItem(key);
-    const populate = (id, values) => values.forEach(value => { const o = el('option', value); o.value = value; $(id).append(o); });
-    populate('#productType', M.PRODUCTS); populate('#role', M.ROLES);
-    for (const [key, p] of Object.entries(M.PLATFORMS)) {
-      const label = el('label', '', 'setup-option');
-      const input = el('input'); input.type = 'checkbox'; input.name = 'platforms'; input.value = key;
-      // Foundation audit NP05 - the fieldset itself carries
-      // aria-describedby="error-platforms", but a screen reader focusing
-      // one specific checkbox doesn't reliably re-announce the group's own
-      // description on every focus - each checkbox needs its own direct
-      // link to the error text, not just the group's.
-      input.setAttribute('aria-describedby', 'error-platforms');
-      label.append(input, document.createTextNode(p.label)); $('#platformOptions').append(label);
+  const readinessLabel=state=>({saved:'Saved',default:'Using defaults',partial:'Partly saved',recovery:'Needs recovery'}[state]);
+  const guidedHref=section=>section.file+'?setup=1';
+  function nextSetupTask(){const sections=M.foundationReadiness(localStorage);return {sections,next:sections.find(section=>section.state==='recovery')||sections.find(section=>section.state!=='saved'),saved:sections.filter(section=>section.state==='saved').length};}
+  function foundationJourney(){
+    if(new URLSearchParams(location.search).get('setup')!=='1')return;
+    const index=M.FOUNDATION_STEPS.findIndex(section=>section.file===file),main=$('main');if(index<0||!main)return;
+    const section=M.FOUNDATION_STEPS[index],next=M.FOUNDATION_STEPS[index+1],previous=M.FOUNDATION_STEPS[index-1];
+    const host=el('section','','setup-journey ads-no-clamp');host.setAttribute('aria-label','Guided Foundation setup');
+    host.append(el('p','Foundation '+(index+1)+' of 8 · '+section.label,'page-eyebrow'));
+    const heading=el('h2',profile?profile.project+' · Review '+section.label:'Review '+section.label);host.append(heading);
+    host.append(el('p',['grid-layout','typography','spacing'].includes(section.id)?'Your project recommendation is preselected where no saved choice exists. Review it, then save to keep it.':'Choose the settings for your project, then save to keep them. You can edit every saved choice later.'));
+    const progress=el('p','','setup-help');progress.id='guidedProgress';host.append(progress);
+    if(!profile){const note=el('p','No project details are saved. These are library defaults. ');const setup=el('a','Set up your project');setup.href='new-project.html';note.append(setup);host.append(note);}
+    const navigation=el('details'),summary=el('summary','View all Foundation steps'),list=el('ol','','guided-step-list');navigation.append(summary,list);
+    for(const [i,step]of M.FOUNDATION_STEPS.entries()){const li=el('li'),link=el('a',(i+1)+'. '+step.label);link.href=guidedHref(step);if(i===index)link.setAttribute('aria-current','step');li.append(link);list.append(li);}host.append(navigation);
+    const status=el('p','','setup-status');status.id='guidedStatus';status.setAttribute('role','status');status.tabIndex=-1;
+    const actions=el('nav','','setup-actions');actions.setAttribute('aria-label','Foundation setup navigation');
+    const back=el('a',previous?'Back: '+previous.label:'Back to project','btn btn-ghost');back.href=previous?guidedHref(previous):'new-project.html';
+    const forward=el('a','','btn btn-ghost');forward.id='guidedContinue';forward.href=next?guidedHref(next):'md-export.html?setup=1';
+    const exit=el('a','Project summary');exit.href='project-setup.html';actions.append(back,forward,exit);host.append(actions,status);
+    (main.querySelector('.page-lede')||main.querySelector('h1')).after(host);
+    function refresh(){
+      const rows=M.foundationReadiness(localStorage),saved=rows.filter(row=>row.state==='saved').length,current=rows[index],state=window.ADSFoundationEditor?.getState();
+      progress.textContent=saved+' of 8 Foundations saved · '+section.label+': '+readinessLabel(current.state)+'.';
+      forward.textContent=current.state==='saved'&&!state?.dirty?(next?'Continue to '+next.label:'Continue to handoff'):'Skip for now'+(next?' → '+next.label:' → Handoff');
+      const save=main.querySelector('[data-foundation-save]');if(save)save.textContent='Save & continue';
+      list.querySelectorAll('li').forEach((li,i)=>{let label=li.querySelector('span');if(!label){label=el('span','','setup-help');li.append(label);}label.textContent=' — '+readinessLabel(rows[i].state);});
     }
-    let draft = null;
-    try { draft = M.read(localStorage, M.DRAFT); } catch (e) { storageError = e.message; }
-    const initial = profile;
-    // Foundation audit NP01 - this page overwrites the one existing project
-    // profile, it does not create an isolated new one, and Foundation values
-    // (Colors, Spacing, etc.) are shared sitewide regardless - saying so here
-    // up front, not only in the sidebar's smaller print further down.
-    const existingNotice = $('#existingProfileNotice');
-    if (existingNotice && profile && typeof profile.project === 'string') {
-      existingNotice.hidden = false;
-      existingNotice.textContent = `You already have a saved project ("${profile.project}"). Continuing will replace its details - Foundation values (Colors, Spacing, Typography, etc.) are shared across this workspace and are not reset by this.`;
-    }
-    // Foundation audit NP03 - "A draft silently takes precedence over
-    // profile... no Resume/Discard/restore-saved control or timestamp
-    // exists." Only relevant when a draft AND a saved profile both exist
-    // and genuinely differ - if they already match, there's nothing to
-    // choose between.
-    const draftNotice = $('#draftProvenanceNotice');
-    let rawDraft=null;try {rawDraft=localStorage.getItem(M.DRAFT);}catch{}
-    if (draftNotice && rawDraft!==null) {
-      const compareKeys = ['project','productType','productOther','name','email','designation','role','roleOther','platforms'];
-      const differs = !draft||!profile||compareKeys.some(k => JSON.stringify(draft[k] ?? null) !== JSON.stringify(profile[k] ?? null));
-      if (differs) {
-        const when = draft?.updatedAt ? new Date(draft.updatedAt) : null;
-        const whenText = when && !isNaN(when) ? relativeTime(when) : 'an unknown time';
-        draftNotice.replaceChildren(document.createTextNode(draft?`You have an unsaved draft from ${whenText}. Choose Resume or Discard before editing. `:'This saved draft could not be read. It has been preserved. Export a backup or discard it to continue. '));
-        if(draft){const resume=el('button','Resume draft','btn btn-ghost');resume.type='button';resume.id='resumeDraftBtn';draftNotice.append(resume);}
-        const discard=el('button','Discard draft','btn btn-ghost');discard.type='button';discard.id='discardDraftBtn';draftNotice.append(discard);
-        const backup=el('button','Back up draft','btn btn-ghost');backup.type='button';backup.addEventListener('click',()=>downloadBackup(rawDraft,'project-draft-backup.json'));draftNotice.append(backup);
-        draftNotice.hidden = false;
-        $('#resumeDraftBtn')?.addEventListener('click', () => {populateSetup(draft);draftNotice.hidden = true;done.hidden=true;form.hidden=false;$('.setup-steps').hidden=false;show(1);field('project').focus();});
-        $('#discardDraftBtn').addEventListener('click', () => {
-          try { localStorage.removeItem(M.DRAFT); } catch {status.textContent='Draft could not be discarded. Your saved data is unchanged.';return;}
-          populateSetup(profile||{});
-          draftNotice.hidden = true;
-        });
-      }
-    }
-    function populateSetup(value){for(const key of ['project','productType','productOther','name','email','designation','role','roleOther'])field(key).value=typeof value[key]==='string'?value[key]:'';form.querySelectorAll('[name=platforms]').forEach(n=>{n.checked=Array.isArray(value.platforms)&&value.platforms.includes(n.value);});conditional();}
-    if (initial) populateSetup(initial);
-    if (storageError) status.textContent = storageError;
-    if(!profile){let rawProfile=null;try{rawProfile=localStorage.getItem(M.KEY);}catch{}
-      if(rawProfile!==null){const recovery=el('div','','setup-notice');recovery.setAttribute('role','group');recovery.setAttribute('aria-label','Saved project recovery');
-        const backup=el('button','Back up saved setup','btn btn-ghost');backup.type='button';backup.addEventListener('click',()=>downloadBackup(rawProfile,'project-profile-backup.json'));
-        const reset=el('button','Discard unreadable setup','btn btn-ghost');reset.type='button';reset.addEventListener('click',()=>{try{localStorage.removeItem(M.KEY);recovery.remove();status.textContent='Unreadable setup discarded. Foundation settings are unchanged.';}catch{status.textContent='Could not discard setup. Your saved data is unchanged.';}});recovery.append(backup,reset);form.before(recovery);
-      }
-    }
-    const collect = () => {
-      const p = Object.fromEntries(new FormData(form));
-      p.platforms = Array.from(form.querySelectorAll('[name=platforms]:checked'), n => n.value);
-      for (const key in p) if (typeof p[key] === 'string') p[key] = p[key].trim();
-      return p;
+    // Keep an unfinished preview on screen instead of losing it through a setup link.
+    main.addEventListener('click',event=>{const link=event.target.closest('.setup-journey a');if(!link||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;if(window.ADSFoundationEditor?.getState().dirty){event.preventDefault();status.textContent='Save your changes to continue, or select Cancel changes to keep your previous settings.';status.focus();}},true);
+    window.addEventListener('ads:foundation-editor-state',refresh);
+    window.addEventListener('ads:foundation-saved',()=>{window.ADSNavigation ? window.ADSNavigation.go(forward.href) : (location.href = forward.href);});
+    window.addEventListener('storage',refresh);refresh();
+  }
+  // Deleting a project is a type-the-name confirmation gate (the same
+  // pattern a destructive action like this needs everywhere - a plain
+  // "Are you sure?" button is too easy to click through without reading)
+  // in front of a soft-delete: M.deleteProject() archives the row rather
+  // than removing it, so a mis-typed-but-still-confirmed delete has a
+  // 7-day recovery window behind it, not just this one confirmation step.
+  function deleteProjectModal(onDeleted){
+    const overlay=$('#deleteProjectOverlay');if(!overlay)return()=>{};
+    const nameEl=$('#deleteProjectName'),input=$('#deleteProjectConfirmInput'),confirmBtn=$('#deleteProjectConfirm'),cancelBtn=$('#deleteProjectCancel'),form=$('#deleteProjectForm'),modalStatus=$('#deleteProjectStatus');
+    let pending=null,opener=null;
+    // Deleting is permanent from the user's point of view (there is no restore UI),
+    // so the dialog says so instead of promising a 7-day recovery window.
+    const copyEl=$('#deleteProjectCopy');
+    function setCopy(){if(!copyEl)return;copyEl.replaceChildren(document.createTextNode('This permanently removes '),nameEl,document.createTextNode(' and its saved Foundation settings. This cannot be undone. To confirm, type the project\u2019s name below.'));}
+    function close(restoreFocus=true){overlay.hidden=true;pending=null;form.reset();confirmBtn.disabled=true;modalStatus.textContent='';const target=opener;opener=null;if(restoreFocus&&target?.isConnected)target.focus();}
+    function sync(){confirmBtn.disabled=!pending||input.value!==pending.profile.project;}
+    function focusables(){return [...overlay.querySelectorAll('input,button,select,textarea,a[href]')].filter(n=>!n.disabled&&!n.hidden&&n.getClientRects().length);}
+    input.addEventListener('input',sync);
+    cancelBtn.addEventListener('click',()=>close());
+    overlay.addEventListener('click',event=>{if(event.target===overlay)close();});
+    document.addEventListener('keydown',event=>{
+      if(overlay.hidden)return;
+      if(event.key==='Escape'){close();return;}
+      if(event.key!=='Tab')return;
+      // Keep Tab inside the dialog (aria-modal does not do this by itself).
+      const items=focusables();if(!items.length)return;
+      const first=items[0],last=items[items.length-1],active=document.activeElement;
+      if(!overlay.contains(active)){event.preventDefault();first.focus();}
+      else if(event.shiftKey&&active===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&active===last){event.preventDefault();first.focus();}
+    });
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      if(!pending||input.value!==pending.profile.project)return;
+      try{M.deleteProject(localStorage,pending.id);const name=pending.profile.project;close(false);onDeleted(name);}
+      catch(error){modalStatus.textContent=error.message;}
+    });
+    return function open(row,trigger){
+      pending=row;opener=trigger||document.activeElement;setCopy();nameEl.textContent=row.profile.project;input.value='';confirmBtn.disabled=true;modalStatus.textContent='';
+      overlay.hidden=false;input.focus();
     };
-    function conditional() {
-      for (const key of ['product','role']) {
-        const select = field(key === 'product' ? 'productType' : 'role');
-        const other = field(key + 'Other');
-        other.closest('label').hidden = select.value !== 'Other';
-        other.disabled = select.value !== 'Other';
+  }
+  function projectHistory() {
+    const list=$('#projectHistoryList');if(!list)return;
+    const search=$('#projectSearch'),empty=$('#projectHistoryEmpty'),status=$('#projectHistoryStatus');
+    const openDeleteModal=deleteProjectModal(name=>{render();status.textContent='Deleted '+name+'. It has been permanently removed.';window.ADSFoundation?.apply?.();(search||status).focus();});
+    function render(){
+      list.replaceChildren();let rows;
+      const draftHost=$('#projectDraft');
+      if(draftHost){
+        draftHost.replaceChildren();let draft=null,issue='';try{draft=M.read(localStorage,M.DRAFT);}catch(error){issue=error.message;}
+        draftHost.hidden=!draft&&!issue;
+        const action=$('#projectHubAction');if(action){action.textContent=issue?'Review draft':draft?'Continue draft':'New project';action.href=draft||issue?'new-project.html?resume=1':'new-project.html?new=1';}
+        if(!draftHost.hidden){const copy=el('div');copy.append(el('strong',issue?'Your draft needs attention':'Unfinished project'),el('p',issue||draft.project||'Your answers are saved. Continue from where you left off.'));draftHost.append(copy);}
       }
-    }
-    let step = 1;
-    function show(next, focus = true) {
-      step = Math.max(1, Math.min(3, next));
-      form.querySelectorAll('[data-step]').forEach(n => { n.hidden = Number(n.dataset.step) !== step; });
-      document.querySelectorAll('.setup-steps li').forEach((n, i) => { if (i + 1 === step) n.setAttribute('aria-current','step'); else n.removeAttribute('aria-current'); });
-      $('#setupBack').hidden = step === 1;
-      $('#setupNext').textContent = step === 3 ? 'Save my design system' : 'Continue';
-      if (step === 3) review();
-      if (focus) { const h = form.querySelector(`[data-step="${step}"] h2`); h.tabIndex = -1; h.focus(); }
-    }
-    function writeSetupSummary(dl,p) {
-      dl.replaceChildren();
-      for (const [label, value] of [['Project',p.project], ['Product',p.productType === 'Other' ? p.productOther : p.productType], ['Platforms',p.platforms.map(k => M.PLATFORMS[k].label).join(', ')], ['Name',p.name || 'Not provided'], ['Email',p.email || 'Not provided'], ['Designation',p.designation || 'Not provided'], ['Role',p.role === 'Other' ? p.roleOther : p.role]]) dl.append(el('dt',label), el('dd',value));
-    }
-    function review() {
-      const p = collect(), dl = $('#setupReview');writeSetupSummary(dl,p);
-      let changes=$('#setupFoundationChanges');if(!changes){changes=el('section','','setup-foundation-changes');changes.id='setupFoundationChanges';dl.after(changes);}changes.replaceChildren(el('h3','Foundation recommendations'));
-      changes.append(el('p','Saved overrides are retained. Unsaved Foundations inherit the revised project recommendation. Review the before/after values below; customize each Foundation from its own editor.'));
-      const F=window.ADSFoundationModel,table=el('table'),head=el('thead'),body=el('tbody'),tr=el('tr');
-      const describe=(key,value)=>!value?'System default':key==='typography'?(value.platform||'Custom type scale').replace(/-/g,' '):key==='grid-layout'?`${value.columns} columns, ${value.gutter}px gutter (${value.system})`:value.system||'Custom settings';
-      for(const label of ['Foundation','Previous recommendation','New recommendation','Applied choice']){const cell=el('th',label);cell.scope='col';tr.append(cell);}head.append(tr);
-      for(const [key,label]of [['grid-layout','Grid & Layout'],['typography','Typography'],['spacing','Spacing']]){
-        const row=el('tr'),saved=window.ADSStorage.safeGet('ads:'+key),previous=F.contextualDefault(key,profile),next=F.contextualDefault(key,p);
-        row.append(el('td',label),el('td',describe(key,previous)),el('td',describe(key,next)),el('td',saved?'Saved override retained: '+describe(key,saved):'Inherited recommendation'));body.append(row);
-      }table.append(head,body);changes.append(table);
-    }
-    // Foundation audit NP05 - "add a summary" of what actually needs fixing,
-    // not just a generic "highlighted fields" pointer.
-    const FIELD_LABELS = { project: 'Project name', productType: 'Product type', productOther: 'Product description', platforms: 'Platforms', name: 'Your name', email: 'Email ID', designation: 'Designation', role: 'Your role', roleOther: 'Role description' };
-    function validate(keys) {
-      const errors = M.validate(collect());
-      form.querySelectorAll('[data-error]').forEach(n => { n.textContent = ''; });
-      form.querySelectorAll('[aria-invalid]').forEach(n => n.removeAttribute('aria-invalid'));
-      let first = null;
-      const invalidLabels = [];
-      for (const key of keys) if (errors[key]) {
-        form.querySelector(`[data-error="${key}"]`).textContent = errors[key];
-        const input = key === 'platforms' ? form.querySelector('[name=platforms]') : field(key);
-        input.setAttribute('aria-invalid','true'); first ||= input;
-        invalidLabels.push(FIELD_LABELS[key] || key);
+      try{rows=M.listProjects(localStorage);}catch(error){status.textContent=error.message;$('#projectHistoryCount').textContent='Projects unavailable';empty.hidden=true;return;}
+      status.textContent='';
+      const activeId=profile?M.projectId(profile):null;rows.sort((a,b)=>Number(b.id===activeId)-Number(a.id===activeId));
+      const query=search.value.trim().toLocaleLowerCase(),matches=rows.filter(row=>row.profile.project.toLocaleLowerCase().includes(query));
+      $('#projectHistoryCount').textContent=matches.length+' '+(matches.length===1?'project':'projects')+(query?' found':'');
+      for(const row of matches){
+        const card=el('article','','project-history-card'),copy=el('div'),heading=el('h2',row.profile.project),meta=el('p',[(row.profile.productType==='Other'?row.profile.productOther:row.profile.productType),row.profile.name||'Owner not provided'].join(' · '),'project-history-meta');
+        copy.append(heading,meta);const date=new Date(row.profile.updatedAt);
+        if(!isNaN(date)){const time=el('time','Updated '+date.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}),'setup-help');time.dateTime=date.toISOString();copy.append(time);}
+        const active=profile&&M.projectId(profile)===row.id;
+        if(active)copy.append(el('span','Active project','project-history-active'));
+        const open=el('button','Open project','btn btn-ghost');open.type='button';open.setAttribute('aria-label','Open '+row.profile.project);
+        open.addEventListener('click',()=>{try{if(!active)M.openProject(localStorage,row.id);window.ADSNavigation ? window.ADSNavigation.go('project-setup.html') : (location.href = 'project-setup.html');}catch(error){status.textContent=error.message;}});
+        const del=el('button','Delete','btn btn-ghost');del.type='button';del.setAttribute('aria-label','Delete '+row.profile.project);
+        del.addEventListener('click',()=>openDeleteModal(row,del));
+        const actions=el('div','','project-card-actions');actions.append(open,del);
+        if(active){const {next,saved}=nextSetupTask();copy.append(el('p',saved+' of 8 Foundations saved','setup-help'));const action=el('a',next?'Continue with '+next.label:'Export project handoff','btn btn-primary');action.id='projectStartAction';action.href=next?guidedHref(next):'md-export.html?setup=1';actions.append(action);}
+        card.append(copy,actions);list.append(card);
       }
-      if (first) { status.textContent = `Please review: ${invalidLabels.join(', ')}.`; first.focus(); return false; }
-      status.textContent = ''; return true;
+      empty.hidden=matches.length!==0;
+      $('#projectHistoryEmptyTitle').textContent=query?'No matching projects':'No saved projects yet';
+      $('#projectHistoryEmptyCopy').textContent=query?'Try another project name or clear your search.':'Choose New project above to create your first design system.';
+      if($('#clearProjectSearch'))$('#clearProjectSearch').hidden=!query;
     }
-    const firstKeys = ['project','productType','productOther','platforms'];
-    const secondKeys = ['name','email','designation','role','roleOther'];
-    conditional();
-    // Foundation audit NP05 - "draft-save messages replace error status
-    // while typing": this used to write to the same #setupStatus element
-    // validate() uses, so correcting one invalid field immediately wiped
-    // out the "please review" guidance for every other still-invalid field
-    // the moment any input event fired. A separate element for save
-    // feedback keeps validation guidance on screen until it's actually
-    // resolved by a real validate() pass, not merely overwritten by typing.
-    const draftStatus = $('#draftSaveStatus');
-    form.addEventListener('input', () => {
-      conditional();
-      if(draftNotice&&!draftNotice.hidden){draftStatus.textContent='Choose Resume or Discard to preserve the existing draft before saving new edits.';return;}
-      // Foundation audit NP03 - a timestamp here is what lets the
-      // draft/profile provenance notice below say how stale a resumed
-      // draft actually is, instead of just that one exists.
-      try { localStorage.setItem(M.DRAFT, JSON.stringify({...collect(),version:2,updatedAt:new Date().toISOString()})); draftStatus.textContent = 'Draft saved on this browser.'; }
-      catch { draftStatus.textContent = 'Browser storage is unavailable. Keep this page open while completing setup.'; }
-    });
-    $('#setupBack').addEventListener('click', () => { location.hash = 'step-' + (step - 1); });
-    window.addEventListener('hashchange', () => {
-      // Back/forward after a completed save used to leave the success
-      // screen visible while the step indicator above it silently moved -
-      // two different states on screen at once. Treat any step hash as a
-      // real request to resume editing: the field values are all still
-      // sitting in the (merely hidden) form, so this is a genuine re-show,
-      // not a reset.
-      if (!done.hidden) return;
-      const requested = Number(location.hash.match(/^#step-([123])$/)?.[1] || 1);
-      if (requested > 1 && !validate(firstKeys)) { show(1,false); history.replaceState(null,'','#step-1'); return; }
-      if (requested > 2 && !validate(secondKeys)) { show(2,false); history.replaceState(null,'','#step-2'); return; }
-      show(requested);
-    });
-    // A resumed draft starts at the first step so required fields are always reviewable.
-    const requestedStep=Number(location.hash.match(/^#step-([123])$/)?.[1]||1);
-    const initialStep=requestedStep>1&&!Object.keys(M.validate(collect())).some(k=>firstKeys.includes(k))?(requestedStep===3&&!Object.keys(M.validate(collect())).some(k=>secondKeys.includes(k))?3:2):1;
-    history.replaceState(null,'','#step-'+initialStep); show(initialStep,false);
-    // Every role beyond the 2 that already routed somewhere real now also
-    // gets its own concrete first task, pointed at a page that genuinely
-    // answers it (the release contract/known-gaps sections added to
-    // accessibility.html are real content, not invented for this).
-    const ROLE_NEXT = {
-      'Developer': ['components.html', 'Explore components', 'Compare a component’s Machine View against its saved Foundation tokens before wiring it up - names and values should match exactly.'],
-      'Product Manager': ['templates.html', 'Explore templates', 'Check Grid & Layout’s Breakpoints tab for what "responsive" concretely means in this system before writing it into a requirement.'],
-      'Design System Lead': ['accessibility.html', 'Review the release contract', 'Read the Foundation release contract (Accessibility page) for this system’s compatibility and deprecation rules before changing any token.'],
-      'QA / Accessibility': ['accessibility.html', 'Review known gaps', 'Start with the Accessibility guide’s "Known gaps - not yet done" section - these are the areas still needing verification.'],
-      'Designer': ['foundations.html#colors', 'Customize foundations', 'Start with Colors and Typography, then review the independent Grid, Spacing, Radius and interaction contracts before designing components.']
-    };
-    const DEFAULT_NEXT = ['foundations.html#colors', 'Customize foundations', 'Explore the Foundation pages and customize what applies to your product - every value stays editable afterward.'];
-    // Informational readiness, not a gate - every Foundation page already
-    // lets Save/export happen at any completion state, and this list
-    // follows that same rule rather than inventing a new blocking one.
-    const FOUNDATION_SECTIONS = [['colors','Colors'], ['grid-layout','Grid & Layout'], ['typography','Typography'], ['spacing','Spacing'], ['radius','Radius'], ['borders','Borders'], ['shadows','Shadows'], ['icons','Icons'],['ai','AI & Agents']];
-    function renderReadiness() {
-      const list = $('#foundationReadiness'); if (!list) return;
-      list.replaceChildren();
-      FOUNDATION_SECTIONS.forEach(([key, label]) => {
-        const records=(FOUNDATION_TOKEN_MAP[key]||[]).map(tokenKey=>{try{return window.ADSFoundationModel.inspectRecord(tokenKey,localStorage.getItem('ads:'+tokenKey));}catch{return {status:'unavailable'};}});
-        const invalid=records.some(r=>['invalid','corrupt','future','unavailable'].includes(r.status));
-        const configured=!invalid&&records.some(r=>['valid','migrated'].includes(r.status));
-        const li = el('li'); li.dataset.done = String(configured);
-        const link=el('a',label);link.href=key==='colors'?'foundations.html':key==='ai'?'ai-foundation.html':key+'.html';
-        li.append(el('span','','readiness-dot'),link,document.createTextNode(' – ' + (invalid?'Needs recovery':key==='ai'?'Documented examples; no live agent':configured?'Valid saved settings; acceptance not verified':'Resolved default; acceptance not verified')));
-        list.append(li);
-      });
-    }
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      if(draftNotice&&!draftNotice.hidden){status.textContent='Resume or discard the existing draft before continuing.';draftNotice.querySelector('button')?.focus();return;}
-      if (step < 3) {
-        if (!validate(step === 1 ? firstKeys : secondKeys)) return;
-        location.hash = 'step-' + (step + 1); return;
-      }
-      // Final submit re-checks BOTH steps' keys, not just this step's own
-      // (secondKeys) - reaching step 3 only proves firstKeys passed at
-      // whatever earlier moment the hash first advanced past step 1, not
-      // that it still does now. M.save() would catch a stale firstKeys
-      // failure anyway (it validates everything), but only this routes
-      // the user back to the actual invalid step instead of a generic
-      // "Could not save" message pointing at nothing on screen.
-      if (!validate(firstKeys)) { location.hash = 'step-1'; return; }
-      if (!validate(secondKeys)) { location.hash = 'step-2'; return; }
-      try { profile = M.save(localStorage, collect()); }
-      catch (error) { status.textContent = 'Could not save: ' + error.message + ' Your entries are still available here.'; return; }
-      window.ADSFoundation.apply();
-      // A previously dismissed context banner is for the old project summary -
-      // saving (first setup or a later edit) clears it so the banner comes
-      // back once elsewhere in the system to confirm the new one.
-      try { localStorage.removeItem(M.DRAFT); localStorage.setItem('ads:welcome-seen','1'); localStorage.removeItem('ads:setup-context-dismissed'); } catch {}
-      form.hidden = true; $('.setup-steps').hidden = true;
-      done.hidden = false;
-      $('#savedProjectName').textContent = profile.project;
-      writeSetupSummary($('#savedSetupReview'),profile);
-      const [, , task] = ROLE_NEXT[profile.role] || DEFAULT_NEXT;
-      $('#recommendedNext').href = 'foundations.html#colors'; $('#recommendedNext').textContent = 'Set up foundations';
-      $('#roleTaskText').textContent = task;
-      renderReadiness();
-      done.querySelector('h2').focus();
-    });
-    const editSetup=el('button','Edit project setup','btn btn-ghost');editSetup.type='button';editSetup.id='editProjectSetup';
-    done.querySelector('.setup-actions').append(editSetup);
-    const cancelEdit=el('button','Cancel changes','btn btn-ghost');cancelEdit.type='button';cancelEdit.id='cancelProjectEdit';cancelEdit.hidden=!profile;form.querySelector('.setup-actions').append(cancelEdit);
-    cancelEdit.addEventListener('click',()=>{try{localStorage.removeItem(M.DRAFT);location.reload();}catch{status.textContent='Could not discard the draft. Your saved setup is unchanged.';}});
-    editSetup.addEventListener('click',()=>{populateSetup(profile);done.hidden=true;form.hidden=false;cancelEdit.hidden=false;$('.setup-steps').hidden=false;history.replaceState(null,'','#step-1');show(1);});
-    if(profile){
-      form.hidden=true;$('.setup-steps').hidden=true;done.hidden=false;
-      $('#savedProjectName').textContent=profile.project;
-      writeSetupSummary($('#savedSetupReview'),profile);
-      const [,,task]=ROLE_NEXT[profile.role]||DEFAULT_NEXT;
-      $('#recommendedNext').href='foundations.html#colors';$('#recommendedNext').textContent='Set up foundations';$('#roleTaskText').textContent=task;renderReadiness();
-    }
+    $('#clearProjectSearch')?.addEventListener('click',()=>{search.value='';render();search.focus();});
+    search.addEventListener('input',render);render();
+    window.addEventListener('storage',event=>{if(event.key===null||[M.KEY,M.HISTORY,M.DRAFT,...M.PROJECT_FOUNDATIONS].includes(event.key)){try{profile=M.read(localStorage);}catch{profile=null;}render();}});
   }
 
   const TOKEN_KEYS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','radius','border','border-states','shadow','grid-layout','icons','sizing','units','data-format'];
@@ -555,6 +466,10 @@
   // parsed from that instead of changing the generated catalog file.
   // Listing/Tab-kind docs don't have this breadcrumb at all and return
   // null, which callers treat as "not a component, don't filter it."
+  // (Figma Export's own orchestration script reads the same breadcrumb
+  // convention independently - adding a shared module here would mean
+  // threading a new <script> tag onto all 159 pages that load this file,
+  // for one small, stable ~10-line regex; duplicated deliberately instead.)
   const COMPONENT_CATEGORY_PATTERN = /^Components · ([^·\n]+) · /;
   function docCategory(doc) {
     const m = COMPONENT_CATEGORY_PATTERN.exec(doc.markdown);
@@ -565,56 +480,12 @@
   // .system-card grid with a "View component guide" CTA) 1:1, except
   // Actions. Button has 8 style-variant pages crawled into the catalog,
   // but components.html's own Button section only ever shows 2 cards -
-  // data-system="primary" -> button-primary.html and
-  // data-system="primary-icon" -> button-primary-icon.html - so those
-  // are Button's real two options, relabeled here to match what the
-  // card itself is called rather than the catalog's generic doc title.
-  const COMPONENT_GROUPS = {
-    Actions: [
-      { label: 'Primary', match: file => file === 'button-primary.html' },
-      { label: 'Primary Icon', match: file => file === 'button-primary-icon.html' },
-    ],
-  };
-  // The other 6 button-*.html files (ghost, link, neutral, secondary,
-  // tertiary, destructive) are real, full pages, not stubs - but none of
-  // them has a listing-screen card anywhere. Two (ghost, link) have zero
-  // inbound links on the whole site; the other four are linked only from
-  // guidelines.html's own reference table, a documentation page, not a
-  // listing screen. Excluded from this picker for the same reason the
-  // other 8-Button-items weren't offered individually: nothing here
-  // should be selectable that a user can't actually reach from a real
-  // listing screen.
-  const EXCLUDED_FILES = new Set([
-    'button-ghost.html', 'button-link.html', 'button-neutral.html',
-    'button-secondary.html', 'button-tertiary.html', 'button-destructive.html',
-  ]);
-  // One collapsed <details> per category, built from the catalog itself
-  // (not hand-written) so this can't drift out of sync with it - each
-  // summary carries its own "select whole category" checkbox next to the
-  // native disclosure triangle, and individual per-component checkboxes
-  // sit inside, letting the user pick components one at a time instead of
-  // only ever including or excluding a whole category.
   function buildComponentCategoryGroups(container, onChange) {
-    const byCategory = new Map(CATEGORY_ORDER.map(c => [c, []]));
-    for (const doc of window.ADSDocsCatalog || []) {
-      const cat = docCategory(doc);
-      if (cat && byCategory.has(cat)) byCategory.get(cat).push(doc);
-    }
+    const manifest = window.ADSComponentManifest.buildCatalogManifest(window.ADSDocsCatalog || []);
     const componentChecks = [];
-    for (const [category, docs] of byCategory) {
-      if (!docs.length) continue;
-      // Collapse any defined groups (e.g. Button's 2 real options) into
-      // one item each; every doc not claimed by a group and not excluded
-      // stays its own item, which is every doc in every category except
-      // Actions.
-      const claimed = new Set();
-      const items = (COMPONENT_GROUPS[category] || []).map(group => {
-        const files = docs.filter(d => group.match(d.file)).map(d => d.file);
-        files.forEach(f => claimed.add(f));
-        return { label: group.label, files };
-      }).filter(item => item.files.length);
-      for (const doc of docs) if (!claimed.has(doc.file) && !EXCLUDED_FILES.has(doc.file)) items.push({ label: doc.title, files: [doc.file] });
-
+    for (const category of CATEGORY_ORDER) {
+      const items = manifest.filter(item => item.category === category).map(item => ({label:item.name, files:item.files}));
+      if (!items.length) continue;
       const details = el('details', '', 'export-category-details');
       const summary = el('summary', '', 'export-category-summary');
       const selectAllLabel = el('label', '', 'setup-option');
@@ -629,7 +500,10 @@
       // down open), instead of trying to recover the native marker.
       const chev = el('span', '', 'chev');
       chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-      summary.append(selectAllLabel, el('span', `(${items.length})`, 'export-category-count'), chev);
+      const count=el('span','','export-category-count');
+      summary.append(el('span',category), count, chev);
+      selectAll.setAttribute('aria-label','Select all '+category+' components');
+      selectAllLabel.lastChild.textContent='Select all '+category;
       details.append(summary);
       const options = el('div', '', 'export-category-options');
       const checks = items.map(item => {
@@ -641,15 +515,17 @@
         componentChecks.push(input);
         return input;
       });
-      details.append(options);
+      details.append(selectAllLabel,options);
       container.append(details);
       const syncSelectAll = () => {
         const checkedCount = checks.filter(c => c.checked).length;
         selectAll.checked = checkedCount === checks.length;
         selectAll.indeterminate = checkedCount > 0 && checkedCount < checks.length;
+        count.textContent=checkedCount+' / '+checks.length+' selected';
       };
       selectAll.addEventListener('click', (e) => e.stopPropagation());
-      selectAll.addEventListener('change', () => { checks.forEach(c => c.checked = selectAll.checked); onChange(); });
+      selectAll.addEventListener('change', () => { checks.forEach(c => c.checked = selectAll.checked); syncSelectAll();onChange(); });
+      container.addEventListener('ads:selection-change',syncSelectAll);syncSelectAll();
       checks.forEach(c => c.addEventListener('change', () => { syncSelectAll(); onChange(); }));
     }
     return componentChecks;
@@ -661,16 +537,19 @@
     const selector = $('#exportScope'), identity = $('#includeIdentity');
     const foundationChecks = Array.from(document.querySelectorAll('.export-foundation-check'));
     const componentChecks = buildComponentCategoryGroups($('#exportComponentGroups'), () => generate());
-    const requestedPage = new URLSearchParams(location.search).get('page');
+    const requestedGuide = new URLSearchParams(location.search).get('page');
+    const requestedPage = ({'patterns.html':'overview.html','templates.html':'overview.html','values.html':'principles.html','ai-generator.html':'md-export.html','figma-export.html':'md-export.html','settings.html':'overview.html'})[requestedGuide] || requestedGuide;
     if (requestedPage && /^[a-z0-9-]+\.html$/.test(requestedPage)) {
-      const option = el('option', 'Brief + the selected page guide'); option.value = 'page';
+      const guide=(window.ADSDocsCatalog||[]).find(d=>d.file===requestedPage);
+      const option = el('option', 'Brief + '+(guide?.title||'selected guide')); option.value = 'page';
       selector.prepend(option); selector.value = 'page';
     }
     async function generate() {
       if (busy) return;
       busy = true; download.disabled = true; copy.disabled = true; selector.disabled = true; identity.disabled = true;
       foundationChecks.forEach(c => c.disabled = true); componentChecks.forEach(c => c.disabled = true);
-      status.textContent = 'Preparing your Markdown…';
+      status.textContent = 'Preparing your Markdown…';status.dataset.state='working';preview.setAttribute('aria-busy','true');
+      updateSelectionSummary();
       try {
         profile=M.read(localStorage);
         let docs = [];
@@ -691,6 +570,7 @@
           // unrelated documentation the user didn't ask to exclude.
           const allowedFiles = new Set(componentChecks.filter(c => c.checked).flatMap(c => JSON.parse(c.dataset.files)));
           if(selector.value !== 'page') docs = docs.filter(d => docCategory(d) === null || allowedFiles.has(d.file));
+          if(selector.value==='components'&&!docs.length)throw new Error('Choose at least one component, or switch to Project brief and foundations.');
         }
         // Each checkbox picks a whole Foundations tab (e.g. "colors" also
         // pulls in the bg/status/neutral/text theme-pair values saved
@@ -706,16 +586,28 @@
         const includedComponentCount = docs.filter(d=>docCategory(d)!==null).length;
         const componentSummary = selector.value !== 'context' ? `${includedComponentCount} component guides · ` : '';
         status.textContent = `${foundationSummary}${componentSummary}${docs.length ? docs.length + ' documentation pages · ' : ''}${Math.ceil(new Blob([preview.value]).size / 1024)} KB · Current local draft. ${identity.checked ? 'Includes contact details.' : 'Contact details excluded.'}`;
-        download.disabled = false; copy.disabled = false;
-      } catch (error) { preview.value = ''; status.textContent = error.message; }
+        download.disabled = false; copy.disabled = false;status.dataset.state='ready';
+      } catch (error) { preview.value = ''; status.textContent = error.message;status.dataset.state='error'; }
       finally {
         busy = false; selector.disabled = false; identity.disabled = false;
         foundationChecks.forEach(c => c.disabled = false); componentChecks.forEach(c => c.disabled = false);
-        const showComponents=['all','components'].includes(selector.value);
-        $('#exportComponentGroups').hidden=!showComponents;
-        $('#exportComponentGroups').previousElementSibling?.toggleAttribute('hidden',!showComponents);
+        const showComponents=new URLSearchParams(location.search).get('format')==='figma'||['all','components'].includes(selector.value);
+        $('#exportComponents').hidden=!showComponents;preview.removeAttribute('aria-busy');
+        updateSelectionSummary();
       }
     }
+    function updateSelectionSummary(){
+      $('#foundationSelectionCount').textContent=foundationChecks.filter(c=>c.checked).length+' / '+foundationChecks.length+' selected';
+      $('#componentSelectionCount').textContent=componentChecks.filter(c=>c.checked).length+' of '+componentChecks.length+' selected. Filtering does not change your selections.';
+      const context=$('#exportProjectContext');context.replaceChildren();context.append(document.createTextNode(profile?profile.project+' · Saved settings are used where available. ':'No project selected. You can export library defaults. '));const setup=el('a',profile?'Review project setup':'Set up a project');setup.href=profile?'project-setup.html':'new-project.html';context.append(setup);
+      $('#exportScopeHelp').textContent=selector.value==='page'?'Includes the selected guide with your project context.':selector.value==='context'?'Your product context, platform guidance and resolved foundation settings.':selector.value==='components'?'Includes the component guides you select below.':'Includes non-component documentation and the component guides you select below.';
+    }
+    for(const [id,checks,checked]of [['selectAllFoundations',foundationChecks,true],['clearFoundations',foundationChecks,false],['selectAllComponents',componentChecks,true],['clearComponents',componentChecks,false]])$("#"+id).addEventListener('click',()=>{checks.forEach(c=>c.checked=checked);$('#exportComponentGroups').dispatchEvent(new Event('ads:selection-change'));generate();});
+    $('#exportComponentSearch').addEventListener('input',event=>{
+      const query=event.target.value.trim().toLocaleLowerCase();let matches=0;
+      for(const group of $('#exportComponentGroups').children){let found=0;for(const label of group.querySelectorAll('.export-component-option')){const match=label.textContent.toLocaleLowerCase().includes(query);label.hidden=!match;if(match)found++;}group.hidden=found===0;matches+=found;if(query){if(!('beforeSearch' in group.dataset))group.dataset.beforeSearch=String(group.open);if(found)group.open=true;}else if('beforeSearch' in group.dataset){group.open=group.dataset.beforeSearch==='true';delete group.dataset.beforeSearch;}}
+      $('#componentSearchEmpty').hidden=matches>0;
+    });
     $('#refreshMarkdown').addEventListener('click', generate);
     selector.addEventListener('change', generate); identity.addEventListener('change', generate);
     foundationChecks.forEach(c => c.addEventListener('change', generate));
@@ -735,16 +627,6 @@
       if(event.key===null||event.key===M.KEY||TOKEN_KEYS.some(key=>event.key==='ads:'+key))generate();
     });
     generate();
-  }
-  function settings() {
-    const summary = $('#profileSummary'); if (!summary) return;
-    // Older saved profiles may omit identity fields; avoid empty separators.
-    const refreshSummary=()=>{
-      try {profile=M.read(localStorage);storageError='';}catch(error){profile=null;storageError=error.message;}
-      summary.textContent = storageError || (profile ? [profile.project, profile.name, profile.designation, profile.role].filter(Boolean).join(' · ') : 'No project setup saved yet.');
-    };
-    summary.setAttribute('role','status');refreshSummary();
-    window.addEventListener('storage',event=>{if(event.key===null||event.key===M.KEY)refreshSummary();});
   }
   // Machine View schema contract (systemwide, every page's Machine View -
   // static auto-generated ones below and every page-specific dynamic one
@@ -834,7 +716,7 @@
         if (node.nodeType === Node.TEXT_NODE) { parts.push(node.textContent); return; }
         if (node.nodeType !== Node.ELEMENT_NODE) return;
         const tag = node.tagName.toLowerCase();
-        if (SKIP_TAGS.has(tag)) return;
+        if (SKIP_TAGS.has(tag) || node.hasAttribute('data-markdown-skip')) return;
         if (node.classList && (node.classList.contains('md-export-panel') || node.classList.contains('page-outline') || node.classList.contains('setup-notice'))) return;
         if (/^h[1-3]$/.test(tag)) parts.push('\n\n' + '#'.repeat(Number(tag[1])) + ' ');
         else if (tag === 'li') parts.push('\n- ');
@@ -863,7 +745,8 @@
       const status = $('#pageMarkdownStatus');
       const done = () => { status.textContent = 'Copied to clipboard'; setTimeout(() => { status.textContent = ''; }, 2500); };
       window.ADSClipboard.copy(output.textContent).then(done).catch(() => {
-          status.textContent = 'Copy failed - select the text above and copy manually.';
+          const details=output.closest('details');if(details)details.open=true;output.closest('pre')?.focus();
+          status.textContent = 'Copy failed. Open the Markdown preview and copy the text manually.';
       });
     });
   }
@@ -875,7 +758,16 @@
   // "prefer this order, else pick whichever has the most space" fallback,
   // and edges are clamped so the tooltip never renders off-screen.
   function smartTooltips() {
-    const selector = '.btn-demo.is-icon-only[aria-label], .component-open-link[aria-label]';
+    // "Draw in Figma" (foundation-runtime.js) is the one icon-only control
+    // sitewide built as .btn.btn-ghost rather than .btn-demo - it sits in
+    // .panel-title-actions beside text buttons of that same .btn family, not
+    // the component preview/stage row .btn-demo belongs to - so the
+    // .btn-demo-only selector silently skipped it: a real aria-label and
+    // title were always there, but hovering it never showed this shared
+    // tooltip the way every .btn-demo icon-only control does. Matching
+    // .btn.is-icon-only here (not just .btn-demo) is what the "every
+    // icon-only control sitewide" comment above already claimed.
+    const selector = '.btn-demo.is-icon-only[aria-label], .btn.is-icon-only[aria-label], .component-open-link[aria-label]';
     const gap = 8, edgePadding = 8, placementOrder = ['top', 'bottom', 'right', 'left'];
     const tip = el('div', '', 'dynamic-tooltip');
     tip.setAttribute('role', 'tooltip');
@@ -917,7 +809,7 @@
     window.addEventListener('scroll', () => { if (activeAnchor) place(activeAnchor); }, true);
     window.addEventListener('resize', () => { if (activeAnchor) place(activeAnchor); });
   }
-  function init() { shared(); setupForm(); exportPage(); settings(); autoMachineViews(); initPageMarkdownExport(); smartTooltips(); }
+  function init() { shared(); foundationJourney(); projectHistory(); exportPage(); autoMachineViews(); initPageMarkdownExport(); smartTooltips(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

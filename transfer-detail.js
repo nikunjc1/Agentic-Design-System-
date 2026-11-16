@@ -17,6 +17,10 @@
     { key: "rest", label: "Rest" },
     { key: "hover", label: "Hover" },
     { key: "focus", label: "Focused" },
+    { key: "loading", label: "Loading" },
+    { key: "empty", label: "Empty" },
+    { key: "noresults", label: "No Results" },
+    { key: "error", label: "Error" },
     { key: "disabled", label: "Disabled" }
   ];
 
@@ -27,7 +31,7 @@
 
   // Checkmark icon - reuses this system's real checkbox SVG treatment
   // (see checkbox-detail.js's CHECK_ICON_SVG) rather than inventing a new one.
-  var CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  var CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
 
   // Size -> panel list height (px) - a literal lookup, not formula-derived,
   // same convention as SIZE_MAP in modal-detail.js, so Copy Code reproduces
@@ -82,10 +86,14 @@
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key]);
     });
     lines.push("");
-    lines.push("States (4):");
+    lines.push("States (8):");
     lines.push("- Rest: default appearance.");
     lines.push("- Hover: the first source item shows a hover background.");
     lines.push("- Focused: the right (\">\") transfer button shows a visible focus ring.");
+    lines.push("- Loading: a spinner replaces each panel's list while data is being fetched or updated.");
+    lines.push("- Empty: each panel's list shows a contextual \"No items\" message instead of rows.");
+    lines.push("- No Results: each panel's list shows a \"No matching items found\" message - relevant to the With Search type, where a query matched nothing; shown here for both types for a consistent state set.");
+    lines.push("- Error: an error banner appears above the panels explaining that an operation failed, with an optional retry action.");
     lines.push("- Disabled: the whole widget at reduced opacity (40%), checkboxes and arrow buttons non-interactive.");
     lines.push("");
     lines.push("Size: " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " - controls each panel's list height (" + (SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size]) + "px). Other options: " + SIZE_OPTIONS.map(function(o){ return o.label + " (" + SIZE_MAP[o.value] + "px)"; }).join(" / ") + ".");
@@ -106,8 +114,8 @@
     lines.push(".transfer-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push("");
     lines.push(".transfer-demo-column{ flex:1 1 0; min-width:var(--dimension-140); display:flex; flex-direction:column; background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); overflow:hidden; }");
-    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:var(--space-8) var(--space-12); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); font-weight:600; color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push('.transfer-demo-search{ margin:var(--space-8); padding:var(--space-6) var(--space-8); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); color:var(--text-hi); }');
+    lines.push('.transfer-demo-column-title{ display:flex; justify-content:space-between; padding:var(--space-8) var(--space-12); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); color:var(--text-hi); background:var(--graphite-800); border-bottom:1px solid var(--line); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.transfer-demo-search{ margin:var(--space-8); padding:var(--space-6) var(--space-8); font-family:var(--font-body); font-size:var(--type-caption-size); background:var(--graphite-800); border:1px solid var(--line-strong); border-radius:var(--radius-sm); color:var(--text-hi); }');
     lines.push("");
     lines.push("/* Size (3 options) - controls each panel's list height */");
     SIZE_OPTIONS.forEach(function(o){
@@ -115,11 +123,11 @@
     });
     lines.push(".transfer-demo-list{ flex:1 1 auto; overflow-y:auto; padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2); }");
     lines.push("");
-    lines.push('.transfer-demo-item{ display:flex; align-items:center; gap:var(--space-8); padding:var(--space-6) var(--space-8); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:var(--text-hi); cursor:pointer; }');
+    lines.push('.transfer-demo-item{ display:flex; align-items:center; gap:var(--space-8); padding:var(--space-6) var(--space-8); border-radius:var(--radius-6); font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); cursor:pointer; }');
     lines.push(".transfer-demo-item:hover, .transfer-demo-item.is-hover{ background:var(--graphite-800); }");
     lines.push("");
     lines.push(".transfer-demo-checkbox-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }");
-    lines.push(".transfer-demo-checkbox{ flex:none; width:var(--dimension-16); height:var(--dimension-16); border-radius:4px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; }");
+    lines.push(".transfer-demo-checkbox{ flex:none; width:var(--dimension-16); height:var(--dimension-16); border-radius:var(--radius-sm); border:var(--border-width-1) var(--border-style) var(--control-border); display:flex; align-items:center; justify-content:center; }");
     lines.push(".transfer-demo-checkbox-input:checked + .transfer-demo-checkbox{ background:var(--red-500); border-color:var(--red-500); }");
     lines.push(".transfer-demo-checkbox-input:focus-visible + .transfer-demo-checkbox{ outline:2px solid var(--red-400); outline-offset:2px; }");
     lines.push(".transfer-demo-checkbox svg{ width:var(--dimension-11); height:var(--dimension-11); color:#FFFFFF; }");
@@ -129,6 +137,9 @@
     lines.push(".transfer-demo-arrow-btn:hover{ background:var(--graphite-700); }");
     lines.push(".transfer-demo-arrow-btn:focus-visible, .transfer-demo-arrow-btn.is-focus{ outline:2px solid var(--red-400); outline-offset:2px; }");
     lines.push(".transfer-demo-arrow-btn:disabled{ opacity:0.5; cursor:not-allowed; }");
+    lines.push("");
+    lines.push(".transfer-demo-empty{ flex:1 1 auto; display:flex; align-items:center; justify-content:center; text-align:center; padding:var(--space-16); color:var(--text-dim); font-family:var(--font-body); font-size:var(--type-caption-size); }");
+    lines.push(".transfer-demo-banner{ padding:var(--space-8) var(--space-12); margin-bottom:var(--space-8); border-radius:var(--radius-sm); background:var(--red-tint); color:var(--danger-500); font-family:var(--font-body); font-size:var(--type-caption-size); }");
     lines.push("");
 
     lines.push("<!-- Example usage - one per type, at " + optionLabelFor(SIZE_OPTIONS, sizeKey) + " size -->");
@@ -170,8 +181,18 @@
   // Foundation audit UX10 - one cell of a side-by-side state comparison,
   // not a real transfer list; tabindex="-1" keeps every control out of the
   // Tab sequence without removing it from the accessibility tree.
+  var EMPTY_MESSAGES = {
+    source: "No available items.",
+    target: "No items selected.",
+    noresults: "No matching items found."
+  };
+
   function buildTransferField(typeKey, stateKey, sizeKey, leftTitle, rightTitle){
     var isDisabled = stateKey === "disabled";
+    var isLoading = stateKey === "loading";
+    var isEmpty = stateKey === "empty";
+    var isNoResults = stateKey === "noresults";
+    var isError = stateKey === "error";
     var hasSearch = typeKey === "with-search";
     var listHeight = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
     var searchHtml = hasSearch ? '<input type="text" class="transfer-demo-search" tabindex="-1" placeholder="Search..." />' : "";
@@ -179,38 +200,88 @@
     var sourceRows = SOURCE_ITEMS.map(function(item, i){
       var hoverCls = (stateKey === "hover" && i === 0) ? " is-hover" : "";
       var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input" tabindex="-1"' + (item.checked ? " checked" : "") + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
+      // data-contract-kind="container" forces the real kind, same fix as
+      // Checkbox/Radio/Switch's own box: a childless <span> defaults to
+      // kind:'text' purely by tag name (correct for an actual text label,
+      // wrong for a bordered/background SHAPE that's only sometimes
+      // childless - no checkmark SVG inside when unchecked). Without it,
+      // the UNCHECKED box - which has no child at all - got misclassified
+      // as an empty TEXT node, losing its entire border/background and
+      // rendering as nothing (reported: the unfilled/unchecked checkbox
+      // not appearing in Figma at all, only the checked one did since it
+      // has a real SVG child forcing the correct container classification).
       var checkboxHtml = item.checked
         ? '<span class="transfer-demo-checkbox is-checked">' + CHECK_ICON_SVG + '</span>'
-        : '<span class="transfer-demo-checkbox"></span>';
+        : '<span class="transfer-demo-checkbox" data-contract-kind="container"></span>';
       return '<label class="transfer-demo-item' + hoverCls + '">' + inputHtml + checkboxHtml + '<span>' + item.name + '</span></label>';
     }).join("");
 
     var targetRows = TARGET_ITEMS.map(function(item){
       var inputHtml = '<input type="checkbox" class="transfer-demo-checkbox-input" tabindex="-1"' + (isDisabled ? " disabled" : "") + ' aria-label="' + escapeHtml(item.name) + '" />';
-      return '<label class="transfer-demo-item">' + inputHtml + '<span class="transfer-demo-checkbox"></span><span>' + item.name + '</span></label>';
+      return '<label class="transfer-demo-item">' + inputHtml + '<span class="transfer-demo-checkbox" data-contract-kind="container"></span><span>' + item.name + '</span></label>';
     }).join("");
 
+    // Loading/Empty/No Results replace a panel's row content entirely -
+    // real users would never see rows AND an empty/loading message at
+    // once, so these states intentionally override sourceRows/targetRows
+    // rather than compositing with them.
+    // Loading/Empty/No Results each replace this slot's content entirely
+    // with something structurally different (a spinner, or a message) -
+    // none of it exists at all in whichever state the base capture happens
+    // to use (Rest), so the generic crossed-variant diff (which only
+    // patches styles/text on nodes that already exist by id in the base
+    // tree) can never represent it - same limitation as Cascader's
+    // Open-state panel and Table's Selected-state checkbox column.
+    // data-contract-part="source-status"/"target-status" gives this slot's
+    // content a stable id regardless of which of the three states built it,
+    // harvested separately per state in captureTransferProperties() below.
+    var sourceListContent = sourceRows, targetListContent = targetRows;
+    if (isLoading){
+      var spinnerHtml = '<span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>';
+      sourceListContent = '<div class="transfer-demo-empty" data-contract-part="source-status">' + spinnerHtml + "</div>";
+      targetListContent = '<div class="transfer-demo-empty" data-contract-part="target-status">' + spinnerHtml + "</div>";
+    } else if (isEmpty){
+      sourceListContent = '<div class="transfer-demo-empty" data-contract-part="source-status">' + EMPTY_MESSAGES.source + "</div>";
+      targetListContent = '<div class="transfer-demo-empty" data-contract-part="target-status">' + EMPTY_MESSAGES.target + "</div>";
+    } else if (isNoResults){
+      sourceListContent = '<div class="transfer-demo-empty" data-contract-part="source-status">' + EMPTY_MESSAGES.noresults + "</div>";
+      targetListContent = '<div class="transfer-demo-empty" data-contract-part="target-status">' + EMPTY_MESSAGES.noresults + "</div>";
+    }
+
     var leftColumn = '<div class="transfer-demo-column">' +
-      '<div class="transfer-demo-column-title"><span>' + escapeHtml(leftTitle) + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>' +
+      '<div class="transfer-demo-column-title"><span data-contract-part="left-title">' + escapeHtml(leftTitle) + '</span><span>' + checkedCountLabel(SOURCE_ITEMS) + '</span></div>' +
       searchHtml +
-      '<div class="transfer-demo-list" style="height:' + listHeight + 'px;">' + sourceRows + '</div>' +
+      '<div class="transfer-demo-list" data-contract-part="source-list" style="height:' + listHeight + 'px;">' + sourceListContent + '</div>' +
       '</div>';
 
     var rightColumn = '<div class="transfer-demo-column">' +
-      '<div class="transfer-demo-column-title"><span>' + escapeHtml(rightTitle) + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>' +
+      '<div class="transfer-demo-column-title"><span data-contract-part="right-title">' + escapeHtml(rightTitle) + '</span><span>' + TARGET_ITEMS.length + ' items</span></div>' +
       searchHtml +
-      '<div class="transfer-demo-list" style="height:' + listHeight + 'px;">' + targetRows + '</div>' +
+      '<div class="transfer-demo-list" data-contract-part="target-list" style="height:' + listHeight + 'px;">' + targetListContent + '</div>' +
       '</div>';
 
     var rightArrowCls = "transfer-demo-arrow-btn" + ((stateKey === "focus") ? " is-focus" : "");
-    var disabledAttr = isDisabled ? " disabled" : "";
+    var disabledAttr = (isDisabled || isLoading || isEmpty) ? " disabled" : "";
     var arrows = '<div class="transfer-demo-arrows">' +
       '<button type="button" class="' + rightArrowCls + '" tabindex="-1" aria-label="Move checked items right"' + disabledAttr + '>&gt;</button>' +
       '<button type="button" class="transfer-demo-arrow-btn" tabindex="-1" aria-label="Move checked items left"' + disabledAttr + '>&lt;</button>' +
       '</div>';
 
+    // Same state-exclusive-content limitation as the status slot above -
+    // the Error banner only exists in the Error state's own DOM, with no
+    // counterpart anywhere in the base capture's anatomy template. It also
+    // used to sit as a SIBLING before .transfer-demo-panel rather than
+    // inside it - for every other state buildTransferField() returned just
+    // the one panel div, but for Error it returned TWO top-level siblings,
+    // so "the matrix cell's root element" literally became a DIFFERENT
+    // element (the banner, not the panel) only for this one state - no
+    // stable root identity for the capture pipeline to build an anatomy
+    // template from at all. Wrapping both in one always-present outer div
+    // keeps the root stable; the banner is just its conditionally-visible
+    // first child, the same treatment every other optional part gets.
+    var bannerHtml = isError ? '<div class="transfer-demo-banner" data-contract-part="banner">Couldn&rsquo;t load items. <button type="button" class="transfer-demo-retry" tabindex="-1">Retry</button></div>' : "";
     var panelCls = "transfer-demo-panel" + (isDisabled ? " is-disabled" : "");
-    return '<div class="' + panelCls + '">' + leftColumn + arrows + rightColumn + '</div>';
+    return '<div class="transfer-demo-wrap">' + bannerHtml + '<div class="' + panelCls + '">' + leftColumn + arrows + rightColumn + '</div>' + '</div>';
   }
 
   function buildComboPrompt(sizeKey, leftTitle, rightTitle){
@@ -249,12 +320,12 @@
       card.setAttribute("tabindex", "0");
       var href = "transfer-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

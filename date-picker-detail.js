@@ -9,8 +9,8 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CALENDAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CALENDAR = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6C3 5.45 3.19583 4.97917 3.5875 4.5875C3.97917 4.19583 4.45 4 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.0208 4.19583 20.4125 4.5875C20.8042 4.97917 21 5.45 21 6V20C21 20.55 20.8042 21.0208 20.4125 21.4125C20.0208 21.8042 19.55 22 19 22H5ZM5 20H19V10H5V20ZM5 8H19V6H5V8Z"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -21,8 +21,14 @@
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
+    // Open models the trigger's own active-state styling only - this system
+    // scopes to the trigger field itself (see buildFullPrompt), not an
+    // interactive calendar popup grid, so no panel renders for this row.
+    { key: "open", cls: " is-open", label: "Open" },
     { key: "error", cls: " is-error", label: "Error" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" }
   ];
 
   // Purpose text per type, used by Copy Prompt - the actual colors come
@@ -50,24 +56,24 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
       focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-color:" + danger500 + ";"
@@ -105,9 +111,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -141,7 +151,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as
@@ -194,27 +204,35 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (9, apply to every type): Rest, Hover, Focused, Filled, Open, Error, Read-Only, Disabled, Loading.");
     lines.push("- Filled: same appearance as Rest, showing the selected date value (e.g. 03/14/2026) instead of the placeholder.");
-    lines.push("- Error: pairs with an inline error message below the field.");
+    lines.push("- Open: the trigger's own active-state styling (same border/outline treatment as Focused) while its calendar is showing - this system scopes to the trigger field itself, not the calendar popup grid.");
+    lines.push("- Error: pairs with a customizable inline error message below the field.");
+    lines.push("- Read-Only: shows its current value but can't be edited; still focusable, unlike Disabled.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
+    lines.push("- Loading: trailing calendar icon replaced by a spinner, not interactive - e.g. while asynchronous date constraints (disabled dates) are being fetched.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when no date is chosen, typically the expected date format).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when no date is chosen, typically the expected date format), Date format (one of MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD, DD MMM YYYY, MMM DD, YYYY - currently " + (opts.format || "MM/DD/YYYY") + " - the display format is independent from the stored date value), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
+    if (opts.supportingText) lines.push("Current supporting text: \"" + opts.supportingText + "\".");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
+    var requiredHtml = opts.required ? '<span class="datepicker-demo-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="datepicker-field">');
-    lines.push('  <label class="datepicker-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="datepicker-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="datepicker-control datepicker-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
     lines.push('    <span class="datepicker-control-value">' + escapeHtml(placeholder) + "</span>");
     lines.push('    <span class="datepicker-control-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>");
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="datepicker-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -228,11 +246,11 @@
     lines.push("/* Agentic Design System - Date Picker component (all types, states, sizes) */");
     lines.push("/* Trigger field only - the calendar popup panel is a separate concern. */");
     lines.push(".datepicker-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.datepicker-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".datepicker-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.datepicker-control-value{ flex:1 1 auto; min-width:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.datepicker-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".datepicker-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.datepicker-control-value{ flex:1 1 auto; min-width:0; font-family:var(--font-body); }');
     lines.push(".datepicker-control-icon{ margin-inline-start:auto; flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
-    lines.push('.datepicker-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.datepicker-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -245,7 +263,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".datepicker-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -261,16 +279,30 @@
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
     lines.push("");
+    lines.push("/* Open - same border/outline treatment as Focused (trigger-only scope, no calendar grid modeled here) */");
+    TYPES.forEach(function(t){
+      var css = liveCssFor(t.key);
+      lines.push(".datepicker-control--" + t.key + ".is-open{ " + css.focus + " }");
+    });
+    lines.push("");
+    lines.push("/* Read-Only - cursor signals it isn't editable; still focusable, unlike Disabled */");
+    lines.push(".datepicker-control.is-readonly{ cursor:default; }");
+    lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".datepicker-control[aria-disabled=\"true\"]{ opacity:0.5; cursor:not-allowed; pointer-events:none; }");
     lines.push("");
+    lines.push("/* Loading - trailing icon replaced by a spinner, not interactive */");
+    lines.push(".datepicker-control.is-loading{ cursor:wait; }");
+    lines.push(".datepicker-demo-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "datepicker-control--h" + exampleSize;
     var radiusClassAttr = "datepicker-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Date of birth", "MM/DD/YYYY"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Date of birth", opts.format || "MM/DD/YYYY", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -278,17 +310,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -320,12 +354,12 @@
       card.setAttribute("tabindex", "0");
       var href = "date-picker-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -411,34 +445,81 @@
     var allowClearInput = document.querySelector('[data-role="datepicker-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="datepicker-size-mount"]');
     var radiusMount = document.querySelector('[data-role="datepicker-radius-mount"]');
+    var formatSelect = document.querySelector('[data-role="datepicker-format"]');
+    var requiredInput = document.querySelector('[data-role="datepicker-required"]');
+    var showSupportingInput = document.querySelector('[data-role="datepicker-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="datepicker-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="datepicker-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="datepicker-error-text"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    var FILLED_VALUE = "03/14/2026";
+    // Fixed sample date (March 14, 2026) reformatted per the chosen Date
+    // format - the display format is independent from the stored value
+    // (spec item 10), so only this rendering changes, never the underlying date.
+    var SAMPLE_MONTH_NAME = "Mar";
+    function formatSampleDate(format){
+      switch (format){
+        case "DD/MM/YYYY": return "14/03/2026";
+        case "YYYY-MM-DD": return "2026-03-14";
+        case "DD MMM YYYY": return "14 " + SAMPLE_MONTH_NAME + " 2026";
+        case "MMM DD, YYYY": return SAMPLE_MONTH_NAME + " 14, 2026";
+        default: return "03/14/2026";
+      }
+    }
 
-    function buildDatePickerField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
+    function currentOpts(){
+      return {
+        format: formatSelect ? formatSelect.value : "MM/DD/YYYY",
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "We use this to confirm your age.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Enter a valid date.") : "Enter a valid date."
+      };
+    }
+
+    function buildDatePickerField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
+      var isReadOnly = stateKey === "readonly";
       var isFilled = stateKey === "filled";
+      var isOpen = stateKey === "open";
       var isError = stateKey === "error";
+      var isLoading = stateKey === "loading";
+      var hasValue = isFilled || isOpen || isReadOnly;
       var controlClasses = "datepicker-demo-control datepicker-demo-control--" + typeKey + " datepicker-demo-control--h" + size + stateCls;
-      var text = isFilled ? FILLED_VALUE : placeholder;
-      var valueClasses = "datepicker-demo-value" + (isFilled ? " is-filled" : "");
+      var text = hasValue ? formatSampleDate(opts.format) : placeholder;
+      var valueClasses = "datepicker-demo-value" + (hasValue ? " is-filled" : "");
       // role="button" kept for a real implementation to model its own
       // interactive control after - tabindex is always -1 here since this
       // matrix is a static state comparison, not an operable field.
       var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="-1"';
+      if (isLoading) interactiveAttrs += ' aria-busy="true"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="datepicker-demo-note is-error">Enter a valid date.</p>' : "";
+      var requiredHtml = opts.required ? '<span class="datepicker-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = isError
+        ? '<p class="datepicker-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Enter a valid date.") + "</p>"
+        : (opts.supportingText ? '<p class="datepicker-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>" : "");
       // allowClear takes over the calendar icon's slot once there's a real
       // value - the icon comes back once cleared, matching Select's own
       // chevron-vs-clear-button rule.
-      var trailingHtml = (allowClear && isFilled && !isDisabled)
-        ? '<button type="button" class="datepicker-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
-        : '<span class="datepicker-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
+      // data-contract-part markers: the trailing slot is whichever of
+      // icon/clear/spinner is relevant to this state, so a plain tag/
+      // position match can't tell them apart across rows (the same
+      // ambiguity Checkbox's icon and Float Button's tooltip bubble/arrow
+      // already hit this session) - give each its own stable id instead of
+      // leaving all three to collide on the same positional slot.
+      var trailingHtml;
+      if (isLoading){
+        trailingHtml = '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>';
+      } else if (allowClear && hasValue && !isDisabled && !isReadOnly){
+        trailingHtml = '<button type="button" class="datepicker-demo-clear" data-contract-part="clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>";
+      } else {
+        trailingHtml = '<span class="datepicker-demo-icon" data-contract-part="icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
+      }
       return '<div class="datepicker-demo-field">' +
-        '<label class="datepicker-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="datepicker-demo-label" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
-          '<span class="' + valueClasses + '">' + escapeHtml(text) + "</span>" +
+          '<span class="' + valueClasses + '"' + (hasValue ? ' data-own-format="true"' : '') + ' data-contract-part="value">' + escapeHtml(text) + "</span>" +
           trailingHtml +
         "</div>" +
         noteHtml +
@@ -458,10 +539,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildDatePickerField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildDatePickerField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -475,7 +556,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -483,6 +565,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -491,14 +574,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -526,6 +609,16 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (formatSelect) formatSelect.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

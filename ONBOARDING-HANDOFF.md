@@ -1,4 +1,8 @@
-# Damco Agentic Design System — onboarding and Overview handoff
+> Current onboarding now uses a one-question conversation, pinned answers, confirmation and real setup progress. See [CONVERSATIONAL-ONBOARDING-HANDOFF.md](CONVERSATIONAL-ONBOARDING-HANDOFF.md). This supersedes the older form flow below.
+
+> Updated project-choice entry and searchable local History: see [ONBOARDING-PROJECT-CHOICE-HANDOFF.md](ONBOARDING-PROJECT-CHOICE-HANDOFF.md). That addendum supersedes the older single-profile entry flow described below.
+
+# Agentic Design System — onboarding and Overview handoff
 
 Updated: 15 September 2026
 
@@ -7,10 +11,10 @@ Updated: 15 September 2026
 Continue work in:
 
 ```text
-/Users/user/Documents/Damco Agentic Design System
+/Users/user/Documents/Agentic Design System
 ```
 
-This is the **Damco Agentic Design System** static HTML/CSS/JavaScript project. Do not confuse it with the separate `/Users/user/Documents/DDOS` folder.
+This is the **Agentic Design System** static HTML/CSS/JavaScript project. Do not confuse it with the separate `/Users/user/Documents/DDOS` folder.
 
 The user requested a thorough UX audit and implementation of the complete Overview/onboarding journey. They then explicitly confirmed:
 
@@ -41,7 +45,7 @@ Overview
 → Manage project / revisit Project Link History
 ```
 
-The review must cover information architecture, task flows, permissions, content hierarchy, success/loading/error/empty/expired states, accessibility and responsive behavior—not only visual changes. Preserve the existing Damco design language and reuse shared tokens/components.
+The review must cover information architecture, task flows, permissions, content hierarchy, success/loading/error/empty/expired states, accessibility and responsive behavior—not only visual changes. Preserve the existing design language and reuse shared tokens/components.
 
 ## Project facts
 
@@ -341,4 +345,4 @@ References used:
 
 ## Suggested continuation prompt
 
-> Continue the Damco Agentic Design System onboarding and Overview work in this folder. Read ONBOARDING-HANDOFF.md, audit/onboarding/ORIGINAL-BRIEF.md and audit/onboarding/UX-REVIEW.md first. The user authorized a clearly labeled local prototype. Preserve the existing implementation and Damco design system; finish the outstanding browser checks, fix issues you actually find, and update the audit and screenshots. Do not introduce real email delivery, publishing or a backend without a new scope instruction. Report exactly what is verified and what remains limited.
+> Continue the Agentic Design System onboarding and Overview work in this folder. Read ONBOARDING-HANDOFF.md, audit/onboarding/ORIGINAL-BRIEF.md and audit/onboarding/UX-REVIEW.md first. The user authorized a clearly labeled local prototype. Preserve the existing implementation and design system; finish the outstanding browser checks, fix issues you actually find, and update the audit and screenshots. Do not introduce real email delivery, publishing or a backend without a new scope instruction. Report exactly what is verified and what remains limited.

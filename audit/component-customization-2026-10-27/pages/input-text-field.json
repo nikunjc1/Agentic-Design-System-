@@ -1,0 +1,299 @@
+{
+  "file": "input-text-field.html",
+  "name": "Input Text Field",
+  "category": "Components · Forms · Input",
+  "controls": [
+    {
+      "index": 0,
+      "role": "input-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "input-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "input-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "input-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "input-icon-placement-mount",
+      "id": null,
+      "label": "Icon placement",
+      "type": "multiselect",
+      "value": [
+        "none"
+      ],
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "leading",
+          "label": "Leading icon"
+        },
+        {
+          "value": "trailing",
+          "label": "Trailing icon"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "input-icon-placement-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "input-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Email address",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "input-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "you@example.com",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "input-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label, placeholder, leading icon and trailing icon are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "None",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Input (Text Field) is the base single-line text control for collecting free-form values - a label, a text box with a placeholder, and states for focus, filled, error and disabled - the foundation every more specialized text field (Password, Number, Search, and others) builds on. When to Use Any short, free-form line of text - email address, full name, company name. A value with no fixed format the system can validate character-by-character - a search term typed into a form. A phone number or similar short structured value with no dedicated component - when no more specific field type exists. When Not to Use A value from a fixed, known list - use Select so the user picks rather than types a value that must match exactly. Multiple lines of text - use Text Area. A secret value that should stay hidden while typing - use Password. A value with a live suggestion list - use Autocomplete or Mention. Best Practices Always pair the field with a visible label, not placeholder-only text - placeholders disappear once typing starts and fail low-vision and memory-impaired users. Show validation errors inline, next to the field, with a specific message rather than a generic \"Invalid input.\" Use placeholder text only for a format example (e.g. \"name@company.com\"), never as the only instruction for what to enter. Do and Don't Do Email address A visible label that stays put, with the placeholder showing the expected format rather than carrying the meaning. Don't A placeholder used as the label disappears the moment someone types, leaving the filled field unlabelled for anyone who looks away and back. Accessibility The label is programmatically associated with the input (via for/id or by wrapping it), not just visually adjacent. The error state sets aria-invalid and links the error message with aria-describedby, so screen readers announce it. Focus state shows a visible outline distinct from the field's default border. Related Components Password, Number, Search, Autocomplete, Mention, Text Area. { \"component\": \"Input\", \"status\": \"Stable\", \"type\": \"Text Field\", \"category\": \"Forms\", \"summary\": \"Input (Text Field) is the base single-line text control for collecting free-form values - a label, a text box with a placeholder, and states for focus, filled, error and disabled - the foundation every more specialized text field (Password, Number, Search, and others) builds on.\", \"whenToUse\": [ \"Any short, free-form line of text - email address, full name, company name.\", \"A value with no fixed format the system can validate character-by-character - a search term typed into a form.\", \"A phone number or similar short structured value with no dedicated component - when no more specific field type exists.\" ], \"whenNotToUse\": [ \"A value from a fixed, known list - use Select so the user picks rather than types a value that must match exactly.\", \"Multiple lines of text - use Text Area.\", \"A secret value that should stay hidden while typing - use Password.\", \"A value with a live suggestion list - use Autocomplete or Mention.\" ], \"bestPractices\": [ \"Always pair the field with a visible label, not placeholder-only text - placeholders disappear once typing starts and fail low-vision and memory-impaired users.\", \"Show validation errors inline, next to the field, with a specific message rather than a generic \\\"Invalid input.\\\"\", \"Use placeholder text only for a format example (e.g. \\\"name@company.com\\\"), never as the only instruction for what to enter.\" ], \"doAndDont\": { \"do\": \"A visible label that stays put, with the placeholder showing the expected format rather than carrying the meaning.\", \"dont\": \"A placeholder used as the label disappears the moment someone types, leaving the filled field unlabelled for anyone who looks away and back.\" }, \"accessibility\": [ \"The label is programmatically associated with the input (via for/id or by wrapping it), not just visually adjacent.\", \"The error state sets aria-invalid and links the error message with aria-describedby, so screen readers announce it.\", \"Focus state shows a visible outline distinct from the field's default border.\" ], \"relatedComponents\": [ \"Password\", \"Number\", \"Search\", \"Autocomplete\", \"Mention\", \"Text Area\" ] }",
+  "tests": []
+}

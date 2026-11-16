@@ -1,0 +1,348 @@
+{
+  "file": "button-primary-icon.html",
+  "name": "Primary Button 36px - Dual Icon",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "dualicon-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "dualicon-size-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "dualicon-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "dualicon-radius-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "dualicon-content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "icon-both",
+          "label": "Icon both sides"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left only"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right only"
+        },
+        {
+          "value": "text",
+          "label": "Text only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "dualicon-content-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-destructive.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Primary",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Transparent",
+          "label": "Transparent"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        },
+        {
+          "value": "CTA With Dropdown",
+          "label": "CTA With Dropdown"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "dualicon-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Save",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "splitcta-leading-icon",
+      "id": null,
+      "label": "CTA leading icon",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "dropdown column only",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview The Dual Icon Button is a compact, filled, high-emphasis action button built for a leading icon, a label, and an optional trailing icon together - used when a primary action benefits from an icon cue alongside its text, at a fixed 36px height distinct from the standard Button's size scale. When to Use A primary action that benefits from a recognizable icon alongside its label - a branded save/continue action tied to a specific integration or provider. Compact toolbars or headers - where a fixed 36px control fits the surrounding density better than the standard Button size scale. Uploading and managing custom icon variations for the same action across contexts - via the page's own icon-upload control. When Not to Use A plain text-only primary action - use the standard Primary Button - the dual-icon layout adds visual weight that a simple action doesn't need. Low-emphasis or supporting actions - use Secondary, Tertiary, or Ghost - Dual Icon is a high-emphasis, filled variant only. Icon-only actions with no label at all - use Float Button or an icon-only Ghost/Tertiary button instead. Best Practices Only add a trailing icon when it conveys real information (e.g. an external-link cue) - don't add one purely for symmetry. Keep uploaded custom icons visually consistent in weight and size with the built-in icon set. Use this fixed 36px size deliberately for the specific contexts it's designed for, rather than mixing it freely with the standard Button size scale. Do and Don't Do ✓ Save changes An icon that reinforces a label already stating the action in words. Don't A single unlabelled glyph for an action with no universal symbol forces the user to guess or hover-and-wait. Pair icon-only buttons with a Tooltip, or keep the label. Accessibility Icons are decorative alongside a visible text label, so they're marked aria-hidden while the label carries the accessible name. Same native <button> semantics and visible focus outline as every other Button type. Custom-uploaded icons should maintain sufficient contrast against the button's fill color. Related Components Primary Button, Secondary Button, Float Button (icon-only corner action), Upload (for managing the icon files themselves). { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Primary Icon (Dual Icon)\", \"category\": \"Actions\", \"summary\": \"The Dual Icon Button is a compact, filled, high-emphasis action button built for a leading icon, a label, and an optional trailing icon together - used when a primary action benefits from an icon cue alongside its text, at a fixed 36px height distinct from the standard Button's size scale.\", \"whenToUse\": [ \"A primary action that benefits from a recognizable icon alongside its label - a branded save/continue action tied to a specific integration or provider.\", \"Compact toolbars or headers - where a fixed 36px control fits the surrounding density better than the standard Button size scale.\", \"Uploading and managing custom icon variations for the same action across contexts - via the page's own icon-upload control.\" ], \"whenNotToUse\": [ \"A plain text-only primary action - use the standard Primary Button - the dual-icon layout adds visual weight that a simple action doesn't need.\", \"Low-emphasis or supporting actions - use Secondary, Tertiary, or Ghost - Dual Icon is a high-emphasis, filled variant only.\", \"Icon-only actions with no label at all - use Float Button or an icon-only Ghost/Tertiary button instead.\" ], \"bestPractices\": [ \"Only add a trailing icon when it conveys real information (e.g. an external-link cue) - don't add one purely for symmetry.\", \"Keep uploaded custom icons visually consistent in weight and size with the built-in icon set.\", \"Use this fixed 36px size deliberately for the specific contexts it's designed for, rather than mixing it freely with the standard Button size scale.\" ], \"doAndDont\": { \"do\": \"An icon that reinforces a label already stating the action in words.\", \"dont\": \"A single unlabelled glyph for an action with no universal symbol forces the user to guess or hover-and-wait. Pair icon-only buttons with a Tooltip, or keep the label.\" }, \"accessibility\": [ \"Icons are decorative alongside a visible text label, so they're marked aria-hidden while the label carries the accessible name.\", \"Same native <button> semantics and visible focus outline as every other Button type.\", \"Custom-uploaded icons should maintain sufficient contrast against the button's fill color.\" ], \"relatedComponents\": [ \"Primary Button\", \"Secondary Button\", \"Float Button\", \"Upload\" ] }",
+  "tests": []
+}

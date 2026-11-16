@@ -12,6 +12,7 @@
   ];
   var STATES = [
     { key: "rest", label: "Rest" },
+    { key: "transitioning", label: "Transitioning" },
     { key: "affixed", label: "Affixed" },
     { key: "disabled", label: "Disabled" }
   ];
@@ -35,10 +36,11 @@
   function buildAffixField(typeKey, stateKey, label, offset){
     var isAffixed = stateKey === "affixed";
     var isDisabled = stateKey === "disabled";
-    var barCls = "affix-demo-bar affix-demo-bar--" + typeKey + (isAffixed ? " is-affixed" : "") + (isDisabled ? " is-disabled" : "");
-    var positionStyle = isAffixed ? ' style="' + (typeKey === "top" ? "top" : "bottom") + ":" + offset + 'px;"' : "";
-    var badgeHtml = isAffixed ? '<span class="affix-demo-badge">Affixed</span>' : (isDisabled ? '<span class="affix-demo-badge affix-demo-badge--muted">Off</span>' : "");
-    var barHtml = '<div class="' + barCls + '"' + positionStyle + '><span>' + escapeHtml(label) + "</span>" + badgeHtml + "</div>";
+    var isTransitioning = stateKey === "transitioning";
+    var barCls = "affix-demo-bar affix-demo-bar--" + typeKey + (isAffixed ? " is-affixed" : "") + (isDisabled ? " is-disabled" : "") + (isTransitioning ? " is-transitioning" : "");
+    var positionStyle = (isAffixed || isTransitioning) ? ' style="' + (typeKey === "top" ? "top" : "bottom") + ":" + offset + 'px;"' : "";
+    var badgeHtml = isAffixed ? '<span class="affix-demo-badge">Affixed</span>' : (isDisabled ? '<span class="affix-demo-badge affix-demo-badge--muted">Off</span>' : (isTransitioning ? '<span class="affix-demo-badge affix-demo-badge--muted">Moving&hellip;</span>' : ""));
+    var barHtml = '<div class="' + barCls + '"' + positionStyle + '><span data-contract-part="label">' + escapeHtml(label) + "</span>" + badgeHtml + "</div>";
 
     return '<div class="affix-demo-viewport">' +
       '<div class="affix-demo-content-line"></div>' +
@@ -61,8 +63,9 @@
     lines.push("- Top: pins the element " + offset + "px from the top of the viewport once scrolled past.");
     lines.push("- Bottom: pins the element " + offset + "px from the bottom of the viewport once scrolled past.");
     lines.push("");
-    lines.push("States (3):");
+    lines.push("States (4):");
     lines.push("- Rest: the element sits in its normal position in the page flow - not yet affixed.");
+    lines.push("- Transitioning: optional - the element is mid-way through animating between its normal position and its affixed edge; respect prefers-reduced-motion by skipping this and jumping straight to the end state.");
     lines.push("- Affixed: the element is pinned to its edge, visually lifted with a shadow and a slightly stronger border/background so it reads as detached from the page flow beneath it.");
     lines.push("- Disabled: affix behavior is turned off entirely - the element always stays in its normal flow position, shown dimmed here to distinguish it from Rest.");
     lines.push("");
@@ -77,10 +80,12 @@
     var lines = [];
     lines.push("/* Agentic Design System - Affix component */");
     lines.push(".affix-demo-viewport{ position:relative; width:var(--dimension-220); height:var(--dimension-140); overflow:hidden; box-sizing:border-box; border:1px solid var(--line-strong); border-radius:var(--radius-md); background:var(--graphite-900); padding:var(--space-8); display:flex; flex-direction:column; gap:var(--space-8); }");
-    lines.push(".affix-demo-content-line{ flex:none; height:var(--dimension-10); border-radius:4px; background:var(--graphite-800); }");
+    lines.push(".affix-demo-content-line{ flex:none; height:var(--dimension-10); border-radius:var(--radius-sm); background:var(--graphite-800); }");
     lines.push(".affix-demo-content-line--short{ width:60%; }");
-    lines.push('.affix-demo-bar{ flex:none; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; color:var(--text-hi); }');
-    lines.push(".affix-demo-bar.is-affixed{ position:absolute; left:8px; right:8px; background:var(--graphite-700); border-color:var(--red-500); box-shadow:0 4px 12px rgba(0,0,0,0.4); z-index:1; }");
+    lines.push('.affix-demo-bar{ flex:none; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:var(--radius-sm); background:var(--graphite-800); border:1px solid var(--line-strong); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); color:var(--text-hi); }');
+    lines.push(".affix-demo-bar.is-affixed{ position:absolute; left:8px; right:8px; background:var(--graphite-700); border-color:var(--red-500); box-shadow:var(--shadow-xs); z-index:1; }");
+    lines.push(".affix-demo-bar.is-transitioning{ position:absolute; left:8px; right:8px; background:var(--graphite-700); border-color:var(--red-500); opacity:0.6; box-shadow:var(--shadow-xs); z-index:1; transition:top .2s ease, bottom .2s ease; }");
+    lines.push("@media (prefers-reduced-motion: reduce){ .affix-demo-bar.is-transitioning{ transition:none; } }");
     lines.push(".affix-demo-bar.is-disabled{ opacity:0.4; }");
     lines.push('.affix-demo-badge{ font-family:var(--font-mono); font-size:var(--type-body-size); letter-spacing:0.05em; text-transform:uppercase; color:var(--red-400); flex:none; }');
     lines.push(".affix-demo-badge--muted{ color:var(--text-dim); }");
@@ -117,12 +122,12 @@
       card.setAttribute("tabindex", "0");
       var href = "affix-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

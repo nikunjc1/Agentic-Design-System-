@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://damco.local/schemas/component-contract-v1",
+  "title": "component contract",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "revision",
+    "name",
+    "authority",
+    "properties",
+    "selection",
+    "anatomy",
+    "variants",
+    "tokens"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,119}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "authority": {
+      "enum": [
+        "contract",
+        "figma"
+      ]
+    },
+    "properties": {
+      "type": "array",
+      "maxItems": 80,
+      "items": {
+        "$ref": "#/$defs/property"
+      }
+    },
+    "selection": {
+      "type": "object"
+    },
+    "anatomy": {
+      "$ref": "#/$defs/part"
+    },
+    "variants": {
+      "type": "array",
+      "maxItems": 2048,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "when",
+          "overrides"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "when": {
+            "type": "object"
+          },
+          "overrides": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "behaviors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "target",
+          "event",
+          "property",
+          "value"
+        ],
+        "properties": {
+          "target": {
+            "type": "string"
+          },
+          "event": {
+            "enum": [
+              "click",
+              "change",
+              "input"
+            ]
+          },
+          "property": {
+            "type": "string"
+          },
+          "value": {}
+        }
+      }
+    },
+    "accessibility": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "references": {
+      "type": "object"
+    },
+    "adapters": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "property": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "default"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,79}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "text",
+            "boolean",
+            "options",
+            "number",
+            "swap",
+            "slot",
+            "event"
+          ]
+        },
+        "default": {},
+        "multiple": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "text"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "swap"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "slot"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "event"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "boolean"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "number"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "options"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "options"
+            ],
+            "properties": {
+              "default": {
+                "type": [
+                  "string",
+                  "number",
+                  "array"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "part": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "container",
+            "text",
+            "icon",
+            "slot",
+            "instance",
+            "shape"
+          ]
+        },
+        "tag": {
+          "type": "string",
+          "enum": [
+            "div",
+            "span",
+            "button",
+            "label",
+            "input",
+            "textarea",
+            "select",
+            "option",
+            "p",
+            "h2",
+            "h3",
+            "ul",
+            "ol",
+            "li",
+            "section",
+            "article",
+            "header",
+            "footer",
+            "nav",
+            "a",
+            "img",
+            "strong",
+            "small",
+            "progress",
+            "table",
+            "thead",
+            "tbody",
+            "tr",
+            "th",
+            "td",
+            "svg",
+            "path",
+            "circle",
+            "rect",
+            "line",
+            "polyline",
+            "polygon",
+            "g",
+            "ellipse",
+            "figure",
+            "figcaption"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "bind": {
+          "type": "string"
+        },
+        "styles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "styleBindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "attributeBindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "reference": {
+          "type": "string"
+        },
+        "exposeProperties": {
+          "type": "boolean"
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "visibleWhen": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "property",
+              "equals"
+            ],
+            "properties": {
+              "property": {
+                "type": "string"
+              },
+              "equals": {},
+              "not": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/part"
+          }
+        },
+        "hiddenWhen": {
+          "description": "Hide this part when all listed conditions match. Evaluated in addition to visibleWhen.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "property",
+              "equals"
+            ],
+            "properties": {
+              "property": {
+                "type": "string"
+              },
+              "equals": {},
+              "not": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -23,7 +23,7 @@ test('typed export imports all CSS tokens in both modes; bad values and alias cy
     assert.equal(tokens['--red-500'],'rgba(255,3,26,1)');
     assert.equal(tokens['--space-16'],'16px');assert.equal(tokens['--line'],mode==='light'?'rgba(15,15,10,0.08)':'rgba(255,255,255,0.08)');
     assert.ok(tokens['--shadow-md'].includes('4px 8px 0px rgba('));assert.ok(tokens['--font-body'].includes('Inter'));
-    assert.equal(tokens['--color-ai-accent'],'rgba(139,92,246,1)');
+    assert.equal(tokens['--color-ai-accent'],mode==='light'?'rgba(124,58,237,1)':'rgba(167,139,250,1)');
     for(const name of ['--type-h1-size','--type-h2-size','--type-h3-size','--type-h4-size','--type-h5-size','--type-h6-size','--type-body-size','--type-paragraph-size','--type-caption-size','--type-h1-line-height','--type-h1-tracking','--grid-columns','--grid-gutter','--grid-max-width','--control-height','--icon-target','--border-width','--radius-card']) {
       if(name in current)assert.equal(tokens[name],current[name],name+' preserves actual resolved value');
     }

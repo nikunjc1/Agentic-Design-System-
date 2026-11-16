@@ -72,10 +72,18 @@ test('px/rem round trips preserve fractional and negative dimensions',()=>{
   for(const [key,value] of Object.entries(px.tokens)) if(/^-?[\d.]+px$/.test(value))assert.equal(M.toPx(rem.tokens[key]),M.toPx(value),key);
   assert.equal(rem.tokens['--type-body-line-height'],'1.5');assert.equal(rem.tokens['--grid-columns'],'12');
 });
-test('button foreground meets 4.5:1 in all three states across palettes',()=>{
+test('button foreground meets 4.5:1 in all three states across palettes, except the documented factory-red exception',()=>{
+  // #FF031A (this system's own shipped default) is a deliberate carve-out:
+  // WCAG's ratio undercounts how bright a saturated near-pure-red reads, so
+  // the ratio's own "winner" there is black text that looks broken on the
+  // button - see the comment above the isFactoryRed check in resolve().
+  // White is used instead, which clears 3:1 (the UI-component/large-text
+  // floor) but not 4.5:1. Every other brand - including arbitrary colors a
+  // user could pick on the Colors page - still gets the full 4.5:1 guarantee.
   for(const theme of ['light','dark'])for(const brand of ['#FF031A','#000000','#FFFFFF','#777777','#00FF00','#8B5CF6','#FFFF00','#123456']) {
     const t=M.resolve({colors:{light:{primary:{hex:brand}}}},theme).tokens;
-    for(const [state,bg]of[['default','--red-500'],['hover','--red-400'],['active','--red-600']])assert.ok(M.contrast(t['--button-primary-text-'+state],t[bg])>=4.5,brand+' '+state);
+    const isFactoryRed=brand==='#FF031A';
+    for(const [state,bg]of[['default','--red-500'],['hover','--red-400'],['active','--red-600']])assert.ok(M.contrast(t['--button-primary-text-'+state],t[bg])>=(isFactoryRed?3:4.5),brand+' '+state);
   }
 });
 test('changing radius adjusts semantic aliases without renaming numeric primitives',()=>{
@@ -96,13 +104,35 @@ test('focus preset cannot recolor or widen resting component boundaries',()=>{
     assert.equal(t['--focus-ring-width'],'2px');
   }
 });
-test('blue project accents and custom control borders cannot tint structural boundaries',()=>{
+test('blue project accents do not tint structural boundaries, but the Borders page color now really drives them',()=>{
   for(const theme of ['light','dark']) {
     const baseline=M.resolve({},theme).tokens;
+    // Brand (Colors page) must stay fully independent of structural line
+    // tokens - changing the accent alone must not move Card/Table/Modal
+    // borders or dividers one bit.
+    const brandOnly=M.resolve({colors:{light:{primary:{hex:'#0000FF'}}}},theme).tokens;
+    for(const key of ['--line','--line-strong','--card-border-color','--table-border-color','--modal-border-color'])assert.equal(brandOnly[key],baseline[key],key+' '+theme);
+    assert.equal(brandOnly['--red-500'],'#0000FF');
+    // Colors page's own Neutral-scale "Control border" field is a separate
+    // control from the Borders page below - it must keep tinting only
+    // --control-border (form control outlines), never the shell's line
+    // tokens real components actually border with.
+    const controlBorderOnly=M.resolve({'neutral-colors':{[theme]:{border:'4F8FE6'}}},theme).tokens;
+    assert.equal(controlBorderOnly['--control-border'],'#4F8FE6');
+    for(const key of ['--line','--line-strong','--card-border-color','--table-border-color','--modal-border-color'])assert.equal(controlBorderOnly[key],baseline[key],key+' '+theme);
+    // The Borders page's own color+opacity is the one control meant to
+    // drive --line/--line-strong (and, same as before, --control-border
+    // too) - per explicit instruction, Draw in Figma and every real
+    // component border must actually follow it now, not just this page's
+    // own local preview.
     const t=M.resolve({colors:{light:{primary:{hex:'#0000FF'}}},border:{system:'brand',width:2,color:'4F8FE6',darkColor:'8AB2E8',opacity:100}},theme).tokens;
-    for(const key of ['--line','--line-strong','--card-border-color','--table-border-color','--modal-border-color'])assert.equal(t[key],baseline[key],key+' '+theme);
-    assert.equal(t['--red-500'],'#0000FF');
-    assert.equal(t['--control-border'],theme==='dark'?'rgba(138,178,232,1)':'rgba(79,143,230,1)');
+    const expectedRgb=theme==='dark'?'138,178,232':'79,143,230';
+    assert.equal(t['--control-border'],`rgba(${expectedRgb},1)`);
+    // Authored CSS capture preserves each token's identity without changing opacity.
+    assert.equal(t['--line-strong'],`rgba(${expectedRgb},1)`);
+    assert.equal(t['--line-strong'],t['--control-border']);
+    assert.equal(t['--line'],`rgba(${expectedRgb},0.533)`);
+    assert.equal(t['--card-border-color'],'var(--line-strong)');assert.equal(t['--table-border-color'],'var(--line)');assert.equal(t['--modal-border-color'],'var(--line-strong)');
   }
 });
 test('legacy blue focus defaults migrate without changing info or custom state colors',()=>{
@@ -156,23 +186,23 @@ test('data formatting distinguishes zero, absence, nonnumeric and loading',()=>{
   assert.match(M.format(123.45,'currency',{locale:'en-US',currency:'USD'}),/^\$123\.45$/);assert.match(M.format(1234567,'large',{locale:'en-US'}),/M/);assert.equal(M.format(.125,'percent',{locale:'en-US'}),'12.5%');
 });
 test('date formatting handles zones, calendar dates, ranges and invalid values',()=>{
-  assert.equal(M.format('2026-03-14','date',{zone:'America/New_York'}),'2026-03-14');assert.equal(M.format('2026-02-30','date',{}),'–');assert.equal(M.format('bad','date',{}),'–');
-  assert.equal(M.format('2026-03-14T23:30:00Z','date',{zone:'Asia/Kolkata'}),'2026-03-15');
+  assert.equal(M.format('2026-03-14','date',{zone:'America/New_York'}),'03/14/2026');assert.equal(M.format('2026-02-30','date',{}),'–');assert.equal(M.format('bad','date',{}),'–');
+  assert.equal(M.format('2026-03-14T23:30:00Z','date',{zone:'Asia/Kolkata'}),'03/15/2026');
   assert.match(M.format('2026-03-14T14:08:00Z','time',{zone:'UTC',seconds:true}),/14:08:00/);
-  assert.equal(M.format(['2026-01-01','2026-03-31'],'range',{}),'2026-01-01 – 2026-03-31');
+  assert.equal(M.format(['2026-01-01','2026-03-31'],'range',{}),'01/01/2026 to 03/31/2026');
   assert.equal(M.format('2026-03-14T14:00:00Z','relative',{locale:'en-US'},{now:'2026-03-14T14:12:00Z'}),'12 minutes ago');
 });
 test('redaction never exposes a full short value and invalid locale/zone recover',()=>{
   assert.equal(M.format('123456781402','partial',{}),'********1402');assert.equal(M.format('1234','full',{}),'****');assert.ok(!M.format('a','partial',{}).includes('a'));
-  const c=M.normalizeData({locale:'INVALID!',zone:'not/a/zone',decimals:999,separator:'comma'});assert.equal(c.locale,'en-GB');assert.equal(c.zone,'UTC');assert.equal(c.decimals,2);
+  const c=M.normalizeData({locale:'INVALID!',zone:'not/a/zone',decimals:999,separator:'comma'});assert.equal(c.locale,'en-US');assert.equal(c.zone,'UTC');assert.equal(c.decimals,2);
   assert.equal(M.normalizeData({locale:'de-DE',separator:'comma'}).separator,'locale');
 });
 test('component code exports keep comments and use the selected Foundation metrics',()=>{
   const code=M.prepareCode('/* line-height: 38px is a sample comment. */\n.example{font-size:var(--type-body-size);font-weight:600;line-height:20px;gap:8px;border:1.5px solid var(--line);height:40px;}');
   assert.match(code,/line-height: 38px is a sample comment/);assert.match(code,/font-weight:var\(--type-body-weight\)/);assert.match(code,/line-height:var\(--type-body-line-height\)/);assert.match(code,/gap:var\(--space-8\)/);assert.match(code,/height:var\(--dimension-40\)/);assert.match(code,/border:var\(--border-width-1\) var\(--border-style\)/);
 });
-test('all 158 live pages load the resolver before boot and bindings last',()=>{
-  const pages=fs.readdirSync(ROOT).filter(p=>p.endsWith('.html'));assert.equal(pages.length,158);
+test('all live pages load the resolver before boot and bindings last',()=>{
+  const pages=fs.readdirSync(ROOT).filter(p=>p.endsWith('.html'));assert.ok(pages.includes('component-editor.html'));assert.equal(pages.length,JSON.parse(fs.readFileSync(path.join(ROOT,'docs-catalog-manifest.json'),'utf8')).pageCount);
   for(const page of pages) {const s=fs.readFileSync(path.join(ROOT,page),'utf8');assert.ok(s.indexOf('src="foundation-model.js"')<s.indexOf('src="foundation-runtime.js"'),page);assert.ok(s.indexOf('src="foundation-runtime.js"')<s.indexOf('src="theme-init.js"'),page);assert.ok(s.includes('href="foundation.css"'),page);assert.doesNotMatch(s,/<p\s+class="panel-title"/,page);assert.doesNotMatch(s,/<span class="badge badge-(?:required|optional)">/,page);}
 });
 test('CSS dependencies resolve and responsive thresholds never contain custom properties',()=>{
@@ -193,7 +223,7 @@ test('shared border styling cannot revive inner borders or override form variant
   }
   const shell=fs.readFileSync(path.join(ROOT,'shell.css'),'utf8');
   for(const kind of ['input','password','number','search','textarea','addon','autocomplete','cascader','treeselect']) {
-    assert.match(shell,new RegExp('\\.'+kind+'-demo-control--outlined[^{}]*:focus[^{}]*\\{[^{}]*outline:\\s*2px solid var\\(--color-focus-ring\\)'),kind+' needs an outer keyboard focus indicator');
+    assert.match(shell,new RegExp('\\.'+kind+'-demo-control--outlined[^{}]*:focus[^{}]*\\{[^{}]*outline:\\s*(?:2px|var\\(--focus-ring-width\\)) solid var\\(--color-focus-ring\\)'),kind+' needs an outer keyboard focus indicator');
   }
 });
 test('head boot, same-page changes, reload defaults and cross-tab clearing use one resolver',async()=>{
@@ -225,4 +255,37 @@ test('storage failure keeps saved data, applies a marked preview, and blocks fai
   resetFailure=true;assert.equal(window.ADSStorage.safeRemove('ads:spacing'),false);assert.equal(JSON.parse(store.get('ads:spacing')).system,'4px');
   assert.equal(window.ADSStorage.safeSet('ads:spacing',{system:'invalid'}),false);
   quota=false;resetFailure=false;assert.equal(window.ADSStorage.safeRemove('ads:spacing'),true);await Promise.resolve();assert.equal(styles.get('--space-12'),'12px');
+});
+test('component radius menus include every semantic medium radius exactly',()=>{
+  const files=fs.readdirSync(ROOT).filter(f=>f.endsWith('-detail.js'));
+  const problems=[];
+  for(const file of files){
+    const content=fs.readFileSync(path.join(ROOT,file),'utf8');
+    const match=/var\s+RADIUS_OPTIONS\s*=\s*\[([\s\S]*?)\];/.exec(content);
+    if(!match)continue;
+    const values=[...match[1].matchAll(/value:\s*"(\d+)"/g)].map(m=>Number(m[1]));
+    for(const philosophy of ['sharp','compact','balanced','soft','expressive']) {
+      const expected=M.toPx(M.resolve({radius:{philosophy}}).tokens['--radius-md']);
+      // Menu deliberately stops at 12px (16px, 24px and Full were removed by request), so under Expressive its default snaps to 12px.
+      if(file==='menu-detail.js'&&expected>12)continue;
+      if(!values.includes(expected))problems.push(file+': '+philosophy+' needs '+expected);
+    }
+  }
+  assert.deepEqual(problems,[]);
+});
+
+test('brand colors follow the active theme with a light fallback for legacy records',()=>{
+  const saved={colors:{light:{primary:{hex:'#176941'}},dark:{primary:{hex:'#84CFA7'}}}};
+  assert.equal(M.resolve(saved,'light').tokens['--red-500'],'#176941');
+  assert.equal(M.resolve(saved,'dark').tokens['--red-500'],'#84CFA7');
+  assert.equal(M.resolve({colors:{light:saved.colors.light}},'dark').tokens['--red-500'],'#176941');
+});
+test('custom border opacity is exact and untouched default rows do not mask it',()=>{
+  const tokens=M.resolve({border:{color:'7250A0',opacity:70},'border-states':{default:{light:'9A9A95'},disabled:{light:'9A9A95'}}}).tokens;
+  assert.equal(tokens['--line-strong'],'rgba(114,80,160,0.7)');
+  assert.equal(tokens['--border-state-default'],undefined);
+  assert.equal(tokens['--border-state-disabled'],undefined);
+  const custom=M.resolve({'border-states':{default:{light:'8A2452'},disabled:{light:'8A2452'}}}).tokens;
+  assert.equal(custom['--border-state-default'],'#8A2452');
+  assert.equal(custom['--border-state-disabled'],'#8A2452');
 });

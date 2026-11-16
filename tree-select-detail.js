@@ -9,9 +9,9 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
-  var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  var ICON_CHEVRON_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CHEVRON_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -23,7 +23,11 @@
     { key: "focus", cls: " is-focus", label: "Focus" },
     { key: "open", cls: " is-open", label: "Open" },
     { key: "filled", cls: " is-filled", label: "Filled" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" },
+    { key: "empty", cls: " is-empty", label: "Empty" }
   ];
 
   // The Open state's panel shows one fixed example tree: Engineering
@@ -63,24 +67,27 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var danger500 = getCssVar("--danger-500", "#FF031A");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
-        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+        error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
-      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+      error: "border-color:" + danger500 + ";"
     };
   }
 
@@ -115,9 +122,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -151,7 +162,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -202,30 +213,38 @@
       lines.push("  Hover: " + css.hover);
       lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
       lines.push("  Open: same border/outline treatment as Focus, plus an indented tree panel anchored below the field.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field.");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("States (10, apply to every type): Rest, Hover, Focus, Open, Filled, Error, Read-Only, Disabled, Loading, Empty.");
     lines.push("- Focus: real keyboard focus on the field, no tree panel visible yet.");
     lines.push("- Open: the tree panel is visible directly below the field - each row is indented by depth (16px per level), parent nodes show a caret (down when expanded, right when collapsed) before the label, leaf nodes show a same-width blank spacer instead so every label still aligns in a column, and the currently selected node is highlighted.");
     lines.push("- Filled: same appearance as Rest, showing the selected node's label with the panel closed.");
+    lines.push("- Read-Only: shows the selected value but can't be changed; still focusable, unlike Disabled - clicking it never opens the panel.");
+    lines.push("- Loading: a spinner replaces the chevron while tree data is being retrieved.");
+    lines.push("- Empty: the field is interactive but no selectable options are available - opening it shows a \"No options available\" message instead of the tree.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty). Multiple selection (boolean - replaces the single active-row highlight with a real checkbox per node, parents included, letting more than one node be picked across branches). Search (boolean - a real input inside the trigger itself, narrowing the tree to matching nodes with the matched substring highlighted).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error). Multiple selection (boolean - replaces the single active-row highlight with a real checkbox per node, parents included, letting more than one node be picked across branches). Search (boolean - a real input inside the trigger itself, narrowing the tree to matching nodes with the matched substring highlighted).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
+    var requiredHtml = opts.required ? '<span class="treeselect-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="treeselect-field">');
-    lines.push('  <label class="treeselect-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="treeselect-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="treeselect-control treeselect-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '">');
     lines.push('    <input type="text" readonly placeholder="' + escapeHtml(placeholder) + '" value="Engineering / Frontend" />');
     lines.push('    <span class="treeselect-chevron">&#9660;</span>');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="treeselect-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("  <!-- Indented tree panel - only rendered while the field is in the Open state -->");
     lines.push('  <div class="treeselect-panel">');
     lines.push('    <div class="treeselect-tree">');
@@ -247,9 +266,9 @@
     var lines = [];
     lines.push("/* Agentic Design System - Tree Select component (all types, states, sizes) */");
     lines.push(".treeselect-field{ position:relative; display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.treeselect-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".treeselect-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.treeselect-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
+    lines.push('.treeselect-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".treeselect-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.treeselect-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; }');
     lines.push(".treeselect-chevron{ flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
@@ -263,7 +282,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".treeselect-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -277,24 +296,32 @@
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-within{ " + css.focus + " }");
       lines.push(cls + ".is-open{ " + css.focus + " } /* tree panel visible - same border/outline treatment as focus */");
+      lines.push(cls + ".is-error{ " + css.error + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - keeps its selected value, but can't be clicked open; still focusable, unlike Disabled */");
+    lines.push(".treeselect-control:has(input:read-only){ cursor:default; }");
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".treeselect-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".treeselect-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
-    var panelBg = getCssVar("--graphite-900", "#15171A");
+    lines.push("/* Required indicator + supporting/error text */");
+    lines.push(".treeselect-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push(".treeselect-note.is-error{ color:" + getCssVar("--danger-700", "#EB0318") + "; }");
+    lines.push("");
+    var panelBg = getCssVar("--graphite-900", "#FFFFFF");
     var panelBorder = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var optionActiveBg = getCssVar("--graphite-800", "#1C1F23");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var optionActiveBg = getCssVar("--graphite-800", "#F1F1EE");
+    var red400 = getCssVar("--red-400", "#FF4253");
     lines.push("/* Indented tree panel - anchored below the field, shown only while Open. Same");
     lines.push("   floating-panel visual language as this system's other panels (Menu, Autocomplete,");
     lines.push("   Cascader, the multi-select dropdowns): graphite background, 1px line-strong border,");
     lines.push("   rounded corners and a soft drop shadow - a single column of rows, each row's");
     lines.push("   left padding set inline per node to show its depth (16px per level). */");
-    lines.push(".treeselect-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-4); overflow:hidden; }");
+    lines.push(".treeselect-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:var(--radius-md); box-shadow:var(--shadow-md); padding:var(--space-4); overflow:hidden; }");
     lines.push(".treeselect-tree{ display:flex; flex-direction:column; gap:var(--space-2); }");
-    lines.push('.treeselect-node{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-10); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); cursor:default; user-select:none; }');
+    lines.push('.treeselect-node{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-6); padding:var(--space-8) var(--space-10); border-radius:var(--radius-6); font-family:var(--font-body); font-size:var(--type-body-size); cursor:default; user-select:none; }');
     lines.push(".treeselect-node.is-active{ background:" + optionActiveBg + "; color:" + red400 + "; }");
     lines.push(".treeselect-caret{ flex:none; width:var(--dimension-12); height:var(--dimension-12); } /* left empty on leaf nodes - a same-width spacer so labels still align */");
     lines.push("");
@@ -302,9 +329,10 @@
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "treeselect-control--h" + exampleSize;
     var radiusClassAttr = "treeselect-control--radius-" + radiusClassSuffix(exampleRadius);
+    var opts = selectionInfo.opts || {};
     lines.push("<!-- Example usage - one per type, shown in the Open state" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Assignee team", "Select a team"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Assignee team", "Select a team", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -312,17 +340,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -354,12 +384,12 @@
       card.setAttribute("tabindex", "0");
       var href = "tree-select-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -478,6 +508,11 @@
     var labelInput = document.querySelector('[data-role="treeselect-label"]');
     var placeholderInput = document.querySelector('[data-role="treeselect-placeholder"]');
     var allowClearInput = document.querySelector('[data-role="treeselect-allow-clear"]');
+    var requiredInput = document.querySelector('[data-role="treeselect-required"]');
+    var showSupportingInput = document.querySelector('[data-role="treeselect-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="treeselect-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="treeselect-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="treeselect-error-text"]');
     var sizeMount = document.querySelector('[data-role="treeselect-size-mount"]');
     var radiusMount = document.querySelector('[data-role="treeselect-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -494,29 +529,47 @@
 
     function buildTreePanel(){
       var rowsHtml = TREE_NODES.map(buildTreeNode).join("");
-      return '<div class="treeselect-demo-panel"><div class="treeselect-demo-tree">' + rowsHtml + "</div></div>";
+      return '<div class="treeselect-demo-panel" data-contract-part="panel"><div class="treeselect-demo-tree">' + rowsHtml + "</div></div>";
     }
 
-    function buildTreeSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
+    function buildTreeSelectField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
-      var hasValue = isOpen || isFilled;
+      var isReadonly = stateKey === "readonly";
+      var isLoading = stateKey === "loading";
+      var isEmpty = stateKey === "empty";
+      var isError = stateKey === "error";
+      var hasValue = isOpen || isFilled || isReadonly;
       var controlClasses = "treeselect-demo-control treeselect-demo-control--" + typeKey + " treeselect-demo-control--h" + size + stateCls;
       var valueAttr = hasValue ? ' value="' + SELECTED_VALUE + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadonly ? " readonly" : "";
       // Foundation audit UX10 - one cell of a side-by-side state comparison,
       // not a real tree select; tabindex="-1" keeps it out of the Tab
       // sequence without removing it from the accessibility tree.
-      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly tabindex="-1" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + " />";
-      var trailingHtml = (allowClear && hasValue && !isDisabled)
-        ? '<button type="button" class="treeselect-demo-clear" tabindex="-1" aria-label="Clear">' + ICON_CLEAR + "</button>"
-        : '<span class="treeselect-demo-chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
+      var inputHtml = '<input type="text" class="treeselect-demo-input" readonly tabindex="-1" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + " />";
+      var trailingHtml = isLoading
+        ? '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>'
+        : (allowClear && hasValue && !isDisabled && !isReadonly)
+          ? '<button type="button" class="treeselect-demo-clear" tabindex="-1" aria-label="Clear">' + ICON_CLEAR + "</button>"
+          : '<span class="treeselect-demo-chevron" data-contract-part="chevron" aria-hidden="true">' + ICON_CHEVRON_DOWN + "</span>";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var panelHtml = isOpen ? buildTreePanel() : "";
+      var panelHtml = "";
+      if (isOpen) panelHtml = buildTreePanel();
+      else if (isEmpty) panelHtml = '<div class="treeselect-demo-panel" data-contract-part="panel"><div class="treeselect-demo-empty">No options available.</div></div>';
+      var requiredHtml = opts.required ? '<span class="treeselect-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = "";
+      if (isError){
+        noteHtml = '<p class="treeselect-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Select a team to continue.") + "</p>";
+      } else if (opts.supportingText){
+        noteHtml = '<p class="treeselect-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>";
+      }
       return '<div class="treeselect-demo-field">' +
-        '<label class="treeselect-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="treeselect-demo-label" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + trailingHtml + "</div>" +
+        noteHtml +
         panelHtml +
         "</div>";
     }
@@ -534,10 +587,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTreeSelectField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTreeSelectField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -548,10 +601,19 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        required: requiredInput ? requiredInput.checked : false,
+        supportingText: (showSupportingInput && showSupportingInput.checked && supportingTextInput) ? supportingTextInput.value.trim() : "",
+        errorText: (errorTextInput && errorTextInput.value.trim()) || "Select a team to continue."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -559,6 +621,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -567,14 +630,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -602,6 +665,15 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

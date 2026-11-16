@@ -1,0 +1,197 @@
+{
+  "file": "steps-default.html",
+  "name": "Steps",
+  "category": "Components · Navigation · Steps",
+  "controls": [
+    {
+      "index": 0,
+      "role": "steps-orientation-mount",
+      "id": null,
+      "label": "Orientation",
+      "type": "multiselect",
+      "value": [
+        "horizontal"
+      ],
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "steps-orientation-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 1,
+      "role": "steps-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - S"
+        },
+        {
+          "value": "32",
+          "label": "32px - M"
+        },
+        {
+          "value": "40",
+          "label": "40px - L"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "steps-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Numbered",
+      "options": [
+        {
+          "value": "Numbered",
+          "label": "Numbered"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Upcoming",
+      "options": [
+        {
+          "value": "Upcoming",
+          "label": "Upcoming"
+        },
+        {
+          "value": "Current",
+          "label": "Current"
+        },
+        {
+          "value": "Completed",
+          "label": "Completed"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "steps-count-input",
+      "id": null,
+      "label": "Step count",
+      "type": "number",
+      "value": "3",
+      "options": [],
+      "min": "2",
+      "max": "12",
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Step count",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "steps-label",
+      "id": null,
+      "label": "Labels",
+      "type": "text",
+      "value": "Details, Shipping, Payment",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Labels",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Orientation, size and labels are properties of the same component, not separate steps glued together - change them below to check this flow's style and states in the Live Preview. Step count follows the number of labels entered - use Step count for a quick bump (fills in generic \"Step N\" labels), or edit Labels directly for custom text.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    },
+    {
+      "label": "Horizontal",
+      "type": "button"
+    },
+    {
+      "label": "40px - L",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Steps shows position within a multi-step flow, like a checkout or onboarding wizard - numbered circles connected by a line, each marked completed, current, or upcoming, so the user always knows how far along they are and what's left. Runs horizontal (left to right) or vertical (top to bottom, circle beside its label) via the Orientation property. When to Use A checkout flow - Details, Shipping, Payment. An onboarding wizard or multi-page form - showing progress across a fixed sequence. Setup progress - a guided configuration flow with a known number of stages. When Not to Use A set of related but independent views with no required order - use Tabs instead, since Steps implies a strict sequence. A location within a nested hierarchy rather than a linear sequence - use Breadcrumb. A flow with an unknown or highly variable number of stages - Steps works best with a fixed, known step count; consider Progress instead if the total isn't fixed. Best Practices Keep step labels short and in plain, parallel language (\"Details\", \"Shipping\", \"Payment\"). Let users navigate back to a completed step when the flow allows revisiting earlier choices. Reflect real progress accurately - never mark a step completed before its content has actually been filled in or confirmed. Do and Don't Do ✓Account2Shipping3Payment Three steps in a checkout, each a short noun, with completed ones marked done - the user always knows what is left. Don't ✓Step 12Step 23Step 34Step 45Step 56Step 6 Generic \"Step 2\" labels tell the user nothing about what that step actually involves, and six steps for a routine checkout signals more work than the task deserves. Accessibility The current step is announced distinctly from completed and upcoming steps, not communicated by color alone. If steps are clickable for backward navigation, they're implemented as real, keyboard-operable controls. The connector lines are purely decorative and hidden from assistive technology. Related Components Tabs, Breadcrumb, Progress. { \"component\": \"Steps\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Steps shows position within a multi-step flow, like a checkout or onboarding wizard - numbered circles connected by a line, each marked completed, current, or upcoming, so the user always knows how far along they are and what's left. Runs horizontal or vertical via the Orientation property.\", \"whenToUse\": [ \"A checkout flow - Details, Shipping, Payment.\", \"An onboarding wizard or multi-page form - showing progress across a fixed sequence.\", \"Setup progress - a guided configuration flow with a known number of stages.\" ], \"whenNotToUse\": [ \"A set of related but independent views with no required order - use Tabs instead, since Steps implies a strict sequence.\", \"A location within a nested hierarchy rather than a linear sequence - use Breadcrumb.\", \"A flow with an unknown or highly variable number of stages - Steps works best with a fixed, known step count; consider Progress instead if the total isn't fixed.\" ], \"bestPractices\": [ \"Keep step labels short and in plain, parallel language (\\\"Details\\\", \\\"Shipping\\\", \\\"Payment\\\").\", \"Let users navigate back to a completed step when the flow allows revisiting earlier choices.\", \"Reflect real progress accurately - never mark a step completed before its content has actually been filled in or confirmed.\" ], \"doAndDont\": { \"do\": \"Three steps in a checkout, each a short noun, with completed ones marked done - the user always knows what is left.\", \"dont\": \"Generic \\\"Step 2\\\" labels tell the user nothing about what that step actually involves, and six steps for a routine checkout signals more work than the task deserves.\" }, \"accessibility\": [ \"The current step is announced distinctly from completed and upcoming steps, not communicated by color alone.\", \"If steps are clickable for backward navigation, they're implemented as real, keyboard-operable controls.\", \"The connector lines are purely decorative and hidden from assistive technology.\" ], \"relatedComponents\": [ \"Tabs\", \"Breadcrumb\", \"Progress\" ] }",
+  "tests": []
+}

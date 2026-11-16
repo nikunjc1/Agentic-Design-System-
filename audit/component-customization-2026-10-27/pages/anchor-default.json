@@ -1,0 +1,147 @@
+{
+  "file": "anchor-default.html",
+  "name": "Anchor",
+  "category": "Components · Navigation · Anchor",
+  "controls": [
+    {
+      "index": 0,
+      "role": "anchor-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "14"
+      ],
+      "options": [
+        {
+          "value": "12",
+          "label": "12px - XS"
+        },
+        {
+          "value": "14",
+          "label": "14px - S"
+        },
+        {
+          "value": "16",
+          "label": "16px - M"
+        },
+        {
+          "value": "18",
+          "label": "18px - L"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "anchor-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Standalone",
+      "options": [
+        {
+          "value": "Standalone",
+          "label": "Standalone"
+        },
+        {
+          "value": "With icon",
+          "label": "With icon"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Visited",
+          "label": "Visited"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "anchor-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Learn more",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size and label are properties of the same component - change them below to check this anchor's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "14px - S",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Anchor is plain inline navigational text, like \"Learn more\" or \"View documentation\", used for wayfinding within copy, lists, and footers - distinct from Button's boxed Link type, which reads as a call-to-action rather than a piece of body text. When to Use A read-more or view-details link inside body copy - sitting naturally within a sentence or paragraph. An external reference or citation - linking out to a source. Inline documentation or footer navigation links - a list of plain text links with no boxed emphasis. When Not to Use An action that needs to stand out among other buttons - use Button's Link type instead, which is built to sit inside a button row. A call to action that should draw attention - use Primary or Secondary Button - Anchor is intentionally understated. A non-navigational action (submitting, deleting, toggling something) - Anchor implies going somewhere; use a real Button for actions that aren't navigation. Best Practices Use descriptive link text (\"View pricing\", not \"Click here\"), since link text alone should make sense out of context. Keep its styling consistent everywhere it appears, so users learn to recognize it as a link at a glance. Reserve the icon-trailing variant for links that genuinely leave the current context (external sites, downloads). Do and Don't Do OverviewPricingFAQ The section currently in view is visually distinct, so Anchor doubles as a reading progress indicator, not just a list of jump links. Don't OverviewPricingFAQ With no active state, Anchor is just a table of contents that cannot tell the reader where they already are on a long page. Accessibility Renders as a real link when it navigates, so screen readers announce it correctly and it's included in link-only navigation. Visited and focus states are visually distinct, never color-only, from the rest state. An external-link icon is paired with descriptive text or an accessible label noting it opens externally. Related Components Button (Link type), Breadcrumb, Dropdown. { \"component\": \"Anchor\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Anchor is plain inline navigational text, like \\\"Learn more\\\" or \\\"View documentation\\\", used for wayfinding within copy, lists, and footers - distinct from Button's boxed Link type, which reads as a call-to-action rather than a piece of body text.\", \"whenToUse\": [ \"A read-more or view-details link inside body copy - sitting naturally within a sentence or paragraph.\", \"An external reference or citation - linking out to a source.\", \"Inline documentation or footer navigation links - a list of plain text links with no boxed emphasis.\" ], \"whenNotToUse\": [ \"An action that needs to stand out among other buttons - use Button's Link type instead, which is built to sit inside a button row.\", \"A call to action that should draw attention - use Primary or Secondary Button - Anchor is intentionally understated.\", \"A non-navigational action (submitting, deleting, toggling something) - Anchor implies going somewhere; use a real Button for actions that aren't navigation.\" ], \"bestPractices\": [ \"Use descriptive link text (\\\"View pricing\\\", not \\\"Click here\\\"), since link text alone should make sense out of context.\", \"Keep its styling consistent everywhere it appears, so users learn to recognize it as a link at a glance.\", \"Reserve the icon-trailing variant for links that genuinely leave the current context (external sites, downloads).\" ], \"doAndDont\": { \"do\": \"The section currently in view is visually distinct, so Anchor doubles as a reading progress indicator, not just a list of jump links.\", \"dont\": \"With no active state, Anchor is just a table of contents that cannot tell the reader where they already are on a long page.\" }, \"accessibility\": [ \"Renders as a real link when it navigates, so screen readers announce it correctly and it's included in link-only navigation.\", \"Visited and focus states are visually distinct, never color-only, from the rest state.\", \"An external-link icon is paired with descriptive text or an accessible label noting it opens externally.\" ], \"relatedComponents\": [ \"Button\", \"Breadcrumb\", \"Dropdown\" ] }",
+  "tests": []
+}

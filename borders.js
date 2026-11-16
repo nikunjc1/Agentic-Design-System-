@@ -554,6 +554,11 @@
           dark: row.querySelector('[data-role="state-hex-dark"]').value,
           darkAuto: stateDarkAuto[key]
         };
+        // Keep inherited state colors inherited when saving another control.
+        // Only changed rows are overrides; untouched factory swatches must
+        // not replace semantic brand/status colors elsewhere in the library.
+        if (payload[key].light.toUpperCase() === stateDefaults[key].light.toUpperCase() &&
+            payload[key].dark.toUpperCase() === stateDefaults[key].dark.toUpperCase() && stateDarkAuto[key]) delete payload[key];
       });
       window.ADSStorage.safeSet(STATES_KEY, payload);
     }

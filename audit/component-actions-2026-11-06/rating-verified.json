@@ -1,0 +1,612 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "rating-default.html",
+      "name": "Rating",
+      "family": "rating.html",
+      "controls": [
+        {
+          "role": "rating-label",
+          "label": "Label",
+          "cases": [
+            {
+              "value": "Audit Label",
+              "native": "Audit Label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-size-mount",
+          "label": "Icon size",
+          "cases": [
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "20"
+              ],
+              "native": [
+                "20"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "32"
+              ],
+              "native": [
+                "32"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-scale-select",
+          "label": "Scale",
+          "cases": [
+            {
+              "value": "3",
+              "native": "3",
+              "previewChanged": true
+            },
+            {
+              "value": "5",
+              "native": "5",
+              "previewChanged": true
+            },
+            {
+              "value": "10",
+              "native": "10",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-count-select",
+          "label": "Selected",
+          "cases": [
+            {
+              "value": "0",
+              "native": "3",
+              "previewChanged": false
+            },
+            {
+              "value": "1",
+              "native": "1",
+              "previewChanged": true
+            },
+            {
+              "value": "2",
+              "native": "2",
+              "previewChanged": true
+            },
+            {
+              "value": "3",
+              "native": "3",
+              "previewChanged": true
+            },
+            {
+              "value": "4",
+              "native": "4",
+              "previewChanged": true
+            },
+            {
+              "value": "5",
+              "native": "5",
+              "previewChanged": true
+            },
+            {
+              "value": "6",
+              "native": "6",
+              "previewChanged": true
+            },
+            {
+              "value": "7",
+              "native": "7",
+              "previewChanged": true
+            },
+            {
+              "value": "8",
+              "native": "8",
+              "previewChanged": true
+            },
+            {
+              "value": "9",
+              "native": "9",
+              "previewChanged": true
+            },
+            {
+              "value": "10",
+              "native": "10",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-show-label",
+          "label": "Show label",
+          "cases": [
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            },
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-show-value",
+          "label": "Show numeric value",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-show-feedback",
+          "label": "Show descriptive feedback",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-allow-clear",
+          "label": "Allow clear",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": false
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "rating-show-supporting",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "rating-feedback-words",
+          "label": "Feedback words",
+          "cases": [
+            {
+              "value": "Audit Feedback words",
+              "native": "Audit Feedback words",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "rating-supporting-text",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": "Audit Supporting text",
+              "native": "Audit Supporting text",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Star",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Star",
+            "state": "Rest",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Star",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Star",
+            "state": "Hover",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Star",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Star",
+            "state": "Selected",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Star",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Star",
+            "state": "Focused",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Star",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Star",
+            "state": "Disabled",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Star",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Star",
+            "state": "Read-Only",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Rest",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Hover",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Selected",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Focused",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Disabled",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Heart",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Heart",
+            "state": "Read-Only",
+            "configuration": "20px - Default",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [
+        "rating-allow-clear produced no matrix/geometry change; inspect conditional or metadata-only use.",
+        "rating-feedback-words produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · FORMS · RATING",
+      "inventory": [
+        {
+          "role": "rating-size-mount",
+          "type": "multi",
+          "value": [
+            "32"
+          ],
+          "options": [
+            "16",
+            "20",
+            "24",
+            "32"
+          ],
+          "label": "Icon size",
+          "unit": false
+        },
+        {
+          "role": "rating-label",
+          "type": "text",
+          "value": "Audit Label",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-scale-select",
+          "type": "select",
+          "value": "10",
+          "options": [
+            "3",
+            "5",
+            "10"
+          ],
+          "label": "Scale",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-count-select",
+          "type": "select",
+          "value": "10",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "label": "Selected",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-label",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-value",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show numeric value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-feedback",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show descriptive feedback",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-feedback-words",
+          "type": "text",
+          "value": "Poor, Fair, Good, Very Good, Excellent",
+          "options": [],
+          "label": "Feedback words",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-supporting-text",
+          "type": "text",
+          "value": "Tap an icon to rate.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "sameHTML": true,
+      "parity": {
+        "expected": {
+          "text": "Audit LabelAudit Supporting text",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        },
+        "actual": {
+          "text": "Audit LabelAudit Supporting text",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        }
+      },
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 14,
+        "variants": 47
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": true
+        },
+        {
+          "width": 320,
+          "overflow": true
+        }
+      ],
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

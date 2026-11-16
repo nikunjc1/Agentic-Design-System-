@@ -1,0 +1,6 @@
+PASS Legacy Design Values links reach the merged introduction; page Markdown contains the values.
+PASS Redundant navigation is removed and AI & Agents remains available.
+PASS Legacy AI Generator links reach the practical AI handoff instructions in Markdown Export.
+PASS Old selected-guide export URLs resolve; complete Markdown downloads include merged guidance without redirect-stub entries.
+PASS Both destination pages fit desktop and mobile in light and dark themes.
+PASS Fresh external visits still open the welcome choices.

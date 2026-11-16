@@ -1,0 +1,208 @@
+{
+  "file": "tabs-default.html",
+  "name": "Tabs",
+  "category": "Components · Navigation · Tabs",
+  "controls": [
+    {
+      "index": 0,
+      "role": "tabs-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "tabs-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "tabs-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "tabs-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Underline",
+      "options": [
+        {
+          "value": "Underline",
+          "label": "Underline"
+        },
+        {
+          "value": "Pill",
+          "label": "Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "tabs-label",
+      "id": null,
+      "label": "Labels",
+      "type": "text",
+      "value": "Overview, Activity, Settings",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Labels",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius and labels are properties of the same component, not separate tabs glued together - change them below to check this bar's style and states in the Live Preview. Trigger count follows the number of labels entered.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Tabs switch between a small, fixed set of related views or sections with exactly one active at a time - a horizontal row of triggers above the content they control, used when several views belong together but only one needs to be visible at once. When to Use Settings pages split into related sections - Profile, Security, Notifications. A product detail's content panes - Overview, Specifications, Reviews. Dashboard or account views sharing the same context - switching between related views without leaving the page. When Not to Use A sequence the user moves through in order, with a clear beginning and end - use Steps instead of Tabs, which implies free switching, not progression. More views than fit comfortably in a single row - beyond roughly 5-7 tabs, consider a Menu, Dropdown, or a redesigned navigation instead of a horizontally scrolling tab bar. Views that aren't actually related - unrelated destinations belong in real navigation (a sidebar, a Breadcrumb-backed hierarchy), not a tab set implying siblings. Best Practices Keep tab labels short and parallel in structure (all nouns, or all short phrases) so the row scans easily. Preserve the active tab across a page reload or back navigation when the URL or state allows it. Avoid nesting tabs within tabs - it quickly becomes disorienting to track which level is active. Do and Don't Do DetailsActivitySettings A handful of parallel views over the same object, one visibly active, each reachable in a single click. Don't OverviewDetailsActivityCommentsHistoryPermissionsBillingIntegrations Eight tabs forces the row to scroll sideways, so most of them are invisible until the user thinks to swipe. Group the overflow into a Menu or a nested page instead. Accessibility Implemented with tab/tabpanel roles, so arrow keys move between tabs and the association between a tab and its panel is explicit. The active tab is exposed via aria-selected, not communicated by color alone. Focus moves logically into the panel's content (or stays manageable) when a new tab is activated, rather than getting lost. Related Components Steps, Menu, Breadcrumb. { \"component\": \"Tabs\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Tabs switch between a small, fixed set of related views or sections with exactly one active at a time - a horizontal row of triggers above the content they control, used when several views belong together but only one needs to be visible at once.\", \"whenToUse\": [ \"Settings pages split into related sections - Profile, Security, Notifications.\", \"A product detail's content panes - Overview, Specifications, Reviews.\", \"Dashboard or account views sharing the same context - switching between related views without leaving the page.\" ], \"whenNotToUse\": [ \"A sequence the user moves through in order, with a clear beginning and end - use Steps instead of Tabs, which implies free switching, not progression.\", \"More views than fit comfortably in a single row - beyond roughly 5-7 tabs, consider a Menu, Dropdown, or a redesigned navigation instead of a horizontally scrolling tab bar.\", \"Views that aren't actually related - unrelated destinations belong in real navigation (a sidebar, a Breadcrumb-backed hierarchy), not a tab set implying siblings.\" ], \"bestPractices\": [ \"Keep tab labels short and parallel in structure (all nouns, or all short phrases) so the row scans easily.\", \"Preserve the active tab across a page reload or back navigation when the URL or state allows it.\", \"Avoid nesting tabs within tabs - it quickly becomes disorienting to track which level is active.\" ], \"doAndDont\": { \"do\": \"A handful of parallel views over the same object, one visibly active, each reachable in a single click.\", \"dont\": \"Eight tabs forces the row to scroll sideways, so most of them are invisible until the user thinks to swipe. Group the overflow into a Menu or a nested page instead.\" }, \"accessibility\": [ \"Implemented with tab/tabpanel roles, so arrow keys move between tabs and the association between a tab and its panel is explicit.\", \"The active tab is exposed via aria-selected, not communicated by color alone.\", \"Focus moves logically into the panel's content (or stays manageable) when a new tab is activated, rather than getting lost.\" ], \"relatedComponents\": [ \"Steps\", \"Menu\", \"Breadcrumb\" ] }",
+  "tests": []
+}

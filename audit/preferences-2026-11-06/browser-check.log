@@ -1,0 +1,8 @@
+PASS Preferences opens by keyboard, exposes labeled native controls, and Escape returns focus.
+PASS Theme, density and direction apply immediately and persist across navigation and reload.
+PASS Existing cross-tab preference synchronization updates the header controls.
+PASS Old Settings navigation opens Overview preferences; legacy guide exports resolve and omit the retired screen.
+PASS Preferences fits three widths in both themes and directions, and closes on an outside click.
+PASS Unavailable storage keeps the controls usable and reports that changes cannot persist.
+PASS Fresh external visits still land on the required project-choice screen.
+PASS Legacy Settings redirects and Preferences work when opened through file://.

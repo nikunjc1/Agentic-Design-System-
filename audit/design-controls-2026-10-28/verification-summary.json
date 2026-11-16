@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-28",
+  "workspace": "Agentic Design System 2",
+  "status": "pass",
+  "detailPages": 69,
+  "dropdownChecks": 184,
+  "foundationPropagationChecks": 1035,
+  "nativeControlsPreserved": 262,
+  "renderedStates": 1067,
+  "buttonLayoutCases": 56,
+  "sitePages": 159,
+  "siteViewportCases": 636,
+  "finalControlLayoutStatus": "pass",
+  "releaseCheck": "pass",
+  "setupFlow": "pass",
+  "notes": "Advanced component APIs, reusable authored behavior contracts and live Figma acceptance remain in the separate product backlog."
+}

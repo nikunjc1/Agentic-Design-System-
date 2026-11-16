@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="site-entry.js"></script>
+<script src="component-workbench-catalog.js"></script>
+<script src="component-workbench.js"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -14,6 +17,8 @@
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
 <link rel="stylesheet" href="foundation.css" />
+<link rel="stylesheet" href="component-workbench.css" />
+<link rel="stylesheet" href="guide-export.css" />
 </head>
 <body>
 
@@ -26,8 +31,7 @@
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Preferences" aria-label="Preferences" id="preferences" data-preferences-toggle aria-haspopup="dialog" aria-expanded="false" aria-controls="adsPreferencesPanel"><span aria-hidden="true">&#9881;</span></button>
   </div>
 </header>
 
@@ -44,8 +48,8 @@
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
-      <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link" href="new-project.html">Project setup</a>
+
+      <a class="nav-link" href="project-setup.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -77,127 +81,137 @@
     <div class="nav-group is-collapsible" data-group="components">
       <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
-        <a class="nav-link" href="component-index.html">All components</a>
+
         <span class="nav-subgroup-label">Actions</span>
-        <a class="nav-link" href="components.html#button">Button</a>
-        <a class="nav-link" href="group-button.html">Group Button</a>
-        <a class="nav-link" href="float-button.html">Float Button</a>
+        <a class="nav-link" href="button-primary.html">Button</a>
+        <a class="nav-link" href="group-button-default.html">Group Button</a>
+        <a class="nav-link" href="float-button-default.html">Float Button</a>
 
         <span class="nav-subgroup-label">Forms</span>
-        <a class="nav-link" href="input.html">Input</a>
-        <a class="nav-link" href="select.html">Select</a>
-        <a class="nav-link" href="checkbox.html">Checkbox</a>
-        <a class="nav-link" href="radio.html">Radio</a>
-        <a class="nav-link" href="switch.html">Switch</a>
-        <a class="nav-link" href="date-picker.html">Date Picker</a>
-        <a class="nav-link" href="password.html">Password</a>
-        <a class="nav-link" href="number.html">Number</a>
-        <a class="nav-link" href="mention.html">Mention</a>
-        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
-        <a class="nav-link" href="date-range.html">Date Range</a>
-        <a class="nav-link" href="time.html">Time</a>
-        <a class="nav-link" href="text-area.html">Text Area</a>
-        <a class="nav-link" href="search.html">Search</a>
-        <a class="nav-link" href="add-on.html">Add-on</a>
-        <a class="nav-link" href="color-picker.html">Color Picker</a>
-        <a class="nav-link" href="slider.html">Slider</a>
-        <a class="nav-link" href="rating.html">Rating</a>
-        <a class="nav-link" href="cascader.html">Cascader</a>
-        <a class="nav-link" href="transfer.html">Transfer</a>
-        <a class="nav-link" href="tree-select.html">Tree Select</a>
-        <a class="nav-link" href="upload.html">Upload</a>
+        <a class="nav-link" href="input-text-field.html">Input</a>
+        <a class="nav-link" href="select-dropdown.html">Select</a>
+        <a class="nav-link" href="checkbox-default.html">Checkbox</a>
+        <a class="nav-link" href="radio-default.html">Radio</a>
+        <a class="nav-link" href="switch-default.html">Switch</a>
+        <a class="nav-link" href="date-picker-default.html">Date Picker</a>
+        <a class="nav-link" href="password-default.html">Password</a>
+        <a class="nav-link" href="number-default.html">Number</a>
+        <a class="nav-link" href="mention-default.html">Mention</a>
+        <a class="nav-link" href="autocomplete-default.html">Autocomplete</a>
+        <a class="nav-link" href="date-range-default.html">Date Range</a>
+        <a class="nav-link" href="time-default.html">Time</a>
+        <a class="nav-link" href="text-area-default.html">Text Area</a>
+        <a class="nav-link" href="search-default.html">Search</a>
+        <a class="nav-link" href="add-on-default.html">Add-on</a>
+        <a class="nav-link" href="color-picker-default.html">Color Picker</a>
+        <a class="nav-link" href="slider-default.html">Slider</a>
+        <a class="nav-link" href="rating-default.html">Rating</a>
+        <a class="nav-link" href="cascader-default.html">Cascader</a>
+        <a class="nav-link" href="transfer-default.html">Transfer</a>
+        <a class="nav-link" href="tree-select-default.html">Tree Select</a>
+        <a class="nav-link" href="upload-default.html">Upload</a>
 
         <span class="nav-subgroup-label">Navigation</span>
-        <a class="nav-link" href="tabs.html">Tabs</a>
-        <a class="nav-link" href="anchor.html">Anchor</a>
-        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
-        <a class="nav-link" href="dropdown.html">Dropdown</a>
-        <a class="nav-link" href="pagination.html">Pagination</a>
-        <a class="nav-link" href="menu.html">Menu</a>
-        <a class="nav-link" href="steps.html">Steps</a>
-        <a class="nav-link" href="affix.html">Affix</a>
+        <a class="nav-link" href="tabs-default.html">Tabs</a>
+        <a class="nav-link" href="anchor-default.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb-default.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown-default.html">Dropdown</a>
+        <a class="nav-link" href="pagination-default.html">Pagination</a>
+        <a class="nav-link" href="menu-default.html">Menu</a>
+        <a class="nav-link" href="steps-default.html">Steps</a>
 
         <span class="nav-subgroup-label">Feedback</span>
-        <a class="nav-link" href="alert.html">Alert</a>
-        <a class="nav-link" href="toast.html">Toast</a>
-        <a class="nav-link" href="modal.html">Modal</a>
-        <a class="nav-link" href="tooltip.html">Tooltip</a>
-        <a class="nav-link" href="tour.html">Tour</a>
-        <a class="nav-link" href="drawer.html">Drawer</a>
-        <a class="nav-link" href="notification.html">Notification</a>
-        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
-        <a class="nav-link" href="progress.html">Progress</a>
-        <a class="nav-link" href="result.html">Result</a>
-        <a class="nav-link" href="skeleton.html">Skeleton</a>
-        <a class="nav-link" href="spin.html">Spin</a>
+        <a class="nav-link" href="alert-default.html">Alert</a>
+        <a class="nav-link" href="toast-default.html">Toast</a>
+        <a class="nav-link" href="modal-default.html">Modal</a>
+        <a class="nav-link" href="tooltip-default.html">Tooltip</a>
+        <a class="nav-link" href="tour-default.html">Tour</a>
+        <a class="nav-link" href="drawer-default.html">Drawer</a>
+        <a class="nav-link" href="notification-default.html">Notification</a>
+        <a class="nav-link" href="pop-confirm-default.html">Pop Confirm</a>
+        <a class="nav-link" href="progress-default.html">Progress</a>
+        <a class="nav-link" href="result-default.html">Result</a>
+        <a class="nav-link" href="skeleton-default.html">Skeleton</a>
+        <a class="nav-link" href="spin-default.html">Spin</a>
 
         <span class="nav-subgroup-label">Data Display</span>
-        <a class="nav-link" href="divider.html">Divider</a>
-        <a class="nav-link" href="avatar.html">Avatar</a>
-        <a class="nav-link" href="badge.html">Badge</a>
-        <a class="nav-link" href="calendar.html">Calendar</a>
-        <a class="nav-link" href="card.html">Card</a>
-        <a class="nav-link" href="collapse.html">Collapse</a>
-        <a class="nav-link" href="description.html">Description</a>
-        <a class="nav-link" href="empty.html">Empty</a>
-        <a class="nav-link" href="image.html">Image</a>
-        <a class="nav-link" href="list.html">List</a>
-        <a class="nav-link" href="popover.html">Popover</a>
-        <a class="nav-link" href="splitter.html">Splitter</a>
-        <a class="nav-link" href="statistic.html">Statistic</a>
-        <a class="nav-link" href="table.html">Table</a>
-        <a class="nav-link" href="tag.html">Tag</a>
-        <a class="nav-link" href="timeline.html">Timeline</a>
-        <a class="nav-link" href="tree.html">Tree</a>
+        <a class="nav-link" href="divider-default.html">Divider</a>
+        <a class="nav-link" href="avatar-default.html">Avatar</a>
+        <a class="nav-link" href="badge-default.html">Badge</a>
+        <a class="nav-link" href="calendar-default.html">Calendar</a>
+        <a class="nav-link" href="card-default.html">Card</a>
+        <a class="nav-link" href="collapse-default.html">Collapse</a>
+        <a class="nav-link" href="description-default.html">Description</a>
+        <a class="nav-link" href="empty-default.html">Empty</a>
+        <a class="nav-link" href="image-default.html">Image</a>
+        <a class="nav-link" href="list-default.html">List</a>
+        <a class="nav-link" href="popover-default.html">Popover</a>
+        <a class="nav-link" href="splitter-default.html">Splitter</a>
+        <a class="nav-link" href="statistic-default.html">Statistic</a>
+        <a class="nav-link" href="table-default.html">Table</a>
+        <a class="nav-link" href="tag-default.html">Tag</a>
+        <a class="nav-link" href="timeline-default.html">Timeline</a>
+        <a class="nav-link" href="tree-default.html">Tree</a>
       </div>
     </div>
 
     <div class="nav-group">
-      <a class="nav-link" href="patterns.html">Patterns</a>
-      <a class="nav-link" href="templates.html">Templates</a>
-      <a class="nav-link" href="ai-generator.html">AI Generator</a>
-      <a class="nav-link" href="md-export.html">Markdown Export</a>
+
+
+
+      <a class="nav-link" href="md-export.html">Export &amp; Handoff</a>
+
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link" href="history.html">History</a>
+
       <a class="nav-link" href="changelog.html">Changelog</a>
-      <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
-<main class="app-main">
-  <p class="page-eyebrow">Guidelines &middot; Design Principles</p>
-  <h1 class="page-title">Design Principles</h1>
-  <p class="page-lede">Ten rules for arranging a screen, independent of any single component - the layer above the component Do/Don't pairs, for decisions about how pieces relate to each other rather than how one piece looks on its own.</p>
+<main class="app-main principles-page">
+    <h1 class="page-title">Design Principles</h1>
+  <p class="page-lede">Four shared values and ten practical principles for clear, consistent interfaces. Use them to guide decisions across components and screens.</p>
+
+
+  <section class="panel spacing-system-panel" id="design-values" aria-labelledby="design-values-title">
+    <h2 class="panel-title" id="design-values-title">Design values</h2>
+    <p class="get-library-copy">Use these values when an existing rule does not settle a design decision. The examples below are static illustrations of the principles.</p>
+    <div class="concept-grid">
+      <div class="concept-card"><h3 class="concept-card-title">Legible</h3><p class="concept-card-body">Make information understandable at a glance. Use clear labels, explain empty states, indicate truncated content, and communicate status through more than color.</p></div>
+      <div class="concept-card"><h3 class="concept-card-title">Consistent</h3><p class="concept-card-body">Give the same problem the same solution. Reuse shared foundations, component behavior and language so familiar patterns stay predictable.</p></div>
+      <div class="concept-card"><h3 class="concept-card-title">Honest</h3><p class="concept-card-body">Show what the system is actually doing. Report real progress, make limitations clear, and use motion and elevation to communicate meaningful changes.</p></div>
+      <div class="concept-card"><h3 class="concept-card-title">Adaptive</h3><p class="concept-card-body">Support the context people bring: screen size, input method, theme, reading direction and accessibility preferences. Build adaptation into each component.</p></div>
+    </div>
+  </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">1. Proximity</h2>
+    <h2 class="panel-title" id="principle-proximity">1. Proximity</h2>
     <p class="get-library-copy">Spacing communicates relationship before a single label is read. Elements that belong together sit close; a group that doesn't relate to its neighbor gets a visibly larger gap - never the same gap used everywhere out of habit.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-16);"><div style="display:flex;flex-direction:column;gap:var(--space-4);"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Last name</div></div><div style="display:flex;flex-direction:column;gap:var(--space-4);"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Phone</div></div></div></div>
-        <p class="guide-dodont-note">Two related pairs, 4px apart inside each pair, 16px between the pairs - the grouping is visible before any label is read.</p>
+        <p class="guide-dodont-note">Small gaps within each pair and larger gaps between pairs make the grouping visible before any label is read.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-10);"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">First name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Last name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Email</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-140);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Phone</div></div></div>
-        <p class="guide-dodont-note">Identical 10px gaps everywhere erase the grouping entirely - the form reads as one undifferentiated stack of four unrelated fields.</p>
+        <p class="guide-dodont-note">Equal gaps within and between groups make related fields harder to distinguish.</p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">2. Alignment</h2>
+    <h2 class="panel-title" id="principle-alignment">2. Alignment</h2>
     <p class="get-library-copy">Every edge should line up with another edge on purpose. An element positioned by eye rather than against a shared line creates a visual tie the reader has to resolve before they can read the content.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-8);align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-160);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-160);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-160);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Billing email</div></div></div>
         <p class="guide-dodont-note">Every field shares the same left edge and the same width - the column reads as one aligned unit.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-8);align-items:flex-start;"><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-160);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Company name</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-120);margin-inline-start:var(--space-14);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Tax ID</div><div style="box-sizing:border-box;border-radius:var(--radius-sm);background:var(--graphite-800);padding:var(--space-8) var(--space-10);color:var(--text-mid);width:var(--dimension-180);margin-inline-start:var(--space-6);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Billing email</div></div></div>
         <p class="guide-dodont-note">Every field starts and ends at a slightly different point - nothing is broken, but the eye has to work to find the column that isn't there.</p>
       </div>
@@ -205,16 +219,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">3. Contrast</h2>
+    <h2 class="panel-title" id="principle-contrast">3. Contrast</h2>
     <p class="get-library-copy">The most important thing on a screen should be the most visually distinct thing on it. If two elements aren't equally important, don't give them equal visual weight - contrast is what lets a reader tell them apart without reading either one.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="color:var(--text-dim);font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Draft saved 2 minutes ago</span></div>
         <p class="guide-dodont-note">One saturated Primary action against dim, small status text - the eye finds the action first, exactly once.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span class="btn-demo btn-demo--primary btn-demo--h36">Publish</span><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Draft saved 2 minutes ago</span></div>
         <p class="guide-dodont-note">Status text bolded and sized to match the button competes with it for attention - now there are two things to look at with no way to tell which mattered more.</p>
       </div>
@@ -222,16 +236,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">4. Repetition</h2>
+    <h2 class="panel-title" id="principle-repetition">4. Repetition</h2>
     <p class="get-library-copy">A pattern solved once should be solved identically everywhere it recurs. Re-deriving a layout, a spacing value or a color per screen isn't creative variation - it's a second, slightly different rule the next designer now has to discover and reconcile.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-8);width:var(--dimension-200);"><div class="card-demo-panel" style="padding:var(--space-10);"><p class="card-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Invoice #4021</p></div><div class="card-demo-panel" style="padding:var(--space-10);"><p class="card-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Invoice #4022</p></div></div></div>
         <p class="guide-dodont-note">Every row in the list uses the exact same card structure and spacing - no row asks to be looked at differently from its neighbor.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-8);width:var(--dimension-200);"><div class="card-demo-panel" style="padding:var(--space-10);"><p class="card-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Invoice #4021</p></div><div class="card-demo-panel" style="padding:var(--space-14);border-radius:0;"><p class="card-demo-title" style="font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Invoice #4022</p></div></div></div>
         <p class="guide-dodont-note">The second row has different padding, corner radius and title weight for no reason tied to its content - the user now wonders if it means something.</p>
       </div>
@@ -239,16 +253,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">5. Make it Direct</h2>
+    <h2 class="panel-title" id="principle-make-it-direct">5. Make it Direct</h2>
     <p class="get-library-copy">Let people act on the thing itself instead of routing them through a separate settings surface to change one property of it. The shorter the distance between seeing something and changing it, the less the interface is getting in the way.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span style="color:var(--text-hi);border-bottom:var(--border-width-1) dashed var(--line-strong);cursor:text;padding-bottom:var(--space-1);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Q1 Roadmap</span><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">click to rename</span></div>
         <p class="guide-dodont-note">Clicking the title renames it in place - the object being edited and the control for editing it are the same element.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Q1 Roadmap</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Open settings to rename</span></div>
         <p class="guide-dodont-note">Renaming a title routes through a separate settings surface for a change that has nothing to do with settings - three clicks for one word.</p>
       </div>
@@ -256,16 +270,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">6. Stay on the Page</h2>
+    <h2 class="panel-title" id="principle-stay-on-the-page">6. Stay on the Page</h2>
     <p class="get-library-copy">A small, contained task doesn't need to leave the page the user is already on. Full navigation resets their scroll position and working context for a job that a drawer or an inline panel could have handled without losing either.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div class="drawer-demo-scrim" style="height:var(--dimension-90);"><div class="drawer-demo-panel drawer-demo-panel--right drawer-demo-panel--small"><div class="modal-demo-header"><span class="modal-demo-title" style="font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Filters</span></div></div></div></div>
         <p class="guide-dodont-note">Filtering opens a drawer beside the list - the list, scroll position and selection stay exactly where the user left them.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:center;"><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">&larr; navigates away from the list entirely</span><span class="btn-demo btn-demo--secondary btn-demo--h32">Go to Filter Settings page</span></div></div>
         <p class="guide-dodont-note">Sending the user to a whole new page to set one filter loses their place in the list they were just looking at.</p>
       </div>
@@ -273,33 +287,33 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">7. Keep it Lightweight</h2>
+    <h2 class="panel-title" id="principle-keep-it-lightweight">7. Keep it Lightweight</h2>
     <p class="get-library-copy">Don't demand more setup than the task is worth. A five-field wizard before the user has seen any payoff teaches them the tool is a chore before it's had the chance to be useful.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo" style="justify-content:flex-start;align-items:flex-end;min-height:auto;padding:var(--space-20);"><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><span class="btn-demo btn-demo--primary btn-demo--h36">Create</span></div>
+        <h3 class="guide-dodont-label">Do</h3>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;align-items:flex-end;min-height:auto;padding:var(--space-20);"><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" aria-label="Example: project name, simple setup" placeholder="Untitled project" readonly tabindex="-1" /></div></div><span class="btn-demo btn-demo--primary btn-demo--h36">Create</span></div>
         <p class="guide-dodont-note">One field to get started - everything else (description, members, template) is filled in later, from inside the thing that now exists.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-10);width:100%;"><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Step 1 of 5</span><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" placeholder="Untitled project" readonly tabindex="-1" /></div></div><div class="input-demo-field"><label class="input-demo-label">Description</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" readonly tabindex="-1" /></div></div></div></div>
+        <h3 class="guide-dodont-label">Don't</h3>
+        <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;flex-direction:column;gap:var(--space-10);width:100%;"><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Step 1 of 5</span><div class="input-demo-field"><label class="input-demo-label">Project name</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" aria-label="Example: project name, lengthy setup" placeholder="Untitled project" readonly tabindex="-1" /></div></div><div class="input-demo-field"><label class="input-demo-label">Description</label><div class="input-demo-control input-demo-control--outlined input-demo-control--h36"><input type="text" class="input-demo-input" aria-label="Example: description, lengthy setup" readonly tabindex="-1" /></div></div></div></div>
         <p class="guide-dodont-note">A five-step wizard before the project even exists front-loads setup the user hasn't earned the payoff for yet.</p>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">8. Provide an Invitation</h2>
+    <h2 class="panel-title" id="principle-provide-an-invitation">8. Provide an Invitation</h2>
     <p class="get-library-copy">The next possible action should be visually discoverable before it's needed, through a subtle cue - a hover state, an icon that appears on proximity - not hidden until the user already knows to look for it.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;align-items:center;gap:var(--space-10);background:var(--graphite-800);padding:var(--space-8) var(--space-10);border-radius:var(--radius-sm);"><span style="color:var(--text-hi);white-space:nowrap;font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Q1 Report.pdf</span><span style="color:var(--text-mid);white-space:nowrap;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-6);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Rename &middot; Delete</span></div></div>
         <p class="guide-dodont-note">Row actions are visible - dimmed to stay out of the way, but present enough that the user knows they exist without hovering to discover them.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div style="display:flex;align-items:center;gap:var(--space-10);background:var(--graphite-800);padding:var(--space-8) var(--space-10);border-radius:var(--radius-sm);"><span style="color:var(--text-hi);white-space:nowrap;font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);">Q1 Report.pdf</span><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">(actions appear only on hover, with no visible cue)</span></div></div>
         <p class="guide-dodont-note">Actions that exist only on hover, with nothing hinting they're there, are invisible on touch devices and undiscoverable everywhere else.</p>
       </div>
@@ -307,16 +321,16 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">9. Use Transition</h2>
-    <p class="get-library-copy">Animate a change of state so the relationship between the before and after stays legible - an element should be seen moving from one position to the next, not vanish from one and appear in the other with nothing connecting them.</p>
+    <h2 class="panel-title" id="principle-use-transition">9. Use Transition</h2>
+    <p class="get-library-copy">Use transitions to explain a change of state. Keep them brief, respect reduced-motion preferences, and never delay access to content or keyboard focus.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span><svg class="collapse-demo-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="collapse-demo-body">Expands with a height transition, so the content below visibly slides down rather than jumping into place.</div></div></div>
-        <p class="guide-dodont-note">The panel's height animates open - the reader's eye follows the content arriving instead of losing its place when the layout jumps.</p>
+        <p class="guide-dodont-note">In an implementation, a brief expansion can help people follow new content. With reduced motion, reveal it immediately and preserve their place.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><div class="collapse-demo-panel collapse-demo-panel--bordered"><div class="collapse-demo-header"><span class="collapse-demo-header-text">Shipping details</span><svg class="collapse-demo-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">(body would appear instantly, no transition, shifting everything below it in one frame)</span></div>
         <p class="guide-dodont-note">Content snapping into existence with no transition shoves every element below it in one frame - disorienting on a long, scrolled page.</p>
       </div>
@@ -324,30 +338,28 @@
   </section>
 
   <section class="panel spacing-model-panel">
-    <h2 class="panel-title">10. React Immediately</h2>
-    <p class="get-library-copy">Respond to an interaction within roughly 100ms, even if the real work underneath takes longer. A button that visibly reacts the instant it's pressed reads as responsive; one that stays inert until the network resolves reads as broken, even if it isn't.</p>
+    <h2 class="panel-title" id="principle-react-immediately">10. React Immediately</h2>
+    <p class="get-library-copy">Acknowledge an action immediately, even when the work takes longer. Show a meaningful working state, prevent duplicate submissions where needed, and announce the result.</p>
     <div class="guide-dodont">
       <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
+        <h3 class="guide-dodont-label">Do</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span class="btn-demo btn-demo--primary btn-demo--h36" style="opacity:.85;">Saving&hellip;</span><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">state changes the instant it's clicked</span></div>
         <p class="guide-dodont-note">The button visibly enters a loading state the moment it's pressed, before the network call has even resolved - the click clearly registered.</p>
       </div>
       <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
+        <h3 class="guide-dodont-label">Don't</h3>
         <div class="guide-dodont-demo" style="justify-content:flex-start;min-height:auto;padding:var(--space-20);"><span class="btn-demo btn-demo--primary btn-demo--h36">Save</span><span style="color:var(--text-dim);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">(nothing changes for 1-2s while the request is in flight)</span></div>
         <p class="guide-dodont-note">A button that gives no feedback until the request finishes leaves the user unsure whether the click landed, and often clicking again.</p>
       </div>
     </div>
   </section>
 
-  <section class="panel spacing-model-panel md-export-panel">
-    <h2 class="panel-title">Design Principles - Markdown export</h2>
-    <p class="get-library-copy">This page's own content, as Markdown - copy it straight into your design system docs or hand it to an AI/agent workflow.</p>
-    <pre class="guide-machine-json" style="max-height:var(--dimension-360);overflow:auto;"><code data-role="page-markdown-output"></code></pre>
-    <div class="panel-footer-row">
-      <button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy Markdown</button>
-      <span class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></span>
-    </div>
+  <section class="panel spacing-model-panel md-export-panel" data-outline-skip aria-labelledby="principles-handoff-title">
+    <h2 class="panel-title" id="principles-handoff-title">Use these principles</h2>
+    <p class="get-library-copy">Copy this guide, or export it with your project brief and foundation settings.</p>
+    <div class="setup-actions"><button class="btn btn-primary" id="copyPageMarkdownBtn" type="button">Copy guide</button><a class="btn btn-ghost" href="md-export.html?page=principles.html">Export with project context</a></div>
+    <p class="save-status" id="pageMarkdownStatus" role="status" aria-live="polite"></p>
+    <details class="guide-markdown-preview"><summary>Preview Markdown</summary><pre class="guide-machine-json" tabindex="0" aria-label="Design Principles Markdown"><code data-role="page-markdown-output"></code></pre></details>
   </section>
 
 
@@ -355,8 +367,9 @@
 <section class="panel ads-implementation-contract" id="implementation-contract" aria-labelledby="implementation-contract-title">
 <h2 class="panel-title" id="implementation-contract-title">Implementation contract</h2>
 <p>Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.</p>
-<div class="ads-contract-rule"><h3>Flow and use</h3><p>Choose a principle, inspect its examples and copy the current Foundation context. Specimen inputs are intentionally read-only. Apply principles through concrete component states, accessible reading order, reflow and recovery rather than using them as substitutes for token or interaction contracts.</p></div>
-<div class="ads-contract-rule"><h3>Handoff</h3><p>Export the principles and current rules. Explain exceptions with the product constraint and verification evidence. A principle alone does not prove a component is accessible.</p></div>
+<div class="ads-contract-rule"><h3>Flow and use</h3><p>Introduce shared values, then use eleven stable, keyboard-accessible section links for the values and ten principles. Do/Don’t examples are static illustrations; example inputs are read-only, named and outside the tab order. Describe transitions as implementation guidance and respect reduced-motion preferences. Apply principles through concrete component states, accessible reading order, reflow and recovery.</p></div>
+<div class="ads-contract-rule"><h3>Handoff</h3><p>Keep one Copy guide action and a link to Markdown Export with project context. Collapse the duplicate Markdown preview by default; reveal and focus it if clipboard access fails. Export the merged values, principles and current rules without including export controls. Explain exceptions with the product constraint and verification evidence. A principle alone does not prove a component is accessible.</p></div>
+<div class="ads-contract-rule"><h3>Values</h3><p>Introduce Legible, Consistent, Honest and Adaptive as shared decision-making values, followed by the ten practical principles. Keep one Design Principles navigation item; legacy Design Values links redirect to this introduction.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -399,8 +412,9 @@
   &quot;section&quot;: {
     &quot;title&quot;: &quot;Design Principles&quot;,
     &quot;rules&quot;: {
-      &quot;Flow and use&quot;: &quot;Choose a principle, inspect its examples and copy the current Foundation context. Specimen inputs are intentionally read-only. Apply principles through concrete component states, accessible reading order, reflow and recovery rather than using them as substitutes for token or interaction contracts.&quot;,
-      &quot;Handoff&quot;: &quot;Export the principles and current rules. Explain exceptions with the product constraint and verification evidence. A principle alone does not prove a component is accessible.&quot;
+      &quot;Flow and use&quot;: &quot;Introduce shared values, then use eleven stable, keyboard-accessible section links for the values and ten principles. Do/Don\u2019t examples are static illustrations; example inputs are read-only, named and outside the tab order. Describe transitions as implementation guidance and respect reduced-motion preferences. Apply principles through concrete component states, accessible reading order, reflow and recovery.&quot;,
+      &quot;Handoff&quot;: &quot;Keep one Copy guide action and a link to Markdown Export with project context. Collapse the duplicate Markdown preview by default; reveal and focus it if clipboard access fails. Export the merged values, principles and current rules without including export controls. Explain exceptions with the product constraint and verification evidence. A principle alone does not prove a component is accessible.&quot;,
+      &quot;Values&quot;: &quot;Introduce Legible, Consistent, Honest and Adaptive as shared decision-making values, followed by the ten practical principles. Keep one Design Principles navigation item; legacy Design Values links redirect to this introduction.&quot;
     }
   }
 }</code></pre></details>

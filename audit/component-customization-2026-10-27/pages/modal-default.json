@@ -1,0 +1,211 @@
+{
+  "file": "modal-default.html",
+  "name": "Modal",
+  "category": "Components · Feedback · Modal",
+  "controls": [
+    {
+      "index": 0,
+      "role": "modal-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "modal-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Destructive",
+          "label": "Destructive"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "No footer",
+          "label": "No footer"
+        },
+        {
+          "value": "Scrollable",
+          "label": "Scrollable"
+        },
+        {
+          "value": "No close",
+          "label": "No close"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "modal-size-select",
+      "id": null,
+      "label": "Size",
+      "type": "select",
+      "value": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Size Small Medium Large",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "modal-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Delete this file?",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "modal-body",
+      "id": null,
+      "label": "Body",
+      "type": "text",
+      "value": "This action cannot be undone.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Body",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "modal-show-close",
+      "id": null,
+      "label": "Show close button",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown in the title bar",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, title, body text and the close button are properties of the same component, not separate dialogs glued together - change them below to check this modal's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Modal is a dialog box that appears above a dimmed backdrop to focus the user on one task or decision before returning them to the page - it blocks interaction with everything behind it until the user responds or explicitly closes it. When to Use A destructive-action confirmation - confirming a delete before it happens. A short, focused task or form - terms acceptance, an onboarding step. A media preview that needs full attention - viewing an image or document in detail. When Not to Use A task that needs more room than a dialog comfortably allows - use Drawer, which slides in from an edge instead of interrupting the whole page. A brief, non-blocking confirmation - use Toast or Alert - Modal's backdrop is a heavy interruption for something minor. Frequent or repeated interruptions in a single flow - excessive modal use breaks flow; consider inline validation or a Drawer instead. Best Practices Give it a single clear purpose and a single primary action - avoid turning it into a small multi-purpose page. Always provide an obvious way to close it (a visible close button and Escape), even when a primary action is required. Keep destructive confirmations short and specific about the consequence, not a generic \"Are you sure?\" Do and Don't Do Delete 3 files?This cannot be undone.CancelDelete One decision, stated with its consequence, and a button that names the action rather than agreeing vaguely. Don't Are you sure?Please confirm.NoYes \"Are you sure?\" with Yes/No never says what is about to happen, so the user confirms without knowing what they agreed to. Accessibility Traps keyboard focus within the dialog while open, and restores it to the triggering element on close. Exposed as role=\"dialog\" with aria-modal=\"true\" and an accessible name (its title via aria-labelledby), announced as soon as it opens - this is about focus management and interruption, not aria-live, since a Modal blocks and demands a response rather than passively announcing a status. Escape always closes it, no matter the type or state. A visible close \"x\" is also available for Default and Destructive, unless explicitly hidden via the Show close property or the No-close state. Related Components Drawer, Pop Confirm, Result. { \"component\": \"Modal\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Modal is a dialog box that appears above a dimmed backdrop to focus the user on one task or decision before returning them to the page - it blocks interaction with everything behind it until the user responds or explicitly closes it.\", \"whenToUse\": [ \"A destructive-action confirmation - confirming a delete before it happens.\", \"A short, focused task or form - terms acceptance, an onboarding step.\", \"A media preview that needs full attention - viewing an image or document in detail.\" ], \"whenNotToUse\": [ \"A task that needs more room than a dialog comfortably allows - use Drawer, which slides in from an edge instead of interrupting the whole page.\", \"A brief, non-blocking confirmation - use Toast or Alert - Modal's backdrop is a heavy interruption for something minor.\", \"Frequent or repeated interruptions in a single flow - excessive modal use breaks flow; consider inline validation or a Drawer instead.\" ], \"bestPractices\": [ \"Give it a single clear purpose and a single primary action - avoid turning it into a small multi-purpose page.\", \"Always provide an obvious way to close it (a visible close button and Escape), even when a primary action is required.\", \"Keep destructive confirmations short and specific about the consequence, not a generic \\\"Are you sure?\\\"\" ], \"doAndDont\": { \"do\": \"One decision, stated with its consequence, and a button that names the action rather than agreeing vaguely.\", \"dont\": \"\\\"Are you sure?\\\" with Yes/No never says what is about to happen, so the user confirms without knowing what they agreed to.\" }, \"accessibility\": [ \"Traps keyboard focus within the dialog while open, and restores it to the triggering element on close.\", \"Exposed as role=\\\"dialog\\\" with aria-modal=\\\"true\\\" and an accessible name (its title via aria-labelledby), announced as soon as it opens - this is about focus management and interruption, not aria-live, since a Modal blocks and demands a response rather than passively announcing a status.\", \"Escape always closes it regardless of type or state. A visible close \\\"x\\\" is also available for Default and Destructive unless explicitly hidden.\" ], \"relatedComponents\": [ \"Drawer\", \"Pop Confirm\", \"Result\" ] }",
+  "tests": []
+}

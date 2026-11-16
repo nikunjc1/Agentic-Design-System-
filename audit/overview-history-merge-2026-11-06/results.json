@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "checks": [
+    "Existing project opens Overview with one New project action and no repeated library/governance panels.",
+    "Saved projects, case-insensitive search, empty search recovery and active-project export work in Overview.",
+    "Opening a saved project and legacy History links retain the saved projects.",
+    "The draft prompt resumes directly; the hub fits four widths in both themes.",
+    "Unreadable history is reported without modifying the saved data."
+  ],
+  "errors": []
+}

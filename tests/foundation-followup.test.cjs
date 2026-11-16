@@ -6,8 +6,8 @@ test('data formatting preserves Unicode redaction, invalid values, date-only ide
   for(const value of [true,false,{},'   '])assert.equal(M.format(value,'number',{}),'–');
   assert.equal(M.format(0,'number',{}),'0');
   for(const value of ['2026-01-01',{start:'2026-01-01'},['2026-01-01'],['2026-01-02','2026-01-01'],['invalid','2026-01-01']])assert.equal(M.format(value,'range',{}),'–');
-  assert.equal(M.format(['2026-01-01','2026-01-02'],'range',{}),'2026-01-01 – 2026-01-02');
-  assert.equal(M.format('2026-03-14','date',{zone:'America/Los_Angeles'}),'2026-03-14');
+  assert.equal(M.format(['2026-01-01','2026-01-02'],'range',{}),'01/01/2026 to 01/02/2026');
+  assert.equal(M.format('2026-03-14','date',{zone:'America/Los_Angeles'}),'03/14/2026');
 });
 test('12px contrast pills keep readable foregrounds on their own status tint in both themes',()=>{
   for(const theme of ['light','dark'])for(const surface of ['#FFFFFF','#15171A','#0805D9']) {

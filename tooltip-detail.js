@@ -68,13 +68,13 @@
 
   function bubbleContentFor(stateKey, text){
     if (stateKey === "rich"){
-      return '<span class="tooltip-demo-title">' + escapeHtml(RICH_TITLE) + '</span>' +
-        '<span class="tooltip-demo-description">' + escapeHtml(RICH_DESCRIPTION) + "</span>";
+      return '<span class="tooltip-demo-title" data-contract-part="title" data-contract-name="Title">' + escapeHtml(RICH_TITLE) + '</span>' +
+        '<span class="tooltip-demo-description" data-contract-part="description" data-contract-name="Description">' + escapeHtml(RICH_DESCRIPTION) + "</span>";
     }
     if (stateKey === "long-text"){
-      return escapeHtml(LONG_TEXT_EXAMPLE);
+      return '<span data-contract-part="longtext" data-contract-name="Long text">' + escapeHtml(LONG_TEXT_EXAMPLE) + "</span>";
     }
-    return escapeHtml(text);
+    return '<span data-contract-part="text">' + escapeHtml(text) + "</span>";
   }
 
   // Renders one trigger+bubble pair. DOM order is always bubble, then the
@@ -93,9 +93,9 @@
     var size = sizeInfoFor(sizeKey);
     var bubbleCls = "tooltip-demo-bubble tooltip-demo-bubble--" + sizeKey + (stateKey === "long-text" ? " is-long-text" : "");
     var bubbleStyle = "padding:" + size.pad + ";font-size:" + size.font + "px;";
-    var bubbleHtml = '<div class="' + bubbleCls + '" style="' + bubbleStyle + '">' + bubbleContentFor(stateKey, text) + "</div>";
-    var arrowHtml = showArrow ? '<div class="tooltip-demo-arrow" aria-hidden="true"></div>' : "";
-    var triggerHtml = '<button type="button" class="tooltip-demo-trigger" tabindex="-1" aria-hidden="true">?</button>';
+    var bubbleHtml = '<div class="' + bubbleCls + '" data-contract-part="bubble" style="' + bubbleStyle + '">' + bubbleContentFor(stateKey, text) + "</div>";
+    var arrowHtml = showArrow ? '<div class="tooltip-demo-arrow" data-contract-part="arrow" aria-hidden="true"></div>' : "";
+    var triggerHtml = '<button type="button" class="tooltip-demo-trigger" data-contract-part="trigger" data-contract-name="Trigger" tabindex="-1" aria-hidden="true">?</button>';
     return '<div class="tooltip-demo-wrap tooltip-demo-wrap--' + typeKey + '">' + bubbleHtml + arrowHtml + triggerHtml + "</div>";
   }
 
@@ -136,7 +136,7 @@
     lines.push(".tooltip-demo-wrap--left{ flex-direction:row; }");
     lines.push(".tooltip-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".tooltip-demo-trigger{ flex:none; width:var(--dimension-28); height:var(--dimension-28); border-radius:9999px; background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-dim); display:flex; align-items:center; justify-content:center; font-size:var(--type-body-size); cursor:default; }");
+    lines.push(".tooltip-demo-trigger{ flex:none; width:var(--dimension-28); height:var(--dimension-28); border-radius:var(--radius-full); background:var(--graphite-800); border:1px solid var(--line-strong); color:var(--text-dim); display:flex; align-items:center; justify-content:center; font-size:var(--type-body-size); cursor:default; }");
     lines.push("");
     lines.push("/* Size - explicitly chosen: " + sizeLabel(sizeKey) + " */");
     lines.push("/* Inverted against the page on purpose - near-black in light theme,");
@@ -150,7 +150,7 @@
     lines.push("   customization, so the tooltip stays correctly inverted regardless. */");
     lines.push(".tooltip-demo-bubble{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); color:var(--overlay-invert-text); border-radius:var(--radius-sm); font-family:var(--font-body); white-space:nowrap; padding:" + size.pad + "; font-size:" + size.font + "px; }");
     lines.push(".tooltip-demo-bubble.is-long-text{ white-space:normal; max-width:var(--dimension-180); }");
-    lines.push(".tooltip-demo-title{ display:block; font-weight:600; font-size:inherit; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tooltip-demo-title{ display:block; font-weight:var(--type-selected-weight); font-size:inherit; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("/* Mixed toward the bubble's own background, not var(--text-mid) -");
     lines.push("   that token is calibrated for normal surfaces and reads too low-");
     lines.push("   contrast against this inverted one. */");
@@ -212,12 +212,12 @@
       card.setAttribute("tabindex", "0");
       var href = "tooltip-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

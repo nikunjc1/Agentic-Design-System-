@@ -1,0 +1,35 @@
+✔ AI approval foregrounds maintain text contrast on all status button states (26.270417ms)
+✔ dimension, border and reference-asset records reject invalid saved settings (28.575208ms)
+✔ every typography role resolves all chosen metrics in each theme (17.084041ms)
+✔ restoring the heading scale preserves other roles, fonts and theme colors (5.297459ms)
+✔ px/rem round trips preserve fractional and negative dimensions (3.874583ms)
+✔ button foreground meets 4.5:1 in all three states across palettes, except the documented factory-red exception (11.255333ms)
+✔ changing radius adjusts semantic aliases without renaming numeric primitives (1.691208ms)
+✔ spacing, sizing, borders, shadows, icons and grid resolve saved settings (1.140834ms)
+✔ focus preset cannot recolor or widen resting component boundaries (1.897459ms)
+✔ blue project accents do not tint structural boundaries, but the Borders page color now really drives them (3.587875ms)
+✔ legacy blue focus defaults migrate without changing info or custom state colors (1.47525ms)
+✔ default focus follows the brand and maintains a ring in both dimensional units (1.766208ms)
+✔ context defaults agree for single-platform and multiple-platform projects (0.103583ms)
+✔ Project Setup seeds Typography, saved choices win, and Radius stays a manual choice (0.889542ms)
+✔ malformed records and out-of-bounds values are rejected or safely resolved (0.513125ms)
+✔ data formatting distinguishes zero, absence, nonnumeric and loading (0.96275ms)
+✔ date formatting handles zones, calendar dates, ranges and invalid values (2.217333ms)
+✔ redaction never exposes a full short value and invalid locale/zone recover (0.242958ms)
+✔ component code exports keep comments and use the selected Foundation metrics (1.351084ms)
+✔ all live pages load the resolver before boot and bindings last (26.226334ms)
+✔ CSS dependencies resolve and responsive thresholds never contain custom properties (7.548875ms)
+✔ shared border styling cannot revive inner borders or override form variants (2.58275ms)
+✔ head boot, same-page changes, reload defaults and cross-tab clearing use one resolver (6.10125ms)
+✔ storage failure keeps saved data, applies a marked preview, and blocks failed resets (3.921708ms)
+✔ component radius menus include every semantic medium radius exactly (72.465458ms)
+✔ brand colors follow the active theme with a light fallback for legacy records (1.004458ms)
+✔ custom border opacity is exact and untouched default rows do not mask it (0.826125ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 238.635042

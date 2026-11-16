@@ -10,9 +10,9 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_EYE ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
-  var ICON_EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-7-11-7a18.7 18.7 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a18.7 18.7 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_EYE ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var ICON_EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-7-11-7a18.7 18.7 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 7 11 7a18.7 18.7 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -24,7 +24,9 @@
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
+    { key: "success", cls: " is-success", label: "Success" },
     { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
 
@@ -50,35 +52,39 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var green500 = getCssVar("--green-500", "#2FBF6E");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-        error: "border-color:" + danger500 + ";"
+        error: "border-color:" + danger500 + ";",
+        success: "border-color:" + green500 + ";"
       };
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-        error: "border-color:" + danger500 + ";"
+        error: "border-color:" + danger500 + ";",
+        success: "border-color:" + green500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
-      error: "border-bottom-color:" + danger500 + ";"
+      error: "border-bottom-color:" + danger500 + ";",
+      success: "border-bottom-color:" + green500 + ";"
     };
   }
 
@@ -113,9 +119,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -149,7 +159,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -204,26 +214,37 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (8, apply to every type): Rest, Hover, Focused, Filled, Success, Error, Read-Only, Disabled.");
     lines.push("- Filled: same appearance as Rest, showing an entered value (rendered as dots) instead of the placeholder.");
+    lines.push("- Success: border recolored to a positive/green tone - only meaningful when validation is appropriate, e.g. a confirm-password match.");
+    lines.push("- Read-Only: shows its current value (masked) but can't be edited; still focusable, unlike Disabled.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text), Allow clear (boolean - once the field has a value, shows an × button before the reveal toggle that clears it).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Show reveal toggle (boolean - shows/hides a trailing eye-icon toggle button that switches the field between masked and plain text, never clearing the entered value when toggled), Allow clear (boolean - once the field has a value, shows an × button before the reveal toggle that clears it - both actions coexist, one never replaces the other), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
+    lines.push("");
+    lines.push("Password validation: Minimum length (" + (opts.minLength != null ? opts.minLength : 8) + " characters" + (opts.maxLength ? ", maximum " + opts.maxLength : "") + "). Password values must never be included in exported configuration data, logs, or analytics.");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
+    var requiredHtml = opts.required ? '<span class="password-demo-required" aria-hidden="true"> *</span>' : "";
+    var minLengthAttr = opts.minLength != null ? ' minlength="' + opts.minLength + '"' : "";
+    var maxLengthAttr = opts.maxLength ? ' maxlength="' + opts.maxLength + '"' : "";
+    var requiredAttr = opts.required ? " required" : "";
     var lines = [];
     lines.push('<div class="password-field">');
-    lines.push('  <label class="password-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="password-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="password-control password-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <input type="password" placeholder="' + escapeHtml(placeholder) + '" />');
+    lines.push('    <input type="password" placeholder="' + escapeHtml(placeholder) + '"' + minLengthAttr + maxLengthAttr + requiredAttr + ' autocomplete="new-password" />');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="password-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -236,11 +257,11 @@
     var lines = [];
     lines.push("/* Agentic Design System - Password component (all types, states, sizes) */");
     lines.push(".password-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.password-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".password-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.password-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; }');
+    lines.push('.password-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".password-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.password-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; }');
     lines.push(".password-toggle{ flex:none; width:var(--dimension-18); height:var(--dimension-18); border:none; background:transparent; padding:0; cursor:pointer; }");
-    lines.push('.password-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.password-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -253,33 +274,39 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to Outlined/Filled only, Underlined stays square */");
     radiiToEmit.forEach(function(radius){
       lines.push(".password-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
-    lines.push("/* Types (3) - rest / hover / focus / error per type */");
+    lines.push("/* Types (3) - rest / hover / focus / success / error per type */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
       var cls = ".password-control--" + t.key;
       lines.push(cls + "{ " + css.rest + " }");
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-within{ " + css.focus + " }");
+      lines.push(cls + ".is-success{ " + css.success + " }");
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - visually unchanged from Rest, cursor signals it isn't editable; still focusable, unlike Disabled */");
+    lines.push(".password-control input:read-only{ cursor:default; }");
+    lines.push(".password-demo-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".password-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".password-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "password-control--h" + exampleSize;
     var radiusClassAttr = "password-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Password", "Enter your password"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Password", "Enter your password", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -287,16 +314,18 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
+      opts: opts,
       radius: { mode: "specific", values: [radius] }
     });
   }
@@ -351,12 +380,12 @@
       card.setAttribute("tabindex", "0");
       var href = "password-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -443,30 +472,57 @@
     var allowClearInput = document.querySelector('[data-role="password-allow-clear"]');
     var sizeMount = document.querySelector('[data-role="password-size-mount"]');
     var radiusMount = document.querySelector('[data-role="password-radius-mount"]');
+    var minLengthInput = document.querySelector('[data-role="password-min-length"]');
+    var maxLengthInput = document.querySelector('[data-role="password-max-length"]');
+    var requiredInput = document.querySelector('[data-role="password-required"]');
+    var showSupportingInput = document.querySelector('[data-role="password-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="password-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="password-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="password-error-text"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildPasswordField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showReveal, allowClear){
+    function currentOpts(){
+      return {
+        minLength: minLengthInput && minLengthInput.value !== "" ? parseInt(minLengthInput.value, 10) : null,
+        maxLength: maxLengthInput && maxLengthInput.value ? parseInt(maxLengthInput.value, 10) : null,
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "Use 8 or more characters with a mix of letters and numbers.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Password must be at least 8 characters.") : "Password must be at least 8 characters."
+      };
+    }
+
+    function buildPasswordField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showReveal, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
+      var isReadOnly = stateKey === "readonly";
       var isFilled = stateKey === "filled";
+      var isSuccess = stateKey === "success";
       var isError = stateKey === "error";
-      var hasValue = isFilled || isError;
+      var hasValue = isFilled || isSuccess || isError || isReadOnly;
       var controlClasses = "password-demo-control password-demo-control--" + typeKey + " password-demo-control--h" + size + stateCls;
-      var valueAttr = isFilled ? ' value="correcthorse"' : (isError ? ' value="short"' : "");
+      var valueAttr = hasValue ? ' value="' + (isError ? "short" : "correcthorse") + '"' : "";
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadOnly ? " readonly" : "";
+      var minLengthAttr = opts.minLength != null ? ' minlength="' + opts.minLength + '"' : "";
+      var maxLengthAttr = opts.maxLength ? ' maxlength="' + opts.maxLength + '"' : "";
+      var requiredAttr = opts.required ? " required" : "";
       // tabindex="-1" + a real for/id label association: static comparison
       // matrix, not an operable field, but still exposed to a screen
       // reader's virtual cursor regardless of tab order.
       var fieldId = "password-demo-field-" + (++passwordFieldCounter);
-      var inputHtml = '<input type="password" id="' + fieldId + '" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
+      var inputHtml = '<input type="password" id="' + fieldId + '" class="password-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + minLengthAttr + maxLengthAttr + requiredAttr + ' autocomplete="new-password" tabindex="-1" />';
       var toggleHtml = showReveal ? '<button type="button" class="password-demo-toggle" aria-label="Show password" tabindex="-1">' + ICON_EYE + "</button>" : "";
-      var clearHtml = (allowClear && hasValue && !isDisabled)
+      var clearHtml = (allowClear && hasValue && !isDisabled && !isReadOnly)
         ? '<button type="button" class="password-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="password-demo-note is-error">Password must be at least 8 characters.</p>' : "";
+      var requiredHtml = opts.required ? '<span class="password-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = isError
+        ? '<p class="password-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Password must be at least 8 characters.") + "</p>"
+        : (opts.supportingText ? '<p class="password-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>" : "");
       return '<div class="password-demo-field">' +
-        '<label class="password-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
+        '<label class="password-demo-label" for="' + fieldId + '" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + toggleHtml + "</div>" +
         noteHtml +
         "</div>";
@@ -485,10 +541,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildPasswordField(t.key, state.key, state.cls, size, radius, label, placeholder, showReveal, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildPasswordField(t.key, state.key, state.cls, size, radius, label, placeholder, showReveal, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -502,7 +558,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -511,6 +568,7 @@
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var showReveal = showRevealInput ? showRevealInput.checked : false;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -519,14 +577,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, showReveal, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -555,6 +613,17 @@
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (showRevealInput) showRevealInput.addEventListener("change", render);
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (minLengthInput) minLengthInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (maxLengthInput) maxLengthInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

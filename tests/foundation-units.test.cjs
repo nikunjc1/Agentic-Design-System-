@@ -22,6 +22,7 @@ function boot(page, { unit = 'px', failWrite = false, typography = null } = {}) 
     }
     get parentElement() { return this.parent || null; }
     get isConnected() { return !!this.parent; }
+    contains(node) { return this === node || this.children.some(child => child.contains(node)); }
     append(...nodes) { nodes.forEach(n => { this.children.push(n); n.parent = this; }); }
     appendChild(node) { this.append(node); return node; }
     prepend(...nodes) { nodes.forEach(n => { n.parent = this; }); this.children.unshift(...nodes); }

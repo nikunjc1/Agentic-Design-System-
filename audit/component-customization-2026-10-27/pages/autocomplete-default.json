@@ -1,0 +1,250 @@
+{
+  "file": "autocomplete-default.html",
+  "name": "Autocomplete",
+  "category": "Components · Forms · Autocomplete",
+  "controls": [
+    {
+      "index": 0,
+      "role": "autocomplete-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "autocomplete-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "autocomplete-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "autocomplete-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "autocomplete-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "City",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "autocomplete-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Search a city...",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "autocomplete-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Autocomplete is a text field that shows a live list of matching suggestions as the user types, while still accepting a free-form value the user keeps typing past the suggestions - a hybrid between Input's free text and Select's closed option list. When to Use A search-like field with known likely values - a city search, a product lookup. Picking from a large option set faster by typing - a tag picker, a contact search. A command or query input - where suggestions speed up entry but a fully custom value is still valid. When Not to Use The value must be one of a small, fixed set with no free text allowed - use Select instead so an invalid value can't be submitted. There's no meaningful suggestion source - a plain Input is simpler when there's nothing useful to suggest. Hierarchical, drill-down data - use Cascader or Tree Select rather than a flat suggestion list. Best Practices Debounce suggestion lookups so fast typing doesn't spam a search on every keystroke. Highlight the matched portion of each suggestion so it's clear why it appeared. Always allow submitting the typed value even if the user never selects a suggestion, unless the field truly requires a match. Do and Don't Do CityManchesterManilaMannheim A short list of real matches narrowed by what has been typed, so choosing is faster than finishing the word. Don't CityAberdeenAdelaideAlbuquerque Suggestions that ignore the query are noise the user has to read past. If nothing matches, say so instead of listing the top of the list. Accessibility Implemented with combobox semantics, so the suggestion list is announced and arrow keys move through it without leaving the input. The number of available suggestions is announced as they update, so screen-reader users know the list changed. Selecting a suggestion with Enter or click produces the same result, and Escape closes the list without clearing typed text. Related Components Select, Mention, Input, Cascader. { \"component\": \"Autocomplete\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Autocomplete is a text field that shows a live list of matching suggestions as the user types, while still accepting a free-form value the user keeps typing past the suggestions - a hybrid between Input's free text and Select's closed option list.\", \"whenToUse\": [ \"A search-like field with known likely values - a city search, a product lookup.\", \"Picking from a large option set faster by typing - a tag picker, a contact search.\", \"A command or query input - where suggestions speed up entry but a fully custom value is still valid.\" ], \"whenNotToUse\": [ \"The value must be one of a small, fixed set with no free text allowed - use Select instead so an invalid value can't be submitted.\", \"There's no meaningful suggestion source - a plain Input is simpler when there's nothing useful to suggest.\", \"Hierarchical, drill-down data - use Cascader or Tree Select rather than a flat suggestion list.\" ], \"bestPractices\": [ \"Debounce suggestion lookups so fast typing doesn't spam a search on every keystroke.\", \"Highlight the matched portion of each suggestion so it's clear why it appeared.\", \"Always allow submitting the typed value even if the user never selects a suggestion, unless the field truly requires a match.\" ], \"doAndDont\": { \"do\": \"A short list of real matches narrowed by what has been typed, so choosing is faster than finishing the word.\", \"dont\": \"Suggestions that ignore the query are noise the user has to read past. If nothing matches, say so instead of listing the top of the list.\" }, \"accessibility\": [ \"Implemented with combobox semantics, so the suggestion list is announced and arrow keys move through it without leaving the input.\", \"The number of available suggestions is announced as they update, so screen-reader users know the list changed.\", \"Selecting a suggestion with Enter or click produces the same result, and Escape closes the list without clearing typed text.\" ], \"relatedComponents\": [ \"Select\", \"Mention\", \"Input\", \"Cascader\" ] }",
+  "tests": []
+}

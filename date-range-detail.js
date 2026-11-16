@@ -9,8 +9,8 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CALENDAR ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CALENDAR ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -20,8 +20,11 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
+    { key: "partial", cls: " is-partial", label: "Partially Filled" },
     { key: "filled", cls: " is-filled", label: "Filled" },
+    { key: "open", cls: " is-focus", label: "Open" },
     { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
 
@@ -50,24 +53,24 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
       focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-color:" + danger500 + ";"
@@ -105,9 +108,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -141,7 +148,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as Date
@@ -194,31 +201,38 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (9, apply to every type): Rest, Hover, Focused, Partially Filled, Filled, Open, Error, Read-Only, Disabled.");
+    lines.push("- Partially Filled: the start date has been chosen but the end date hasn't yet - the start segment shows its value, the end segment still shows its placeholder, visually distinct from a completed range.");
     lines.push("- Filled: same appearance as Rest, showing the selected start and end date values (e.g. Jan 4, 2026 -> Jan 9, 2026) instead of the two placeholders.");
+    lines.push("- Open: the calendar is visible - same border/outline treatment as Focused. Scope is the trigger field itself; the calendar grid is a separate, larger feature not built here.");
     lines.push("- Error: shows an invalid/incomplete pairing (e.g. an end date before the start date) and pairs with an inline error message below the field.");
+    lines.push("- Read-Only: shows its selected range but can't be changed; still focusable, unlike Disabled - clicking it never opens the calendar.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Start placeholder (editable text shown for the start date when no range is chosen), End placeholder (editable text shown for the end date when no range is chosen).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Start placeholder (editable text shown for the start date when no range is chosen), End placeholder (editable text shown for the end date when no range is chosen), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, startPlaceholder, endPlaceholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, startPlaceholder, endPlaceholder, opts){
+    opts = opts || {};
+    var requiredHtml = opts.required ? '<span class="daterange-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="daterange-field">');
-    lines.push('  <label class="daterange-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="daterange-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="daterange-control daterange-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" role="button" tabindex="0">');
     lines.push('    <span class="daterange-control-value">');
     lines.push('      <span class="daterange-control-segment">' + escapeHtml(startPlaceholder) + "</span>");
-    lines.push('      <span class="daterange-control-arrow">&#8594;</span>');
+    lines.push('      <span class="daterange-control-arrow">To</span>');
     lines.push('      <span class="daterange-control-segment">' + escapeHtml(endPlaceholder) + "</span>");
     lines.push("    </span>");
     lines.push('    <span class="daterange-control-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>");
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="daterange-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -232,12 +246,12 @@
     lines.push("/* Agentic Design System - Date Range component (all types, states, sizes) */");
     lines.push("/* Trigger field only - the calendar popup panel is a separate concern. */");
     lines.push(".daterange-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.daterange-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".daterange-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:8px; cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.daterange-control-value{ flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--space-6); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.daterange-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".daterange-control{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); border-radius:var(--radius-md); cursor:pointer; transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.daterange-control-value{ flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--space-6); font-family:var(--font-body); }');
     lines.push(".daterange-control-arrow{ flex:none; }");
     lines.push(".daterange-control-icon{ margin-inline-start:auto; flex:none; width:var(--dimension-16); height:var(--dimension-16); }");
-    lines.push('.daterange-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.daterange-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -250,7 +264,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".daterange-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -263,19 +277,28 @@
       lines.push(cls + "{ " + css.rest + " }");
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-visible{ " + css.focus + " }");
+      lines.push(cls + ".is-open{ " + css.focus + " } /* calendar visible - same border/outline treatment as Focused */");
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - keeps its selected range, but can't be clicked open; still focusable, unlike Disabled */");
+    lines.push(".daterange-control.is-readonly{ cursor:default; }");
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".daterange-control[aria-disabled=\"true\"]{ opacity:0.5; cursor:not-allowed; pointer-events:none; }");
     lines.push("");
+    lines.push("/* Required indicator + supporting/error text */");
+    lines.push(".daterange-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push(".daterange-note.is-error{ color:" + getCssVar("--danger-700", "#EB0318") + "; }");
+    lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "daterange-control--h" + exampleSize;
     var radiusClassAttr = "daterange-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Trip dates", "Start date", "End date"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Trip dates", "Start date", "End date", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -283,17 +306,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -325,12 +350,12 @@
       card.setAttribute("tabindex", "0");
       var href = "date-range-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -416,6 +441,11 @@
     var startPlaceholderInput = document.querySelector('[data-role="daterange-start-placeholder"]');
     var endPlaceholderInput = document.querySelector('[data-role="daterange-end-placeholder"]');
     var allowClearInput = document.querySelector('[data-role="daterange-allow-clear"]');
+    var requiredInput = document.querySelector('[data-role="daterange-required"]');
+    var showSupportingInput = document.querySelector('[data-role="daterange-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="daterange-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="daterange-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="daterange-error-text"]');
     var sizeMount = document.querySelector('[data-role="daterange-size-mount"]');
     var radiusMount = document.querySelector('[data-role="daterange-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -426,30 +456,46 @@
     var ERROR_START = "Jan 9, 2026";
     var ERROR_END = "Jan 4, 2026";
 
-    function buildDateRangeField(typeKey, stateKey, stateCls, size, radius, label, startPlaceholder, endPlaceholder, allowClear){
+    function buildDateRangeField(typeKey, stateKey, stateCls, size, radius, label, startPlaceholder, endPlaceholder, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
+      var isPartial = stateKey === "partial";
+      var isReadonly = stateKey === "readonly";
       var isError = stateKey === "error";
-      var controlClasses = "daterange-demo-control daterange-demo-control--" + typeKey + " daterange-demo-control--h" + size + stateCls;
+      var hasValue = isFilled || isError || isReadonly;
+      var controlClasses = "daterange-demo-control daterange-demo-control--" + typeKey + " daterange-demo-control--h" + size + stateCls + (isReadonly ? " is-readonly" : "");
       // role="button" kept for a real implementation to model its own
       // interactive control after - tabindex is always -1 here since this
       // matrix is a static state comparison, not an operable field.
       var interactiveAttrs = isDisabled ? ' aria-disabled="true" tabindex="-1"' : ' role="button" tabindex="-1"';
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var segmentClass = (isFilled || isError) ? "daterange-demo-segment" : "daterange-demo-segment is-placeholder";
-      var startText = escapeHtml(isFilled ? FILLED_START : (isError ? ERROR_START : startPlaceholder));
-      var endText = escapeHtml(isFilled ? FILLED_END : (isError ? ERROR_END : endPlaceholder));
-      var noteHtml = isError ? '<p class="daterange-demo-note is-error">End date must be after the start date.</p>' : "";
-      var trailingHtml = (allowClear && isFilled && !isDisabled)
-        ? '<button type="button" class="daterange-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
-        : '<span class="daterange-demo-icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
+      var startFilled = hasValue || isPartial;
+      var startSegmentClass = startFilled ? "daterange-demo-segment" : "daterange-demo-segment is-placeholder";
+      var endSegmentClass = hasValue ? "daterange-demo-segment" : "daterange-demo-segment is-placeholder";
+      var startText = escapeHtml(hasValue ? (isError ? ERROR_START : FILLED_START) : (isPartial ? FILLED_START : startPlaceholder));
+      var endText = escapeHtml(hasValue ? (isError ? ERROR_END : FILLED_END) : endPlaceholder);
+      var requiredHtml = opts.required ? '<span class="daterange-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = "";
+      if (isError){
+        noteHtml = '<p class="daterange-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "End date must be after the start date.") + "</p>";
+      } else if (opts.supportingText){
+        noteHtml = '<p class="daterange-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>";
+      }
+      // data-contract-part markers, same reasoning as Date Picker's trailing
+      // icon/clear slot: the start/end segments and icon/clear both swap
+      // structurally by state, so a stable id keeps the Figma capture from
+      // mismatching one for the other across rows.
+      var trailingHtml = (allowClear && hasValue && !isDisabled && !isReadonly)
+        ? '<button type="button" class="daterange-demo-clear" data-contract-part="clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
+        : '<span class="daterange-demo-icon" data-contract-part="icon" aria-hidden="true">' + ICON_CALENDAR + "</span>";
       return '<div class="daterange-demo-field">' +
-        '<label class="daterange-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="daterange-demo-label" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + interactiveAttrs + radiusStyle + ">" +
-          '<span class="daterange-demo-value">' +
-            '<span class="' + segmentClass + '">' + startText + "</span>" +
-            '<span class="daterange-demo-arrow">&#8594;</span>' +
-            '<span class="' + segmentClass + '">' + endText + "</span>" +
+          '<span class="daterange-demo-value" data-contract-part="value">' +
+            '<span class="' + startSegmentClass + '" data-contract-part="start">' + startText + "</span>" +
+            '<span class="daterange-demo-arrow" data-contract-part="arrow">To</span>' +
+            '<span class="' + endSegmentClass + '" data-contract-part="end">' + endText + "</span>" +
           "</span>" +
           trailingHtml +
         "</div>" +
@@ -470,10 +516,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear){
+    function buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildDateRangeField(t.key, state.key, state.cls, size, radius, label, startPlaceholder, endPlaceholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildDateRangeField(t.key, state.key, state.cls, size, radius, label, startPlaceholder, endPlaceholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -484,10 +530,19 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        required: requiredInput ? requiredInput.checked : false,
+        supportingText: (showSupportingInput && showSupportingInput.checked && supportingTextInput) ? supportingTextInput.value.trim() : "",
+        errorText: (errorTextInput && errorTextInput.value.trim()) || "End date must be after the start date."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -496,6 +551,7 @@
       var startPlaceholder = startPlaceholderInput.value.trim() || defaultStartPlaceholder;
       var endPlaceholder = endPlaceholderInput.value.trim() || defaultEndPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -504,14 +560,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear);
+          html += buildMatrixSection(size, radius, label, startPlaceholder, endPlaceholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -540,6 +596,15 @@
     startPlaceholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     endPlaceholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

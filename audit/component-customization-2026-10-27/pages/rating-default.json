@@ -1,0 +1,185 @@
+{
+  "file": "rating-default.html",
+  "name": "Rating",
+  "category": "Components · Forms · Rating",
+  "controls": [
+    {
+      "index": 0,
+      "role": "rating-size-mount",
+      "id": null,
+      "label": "Icon size",
+      "type": "multiselect",
+      "value": [
+        "20"
+      ],
+      "options": [
+        {
+          "value": "16",
+          "label": "16px - Small"
+        },
+        {
+          "value": "20",
+          "label": "20px - Default"
+        },
+        {
+          "value": "24",
+          "label": "24px - Large"
+        },
+        {
+          "value": "32",
+          "label": "32px - XL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "rating-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Star",
+      "options": [
+        {
+          "value": "Star",
+          "label": "Star"
+        },
+        {
+          "value": "Heart",
+          "label": "Heart"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "rating-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Rate this product",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "rating-count-select",
+      "id": null,
+      "label": "Selected",
+      "type": "select",
+      "value": "3",
+      "options": [
+        {
+          "value": "0",
+          "label": "0"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Selected 0 1 2 3 4 5",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Icon size, label and selected count are properties of the same component, not separate icons - change them below to check this control's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "20px - Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Rating is a row of identical icon buttons (stars or hearts) that fill in as the user hovers or taps, letting someone score something on a simple, bounded scale - built for quick, low-friction feedback rather than precise numeric entry. When to Use A product or service review score - a 0-5 star rating. A quick satisfaction survey question - how satisfied were you, on a small fixed scale. A content quality score - used internally to flag good or poor examples. When Not to Use A precise numeric value - use Number - Rating is for a small, discrete, low-precision scale, not exact figures. A scale bigger than a handful of points - beyond roughly 5-10 points, individual icons stop being scannable at a glance; consider Slider or Number instead. A binary yes/no signal - use Switch or a simple Checkbox rather than a rating scale for a single up/down choice. Best Practices Preview the would-be selection on hover before it's committed by a click/tap, so users can see what they're about to choose. Keep the icon count small and fixed (commonly 5) - a rating scale should be scannable in a single glance. Pair the icon row with a numeric or text label when precision matters (e.g. \"4.5 out of 5\"), since icons alone can't show fractional values clearly. Do and Don't Do Rate this article A single five-point scale for one clear question - quick to answer and quick to read back in aggregate. Don't AccuracyToneDepthUsefulness Four scales turn a two-second reaction into a survey, and most people abandon it rather than score every dimension. Accessibility Each icon is an independently focusable, labeled control (\"Rate 3 out of 5\"), not one giant unlabeled row. The current and hovered/previewed value are both announced to assistive technology, not communicated by fill color alone. Fully operable by keyboard - arrow keys move between values, Enter/Space commits the selection. Related Components Slider, Number, Badge. { \"component\": \"Rating\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Rating is a row of identical icon buttons (stars or hearts) that fill in as the user hovers or taps, letting someone score something on a simple, bounded scale - built for quick, low-friction feedback rather than precise numeric entry.\", \"whenToUse\": [ \"A product or service review score - a 0-5 star rating.\", \"A quick satisfaction survey question - how satisfied were you, on a small fixed scale.\", \"A content quality score - used internally to flag good or poor examples.\" ], \"whenNotToUse\": [ \"A precise numeric value - use Number - Rating is for a small, discrete, low-precision scale, not exact figures.\", \"A scale bigger than a handful of points - beyond roughly 5-10 points, individual icons stop being scannable at a glance; consider Slider or Number instead.\", \"A binary yes/no signal - use Switch or a simple Checkbox rather than a rating scale for a single up/down choice.\" ], \"bestPractices\": [ \"Preview the would-be selection on hover before it's committed by a click/tap, so users can see what they're about to choose.\", \"Keep the icon count small and fixed (commonly 5) - a rating scale should be scannable in a single glance.\", \"Pair the icon row with a numeric or text label when precision matters (e.g. \\\"4.5 out of 5\\\"), since icons alone can't show fractional values clearly.\" ], \"doAndDont\": { \"do\": \"A single five-point scale for one clear question - quick to answer and quick to read back in aggregate.\", \"dont\": \"Four scales turn a two-second reaction into a survey, and most people abandon it rather than score every dimension.\" }, \"accessibility\": [ \"Each icon is an independently focusable, labeled control (\\\"Rate 3 out of 5\\\"), not one giant unlabeled row.\", \"The current and hovered/previewed value are both announced to assistive technology, not communicated by fill color alone.\", \"Fully operable by keyboard - arrow keys move between values, Enter/Space commits the selection.\" ], \"relatedComponents\": [ \"Slider\", \"Number\", \"Badge\" ] }",
+  "tests": []
+}

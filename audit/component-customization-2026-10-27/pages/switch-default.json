@@ -1,0 +1,147 @@
+{
+  "file": "switch-default.html",
+  "name": "Switch",
+  "category": "Components · Forms · Switch",
+  "controls": [
+    {
+      "index": 0,
+      "role": "switch-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "24"
+      ],
+      "options": [
+        {
+          "value": "20",
+          "label": "20px - S"
+        },
+        {
+          "value": "24",
+          "label": "24px - M"
+        },
+        {
+          "value": "32",
+          "label": "32px - L"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "switch-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Compact",
+      "options": [
+        {
+          "value": "Compact",
+          "label": "Compact"
+        },
+        {
+          "value": "Labeled",
+          "label": "Labeled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Off",
+      "options": [
+        {
+          "value": "Off",
+          "label": "Off"
+        },
+        {
+          "value": "On",
+          "label": "On"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "switch-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Enable notifications",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size and label are properties of the same component, not separate switches - change them below to check this control's states in the Live Preview. Switches are always fully pill-shaped, so there is no corner-radius property.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "24px - M",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Switch is for instantly toggling a single, independent setting on or off - the change takes effect immediately with no separate confirm or submit step, unlike a Checkbox inside a form that waits for the whole form to be submitted. When to Use A setting that applies the moment it's flipped - a notification toggle, dark mode. A feature flag or experimental setting - turned on/off independently of any form. A device-level or system-level toggle - airplane mode. When Not to Use A setting that needs explicit confirmation before it takes effect - use Checkbox plus a Save button, or a confirmation dialog for risky changes. More than two states - Switch is strictly binary; use Group Button or Select for three or more options. A choice that's part of a larger form submitted together - Checkbox communicates that context more clearly than an instantly-applied Switch. Best Practices Label the setting by its \"on\" state clearly (\"Notifications\", not \"Enable\") so the label reads correctly in both positions. Reflect the change immediately in whatever the switch controls, so the user gets instant confirming feedback. Avoid using Switch for anything destructive or hard to reverse without pairing it with a follow-up confirmation. Do and Don't Do Dark mode Named for the setting itself, and it applies the instant it is flipped - no Save step to hunt for. Don't Enable dark mode setting?Save A Switch that only takes effect after a separate Save contradicts what a switch promises. Use a Checkbox when the change is submitted with a form. Accessibility Exposed with a real switch or checkbox role, with the current state (on/off) announced to assistive technology. The label describes the setting itself, not the mechanism (\"Dark mode\", not \"Toggle switch\"). On/off is never communicated by color alone - the thumb's position and track fill both change too. Related Components Checkbox, Radio, Group Button. { \"component\": \"Switch\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Switch is for instantly toggling a single, independent setting on or off - the change takes effect immediately with no separate confirm or submit step, unlike a Checkbox inside a form that waits for the whole form to be submitted.\", \"whenToUse\": [ \"A setting that applies the moment it's flipped - a notification toggle, dark mode.\", \"A feature flag or experimental setting - turned on/off independently of any form.\", \"A device-level or system-level toggle - airplane mode.\" ], \"whenNotToUse\": [ \"A setting that needs explicit confirmation before it takes effect - use Checkbox plus a Save button, or a confirmation dialog for risky changes.\", \"More than two states - Switch is strictly binary; use Group Button or Select for three or more options.\", \"A choice that's part of a larger form submitted together - Checkbox communicates that context more clearly than an instantly-applied Switch.\" ], \"bestPractices\": [ \"Label the setting by its \\\"on\\\" state clearly (\\\"Notifications\\\", not \\\"Enable\\\") so the label reads correctly in both positions.\", \"Reflect the change immediately in whatever the switch controls, so the user gets instant confirming feedback.\", \"Avoid using Switch for anything destructive or hard to reverse without pairing it with a follow-up confirmation.\" ], \"doAndDont\": { \"do\": \"Named for the setting itself, and it applies the instant it is flipped - no Save step to hunt for.\", \"dont\": \"A Switch that only takes effect after a separate Save contradicts what a switch promises. Use a Checkbox when the change is submitted with a form.\" }, \"accessibility\": [ \"Exposed with a real switch or checkbox role, with the current state (on/off) announced to assistive technology.\", \"The label describes the setting itself, not the mechanism (\\\"Dark mode\\\", not \\\"Toggle switch\\\").\", \"On/off is never communicated by color alone - the thumb's position and track fill both change too.\" ], \"relatedComponents\": [ \"Checkbox\", \"Radio\", \"Group Button\" ] }",
+  "tests": []
+}

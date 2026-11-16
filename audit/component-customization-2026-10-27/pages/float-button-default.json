@@ -1,0 +1,334 @@
+{
+  "file": "float-button-default.html",
+  "name": "Float Button",
+  "category": "Components · Actions · Float Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "floatbutton-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "36",
+          "label": "36px - Small"
+        },
+        {
+          "value": "40",
+          "label": "40px - Default"
+        },
+        {
+          "value": "44",
+          "label": "44px - Large"
+        },
+        {
+          "value": "56",
+          "label": "56px - XL"
+        },
+        {
+          "value": "68",
+          "label": "68px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "floatbutton-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Square",
+          "label": "Square"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "floatbutton-elevation-select",
+      "id": null,
+      "label": "Elevation",
+      "type": "select",
+      "value": "medium",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "subtle",
+          "label": "Subtle"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Elevation None Subtle Medium High",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "floatbutton-supporting-text",
+      "id": null,
+      "label": "Supporting text",
+      "type": "text",
+      "value": "Back to top",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Supporting text",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "floatbutton-show-tooltip",
+      "id": null,
+      "label": "Tooltip",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown on hover/focus",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "floatbutton-tooltip-text",
+      "id": null,
+      "label": "Tooltip text",
+      "type": "text",
+      "value": "Back to top",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Tooltip text",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "floatbutton-tooltip-placement",
+      "id": null,
+      "label": "Tooltip placement",
+      "type": "select",
+      "value": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Tooltip placement Top Bottom Left Right",
+      "trigger": null
+    },
+    {
+      "index": 8,
+      "role": "floatbutton-show-badge",
+      "id": null,
+      "label": "Badge",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown in the corner",
+      "trigger": null
+    },
+    {
+      "index": 9,
+      "role": "floatbutton-badge-type",
+      "id": null,
+      "label": "Badge type",
+      "type": "select",
+      "value": "dot",
+      "options": [
+        {
+          "value": "dot",
+          "label": "Dot"
+        },
+        {
+          "value": "count",
+          "label": "Count"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Badge type Dot Count",
+      "trigger": null
+    },
+    {
+      "index": 10,
+      "role": "floatbutton-badge-count",
+      "id": null,
+      "label": "Badge count",
+      "type": "number",
+      "value": "5",
+      "options": [],
+      "min": "0",
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Badge count",
+      "trigger": null
+    },
+    {
+      "index": 11,
+      "role": "floatbutton-badge-max",
+      "id": null,
+      "label": "Badge max count",
+      "type": "number",
+      "value": "99",
+      "options": [],
+      "min": "1",
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Badge max count",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, tooltip text and badge visibility are properties of the same component, not separate buttons - change them below to check this button's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Float Button is a persistent, icon-only action anchored to a fixed corner of the screen, used for a single always-accessible action a user might need regardless of scroll position or context - distinct from an inline Button, which lives within the page's normal content flow. When to Use A persistent utility action - Back to top, Compose new item. A support or help launcher - a customer support chat entry point. A single primary page action that should stay reachable while scrolling - Quick add. When Not to Use Multiple competing floating actions on one screen - pick the single truly persistent action; route the rest through a menu or inline buttons. An action that already exists inline on the page - don't duplicate it as a float - that just adds visual noise. Complex, multi-step actions - a Float Button should trigger something simple or open another surface (Modal, Drawer) - it shouldn't carry the whole flow itself. Best Practices Use exactly one Float Button per screen so it stays meaningfully \"the\" persistent action. Choose an icon that is universally recognizable without a label (a plus, an upward arrow, a chat bubble). Reserve the badge dot for a real unread/pending count, not decoration. Always pair it with a tooltip, since the control itself carries no visible text. Do and Don't Do + Exactly one floating action, so it reliably means \"the persistent thing you can always do here\". Don't +✉⚙ A stack of floating buttons covers the content it floats over and turns a clear affordance into a second navigation bar. Accessibility Icon-only, so it needs an explicit aria-label naming the action - there is no visible text to fall back on. The tooltip is a supplementary visual hint, not a substitute for the accessible name. Keeps a full-size touch target even though it's visually compact, meeting WCAG 2.2 target-size guidance. Related Components Primary Button, Dropdown (when the floating action opens a menu of several actions), Tooltip (its hover label), Badge (its notification dot). { \"component\": \"Float Button\", \"status\": \"Stable\", \"category\": \"Actions\", \"summary\": \"Float Button is a persistent, icon-only action anchored to a fixed corner of the screen, used for a single always-accessible action a user might need regardless of scroll position or context - distinct from an inline Button, which lives within the page's normal content flow.\", \"whenToUse\": [ \"A persistent utility action - Back to top, Compose new item.\", \"A support or help launcher - a customer support chat entry point.\", \"A single primary page action that should stay reachable while scrolling - Quick add.\" ], \"whenNotToUse\": [ \"Multiple competing floating actions on one screen - pick the single truly persistent action; route the rest through a menu or inline buttons.\", \"An action that already exists inline on the page - don't duplicate it as a float - that just adds visual noise.\", \"Complex, multi-step actions - a Float Button should trigger something simple or open another surface (Modal, Drawer) - it shouldn't carry the whole flow itself.\" ], \"bestPractices\": [ \"Use exactly one Float Button per screen so it stays meaningfully \\\"the\\\" persistent action.\", \"Choose an icon that is universally recognizable without a label (a plus, an upward arrow, a chat bubble).\", \"Reserve the badge dot for a real unread/pending count, not decoration.\", \"Always pair it with a tooltip, since the control itself carries no visible text.\" ], \"doAndDont\": { \"do\": \"Exactly one floating action, so it reliably means \\\"the persistent thing you can always do here\\\".\", \"dont\": \"A stack of floating buttons covers the content it floats over and turns a clear affordance into a second navigation bar.\" }, \"accessibility\": [ \"Icon-only, so it needs an explicit aria-label naming the action - there is no visible text to fall back on.\", \"The tooltip is a supplementary visual hint, not a substitute for the accessible name.\", \"Keeps a full-size touch target even though it's visually compact, meeting WCAG 2.2 target-size guidance.\" ], \"relatedComponents\": [ \"Primary Button\", \"Dropdown\", \"Tooltip\", \"Badge\" ] }",
+  "tests": []
+}

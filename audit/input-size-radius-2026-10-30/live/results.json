@@ -1,0 +1,38 @@
+{
+  "liveFigmaVerified": false,
+  "expectedVariantCount": 1152,
+  "expectedSizes": [
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    56
+  ],
+  "expectedCornerRadii": [
+    0,
+    2,
+    4,
+    8,
+    12,
+    9999
+  ],
+  "automatedChecks": {
+    "fiveExportActions": "PASS",
+    "allCombinationGeometry": "PASS",
+    "existingMasterIdentityAndReadback": "PASS",
+    "releaseAndFreshness": "PASS",
+    "runtimeHandshakeAndPingUnitRegression": "PASS"
+  },
+  "actualLiveEvidence": {
+    "drawAttempts": "HTTP 504; no completion acknowledgement",
+    "runtimeBuildReportedByUser": "input-all-configurations-2026-10-30-v5",
+    "healthRequestPhaseObserved": "Queued",
+    "bridgeConnectedAtObservation": false,
+    "consoleErrorReportedByUser": null
+  },
+  "blocker": "The live plugin did not collect a pure health request. Exact current plugin status requested from the user; do not assert that all sizes/radii are verified in the live canvas.",
+  "continuation": "Resolve plugin polling/connection, verify /contracts/ping, then use lightweight /contracts/inspect. Inspect partial imports before deciding whether another push is needed."
+}

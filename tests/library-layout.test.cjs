@@ -38,9 +38,9 @@ test('section Group Buttons identify one reading location and repeated card link
   main.querySelectorAll = selector => selector.startsWith('section > h2') ? headings : selector === '[data-detail-href]' ? cards : [];
   const document = { readyState: 'complete', body, documentElement:{dir:'ltr'},addEventListener(){}, querySelector: selector => selector === 'main' ? main : null, querySelectorAll: () => [], createElement(tag) { const n = new Node(tag); created.push(n); return n; } };
   let observer, bannerObserver;
-  const events=new Map(),location={ pathname: '/overview.html', hash: '#section-2' };
+  const events=new Map(),location={ pathname: '/components.html', search:'', hash: '#section-2' };
   const context=vm.createContext({
-    window: { ADSProject: { read: () => null }, ADSFoundationModel: M,addEventListener:(type,fn)=>events.set(type,fn) }, document, localStorage: {}, location,
+    window: { ADSProject: { read: () => null }, ADSFoundationModel: M,addEventListener:(type,fn)=>events.set(type,fn) }, document, localStorage: {}, location,URLSearchParams,
     requestAnimationFrame: fn => fn(), IntersectionObserver: class { constructor(callback, options) { observer = { callback, options, observed: [] }; } observe(node) { observer.observed.push(node); } },
     ResizeObserver: class { constructor(callback) { bannerObserver = { callback, observed:[] }; } observe(node) { bannerObserver.observed.push(node); } disconnect() { bannerObserver.disconnected=true; } },
   });

@@ -26,6 +26,7 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
+    { key: "active", cls: " is-active", label: "Active" },
     { key: "visited", cls: " is-visited", label: "Visited" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
@@ -37,10 +38,10 @@
 
   // The exact external-link arrow SVG the spec calls for, verbatim - used
   // as-is inside the Copy Prompt text so the described icon is unambiguous.
-  var ANCHOR_ICON_SVG_EXACT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>';
+  var ANCHOR_ICON_SVG_EXACT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>';
 
   function anchorIconSvg(cls){
-    return '<svg class="' + cls + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>';
+    return '<svg class="' + cls + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>';
   }
 
   function getCssVar(name, fallback){
@@ -52,13 +53,14 @@
   // the trailing SVG in the markup), so there is a single shared CSS map
   // rather than one per type.
   function liveCssFor(){
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red600 = getCssVar("--red-600", "#D80016");
+    var red600 = getCssVar("--red-600", "#D10215");
     return {
       rest: "color:" + red400 + ";text-decoration:none;",
       hover: "color:" + red500 + ";text-decoration:underline;",
-      focus: "color:" + red400 + ";text-decoration:none;outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:2px;",
+      focus: "color:" + red400 + ";text-decoration:none;outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;border-radius:var(--radius-2);",
+      active: "color:" + red600 + ";text-decoration:underline;",
       visited: "color:" + red600 + ";",
       disabled: "opacity:0.5;cursor:default;pointer-events:none;"
     };
@@ -145,18 +147,21 @@
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
     });
     lines.push("");
-    lines.push("States (5, apply to the anchor text - identical across both types):");
+    lines.push("States (6, apply to the anchor text - identical across both types):");
     lines.push("- Rest: " + css.rest);
     lines.push("- Hover: " + css.hover);
     lines.push("- Focused: " + css.focus + " Never just a color change, so keyboard focus is always visible.");
+    lines.push("- Active: " + css.active + " The instant of activation (mouse down/touch), between Rest/Hover and the page actually navigating.");
     lines.push("- Visited: " + css.visited + " Only a color change is allowed here - browsers block every other CSS property on the real :visited pseudo-class for privacy reasons.");
     lines.push("- Disabled: " + css.disabled + " Anchors have no native disabled attribute, so this is simulated with aria-disabled=\"true\" plus pointer-events:none and reduced opacity - it is not a real browser-level disabled element.");
     lines.push("");
-    lines.push("With icon type only: append this trailing external-link arrow SVG after the text with a small gap, sized to roughly match the text's line-height: " + ANCHOR_ICON_SVG_EXACT);
+    var opts = selectionInfo.opts || {};
+    var iconPosition = opts.iconPosition || "trailing";
+    lines.push("With icon type only: " + (iconPosition === "leading" ? "prepend" : "append") + " this external-link arrow SVG " + (iconPosition === "leading" ? "before" : "after") + " the text with a small gap, sized to roughly match the text's line-height: " + ANCHOR_ICON_SVG_EXACT);
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Anchors are sized by font-size, not height - the icon (With icon type) scales alongside it.");
     lines.push("");
-    lines.push("Component properties: Label (editable text, current value \"" + label + "\").");
+    lines.push("Component properties: Label (editable text, current value \"" + label + "\"); Icon position (With icon type only - Leading or Trailing).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
@@ -168,7 +173,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Anchor (inline text link) component */");
-    lines.push('.anchor-demo-link{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:var(--space-4); cursor:pointer; }');
+    lines.push('.anchor-demo-link{ font-family:var(--font-body); text-decoration:none; display:inline-flex; align-items:center; gap:var(--space-4); cursor:pointer; }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -179,20 +184,24 @@
       lines.push(".anchor-demo-link--fs" + size + " .anchor-demo-icon{ width:" + ICON_SIZE_SCALE[size] + "px; height:" + ICON_SIZE_SCALE[size] + "px; }");
     });
     lines.push("");
-    lines.push("/* States (5) - identical across both types */");
+    lines.push("/* States (6) - identical across both types */");
     lines.push(".anchor-demo-link{ " + c.rest + " }");
     lines.push(".anchor-demo-link:hover, .anchor-demo-link.is-hover{ " + c.hover + " }");
     lines.push(".anchor-demo-link:focus-visible, .anchor-demo-link.is-focus{ " + c.focus + " }");
+    lines.push(".anchor-demo-link:active, .anchor-demo-link.is-active{ " + c.active + " }");
     lines.push("/* :visited only allows a color change - browsers block every other property for privacy */");
     lines.push(".anchor-demo-link:visited, .anchor-demo-link.is-visited{ " + c.visited + " }");
     lines.push("/* Anchors have no native disabled attribute - simulate it with aria-disabled plus pointer-events:none */");
     lines.push('.anchor-demo-link[aria-disabled="true"], .anchor-demo-link.is-disabled{ ' + c.disabled + ' }');
     lines.push("");
+    var opts = selectionInfo.opts || {};
+    var iconPosition = opts.iconPosition || "trailing";
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + " -->");
     TYPES.forEach(function(t){
-      var iconMarkup = t.key === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
-      lines.push('<a href="#" class="anchor-demo-link anchor-demo-link--' + t.key + ' anchor-demo-link--fs' + exampleSize + '">' + escapeHtml(label) + iconMarkup + "</a>");
+      var iconSvg = t.key === "icon" ? anchorIconSvg("anchor-demo-icon") : "";
+      var content = iconPosition === "leading" ? (iconSvg ? iconSvg + " " : "") + escapeHtml(label) : escapeHtml(label) + (iconSvg ? " " + iconSvg : "");
+      lines.push('<a href="#" class="anchor-demo-link anchor-demo-link--' + t.key + ' anchor-demo-link--fs' + exampleSize + '">' + content + "</a>");
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -200,12 +209,12 @@
   // Builds the prompt/code for exactly ONE Size, fully resolved (never
   // "ask the question") - used by the Copy prompt/Copy code dropdown's
   // per-combination "Copy" buttons.
-  function buildComboPrompt(size, label){
-    return buildFullPrompt({ size: { mode: "specific", values: [size] }, label: label });
+  function buildComboPrompt(size, label, opts){
+    return buildFullPrompt({ size: { mode: "specific", values: [size] }, label: label, opts: opts });
   }
 
-  function buildComboCode(size, label){
-    return buildFullCode({ size: { mode: "specific", values: [size] }, label: label });
+  function buildComboCode(size, label, opts){
+    return buildFullCode({ size: { mode: "specific", values: [size] }, label: label, opts: opts });
   }
 
   document.addEventListener("DOMContentLoaded", function(){
@@ -236,12 +245,12 @@
       card.setAttribute("tabindex", "0");
       var href = "anchor-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -321,19 +330,22 @@
     if (!matrixContainer) return;
 
     var labelInput = document.querySelector('[data-role="anchor-label"]');
+    var iconPositionSelect = document.querySelector('[data-role="anchor-icon-position"]');
     var sizeMount = document.querySelector('[data-role="anchor-size-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildAnchorCell(typeKey, stateKey, stateCls, size, label){
+    function buildAnchorCell(typeKey, stateKey, stateCls, size, label, iconPosition){
       var isDisabled = stateKey === "disabled";
       var cls = "anchor-demo-link anchor-demo-link--" + typeKey + " anchor-demo-link--fs" + size + stateCls;
       var ariaAttr = isDisabled ? ' aria-disabled="true"' : "";
-      var iconMarkup = typeKey === "icon" ? " " + anchorIconSvg("anchor-demo-icon") : "";
+      var iconSvg = typeKey === "icon" ? anchorIconSvg("anchor-demo-icon").replace("<svg ", '<svg data-contract-part="icon" ') : "";
+      var labelHtml = '<span class="anchor-demo-label">' + escapeHtml(label) + "</span>";
+      var content = iconPosition === "leading" ? (iconSvg ? iconSvg + " " : "") + labelHtml : labelHtml + (iconSvg ? " " + iconSvg : "");
       // Foundation audit UX10 - this is one cell of a side-by-side state
       // comparison, not a real navigation link; tabindex="-1" keeps it out
       // of the Tab sequence without removing it from the accessibility tree.
-      return '<a href="#" class="' + cls + '"' + ariaAttr + ' tabindex="-1">' + escapeHtml(label) + iconMarkup + "</a>";
+      return '<a href="#" class="' + cls + '"' + ariaAttr + ' tabindex="-1">' + content + "</a>";
     }
 
     function selectedOrDefault(multiSelect, optionList, fallback){
@@ -349,10 +361,10 @@
       return optionLabelFor(SIZE_OPTIONS, size);
     }
 
-    function buildMatrixSection(size, label){
+    function buildMatrixSection(size, label, iconPosition){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildAnchorCell(t.key, state.key, state.cls, size, label) + "</td>";
+          return '<td class="button-matrix-cell">' + buildAnchorCell(t.key, state.key, state.cls, size, label, iconPosition) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -363,27 +375,33 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return { iconPosition: iconPositionSelect ? iconPositionSelect.value : "trailing" };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        label: parseLabel(labelInput.value)
+        label: parseLabel(labelInput.value),
+        opts: currentOpts()
       };
     }
 
     function render(){
       var label = parseLabel(labelInput.value);
+      var opts = currentOpts();
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
 
       var html = "";
       var combos = [];
       sizes.forEach(function(size){
-        html += buildMatrixSection(size, label);
+        html += buildMatrixSection(size, label, opts.iconPosition);
         combos.push({ size: size, label: comboLabel(size), fieldLabel: label });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.fieldLabel); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.fieldLabel); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.fieldLabel, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.fieldLabel, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -399,6 +417,7 @@
     }
 
     if (labelInput) labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (iconPositionSelect) iconPositionSelect.addEventListener("change", render);
 
     render();
   });

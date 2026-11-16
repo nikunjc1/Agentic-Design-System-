@@ -2,6 +2,70 @@
 .ads-foundation-editor{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);padding:var(--space-16);margin-block:var(--space-16);border:var(--border-width-1) solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface-panel)}
 .ads-foundation-editor p{flex:1 1 22rem;margin:0}
 .ads-editor-locked :is(.system-card,.product-card,.font-option){cursor:default}
+/* The one visual cue that every field below is intentionally disabled, not
+   broken - without it the banner reads as routine status text, easy to skim
+   past on a page whose inputs have all gone gray. Amber rather than brand
+   red/green: this isn't an error or a success, just "here's why". */
+.ads-editor-locked .ads-foundation-editor{border-color:var(--amber-500);background:color-mix(in srgb, var(--amber-500) 6%, var(--surface-panel))}
+/* The guided setup journey's own bar is deliberately borderless/transparent
+   (experience.css) to sit flush inside that flow instead of looking like a
+   second boxed panel - the lock icon and primary-styled Edit button alone
+   still carry the same cue there without reintroducing a visible box. */
+.setup-journey .ads-foundation-editor{background:transparent}
+/* Standalone Foundation pages (Colors, Typography, etc.) run several
+   screens long - a bar that only ever sat once near the top meant a trip
+   back up to find Save/Cancel after editing something further down.
+   position:sticky on an element this close to the top of a long scrolling
+   panel doesn't produce a persistently-visible bar (it only engages near
+   the very end of the scroll range), so foundation-runtime.js instead
+   hands main's own scrolling to a new .ads-foundation-scroll wrapper
+   around its existing content, leaving this bar as a non-scrolling flex
+   sibling pinned to the bottom of main's own area - overriding .app-main's
+   shared overflow (shell.css) only on the pages that opt into this
+   wrapper, never site-wide. The guided setup journey's copy of this bar
+   never gets wrapped (see foundation-runtime.js) and keeps its original
+   compact, top-of-panel placement - that flow is a handful of fields, not
+   a long reference page. */
+main.ads-foundation-shell{display:flex;flex-direction:column;overflow:hidden}
+.ads-foundation-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
+/* .app-main's own horizontal padding (shell.css) otherwise insets this bar
+   like every other panel on the page, so a background/border meant to read
+   as "the floor of the screen" stopped short of both edges instead.
+   Breaking out via a negative inline margin the exact width of that
+   padding, then re-padding the bar's own content by the same amount, keeps
+   Save/Cancel aligned with the content above while the bar itself spans
+   edge to edge; the compact-density override keeps both numbers in sync
+   with whichever padding .app-main is actually using. max-inline-size:none
+   is the part that actually matters here - .app-main > *{max-inline-size:
+   min(100%,var(--size-content))} (below) caps every one of main's direct
+   children at the shared reading-width limit, which silently capped this
+   bar's width too and made the negative margin alone look like it was
+   doing nothing (it was shifting the box left, just within a box that
+   could never render wider than 100% of the padded content area).
+   --page-gutter is .app-main's own custom property for exactly this
+   padding value (shell.css/foundation.css redefine it for compact density
+   and again under 640px) - referencing it here instead of duplicating
+   var(--space-40)/var(--space-24) per breakpoint is what keeps this in
+   sync; a hardcoded -40px margin previously overshot the real ~16px
+   padding at mobile widths and pushed the bar wider than main itself,
+   causing horizontal overflow on Borders (caught by tools/check-site-
+   health.cjs, not by eye). */
+/* 64px rather than letting content (padding + button height) decide it -
+   padding-block:0 removes the base rule's own vertical padding so it can't
+   add to that and overflow it; align-items:center (already set on
+   .ads-foundation-editor) centers the icon/status/buttons inside the box.
+   min-block-size, not a hard block-size: at narrow widths the status text
+   wraps to two lines and the buttons wrap below it (flex-wrap is already
+   set on the base rule), needing more than 64px - a fixed height clipped
+   the box there while overflow:visible let the Save/Cancel buttons spill
+   out past the bottom of the viewport, mostly unreachable. min-height
+   keeps it at exactly 64px everywhere a single row fits (every width this
+   was actually asked for) and only grows where content genuinely can't
+   fit in that space, instead of cutting it off. */
+main.ads-foundation-shell > .ads-foundation-editor{flex:none;min-block-size:64px;padding-block:0;margin-block-end:0;margin-inline:calc(-1 * var(--page-gutter));max-inline-size:none;padding-inline:var(--page-gutter);border-radius:0;border-inline:0;box-shadow:0 -1px 0 var(--line-strong),0 -8px 16px -8px rgba(0,0,0,.18)}
+.ads-foundation-lock-icon{flex:none;width:var(--dimension-20);height:var(--dimension-20);color:var(--amber-500)}
+.ads-foundation-lock-icon svg{width:100%;height:100%;display:block}
+.ads-foundation-lock-icon[hidden]{display:none}
 body{font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);color:var(--type-body-color)}
 /* Page roles outrank the earlier page-specific type rules. Metadata and
    component specimens retain their explicit role bindings below. */
@@ -60,7 +124,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
    vertical padding, height driven entirely by min-block-size below - a
    textarea is still genuinely multi-line, so it keeps real padding. */
 :is(.ads-foundation-toolbar,.ads-unit-control,.ads-format-controls,.ads-sizing) :is(input:not([type=radio]):not([type=checkbox]),select){padding:0 var(--space-12)}
-[aria-selected=true]{border-color:var(--border-state-selected,var(--text-hi))}
+[aria-selected=true]{border-color:var(--border-state-selected,var(--red-500))}
 .setup-error,.input-demo-error{color:var(--type-error-color)}
 .ads-required{display:inline;margin-inline-start:var(--space-4);color:var(--danger-500);font:inherit}
 .ads-foundation-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-12);margin-block:var(--space-16);padding:var(--space-12);border:var(--border-width-1) var(--border-style) var(--line);border-radius:var(--radius-md)}
@@ -115,7 +179,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
 .data-format-page .usage-values{white-space:normal;overflow-wrap:anywhere}
 .ads-data-settings .ads-format-grouped{grid-template-columns:minmax(0,1fr);gap:var(--space-24);margin-block:var(--space-24)}
 .ads-format-group{min-inline-size:0;margin:0;padding:0;border:0}
-.ads-format-group legend{padding:0;margin-block-end:var(--space-16);font-weight:600}
+.ads-format-group legend{padding:0;margin-block-end:var(--space-16);font-weight:var(--type-selected-weight)}
 .ads-format-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--dimension-240)),1fr));gap:var(--space-16)}
 .ads-format-field{display:grid;grid-template-rows:minmax(calc(2 * var(--type-body-size) * var(--type-body-line-height)),auto) auto;gap:var(--space-8);min-width:0;align-content:start}
 .ads-format-label{min-width:0;overflow-wrap:anywhere}
@@ -197,7 +261,7 @@ pre,code,kbd,samp,.guide-machine-json,.copy-code{font-family:var(--font-mono)}
    scroll area. Mirror classic scrollbar space in both shell columns. */
 /* Bound the grid to the visible viewport. Only its content regions scroll,
    with no outer document tail or elastic blank area at their boundaries. */
-body{height:100vh;height:100dvh;min-height:0;grid-template-rows:64px minmax(0,1fr);overflow:hidden;overscroll-behavior-y:none}
+body{height:100vh;height:100dvh;min-height:0;grid-template-rows:var(--size-topbar) minmax(0,1fr);overflow:hidden;overscroll-behavior-y:none}
 .app-main,.app-sidebar{min-height:0;scrollbar-gutter:stable both-edges;overscroll-behavior-y:none}
 .app-main{--page-gutter:var(--space-40);width:100%;max-width:none;min-width:0;padding-inline:var(--page-gutter);padding-block-end:var(--space-24)}
 .app-main > *{max-inline-size:min(100%,var(--size-content));margin-inline:auto}
@@ -206,8 +270,22 @@ body{height:100vh;height:100dvh;min-height:0;grid-template-rows:64px minmax(0,1f
 .sidebar-search-sticky,.nav-group{padding-inline:var(--sidebar-gutter)}
 [data-density="compact"] .app-main{--page-gutter:var(--space-24);padding-inline:var(--page-gutter);padding-block-end:var(--space-16)}
 @media(max-width:640px){:root .app-main{--page-gutter:var(--space-16);padding-inline:var(--page-gutter);padding-block-end:var(--space-16)}}
+/* .app-main's own padding-block-end above (default, compact and <640px
+   variants) reserves space after its last child - harmless while the
+   Foundation editor bar sat inline with everything else, since it was just
+   trailing space under real content. Once the bar becomes a non-scrolling
+   flex sibling that owns the true bottom edge (foundation-runtime.js adds
+   .ads-foundation-shell), that same padding instead opens a dead gap below
+   the bar, through main's own transparent background, down to whatever
+   renders behind it - the actual cause of a persistent "extra spacing
+   under the sticky bar" report. The bar's own border/box-shadow already
+   mark where the page ends, so this zeroes the now-redundant space in all
+   three density/width variants - matching .app-main.ads-foundation-shell's
+   higher specificity (tag + 2 classes) is what makes it win over all of
+   them regardless of source order, not just the first. */
+.app-main.ads-foundation-shell{padding-block-end:0}
 :is(.icon-btn,.btn,.chip) svg:not([data-fixed-icon]){width:var(--icon-size);height:var(--icon-size);flex-shrink:0}
-svg[stroke="currentColor"]:not([data-fixed-icon]){stroke-width:var(--icon-stroke);stroke-linecap:var(--icon-cap);stroke-linejoin:var(--icon-join)}
+svg[stroke="currentColor"]:not([data-fixed-icon]):not([fill="currentColor"]){stroke-width:var(--icon-stroke);stroke-linecap:var(--icon-cap);stroke-linejoin:var(--icon-join)}
 @media(pointer:coarse){:is(button,.btn,.chip,a,input,select){min-block-size:var(--size-target)}}
 @media(max-width:640px){.ads-foundation-toolbar{align-items:flex-start}.ads-format-controls{grid-template-columns:minmax(0,1fr)}.panel-title-row{flex-direction:column;align-items:flex-start}main{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){.ads-data-skeleton{animation:none}}
@@ -224,7 +302,7 @@ svg[stroke="currentColor"]:not([data-fixed-icon]){stroke-width:var(--icon-stroke
 [data-border-sides=right] :is(.input-demo-control--outlined,.select-demo-control--outlined){border-width:0 var(--border-width-1) 0 0}
 [data-border-sides=start] :is(.input-demo-control--outlined,.select-demo-control--outlined){border-width:0;border-inline-start-width:var(--border-width-1)}
 [data-border-sides=end] :is(.input-demo-control--outlined,.select-demo-control--outlined){border-width:0;border-inline-end-width:var(--border-width-1)}
-[data-icon-style=dashed] :is(.icon-btn,.btn,.chip,.nav-link) svg{stroke-dasharray:3 2.6}
+[data-icon-style=dashed] svg[stroke="currentColor"]:not([data-fixed-icon]){stroke-dasharray:3 2.6}
 
 .btn-demo--primary{color:var(--button-primary-text-default)}
 .btn-demo--primary:hover,.btn-demo--primary.is-hover{color:var(--button-primary-text-hover)}
@@ -270,15 +348,18 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
    its own selectors has to live here too, not in an earlier stylesheet. */
 @media(max-width:640px){.app-main .setup-notice p{font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}}
 .app-main :is(.setup-error,.input-demo-error){color:var(--type-error-color)}
-/* Documentation tabs use the library's Outlined Group Button track. */
-.app-main .ads-tab-group{display:inline-flex;align-items:stretch;gap:0;padding:0;max-inline-size:100%;overflow-x:auto;border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);flex:none}
+/* Documentation tabs use the library's Filled Group Button track - a solid
+   track with a pill highlight around the selected segment, same states
+   (rest/hover/active/selected/focus/disabled) as the real .group-btn--filled
+   component, just with this chrome's own sizing/overflow handling kept. */
+.app-main .ads-tab-group{display:inline-flex;align-items:stretch;gap:var(--space-2);padding:var(--space-2);max-inline-size:100%;overflow-x:auto;background:var(--graphite-800);border-radius:var(--radius-md);flex:none}
 .app-main .page-outline > .ads-tab-group{max-inline-size:none}
-.app-main .ads-tab-group .group-btn-segment{flex:none;height:auto;min-block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));margin:0;padding:0 var(--space-16);border:0;border-inline-end:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:0;background:transparent;color:var(--type-body-color);text-decoration:none;white-space:nowrap;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
-.app-main .ads-tab-group .group-btn-segment:last-child{border-inline-end:0}
-.app-main .ads-tab-group .group-btn-segment:hover{background:var(--graphite-800)}
-.app-main .ads-tab-group .group-btn-segment:active{background:var(--graphite-700)}
-.app-main .ads-tab-group .group-btn-segment.is-selected{background:var(--graphite-800);color:var(--text-hi)}
+.app-main .ads-tab-group .group-btn-segment{flex:none;height:auto;min-block-size:max(var(--size-control),var(--size-target),calc(var(--type-body-size) * var(--type-body-line-height) + var(--space-16)));margin:0;padding:0 var(--space-16);border:0;border-radius:inherit;background:transparent;color:var(--text-mid);text-decoration:none;white-space:nowrap;font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking)}
+.app-main .ads-tab-group .group-btn-segment:hover{background:var(--graphite-700);color:var(--text-hi)}
+.app-main .ads-tab-group .group-btn-segment:active{background:var(--graphite-600)}
+.app-main .ads-tab-group .group-btn-segment.is-selected{background:var(--red-500);color:var(--on-brand-text)}
 .app-main .ads-tab-group .group-btn-segment:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus-ring);outline-offset:calc(-1 * var(--space-3))}
+.app-main .ads-tab-group .group-btn-segment:disabled{opacity:0.4}
 /* Generated implementation guidance shares the panel's rhythm and separators. */
 .ads-contract-rule { padding-block:var(--space-16); border-block-start:1px solid var(--line); }
 .ads-contract-rule h3 { margin:0 0 var(--space-8); }
@@ -319,3 +400,17 @@ main .statistic-demo-value--negative{color:var(--type-error-color)}
 @media print{.ads-foundation-toolbar,.setup-context,.app-sidebar,.app-topbar{display:none}.panel{box-shadow:none;break-inside:avoid}}
 .modal-overlay,.welcome-modal-overlay { z-index:var(--layer-dialog); }
 .dropdown-demo-menu { z-index:var(--layer-popover); }
+
+/* Data Format: associate help and errors with each atomic control. */
+.data-format-page .ads-format-field{grid-template-rows:auto auto 1fr;gap:var(--space-8)}
+.data-format-page .ads-format-label{align-self:end;line-height:var(--type-body-line-height)}
+.data-format-page .ads-format-help{font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);color:var(--text-mid);overflow-wrap:anywhere}
+.data-format-page .ads-format-field-error{display:block;margin-block-start:var(--space-4)}
+.data-format-page .ads-format-field-error:empty{display:none}
+.data-format-page .ads-format-expanded{display:block;margin-block-start:var(--space-8);color:var(--text-mid);font-family:var(--type-body-family);font-size:var(--type-caption-size)}
+.data-format-page .ads-format-toggle{cursor:pointer}
+@supports(grid-template-rows:subgrid){.data-format-page .ads-format-field{grid-row:span 3;grid-template-rows:subgrid}}
+.data-format-page .usage-values{font-family:var(--font-mono);font-size:var(--type-body-size);line-height:var(--type-body-line-height);color:var(--text-hi);font-variant-numeric:tabular-nums}
+
+/* Native placeholders inside the border configuration grid used the UA default grey (3.9:1 in dark). */
+.border-config-grid .type-control input::placeholder{color:var(--text-dim);opacity:1}

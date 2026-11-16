@@ -10,7 +10,9 @@
     { key: "default", label: "Default" },
     { key: "expanded", label: "Expanded" },
     { key: "selected", label: "Selected" },
-    { key: "disabled", label: "Disabled" }
+    { key: "disabled", label: "Disabled" },
+    { key: "loading", label: "Loading" },
+    { key: "empty", label: "Empty" }
   ];
 
   var DEFAULT_ROOT_LABEL = "Documents";
@@ -58,12 +60,23 @@
     return "indeterminate";
   }
 
-  var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
-  var FOLDER_CLOSED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>';
-  var FOLDER_OPEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2H7a2 2 0 0 0-1.9 1.4L3 15V7z"/><path d="M3 15l1.7-5.7A2 2 0 0 1 6.6 8H21l-2 8a2 2 0 0 1-2 1.5H5a2 2 0 0 1-2-2z"/></svg>';
-  var FILE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
-  var DASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="12" x2="18" y2="12"/></svg>';
-  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
+  var FOLDER_CLOSED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>';
+  var FOLDER_OPEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2H7a2 2 0 0 0-1.9 1.4L3 15V7z"/><path d="M3 15l1.7-5.7A2 2 0 0 1 6.6 8H21l-2 8a2 2 0 0 1-2 1.5H5a2 2 0 0 1-2-2z"/></svg>';
+  var FILE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+  var DASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="12" x2="18" y2="12"/></svg>';
+  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  // Loading indicator - the same hand-built progress_activity glyph
+  // Transfer/Button already use for their own Loading states, reused
+  // verbatim rather than inventing a new spinner icon. A real static SVG,
+  // not a CSS border-trick spun by an `animation` property - that approach
+  // is fragile (meaningless once exported, and a frozen frame of it reads
+  // as a half-drawn, broken ring) - this glyph reads as "loading" even
+  // standing still, which matters here since Tree has a live Figma push
+  // integration (captureTreeProperties() below) that can freeze this exact
+  // markup into an exported variant.
+  var SPINNER_SVG = '<svg class="tree-demo-spinner-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.125 21.2125C6.90833 20.6875 5.84583 19.9708 4.9375 19.0625C4.02917 18.1542 3.3125 17.0917 2.7875 15.875C2.2625 14.6583 2 13.3625 2 11.9875C2 10.6125 2.2625 9.32083 2.7875 8.1125C3.3125 6.90417 4.02917 5.84583 4.9375 4.9375C5.84583 4.02917 6.90833 3.3125 8.125 2.7875C9.34167 2.2625 10.6333 2 12 2C12.2833 2 12.5208 2.09583 12.7125 2.2875C12.9042 2.47917 13 2.71667 13 3C13 3.28333 12.9042 3.52083 12.7125 3.7125C12.5208 3.90417 12.2833 4 12 4C9.78333 4 7.89583 4.77917 6.3375 6.3375C4.77917 7.89583 4 9.78333 4 12C4 14.2167 4.77917 16.1042 6.3375 17.6625C7.89583 19.2208 9.78333 20 12 20C14.2167 20 16.1042 19.2208 17.6625 17.6625C19.2208 16.1042 20 14.2167 20 12C20 11.7167 20.0958 11.4792 20.2875 11.2875C20.4792 11.0958 20.7167 11 21 11C21.2833 11 21.5208 11.0958 21.7125 11.2875C21.9042 11.4792 22 11.7167 22 12C22 13.3667 21.7375 14.6583 21.2125 15.875C20.6875 17.0917 19.9708 18.1542 19.0625 19.0625C18.1542 19.9708 17.0958 20.6875 15.8875 21.2125C14.6792 21.7375 13.3875 22 12.0125 22C10.6375 22 9.34167 21.7375 8.125 21.2125Z"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -136,6 +149,8 @@
   // the fixed per-state rendering it needs.
   function buildTreeField(typeKey, stateKey, rootLabel, showIcons, liveState){
     var isDisabled = stateKey === "disabled";
+    var isLoading = stateKey === "loading";
+    var isEmpty = stateKey === "empty";
     var isExpanded = stateKey === "expanded" || stateKey === "selected";
     var opts = {
       checkable: typeKey === "checkable",
@@ -145,12 +160,29 @@
       checkedLabels: liveState ? liveState.checkedLabels : (stateKey === "selected" ? ["Q1 Report.pdf"] : [])
     };
 
-    var nodesHtml = TREE_DATA.map(function(node){ return buildTreeNode(node, opts); }).join("");
+    // Loading/Empty replace the whole node list with something structurally
+    // different (a spinner glyph, or a message) - real users would never
+    // see rows AND a loading/empty message at once, so these states
+    // intentionally override nodesHtml rather than compositing with it -
+    // same "override, don't composite" rule Transfer's own Loading/Empty/
+    // No Results slot uses. Each gets its own data-contract-part so Figma
+    // capture (captureTreeProperties() in component-workbench.js) can find
+    // it regardless of which state the DOM happens to be in at capture
+    // time - the recurring "base capture has no node for content that only
+    // exists in another state" bug this system has hit repeatedly.
+    var nodesContent;
+    if (isLoading){
+      nodesContent = '<div class="tree-demo-loading" data-contract-part="tree-items-loading">' + SPINNER_SVG + "</div>";
+    } else if (isEmpty){
+      nodesContent = '<p class="tree-demo-empty" data-contract-part="tree-items-empty">No items to show.</p>';
+    } else {
+      nodesContent = TREE_DATA.map(function(node){ return buildTreeNode(node, opts); }).join("");
+    }
     var wrapCls = "tree-demo-wrap" + (typeKey === "lines" ? " tree-demo-wrap--lines" : "") + (isDisabled ? " is-disabled" : "");
 
     return '<div class="' + wrapCls + '">' +
-      '<p class="tree-demo-root">' + escapeHtml(rootLabel) + "</p>" +
-      '<div class="tree-demo-nodes">' + nodesHtml + "</div>" +
+      '<p class="tree-demo-root" data-contract-part="rootLabel">' + escapeHtml(rootLabel) + "</p>" +
+      '<div class="tree-demo-nodes" data-contract-part="treeNodes">' + nodesContent + "</div>" +
       "</div>";
   }
 
@@ -173,11 +205,13 @@
       lines.push("This card's live example commits specifically to the " + (filteredType ? filteredType.label : typeFilter) + " type - generate that type first, though the full component still supports all " + TYPES.length + " listed above.");
     }
     lines.push("");
-    lines.push("States (4):");
+    lines.push("States (6):");
     lines.push("- Default: top-level nodes visible, all branches collapsed.");
     lines.push("- Expanded: one branch expanded, showing its children.");
     lines.push("- Selected: one leaf node highlighted (Default type) or checked (Checkable type), with its parent branch expanded so it's visible.");
     lines.push("- Disabled: the whole tree dimmed and non-interactive.");
+    lines.push("- Loading: a centered spinner glyph replaces the node list while data is being fetched.");
+    lines.push("- Empty: a centered, dimmed \"No items to show.\" message replaces the node list when there is nothing to display.");
     lines.push("");
     lines.push("Each node is either a parent (has children, shown with an expand/collapse chevron" + (showIcons ? " and a folder icon" : "") + ") or a leaf" + (showIcons ? " (shown with a file icon)" : "") + ". Clicking a parent's chevron toggles its children's visibility without selecting it.");
     lines.push("");
@@ -193,7 +227,7 @@
     lines.push("/* Agentic Design System - Tree component */");
     lines.push(".tree-demo-wrap{ width:var(--dimension-220); font-family:var(--font-body); font-size:var(--type-body-size); }");
     lines.push(".tree-demo-wrap.is-disabled{ opacity:0.4; pointer-events:none; }");
-    lines.push('.tree-demo-root{ margin:0 0 var(--space-6); font-family:var(--font-mono); font-size:var(--type-body-size); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.tree-demo-root{ margin:0 0 var(--space-6); font-family:var(--font-mono); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".tree-demo-row{ display:flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-6); border-radius:var(--radius-sm); color:var(--text-hi); cursor:pointer; }");
     lines.push(".tree-demo-row:hover{ background:var(--graphite-800); }");
     lines.push(".tree-demo-row.is-selected{ background:var(--red-tint); color:var(--red-400); }");
@@ -201,7 +235,7 @@
     lines.push(".tree-demo-toggle.is-expanded{ transform:rotate(90deg); }");
     lines.push(".tree-demo-toggle-spacer{ width:var(--dimension-14); flex:none; }");
     lines.push(".tree-demo-toggle svg, .tree-demo-checkbox svg, .tree-demo-icon svg{ width:var(--dimension-14); height:var(--dimension-14); }");
-    lines.push(".tree-demo-checkbox{ width:var(--dimension-14); height:var(--dimension-14); flex:none; border-radius:3px; border:1.5px solid var(--line-strong); display:flex; align-items:center; justify-content:center; color:#FFFFFF; }");
+    lines.push(".tree-demo-checkbox{ width:var(--dimension-14); height:var(--dimension-14); flex:none; border-radius:3px; border:var(--border-width-1) var(--border-style) var(--line-strong); display:flex; align-items:center; justify-content:center; color:#FFFFFF; }");
     lines.push(".tree-demo-checkbox.is-checked, .tree-demo-checkbox.is-indeterminate{ background:var(--red-500); border-color:var(--red-500); }");
     lines.push("/* Indeterminate is filled like a checked box - the dash vs tick is what separates partial from complete. */");
     lines.push(".tree-demo-icon{ flex:none; color:var(--text-dim); display:flex; }");
@@ -267,12 +301,12 @@
       var href = "tree-" + card.dataset.system + ".html";
       if (card.dataset.type) href += "?type=" + encodeURIComponent(card.dataset.type);
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

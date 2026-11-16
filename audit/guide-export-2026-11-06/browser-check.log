@@ -1,0 +1,11 @@
+PASS Principles has eleven focused section links, stable anchors, named inert example fields and a collapsed Markdown preview.
+PASS Copy guide includes the complete content; clipboard failure opens and focuses a manual-copy preview.
+PASS Default export works without a project, with one context message and no irrelevant component controls.
+PASS Contact information is excluded by default and included only by explicit selection.
+PASS Disclosure controls work with Space/Enter and Tab reaches the separate category checkbox.
+PASS Empty component exports are blocked; search, no-results and clearing filters preserve selection.
+PASS Category selection has separate disclosure and checkbox controls with accurate mixed/all state.
+PASS Foundation bulk selection includes custom settings only when selected, retaining library defaults otherwise.
+PASS Copy uses the current privacy selection; failure selects the preview; .md download contains current project settings.
+PASS Both pages fit four viewport widths in both themes without page overflow.
+PASS Legacy selected-guide URLs still work; clearing components preserves unrelated documentation in complete exports.

@@ -12,8 +12,8 @@
   // Simple inline SVG icon constants - viewBox 0 0 24 24, stroke currentColor
   // so each icon inherits its surrounding element's color rather than a
   // hard-coded fill.
-  var ZOOM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
-  var BROKEN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><line x1="3" y1="21" x2="10" y2="14"></line><line x1="14" y1="14" x2="21" y2="21"></line></svg>';
+  var ZOOM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+  var BROKEN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><line x1="3" y1="21" x2="10" y2="14"></line><line x1="14" y1="14" x2="21" y2="21"></line></svg>';
 
   var TYPES = [
     { key: "default", label: "Default" },
@@ -36,9 +36,13 @@
   // the Copy Prompt/Copy Code generators below.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -84,7 +88,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -165,7 +169,7 @@
     lines.push(".image-demo-error{ display:flex; flex-direction:column; align-items:center; gap:var(--space-6); color:var(--text-dim); }");
     lines.push(".image-demo-error svg{ width:var(--dimension-24); height:var(--dimension-24); }");
     lines.push('.image-demo-error-text{ font-family:var(--font-body); font-size:var(--type-body-size); }');
-    lines.push(".image-demo-zoom-icon{ position:absolute; bottom:6px; right:6px; width:var(--dimension-22); height:var(--dimension-22); border-radius:9999px; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#FFFFFF; opacity:0.7; transition:opacity .15s ease; }");
+    lines.push(".image-demo-zoom-icon{ position:absolute; bottom:6px; right:6px; width:var(--dimension-22); height:var(--dimension-22); border-radius:var(--radius-full); background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#FFFFFF; opacity:0.7; transition:opacity .15s ease; }");
     lines.push(".image-demo-frame:hover .image-demo-zoom-icon, .image-demo-frame--hover .image-demo-zoom-icon{ opacity:1; }");
     lines.push(".image-demo-zoom-icon svg{ width:var(--dimension-12); height:var(--dimension-12); }");
     lines.push('.image-demo-caption{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
@@ -191,7 +195,7 @@
       innerHtml = '<span class="image-demo-zoom-icon">' + ZOOM_ICON + "</span>";
     }
     var frameHtml = '<div class="image-demo-frame image-demo-frame--' + stateKey + '" style="' + frameStyle + '">' + innerHtml + "</div>";
-    var captionHtml = (typeKey === "with-caption") ? '<p class="image-demo-caption">' + escapeHtml(caption) + "</p>" : "";
+    var captionHtml = (typeKey === "with-caption") ? '<p class="image-demo-caption" data-contract-part="caption">' + escapeHtml(caption) + "</p>" : "";
     return '<div class="image-demo-wrap">' + frameHtml + captionHtml + "</div>";
   }
 
@@ -264,12 +268,12 @@
       card.setAttribute("tabindex", "0");
       var href = "image-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

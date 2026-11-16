@@ -1,0 +1,165 @@
+{
+  "file": "description-default.html",
+  "name": "Description",
+  "category": "Components · Data Display · Description",
+  "controls": [
+    {
+      "index": 0,
+      "role": "description-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "large"
+      ],
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "middle",
+          "label": "Middle"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "description-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Bordered",
+          "label": "Bordered"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Compact",
+      "options": [
+        {
+          "value": "Compact",
+          "label": "Compact"
+        },
+        {
+          "value": "With title",
+          "label": "With title"
+        },
+        {
+          "value": "Long value",
+          "label": "Long value"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "description-columns-select",
+      "id": null,
+      "label": "Columns",
+      "type": "select",
+      "value": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Columns 1 2 3",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "description-title",
+      "id": null,
+      "label": "Section title",
+      "type": "text",
+      "value": "Account details",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Section title",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Description has no hover/focus/disabled states - it is not interactive. Section title below only applies to the With title state; the other states ignore it. Change Columns to check every type and state in the Live Preview at 1, 2 or 3 columns.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Large",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Description displays a set of structured details at a glance, like a summary panel - label/value pairs arranged in a configurable grid of columns, used for read-only structured details rather than an editable form. When to Use A user profile summary - showing a set of fixed attributes at a glance. Order confirmation details or account settings overview - a read-only recap of structured data. A product specification sheet or support ticket metadata - label/value pairs that don't need editing in place. When Not to Use Data the user needs to edit directly - use the appropriate form fields (Input, Select, etc.) instead of read-only Description. A single flat list of similar items rather than distinct labeled attributes - use List. Tabular data with many rows sharing the same columns - use Table instead of repeating Description panels. Best Practices Choose a column count that keeps label/value pairs readable without excessive line wrapping. Keep labels short and consistent in tone (all nouns, or all short phrases) across every field in the panel. Group related fields visually, with an optional section title, when the panel covers more than one topic. Do and Don't Do StatusActiveRenewal date14 Mar 2026 Short labels paired with short values in a scannable grid - exactly what Description is for, a record's fixed fields laid out at a glance. Don't NotesCustomer called on the 3rd to ask about upgrading their plan, was transferred twice, eventually resolved by billing on the 5th. A paragraph forced into a label/value row breaks the grid's alignment for every other field. Long-form content belongs in a Card or a text block, not a Description grid. Accessibility Implemented with real term/description semantics (or an equivalent structure) so the label-value relationship is explicit to assistive technology, not just visual proximity. Long values wrap or truncate with a way to see the full value, rather than silently cutting text off with no indication. Section titles are real headings, not styled text with no semantic weight. Related Components Card, Table, List. { \"component\": \"Description\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Description displays a set of structured details at a glance, like a summary panel - label/value pairs arranged in a configurable grid of columns, used for read-only structured details rather than an editable form.\", \"whenToUse\": [ \"A user profile summary - showing a set of fixed attributes at a glance.\", \"Order confirmation details or account settings overview - a read-only recap of structured data.\", \"A product specification sheet or support ticket metadata - label/value pairs that don't need editing in place.\" ], \"whenNotToUse\": [ \"Data the user needs to edit directly - use the appropriate form fields (Input, Select, etc.) instead of read-only Description.\", \"A single flat list of similar items rather than distinct labeled attributes - use List.\", \"Tabular data with many rows sharing the same columns - use Table instead of repeating Description panels.\" ], \"bestPractices\": [ \"Choose a column count that keeps label/value pairs readable without excessive line wrapping.\", \"Keep labels short and consistent in tone (all nouns, or all short phrases) across every field in the panel.\", \"Group related fields visually, with an optional section title, when the panel covers more than one topic.\" ], \"doAndDont\": { \"do\": \"Short labels paired with short values in a scannable grid - exactly what Description is for, a record's fixed fields laid out at a glance.\", \"dont\": \"A paragraph forced into a label/value row breaks the grid's alignment for every other field. Long-form content belongs in a Card or a text block, not a Description grid.\" }, \"accessibility\": [ \"Implemented with real term/description semantics (or an equivalent structure) so the label-value relationship is explicit to assistive technology, not just visual proximity.\", \"Long values wrap or truncate with a way to see the full value, rather than silently cutting text off with no indication.\", \"Section titles are real headings, not styled text with no semantic weight.\" ], \"relatedComponents\": [ \"Card\", \"Table\", \"List\" ] }",
+  "tests": []
+}

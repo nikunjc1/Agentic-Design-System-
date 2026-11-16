@@ -1,6 +1,12 @@
 (() => {
   "use strict";
 
+  // Check/line glyphs for the optional in-thumb state icons - small enough
+  // to never be the PRIMARY signal of state (track color + thumb position
+  // already carry that), per the spec's "don't rely on icons/color alone" guidance.
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
+  var ICON_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 12h12"/></svg>';
+
   var TYPES = [
     { key: "compact", label: "Compact" },
     { key: "labeled", label: "Labeled" }
@@ -28,7 +34,7 @@
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var graphite600 = getCssVar("--graphite-600", "#383D44");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     return {
       off: "background:" + graphite700 + "; thumb background:#FFFFFF, thumb sits at the left.",
       on: "background:" + red500 + "; thumb background:#FFFFFF, thumb slides to the right.",
@@ -131,7 +137,12 @@
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Track width scales with height (width = height x 1.75, rounded); thumb size and travel distance scale with it too.");
     lines.push("");
-    lines.push("Component properties: Label (editable text next to the switch, shown for the Labeled type and used as the accessible name for both).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text next to the switch, shown for the Labeled type and used as the accessible name for both, placement Left or Right of the switch - currently " + (opts.labelPlacement || "right") + "), Required (boolean, shows a required indicator after the label, Labeled type only - currently " + (opts.required ? "yes" : "no") + "), State icons (boolean, shows a check mark inside the thumb when On and a short line when Off - never relied on alone to communicate state, since track color/thumb position always change too - currently " + (opts.showIcons ? "shown" : "hidden") + "), Supporting text (optional helper text below the switch), Error/status (boolean - only meaningful when the switch is tied to a real business rule or action, not a generic required-field validator).");
+    if (opts.showError) lines.push("Current error message: \"" + opts.errorText + "\".");
+    else if (opts.supportingText) lines.push("Current supporting text: \"" + opts.supportingText + "\".");
+    lines.push("");
+    lines.push("Toggle behavior: clicking or pressing Space flips Off/On immediately by default. For an asynchronous update, show Loading on the toggled-to value, then either settle there on success or revert to the previous value and surface the error message on failure - never leave the control stuck on an optimistic value the backend rejected.");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
@@ -141,16 +152,21 @@
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
     var graphite600 = getCssVar("--graphite-600", "#383D44");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var textHi = getCssVar("--text-hi", "#111827");
 
     var lines = [];
     lines.push("/* Agentic Design System - Switch (toggle) component */");
-    lines.push('.switch-demo-field{ position:relative; display:inline-flex; align-items:center; gap:var(--space-10); cursor:pointer; }');
+    lines.push('.switch-demo-field{ position:relative; display:inline-flex; flex-direction:column; align-items:flex-start; gap:var(--space-4); cursor:pointer; }');
+    lines.push(".switch-demo-row{ display:inline-flex; align-items:center; gap:var(--space-10); }");
     lines.push('.switch-demo-input{ position:absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }');
-    lines.push('.switch-demo-track{ position:relative; display:inline-flex; align-items:center; box-sizing:border-box; border-radius:999px; background:' + graphite700 + '; padding:0 var(--space-2); cursor:pointer; flex:none; transition:background-color .15s ease, outline-color .15s ease; }');
-    lines.push('.switch-demo-thumb{ border-radius:50%; background:#FFFFFF; transform:translateX(0); transition:transform .15s ease; flex:none; }');
-    lines.push('.switch-demo-label{ font-size:var(--type-body-size); color:' + textHi + '; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; }');
+    lines.push('.switch-demo-track{ position:relative; display:inline-flex; align-items:center; box-sizing:border-box; border-radius:var(--radius-full); background:' + graphite700 + '; padding:0 var(--space-2); cursor:pointer; flex:none; transition:background-color .15s ease, outline-color .15s ease; }');
+    lines.push('.switch-demo-thumb{ border-radius:50%; background:#FFFFFF; transform:translateX(0); transition:transform .15s ease; flex:none; display:flex; align-items:center; justify-content:center; color:' + graphite700 + '; }');
+    lines.push('.switch-demo-label{ font-size:var(--type-body-size); color:' + textHi + '; font-family:var(--font-body); }');
+    lines.push(".switch-demo-field--label-left .switch-demo-row{ flex-direction:row-reverse; }");
+    lines.push(".switch-demo-required{ color:var(--danger-500); }");
+    lines.push(".switch-demo-note{ font-size:var(--type-caption-size); color:var(--text-dim); margin:var(--space-4) 0 0; }");
+    lines.push(".switch-demo-note.is-error{ color:var(--danger-700); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -160,24 +176,31 @@
       var scale = SIZE_SCALE[size];
       lines.push(".switch-demo-track--h" + size + "{ width:" + scale.width + "px; height:" + size + "px; }");
       lines.push(".switch-demo-track--h" + size + " .switch-demo-thumb{ width:" + scale.thumb + "px; height:" + scale.thumb + "px; }");
-      lines.push(".switch-demo-input:checked + .switch-demo-track--h" + size + " .switch-demo-thumb{ transform:translateX(" + scale.travel + "px); }");
+      lines.push(".switch-demo-field:has(.switch-demo-input:checked) .switch-demo-track--h" + size + " .switch-demo-thumb{ transform:translateX(" + scale.travel + "px); }");
     });
     lines.push("");
     lines.push("/* States (5) - Off, On, Hover, Focused, Disabled - shared by both types */");
-    lines.push(".switch-demo-input:checked + .switch-demo-track{ background:" + red500 + "; }");
+    lines.push(".switch-demo-field:has(.switch-demo-input:checked) .switch-demo-track{ background:" + red500 + "; }");
     lines.push(".switch-demo-track:hover, .switch-demo-track.is-hover{ background:" + graphite600 + "; }");
-    lines.push(".switch-demo-input:focus-visible + .switch-demo-track, .switch-demo-track.is-focus{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:2px; }");
-    lines.push(".switch-demo-input:disabled + .switch-demo-track, .switch-demo-track.is-disabled{ opacity:0.4; cursor:not-allowed; }");
+    lines.push(".switch-demo-field:has(.switch-demo-input:focus-visible) .switch-demo-track, .switch-demo-track.is-focus{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:2px; }");
+    lines.push(".switch-demo-field:has(.switch-demo-input:disabled) .switch-demo-track, .switch-demo-track.is-disabled{ opacity:0.4; cursor:not-allowed; }");
     lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
+    var thumbIconHtml = opts.showIcons ? ICON_CHECK : "";
+    var requiredHtml = opts.required ? '<span class="switch-demo-required" aria-hidden="true"> *</span>' : "";
+    var noteHtml = opts.showError ? '<p class="switch-demo-note is-error">' + opts.errorText + "</p>" : (opts.supportingText ? '<p class="switch-demo-note">' + opts.supportingText + "</p>" : "");
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + ", switched on -->");
     TYPES.forEach(function(t){
       var showLabel = t.key === "labeled";
-      lines.push('<label class="switch-demo-field">');
+      lines.push('<label class="switch-demo-field' + (opts.labelPlacement === "left" ? " switch-demo-field--label-left" : "") + '">');
       lines.push('  <input type="checkbox" role="switch" class="switch-demo-input" aria-label="' + DEFAULT_LABEL + '" checked />');
-      lines.push('  <span class="switch-demo-track switch-demo-track--h' + exampleSize + '"><span class="switch-demo-thumb"></span></span>');
-      if (showLabel) lines.push('  <span class="switch-demo-label">' + DEFAULT_LABEL + '</span>');
+      lines.push('  <span class="switch-demo-row">');
+      lines.push('    <span class="switch-demo-track switch-demo-track--h' + exampleSize + '"><span class="switch-demo-thumb">' + thumbIconHtml + '</span></span>');
+      if (showLabel) lines.push('    <span class="switch-demo-label">' + DEFAULT_LABEL + requiredHtml + '</span>');
+      lines.push('  </span>');
       lines.push('</label>');
+      if (noteHtml) lines.push(noteHtml);
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -185,12 +208,12 @@
   // Builds the prompt/code for exactly ONE Size, fully resolved (never
   // "ask the question") - used by the Copy prompt/Copy code dropdown's
   // per-combination "Copy" buttons.
-  function buildComboPrompt(size){
-    return buildFullPrompt({ size: { mode: "specific", values: [size] } });
+  function buildComboPrompt(size, opts){
+    return buildFullPrompt({ size: { mode: "specific", values: [size] }, opts: opts });
   }
 
-  function buildComboCode(size){
-    return buildFullCode({ size: { mode: "specific", values: [size] } });
+  function buildComboCode(size, opts){
+    return buildFullCode({ size: { mode: "specific", values: [size] }, opts: opts });
   }
 
   document.addEventListener("DOMContentLoaded", function(){
@@ -221,12 +244,12 @@
       card.setAttribute("tabindex", "0");
       var href = "switch-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -307,23 +330,67 @@
 
     var labelInput = document.querySelector('[data-role="switch-label"]');
     var sizeMount = document.querySelector('[data-role="switch-size-mount"]');
+    var labelPlacementSelect = document.querySelector('[data-role="switch-label-placement"]');
+    var requiredInput = document.querySelector('[data-role="switch-required"]');
+    var showIconsInput = document.querySelector('[data-role="switch-show-icons"]');
+    var showSupportingInput = document.querySelector('[data-role="switch-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="switch-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="switch-supporting-text-field"]');
+    var showErrorInput = document.querySelector('[data-role="switch-show-error"]');
+    var errorTextInput = document.querySelector('[data-role="switch-error-text"]');
+    var errorTextFieldWrap = document.querySelector('[data-role="switch-error-text-field"]');
+    var simulateFailureInput = document.querySelector('[data-role="switch-simulate-failure"]');
+    var interactiveMount = document.querySelector('[data-role="switch-interactive"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildSwitchDemo(typeKey, state, size, labelText){
+    function currentOpts(){
+      return {
+        labelPlacement: labelPlacementSelect ? labelPlacementSelect.value : "right",
+        required: !!(requiredInput && requiredInput.checked),
+        showIcons: !!(showIconsInput && showIconsInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "Changes apply immediately.") : "",
+        showError: !!(showErrorInput && showErrorInput.checked),
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "Couldn't save this change. Try again.") : ""
+      };
+    }
+
+    function buildSwitchDemo(typeKey, state, size, labelText, opts){
+      opts = opts || {};
       var trackCls = "switch-demo-track switch-demo-track--h" + size + state.cls;
       var checkedAttr = state.checked ? " checked" : "";
       var disabledAttr = state.disabled ? " disabled" : "";
       var busyAttr = state.loading ? ' aria-busy="true"' : "";
-      var thumbInner = state.loading ? '<span class="switch-demo-spinner"></span>' : "";
-      var labelSpan = typeKey === "labeled" ? '<span class="switch-demo-label">' + escapeAttr(labelText) + "</span>" : "";
+      var thumbInner = state.loading ? '<span class="switch-demo-spinner"></span>' : (opts.showIcons ? (state.checked ? ICON_CHECK : ICON_OFF) : "");
+      var requiredHtml = opts.required ? '<span class="switch-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var labelSpan = typeKey === "labeled" ? '<span class="switch-demo-label" data-contract-part="label">' + escapeAttr(labelText) + requiredHtml + "</span>" : "";
+      // data-contract-part gives the Figma capture a stable identity for
+      // each part, independent of DOM position - same reasoning as
+      // checkbox-detail.js's own buildCheckboxCell().
+      // data-contract-kind="container" - the thumb is a real bordered/
+      // filled circle shape, but is childless whenever showIcons/loading
+      // are both off (the common default) - a childless <span> gets
+      // misclassified as a glyph-only TEXT node by tag name alone, and
+      // Figma TEXT nodes can't carry a background, silently dropping the
+      // thumb's entire visible appearance (the reported "circle is
+      // missing") in every state that happens to be childless at capture
+      // time - same bug class already fixed for Checkbox's box/Radio's
+      // circle, same fix.
+      var noteHtml = opts.showError ? '<p class="switch-demo-note is-error" data-contract-part="error">' + escapeAttr(opts.errorText || "") + "</p>" : (opts.supportingText ? '<p class="switch-demo-note" data-contract-part="supporting">' + escapeAttr(opts.supportingText) + "</p>" : "");
+      // row wraps track+label so the field itself can stack row-then-note
+      // vertically - previously the field was a single flex row holding
+      // input+track+label+note all side by side with no wrap, so the note
+      // rendered beside the label instead of below it (same bug already
+      // fixed for Checkbox/Radio's field, same fix: the field becomes a
+      // column, this row stays the original horizontal arrangement).
+      var rowHtml = '<span class="switch-demo-row" data-contract-part="row"><span class="' + trackCls + '" data-contract-part="box" data-contract-kind="container"><span class="switch-demo-thumb" data-contract-kind="container">' + thumbInner + "</span></span>" + labelSpan + "</span>";
       // Foundation audit UX10 - one cell of a side-by-side state comparison,
       // not a real switch; tabindex="-1" keeps it out of the Tab sequence
       // without removing it from the accessibility tree.
-      return '<label class="switch-demo-field">' +
-        '<input type="checkbox" role="switch" class="switch-demo-input" tabindex="-1" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + busyAttr + " />" +
-        '<span class="' + trackCls + '"><span class="switch-demo-thumb">' + thumbInner + "</span></span>" +
-        labelSpan +
+      return '<label class="switch-demo-field' + (opts.labelPlacement === "left" ? " switch-demo-field--label-left" : "") + '">' +
+        '<input type="checkbox" role="switch" class="switch-demo-input" data-contract-part="input" tabindex="-1" aria-label="' + escapeAttr(labelText) + '"' + checkedAttr + disabledAttr + busyAttr + " />" +
+        rowHtml +
+        noteHtml +
         "</label>";
     }
 
@@ -340,10 +407,10 @@
       return optionLabelFor(SIZE_OPTIONS, size);
     }
 
-    function buildMatrixSection(size, labelText){
+    function buildMatrixSection(size, labelText, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildSwitchDemo(t.key, state, size, labelText) + "</td>";
+          return '<td class="button-matrix-cell">' + buildSwitchDemo(t.key, state, size, labelText, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -356,24 +423,74 @@
 
     function currentSelectionInfo(){
       return {
-        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size])
+        size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
+        opts: currentOpts()
       };
+    }
+
+    // The comparison matrix above freezes Off/On per row to show every
+    // state at once - real click/Space-to-toggle behavior (plus the
+    // simulated async failure-and-revert from spec item 10) doesn't fit
+    // that format, so it lives here instead, in its own always-interactive
+    // instance, the same "Try it" pattern Group Button/Select use.
+    var interactiveOn = false, interactiveLoading = false, interactiveErrored = false;
+    function renderInteractive(){
+      if (!interactiveMount) return;
+      var opts = currentOpts();
+      var labelText = parseLabel(labelInput.value);
+      var size = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size)[0];
+      var scale = SIZE_SCALE[size];
+      var trackCls = "switch-demo-track switch-demo-track--h" + size + (interactiveLoading ? " is-loading" : "");
+      var thumbInner = interactiveLoading ? '<span class="switch-demo-spinner"></span>' : (opts.showIcons ? (interactiveOn ? ICON_CHECK : ICON_OFF) : "");
+      var noteText = interactiveErrored ? opts.errorText : opts.supportingText;
+      var noteHtml = noteText ? '<p class="switch-demo-note' + (interactiveErrored ? " is-error" : "") + '">' + escapeAttr(noteText) + "</p>" : "";
+      interactiveMount.innerHTML = '<label class="switch-demo-field' + (opts.labelPlacement === "left" ? " switch-demo-field--label-left" : "") + '">' +
+        '<input type="checkbox" role="switch" class="switch-demo-input" aria-label="' + escapeAttr(labelText) + '"' + (interactiveOn ? " checked" : "") + (interactiveLoading ? ' aria-busy="true" disabled' : "") + " />" +
+        '<span class="switch-demo-row">' +
+          '<span class="' + trackCls + '"><span class="switch-demo-thumb">' + thumbInner + "</span></span>" +
+          '<span class="switch-demo-label">' + escapeAttr(labelText) + (opts.required ? '<span class="switch-demo-required" aria-hidden="true"> *</span>' : "") + "</span>" +
+        "</span>" +
+        "</label>" + noteHtml;
+      var input = interactiveMount.querySelector(".switch-demo-input");
+      input.addEventListener("change", function(){
+        var nextValue = input.checked;
+        interactiveErrored = false;
+        var shouldFail = !!(simulateFailureInput && simulateFailureInput.checked);
+        if (shouldFail){
+          interactiveLoading = true;
+          renderInteractive();
+          setTimeout(function(){
+            interactiveLoading = false;
+            interactiveErrored = true;
+            if (simulateFailureInput) simulateFailureInput.checked = false;
+            // Reverts to the value from before this toggle - an optimistic
+            // update a backend rejected must never leave the control
+            // stuck showing the value that didn't actually take effect.
+            renderInteractive();
+          }, 700);
+        } else {
+          interactiveOn = nextValue;
+          renderInteractive();
+        }
+      });
     }
 
     function render(){
       var labelText = parseLabel(labelInput.value);
+      var opts = currentOpts();
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
 
       var html = "";
       var combos = [];
       sizes.forEach(function(size){
-        html += buildMatrixSection(size, labelText);
+        html += buildMatrixSection(size, labelText, opts);
         combos.push({ size: size, label: comboLabel(size) });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, opts); });
+      renderInteractive();
     }
 
     var propertyMultiSelects = {};
@@ -389,6 +506,23 @@
     }
 
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (labelPlacementSelect) labelPlacementSelect.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showIconsInput) showIconsInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (showErrorInput && errorTextFieldWrap){
+      showErrorInput.addEventListener("change", function(){
+        errorTextFieldWrap.hidden = !showErrorInput.checked;
+        render();
+      });
+    }
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

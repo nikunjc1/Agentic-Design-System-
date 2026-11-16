@@ -1,0 +1,10 @@
+{
+  "jobId": "6f33d64e-e6de-43a5-bc95-2d6b63fb9322",
+  "operation": "ping",
+  "status": "succeeded",
+  "phase": "Completed",
+  "result": {
+    "build": "damco-native-bridge-2026-10-30-v6",
+    "transport": "native-fetch"
+  }
+}

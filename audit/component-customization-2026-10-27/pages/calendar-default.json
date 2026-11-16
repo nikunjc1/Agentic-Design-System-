@@ -1,0 +1,119 @@
+{
+  "file": "calendar-default.html",
+  "name": "Calendar",
+  "category": "Components · Data Display · Calendar",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Full",
+      "options": [
+        {
+          "value": "Full",
+          "label": "Full"
+        },
+        {
+          "value": "Compact",
+          "label": "Compact"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "With events",
+          "label": "With events"
+        },
+        {
+          "value": "Range preview",
+          "label": "Range preview"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "calendar-month-label",
+      "id": null,
+      "label": "Month label",
+      "type": "text",
+      "value": "September 2026",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Month label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "calendar-first-day-select",
+      "id": null,
+      "label": "First day of week",
+      "type": "select",
+      "value": "sunday",
+      "options": [
+        {
+          "value": "sunday",
+          "label": "Sunday"
+        },
+        {
+          "value": "monday",
+          "label": "Monday"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "First day of week Sunday Monday",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Enter a full month and year, such as February 2028. The day grid and full-date labels update together, including leap years and adjacent months. First day of week reflows the same month. Event and range states are preview examples.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Calendar is a full, always-visible month grid for browsing dates or scheduling - unlike Date Picker's compact trigger-and-popup pattern, Calendar stays open on the page so an entire month can be scanned, compared, and interacted with at once. When to Use A booking or scheduling view - showing availability across a full month. A content publishing calendar or attendance tracker - seeing many dates' worth of data simultaneously. Event planning overviews or a habit-tracker grid - any case where scanning the whole month matters more than a compact popup. When Not to Use Picking a single date within a form - use Date Picker's compact trigger instead of dedicating a full grid to the page. A bounded start/end pair - use Date Range. A screen with limited space where a full month grid can't be shown clearly - consider a Date Picker's popup calendar instead of a permanently visible one. Best Practices Highlight today's date clearly and consistently, so orientation within the month is immediate. Use event dots or markers sparingly - too many per day makes the grid noisy and hard to scan. Keep the first day of the week configurable to match locale or organizational convention (Sunday vs. Monday). Do and Don't Do March 2026MoTuWeThFrSaSu29123 Leading days from the previous month are shown dimmed rather than hidden, so the grid never looks like a broken week with cells missing. Don't March 2026MoTuWe123 Starting the grid at day 1 with no leading blanks makes every week after the first misalign with its weekday header. Accessibility Each day cell is independently focusable and announces its full date, not just the day number. Today, selected, and out-of-month days are each distinguishable by more than color alone. Fully keyboard-navigable - arrow keys move between days, Page Up/Down move between months. Related Components Date Picker, Date Range, Table. { \"component\": \"Calendar\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Calendar is a full, always-visible month grid for browsing dates or scheduling - unlike Date Picker's compact trigger-and-popup pattern, Calendar stays open on the page so an entire month can be scanned, compared, and interacted with at once.\", \"whenToUse\": [ \"A booking or scheduling view - showing availability across a full month.\", \"A content publishing calendar or attendance tracker - seeing many dates' worth of data simultaneously.\", \"Event planning overviews or a habit-tracker grid - any case where scanning the whole month matters more than a compact popup.\" ], \"whenNotToUse\": [ \"Picking a single date within a form - use Date Picker's compact trigger instead of dedicating a full grid to the page.\", \"A bounded start/end pair - use Date Range.\", \"A screen with limited space where a full month grid can't be shown clearly - consider a Date Picker's popup calendar instead of a permanently visible one.\" ], \"bestPractices\": [ \"Highlight today's date clearly and consistently, so orientation within the month is immediate.\", \"Use event dots or markers sparingly - too many per day makes the grid noisy and hard to scan.\", \"Keep the first day of the week configurable to match locale or organizational convention (Sunday vs. Monday).\" ], \"doAndDont\": { \"do\": \"Leading days from the previous month are shown dimmed rather than hidden, so the grid never looks like a broken week with cells missing.\", \"dont\": \"Starting the grid at day 1 with no leading blanks makes every week after the first misalign with its weekday header.\" }, \"accessibility\": [ \"Each day cell is independently focusable and announces its full date, not just the day number.\", \"Today, selected, and out-of-month days are each distinguishable by more than color alone.\", \"Fully keyboard-navigable - arrow keys move between days, Page Up/Down move between months.\" ], \"relatedComponents\": [ \"Date Picker\", \"Date Range\", \"Table\" ] }",
+  "tests": []
+}

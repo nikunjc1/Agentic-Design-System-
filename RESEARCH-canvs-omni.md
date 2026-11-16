@@ -139,7 +139,7 @@ This is the direct precedent for Omni: the same person (Arjun Rajkishore) built 
 
 ## 7. Comparison to our own system (as of this session)
 
-| Area | Omni | Damco Agentic Design System |
+| Area | Omni | Agentic Design System |
 |---|---|---|
 | Color science | OKLCH + gamut-mapping | RGB-space lightness mixing for dark-mode suggestions |
 | Contrast | APCA + WCAG2, 4 use-case thresholds, live hover grid | Flat WCAG 4.5/7 AA/AAA + a 3:1 non-text check |

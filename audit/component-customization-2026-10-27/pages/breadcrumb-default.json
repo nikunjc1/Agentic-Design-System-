@@ -1,0 +1,159 @@
+{
+  "file": "breadcrumb-default.html",
+  "name": "Breadcrumb",
+  "category": "Components · Navigation · Breadcrumb",
+  "controls": [
+    {
+      "index": 0,
+      "role": "breadcrumb-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "breadcrumb-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Chevron",
+      "options": [
+        {
+          "value": "Chevron",
+          "label": "Chevron"
+        },
+        {
+          "value": "Slash",
+          "label": "Slash"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "breadcrumb-label",
+      "id": null,
+      "label": "Labels",
+      "type": "text",
+      "value": "Home, Products, Shoes",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Labels",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size and labels are properties of the same component, not separate trails - change them below to check this breadcrumb's style and states in the Live Preview. Item count follows the number of labels entered, and the last label is always the current page.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Breadcrumb is a horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider - the last item is always the current page, shown as plain text rather than a clickable link. When to Use A product category trail - Home / Electronics / Laptops. A file or folder path - showing nested location within a file browser. Documentation hierarchy or a multi-step form's current section - anywhere retracing the path back up the hierarchy is useful. When Not to Use A flat structure with no real hierarchy - a breadcrumb implies nested depth; don't add one just to show a page title. The primary means of navigating the product - Breadcrumb supplements primary navigation (a sidebar, a nav bar) - it shouldn't be the only way to get around. A sequence of steps the user is moving through, rather than a location in a hierarchy - use Steps instead. Best Practices Keep every item except the last one a real, clickable link, so users can jump back to any ancestor level directly. Truncate very long trails (many levels deep) with an ellipsis or collapsed middle section rather than wrapping across lines - past 4 levels, show the first level, a collapsed \"…\" (expandable on click/tap to reveal the hidden middle levels), then the last 2 levels plus the current page. Match the trail exactly to the real navigational hierarchy - a breadcrumb that lies about structure erodes trust in it. Do and Don't Do Projects›Q1 Launch›Budget Every ancestor is a real link back up the hierarchy; only the current page is plain text, since it has nowhere further to go. Don't Projects›Q1 Launch›Budget When every crumb is unclickable text, the trail can only be read, not used - the user still has to find another way back to Projects. Accessibility Wrapped in a nav landmark with an accessible name (\"Breadcrumb\"), so it's easy to jump to for screen-reader users. The current page (last item) is marked with aria-current=\"page\" rather than just styled differently. Dividers between items are decorative and hidden from assistive technology (aria-hidden), so the trail reads cleanly as a list of links. Related Components Anchor, Tabs, Steps. { \"component\": \"Breadcrumb\", \"status\": \"Stable\", \"category\": \"Navigation\", \"summary\": \"Breadcrumb is a horizontal trail of navigational links showing the user's current location within a hierarchy, separated by a divider - the last item is always the current page, shown as plain text rather than a clickable link.\", \"whenToUse\": [ \"A product category trail - Home / Electronics / Laptops.\", \"A file or folder path - showing nested location within a file browser.\", \"Documentation hierarchy or a multi-step form's current section - anywhere retracing the path back up the hierarchy is useful.\" ], \"whenNotToUse\": [ \"A flat structure with no real hierarchy - a breadcrumb implies nested depth; don't add one just to show a page title.\", \"The primary means of navigating the product - Breadcrumb supplements primary navigation (a sidebar, a nav bar) - it shouldn't be the only way to get around.\", \"A sequence of steps the user is moving through, rather than a location in a hierarchy - use Steps instead.\" ], \"bestPractices\": [ \"Keep every item except the last one a real, clickable link, so users can jump back to any ancestor level directly.\", \"Truncate very long trails (many levels deep) with an ellipsis or collapsed middle section rather than wrapping across lines.\", \"Match the trail exactly to the real navigational hierarchy - a breadcrumb that lies about structure erodes trust in it.\" ], \"doAndDont\": { \"do\": \"Every ancestor is a real link back up the hierarchy; only the current page is plain text, since it has nowhere further to go.\", \"dont\": \"When every crumb is unclickable text, the trail can only be read, not used - the user still has to find another way back to Projects.\" }, \"accessibility\": [ \"Wrapped in a nav landmark with an accessible name (\\\"Breadcrumb\\\"), so it's easy to jump to for screen-reader users.\", \"The current page (last item) is marked with aria-current=\\\"page\\\" rather than just styled differently.\", \"Dividers between items are decorative and hidden from assistive technology (aria-hidden), so the trail reads cleanly as a list of links.\" ], \"relatedComponents\": [ \"Anchor\", \"Tabs\", \"Steps\" ] }",
+  "tests": []
+}

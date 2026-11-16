@@ -6,10 +6,15 @@
   const DENSITY_KEY = "ads:density";
   const DIRECTION_KEY = "ads:direction";
   // Coalesce rapid property edits before rebuilding a potentially large state matrix.
-  const renderTimers = new WeakMap();
+  const renderTimers = new Map();
   window.ADS_scheduleRender = function(render) {
     clearTimeout(renderTimers.get(render));
     renderTimers.set(render, setTimeout(() => { renderTimers.delete(render); render(); }, 80));
+  };
+  window.ADS_flushRenders = function() {
+    for (const [render, timer] of [...renderTimers]) {
+      clearTimeout(timer); renderTimers.delete(render); render();
+    }
   };
   // Report copying only after an actual clipboard write or successful
   // legacy copy command. Keep focus on the action that initiated it.
@@ -80,44 +85,326 @@
   // "Could not reach" even though the plugin received and drew the request.
   const FIGMA_BRIDGE_PORT = 3333;
   const figmaFeedback = new WeakMap();
+  // Button's Appearance (Primary/Secondary/Tertiary/Ghost/Neutral/Link/
+  // Destructive) is a separate page per appearance, not a property any one
+  // page can cross on its own - merging them into one Figma component means
+  // visiting every sibling page's own capture, the same hidden-iframe
+  // technique drawFromPage already uses to pull in a single referenced page.
+  const BUTTON_APPEARANCE_FILES={primary:'button-primary.html',secondary:'button-secondary.html',tertiary:'button-tertiary.html',ghost:'button-ghost.html',neutral:'button-neutral.html',link:'button-link.html',destructive:'button-destructive.html'};
+  async function captureFromFile(file){
+    const url=new URL(file,location.href);if(url.origin!==location.origin)throw new Error('Cannot capture a page outside this origin.');
+    const frame=document.createElement('iframe');frame.style.cssText='position:fixed;left:-10000px;top:0;width:1440px;height:1000px;border:0';frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;document.body.append(frame);
+    try{return await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Component guide did not load.')),20000);frame.onload=()=>{clearTimeout(timer);try{resolve(frame.contentWindow.ADSContracts.capture());}catch(error){reject(error);}};frame.src=url.href;});}
+    finally{frame.remove();}
+  }
+  // A click that fails before draw() ever runs (capture threw, a sibling
+  // page couldn't be reached) used to only set the button's title attribute
+  // - invisible unless you happen to hover it, so the button looked like it
+  // silently did nothing. Route every such failure through the same visible
+  // toast draw() itself uses for a rejected push.
+  function reportFailure(message,button){
+    button.title=message;
+    let status=document.getElementById('ads-figma-status');
+    if(!status){
+      status=document.createElement('div');status.id='ads-figma-status';status.className='ads-figma-toast';
+      status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+      status.innerHTML='<span class="ads-figma-spinner" aria-hidden="true"></span><span class="ads-figma-toast-text"></span>';
+      (document.body||document.documentElement).append(status);
+    }
+    status.classList.add('is-visible','is-error');status.classList.remove('is-done');
+    status.querySelector('.ads-figma-toast-text').textContent=message;
+    clearTimeout(status._adsFailureTimer);
+    status._adsFailureTimer=setTimeout(()=>status.classList.remove('is-visible','is-done','is-error'),4000);
+  }
+  const buttonAppearanceLabel=name=>name.replace(/\s*Button$/,'').trim();
+  // Shared by drawCurrentPage (one live Button page merging its siblings)
+  // and the catalog export (every page captured cold via captureFromFile,
+  // including Button's own) - pure capture/assembly, no button/UI coupling.
+  async function captureButtonFamilySeed(ownType,ownContract){
+    const members=[];
+    for(const [siblingType,file]of Object.entries(BUTTON_APPEARANCE_FILES)){
+      const contract=siblingType===ownType?ownContract:await captureFromFile(file);
+      members.push({appearance:buttonAppearanceLabel(contract.name),contract});
+    }
+    const M=window.ADSComponentContract;
+    return {schemaVersion:M.VERSION,id:M.id('button'),revision:0,name:'Button',authority:'contract',
+      properties:[{id:'appearance',name:'Appearance',type:'options',options:members.map(m=>m.appearance),default:buttonAppearanceLabel(ownContract.name)}],
+      selection:{appearance:buttonAppearanceLabel(ownContract.name)},
+      anatomy:{id:'root',name:'Button',kind:'container',tag:'div',styles:{display:'inline-flex'},children:[]},
+      variants:[],tokens:{},behaviors:[],accessibility:[],adapters:{figma:{variableMap:{}}},
+      source:{page:'button-family',kind:'button-appearance-family',notes:'All '+members.length+' Button appearances ('+members.map(m=>m.appearance).join(', ')+') merged into one Figma component with an Appearance property switching between them; each appearance keeps its own full State, Size and Corner radius variant set underneath.'},
+      families:members};
+  }
   window.ADSFigmaBridge = {
     port: FIGMA_BRIDGE_PORT,
-    async draw(contract, button) {
+    async drawFromPage(file,button){
+      try{return await this.draw(await captureFromFile(file),button);}
+      catch(error){reportFailure(error.message,button);return false;}
+    },
+    // The generic "Draw in Figma" entry point for any component page - most
+    // pages just capture themselves and push, but a Button appearance page
+    // instead gathers every sibling appearance first and pushes the whole
+    // family as one merged component with an Appearance switcher.
+    async drawCurrentPage(button){
+      const type=document.body.dataset.buttonType;
+      if(!(type in BUTTON_APPEARANCE_FILES))return await this.draw(window.ADSContracts.capture(),button);
+      let ownContract;
+      try{ownContract=window.ADSContracts.capture();}catch(error){reportFailure(error.message,button);return false;}
+      try{
+        const seed=await captureButtonFamilySeed(type,ownContract);
+        return await this.draw(seed,button);
+      }catch(error){
+        // Merging requires visiting every sibling appearance page in a
+        // hidden iframe. Opened directly as a file:// page (no local server),
+        // Chrome gives every file:// document its own opaque origin - even a
+        // same-folder sibling - and blocks reading its contentWindow, so the
+        // merge can never succeed there. Fall back to pushing just this one
+        // appearance (today's pre-merge behavior) instead of leaving the
+        // button looking broken, and say why in the toast.
+        return await this.draw(ownContract,button,['Pushed '+buttonAppearanceLabel(ownContract.name)+' only - could not read the other appearance pages ('+error.message+'). Serve this portal over http(s), e.g. `python3 -m http.server`, to merge every appearance into one component.']);
+      }
+    },
+    // Exports the whole catalog in one orchestrated run: captures every
+    // component (cold, via hidden iframes - there is no "current page" for
+    // most of these when launched from the export page itself), then sends
+    // them all as one long-running bridge job so the plugin can build real
+    // per-component Figma pages grouped under category dividers (adapter.js
+    // `pushCatalog`). `manifest` is `[{name,category,file,isButtonFamily}]`
+    // (see component-manifest.js); `onProgress(message)` is called at each
+    // capture step and again for every phase the plugin itself reports.
+    async exportCatalog(manifest,onProgress){
+      const items=[],captureFailures=[];
+      // One bad page (a slow load, a capture bug, anything captureFromFile's
+      // own 20s timeout catches) must not take the other 61 down with it -
+      // every component gets its own try/catch so the loop always visits
+      // every entry in the manifest, one by one, regardless of what happened
+      // to an earlier one. A capture failure is recorded and reported in the
+      // final result, same as a push failure already is, instead of
+      // silently dropping that component and everything after it.
+      for(const [index,entry]of manifest.entries()){
+        onProgress('Capturing '+entry.name+' ('+(index+1)+'/'+manifest.length+')');
+        try{
+          let contract;
+          if(entry.isButtonFamily){
+            const ownContract=await captureFromFile(entry.file);
+            contract=await captureButtonFamilySeed('primary',ownContract);
+          }else{
+            contract=await captureFromFile(entry.file);
+          }
+          // Every component's own captured contract.tokens is a full,
+          // independent copy of the SAME resolved Foundation token set
+          // (component-workbench.js / component-contract-runtime.js both do
+          // c.tokens={...foundation.tokens}) - identical across all 62
+          // components in one run, and already sent once below as this
+          // request's shared `tokens` field. Sending it again per item is
+          // pure waste that scales with catalog size: a custom uploaded
+          // font or icon set (Typography/Icons Foundation pages allow a few
+          // MB each) turns a small customization into tens of MB once
+          // duplicated 62 times, which is what actually trips the bridge
+          // server's request-size limit, not the real component data. The
+          // bridge re-hydrates each item's tokens from the shared field
+          // before validating/dispatching (tools/component-bridge.cjs), so
+          // this placeholder never reaches validation or the plugin.
+          items.push({name:entry.name,category:entry.category,contract:{...contract,tokens:{}}});
+        }catch(error){
+          captureFailures.push({id:entry.file,name:entry.name,category:entry.category,error:'Could not capture: '+error.message});
+        }
+      }
+      if(!items.length){
+        // Every single capture failing (not just one flaky page) is the
+        // signature of the file:// cross-origin restriction - Chrome gives
+        // every file:// document its own opaque origin, so the hidden
+        // iframes captureFromFile opens for every OTHER page can never be
+        // read, even same-folder siblings. Same root cause and same fix as
+        // drawCurrentPage's Button-merge fallback above; say so plainly
+        // instead of surfacing the raw "Blocked a frame..." browser message.
+        const isFileProtocol=location.protocol==='file:';
+        const hint=isFileProtocol?' This portal is open as a file:// page - serve it over http(s) instead, e.g. `python3 -m http.server`, then reload and try again.':'';
+        throw new Error('Could not capture any component ('+captureFailures.length+' failed).'+hint+' '+(captureFailures[0]?.error||''));
+      }
+      // "Create Base Foundations" first: the plugin establishes every
+      // resolved Foundation token as a real variable, across all 8
+      // categorized collections, before touching a single component - the
+      // full resolved set (not just whatever tokens one component happens
+      // to reference) so even Shadows/Icons, which no component binds live
+      // today, still get real variables.
+      onProgress('Sending '+items.length+' components to the Figma Bridge Plugin…');
+      const endpoint='http://127.0.0.1:'+this.port;
+      const response=await fetch(endpoint+'/contracts/jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({operation:'pushCatalog',items,tokens:window.ADSFoundation.get().tokens}),signal:AbortSignal.timeout(30000)});
+      let job={};try{job=await response.json();}catch{}
+      if(!response.ok||!job.jobId)throw new Error(job.error||'Could not start the Figma catalog export.');
+      // A full catalog export can run far longer than one component's own
+      // push (every component, sequentially) - poll well past the single-
+      // component draw's own 10-minute allowance; the bridge server's own
+      // job timeout was raised to match (tools/component-bridge.cjs).
+      // A component that failed to even capture never reached the plugin at
+      // all, so it's folded into the plugin's own result here rather than
+      // reported separately - one combined total/failed count and one
+      // combined list of failures, whichever stage a component fell down at.
+      const mergeCaptureFailures=result=>captureFailures.length?{...result,total:result.total+captureFailures.length,failed:result.failed+captureFailures.length,results:[...captureFailures,...result.results],warnings:[...captureFailures.map(f=>f.name+': '+f.error),...result.warnings]}:result;
+      const deadline=Date.now()+7200000;
+      while(Date.now()<deadline){
+        const check=await fetch(endpoint+'/contracts/jobs/'+encodeURIComponent(job.jobId),{signal:AbortSignal.timeout(10000)});
+        const status=await check.json();if(!check.ok)throw new Error(status.error||'Could not read the export result.');
+        if(status.status==='succeeded')return mergeCaptureFailures(status.result);
+        if(['failed','uncertain'].includes(status.status))throw new Error(status.error||'Figma did not confirm completion. Inspect the file before retrying.');
+        if(status.phase)onProgress(status.phase);
+        await new Promise(resolve=>setTimeout(resolve,750));
+      }
+      throw new Error('Figma has not confirmed completion after 2 hours. Inspect the file before exporting again.');
+    },
+    async draw(contract, button, localWarnings) {
       let state = figmaFeedback.get(button);
       if (!state) {
         state = { nodes:Array.from(button.childNodes), title:button.getAttribute('title'), sequence:0 };
         figmaFeedback.set(button,state);
       }
+      if(state.pending)return false;
+      state.pending=true;button.disabled=true;button.setAttribute('aria-busy','true');
+      // Swap the static Figma mark for a spinning ring the instant the click
+      // registers - aria-busy alone is a screen-reader-only cue, and the
+      // button otherwise looks completely unchanged for however long the
+      // real push takes (anywhere from under a second to tens of seconds
+      // for a large variant set), which reads as "did my click even work?"
+      button.innerHTML='<span class="ads-figma-spinner" aria-hidden="true"></span>';
+      const showProgress=message=>{
+       let status=document.getElementById('ads-figma-status');
+       if(!status){
+        status=document.createElement('div');status.id='ads-figma-status';status.className='ads-figma-toast';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+        status.innerHTML='<span class="ads-figma-spinner" aria-hidden="true"></span><span class="ads-figma-toast-text"></span>';
+        (document.body||document.documentElement).append(status);
+       }
+       status.classList.add('is-visible');status.classList.remove('is-done','is-error');
+       status.querySelector('.ads-figma-toast-text').textContent=message;
+      };
+      showProgress('Connecting to Figma…');
       clearTimeout(state.timer);
       const sequence=++state.sequence;
       let success=false;
+      let warnings=Array.isArray(localWarnings)?[...localWarnings]:[];
+      // Reached-but-rejected (validation, queue full, timeout, plugin error)
+      // is a different failure than never reaching the bridge at all - surface
+      // the bridge's own message instead of always claiming "could not reach".
+      // A local fallback warning (e.g. "merged failed, pushing one appearance
+      // instead") must still reach the toast even when the bridge itself is
+      // unreachable - that is the single most likely way this actually shows
+      // up, not a happy-path warning from a successful push.
+      const prefix=warnings.length?warnings.join(' ')+' ':'';
+      let failureMessage=prefix+'Could not reach the Figma Bridge Plugin. Make sure it is running on localhost:'+FIGMA_BRIDGE_PORT+'.';
       try {
-        const response=await fetch('http://localhost:'+FIGMA_BRIDGE_PORT+'/draw', {
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(contract),
+        const endpoint='http://127.0.0.1:'+this.port;
+        const response=await fetch(endpoint+'/contracts/jobs', {
+          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({operation:'push',contract}),
+          signal:AbortSignal.timeout(10000),
         });
-        success=response.ok;
-      } catch {}
+        let result={};
+        try{result=await response.json();}catch{}
+        if(response.ok&&result.jobId){
+          const jobId=result.jobId,deadline=Date.now()+600000;
+          while(Date.now()<deadline){
+            const check=await fetch(endpoint+'/contracts/jobs/'+encodeURIComponent(jobId),{signal:AbortSignal.timeout(10000)});
+            const job=await check.json();if(!check.ok)throw new Error(job.error||'Could not read the Figma draw result.');
+            if(job.status==='succeeded'){result=job.result;break;}
+            if(['failed','uncertain'].includes(job.status))throw new Error(job.error||'Figma did not confirm completion. Inspect the component before retrying.');
+            button.title='Drawing in Figma: '+job.phase;
+            showProgress(button.title);
+            await new Promise(resolve=>setTimeout(resolve,500));
+          }
+          if(!result.componentId)throw new Error('Figma has not confirmed completion. Inspect the component before drawing again. Job: '+jobId);
+        }
+        success=response.ok&&result.componentId===contract.id&&typeof result.nodeId==='string'&&result.revision===contract.revision;
+        if(success&&Array.isArray(result.warnings))warnings=[...warnings,...result.warnings.filter(message=>typeof message==='string')];
+        if(!success&&typeof result.error==='string')failureMessage=prefix+result.error;
+      } catch(error) {if(error.message&&!/ECONN|Failed to fetch|fetch failed|NetworkError/i.test(error.message))failureMessage=prefix+error.message;}
+      finally{state.pending=false;button.disabled=false;button.removeAttribute('aria-busy');}
       if(sequence!==state.sequence)return success;
       // Same icon-only feedback convention as copyWithFeedback - swap the
       // glyph rather than the (fixed-width, square) button's text.
       button.innerHTML = success
         ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>'
         : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>';
-      button.title=success?'Sent to Figma':'Could not reach the Figma Bridge Plugin. Make sure it is running on localhost:'+FIGMA_BRIDGE_PORT+'.';
+      const successMessage=warnings.length?'Sent to Figma. Review: '+warnings.join(' '):'Sent to Figma.';
+      button.title=success?(warnings.length?successMessage:'Sent to Figma'):failureMessage;
       let status=document.getElementById('ads-figma-status');
       if(!status) {
-        status=document.createElement('p');status.id='ads-figma-status';status.className='ads-copy-status';
+        status=document.createElement('div');status.id='ads-figma-status';status.className='ads-figma-toast';
         status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+        status.innerHTML='<span class="ads-figma-spinner" aria-hidden="true"></span><span class="ads-figma-toast-text"></span>';
         (document.body||document.documentElement).append(status);
       }
-      status.textContent=success?'Sent to Figma.':'Could not reach the Figma Bridge Plugin. Make sure it is running on localhost:'+FIGMA_BRIDGE_PORT+'.';
+      // The processing spinner has done its job once there's a final
+      // outcome - swap it for a plain done/error dot so the toast still
+      // reads "finished", not "still working".
+      status.classList.add('is-visible',success?'is-done':'is-error');status.classList.remove(success?'is-error':'is-done');
+      status.querySelector('.ads-figma-toast-text').textContent=success?successMessage:failureMessage;
       state.timer=setTimeout(()=>{
         if(sequence!==state.sequence)return;
+        status.classList.remove('is-visible','is-done','is-error');
         button.replaceChildren(...state.nodes);
         if(state.title==null)button.removeAttribute('title');else button.setAttribute('title',state.title);
       },1800);
       return success;
     }
+  };
+
+  // "Send to Claude Design" - Claude Design has no local bridge to push to
+  // (unlike the Figma plugin), so this builds a ready-to-paste prompt from the
+  // same component contract "Draw in Figma" uses (name, configured properties,
+  // resolved tokens) and copies it to the clipboard. Paste it into Claude
+  // Design to add the component to the design system there.
+  const CLAUDE_MARK='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="#D97757" stroke-width="2.6" stroke-linecap="round"><path d="M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7"/></svg>';
+  const CLAUDE_DONE='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
+  const claudeFeedback=new WeakMap();
+  function claudeToast(message,kind){
+    let status=document.getElementById('ads-figma-status');
+    if(!status){
+      status=document.createElement('div');status.id='ads-figma-status';status.className='ads-figma-toast';
+      status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+      status.innerHTML='<span class="ads-figma-spinner" aria-hidden="true"></span><span class="ads-figma-toast-text"></span>';
+      (document.body||document.documentElement).append(status);
+    }
+    status.classList.remove('is-done','is-error');status.classList.add('is-visible');
+    if(kind)status.classList.add(kind==='done'?'is-done':'is-error');
+    status.querySelector('.ads-figma-toast-text').textContent=message;
+    clearTimeout(status._adsClaudeTimer);
+    status._adsClaudeTimer=setTimeout(()=>status.classList.remove('is-visible','is-done','is-error'),kind==='error'?4000:2400);
+  }
+  async function copyText(text){
+    try{await navigator.clipboard.writeText(text);return true;}catch{}
+    const area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');area.style.cssText='position:fixed;left:-10000px;top:0';
+    document.body.append(area);area.select();
+    let ok=false;try{ok=document.execCommand('copy');}catch{}
+    area.remove();return ok;
+  }
+  function claudeDesignPrompt(contract){
+    const name=contract.name||'component';
+    return 'Add the "'+name+'" component to my Claude Design System (Damco Agentic Design System).\n\n'
+      +'Build it from the contract below: keep the exact anatomy, variants and property names. Use the listed design tokens instead of hard-coded values, and support both light and dark themes. Add a live preview and a short usage guideline.\n\n'
+      +'```json\n'+JSON.stringify(contract,null,2).replace(/`/g,'\\u0060')+'\n```\n';
+  }
+  window.ADSClaudeDesign={
+    async sendFromPage(file,button){
+      try{return await this.send(await captureFromFile(file),button);}
+      catch(error){claudeToast(error.message,'error');return false;}
+    },
+    async sendCurrentPage(button){
+      try{return await this.send(window.ADSContracts.capture(),button);}
+      catch(error){claudeToast(error.message,'error');return false;}
+    },
+    async send(contract,button){
+      let state=claudeFeedback.get(button);
+      if(!state){state={nodes:Array.from(button.childNodes),title:button.getAttribute('title')};claudeFeedback.set(button,state);}
+      const ok=await copyText(claudeDesignPrompt(contract));
+      clearTimeout(state.timer);
+      if(ok){
+        button.replaceChildren();button.insertAdjacentHTML('beforeend',CLAUDE_DONE);
+        button.title='Copied for Claude Design';
+        claudeToast('Copied for Claude Design. Paste it into Claude Design to add '+(contract.name||'this component')+'.','done');
+        state.timer=setTimeout(()=>{button.replaceChildren(...state.nodes);if(state.title==null)button.removeAttribute('title');else button.setAttribute('title',state.title);},1800);
+      }else claudeToast('Could not copy to the clipboard. Allow clipboard access and try again.','error');
+      return ok;
+    },
+    mark:CLAUDE_MARK
   };
 
   // Preferences remain optional when browser storage is unavailable.
@@ -279,6 +566,9 @@
     if (code) code.textContent = label;
   }
   window.ADS_updateBrandColorDotTitle = updateBrandColorDotTitle;
+  // Any foundation apply (new project, project-setup save, reset) can change the
+  // brand colour, so keep the visible hex in step with the swatch.
+  window.addEventListener('ads:foundation-applied', () => { if (typeof document.getElementById === 'function') updateBrandColorDotTitle(); });
 
   window.ADS_applySavedRadius = () => window.ADSFoundation.apply();
   window.ADS_applySavedTypographyFont = () => window.ADSFoundation.apply();
@@ -292,6 +582,8 @@
     const label = document.getElementById("themeToggleLabel");
     if (toggle) toggle.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
     if (label) label.textContent = theme === "light" ? "Light" : "Dark";
+    const preference = document.getElementById('adsPreferenceTheme');
+    if (preference) preference.value = theme;
   }
 
   function initThemeToggle() {
@@ -311,47 +603,76 @@
   // then live-toggleable and synced across tabs the same way theme is.
   function applyDensity(density) {
     document.documentElement.setAttribute("data-density", density);
-    const toggle = document.getElementById("densityToggle");
-    const label = document.getElementById("densityToggleLabel");
-    if (toggle) toggle.setAttribute("aria-pressed", density === "compact" ? "true" : "false");
-    if (label) label.textContent = density === "compact" ? "Compact" : "Comfortable";
+    const preference = document.getElementById('adsPreferenceDensity');
+    if (preference) preference.value = density;
   }
   window.ADS_applyDensity = applyDensity;
-
-  function initDensityToggle() {
-    const toggle = document.getElementById("densityToggle");
-    applyDensity(document.documentElement.getAttribute("data-density") || "comfortable");
-    if (!toggle) return;
-    toggle.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-density") === "compact" ? "compact" : "comfortable";
-      const next = current === "compact" ? "comfortable" : "compact";
-      writePreference(DENSITY_KEY, next);
-      applyDensity(next);
-    });
-  }
 
   // Direction, same pattern again: an attribute already native to <html>
   // (dir), read once at boot to avoid a flash of the wrong direction,
   // then live-toggleable and synced across tabs like theme/density.
   function applyDirection(direction) {
     document.documentElement.setAttribute("dir", direction);
-    const toggle = document.getElementById("directionToggle");
-    const label = document.getElementById("directionToggleLabel");
-    if (toggle) toggle.setAttribute("aria-pressed", direction === "rtl" ? "true" : "false");
-    if (label) label.textContent = direction === "rtl" ? "Right-to-left" : "Left-to-right";
+    const preference = document.getElementById('adsPreferenceDirection');
+    if (preference) preference.value = direction;
   }
   window.ADS_applyDirection = applyDirection;
 
-  function initDirectionToggle() {
-    const toggle = document.getElementById("directionToggle");
-    applyDirection(document.documentElement.getAttribute("dir") || "ltr");
-    if (!toggle) return;
-    toggle.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("dir") === "rtl" ? "rtl" : "ltr";
-      const next = current === "rtl" ? "ltr" : "rtl";
-      writePreference(DIRECTION_KEY, next);
-      applyDirection(next);
+  function initPreferences() {
+    const trigger = document.querySelector('[data-preferences-toggle]');
+    if (!trigger) return;
+    const panel = document.createElement('section');
+    panel.id = 'adsPreferencesPanel';panel.className = 'ads-preferences';panel.hidden = true;
+    panel.setAttribute('role', 'dialog');panel.setAttribute('aria-labelledby', 'adsPreferencesTitle');
+    const nativePopover = typeof panel.showPopover === 'function';
+    if (nativePopover) panel.setAttribute('popover', 'auto');
+    panel.innerHTML = '<div class="ads-preferences-heading"><h2 id="adsPreferencesTitle">Preferences</h2><button type="button" class="icon-btn" aria-label="Close preferences"><span aria-hidden="true">×</span></button></div>' +
+      '<label for="adsPreferenceTheme">Appearance<select id="adsPreferenceTheme"><option value="light">Light</option><option value="dark">Dark</option></select></label>' +
+      '<label for="adsPreferenceDensity">Density<select id="adsPreferenceDensity"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></label>' +
+      '<label for="adsPreferenceDirection">Layout direction<select id="adsPreferenceDirection"><option value="ltr">Left-to-right</option><option value="rtl">Right-to-left</option></select></label>' +
+      '<p class="ads-preferences-help">Saved in this browser.</p><p class="ads-preferences-status" role="status" aria-live="polite"></p>';
+    document.body.append(panel);
+    const theme = panel.querySelector('#adsPreferenceTheme'), density = panel.querySelector('#adsPreferenceDensity'), direction = panel.querySelector('#adsPreferenceDirection');
+    const status = panel.querySelector('.ads-preferences-status');
+    let open = false;
+    function close(restoreFocus) {
+      if (!open) return;
+      open = false;trigger.setAttribute('aria-expanded', 'false');
+      if (nativePopover && panel.matches(':popover-open')) panel.hidePopover();
+      panel.hidden = true;
+      if (restoreFocus) trigger.focus({preventScroll:true});
+    }
+    function show() {
+      if (open) return;
+      theme.value = document.documentElement.dataset.theme || 'light';
+      density.value = document.documentElement.dataset.density || 'comfortable';
+      direction.value = document.documentElement.dir || 'ltr';
+      status.textContent = '';panel.hidden = false;open = true;
+      if (nativePopover) panel.showPopover();
+      trigger.setAttribute('aria-expanded', 'true');theme.focus({preventScroll:true});
+    }
+    trigger.addEventListener('click', () => open ? close(true) : show());
+    panel.querySelector('button').addEventListener('click', () => close(true));
+    document.addEventListener('keydown', event => {
+      if (open && event.key === 'Escape') {event.preventDefault();close(true);}
     });
+    document.addEventListener('pointerdown', event => {
+      if (open && !panel.contains(event.target) && !trigger.contains(event.target)) close(false);
+    });
+    document.addEventListener('focusin', event => {
+      if (open && !panel.contains(event.target) && !trigger.contains(event.target)) close(false);
+    });
+    panel.addEventListener('toggle', event => {
+      if (event.newState === 'closed') {open = false;panel.hidden = true;trigger.setAttribute('aria-expanded', 'false');}
+    });
+    for (const [select, key, apply] of [[theme,THEME_KEY,applyTheme],[density,DENSITY_KEY,applyDensity],[direction,DIRECTION_KEY,applyDirection]]) {
+      select.addEventListener('change', () => {
+        const saved = writePreference(key, select.value);apply(select.value);
+        status.textContent = saved ? 'Preference saved.' : 'Changed for this tab only. Browser storage is unavailable.';
+      });
+    }
+    const openLegacyLink = () => {if (location.hash === '#preferences') show();};
+    window.addEventListener('hashchange', openLegacyLink);openLegacyLink();
   }
 
   // The <head> boot script only reads localStorage once, at load - it has
@@ -379,7 +700,7 @@
     // the branches below ran. foundation-runtime.js's own listener already
     // resets the root theme/density/direction attributes on a clear, but
     // only this file's apply*() functions also refresh the toggle's visible
-    // label and aria-pressed - skipping them left Settings showing stale
+    // label and aria-pressed - skipping them left preferences showing stale
     // button state (e.g. "Density: Compact", aria-pressed="true") after the
     // page itself had already visually reset to its defaults.
     if (e.key === null) {
@@ -518,7 +839,7 @@
     toggle.setAttribute("aria-expanded", "false");
     sidebar.id ||= 'site-navigation';
     toggle.setAttribute('aria-controls', sidebar.id);
-    toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+    toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
     topbarRight.insertAdjacentElement("beforebegin", toggle);
 
     const narrow = matchMedia('(max-width: 900px)');
@@ -674,7 +995,7 @@
 
   // Shared Group Button behavior for documentation section/view choices.
   window.ADSGroupButton = function(group, buttons) {
-    group.classList.add('group-btn','group-btn--outlined','ads-tab-group');
+    group.classList.add('group-btn','group-btn--filled','ads-tab-group');
     group.setAttribute('role','group');
     buttons.forEach(button => button.classList.add('group-btn-segment','group-btn-segment--h40'));
     const sync = () => buttons.forEach(button => {
@@ -726,9 +1047,10 @@
     initCollapsibleGroups(activeLink ? activeLink.closest(".nav-group") : null);
     initSidebarDrawer();
     initSidebarSearch();
+    initPreferences();
     initThemeToggle();
-    initDensityToggle();
-    initDirectionToggle();
+    applyDensity(document.documentElement.dataset.density || "comfortable");
+    applyDirection(document.documentElement.dir || "ltr");
     initGuideViewToggle();
 
     // A fresh page load always starts the sidebar scrolled to its top,

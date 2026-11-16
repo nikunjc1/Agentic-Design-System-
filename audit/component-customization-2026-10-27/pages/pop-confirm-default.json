@@ -1,0 +1,135 @@
+{
+  "file": "pop-confirm-default.html",
+  "name": "Pop Confirm",
+  "category": "Components · Feedback · Pop Confirm",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Top",
+      "options": [
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "Left",
+          "label": "Left"
+        },
+        {
+          "value": "Right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Destructive",
+          "label": "Destructive"
+        },
+        {
+          "value": "With icon",
+          "label": "With icon"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "popconfirm-question",
+      "id": null,
+      "label": "Question text",
+      "type": "text",
+      "value": "Delete this item?",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Question text",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "popconfirm-confirm-label",
+      "id": null,
+      "label": "Confirm label",
+      "type": "text",
+      "value": "Yes",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Confirm label",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "popconfirm-cancel-label",
+      "id": null,
+      "label": "Cancel label",
+      "type": "text",
+      "value": "No",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Cancel label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Question text, Confirm label and Cancel label are properties of the same component, not separate confirmations built by hand - change them below to check every placement and state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Pop Confirm asks a short \"are you sure?\" question right next to the trigger that caused it, with Confirm/Cancel buttons inline in the popover - a lightweight alternative to a full Modal for confirmations that don't need to fully block the page. When to Use A delete or remove confirmation on a single row or item - anchored right at the action that triggered it. Discarding unsaved changes or leaving a page - a quick check before a potentially costly action. A bulk action or an irreversible toggle confirmation - still simple enough not to need a full dialog. When Not to Use A decision with real complexity or multiple fields - use Modal - Pop Confirm is for a single yes/no question, not a form. An action with severe, hard-to-reverse consequences at scale - consider a full Modal with more explicit warning copy for genuinely high-stakes confirmations. Something that isn't actually a confirmation - use Popover for general contextual content that isn't a yes/no decision. Best Practices Keep the question and both button labels short and specific (\"Delete this file?\" / \"Delete\" / \"Cancel\"). Anchor it directly to the triggering control so the connection between action and confirmation is obvious. Close it on an outside click or Escape without treating that as a confirmation either way. Do and Don't Do Delete this file?CancelDelete A single yes-or-no question, anchored to the control that triggered it, with buttons that name the outcome. Don't Delete this file? Also remove it from shared folders, revoke links, and notify collaborators?NoOK Several decisions bundled into one question cannot be answered with one button. Once it needs this much explaining, use a Modal. Accessibility Pop Confirm exists to gate a destructive or otherwise irreversible action, so its popover content carries role=\"alertdialog\" rather than a plain popover/tooltip role - that's what gets its appearance and question announced together as a single interruption, instead of relying on the user to notice it visually. Focus moves into the alertdialog (typically onto the Cancel button, the safer default) when it opens, and returns to the exact triggering element when it closes, whether closed by Confirm, Cancel, Escape, or an outside click. The Confirm and Cancel buttons are distinguishable by more than color, especially when Confirm is destructive-styled. Escape closes it exactly like a Cancel, never like a silent Confirm. Related Components Modal, Popover, Tooltip. { \"component\": \"Pop Confirm\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Pop Confirm asks a short \\\"are you sure?\\\" question right next to the trigger that caused it, with Confirm/Cancel buttons inline in the popover - a lightweight alternative to a full Modal for confirmations that don't need to fully block the page.\", \"whenToUse\": [ \"A delete or remove confirmation on a single row or item - anchored right at the action that triggered it.\", \"Discarding unsaved changes or leaving a page - a quick check before a potentially costly action.\", \"A bulk action or an irreversible toggle confirmation - still simple enough not to need a full dialog.\" ], \"whenNotToUse\": [ \"A decision with real complexity or multiple fields - use Modal - Pop Confirm is for a single yes/no question, not a form.\", \"An action with severe, hard-to-reverse consequences at scale - consider a full Modal with more explicit warning copy for genuinely high-stakes confirmations.\", \"Something that isn't actually a confirmation - use Popover for general contextual content that isn't a yes/no decision.\" ], \"bestPractices\": [ \"Keep the question and both button labels short and specific (\\\"Delete this file?\\\" / \\\"Delete\\\" / \\\"Cancel\\\").\", \"Anchor it directly to the triggering control so the connection between action and confirmation is obvious.\", \"Close it on an outside click or Escape without treating that as a confirmation either way.\" ], \"doAndDont\": { \"do\": \"A single yes-or-no question, anchored to the control that triggered it, with buttons that name the outcome.\", \"dont\": \"Several decisions bundled into one question cannot be answered with one button. Once it needs this much explaining, use a Modal.\" }, \"accessibility\": [ \"Pop Confirm exists to gate a destructive or otherwise irreversible action, so its popover content carries role=\\\"alertdialog\\\" rather than a plain popover/tooltip role - that's what gets its appearance and question announced together as a single interruption, instead of relying on the user to notice it visually.\", \"Focus moves into the alertdialog (typically onto the Cancel button, the safer default) when it opens, and returns to the exact triggering element when it closes, whether closed by Confirm, Cancel, Escape, or an outside click.\", \"The Confirm and Cancel buttons are distinguishable by more than color, especially when Confirm is destructive-styled.\", \"Escape closes it exactly like a Cancel, never like a silent Confirm.\" ], \"relatedComponents\": [ \"Modal\", \"Popover\", \"Tooltip\" ] }",
+  "tests": []
+}

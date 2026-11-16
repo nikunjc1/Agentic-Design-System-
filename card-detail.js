@@ -38,12 +38,12 @@
   // the same set of rules across all 3 types, so this returns one shared
   // object rather than being keyed by typeKey.
   function liveCssFor(){
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#6E7278");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
     return {
-      rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+      rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-color:" + textDim + ";box-shadow:var(--shadow-md);",
       selected: "border-color:" + red500 + ";box-shadow:0 0 0 1px " + red500 + ";",
       disabled: "opacity:0.4;"
@@ -55,9 +55,13 @@
   // the Copy Prompt/Copy Code generators below.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -101,7 +105,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -174,14 +178,14 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Card component */");
-    lines.push(".card-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; width:var(--dimension-240); background:var(--graphite-900); border:1.5px solid var(--line-strong); overflow:hidden; transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }");
+    lines.push(".card-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; width:var(--dimension-240); background:var(--graphite-900); border:var(--border-width-1) var(--border-style) var(--line-strong); overflow:hidden; transition:background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }");
     lines.push(".card-demo-panel.card-demo-shadow{ box-shadow:var(--shadow-sm); }");
     lines.push(".card-demo-panel:hover, .card-demo-panel.is-hover{ border-color:var(--text-dim); box-shadow:var(--shadow-md); }");
     lines.push(".card-demo-panel.is-selected{ border-color:var(--red-500); box-shadow:0 0 0 1px var(--red-500); }");
     lines.push(".card-demo-panel.is-disabled{ opacity:0.4; pointer-events:none; }");
     lines.push(".card-demo-media{ height:var(--dimension-80); background:linear-gradient(135deg, var(--blue-500), var(--red-500)); flex:none; }");
     lines.push(".card-demo-body-wrap{ padding:var(--space-14) var(--space-16); display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); text-align: start; margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.card-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); text-align: start; margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.card-demo-text{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); text-align: start; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("/* Footer reuses Modal's own .modal-demo-footer/.modal-demo-btn classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent. Tightened padding restores real margin in this narrower 240px card (Modal's own 20px side padding left almost none); flex-shrink:0 stops the buttons from ever shrinking below their own text width, so they overflow visibly in a worst case instead of silently truncating. */");
     lines.push(".card-demo-footer{ padding:var(--space-12) var(--space-16); }");
@@ -224,7 +228,7 @@
         '<span class="skeleton-demo-line is-animated" style="width:60%;height:var(--dimension-14);"></span>' +
         '<span class="skeleton-demo-line is-animated" style="margin-top:var(--space-10);"></span>' +
         '<span class="skeleton-demo-line is-animated" style="width:80%;"></span></div>'
-      : '<div class="card-demo-body-wrap"><p class="card-demo-title">' + escapeHtml(title) + '</p><p class="card-demo-text">' + escapeHtml(body) + "</p></div>";
+      : '<div class="card-demo-body-wrap"><p class="card-demo-title" data-contract-part="title">' + escapeHtml(title) + '</p><p class="card-demo-text" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
     var footerHtml = (typeKey === "with-actions" && !isLoading)
       ? '<div class="card-demo-footer modal-demo-footer"><button type="button" class="modal-demo-btn modal-demo-btn--cancel"' + tabindexAttr + '>Cancel</button><button type="button" class="modal-demo-btn modal-demo-btn--primary" style="background:var(--red-500);"' + tabindexAttr + ">View details</button></div>"
       : "";
@@ -305,12 +309,12 @@
       card.setAttribute("tabindex", "0");
       var href = "card-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

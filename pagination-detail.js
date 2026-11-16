@@ -9,7 +9,8 @@
     { key: "rest", cls: "", label: "Rest" },
     { key: "hover", cls: " is-hover", label: "Hover" },
     { key: "focus", cls: " is-focus", label: "Focused" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: "", label: "Loading" }
   ];
 
   var FULL_SPEC = {
@@ -17,8 +18,8 @@
     simple: { purpose: "Just a Prev arrow, a \"Page X of Y\" text label and a Next arrow - a compact control for when individual page numbers aren't needed." }
   };
 
-  var PREV_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
-  var NEXT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>';
+  var PREV_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg>';
+  var NEXT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg>';
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -27,16 +28,16 @@
 
   function liveCssFor(){
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var textMid = getCssVar("--text-mid", "#A7ABB2");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var textMid = getCssVar("--text-mid", "#4B5563");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
 
     return {
       rest: "background:transparent;color:" + textHi + ";border:1px solid " + lineStrong + ";",
       hover: "background:" + graphite800 + ";",
-      current: "background:" + red500 + ";color:#FFFFFF;border-color:" + red500 + ";",
+      current: "background:" + red500 + ";color:var(--on-brand-text);border-color:" + red500 + ";",
       focus: "outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       count: "color:" + textMid + ";"
     };
@@ -73,9 +74,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -109,7 +114,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -161,10 +166,11 @@
     lines.push("  Focused: " + css.focus + " Never just a color change, so layout never shifts.");
     lines.push("  \"Page X of Y\" count text (Simple type): " + css.count);
     lines.push("");
-    lines.push("States (4, apply per button): Rest, Hover, Focused, Disabled.");
+    lines.push("States (5, apply per button): Rest, Hover, Focused, Disabled, Loading.");
     lines.push("- For the Numbered type, the current page (always the middle of the 5 numbered buttons in this reference) stays a solid filled state regardless of row/state being demonstrated on other buttons.");
     lines.push("- For the Simple type, there are no individual page-number buttons, so states apply to the Prev arrow button instead.");
     lines.push("- Disabled means the target button is a real disabled control (40% opacity, not-allowed cursor), not just a visual style.");
+    lines.push("- Loading: the requested page's data is being retrieved - the Numbered type's page numbers are replaced by a single spinner, the Simple type's \"Page X of Y\" text is replaced by a spinner.");
     lines.push("");
     lines.push("Use a left-chevron arrow icon for Prev and the same icon mirrored horizontally for Next (both real <svg>, stroke-based, 24x24 viewBox, currentColor).");
     lines.push("");
@@ -186,13 +192,13 @@
     lines.push("/* Agentic Design System - Pagination component */");
     lines.push("/* Page numbers/count shown are illustrative reference content, not a configurable property. */");
     lines.push(".pagination-demo-bar{ display:inline-flex; align-items:center; gap:var(--space-6); box-sizing:border-box; }");
-    lines.push('.pagination-demo-item, .pagination-demo-arrow{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-weight:500; cursor:pointer; transition:background-color .15s ease, border-color .15s ease, color .15s ease; ' + css.rest + ' }');
+    lines.push('.pagination-demo-item, .pagination-demo-arrow{ box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; font-family:var(--font-body); font-weight:var(--type-active-weight); cursor:pointer; transition:background-color .15s ease, border-color .15s ease, color .15s ease; ' + css.rest + ' }');
     lines.push(".pagination-demo-arrow svg{ width:var(--dimension-16); height:var(--dimension-16); }");
     lines.push(".pagination-demo-item:hover, .pagination-demo-arrow:hover{ " + css.hover + " }");
     lines.push(".pagination-demo-item:focus-visible, .pagination-demo-arrow:focus-visible{ " + css.focus + " }");
     lines.push(".pagination-demo-item:disabled, .pagination-demo-arrow:disabled{ cursor:not-allowed; opacity:0.4; }");
     lines.push(".pagination-demo-item.is-current{ " + css.current + " }");
-    lines.push(".pagination-demo-count{ " + css.count + " font-family:\"Inter\",ui-sans-serif,system-ui,sans-serif; }");
+    lines.push(".pagination-demo-count{ " + css.count + " font-family:var(--font-body); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -205,7 +211,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applied to each button individually */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applied to each button individually */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applied to each button individually */");
     radiiToEmit.forEach(function(radius){
       lines.push(".pagination--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -277,12 +283,12 @@
       card.setAttribute("tabindex", "0");
       var href = "pagination-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -368,6 +374,7 @@
 
     function buildPaginationBar(typeKey, stateKey, stateCls, size, radius){
       var isDisabled = stateKey === "disabled";
+      var isLoading = stateKey === "loading";
       var disabledAttr = isDisabled ? " disabled" : "";
       var radiusCls = "pagination--radius-" + radiusClassSuffix(radius);
 
@@ -379,26 +386,29 @@
       if (typeKey === "simple"){
         var prevCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls + stateCls;
         var nextCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls;
+        var countHtml = isLoading ? '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>' : '<span class="pagination-demo-count" data-contract-part="count">Page 3 of 12</span>';
         return '<nav class="pagination-demo-bar pagination-demo-bar--simple" aria-label="Pagination">' +
-          '<button type="button" class="' + prevCls + '" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
-          '<span class="pagination-demo-count">Page 3 of 12</span>' +
-          '<button type="button" class="' + nextCls + '" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
+          '<button type="button" class="' + prevCls + '" data-contract-part="prev" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
+          countHtml +
+          '<button type="button" class="' + nextCls + '" data-contract-part="next" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
           "</nav>";
       }
 
       var prevArrowCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls + stateCls;
-      var items = [1, 2, 3, 4, 5].map(function(n){
-        var isCurrent = n === 3;
-        var itemStateCls = !isCurrent ? stateCls : "";
-        var itemDisabledAttr = !isCurrent && isDisabled ? " disabled" : "";
-        var currentCls = isCurrent ? " is-current" : "";
-        return '<button type="button" class="pagination-demo-item pagination-demo-item--h' + size + " " + radiusCls + currentCls + itemStateCls + '" tabindex="-1"' + itemDisabledAttr + ">" + n + "</button>";
-      }).join("");
+      var items = isLoading
+        ? '<span class="select-demo-spinner" data-contract-kind="container" data-contract-part="spinner" aria-hidden="true"></span>'
+        : [1, 2, 3, 4, 5].map(function(n){
+            var isCurrent = n === 3;
+            var itemStateCls = !isCurrent ? stateCls : "";
+            var itemDisabledAttr = !isCurrent && isDisabled ? " disabled" : "";
+            var currentCls = isCurrent ? " is-current" : "";
+            return '<button type="button" class="pagination-demo-item pagination-demo-item--h' + size + " " + radiusCls + currentCls + itemStateCls + '" data-contract-part="item-' + n + '" tabindex="-1"' + itemDisabledAttr + ">" + n + "</button>";
+          }).join("");
       var nextArrowCls = "pagination-demo-arrow pagination-demo-arrow--h" + size + " " + radiusCls;
       return '<nav class="pagination-demo-bar" aria-label="Pagination">' +
-        '<button type="button" class="' + prevArrowCls + '" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
+        '<button type="button" class="' + prevArrowCls + '" data-contract-part="prev" tabindex="-1" aria-label="Previous page"' + disabledAttr + ">" + PREV_SVG + "</button>" +
         items +
-        '<button type="button" class="' + nextArrowCls + '" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
+        '<button type="button" class="' + nextArrowCls + '" data-contract-part="next" tabindex="-1" aria-label="Next page">' + NEXT_SVG + "</button>" +
         "</nav>";
     }
 

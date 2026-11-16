@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="site-entry.js"></script>
+<script src="component-workbench-catalog.js"></script>
+<script src="component-workbench.js"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -14,6 +17,7 @@
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
 <link rel="stylesheet" href="foundation.css" />
+<link rel="stylesheet" href="component-workbench.css" />
 </head>
 <body>
 
@@ -26,8 +30,7 @@
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" title="Toggle theme">
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
-    <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Preferences" aria-label="Preferences" id="preferences" data-preferences-toggle aria-haspopup="dialog" aria-expanded="false" aria-controls="adsPreferencesPanel"><span aria-hidden="true">&#9881;</span></button>
   </div>
 </header>
 
@@ -44,8 +47,8 @@
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
-      <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link" href="new-project.html">Project setup</a>
+
+      <a class="nav-link" href="project-setup.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -77,208 +80,214 @@
     <div class="nav-group is-collapsible" data-group="components">
       <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
-        <a class="nav-link" href="component-index.html">All components</a>
+
         <span class="nav-subgroup-label">Actions</span>
-        <a class="nav-link" href="components.html#button">Button</a>
-        <a class="nav-link" href="group-button.html">Group Button</a>
-        <a class="nav-link" href="float-button.html">Float Button</a>
+        <a class="nav-link" href="button-primary.html">Button</a>
+        <a class="nav-link" href="group-button-default.html">Group Button</a>
+        <a class="nav-link" href="float-button-default.html">Float Button</a>
 
         <span class="nav-subgroup-label">Forms</span>
-        <a class="nav-link" href="input.html">Input</a>
-        <a class="nav-link" href="select.html">Select</a>
-        <a class="nav-link" href="checkbox.html">Checkbox</a>
-        <a class="nav-link" href="radio.html">Radio</a>
-        <a class="nav-link" href="switch.html">Switch</a>
-        <a class="nav-link" href="date-picker.html">Date Picker</a>
-        <a class="nav-link" href="password.html">Password</a>
-        <a class="nav-link" href="number.html">Number</a>
-        <a class="nav-link" href="mention.html">Mention</a>
-        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
-        <a class="nav-link" href="date-range.html">Date Range</a>
-        <a class="nav-link" href="time.html">Time</a>
-        <a class="nav-link" href="text-area.html">Text Area</a>
-        <a class="nav-link" href="search.html">Search</a>
-        <a class="nav-link" href="add-on.html">Add-on</a>
-        <a class="nav-link" href="color-picker.html">Color Picker</a>
-        <a class="nav-link" href="slider.html">Slider</a>
-        <a class="nav-link" href="rating.html">Rating</a>
-        <a class="nav-link" href="cascader.html">Cascader</a>
-        <a class="nav-link" href="transfer.html">Transfer</a>
-        <a class="nav-link" href="tree-select.html">Tree Select</a>
-        <a class="nav-link" href="upload.html">Upload</a>
+        <a class="nav-link" href="input-text-field.html">Input</a>
+        <a class="nav-link" href="select-dropdown.html">Select</a>
+        <a class="nav-link" href="checkbox-default.html">Checkbox</a>
+        <a class="nav-link" href="radio-default.html">Radio</a>
+        <a class="nav-link" href="switch-default.html">Switch</a>
+        <a class="nav-link" href="date-picker-default.html">Date Picker</a>
+        <a class="nav-link" href="password-default.html">Password</a>
+        <a class="nav-link" href="number-default.html">Number</a>
+        <a class="nav-link" href="mention-default.html">Mention</a>
+        <a class="nav-link" href="autocomplete-default.html">Autocomplete</a>
+        <a class="nav-link" href="date-range-default.html">Date Range</a>
+        <a class="nav-link" href="time-default.html">Time</a>
+        <a class="nav-link" href="text-area-default.html">Text Area</a>
+        <a class="nav-link" href="search-default.html">Search</a>
+        <a class="nav-link" href="add-on-default.html">Add-on</a>
+        <a class="nav-link" href="color-picker-default.html">Color Picker</a>
+        <a class="nav-link" href="slider-default.html">Slider</a>
+        <a class="nav-link" href="rating-default.html">Rating</a>
+        <a class="nav-link" href="cascader-default.html">Cascader</a>
+        <a class="nav-link" href="transfer-default.html">Transfer</a>
+        <a class="nav-link" href="tree-select-default.html">Tree Select</a>
+        <a class="nav-link" href="upload-default.html">Upload</a>
 
         <span class="nav-subgroup-label">Navigation</span>
-        <a class="nav-link" href="tabs.html">Tabs</a>
-        <a class="nav-link" href="anchor.html">Anchor</a>
-        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
-        <a class="nav-link" href="dropdown.html">Dropdown</a>
-        <a class="nav-link" href="pagination.html">Pagination</a>
-        <a class="nav-link" href="menu.html">Menu</a>
-        <a class="nav-link" href="steps.html">Steps</a>
-        <a class="nav-link" href="affix.html">Affix</a>
+        <a class="nav-link" href="tabs-default.html">Tabs</a>
+        <a class="nav-link" href="anchor-default.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb-default.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown-default.html">Dropdown</a>
+        <a class="nav-link" href="pagination-default.html">Pagination</a>
+        <a class="nav-link" href="menu-default.html">Menu</a>
+        <a class="nav-link" href="steps-default.html">Steps</a>
 
         <span class="nav-subgroup-label">Feedback</span>
-        <a class="nav-link" href="alert.html">Alert</a>
-        <a class="nav-link" href="toast.html">Toast</a>
-        <a class="nav-link" href="modal.html">Modal</a>
-        <a class="nav-link" href="tooltip.html">Tooltip</a>
-        <a class="nav-link" href="tour.html">Tour</a>
-        <a class="nav-link" href="drawer.html">Drawer</a>
-        <a class="nav-link" href="notification.html">Notification</a>
-        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
-        <a class="nav-link" href="progress.html">Progress</a>
-        <a class="nav-link" href="result.html">Result</a>
-        <a class="nav-link" href="skeleton.html">Skeleton</a>
-        <a class="nav-link" href="spin.html">Spin</a>
+        <a class="nav-link" href="alert-default.html">Alert</a>
+        <a class="nav-link" href="toast-default.html">Toast</a>
+        <a class="nav-link" href="modal-default.html">Modal</a>
+        <a class="nav-link" href="tooltip-default.html">Tooltip</a>
+        <a class="nav-link" href="tour-default.html">Tour</a>
+        <a class="nav-link" href="drawer-default.html">Drawer</a>
+        <a class="nav-link" href="notification-default.html">Notification</a>
+        <a class="nav-link" href="pop-confirm-default.html">Pop Confirm</a>
+        <a class="nav-link" href="progress-default.html">Progress</a>
+        <a class="nav-link" href="result-default.html">Result</a>
+        <a class="nav-link" href="skeleton-default.html">Skeleton</a>
+        <a class="nav-link" href="spin-default.html">Spin</a>
 
         <span class="nav-subgroup-label">Data Display</span>
-        <a class="nav-link" href="divider.html">Divider</a>
-        <a class="nav-link" href="avatar.html">Avatar</a>
-        <a class="nav-link" href="badge.html">Badge</a>
-        <a class="nav-link" href="calendar.html">Calendar</a>
-        <a class="nav-link" href="card.html">Card</a>
-        <a class="nav-link" href="collapse.html">Collapse</a>
-        <a class="nav-link" href="description.html">Description</a>
-        <a class="nav-link" href="empty.html">Empty</a>
-        <a class="nav-link" href="image.html">Image</a>
-        <a class="nav-link" href="list.html">List</a>
-        <a class="nav-link" href="popover.html">Popover</a>
-        <a class="nav-link" href="splitter.html">Splitter</a>
-        <a class="nav-link" href="statistic.html">Statistic</a>
-        <a class="nav-link" href="table.html">Table</a>
-        <a class="nav-link" href="tag.html">Tag</a>
-        <a class="nav-link" href="timeline.html">Timeline</a>
-        <a class="nav-link" href="tree.html">Tree</a>
+        <a class="nav-link" href="divider-default.html">Divider</a>
+        <a class="nav-link" href="avatar-default.html">Avatar</a>
+        <a class="nav-link" href="badge-default.html">Badge</a>
+        <a class="nav-link" href="calendar-default.html">Calendar</a>
+        <a class="nav-link" href="card-default.html">Card</a>
+        <a class="nav-link" href="collapse-default.html">Collapse</a>
+        <a class="nav-link" href="description-default.html">Description</a>
+        <a class="nav-link" href="empty-default.html">Empty</a>
+        <a class="nav-link" href="image-default.html">Image</a>
+        <a class="nav-link" href="list-default.html">List</a>
+        <a class="nav-link" href="popover-default.html">Popover</a>
+        <a class="nav-link" href="splitter-default.html">Splitter</a>
+        <a class="nav-link" href="statistic-default.html">Statistic</a>
+        <a class="nav-link" href="table-default.html">Table</a>
+        <a class="nav-link" href="tag-default.html">Tag</a>
+        <a class="nav-link" href="timeline-default.html">Timeline</a>
+        <a class="nav-link" href="tree-default.html">Tree</a>
       </div>
     </div>
 
     <div class="nav-group">
-      <a class="nav-link" href="patterns.html">Patterns</a>
-      <a class="nav-link" href="templates.html">Templates</a>
-      <a class="nav-link" href="ai-generator.html">AI Generator</a>
-      <a class="nav-link" href="md-export.html">Markdown Export</a>
+
+
+
+      <a class="nav-link" href="md-export.html">Export &amp; Handoff</a>
+
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link" href="history.html">History</a>
+
       <a class="nav-link" href="changelog.html">Changelog</a>
-      <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
 
 <main class="app-main data-format-page">
-  <p class="page-eyebrow">Guidelines &middot; Data Format</p>
-  <h1 class="page-title">Data Format</h1>
-  <p class="page-lede">How numbers, dates, currency and missing values are written for display - one rule per case, so the same value never renders two different ways on two different screens.</p>
+    <h1 class="page-title">Data Format</h1>
+  <p class="page-lede">Set consistent display rules for numbers, dates and data states. Preview your choices, then copy the guidance or download the configuration.</p>
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Numbers and currency</h2>
-    <p class="get-library-copy">The same number should read exactly the same way in a table, a card and an export - never spelled out in one place and abbreviated in another for no reason tied to the content.</p>
+    <p class="get-library-copy">Format quantities consistently for the selected locale. Keep identifiers, phone numbers and postal codes as text to preserve leading zeros.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Thousands separator</span>
-        <span class="usage-desc">Comma every three digits - 123,220, never 123220</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Use locale grouping by default. Indian grouping, decimal marks and digit shapes follow the locale; custom grouping must not conflict with decimal marks.</span>
+        <span class="usage-values"><span data-format="number" data-value="123220.5">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Units</span>
-        <span class="usage-desc">Lowercase, no space before - 220kg, 12.32%</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Preserve unit-symbol case (kg, kW, °C). For SI quantities, choose a space or non-breaking space before the unit; no-space formatting is a project exception.</span>
+        <span class="usage-values"><span data-format="unit" data-value="220">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Currency</span>
-        <span class="usage-desc">Symbol or ISO code immediately before the number - &#163;123.00 or GBP 123.00, never after</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">The locale controls symbol position and spacing. Choose a symbol, currency code or name. Decimal precision fixes the displayed currency fraction; it does not convert currencies.</span>
+        <span class="usage-values"><span data-format="currency" data-value="123.45">–</span></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Percentages</span>
+        <span class="usage-desc">Pass a ratio: 0.125 means 12.5%. Locale controls the percent sign and spacing. Never multiply the value twice.</span>
+        <span class="usage-values"><span data-format="percent" data-value="0.125">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Large amounts</span>
-        <span class="usage-desc">Abbreviate past six figures - 1.2M, 3.4B - full precision stays available on hover or in the export</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Compact notation follows locale conventions. Use standard notation for exact comparisons. The expanded example below uses the selected decimal precision.</span>
+        <span class="usage-values"><span data-format="large" data-value="1234567">–</span><small class="ads-format-expanded">Expanded: <span data-format="number" data-value="1234567"></span></small></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Tables</span>
-        <span class="usage-desc">Right-align numeric columns so digits stack for vertical comparison - never center or left-align a number column</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Use tabular numerals and consistent alignment. End alignment is recommended for numeric columns; text identifiers keep their text alignment.</span>
+        <span class="usage-values"><span data-format="number" data-value="123220.5">–</span></span>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Dates and times</h2>
-    <p class="get-library-copy">One format per case, chosen for how it's actually read - unambiguous across locales, precise only when precision is asked for, and never a bare time with no time zone for anyone outside it.</p>
+    <p class="get-library-copy">Keep calendar dates separate from timestamps. Date-only values retain their calendar day; timestamps are displayed in the selected time zone.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
         <span class="usage-label">Absolute date</span>
-        <span class="usage-desc">YYYY-MM-DD (2026-03-14) - all-numeric formats like 03/14/26 are ambiguous across locales</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Choose YYYY-MM-DD for shared, unambiguous dates, or a locale or long date for readers in a known locale. This example is a date-only value.</span>
+        <span class="usage-values"><span data-format="date" data-value="2026-03-14">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Absolute time</span>
-        <span class="usage-desc">24-hour HH:MM, seconds only when precision genuinely matters (14:08, not 2:08 PM)</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Choose a 12- or 24-hour clock for your audience. Include seconds only when needed. This timestamp is 14:08 UTC before conversion.</span>
+        <span class="usage-values"><span data-format="time" data-value="2026-03-14T14:08:00Z">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Combined</span>
-        <span class="usage-desc">Date, space, time - 2026-03-14 14:08</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">The selected separator joins the display date and time. A T separator alone does not produce an ISO timestamp; use explicit-offset timestamps for data interchange.</span>
+        <span class="usage-values"><span data-format="datetime" data-value="2026-03-14T14:08:00Z">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Relative time</span>
-        <span class="usage-desc">"just now" under 1 minute, "N minutes ago" under 1 hour, "N hours ago" under 24, then the absolute date</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">When enabled, use localized seconds, minutes or hours for events within 24 hours, then an absolute date. When disabled, always show the date.</span>
+        <span class="usage-values"><span data-format="relative" data-value="2026-03-14T13:56:00Z">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Time zone</span>
-        <span class="usage-desc">Name it whenever a time crosses more than one person's context - a bare time is a guess for anyone not in the same zone</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Use an IANA zone such as Asia/Kolkata. Show the zone when readers work across regions. Daylight-saving rules apply to the timestamp’s date.</span>
+        <span class="usage-values"><span data-format="time" data-value="2026-03-14T14:08:00Z">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Ranges</span>
-        <span class="usage-desc">Both ends spelled out with a dash - 2026-01-01 - 2026-03-31 - never an open-ended "from" with no visible end</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Provide two valid dates in chronological order. The separator is configurable. Date-only endpoints remain unchanged in every time zone.</span>
+        <span class="usage-values"><span data-format="range" data-value="[&quot;2026-01-01&quot;,&quot;2026-03-31&quot;]">–</span></span>
       </div>
     </div>
   </section>
 
   <section class="panel spacing-model-panel">
     <h2 class="panel-title">Missing and sensitive data</h2>
-    <p class="get-library-copy">A missing value, a still-loading value and a deliberately redacted value are three different situations - the rendering should make it obvious which one a reader is looking at, never one generic placeholder standing in for all three.</p>
+    <p class="get-library-copy">Use distinct states for zero, absent values, pending requests and errors. Masking is presentation only: remove sensitive data before delivering it to the browser.</p>
     <div class="usage-hierarchy">
       <div class="usage-row">
+        <span class="usage-label">Zero</span>
+        <span class="usage-desc">A real zero is a value. Never replace it with the missing-value placeholder.</span>
+        <span class="usage-values"><span data-format="number" data-value="0">–</span></span>
+      </div>
+      <div class="usage-row">
         <span class="usage-label">No value</span>
-        <span class="usage-desc">An en dash (&ndash;) in a table cell or field - never a blank cell, which reads as a loading or rendering failure</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Use the configured placeholder for a confirmed absent value. An empty list instead needs a clear message such as “No results”.</span>
+        <span class="usage-values"><span data-format="number" data-missing="true">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Loading</span>
-        <span class="usage-desc">A skeleton shaped like the eventual content - never the em dash placeholder, which implies the value is confirmed absent</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Use a skeleton or loading text while a request is pending. Announce loading once for the containing region, rather than every table cell.</span>
+        <span class="usage-values"><span data-format="loading" data-value="">Loading…</span></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Invalid value</span>
+        <span class="usage-desc">Validate inputs before formatting and show a specific error. The formatter falls back to the missing placeholder for invalid input, so callers must preserve the error state.</span>
+        <span class="usage-values"><span>Invalid date — check the source value</span></span>
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Empty list</span>
+        <span class="usage-desc">A completed search with no matches is an empty state, not a missing cell or a loading request.</span>
+        <span class="usage-values"><span>No results. Try a different search.</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Full redaction</span>
-        <span class="usage-desc">Asterisks in place of the whole value for highly sensitive fields - never a fake plausible-looking value</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Replace every character with the chosen mask. Do not reveal the original value in tooltips, accessible names or exported content.</span>
+        <span class="usage-values"><span data-format="full" data-value="123456781402">–</span></span>
       </div>
       <div class="usage-row">
         <span class="usage-label">Partial redaction</span>
-        <span class="usage-desc">Preserve enough to identify, mask the rest - a card ending 1402, a name showing first and last letter only</span>
-        <span class="usage-values">Rule</span>
+        <span class="usage-desc">Reveal only the permitted trailing characters (0–8); at least one character always stays masked. The configured default controls generic redaction.</span>
+        <span class="usage-values"><span data-format="partial" data-value="123456781402">–</span></span>
       </div>
-    </div>
-  </section>
-
-  <section class="panel spacing-model-panel">
-    <h2 class="panel-title">Empty vs. missing vs. loading</h2>
-    <p class="get-library-copy">These are three different states and need three different treatments - collapsing them into one blank cell or one generic label hides which one the user is looking at.</p>
-    <div class="guide-dodont">
-      <div class="guide-dodont-case is-do">
-        <p class="guide-dodont-label">Do</p>
-        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Renewal date: &ndash;</span></div>
-        <p class="guide-dodont-note">An en dash reads unambiguously as "no value exists" - distinct from a still-loading skeleton and from a genuinely empty list.</p>
-      </div>
-      <div class="guide-dodont-case is-dont">
-        <p class="guide-dodont-label">Don't</p>
-        <div class="guide-dodont-demo"><span style="color:var(--text-hi);font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);">Renewal date: [blank cell]</span></div>
-        <p class="guide-dodont-note">A blank cell is indistinguishable from a rendering bug or a value still in flight - the user can't tell if something is wrong.</p>
+      <div class="usage-row">
+        <span class="usage-label">Default redaction</span>
+        <span class="usage-desc">This example follows the Full or Partial default selected above. Use only fictional data in examples.</span>
+        <span class="usage-values"><span data-format="redaction" data-value="123456781402">–</span></span>
       </div>
     </div>
   </section>
@@ -302,6 +311,7 @@
 <div class="ads-contract-rule"><h3>Constraints</h3><p>Decimal precision 0–6, trailing reveal 0–8, one Unicode code point for the mask, a supported locale and valid IANA zone. Explicit comma grouping cannot conflict with a comma decimal locale. Distinguish real zero, missing, invalid and loading. Never reveal the entire value through a tooltip or accessible name.</p></div>
 <div class="ads-contract-rule"><h3>Layout and accessibility</h3><p>Group number/currency, date/time and missing/sensitive settings with separators. Equal field heights and gutters, wrapped labels and responsive columns share the reference layout. Loading is announced once. Export the typed configuration and locale/zone/range/redaction rules.</p></div>
 <div class="ads-contract-rule"><h3>Value identity</h3><p>Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one.</p></div>
+<div class="ads-contract-rule"><h3>Localized display</h3><p>Locale controls grouping patterns, currency placement, percent spacing and relative wording. Unit symbols preserve case; SI quantities use a space before the unit. Decimal precision fixes currency fractions and limits other numeric fractions. Display strings are not interchange timestamps. Exports include current valid configuration and specific guidance, not unselected editor options.</p></div>
 <details><summary>Machine contract: section rules, storage, units and acceptance</summary><pre class="guide-machine-json"><code>{
   &quot;schemaVersion&quot;: 1,
   &quot;authority&quot;: &quot;Saved validated choices override project recommendations, which override system defaults. This implementation contract governs static specimens. Resolved tokens in the current export are authoritative values. Component exceptions must name the affected role and reason.&quot;,
@@ -347,7 +357,8 @@
       &quot;Flow&quot;: &quot;Configure a field, inspect its formatted example, copy/export current valid settings and reset/reload. Every valid input updates without blur. Invalid simultaneous fields all expose errors and retain the prior valid configuration.&quot;,
       &quot;Constraints&quot;: &quot;Decimal precision 0\u20136, trailing reveal 0\u20138, one Unicode code point for the mask, a supported locale and valid IANA zone. Explicit comma grouping cannot conflict with a comma decimal locale. Distinguish real zero, missing, invalid and loading. Never reveal the entire value through a tooltip or accessible name.&quot;,
       &quot;Layout and accessibility&quot;: &quot;Group number/currency, date/time and missing/sensitive settings with separators. Equal field heights and gutters, wrapped labels and responsive columns share the reference layout. Loading is announced once. Export the typed configuration and locale/zone/range/redaction rules.&quot;,
-      &quot;Value identity&quot;: &quot;Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one.&quot;
+      &quot;Value identity&quot;: &quot;Apply numeric formatting to quantities, not IDs, phone numbers, postal codes or tracking references. Preserve leading zeros. Numeric table alignment applies only to numeric kinds. Date-only values retain their calendar day regardless of time zone. Ranges require two valid ordered dates; partial redaction counts Unicode code points and always masks at least one.&quot;,
+      &quot;Localized display&quot;: &quot;Locale controls grouping patterns, currency placement, percent spacing and relative wording. Unit symbols preserve case; SI quantities use a space before the unit. Decimal precision fixes currency fractions and limits other numeric fractions. Display strings are not interchange timestamps. Exports include current valid configuration and specific guidance, not unselected editor options.&quot;
     }
   }
 }</code></pre></details>

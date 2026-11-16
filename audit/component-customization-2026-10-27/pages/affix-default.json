@@ -1,0 +1,115 @@
+{
+  "file": "affix-default.html",
+  "name": "Affix",
+  "category": "Components · Navigation · Affix",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Top",
+      "options": [
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Affixed",
+          "label": "Affixed"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "affix-label",
+      "id": null,
+      "label": "Content label",
+      "type": "text",
+      "value": "Filter toolbar",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Content label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "affix-offset",
+      "id": null,
+      "label": "Offset (px)",
+      "type": "number",
+      "value": "8",
+      "options": [],
+      "min": "0",
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": false,
+      "accessibleName": "",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Content label and offset are properties of the same component, not separate bars - change them below to check both types and every state in the Live Preview. Affixed and Disabled are simulated here as static snapshots, since real Affix behavior only triggers on an actual scroll event.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Affix pins an element to the viewport once the page scrolls past its original position, so it stays reachable - distinct from Float Button, which is always corner-anchored regardless of scroll, and distinct from Header/Modal overlays, which aren't tied to scroll position at all. When to Use A filter or toolbar above a long list or table - stays available without scrolling back up. A table's header row - column labels stay visible while scrolling through many rows. A persistent call-to-action or a section sub-navigation - anything that should remain reachable throughout a long page. When Not to Use A single, always-corner-anchored action unrelated to scroll position - use Float Button instead. Short pages with no meaningful scroll distance - affixing adds complexity with no real benefit if the whole page already fits in view. Elements that must stay in a fixed spot regardless of any particular trigger point - use a real fixed-position layout element instead of Affix's scroll-triggered pinning. Best Practices Keep the affixed element visually distinct once pinned (a subtle shadow or border) so users notice it detached from the page flow. Affix only content that benefits from constant visibility - overusing it on multiple elements at once creates a cluttered, competing set of sticky bars. Account for the affixed element's height when it overlaps content below it, so nothing gets permanently hidden underneath it. Do and Don't Do StickySave bar - pins once its normal position scrolls out of view Pins a short, persistently-useful action bar, and only once the page has scrolled past where it would normally sit. Don't StickyFull article text - pinned for the entire length of the page Pinning a large block of content for the whole scroll permanently eats screen space the reader needs for the content moving underneath it. Accessibility The affixed element keeps its place in the reading/tab order - affixing is a purely visual position change, not a DOM reordering. Sufficient contrast and a visible boundary (shadow/border) once affixed, so it doesn't visually blend into whatever scrolls beneath it. Never affix content that would then overlap and obscure keyboard focus elsewhere on the page. Related Components Float Button, Anchor, Tabs. { \"component\": \"Affix\", \"status\": \"Experimental\", \"category\": \"Navigation\", \"summary\": \"Affix pins an element to the viewport once the page scrolls past its original position, so it stays reachable.\", \"whenToUse\": [ \"A filter or toolbar above a long list or table.\", \"A table's header row, so column labels stay visible while scrolling.\", \"A persistent call-to-action or a section sub-navigation.\" ], \"whenNotToUse\": [ \"A single, always-corner-anchored action unrelated to scroll position - use Float Button instead.\", \"Short pages with no meaningful scroll distance.\", \"Elements that must stay fixed regardless of any particular scroll trigger point.\" ], \"bestPractices\": [ \"Keep the affixed element visually distinct once pinned (shadow or border).\", \"Affix only content that benefits from constant visibility - avoid multiple competing sticky bars.\", \"Account for the affixed element's height so it never permanently hides content beneath it.\" ], \"doAndDont\": { \"do\": \"Pins a short, persistently-useful action bar, and only once the page has scrolled past where it would normally sit.\", \"dont\": \"Pinning a large block of content for the whole scroll permanently eats screen space the reader needs for the content moving underneath it.\" }, \"accessibility\": [ \"The affixed element keeps its place in the reading/tab order - affixing is a visual change only.\", \"Sufficient contrast and a visible boundary once affixed.\", \"Never affix content that would overlap and obscure keyboard focus elsewhere on the page.\" ], \"relatedComponents\": [ \"Float Button\", \"Anchor\", \"Tabs\" ] }",
+  "tests": []
+}

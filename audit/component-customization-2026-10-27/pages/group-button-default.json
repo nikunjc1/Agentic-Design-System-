@@ -1,0 +1,321 @@
+{
+  "file": "group-button-default.html",
+  "name": "Group Button",
+  "category": "Components · Actions · Group Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "group-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "group-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "group-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "group-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "group-count-select",
+      "id": null,
+      "label": "Number of buttons",
+      "type": "select",
+      "value": "3",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Number of buttons 1 2 3 4 5 6 7 8 9",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "group-show-label",
+      "id": null,
+      "label": "Field label",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown above the group",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "group-field-label",
+      "id": null,
+      "label": "Field label text",
+      "type": "text",
+      "value": "View",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Field label text",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "group-show-supporting",
+      "id": null,
+      "label": "Supporting text",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown below the group",
+      "trigger": null
+    },
+    {
+      "index": 8,
+      "role": "group-supporting-text",
+      "id": null,
+      "label": "Supporting text",
+      "type": "text",
+      "value": "Choose how to display your results.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Supporting text",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, button count, field label and supporting text are properties of the same component, not separate buttons - change them below to check this group's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Group Button is a segmented control for switching between a small, fixed set of mutually exclusive options - one bordered strip of adjoining buttons where exactly one segment is active at a time, unlike Radio's separate circular inputs or Select's collapsed dropdown. When to Use A view toggle - switching between List and Grid layouts. A time range or sort filter - Day/Week/Month, or a sort-order picker. A short, fixed set of exclusive settings - unit system (Metric/Imperial), text alignment. When Not to Use More than five or six options - segments get cramped; use Select or Dropdown instead. Options that aren't mutually exclusive - use a Checkbox group so more than one can be active. A single on/off setting - use Switch - Group Button is for choosing among several options, not toggling one. Best Practices Keep segment labels short (a word or an icon) so they never wrap or truncate. Use it for exactly one active option at a time - it is not a multi-select control. Keep the segment count small enough to fit without horizontal scrolling on narrow screens. Do and Don't Do DayWeekMonth A short, fixed set of mutually exclusive options, each label a single word, all visible at once. Don't Last 24 hoursPrevious calendar week Sentence-length labels stretch the segments until the control no longer scans as a single row of choices. Use Select once labels get this long. Accessibility Exposed as a group of real buttons with aria-pressed reflecting each segment's active state. Visible focus ring per segment, independent of the active-state background fill. The active segment is communicated by more than color alone (a filled background, not just a text-color change). Related Components Tabs (switches views rather than options), Radio (separate visible inputs), Select (a collapsed single choice), Switch (a single on/off setting), Button (all 8 Button types - see Components · Button - for the standalone action that sits next to a Group Button rather than inside it). { \"component\": \"Group Button\", \"status\": \"Stable\", \"category\": \"Actions\", \"summary\": \"Group Button is a segmented control for switching between a small, fixed set of mutually exclusive options - one bordered strip of adjoining buttons where exactly one segment is active at a time, unlike Radio's separate circular inputs or Select's collapsed dropdown.\", \"whenToUse\": [ \"A view toggle - switching between List and Grid layouts.\", \"A time range or sort filter - Day/Week/Month, or a sort-order picker.\", \"A short, fixed set of exclusive settings - unit system (Metric/Imperial), text alignment.\" ], \"whenNotToUse\": [ \"More than five or six options - segments get cramped; use Select or Dropdown instead.\", \"Options that aren't mutually exclusive - use a Checkbox group so more than one can be active.\", \"A single on/off setting - use Switch - Group Button is for choosing among several options, not toggling one.\" ], \"bestPractices\": [ \"Keep segment labels short (a word or an icon) so they never wrap or truncate.\", \"Use it for exactly one active option at a time - it is not a multi-select control.\", \"Keep the segment count small enough to fit without horizontal scrolling on narrow screens.\" ], \"doAndDont\": { \"do\": \"A short, fixed set of mutually exclusive options, each label a single word, all visible at once.\", \"dont\": \"Sentence-length labels stretch the segments until the control no longer scans as a single row of choices. Use Select once labels get this long.\" }, \"accessibility\": [ \"Exposed as a group of real buttons with aria-pressed reflecting each segment's active state.\", \"Visible focus ring per segment, independent of the active-state background fill.\", \"The active segment is communicated by more than color alone (a filled background, not just a text-color change).\" ], \"relatedComponents\": [ \"Tabs\", \"Radio\", \"Select\", \"Switch\" ] }",
+  "tests": []
+}

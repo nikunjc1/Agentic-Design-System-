@@ -6,6 +6,24 @@
   'use strict';
   const KEY = 'ads:project-profile:v1';
   const DRAFT = 'ads:project-draft:v1';
+  const FOUNDATION_STEPS = [
+    {id:'colors',label:'Colors',file:'foundations.html',keys:['colors','bg-colors','status-colors','neutral-colors']},
+    {id:'grid-layout',label:'Grid & Layout',file:'grid-layout.html',keys:['grid-layout']},
+    {id:'typography',label:'Typography',file:'typography.html',keys:['typography']},
+    {id:'spacing',label:'Spacing',file:'spacing.html',keys:['spacing']},
+    {id:'radius',label:'Radius',file:'radius.html',keys:['radius']},
+    {id:'borders',label:'Borders',file:'borders.html',keys:['border','border-states']},
+    {id:'shadows',label:'Shadows',file:'shadows.html',keys:['shadow']},
+    {id:'icons',label:'Icons',file:'icons.html',keys:['icons']}
+  ];
+  function foundationReadiness(storage) {
+    return FOUNDATION_STEPS.map(section=>{
+      const records=section.keys.map(key=>{try{return F.inspectRecord(key,storage.getItem('ads:'+key));}catch{return {status:'unavailable'};}});
+      const usable=records.filter(record=>['valid','migrated'].includes(record.status)).length;
+      const state=records.some(record=>['invalid','corrupt','future','unavailable'].includes(record.status))?'recovery':usable===records.length?'saved':usable?'partial':'default';
+      return {...section,state};
+    });
+  }
   // Matches the product-card taxonomy already used on Spacing, Radius
   // and Grid & Layout's own "What are you building?" pickers (see their
   // data-product values), minus the three that duplicate this same
@@ -83,6 +101,7 @@
     if (!p || typeof p !== 'object' || Array.isArray(p)) throw new Error('Saved setup could not be read. Your saved data has not been changed.');
     if (p.version!=null&&(!Number.isInteger(p.version)||p.version<0)) throw new Error('Saved setup has an invalid version. Your saved data has not been changed.');
     if (typeof p.version === 'number' && p.version > SUPPORTED_VERSION) throw new Error('Saved setup was created by a newer version of this app and can’t be read here. Update the app, or explicitly discard the saved setup.');
+    if(p.id!=null&&(typeof p.id!=='string'||!p.id||p.id.length>300))throw new Error('Saved project has an invalid identity. Your saved data has not been changed.');
     // Foundation audit NP03 - this migration used to run only for the real
     // profile (key === KEY), so a draft saved under an old product-type name
     // silently lost its selection instead of migrating forward: the <select>
@@ -91,6 +110,7 @@
     // as in a saved profile, so the migration applies to both unconditionally.
     if (LEGACY_PRODUCT_MAP[p.productType]) p.productType = LEGACY_PRODUCT_MAP[p.productType];
     if(key===DRAFT){
+      if(p.step!=null&&(!Number.isInteger(p.step)||p.step<1||p.step>3))throw new Error('Saved draft has an invalid step. Export a backup or discard the draft.');
       if(p.productType&&!PRODUCTS.includes(p.productType))throw new Error('Saved draft has an unsupported product category. Export a backup or discard the draft.');
       if(p.role&&!ROLES.includes(p.role))throw new Error('Saved draft has an unsupported role. Export a backup or discard the draft.');
       for(const k of ['project','productType','productOther','name','email','designation','role','roleOther']) if(p[k]!=null&&(typeof p[k]!=='string'||p[k].length>(k==='email'?254:100)))throw new Error('Saved draft has invalid fields. Export a backup or discard the draft.');
@@ -99,17 +119,107 @@
     if (key === KEY && Object.keys(validate(p,{legacyIdentity:(p.version||0)<2})).length) throw new Error('Saved setup is incomplete. Review your project details.');
     return p;
   }
-  function save(storage, p) {
+  const HISTORY = 'ads:project-history:v1';
+  const PROJECT_FOUNDATIONS = ['colors','bg-colors','status-colors','neutral-colors','typography','spacing','sizing','radius','border','border-states','shadow','icons','grid-layout','units','data-format'].map(key=>'ads:'+key);
+  const projectId = p => p.id || 'legacy-'+slug(p.project)+'-'+(p.updatedAt || 'initial');
+  function readHistory(storage) {
+    const raw=storage.getItem(HISTORY);
+    if(!raw)return [];
+    let data;try{data=JSON.parse(raw);}catch{throw new Error('Project history could not be read. Your saved projects have been preserved.');}
+    if(data?.version!==1||!Array.isArray(data.projects)||data.projects.some(row=>!row||typeof row.id!=='string'||!row.profile||!row.foundations||Array.isArray(row.foundations)||typeof row.foundations!=='object'||Object.entries(row.foundations).some(([key,value])=>!PROJECT_FOUNDATIONS.includes(key)||typeof value!=='string')))
+      throw new Error('Project history could not be read. Your saved projects have been preserved.');
+    const seen=new Set();
+    for(const row of data.projects){read({getItem:()=>JSON.stringify(row.profile)});if(seen.has(row.id)||row.id!==projectId(row.profile))throw new Error('Project history contains invalid project identities. Your saved projects have been preserved.');seen.add(row.id);}
+    return data.projects;
+  }
+  function snapshot(storage,p) {
+    const foundations={};
+    for(const key of PROJECT_FOUNDATIONS){const raw=storage.getItem(key);if(raw!==null)foundations[key]=raw;}
+    return {id:projectId(p),profile:{...p,id:projectId(p)},foundations};
+  }
+  // A deleted project isn't removed immediately - it's marked archivedAt
+  // and kept out of the visible list for ARCHIVE_RETENTION_DAYS, a safety
+  // net against an accidental (or mis-typed-but-still-confirmed) delete.
+  // Purged here, the one place already called on every history render,
+  // rather than in readHistory() itself - that stays a pure reader other
+  // callers (save(), openProject()) rely on to splice into unchanged.
+  const ARCHIVE_RETENTION_DAYS = 7;
+  function purgeExpiredArchives(projects) {
+    const cutoff=Date.now()-ARCHIVE_RETENTION_DAYS*24*60*60*1000;
+    return projects.filter(row=>!row.archivedAt||new Date(row.archivedAt).getTime()>cutoff);
+  }
+  function listProjects(storage) {
+    let projects=readHistory(storage);
+    const before=projects.length;
+    projects=purgeExpiredArchives(projects);
+    if(projects.length!==before)writeProjectRecords(storage,[[HISTORY,JSON.stringify({version:1,projects})]]);
+    const current=read(storage);
+    if(current){const row=snapshot(storage,current),index=projects.findIndex(item=>item.id===row.id);if(index<0)projects.push(row);else if(!projects[index].archivedAt)projects[index]=row;}
+    return projects.filter(row=>!row.archivedAt).sort((a,b)=>String(b.profile.updatedAt||'').localeCompare(String(a.profile.updatedAt||'')));
+  }
+  // Soft-delete: archives the project's history row (hidden from
+  // listProjects(), permanently purged after ARCHIVE_RETENTION_DAYS)
+  // instead of removing it outright - the UI's own type-the-project-name
+  // confirmation is the deliberate-intent gate; this is the undo window
+  // for when that confirmation was still the wrong call. Clears the
+  // active profile too when deleting the currently open project, so nothing
+  // keeps operating on a project this list no longer shows.
+  function deleteProject(storage, id) {
+    const projects=readHistory(storage),index=projects.findIndex(item=>item.id===id);
+    if(index<0)throw new Error('This project is no longer available. Refresh and try again.');
+    if(projects[index].archivedAt)return;
+    const current=read(storage),isActive=Boolean(current&&projectId(current)===id);
+    if(isActive)projects[index]=snapshot(storage,current);
+    projects[index]={...projects[index],archivedAt:new Date().toISOString()};
+    const entries=[[HISTORY,JSON.stringify({version:1,projects})]];
+    // The active project's Foundation records must not keep theming the app once
+    // it is deleted; they stay recoverable only inside the archived history row.
+    if(isActive)entries.push([KEY,null],...PROJECT_FOUNDATIONS.map(key=>[key,null]));
+    writeProjectRecords(storage,entries);
+  }
+  // A failed write restores the active profile, archive and Foundation records together.
+  function writeProjectRecords(storage,entries) {
+    const previous=entries.map(([key])=>[key,storage.getItem(key)]);
+    try{for(const [key,value]of entries){if(value===null)storage.removeItem(key);else storage.setItem(key,value);}}
+    catch(error){let restored=true;for(const [key,value]of previous){try{if(value===null)storage.removeItem(key);else storage.setItem(key,value);}catch{restored=false;}}
+      throw new Error(restored?'Project could not be saved. Your previous project is unchanged.':'Project could not be saved and storage recovery was incomplete. Keep this page open and back up your browser data.');}
+  }
+  function save(storage, p, options={}) {
     if (Object.keys(validate(p)).length) throw new Error('Review the highlighted fields before saving.');
-    read(storage);
-    const profile = {...p, version:SUPPORTED_VERSION, updatedAt:new Date().toISOString()};
-    storage.setItem(KEY, JSON.stringify(profile));
+    if(Object.prototype.hasOwnProperty.call(options,'expectedRaw')&&storage.getItem(KEY)!==options.expectedRaw)throw new Error('Project details changed in another tab. Reload the saved project before saving your edits.');
+    if(Object.prototype.hasOwnProperty.call(options,'expectedDraftRaw')&&storage.getItem(DRAFT)!==options.expectedDraftRaw)throw new Error('Project setup changed in another tab. Reload before confirming this conversation.');
+    for(const [key,raw]of Object.entries(options.expectedFoundations||{}))if(!PROJECT_FOUNDATIONS.includes(key)||storage.getItem(key)!==raw)throw new Error('Foundation settings changed in another tab. Reload before confirming this conversation.');
+    const current=read(storage),projects=readHistory(storage);
+    if(current){const row=snapshot(storage,current),index=projects.findIndex(item=>item.id===row.id);if(index<0)projects.push(row);else projects[index]=row;}
+    const id=options.newProject||!current?'project-'+(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)):projectId(current);
+    const profile = {...p,id,version:SUPPORTED_VERSION,updatedAt:new Date().toISOString()};
+    const foundations=options.newProject?{}:snapshot(storage,profile).foundations;
+    for(const [key,value]of Object.entries(options.foundationRecords||{})){
+      if(!PROJECT_FOUNDATIONS.includes('ads:'+key))throw new Error('Unknown Foundation setting: '+key);
+      foundations['ads:'+key]=JSON.stringify(F.migrateRecord(key,value));
+    }
+    const row={id,profile,foundations};
+    const index=projects.findIndex(item=>item.id===id);if(index<0)projects.push(row);else projects[index]=row;
+    const entries=[[HISTORY,JSON.stringify({version:1,projects})],[KEY,JSON.stringify(profile)]];
+    if(options.newProject)for(const key of PROJECT_FOUNDATIONS)entries.push([key,foundations[key]??null]);
+    else for(const key of Object.keys(options.foundationRecords||{}))entries.push(['ads:'+key,foundations['ads:'+key]]);
+    if(options.clearDraft)entries.push([DRAFT,null]);
+    writeProjectRecords(storage,entries);
     return profile;
+  }
+  function openProject(storage,id) {
+    if(storage.getItem(DRAFT)!==null)throw new Error('You have an unsaved setup draft. Resume or discard it in Project setup before switching projects.');
+    const projects=listProjects(storage),row=projects.find(item=>item.id===id);
+    if(!row)throw new Error('This project is no longer available. Refresh History and try again.');
+    // Validate before touching any active records, including legacy profiles.
+    read({getItem:()=>JSON.stringify(row.profile)});
+    writeProjectRecords(storage,[[HISTORY,JSON.stringify({version:1,projects})],[KEY,JSON.stringify(row.profile)],...PROJECT_FOUNDATIONS.map(key=>[key,row.foundations[key]??null])]);
+    return row.profile;
   }
   const safe = value => String(value || '').replace(/[\r\n]+/g, ' ').replace(/[\\`*_{}\[\]<>#]/g, '\\$&');
   function markdown(profile, tokens, docs = [], includeIdentity = false, defaultedKeys = []) {
     const p = profile || {};
-    const lines = ['---', 'project: ' + JSON.stringify(p.project || 'Damco design system'), 'version: "3.5.0-local-draft"', 'generated: ' + JSON.stringify(new Date().toISOString()), 'scope: ' + JSON.stringify(docs.length ? 'documentation-and-context' : 'project-context'), '---', '', '# ' + safe(p.project || 'Damco design system'), '', '## Product context', '', '- Product: ' + safe(p.productType === 'Other' ? p.productOther : p.productType || 'Not configured'), '- Delivery role: ' + safe(p.role === 'Other' ? p.roleOther : p.role || 'Not configured')];
+    const lines = ['---', 'project: ' + JSON.stringify(p.project || 'design system'), 'version: "3.5.0-local-draft"', 'generated: ' + JSON.stringify(new Date().toISOString()), 'scope: ' + JSON.stringify(docs.length ? 'documentation-and-context' : 'project-context'), '---', '', '# ' + safe(p.project || 'design system'), '', '## Product context', '', '- Product: ' + safe(p.productType === 'Other' ? p.productOther : p.productType || 'Not configured'), '- Delivery role: ' + safe(p.role === 'Other' ? p.roleOther : p.role || 'Not configured')];
     if (includeIdentity) lines.push('- Owner: ' + safe(p.name), '- Email: ' + safe(p.email), '- Designation: ' + safe(p.designation));
     lines.push('', '## Target platforms', '');
     for (const key of p.platforms || []) if (PLATFORMS[key]) lines.push('### ' + PLATFORMS[key].label, '', PLATFORMS[key].guidance, '');
@@ -152,5 +262,5 @@
     lines.push('', F.contractMarkdown());
     return F.prepareMarkdown(lines.join('\n'),resolved,names);
   }
-  return {KEY,DRAFT,PRODUCTS,ROLES,PLATFORMS,validate,slug,read,save,markdown};
+  return {KEY,DRAFT,HISTORY,PROJECT_FOUNDATIONS,projectId,listProjects,openProject,deleteProject,ARCHIVE_RETENTION_DAYS,FOUNDATION_STEPS,foundationReadiness,PRODUCTS,ROLES,PLATFORMS,validate,slug,read,save,markdown};
 });

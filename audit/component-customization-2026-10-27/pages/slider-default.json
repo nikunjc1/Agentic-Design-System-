@@ -1,0 +1,164 @@
+{
+  "file": "slider-default.html",
+  "name": "Slider",
+  "category": "Components · Forms · Slider",
+  "controls": [
+    {
+      "index": 0,
+      "role": "slider-size-mount",
+      "id": null,
+      "label": "Track thickness",
+      "type": "multiselect",
+      "value": [
+        "6"
+      ],
+      "options": [
+        {
+          "value": "4",
+          "label": "4px - Thin"
+        },
+        {
+          "value": "6",
+          "label": "6px - Default"
+        },
+        {
+          "value": "8",
+          "label": "8px - Bold"
+        },
+        {
+          "value": "10",
+          "label": "10px - Heavy"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "slider-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Single",
+      "options": [
+        {
+          "value": "Single",
+          "label": "Single"
+        },
+        {
+          "value": "Range",
+          "label": "Range"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "slider-label",
+      "id": null,
+      "label": "Label text",
+      "type": "text",
+      "value": "Volume",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label text",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "slider-value",
+      "id": null,
+      "label": "Value",
+      "type": "number",
+      "value": "60",
+      "options": [],
+      "min": "0",
+      "max": "100",
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Value",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Track thickness, label text and value are properties of the same component, not separate sliders - change them below to check both types and every state in the Live Preview. There is no configurable corner radius: the track and thumb are always a full pill shape, since a slider control has no practical use for sharp or partial corners.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    },
+    {
+      "label": "6px - Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Slider lets someone pick a numeric value, or a range of two values, by dragging a thumb along a track - used for continuous or coarse-grained values where the exact number matters less than quickly finding the right position, like a volume level or a price filter. When to Use A value picked along a continuous scale - volume, brightness, zoom level. A bounded range of two values - a price range filter with a low and high thumb. A scrubber for position within a duration - a progress scrubber. When Not to Use A value that needs precise, exact keyboard entry - use Number instead - dragging is imprecise for exact values like \"37\". A choice from a small set of discrete, named options - use Group Button, Radio, or Select rather than a slider with only a few valid stops. A single date or time value - use Date Picker or Time - a slider doesn't communicate calendar or clock context. Best Practices Show the current value as text alongside the track, since position alone is hard to read precisely. Choose a track thickness and thumb size that stay comfortably draggable on touch as well as with a mouse. Support arrow-key adjustment in fixed increments as an alternative to dragging. Do and Don't Do Opacity - 60% An approximate setting the user judges by eye, with the current value shown so the choice is still repeatable. Don't Invoice amount A slider cannot hit an exact figure, and no value is shown to confirm one. Anything that must be precise belongs in a Number field. Accessibility Exposed with proper slider role semantics, including the current value, minimum, and maximum, all announced to assistive technology. Fully operable by keyboard - arrow keys adjust the value, Home/End jump to the bounds. The focus ring appears on the thumb itself, independent of any hover-only styling. Related Components Number, Rating, Progress. { \"component\": \"Slider\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Slider lets someone pick a numeric value, or a range of two values, by dragging a thumb along a track - used for continuous or coarse-grained values where the exact number matters less than quickly finding the right position, like a volume level or a price filter.\", \"whenToUse\": [ \"A value picked along a continuous scale - volume, brightness, zoom level.\", \"A bounded range of two values - a price range filter with a low and high thumb.\", \"A scrubber for position within a duration - a progress scrubber.\" ], \"whenNotToUse\": [ \"A value that needs precise, exact keyboard entry - use Number instead - dragging is imprecise for exact values like \\\"37\\\".\", \"A choice from a small set of discrete, named options - use Group Button, Radio, or Select rather than a slider with only a few valid stops.\", \"A single date or time value - use Date Picker or Time - a slider doesn't communicate calendar or clock context.\" ], \"bestPractices\": [ \"Show the current value as text alongside the track, since position alone is hard to read precisely.\", \"Choose a track thickness and thumb size that stay comfortably draggable on touch as well as with a mouse.\", \"Support arrow-key adjustment in fixed increments as an alternative to dragging.\" ], \"doAndDont\": { \"do\": \"An approximate setting the user judges by eye, with the current value shown so the choice is still repeatable.\", \"dont\": \"A slider cannot hit an exact figure, and no value is shown to confirm one. Anything that must be precise belongs in a Number field.\" }, \"accessibility\": [ \"Exposed with proper slider role semantics, including the current value, minimum, and maximum, all announced to assistive technology.\", \"Fully operable by keyboard - arrow keys adjust the value, Home/End jump to the bounds.\", \"The focus ring appears on the thumb itself, independent of any hover-only styling.\" ], \"relatedComponents\": [ \"Number\", \"Rating\", \"Progress\" ] }",
+  "tests": []
+}

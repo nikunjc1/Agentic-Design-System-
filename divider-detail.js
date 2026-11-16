@@ -90,7 +90,7 @@
     var alignKey = align || DEFAULT_ALIGN;
     return '<div class="divider-demo-line-text divider-demo-line-text--' + alignKey + sizeCls + '">' +
       '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '"></span>' +
-      '<span class="divider-demo-label">' + label + "</span>" +
+      '<span class="divider-demo-label" data-contract-part="label">' + label + "</span>" +
       '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '"></span>' +
       "</div>";
   }
@@ -181,12 +181,12 @@
       card.setAttribute("tabindex", "0");
       var href = "divider-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

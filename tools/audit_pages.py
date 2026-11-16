@@ -129,7 +129,9 @@ def run():
         kind = 'Detail' if 'class="back-link"' in source else 'Listing' if 'data-system=' in source else 'Tab'
         body = re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+', '\n\n', ''.join(page.parts)).strip()
         status = 'Reference / planned' if 'Mockup</span>' in source or 'Not built yet' in body else 'Available'
-        catalog.append(dict(file=name, title=page.headings[0] if page.headings else name, kind=kind, status=status, markdown=body))
+        # Redirect stubs are audited, but do not duplicate merged guides in exports.
+        if not re.search(r'<meta\s+name="ads-redirect"', source):
+            catalog.append(dict(file=name, title=page.headings[0] if page.headings else name, kind=kind, status=status, markdown=body))
         report.append(dict(file=name, kind=kind, status=status, sections=page.headings, issues=issues, bytes=(ROOT / name).stat().st_size))
     (ROOT / 'docs-catalog.json').write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + '\n')
     # Loaded via a plain <script src> (not fetch) so MD Export works when the

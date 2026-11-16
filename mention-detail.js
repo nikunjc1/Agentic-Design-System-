@@ -9,7 +9,7 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -21,7 +21,11 @@
     { key: "focus", cls: " is-focus", label: "Focus" },
     { key: "open", cls: " is-open", label: "Open" },
     { key: "filled", cls: " is-filled", label: "Filled" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" },
+    { key: "empty", cls: " is-empty", label: "Empty" }
   ];
 
   // Purpose text per type, used by Copy Prompt - the actual colors come
@@ -47,24 +51,27 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var red400 = getCssVar("--red-400", "#FF4253");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
+    var danger500 = getCssVar("--danger-500", "#FF031A");
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
-        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+        focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+        error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+      rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
       hover: "background:" + graphite700 + ";",
-      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;"
+      focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
+      error: "border-color:" + danger500 + ";"
     };
   }
 
@@ -101,9 +108,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -137,7 +148,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -190,29 +201,37 @@
       lines.push("  Hover: " + css.hover);
       lines.push("  Focus: " + css.focus + " Never just a color change, so layout never shifts.");
       lines.push("  Open: same border/outline treatment as Focus, plus a suggestion panel of people anchored below the field.");
+      lines.push("  Error: " + css.error + " Paired with an inline error message below the field.");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focus, Open, Filled, Disabled.");
+    lines.push("States (10, apply to every type): Rest, Hover, Focus, Open, Filled, Error, Read-Only, Disabled, Loading, Empty.");
     lines.push("- Rest/Hover/Focus: field is empty, showing the placeholder - no chip yet, nothing typed.");
     lines.push("- Open: the field looks focused and a suggestion panel is visible directly below it, listing 3 example people, each row showing a small round initials avatar and a full name, with one row visually highlighted as if hovered or keyboard-focused so the user can see which person Enter/click would insert.");
     lines.push("- Filled: same appearance as Rest, showing free-form text with one inline highlighted chip token mixed into it - the mention has already been inserted and the suggestion panel is closed.");
+    lines.push("- Read-Only: shows its current text and any mention chips but can't be edited; still focusable, unlike Disabled - typing \"@\" never opens the suggestion panel.");
+    lines.push("- Loading: a spinner replaces the suggestion panel's contents while matching people are being fetched asynchronously.");
+    lines.push("- Empty: the suggestion panel is visible but its contents are replaced by a single centered \"No matches found.\" message - the typed \"@\" query matched no one.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus/open feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to both Outlined and Filled.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, opts){
+    opts = opts || {};
+    var requiredHtml = opts.required ? '<span class="mention-required" aria-hidden="true"> *</span>' : "";
     var lines = [];
     lines.push('<div class="mention-field">');
-    lines.push('  <label class="mention-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="mention-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="mention-control mention-control--' + typeKey + " " + sizeClass + " " + radiusClassAttr + '" contenteditable="true" data-placeholder="' + escapeHtml(placeholder) + '">');
     lines.push('    Hey <span class="mention-chip">@Jordan</span>, can you review this before end of day?');
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="mention-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("  <!-- Suggestion panel - only rendered while the field is in the Open state, i.e. actively typing after \"@\" -->");
     lines.push('  <div class="mention-panel">');
     lines.push('    <div class="mention-person is-active"><span class="mention-avatar">JD</span><span>Jordan Diaz</span></div>');
@@ -231,11 +250,11 @@
     var lines = [];
     lines.push("/* Agentic Design System - Mention component (all types, states, sizes) */");
     lines.push(".mention-field{ position:relative; display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.mention-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".mention-control{ box-sizing:border-box; display:flex; align-items:flex-start; width:100%; min-height:var(--dimension-84); border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.mention-control[contenteditable]{ outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; line-height:1.5; }');
-    lines.push('.mention-control[contenteditable]:empty::before{ content:attr(data-placeholder); color:' + getCssVar("--text-dim", "#64686F") + '; }');
-    lines.push(".mention-chip{ display:inline-block; background:" + getCssVar("--red-tint", "RGBA(255,3,26,0.1)") + "; color:" + getCssVar("--red-400", "#FF3F4F") + "; border-radius:4px; padding:var(--space-1) var(--space-4); font-weight:500; }");
+    lines.push('.mention-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".mention-control{ box-sizing:border-box; display:flex; align-items:flex-start; width:100%; min-height:var(--dimension-84); border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.mention-control[contenteditable]{ outline:none; font-family:var(--font-body); line-height:1.5; }');
+    lines.push('.mention-control[contenteditable]:empty::before{ content:attr(data-placeholder); color:' + getCssVar("--text-dim", "#69707D") + '; }');
+    lines.push(".mention-chip{ display:inline-block; background:" + getCssVar("--red-tint", "rgba(255,3,26,0.08)") + "; color:" + getCssVar("--red-400", "#FF4253") + "; border-radius:var(--radius-sm); padding:var(--space-1) var(--space-4); font-weight:var(--type-active-weight); }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -248,7 +267,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to both Outlined and Filled */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to both Outlined and Filled */");
     radiiToEmit.forEach(function(radius){
       lines.push(".mention-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -262,33 +281,42 @@
       lines.push(cls + ":hover{ " + css.hover + " }");
       lines.push(cls + ":focus-within{ " + css.focus + " }");
       lines.push(cls + ".is-open{ " + css.focus + " } /* suggestion panel visible - same border/outline treatment as focus */");
+      lines.push(cls + ".is-error{ " + css.error + " }");
     });
+    lines.push("");
+    lines.push("/* Read-Only - keeps its text and mention chips, but typing \"@\" never opens the suggestion panel; still focusable, unlike Disabled */");
+    lines.push('.mention-control.is-readonly[contenteditable]{ cursor:default; }');
     lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".mention-control.is-disabled{ opacity:0.5; }");
     lines.push('.mention-control.is-disabled[contenteditable]{ cursor:not-allowed; pointer-events:none; }');
     lines.push("");
-    var panelBg = getCssVar("--graphite-900", "#15171A");
+    lines.push("/* Required indicator + supporting/error text */");
+    lines.push(".mention-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push(".mention-note.is-error{ color:" + getCssVar("--danger-700", "#EB0318") + "; }");
+    lines.push("");
+    var panelBg = getCssVar("--graphite-900", "#FFFFFF");
     var panelBorder = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var optionActiveBg = getCssVar("--graphite-800", "#1C1F23");
+    var optionActiveBg = getCssVar("--graphite-800", "#F1F1EE");
     var avatarBg = getCssVar("--graphite-700", "#262A2F");
     lines.push("/* Suggestion panel - anchored below the field, shown only while Open. Same");
     lines.push("   floating-panel visual language as this system's other panels (Menu, Autocomplete,");
     lines.push("   the multi-select dropdowns): graphite background, 1px line-strong border, rounded");
     lines.push("   corners and a soft drop shadow. Each row is a person: a round initials avatar");
     lines.push("   plus a full name. */");
-    lines.push(".mention-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.4); padding:var(--space-4); }");
-    lines.push('.mention-person{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:6px; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); cursor:default; }');
+    lines.push(".mention-panel{ position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:5; box-sizing:border-box; display:flex; flex-direction:column; gap:var(--space-2); background:" + panelBg + "; border:1px solid " + panelBorder + "; border-radius:var(--radius-md); box-shadow:var(--shadow-md); padding:var(--space-4); }");
+    lines.push('.mention-person{ box-sizing:border-box; display:flex; align-items:center; gap:var(--space-8); padding:var(--space-8) var(--space-10); border-radius:var(--radius-6); font-family:var(--font-body); font-size:var(--type-body-size); cursor:default; }');
     lines.push(".mention-person.is-active{ background:" + optionActiveBg + "; }");
-    lines.push('.mention-avatar{ width:var(--dimension-22); height:var(--dimension-22); flex-shrink:0; border-radius:9999px; background:' + avatarBg + '; color:' + getCssVar("--text-hi", "#F5F6F7") + '; font-size:var(--type-body-size); font-weight:600; display:flex; align-items:center; justify-content:center; }');
+    lines.push('.mention-avatar{ width:var(--dimension-22); height:var(--dimension-22); flex-shrink:0; border-radius:var(--radius-full); background:' + avatarBg + '; color:' + getCssVar("--text-hi", "#111827") + '; font-size:var(--type-body-size); font-weight:var(--type-selected-weight); display:flex; align-items:center; justify-content:center; }');
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "mention-control--h" + exampleSize;
     var radiusClassAttr = "mention-control--radius-" + radiusClassSuffix(exampleRadius);
+    var opts = selectionInfo.opts || {};
     lines.push("<!-- Example usage - one per type, shown in the Open state" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Comment", "Type @ to mention someone"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Comment", "Type @ to mention someone", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -296,17 +324,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -338,12 +368,12 @@
       card.setAttribute("tabindex", "0");
       var href = "mention-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -427,6 +457,11 @@
     var labelInput = document.querySelector('[data-role="mention-label"]');
     var placeholderInput = document.querySelector('[data-role="mention-placeholder"]');
     var allowClearInput = document.querySelector('[data-role="mention-allow-clear"]');
+    var requiredInput = document.querySelector('[data-role="mention-required"]');
+    var showSupportingInput = document.querySelector('[data-role="mention-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="mention-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="mention-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="mention-error-text"]');
     var sizeMount = document.querySelector('[data-role="mention-size-mount"]');
     var radiusMount = document.querySelector('[data-role="mention-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
@@ -440,31 +475,52 @@
     // Focus show the dim placeholder text (nothing typed yet); Filled and
     // Open show the mixed text + chip content; Open additionally renders
     // the suggestion panel of people.
-    function buildMentionField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear){
+    function buildMentionField(typeKey, stateKey, stateCls, size, radius, label, placeholder, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isOpen = stateKey === "open";
-      var showsContent = isFilled || isOpen;
+      var isReadonly = stateKey === "readonly";
+      var isLoading = stateKey === "loading";
+      var isError = stateKey === "error";
+      var isEmpty = stateKey === "empty";
+      var showsContent = isFilled || isOpen || isReadonly;
       var controlClasses = "mention-demo-control mention-demo-control--" + typeKey + " mention-demo-control--h" + size + stateCls;
       var contentHtml = showsContent
         ? 'Hey <span class="mention-demo-chip">@Jordan</span>, can you review this before end of day?'
         : escapeHtml(placeholder);
       var inputClasses = "mention-demo-input" + (showsContent ? "" : " mention-demo-input--empty");
       var inputHtml = '<div class="' + inputClasses + '" contenteditable="false" tabindex="-1">' + contentHtml + "</div>";
-      var clearHtml = (allowClear && showsContent && !isDisabled)
+      var clearHtml = (allowClear && showsContent && !isDisabled && !isReadonly)
         ? '<button type="button" class="mention-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
       var radiusStyle = ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var panelHtml = isOpen
-        ? '<div class="mention-demo-panel">' +
+      var panelHtml = "";
+      if (isOpen){
+        panelHtml = '<div class="mention-demo-panel">' +
             '<div class="mention-demo-person is-active"><span class="mention-demo-avatar">JD</span><span>Jordan Diaz</span></div>' +
             '<div class="mention-demo-person"><span class="mention-demo-avatar">JD</span><span>Jamie Diallo</span></div>' +
             '<div class="mention-demo-person"><span class="mention-demo-avatar">JD</span><span>Jordyn Dunn</span></div>' +
-          "</div>"
-        : "";
+          "</div>";
+      } else if (isLoading){
+        panelHtml = '<div class="mention-demo-panel"><div class="mention-demo-panel-loading"><span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>Loading suggestions&hellip;</div></div>';
+      } else if (isEmpty){
+        // Same panel shell as Open/Loading above, but with the candidate
+        // list replaced entirely by a single centered, dimmed message - the
+        // typed "@" query matched no one.
+        panelHtml = '<div class="mention-demo-panel"><div class="mention-demo-empty" data-contract-part="mention-candidates-empty">No matches found.</div></div>';
+      }
+      var requiredHtml = opts.required ? '<span class="mention-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = "";
+      if (isError){
+        noteHtml = '<p class="mention-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Mentioning a team member is required here.") + "</p>";
+      } else if (opts.supportingText){
+        noteHtml = '<p class="mention-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>";
+      }
       return '<div class="mention-demo-field">' +
-        '<label class="mention-demo-label">' + escapeHtml(label) + "</label>" +
+        '<label class="mention-demo-label" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
         '<div class="' + controlClasses + '"' + radiusStyle + ">" + inputHtml + clearHtml + "</div>" +
+        noteHtml +
         panelHtml +
         "</div>";
     }
@@ -482,10 +538,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildMentionField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildMentionField(t.key, state.key, state.cls, size, radius, label, placeholder, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -496,10 +552,19 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        required: requiredInput ? requiredInput.checked : false,
+        supportingText: (showSupportingInput && showSupportingInput.checked && supportingTextInput) ? supportingTextInput.value.trim() : "",
+        errorText: (errorTextInput && errorTextInput.value.trim()) || "Mentioning a team member is required here."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -507,6 +572,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -515,14 +581,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -550,6 +616,15 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

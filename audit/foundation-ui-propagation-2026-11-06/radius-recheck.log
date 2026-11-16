@@ -1,0 +1,9 @@
+Radius / sharp radius: pass 
+Radius / compact radius: pass 
+Radius / soft radius: pass 
+Radius / expressive radius: pass 
+Radius / balanced radius: pass 
+Radius / Compact radius on Button and pill Tabs: pass 
+Radius / Explicit component radius survives foundation change: pass 
+Radius / Reset component restores foundation following: pass 
+UI PROPAGATION: pass

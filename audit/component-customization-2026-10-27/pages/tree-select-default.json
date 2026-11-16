@@ -1,0 +1,250 @@
+{
+  "file": "tree-select-default.html",
+  "name": "Tree Select",
+  "category": "Components · Forms · Tree Select",
+  "controls": [
+    {
+      "index": 0,
+      "role": "treeselect-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "treeselect-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "treeselect-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "treeselect-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "treeselect-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Assignee team",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "treeselect-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Select a team",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "treeselect-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces chevron once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Tree Select is a select field over hierarchical, nested data - the user picks any node, parent or leaf, at any depth from an indented, expandable tree - used when the option set is too deep or too structured for a flat Select or Cascader's linked columns. When to Use An org chart or folder-structure picker - where any level, not just leaves, is a valid selection. Permission group assignment - picking a specific nested group within a broader hierarchy. A nested tag selector or report hierarchy filter - where the full tree needs to stay visible and explorable at once. When Not to Use A flat, non-nested option list - use Select - a tree adds visual complexity a flat list doesn't need. Data where only leaf nodes are ever valid, and the path itself matters more than seeing the whole tree at once - use Cascader's linked-column drill-down instead. A very large tree with thousands of nodes and no search - add a filter/search mode, or reconsider whether Tree Select is the right control for that scale. Best Practices Let common branches start expanded when the selected value (or a sensible default) lives a level or two deep. Support typing to filter/search across the whole tree once it grows beyond a quick visual scan. Show the selected node's full path in the closed trigger, not just its own label, so the selection stays unambiguous. Do and Don't Do Destination folderDesign / IconsDesignIconsLogos The control shows the whole path, so \"Icons\" is never confused with another folder of the same name elsewhere in the tree. Don't Destination folderIconsDesignIconsMarketingIcons Showing only the leaf name makes two different folders look like the same choice once the panel is closed. Accessibility Implemented with tree/treeitem semantics, so screen readers announce each node's depth and expanded/collapsed state. Fully keyboard-operable - arrow keys move between nodes, and left/right expand or collapse a branch. The currently selected node is clearly announced, including which ancestor branch it belongs to. Related Components Select, Cascader, Transfer. { \"component\": \"Tree Select\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Tree Select is a select field over hierarchical, nested data - the user picks any node, parent or leaf, at any depth from an indented, expandable tree - used when the option set is too deep or too structured for a flat Select or Cascader's linked columns.\", \"whenToUse\": [ \"An org chart or folder-structure picker - where any level, not just leaves, is a valid selection.\", \"Permission group assignment - picking a specific nested group within a broader hierarchy.\", \"A nested tag selector or report hierarchy filter - where the full tree needs to stay visible and explorable at once.\" ], \"whenNotToUse\": [ \"A flat, non-nested option list - use Select - a tree adds visual complexity a flat list doesn't need.\", \"Data where only leaf nodes are ever valid, and the path itself matters more than seeing the whole tree at once - use Cascader's linked-column drill-down instead.\", \"A very large tree with thousands of nodes and no search - add a filter/search mode, or reconsider whether Tree Select is the right control for that scale.\" ], \"bestPractices\": [ \"Let common branches start expanded when the selected value (or a sensible default) lives a level or two deep.\", \"Support typing to filter/search across the whole tree once it grows beyond a quick visual scan.\", \"Show the selected node's full path in the closed trigger, not just its own label, so the selection stays unambiguous.\" ], \"doAndDont\": { \"do\": \"The control shows the whole path, so \\\"Icons\\\" is never confused with another folder of the same name elsewhere in the tree.\", \"dont\": \"Showing only the leaf name makes two different folders look like the same choice once the panel is closed.\" }, \"accessibility\": [ \"Implemented with tree/treeitem semantics, so screen readers announce each node's depth and expanded/collapsed state.\", \"Fully keyboard-operable - arrow keys move between nodes, and left/right expand or collapse a branch.\", \"The currently selected node is clearly announced, including which ancestor branch it belongs to.\" ], \"relatedComponents\": [ \"Select\", \"Cascader\", \"Transfer\" ] }",
+  "tests": []
+}

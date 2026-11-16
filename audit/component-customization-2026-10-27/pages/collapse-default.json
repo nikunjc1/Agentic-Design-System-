@@ -1,0 +1,218 @@
+{
+  "file": "collapse-default.html",
+  "name": "Collapse",
+  "category": "Components · Data Display · Collapse",
+  "controls": [
+    {
+      "index": 0,
+      "role": "collapse-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "collapse-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "collapse-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "medium"
+      ],
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "collapse-size-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Bordered",
+      "options": [
+        {
+          "value": "Bordered",
+          "label": "Bordered"
+        },
+        {
+          "value": "Borderless",
+          "label": "Borderless"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Collapsed",
+      "options": [
+        {
+          "value": "Collapsed",
+          "label": "Collapsed"
+        },
+        {
+          "value": "Expanded",
+          "label": "Expanded"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "collapse-header",
+      "id": null,
+      "label": "Header text",
+      "type": "text",
+      "value": "What's included in the free plan?",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Header text",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "collapse-body",
+      "id": null,
+      "label": "Body text",
+      "type": "text",
+      "value": "The free plan includes up to 3 projects, 1GB of storage, and community support.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Body text",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "collapse-show-icon",
+      "id": null,
+      "label": "Show icon",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown on the right side of the header",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Corner radius, size, header text, body text and chevron visibility are properties of the same component, not separate panels - change them below to check this collapse's types and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    },
+    {
+      "label": "Medium",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Collapse progressively discloses long or secondary content behind a clickable header - the content stays hidden until expanded, keeping the page compact while still making the detail available on demand. When to Use An FAQ list - each question collapsed until clicked. Settings section grouping or filter panel sections - organizing a long settings page into expandable chunks. An order details breakdown or terms and conditions section - long content that most users won't need expanded by default. When Not to Use Content everyone needs to see immediately - hiding essential information behind a click adds friction; show it directly instead. A single, always-visible section with no reason to hide it - a static Card or plain section is simpler when there's no benefit to collapsing. Switching between different views of content rather than showing/hiding one section - use Tabs instead of Collapse. Best Practices Make the whole header row clickable, not just a small chevron icon, so the hit target is generous. Default the most commonly needed section open when there's a clear default, rather than collapsing everything. Animate the expand/collapse transition smoothly so content doesn't just snap in and out abruptly. Do and Don't Do Shipping detailsDelivered by courier, 2-4 business days. A header naming exactly what is inside, so opening it is a deliberate choice rather than a guess. Don't More infoDetails Two panels both titled something generic give the user no way to predict which one holds what they need - they have to open both. Accessibility The header exposes aria-expanded, reflecting whether its panel is currently open. The header is a real, keyboard-operable button, not a div with only a click handler. The expanded panel is programmatically associated with its header via aria-controls, so the relationship is explicit. Related Components Tabs, Card, Description. { \"component\": \"Collapse\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Collapse progressively discloses long or secondary content behind a clickable header - the content stays hidden until expanded, keeping the page compact while still making the detail available on demand.\", \"whenToUse\": [ \"An FAQ list - each question collapsed until clicked.\", \"Settings section grouping or filter panel sections - organizing a long settings page into expandable chunks.\", \"An order details breakdown or terms and conditions section - long content that most users won't need expanded by default.\" ], \"whenNotToUse\": [ \"Content everyone needs to see immediately - hiding essential information behind a click adds friction; show it directly instead.\", \"A single, always-visible section with no reason to hide it - a static Card or plain section is simpler when there's no benefit to collapsing.\", \"Switching between different views of content rather than showing/hiding one section - use Tabs instead of Collapse.\" ], \"bestPractices\": [ \"Make the whole header row clickable, not just a small chevron icon, so the hit target is generous.\", \"Default the most commonly needed section open when there's a clear default, rather than collapsing everything.\", \"Animate the expand/collapse transition smoothly so content doesn't just snap in and out abruptly.\" ], \"doAndDont\": { \"do\": \"A header naming exactly what is inside, so opening it is a deliberate choice rather than a guess.\", \"dont\": \"Two panels both titled something generic give the user no way to predict which one holds what they need - they have to open both.\" }, \"accessibility\": [ \"The header exposes aria-expanded, reflecting whether its panel is currently open.\", \"The header is a real, keyboard-operable button, not a div with only a click handler.\", \"The expanded panel is programmatically associated with its header via aria-controls, so the relationship is explicit.\" ], \"relatedComponents\": [ \"Tabs\", \"Card\", \"Description\" ] }",
+  "tests": []
+}

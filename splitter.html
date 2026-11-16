@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="site-entry.js"></script>
+<script src="component-workbench-catalog.js"></script>
+<script src="component-workbench.js"></script>
 <script src="foundation-model.js"></script>
 <script src="foundation-runtime.js"></script>
 <script src="theme-init.js"></script>
@@ -14,6 +17,7 @@
 <link rel="stylesheet" href="shell.css" />
 <link rel="stylesheet" href="experience.css" />
 <link rel="stylesheet" href="foundation.css" />
+<link rel="stylesheet" href="component-workbench.css" />
 </head>
 <body>
 
@@ -27,7 +31,7 @@
       <span class="theme-toggle-icon" aria-hidden="true"></span>
     </button>
     <span class="version-badge">v3.5.0</span>
-    <button class="icon-btn" type="button" title="Settings" onclick="location.href='settings.html'">&#9881;</button>
+    <button class="icon-btn" type="button" title="Preferences" aria-label="Preferences" id="preferences" data-preferences-toggle aria-haspopup="dialog" aria-expanded="false" aria-controls="adsPreferencesPanel"><span aria-hidden="true">&#9881;</span></button>
   </div>
 </header>
 
@@ -44,8 +48,8 @@
     <div class="nav-group">
       <span class="nav-group-label">Design System</span>
       <a class="nav-link" href="overview.html">Overview</a>
-      <a class="nav-link" href="values.html">Design Values</a>
-      <a class="nav-link" href="new-project.html">Project setup</a>
+
+      <a class="nav-link" href="project-setup.html">Project setup</a>
     </div>
 
     <div class="nav-group is-collapsible" data-group="foundations">
@@ -77,90 +81,89 @@
     <div class="nav-group is-collapsible" data-group="components">
       <button class="nav-group-label as-toggle" type="button"><span>Components</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
       <div class="nav-group-items">
-        <a class="nav-link" href="component-index.html">All components</a>
+
         <span class="nav-subgroup-label">Actions</span>
-        <a class="nav-link" href="components.html#button">Button</a>
-        <a class="nav-link" href="group-button.html">Group Button</a>
-        <a class="nav-link" href="float-button.html">Float Button</a>
+        <a class="nav-link" href="button-primary.html">Button</a>
+        <a class="nav-link" href="group-button-default.html">Group Button</a>
+        <a class="nav-link" href="float-button-default.html">Float Button</a>
 
         <span class="nav-subgroup-label">Forms</span>
-        <a class="nav-link" href="input.html">Input</a>
-        <a class="nav-link" href="select.html">Select</a>
-        <a class="nav-link" href="checkbox.html">Checkbox</a>
-        <a class="nav-link" href="radio.html">Radio</a>
-        <a class="nav-link" href="switch.html">Switch</a>
-        <a class="nav-link" href="date-picker.html">Date Picker</a>
-        <a class="nav-link" href="password.html">Password</a>
-        <a class="nav-link" href="number.html">Number</a>
-        <a class="nav-link" href="mention.html">Mention</a>
-        <a class="nav-link" href="autocomplete.html">Autocomplete</a>
-        <a class="nav-link" href="date-range.html">Date Range</a>
-        <a class="nav-link" href="time.html">Time</a>
-        <a class="nav-link" href="text-area.html">Text Area</a>
-        <a class="nav-link" href="search.html">Search</a>
-        <a class="nav-link" href="add-on.html">Add-on</a>
-        <a class="nav-link" href="color-picker.html">Color Picker</a>
-        <a class="nav-link" href="slider.html">Slider</a>
-        <a class="nav-link" href="rating.html">Rating</a>
-        <a class="nav-link" href="cascader.html">Cascader</a>
-        <a class="nav-link" href="transfer.html">Transfer</a>
-        <a class="nav-link" href="tree-select.html">Tree Select</a>
-        <a class="nav-link" href="upload.html">Upload</a>
+        <a class="nav-link" href="input-text-field.html">Input</a>
+        <a class="nav-link" href="select-dropdown.html">Select</a>
+        <a class="nav-link" href="checkbox-default.html">Checkbox</a>
+        <a class="nav-link" href="radio-default.html">Radio</a>
+        <a class="nav-link" href="switch-default.html">Switch</a>
+        <a class="nav-link" href="date-picker-default.html">Date Picker</a>
+        <a class="nav-link" href="password-default.html">Password</a>
+        <a class="nav-link" href="number-default.html">Number</a>
+        <a class="nav-link" href="mention-default.html">Mention</a>
+        <a class="nav-link" href="autocomplete-default.html">Autocomplete</a>
+        <a class="nav-link" href="date-range-default.html">Date Range</a>
+        <a class="nav-link" href="time-default.html">Time</a>
+        <a class="nav-link" href="text-area-default.html">Text Area</a>
+        <a class="nav-link" href="search-default.html">Search</a>
+        <a class="nav-link" href="add-on-default.html">Add-on</a>
+        <a class="nav-link" href="color-picker-default.html">Color Picker</a>
+        <a class="nav-link" href="slider-default.html">Slider</a>
+        <a class="nav-link" href="rating-default.html">Rating</a>
+        <a class="nav-link" href="cascader-default.html">Cascader</a>
+        <a class="nav-link" href="transfer-default.html">Transfer</a>
+        <a class="nav-link" href="tree-select-default.html">Tree Select</a>
+        <a class="nav-link" href="upload-default.html">Upload</a>
 
         <span class="nav-subgroup-label">Navigation</span>
-        <a class="nav-link" href="tabs.html">Tabs</a>
-        <a class="nav-link" href="anchor.html">Anchor</a>
-        <a class="nav-link" href="breadcrumb.html">Breadcrumb</a>
-        <a class="nav-link" href="dropdown.html">Dropdown</a>
-        <a class="nav-link" href="pagination.html">Pagination</a>
-        <a class="nav-link" href="menu.html">Menu</a>
-        <a class="nav-link" href="steps.html">Steps</a>
-        <a class="nav-link" href="affix.html">Affix</a>
+        <a class="nav-link" href="tabs-default.html">Tabs</a>
+        <a class="nav-link" href="anchor-default.html">Anchor</a>
+        <a class="nav-link" href="breadcrumb-default.html">Breadcrumb</a>
+        <a class="nav-link" href="dropdown-default.html">Dropdown</a>
+        <a class="nav-link" href="pagination-default.html">Pagination</a>
+        <a class="nav-link" href="menu-default.html">Menu</a>
+        <a class="nav-link" href="steps-default.html">Steps</a>
 
         <span class="nav-subgroup-label">Feedback</span>
-        <a class="nav-link" href="alert.html">Alert</a>
-        <a class="nav-link" href="toast.html">Toast</a>
-        <a class="nav-link" href="modal.html">Modal</a>
-        <a class="nav-link" href="tooltip.html">Tooltip</a>
-        <a class="nav-link" href="tour.html">Tour</a>
-        <a class="nav-link" href="drawer.html">Drawer</a>
-        <a class="nav-link" href="notification.html">Notification</a>
-        <a class="nav-link" href="pop-confirm.html">Pop Confirm</a>
-        <a class="nav-link" href="progress.html">Progress</a>
-        <a class="nav-link" href="result.html">Result</a>
-        <a class="nav-link" href="skeleton.html">Skeleton</a>
-        <a class="nav-link" href="spin.html">Spin</a>
+        <a class="nav-link" href="alert-default.html">Alert</a>
+        <a class="nav-link" href="toast-default.html">Toast</a>
+        <a class="nav-link" href="modal-default.html">Modal</a>
+        <a class="nav-link" href="tooltip-default.html">Tooltip</a>
+        <a class="nav-link" href="tour-default.html">Tour</a>
+        <a class="nav-link" href="drawer-default.html">Drawer</a>
+        <a class="nav-link" href="notification-default.html">Notification</a>
+        <a class="nav-link" href="pop-confirm-default.html">Pop Confirm</a>
+        <a class="nav-link" href="progress-default.html">Progress</a>
+        <a class="nav-link" href="result-default.html">Result</a>
+        <a class="nav-link" href="skeleton-default.html">Skeleton</a>
+        <a class="nav-link" href="spin-default.html">Spin</a>
 
         <span class="nav-subgroup-label">Data Display</span>
-        <a class="nav-link" href="divider.html">Divider</a>
-        <a class="nav-link" href="avatar.html">Avatar</a>
-        <a class="nav-link" href="badge.html">Badge</a>
-        <a class="nav-link" href="calendar.html">Calendar</a>
-        <a class="nav-link" href="card.html">Card</a>
-        <a class="nav-link" href="collapse.html">Collapse</a>
-        <a class="nav-link" href="description.html">Description</a>
-        <a class="nav-link" href="empty.html">Empty</a>
-        <a class="nav-link" href="image.html">Image</a>
-        <a class="nav-link" href="list.html">List</a>
-        <a class="nav-link" href="popover.html">Popover</a>
-        <a class="nav-link" href="splitter.html">Splitter</a>
-        <a class="nav-link" href="statistic.html">Statistic</a>
-        <a class="nav-link" href="table.html">Table</a>
-        <a class="nav-link" href="tag.html">Tag</a>
-        <a class="nav-link" href="timeline.html">Timeline</a>
-        <a class="nav-link" href="tree.html">Tree</a>
+        <a class="nav-link" href="divider-default.html">Divider</a>
+        <a class="nav-link" href="avatar-default.html">Avatar</a>
+        <a class="nav-link" href="badge-default.html">Badge</a>
+        <a class="nav-link" href="calendar-default.html">Calendar</a>
+        <a class="nav-link" href="card-default.html">Card</a>
+        <a class="nav-link" href="collapse-default.html">Collapse</a>
+        <a class="nav-link" href="description-default.html">Description</a>
+        <a class="nav-link" href="empty-default.html">Empty</a>
+        <a class="nav-link" href="image-default.html">Image</a>
+        <a class="nav-link" href="list-default.html">List</a>
+        <a class="nav-link" href="popover-default.html">Popover</a>
+        <a class="nav-link" href="splitter-default.html">Splitter</a>
+        <a class="nav-link" href="statistic-default.html">Statistic</a>
+        <a class="nav-link" href="table-default.html">Table</a>
+        <a class="nav-link" href="tag-default.html">Tag</a>
+        <a class="nav-link" href="timeline-default.html">Timeline</a>
+        <a class="nav-link" href="tree-default.html">Tree</a>
       </div>
     </div>
 
     <div class="nav-group">
-      <a class="nav-link" href="patterns.html">Patterns</a>
-      <a class="nav-link" href="templates.html">Templates</a>
-      <a class="nav-link" href="ai-generator.html">AI Generator</a>
-      <a class="nav-link" href="md-export.html">Markdown Export</a>
+
+
+
+      <a class="nav-link" href="md-export.html">Export &amp; Handoff</a>
+
       <a class="nav-link" href="npm-package.html">NPM Package</a>
-      <a class="nav-link" href="history.html">History</a>
+
       <a class="nav-link" href="changelog.html">Changelog</a>
-      <a class="nav-link" href="settings.html">Settings</a>
     </div>
   </nav>
 </aside>
@@ -184,7 +187,7 @@
             <div class="splitter-demo-divider splitter-demo-divider--horizontal"><span class="splitter-demo-handle"></span></div>
             <div class="splitter-demo-panel" style="flex:1 1 auto;">Content</div>
           </div>
-          <p class="dualicon-card-label">System Control</p>
+          <p class="dualicon-card-label">Splitter</p>
         </div>
         <div class="card-copy-row">
           <button class="btn-demo btn-demo--secondary btn-demo--h32" data-role="copy-prompt-splitter" type="button">Copy prompt</button>

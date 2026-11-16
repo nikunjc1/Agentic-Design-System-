@@ -1,0 +1,102 @@
+{
+  "file": "spin-default.html",
+  "name": "Spin",
+  "category": "Components · Feedback · Spin",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Small",
+      "options": [
+        {
+          "value": "Small",
+          "label": "Small"
+        },
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Spinning",
+      "options": [
+        {
+          "value": "Spinning",
+          "label": "Spinning"
+        },
+        {
+          "value": "With label",
+          "label": "With label"
+        },
+        {
+          "value": "Overlay",
+          "label": "Overlay"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "spin-label-input",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Loading...",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Label is a property of the same component, not a separate control - change it below to check its effect across the With label and Overlay states in the Live Preview. Spinning shows only the bare ring regardless of Label, since it represents the leanest inline case with no accompanying text.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Spin indicates that something is happening with no known duration or completion percentage - a small ring that spins continuously until the operation finishes, used whenever there's genuinely no measurable progress to show. When to Use An inline button loading state - showing an action is in flight after a click. Section or panel content loading with no known shape or percentage - a generic in-progress signal. An async search, filter, or form submission in flight - any short wait with no meaningful progress fraction. When Not to Use An operation with a real, known percentage complete - use Progress instead - showing a spinner when real progress data exists hides useful information. Content whose eventual shape is already known - use Skeleton so the layout doesn't jump once it loads. A wait long enough that the user needs more context (time remaining, what's happening) - pair Spin with actual status text, or reconsider whether Progress fits better. Best Practices Keep it small and contextual - inline in a button or panel, not a full-page takeover unless the whole page truly depends on it. Pair it with a brief label (\"Loading...\", \"Searching...\") when the context alone doesn't make the wait obvious. Disable the control it's attached to while spinning, so the same action can't be triggered twice. Do and Don't Do Searching... Used where there is genuinely no percentage to report, and paired with a word about what is happening. Don't A bare spinner on a long wait leaves the user unable to tell progress from a hang. Add a label, or use Progress when the total is known. Accessibility Carries role=\"status\" (or aria-live=\"polite\" plus aria-busy=\"true\") on the spinning element itself - a screen-reader user must hear that loading has started and hear again when it ends, since the ring's motion is entirely invisible to them. Never the only feedback for a long wait - pair with text for anything beyond a couple of seconds, and make sure that text is inside the same live region so its updates are announced too. Doesn't trap focus or block keyboard navigation elsewhere on the page unless the underlying operation genuinely requires it. Related Components Progress, Skeleton, Button. { \"component\": \"Spin\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Spin indicates that something is happening with no known duration or completion percentage - a small ring that spins continuously until the operation finishes, used whenever there's genuinely no measurable progress to show.\", \"whenToUse\": [ \"An inline button loading state - showing an action is in flight after a click.\", \"Section or panel content loading with no known shape or percentage - a generic in-progress signal.\", \"An async search, filter, or form submission in flight - any short wait with no meaningful progress fraction.\" ], \"whenNotToUse\": [ \"An operation with a real, known percentage complete - use Progress instead - showing a spinner when real progress data exists hides useful information.\", \"Content whose eventual shape is already known - use Skeleton so the layout doesn't jump once it loads.\", \"A wait long enough that the user needs more context (time remaining, what's happening) - pair Spin with actual status text, or reconsider whether Progress fits better.\" ], \"bestPractices\": [ \"Keep it small and contextual - inline in a button or panel, not a full-page takeover unless the whole page truly depends on it.\", \"Pair it with a brief label (\\\"Loading...\\\", \\\"Searching...\\\") when the context alone doesn't make the wait obvious.\", \"Disable the control it's attached to while spinning, so the same action can't be triggered twice.\" ], \"doAndDont\": { \"do\": \"Used where there is genuinely no percentage to report, and paired with a word about what is happening.\", \"dont\": \"A bare spinner on a long wait leaves the user unable to tell progress from a hang. Add a label, or use Progress when the total is known.\" }, \"accessibility\": [ \"Carries role=\\\"status\\\" (or aria-live=\\\"polite\\\" plus aria-busy=\\\"true\\\") on the spinning element itself - a screen-reader user must hear that loading has started and hear again when it ends, since the ring's motion is entirely invisible to them.\", \"Never the only feedback for a long wait - pair with text for anything beyond a couple of seconds, and make sure that text is inside the same live region so its updates are announced too.\", \"Doesn't trap focus or block keyboard navigation elsewhere on the page unless the underlying operation genuinely requires it.\" ], \"relatedComponents\": [ \"Progress\", \"Skeleton\", \"Button\" ] }",
+  "tests": []
+}

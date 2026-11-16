@@ -55,7 +55,7 @@
   // accessible object itself).
   function buildProgressField(typeKey, stateKey, percent, showLabel){
     var pct = cellPercent(stateKey, percent);
-    var labelHtml = showLabel ? '<span class="progress-demo-label">' + pct + "%</span>" : "";
+    var labelHtml = showLabel ? '<span class="progress-demo-label" data-contract-part="label">' + pct + "%</span>" : "";
     var progressbarAttrs = ' role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Progress"';
 
     if (typeKey === "linear"){
@@ -71,7 +71,7 @@
     var bg = "conic-gradient(" + color + " calc(" + pct + "*1%), var(--graphite-700) 0)";
     return '<div class="' + wrapClass + '"' + progressbarAttrs + ' style="background:' + bg + ';">' +
       '<div class="progress-demo-circular-inner"></div>' +
-      (showLabel ? '<span class="progress-demo-label">' + pct + "%</span>" : "") +
+      (showLabel ? '<span class="progress-demo-label" data-contract-part="label">' + pct + "%</span>" : "") +
       "</div>";
   }
 
@@ -106,9 +106,9 @@
     lines.push(".progress-demo-fill--error{ background: repeating-linear-gradient(135deg, var(--danger-600) 0 6px, var(--danger-500) 6px 12px); }");
     lines.push(".progress-demo-label{ flex:none; font-family:var(--font-mono); font-size:var(--type-caption-size); color:var(--text-mid); min-width:var(--dimension-36); text-align: end; }");
     lines.push("");
-    lines.push(".progress-demo-circular{ position:relative; width:var(--dimension-72); height:var(--dimension-72); border-radius:9999px; display:flex; align-items:center; justify-content:center; }");
+    lines.push(".progress-demo-circular{ position:relative; width:var(--dimension-72); height:var(--dimension-72); border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; }");
     lines.push(".progress-demo-circular--error{ outline: 2px dashed var(--danger-600); outline-offset: 2px; }");
-    lines.push(".progress-demo-circular-inner{ position:absolute; inset:8px; border-radius:9999px; background:var(--graphite-950); }");
+    lines.push(".progress-demo-circular-inner{ position:absolute; inset:8px; border-radius:var(--radius-full); background:var(--graphite-950); }");
     lines.push(".progress-demo-circular .progress-demo-label{ position:relative; z-index:1; text-align:center; min-width:0; }");
     lines.push("");
     lines.push("<!-- Example usage - Linear layout, In progress state - the track carries role=\"progressbar\" so assistive technology announces real progress, not just a silent colored bar -->");
@@ -150,12 +150,12 @@
       card.setAttribute("tabindex", "0");
       var href = "progress-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

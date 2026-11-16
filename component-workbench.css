@@ -1,0 +1,155 @@
+/* Experimental detail workspace; scoped to preserve Foundation and setup pages. */
+.wb-page .app-main{padding:0!important;overflow:auto;background:var(--graphite-950)}
+/* foundation.css's `.app-main > *{max-inline-size:min(100%,var(--size-content));
+   margin-inline:auto}` centers ordinary prose-width pages - applied here too
+   since .wb-layout is also a direct .app-main child, leaving large symmetric
+   dead gutters on wide screens instead of using the full width an app-style
+   two-column layout needs. */
+.wb-page .app-main > .wb-layout{max-inline-size:none;margin-inline:0}
+.wb-header{padding:var(--space-24) var(--space-28) var(--space-20);border-bottom:calc(var(--dimension-1) * 1) solid var(--line);background:var(--graphite-900)}
+.wb-header .page-eyebrow{margin:0 0 var(--space-8);font-size:var(--type-caption-size);letter-spacing:var(--type-caption-tracking);text-transform:uppercase}
+.wb-header .page-title{font-size:var(--type-h1-size);line-height:var(--type-h1-line-height);font-weight:var(--type-h1-weight);letter-spacing:var(--type-h1-tracking);margin:0 0 var(--space-8)}
+.wb-header .component-meta{margin:0 0 var(--space-8);font-size:var(--type-caption-size)}
+.wb-header .page-lede{font-size:var(--type-paragraph-size);line-height:var(--type-paragraph-line-height);font-weight:var(--type-paragraph-weight);letter-spacing:var(--type-paragraph-tracking);max-width:none;margin:0}
+.wb-header .back-link,.wb-page .page-outline,.wb-page .md-export-panel{display:none!important}
+.wb-layout{display:grid;grid-template-columns:minmax(0,1fr) calc(var(--dimension-1) * 332);grid-template-areas:"header inspector" "center inspector";align-items:start;min-width:0}
+.wb-header{grid-area:header}
+.wb-center{grid-area:center;padding:var(--space-24);min-width:0}
+.wb-inspector{grid-area:inspector;min-width:0;position:sticky;top:0;max-height:calc(100dvh - calc(var(--dimension-1) * 64));overflow:auto;overscroll-behavior:contain;border-inline-start:calc(var(--dimension-1) * 1) solid var(--line);background:var(--graphite-900);padding:var(--space-20);scrollbar-gutter:stable}
+.wb-inspector h2{font-size:var(--type-body-size);margin:0 0 var(--space-6)}.wb-subtitle{font-size:var(--type-caption-size);color:var(--text-mid);line-height:var(--type-caption-line-height);margin:0 0 var(--space-16)}
+.wb-inspector-header{position:sticky;top:calc(-1 * var(--space-20));background:var(--graphite-900);z-index:3;padding-block:var(--space-16) var(--space-8);margin-top:calc(-1 * var(--space-16));border-bottom:calc(var(--dimension-1) * 1) solid var(--line);margin-bottom:var(--space-16)}
+/* Save/Cancel/Reset live in a sticky footer instead of the header, so they
+   stay reachable at the bottom of the inspector while scrolling through a
+   long property list - same edge-canceling technique as the header above,
+   mirrored for the bottom edge. */
+.wb-inspector-footer{position:sticky;bottom:calc(-1 * var(--space-20));background:var(--graphite-900);z-index:3;padding-block:var(--space-12) var(--space-16);margin-top:var(--space-20);margin-bottom:calc(-1 * var(--space-20));border-top:calc(var(--dimension-1) * 1) solid var(--line)}
+.wb-inspector-footer .wb-savebar{border-bottom:0;margin-bottom:0;padding-top:0;padding-bottom:0}
+.wb-interactive{margin:var(--space-24) 0 0}.wb-page .app-main .wb-interactive>.panel-title{font-size:var(--type-body-size)}.wb-interactive>p{font-size:var(--type-caption-size)}
+.wb-interactive .interactive-demo{max-inline-size:100%;overflow-x:auto;align-items:safe center}
+.wb-page .app-main .wb-inspector :is(.wb-inspector-header>h2){font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking)}
+.wb-page .app-main :is(.wb-subtitle,.wb-status,.wb-export-note){font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);color:var(--text-mid)}
+.wb-page .wb-inspector .panel{background:transparent;border:0;border-radius:0;padding:0;margin:0;box-shadow:none}
+.wb-inspector .panel-title-row{margin:0 0 var(--space-14)}.wb-inspector .panel-title{font-size:var(--type-caption-size)}
+.wb-inspector .get-library-copy{font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);margin:0 0 var(--space-14);max-height:none!important}
+.wb-inspector .border-config-grid{display:grid;grid-template-columns:minmax(0,1fr)!important;gap:var(--space-14);margin-bottom:var(--space-16)!important}
+.wb-inspector .type-control{min-width:0;font-size:var(--type-caption-size)}.wb-inspector .type-control>span{font-size:var(--type-caption-size)}
+.wb-inspector input:not([type=checkbox]):not([type=radio]),.wb-inspector select,.wb-inspector textarea{max-width:100%;min-width:0;width:100%;font:var(--type-caption-weight) var(--type-caption-size)/var(--type-caption-line-height) var(--type-caption-family)}
+.wb-inspector .panel-title-actions{display:none}.wb-inspector .multiselect-options{max-height:calc(var(--dimension-1) * 240);overflow:auto}
+.wb-savebar{padding:var(--space-14) 0 var(--space-18);border-bottom:calc(var(--dimension-1) * 1) solid var(--line);margin-bottom:var(--space-18);display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:center}
+.wb-savebar .btn-demo:not(.is-icon-only){flex:1;max-width:none}
+.wb-status{font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);color:var(--text-mid);flex-basis:100%;margin:0;overflow-wrap:anywhere}
+.wb-button{font:var(--type-caption-weight) var(--type-caption-size)/var(--type-caption-line-height) var(--type-caption-family);border:calc(var(--dimension-1) * 1) solid var(--line-strong);border-radius:var(--radius-md);color:var(--text-hi);background:var(--graphite-900);min-height:var(--size-control);padding:var(--space-8) var(--space-12);cursor:pointer;text-align:center}
+.wb-button:hover{background:var(--graphite-800)}.wb-button:disabled{opacity:.45;cursor:default}
+.wb-button-primary{background:var(--text-hi);color:var(--graphite-900);border-color:var(--text-hi)}.wb-button-primary:hover{background:var(--text-mid)}
+.wb-button:focus-visible,.wb-field input:focus-visible,.wb-field select:focus-visible,.wb-field textarea:focus-visible,.wb-inspector summary:focus-visible{outline:calc(var(--dimension-1) * 2) solid var(--color-focus-ring);outline-offset:calc(var(--dimension-1) * 3)}
+.wb-toolbar{display:flex;align-items:flex-end;gap:var(--space-12);flex-wrap:wrap;margin-bottom:var(--space-16);min-width:0}
+.wb-toolbar .wb-field{flex:1;min-width:calc(var(--dimension-1) * 100);max-width:calc(var(--dimension-1) * 240)}
+.wb-mode{display:flex;flex-wrap:wrap;max-inline-size:100%;gap:var(--space-4);padding:var(--space-3);background:var(--graphite-800);border-radius:var(--radius-md);margin-inline-start:auto}
+.wb-mode .wb-button{flex:1;white-space:nowrap;border-color:transparent;background:transparent;min-height:calc(var(--dimension-1) * 30);padding:var(--space-6) var(--space-10)}.wb-mode .wb-button[aria-pressed=true]{background:var(--graphite-900);box-shadow:var(--shadow-xs)}
+.wb-unit-row{display:flex;align-items:center;gap:var(--space-12);margin:0 0 var(--space-16)}
+.wb-unit-label{font-size:var(--type-caption-size);color:var(--text-mid)}
+.wb-inspector-header .wb-unit-row{justify-content:space-between;margin:var(--space-12) 0 var(--space-16)}
+.wb-inspector-header .wb-unit-row .wb-mode{margin:0;min-width:calc(var(--dimension-1) * 88)}
+.wb-page .wb-stage.panel{margin:0;padding:0;border:calc(var(--dimension-1) * 1) solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--graphite-900)}
+.wb-stage>h2,.wb-stage>.panel-title-row,.wb-stage>.get-library-copy{display:none}
+.wb-stage .button-matrix-wrap{margin:0;min-width:0;max-width:100%;overflow:auto;padding:var(--space-28)}
+.wb-stage.wb-showcase .button-matrix-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(var(--dimension-1) * 400);background-image:radial-gradient(var(--line-strong) calc(var(--dimension-1) * 0.7),transparent calc(var(--dimension-1) * 0.7));background-size:calc(var(--dimension-1) * 16) calc(var(--dimension-1) * 16)}
+.wb-showcase .button-matrix-combo:not(.wb-selected-combo){display:none!important}
+.wb-showcase .button-matrix-combo.wb-selected-combo{width:100%;margin:0!important}
+.wb-showcase .button-matrix-combo-label{display:none!important}
+.wb-showcase .button-matrix{display:block!important;border:0!important;background:transparent!important;width:100%!important;min-width:0!important;margin:0!important;box-shadow:none!important}
+.wb-showcase .button-matrix>thead,.wb-showcase .button-matrix>tbody>tr:not(.wb-selected-row),.wb-showcase .button-matrix>tbody>tr>th,.wb-showcase .button-matrix>tbody>tr>td:not(.wb-selected-cell){display:none!important}
+.wb-showcase .button-matrix>tbody{display:block!important}.wb-showcase .wb-selected-row{display:block!important}
+.wb-showcase .button-matrix>tbody>tr>td.wb-selected-cell{display:flex!important;align-items:safe center;justify-content:safe center;padding:var(--space-20)!important;border:0!important;background:transparent!important;min-height:calc(var(--dimension-1) * 280);min-width:0;max-width:100%;width:100%!important;overflow:auto}
+.wb-stage-caption{display:flex;justify-content:space-between;gap:var(--space-12);padding:var(--space-14) var(--space-18);border-top:calc(var(--dimension-1) * 1) solid var(--line);font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);color:var(--text-mid);background:var(--graphite-900)}
+.wb-stage .wb-exports{display:flex;gap:var(--space-8);flex-wrap:wrap;margin:0;padding:var(--space-14) var(--space-18);border-bottom:calc(var(--dimension-1) * 1) solid var(--line);background:var(--graphite-900)}
+.wb-stage .wb-exports .wb-button{flex:1;min-width:calc(var(--dimension-1) * 140)}
+.wb-stage .wb-exports>.wb-mode{margin-inline-start:0}
+.wb-stage .wb-exports .wb-export-actions{display:flex;gap:var(--space-8);flex-wrap:wrap;margin-inline-start:auto}
+/* The Figma action is a .btn.btn-ghost (shared sitewide), while its row-mates
+   here are .btn-demo--tertiary - that pulls a solid, heavier border color
+   than the lighter/lower-opacity one every other icon in this row uses.
+   Match it rather than letting one icon visually outweigh its neighbors. */
+.wb-exports .btn.is-icon-only{border-color:var(--line-strong)}
+.wb-export-note{font-size:var(--type-caption-size);color:var(--text-mid);line-height:var(--type-caption-line-height);margin:var(--space-12) 0 0}
+.wb-docs{margin-top:var(--space-24);border:var(--border-width-1) var(--border-style) var(--line-strong);border-radius:var(--radius-md);padding:0 var(--space-14)}
+.wb-docs[open]{padding-bottom:var(--space-14)}
+.wb-docs>summary{display:flex;align-items:center;gap:var(--space-10);font-size:var(--type-caption-size);cursor:pointer;padding:var(--space-14) 0;font-weight:var(--type-selected-weight);list-style:none}
+.wb-docs>summary::-webkit-details-marker{display:none}
+.wb-docs>summary .chev{color:var(--text-dim);margin-inline-start:auto;transform:rotate(-90deg)}
+.wb-docs[open]>summary .chev{transform:rotate(0deg)}
+.wb-docs>.panel{margin-bottom:var(--space-16)}.wb-docs .panel-title{font-size:var(--type-body-size)}
+.wb-inspector details{border-top:calc(var(--dimension-1) * 1) solid var(--line);padding:var(--space-14) 0 0;margin-top:var(--space-16)}
+.wb-inspector summary{cursor:pointer;font-size:var(--type-caption-size);font-weight:var(--type-selected-weight);line-height:var(--type-caption-line-height);padding:0 0 var(--space-12)}
+.wb-field{display:flex;flex-direction:column;gap:var(--space-6);min-width:0;margin-bottom:var(--space-12);font-size:var(--type-caption-size);color:var(--text-mid)}
+.wb-field input,.wb-field select,.wb-field textarea{font:var(--type-caption-weight) var(--type-caption-size)/var(--type-caption-line-height) var(--type-caption-family);color:var(--text-hi);background:var(--graphite-950);border:calc(var(--dimension-1) * 1) solid var(--line-strong);border-radius:var(--radius-sm);min-height:var(--size-control);padding:var(--space-8);min-width:0;width:100%}
+.wb-field textarea{min-height:calc(var(--dimension-1) * 68);resize:vertical}.wb-field .wb-hint{font-size:var(--type-caption-size);line-height:var(--type-caption-line-height)}
+.wb-field input[aria-invalid=true]{border-color:var(--danger-500)}.wb-error{font-size:var(--type-caption-size);color:var(--danger-500);line-height:var(--type-caption-line-height)}
+.wb-additional{border-top:calc(var(--dimension-1) * 1) solid var(--line);margin-top:var(--space-16);padding-top:var(--space-16)}
+.wb-additional h3{font:var(--type-h6-weight) var(--type-h6-size)/var(--type-h6-line-height) var(--type-h6-family);margin:0 0 var(--space-12)}
+.wb-additional [data-role="avatar-group-container"]{margin-block:var(--space-12)}
+.wb-page .wb-inspector [hidden],.wb-page .wb-center [hidden]{display:none!important}
+@media(min-width:1600px){.wb-layout{grid-template-columns:minmax(0,1fr) calc(var(--dimension-1) * 360)}.wb-center{padding:var(--space-32)}}
+@media(max-width:1150px){.wb-layout{grid-template-columns:minmax(0,1fr) calc(var(--dimension-1) * 300)}.wb-center{padding:var(--space-16)}.wb-inspector{padding:var(--space-16)}.wb-header{padding:var(--space-20)}.wb-toolbar{gap:var(--space-8)}.wb-stage.wb-showcase .button-matrix-wrap{padding:var(--space-12)}}
+@media(max-width:1150px){.wb-inspector-header{top:calc(-1 * var(--space-16))}}
+@media(max-width:900px){.wb-inspector{max-height:calc(100dvh - calc(var(--dimension-1) * 64))}.wb-stage.wb-showcase .button-matrix-wrap{min-height:calc(var(--dimension-1) * 320)}}
+@media(max-width:700px){.wb-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "center" "inspector"}.wb-inspector{position:static;max-height:none;border-inline-start:0;border-top:calc(var(--dimension-1) * 1) solid var(--line)}.wb-header{padding:var(--space-20) var(--space-16)}.wb-header .page-title{font-size:var(--type-h4-size)}.wb-toolbar .wb-field{max-width:none;flex-basis:35%}.wb-mode{margin:0;width:100%}.wb-stage-caption{flex-wrap:wrap}.wb-showcase .button-matrix>tbody>tr>td.wb-selected-cell{padding:var(--space-12)!important;min-height:calc(var(--dimension-1) * 220)}.wb-stage.wb-showcase .button-matrix-wrap{min-height:calc(var(--dimension-1) * 280)}.wb-exports .wb-button{flex:1 1 40%}}
+@media(max-width:700px){.wb-inspector-header{position:static}.wb-inspector-shortcuts{position:static}}
+@media(prefers-reduced-motion:reduce){.wb-page *{scroll-behavior:auto!important}}
+
+/* Button detail workspace: consistent control rows and individually editable parts. */
+.wb-button-page .wb-layout{grid-template-columns:minmax(0,1fr) calc(var(--dimension-1) * 360)}
+.wb-button-page .wb-center{container:button-canvas / inline-size;padding:var(--space-24)}
+.wb-button-page .wb-header{padding:var(--space-24)}
+.wb-button-page .wb-header .page-title{margin-bottom:var(--space-8);line-height:1.3}
+.wb-button-page .wb-toolbar{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr));gap:var(--space-16) var(--space-12);align-items:end;margin-bottom:var(--space-16)}
+.wb-button-page .wb-toolbar .wb-field{min-width:0;max-width:none;margin:0;gap:var(--space-8);font-size:var(--type-caption-size)}
+.wb-button-page .wb-toolbar .wb-field:has([aria-label=Configuration]){grid-column:1/-1;order:1}
+.wb-button-page .wb-toolbar select{height:var(--size-control);min-height:var(--size-control);padding:var(--space-8) var(--space-12);font-size:var(--type-caption-size);border-radius:var(--radius-md);overflow:hidden;text-overflow:ellipsis}
+.wb-button-page .wb-toolbar>.wb-mode{grid-column:1/-1;justify-self:start;margin:0;gap:var(--space-4);padding:var(--space-4);order:2}
+.wb-button-page .wb-toolbar>.wb-mode .wb-button{min-height:calc(var(--dimension-1) * 32);padding:var(--space-6) var(--space-12)}
+.wb-button-page .wb-stage{position:relative}
+.wb-button-page .wb-stage.wb-showcase .button-matrix-wrap{min-height:clamp(calc(var(--dimension-1) * 240),calc(100dvh - calc(var(--dimension-1) * 400)),calc(var(--dimension-1) * 440));padding:var(--space-24)}
+.wb-button-page .wb-stage-caption{align-items:center;padding:var(--space-12) var(--space-16);min-height:calc(var(--dimension-1) * 44);gap:var(--space-12);line-height:calc(var(--dimension-1) * 18)}
+.wb-button-page .wb-stage-caption>span:last-child{flex:none;font-variant-numeric:tabular-nums;font-family:var(--font-mono);font-size:var(--type-caption-size)}
+.wb-button-page .wb-inspector{padding:var(--space-20);height:calc(100dvh - calc(var(--dimension-1) * 64));max-height:calc(100dvh - calc(var(--dimension-1) * 64))}
+.wb-button-page .wb-inspector-header{padding-top:var(--space-16);padding-bottom:var(--space-16);margin-bottom:var(--space-20)}
+.wb-button-page .wb-inspector-header .wb-subtitle{margin-bottom:var(--space-16)}
+.wb-button-page .wb-savebar{gap:var(--space-8);padding-top:0}
+.wb-button-page .wb-inspector .wb-button{border-radius:var(--radius-md)}
+.wb-button-page .wb-inspector .type-control{gap:var(--space-8);min-width:0;margin:0}
+.wb-button-page .wb-inspector .type-control>span{font-size:var(--type-caption-size);line-height:calc(var(--dimension-1) * 16)}
+.wb-button-page .wb-inspector :is(.multiselect-trigger,input[type=text],input[type=number],select){height:var(--size-control);min-height:var(--size-control);padding:var(--space-8) var(--space-10);border-radius:var(--radius-md);font-size:var(--type-caption-size);line-height:calc(var(--dimension-1) * 20)}
+.wb-button-page .wb-inspector .multiselect-trigger-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wb-button-page .wb-inspector :is(input,textarea,select,button):focus-visible{outline:calc(var(--dimension-1) * 2) solid var(--color-focus-ring);outline-offset:calc(var(--dimension-1) * 2)}
+.wb-button-page .wb-inspector .get-library-copy{font-size:var(--type-caption-size);line-height:calc(var(--dimension-1) * 18);margin-bottom:var(--space-16)}
+.wb-button-page .wb-inspector details{padding-top:var(--space-16);margin-top:var(--space-20)}
+.wb-button-page .wb-inspector summary{font-size:var(--type-caption-size);line-height:calc(var(--dimension-1) * 18);padding-bottom:var(--space-12)}
+.wb-button-page .wb-unit-row{justify-content:space-between;gap:var(--space-12);flex-wrap:wrap;margin-bottom:var(--space-16)}
+.wb-button-page .wb-unit-label{font-size:var(--type-caption-size)}
+.wb-button-page .wb-unit-row .wb-mode{margin:0;min-width:calc(var(--dimension-1) * 88)}
+.wb-button-page .wb-field{gap:var(--space-8);margin-bottom:var(--space-16);font-size:var(--type-caption-size);line-height:calc(var(--dimension-1) * 16)}
+.wb-button-page .wb-field :is(input,select,textarea){font-size:var(--type-caption-size);border-radius:var(--radius-md)}
+.wb-button-page .wb-field textarea{padding:var(--space-10);min-height:calc(var(--dimension-1) * 80);line-height:calc(var(--dimension-1) * 20)}
+@container button-canvas (max-width:360px){
+  .wb-button-page .wb-toolbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-12)}
+  .wb-button-page .wb-toolbar .wb-family{grid-column:1/-1}
+}
+@container button-canvas (min-width:900px){
+  .wb-button-page .wb-toolbar{grid-template-columns:minmax(calc(var(--dimension-1) * 180),calc(var(--dimension-1) * 280)) repeat(2,minmax(calc(var(--dimension-1) * 140),calc(var(--dimension-1) * 180))) minmax(calc(var(--dimension-1) * 200),1fr)}
+  .wb-button-page .wb-toolbar>.wb-mode{grid-column:auto;justify-self:end;order:0}
+}
+@media(min-width:1600px){.wb-button-page .wb-center{padding:var(--space-32)}.wb-button-page .wb-header{padding:var(--space-24) var(--space-32)}}
+@media(max-width:1150px){.wb-button-page .wb-layout{grid-template-columns:minmax(0,1fr) calc(var(--dimension-1) * 320)}.wb-button-page .wb-center,.wb-button-page .wb-header{padding:var(--space-20)}.wb-button-page .wb-inspector{padding:var(--space-16)}.wb-button-page .wb-inspector-header{top:calc(-1 * var(--space-16))}}
+@media(max-width:700px){.wb-button-page .wb-layout{grid-template-columns:minmax(0,1fr)}.wb-button-page .wb-center,.wb-button-page .wb-header{padding:var(--space-16)}.wb-button-page .wb-inspector{height:auto;max-height:none;padding:var(--space-20) var(--space-16)}.wb-button-page .wb-inspector-header{position:static}.wb-button-page .wb-stage.wb-showcase .button-matrix-wrap{min-height:calc(var(--dimension-1) * 280);padding:var(--space-12)}}
+
+/* Inspector chrome uses consistent arrows and leaves room for long values. */
+.wb-page :is(.wb-toolbar,.wb-inspector) select{appearance:none;padding-inline-end:var(--space-32);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23888888' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right calc(var(--dimension-1) * 10) center;background-size:calc(var(--dimension-1) * 12) calc(var(--dimension-1) * 8);text-overflow:ellipsis}
+[dir=rtl] .wb-page :is(.wb-toolbar,.wb-inspector) select{background-position:left calc(var(--dimension-1) * 10) center}
+
+/* New workspace controls inherit the complete Foundation typography role. */
+.wb-page .app-main :is(.wb-button,.wb-field,.wb-unit-label,.wb-status,.wb-export-note,.wb-stage-caption,.wb-inspector summary,.multiselect-option),
+.wb-page .app-main :is(.wb-toolbar,.wb-inspector) :is(input,select,textarea,.multiselect-trigger){font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking)}
+.wb-page .wb-inspector-header h2{font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking)}
+.wb-page :is(.wb-toolbar,.wb-inspector) :is(input:not([type=checkbox]):not([type=radio]),select,textarea,.multiselect-trigger){border-width:var(--border-width-1);border-style:var(--border-style);border-color:var(--control-border);border-radius:var(--radius-sm)}
+

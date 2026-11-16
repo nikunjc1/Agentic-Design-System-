@@ -1,0 +1,123 @@
+[
+  {
+    "page": "overview.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "values.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "new-project.html",
+    "removed": [
+      "Header version badge"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "principles.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "guidelines.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "copywriting.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "data-format.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "accessibility.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "patterns.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "templates.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "ai-generator.html",
+    "removed": [
+      "Header version badge",
+      "Repeated Not built yet label",
+      "Three repeated availability tags"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "npm-package.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label",
+      "Six state badges duplicated by the explanatory rows"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "history.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "changelog.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  },
+  {
+    "page": "settings.html",
+    "removed": [
+      "Header version badge",
+      "Redundant page/category label"
+    ],
+    "linksPreserved": true
+  }
+]

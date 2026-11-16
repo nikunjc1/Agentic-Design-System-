@@ -1,0 +1,267 @@
+{
+  "file": "date-range-default.html",
+  "name": "Date Range",
+  "category": "Components · Forms · Date Range",
+  "controls": [
+    {
+      "index": 0,
+      "role": "daterange-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "daterange-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "daterange-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "daterange-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "daterange-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Trip dates",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "daterange-start-placeholder",
+      "id": null,
+      "label": "Start placeholder",
+      "type": "text",
+      "value": "Start date",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Start placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "daterange-end-placeholder",
+      "id": null,
+      "label": "End placeholder",
+      "type": "text",
+      "value": "End date",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "End placeholder",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "daterange-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces icon once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholders are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Date Range collects a start and end date together as one bounded pair in a single field - a text field showing both dates with a fixed trailing calendar icon - used whenever the two dates are meaningless apart, like a trip's start and end. When to Use Trip or booking dates - start and end, considered together. A reporting period or subscription term - a bounded window with a clear start and end. An event's duration - where showing just one date without the other would be incomplete. When Not to Use Two genuinely independent dates - use two separate Date Pickers if the dates don't form one bounded range. A single date with no end boundary - use Date Picker. A numeric range rather than a date range - use Slider or two Number fields. Best Practices Show both dates together in the field so the pair reads as one value, not two. Prevent selecting an end date before the start date directly in the calendar UI, rather than only validating after submission. Highlight the in-between days in the calendar panel while the user is choosing the range, so the selection reads clearly before it's confirmed. Do and Don't Do Reporting period1 Jan 2026 – 31 Mar 2026📅 One control holding both ends, so the pair is obviously a range and cannot be filled in the wrong order. Don't From31 Mar 2026📅To1 Jan 2026📅End date is before start date. Two independent Date Pickers let the user build an impossible range and only find out when they submit. Accessibility Announces which end of the range (start or end) is currently being selected as the user moves through the calendar. Fully keyboard-operable, matching Date Picker's arrow-key and Enter/Escape behavior, extended across two linked selections. The field's accessible name or nearby label clarifies that a range, not a single date, is being collected. Related Components Date Picker, Calendar, Time. { \"component\": \"Date Range\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Date Range collects a start and end date together as one bounded pair in a single field - a text field showing both dates with a fixed trailing calendar icon - used whenever the two dates are meaningless apart, like a trip's start and end.\", \"whenToUse\": [ \"Trip or booking dates - start and end, considered together.\", \"A reporting period or subscription term - a bounded window with a clear start and end.\", \"An event's duration - where showing just one date without the other would be incomplete.\" ], \"whenNotToUse\": [ \"Two genuinely independent dates - use two separate Date Pickers if the dates don't form one bounded range.\", \"A single date with no end boundary - use Date Picker.\", \"A numeric range rather than a date range - use Slider or two Number fields.\" ], \"bestPractices\": [ \"Show both dates together in the field so the pair reads as one value, not two.\", \"Prevent selecting an end date before the start date directly in the calendar UI, rather than only validating after submission.\", \"Highlight the in-between days in the calendar panel while the user is choosing the range, so the selection reads clearly before it's confirmed.\" ], \"doAndDont\": { \"do\": \"One control holding both ends, so the pair is obviously a range and cannot be filled in the wrong order.\", \"dont\": \"Two independent Date Pickers let the user build an impossible range and only find out when they submit.\" }, \"accessibility\": [ \"Announces which end of the range (start or end) is currently being selected as the user moves through the calendar.\", \"Fully keyboard-operable, matching Date Picker's arrow-key and Enter/Escape behavior, extended across two linked selections.\", \"The field's accessible name or nearby label clarifies that a range, not a single date, is being collected.\" ], \"relatedComponents\": [ \"Date Picker\", \"Calendar\", \"Time\" ] }",
+  "tests": []
+}

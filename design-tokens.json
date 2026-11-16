@@ -6,6 +6,22 @@
         "dark": "tabular-nums",
         "light": "tabular-nums"
       },
+      "icon-cap": {
+        "dark": "round",
+        "light": "round"
+      },
+      "icon-join": {
+        "dark": "round",
+        "light": "round"
+      },
+      "border-style": {
+        "dark": "solid",
+        "light": "solid"
+      },
+      "border-sides": {
+        "dark": "all",
+        "light": "all"
+      },
       "type-h1-style": {
         "dark": "normal",
         "light": "normal"
@@ -69,22 +85,6 @@
       "type-info-style": {
         "dark": "normal",
         "light": "normal"
-      },
-      "border-style": {
-        "dark": "solid",
-        "light": "solid"
-      },
-      "border-sides": {
-        "dark": "all",
-        "light": "all"
-      },
-      "icon-cap": {
-        "dark": "round",
-        "light": "round"
-      },
-      "icon-join": {
-        "dark": "round",
-        "light": "round"
       }
     },
     "com.agentic-design-system.context": {
@@ -776,12 +776,36 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
+          0.6549019607843137,
           0.5450980392156862,
-          0.3607843137254902,
-          0.9647058823529412
+          0.9803921568627451
         ],
         "alpha": 1,
-        "hex": "#8b5cf6"
+        "hex": "#a78bfa"
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6549019607843137,
+              0.5450980392156862,
+              0.9803921568627451
+            ],
+            "alpha": 1,
+            "hex": "#a78bfa"
+          },
+          "light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.48627450980392156,
+              0.22745098039215686,
+              0.9294117647058824
+            ],
+            "alpha": 1,
+            "hex": "#7c3aed"
+          }
+        }
       }
     },
     "color-ai-accent-strong": {
@@ -1201,6 +1225,16 @@
       "$type": "color",
       "$value": "{other.border-state-focus}"
     },
+    "border-state-focus": {
+      "$type": "color",
+      "$value": "{color.red-400}",
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": "{color.red-400}",
+          "light": "{color.red-500}"
+        }
+      }
+    },
     "color-on-brand": {
       "$type": "color",
       "$value": "{other.on-brand-text}"
@@ -1210,12 +1244,12 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.0,
-          0.0,
-          0.0
+          1.0,
+          1.0,
+          1.0
         ],
         "alpha": 1,
-        "hex": "#000000"
+        "hex": "#FFFFFF"
       }
     },
     "tracking-tight": {
@@ -1288,6 +1322,81 @@
         "com.agentic-design-system.relative-unit": "em"
       }
     },
+    "icon-size": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "icon-scale": {
+      "$type": "number",
+      "$value": 1.0
+    },
+    "icon-stroke": {
+      "$type": "number",
+      "$value": 1.8
+    },
+    "focus-ring-width": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "size-control": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "size-target": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "size-icon": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "size-content": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1200,
+        "unit": "px"
+      }
+    },
+    "size-sidebar": {
+      "$type": "dimension",
+      "$value": {
+        "value": 264,
+        "unit": "px"
+      }
+    },
+    "size-topbar": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "grid-columns": {
+      "$type": "number",
+      "$value": 12.0
+    },
+    "grid-gutter": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
     "button-primary-bg-default": {
       "$type": "color",
       "$value": "{color.red-500}"
@@ -1303,6 +1412,45 @@
     "button-primary-text": {
       "$type": "color",
       "$value": "{other.color-on-brand}"
+    },
+    "button-primary-text-default": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "button-primary-text-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "button-primary-text-active": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
     },
     "button-primary-focus-ring": {
       "$type": "color",
@@ -2459,45 +2607,6 @@
             "hex": "#3E70B5"
           }
         }
-      }
-    },
-    "button-primary-text-hover": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "alpha": 1,
-        "hex": "#000000"
-      }
-    },
-    "button-primary-text-default": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "alpha": 1,
-        "hex": "#000000"
-      }
-    },
-    "button-primary-text-active": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "alpha": 1,
-        "hex": "#FFFFFF"
       }
     },
     "contrast-pass-bg": {
@@ -3797,80 +3906,6 @@
       "$type": "dimension",
       "$value": {
         "value": 1352,
-        "unit": "px"
-      }
-    },
-    "border-state-focus": {
-      "$type": "color",
-      "$value": "{color.red-400}",
-      "$extensions": {
-        "com.agentic-design-system.mode": {
-          "dark": "{color.red-400}",
-          "light": "{color.red-500}"
-        }
-      }
-    },
-    "focus-ring-width": {
-      "$type": "dimension",
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
-    "size-control": {
-      "$type": "dimension",
-      "$value": {
-        "value": 40,
-        "unit": "px"
-      }
-    },
-    "size-target": {
-      "$type": "dimension",
-      "$value": {
-        "value": 44,
-        "unit": "px"
-      }
-    },
-    "size-icon": {
-      "$type": "dimension",
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "size-content": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1200,
-        "unit": "px"
-      }
-    },
-    "size-sidebar": {
-      "$type": "dimension",
-      "$value": {
-        "value": 264,
-        "unit": "px"
-      }
-    },
-    "icon-size": {
-      "$type": "dimension",
-      "$value": {
-        "value": 24,
-        "unit": "px"
-      }
-    },
-    "icon-stroke": {
-      "$type": "number",
-      "$value": 1.8
-    },
-    "grid-columns": {
-      "$type": "number",
-      "$value": 12.0
-    },
-    "grid-gutter": {
-      "$type": "dimension",
-      "$value": {
-        "value": 24,
         "unit": "px"
       }
     }
@@ -5870,7 +5905,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.06
+          "alpha": 0.15
         },
         "offsetX": {
           "value": 0,
@@ -5888,6 +5923,64 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.15
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.06
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        }
       }
     },
     "shadow-sm": {
@@ -5900,7 +5993,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.08
+          "alpha": 0.2
         },
         "offsetX": {
           "value": 0,
@@ -5918,6 +6011,64 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.2
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 4,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.08
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 4,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        }
       }
     },
     "shadow-md": {
@@ -5930,7 +6081,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.1
+          "alpha": 0.25
         },
         "offsetX": {
           "value": 0,
@@ -5948,6 +6099,64 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.25
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 8,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.1
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 8,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        }
       }
     },
     "shadow-lg": {
@@ -5960,7 +6169,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.12
+          "alpha": 0.3
         },
         "offsetX": {
           "value": 0,
@@ -5978,6 +6187,64 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.3
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 16,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.12
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 16,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        }
       }
     },
     "shadow-xl": {
@@ -5990,7 +6257,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.14
+          "alpha": 0.35
         },
         "offsetX": {
           "value": 0,
@@ -6008,6 +6275,64 @@
           "value": 0,
           "unit": "px"
         }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.35
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 12,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 24,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.14
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 12,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 24,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        }
       }
     },
     "shadow-2xl": {
@@ -6020,7 +6345,7 @@
             0.0,
             0.0
           ],
-          "alpha": 0.16
+          "alpha": 0.4
         },
         "offsetX": {
           "value": 0,
@@ -6037,6 +6362,64 @@
         "spread": {
           "value": 0,
           "unit": "px"
+        }
+      },
+      "$extensions": {
+        "com.agentic-design-system.mode": {
+          "dark": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.4
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 16,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 32,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "light": {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.16
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 16,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 32,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
         }
       }
     }

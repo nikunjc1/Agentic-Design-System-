@@ -1,0 +1,123 @@
+{
+  "file": "tree-default.html",
+  "name": "Tree",
+  "category": "Components · Data Display · Tree",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Checkable",
+          "label": "Checkable"
+        },
+        {
+          "value": "Metatext",
+          "label": "Metatext"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Expanded",
+          "label": "Expanded"
+        },
+        {
+          "value": "Selected",
+          "label": "Selected"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "tree-root-label",
+      "id": null,
+      "label": "Root label",
+      "type": "text",
+      "value": "Documents",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Root label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "tree-show-icons",
+      "id": null,
+      "label": "Show icons",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "folder/file icon next to each node",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Root label and icon visibility are properties of the same component, not a separate tree - change them below to check all 3 types and every state in the Live Preview. The node structure itself (Reports/Presentations/Notes.txt) is fixed reference content, matching Cascader's and Tree Select's own fixed demo hierarchies.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Read More",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Tree is a standalone, always-visible hierarchical structure with expandable branches - each node can be a folder-like parent with children or a leaf, optionally with a checkbox for multi-select. It's the always-on-page counterpart to Tree Select, which hides the same structure behind a dropdown trigger. When to Use A file or folder browser - nested files and directories the user expands and browses directly. An org chart or category tree - a structure worth keeping visible while the user works, not hidden behind a click. A permission tree with checkboxes - selecting individual nodes or whole branches at once. When Not to Use A form field that picks one value from hierarchical data - use Tree Select so the structure stays hidden until needed, saving space. Linked columns where each choice narrows the next - use Cascader instead of a single expandable tree. Flat, non-hierarchical data - use List or Table; a Tree's indentation and expand controls add nothing when there's no real nesting. Best Practices Keep deeply nested branches collapsed by default, expanding only the path relevant to the current context. Use the Checkable type's parent-checkbox to reflect a partial (indeterminate) selection when only some children are checked. Pair folder/file icons with the indentation, not instead of it - icons alone don't communicate depth as clearly as indentation does. Reach for the Metatext type's second line of supplemental text to disambiguate similarly-named nodes or surface a quick detail (a file size, an item count) without adding a column. Do and Don't Do ▾📁Design📄Icons.fig Folders and files read differently at a glance, and the hierarchy is shown through real indentation, not just a label prefix. Don't Design- Icons.fig A hyphen standing in for indentation collapses the moment there is more than one level deep, and gives folders no toggle to collapse their contents. Accessibility Implemented with tree/treeitem roles, so screen readers announce each node's depth and expanded/collapsed state. Fully keyboard-operable - arrow keys move between nodes, and left/right expand or collapse a branch. Checkbox state (checked/indeterminate/unchecked) is exposed programmatically, not communicated by fill color alone. Related Components Tree Select, Cascader, Transfer. { \"component\": \"Tree\", \"status\": \"Experimental\", \"category\": \"Data Display\", \"summary\": \"Tree is a standalone, always-visible hierarchical structure with expandable branches - the always-on-page counterpart to Tree Select's dropdown-hidden variant.\", \"whenToUse\": [ \"A file or folder browser with nested files and directories.\", \"An org chart or category tree worth keeping visible while the user works.\", \"A permission tree with checkboxes for selecting individual nodes or whole branches.\" ], \"whenNotToUse\": [ \"A form field that picks one value from hierarchical data - use Tree Select instead.\", \"Linked columns where each choice narrows the next - use Cascader instead.\", \"Flat, non-hierarchical data - use List or Table instead.\" ], \"bestPractices\": [ \"Keep deeply nested branches collapsed by default, expanding only the relevant path.\", \"Use the Checkable type's parent-checkbox to reflect a partial (indeterminate) selection.\", \"Pair folder/file icons with indentation, not instead of it.\", \"Reach for the Metatext type's second line of supplemental text to disambiguate similarly-named nodes or surface a quick detail without adding a column.\" ], \"doAndDont\": { \"do\": \"Folders and files read differently at a glance, and the hierarchy is shown through real indentation, not just a label prefix.\", \"dont\": \"A hyphen standing in for indentation collapses the moment there is more than one level deep, and gives folders no toggle to collapse their contents.\" }, \"accessibility\": [ \"Implemented with tree/treeitem roles announcing depth and expanded state.\", \"Fully keyboard-operable - arrow keys move between nodes, left/right expand or collapse.\", \"Checkbox state is exposed programmatically, not communicated by color alone.\" ], \"relatedComponents\": [ \"Tree Select\", \"Cascader\", \"Transfer\" ] }",
+  "tests": []
+}

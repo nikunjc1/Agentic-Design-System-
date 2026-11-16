@@ -1,0 +1,2314 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "avatar-default.html",
+      "name": "Avatar",
+      "family": "avatar.html",
+      "controls": [
+        {
+          "role": "avatar-size-select",
+          "label": "Size",
+          "cases": [
+            {
+              "value": "24",
+              "native": "24",
+              "previewChanged": true
+            },
+            {
+              "value": "32",
+              "native": "32",
+              "previewChanged": true
+            },
+            {
+              "value": "40",
+              "native": "40",
+              "previewChanged": true
+            },
+            {
+              "value": "48",
+              "native": "48",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-shape-select",
+          "label": "Shape",
+          "cases": [
+            {
+              "value": "circle",
+              "native": "circle",
+              "previewChanged": false
+            },
+            {
+              "value": "square",
+              "native": "square",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-initials",
+          "label": "Initials",
+          "cases": [
+            {
+              "value": "QA",
+              "native": "QA",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "avatar-group-view-select",
+          "label": "Show as",
+          "cases": [
+            {
+              "value": "avatars",
+              "native": "avatars",
+              "previewChanged": false
+            },
+            {
+              "value": "names",
+              "native": "names",
+              "previewChanged": false
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Initials",
+          "state": "Default",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Online",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Away",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Initials",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Initials",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Default",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Online",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Away",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Icon",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Icon",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Default",
+          "selection": {
+            "appearance": "Image",
+            "state": "Default",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Online",
+          "selection": {
+            "appearance": "Image",
+            "state": "Online",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Away",
+          "selection": {
+            "appearance": "Image",
+            "state": "Away",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Image",
+          "state": "Offline",
+          "selection": {
+            "appearance": "Image",
+            "state": "Offline",
+            "configuration": "32px - Default / Circle",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [
+        "avatar-group-view-select produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · DATA DISPLAY · AVATAR",
+      "inventory": [
+        {
+          "role": "avatar-size-select",
+          "type": "select",
+          "value": "32",
+          "options": [
+            "24",
+            "32",
+            "40",
+            "48"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-shape-select",
+          "type": "select",
+          "value": "circle",
+          "options": [
+            "circle",
+            "square"
+          ],
+          "label": "Shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-initials",
+          "type": "text",
+          "value": "JD",
+          "options": [],
+          "label": "Initials",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-group-view-select",
+          "type": "select",
+          "value": "avatars",
+          "options": [
+            "avatars",
+            "names"
+          ],
+          "label": "Show as",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 5,
+        "variants": 95
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "name": "Primary Button",
+      "family": "components.html",
+      "controls": [
+        {
+          "role": "size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "native": [
+                "28"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "32"
+              ],
+              "native": [
+                "32"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "36"
+              ],
+              "native": [
+                "36"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "40"
+              ],
+              "native": [
+                "40"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "44"
+              ],
+              "native": [
+                "44"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "48"
+              ],
+              "native": [
+                "48"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "56"
+              ],
+              "native": [
+                "56"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "content-mount",
+          "label": "Content",
+          "cases": [
+            {
+              "value": [
+                "text"
+              ],
+              "native": [
+                "text"
+              ],
+              "previewChanged": false
+            },
+            {
+              "value": [
+                "icon-left"
+              ],
+              "native": [
+                "icon-left"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "icon-right"
+              ],
+              "native": [
+                "icon-right"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "icon-both"
+              ],
+              "native": [
+                "icon-both"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "icon-only"
+              ],
+              "native": [
+                "icon-only"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "native": [
+                "2"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "4"
+              ],
+              "native": [
+                "4"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "6"
+              ],
+              "native": [
+                "6"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "8"
+              ],
+              "native": [
+                "8"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "12"
+              ],
+              "native": [
+                "12"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "button-label",
+          "label": "Button label",
+          "cases": [
+            {
+              "value": "Audit Button label",
+              "native": "Audit Button label",
+              "previewChanged": false
+            }
+          ]
+        },
+        {
+          "role": "accessible-label",
+          "label": "Accessible label (required for icon-only)?",
+          "cases": [
+            {
+              "value": "Audit Accessible label (require",
+              "native": "Audit Accessible label (require",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Primary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Primary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Primary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Secondary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Secondary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Tertiary",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Tertiary",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Ghost",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Ghost",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Neutral",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Neutral",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Link",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Link",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Link",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Link",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Link",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Link",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Link",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Approve",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Approve",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Rest",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Hover",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Pressed",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Focus",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Focus",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Disabled",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Destructive",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Destructive",
+            "state": "Loading",
+            "configuration": "40px - M / Text only / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [
+        "button-label produced no matrix/geometry change; inspect conditional or metadata-only use."
+      ],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 7,
+        "variants": 335
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "name": "Input Text Field",
+      "family": "input.html",
+      "controls": [
+        {
+          "role": "input-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "native": [
+                "28"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "32"
+              ],
+              "native": [
+                "32"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "36"
+              ],
+              "native": [
+                "36"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "40"
+              ],
+              "native": [
+                "40"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "44"
+              ],
+              "native": [
+                "44"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "48"
+              ],
+              "native": [
+                "48"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "56"
+              ],
+              "native": [
+                "56"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "native": [
+                "2"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "4"
+              ],
+              "native": [
+                "4"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "6"
+              ],
+              "native": [
+                "6"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "8"
+              ],
+              "native": [
+                "8"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "12"
+              ],
+              "native": [
+                "12"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "9999"
+              ],
+              "native": [
+                "9999"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-label",
+          "label": "Label",
+          "cases": [
+            {
+              "value": "Audit Label",
+              "native": "Audit Label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-placeholder",
+          "label": "Placeholder",
+          "cases": [
+            {
+              "value": "Audit Placeholder",
+              "native": "Audit Placeholder",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-icon-placement-mount",
+          "label": "Icon placement",
+          "cases": [
+            {
+              "value": [
+                "none"
+              ],
+              "native": [
+                "none"
+              ],
+              "previewChanged": false
+            },
+            {
+              "value": [
+                "leading"
+              ],
+              "native": [
+                "leading"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "trailing"
+              ],
+              "native": [
+                "trailing"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "both"
+              ],
+              "native": [
+                "both"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-type-select",
+          "label": "Input type",
+          "cases": [
+            {
+              "value": "text",
+              "native": "text",
+              "previewChanged": true
+            },
+            {
+              "value": "email",
+              "native": "email",
+              "previewChanged": true
+            },
+            {
+              "value": "password",
+              "native": "password",
+              "previewChanged": true
+            },
+            {
+              "value": "search",
+              "native": "search",
+              "previewChanged": true
+            },
+            {
+              "value": "tel",
+              "native": "tel",
+              "previewChanged": true
+            },
+            {
+              "value": "url",
+              "native": "url",
+              "previewChanged": true
+            },
+            {
+              "value": "number",
+              "native": "number",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-max-length",
+          "label": "Maximum length",
+          "cases": [
+            {
+              "value": 1,
+              "native": "1",
+              "previewChanged": true
+            },
+            {
+              "value": 0,
+              "native": "0",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-error-text",
+          "label": "Error message",
+          "cases": [
+            {
+              "value": "Audit Error message",
+              "native": "Audit Error message",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-allow-clear",
+          "label": "Allow clear",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-required",
+          "label": "Required",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-show-supporting",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "input-supporting-text",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": "Audit Supporting text",
+              "native": "Audit Supporting text",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Outlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Success",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Success",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Error",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Filled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Filled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Success",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Success",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Error",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Error",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Read-Only",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Read-Only",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Underlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Underlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · INPUT",
+      "inventory": [
+        {
+          "role": "input-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "input-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "input-label",
+          "type": "text",
+          "value": "Email address",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-placeholder",
+          "type": "text",
+          "value": "you@example.com",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-icon-placement-mount",
+          "type": "multi",
+          "value": [
+            "none"
+          ],
+          "options": [
+            "none",
+            "leading",
+            "trailing",
+            "both"
+          ],
+          "label": "Icon placement",
+          "unit": false
+        },
+        {
+          "role": "input-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-type-select",
+          "type": "select",
+          "value": "text",
+          "options": [
+            "text",
+            "email",
+            "password",
+            "search",
+            "tel",
+            "url",
+            "number"
+          ],
+          "label": "Input type",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-max-length",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-supporting-text",
+          "type": "text",
+          "value": "We'll only use this to send you a receipt.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-error-text",
+          "type": "text",
+          "value": "Enter a valid email address.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 18,
+        "variants": 38
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "file": "table-default.html",
+      "name": "Table",
+      "family": "table.html",
+      "controls": [
+        {
+          "role": "table-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "native": [
+                "2"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "4"
+              ],
+              "native": [
+                "4"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "6"
+              ],
+              "native": [
+                "6"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "8"
+              ],
+              "native": [
+                "8"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "12"
+              ],
+              "native": [
+                "12"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "9999"
+              ],
+              "native": [
+                "9999"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "table-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "small"
+              ],
+              "native": [
+                "small"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "middle"
+              ],
+              "native": [
+                "middle"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "large"
+              ],
+              "native": [
+                "large"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "table-show-header",
+          "label": "Show header",
+          "cases": [
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            },
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Default",
+          "state": "Default",
+          "selection": {
+            "appearance": "Default",
+            "state": "Default",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Striped",
+          "selection": {
+            "appearance": "Default",
+            "state": "Striped",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Default",
+            "state": "Selected",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Default",
+            "state": "Loading",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Default",
+          "state": "Empty",
+          "selection": {
+            "appearance": "Default",
+            "state": "Empty",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Default",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Default",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Striped",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Striped",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Selected",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Loading",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Loading",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Bordered",
+          "state": "Empty",
+          "selection": {
+            "appearance": "Bordered",
+            "state": "Empty",
+            "configuration": "8px - Balanced / Large",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TABLE",
+      "inventory": [
+        {
+          "role": "table-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "table-size-mount",
+          "type": "multi",
+          "value": [
+            "large"
+          ],
+          "options": [
+            "small",
+            "middle",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "table-show-header",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show header",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 5,
+        "variants": 232
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "overflow": false
+        }
+      ],
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

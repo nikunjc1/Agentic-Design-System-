@@ -1,0 +1,33 @@
+✔ AI approval foregrounds maintain text contrast on all status button states (26.848334ms)
+✔ dimension, border and reference-asset records reject invalid saved settings (19.608208ms)
+✔ every typography role resolves all chosen metrics in each theme (10.800125ms)
+✔ restoring the heading scale preserves other roles, fonts and theme colors (2.631416ms)
+✔ px/rem round trips preserve fractional and negative dimensions (2.002416ms)
+✔ button foreground meets 4.5:1 in all three states across palettes, except the documented factory-red exception (5.862292ms)
+✔ changing radius adjusts semantic aliases without renaming numeric primitives (0.845625ms)
+✔ spacing, sizing, borders, shadows, icons and grid resolve saved settings (0.342834ms)
+✔ focus preset cannot recolor or widen resting component boundaries (1.5475ms)
+✔ blue project accents do not tint structural boundaries, but the Borders page color now really drives them (2.90225ms)
+✔ legacy blue focus defaults migrate without changing info or custom state colors (1.46575ms)
+✔ default focus follows the brand and maintains a ring in both dimensional units (1.493916ms)
+✔ context defaults agree for single-platform and multiple-platform projects (0.0825ms)
+✔ Project Setup seeds Typography, saved choices win, and Radius stays a manual choice (1.042042ms)
+✔ malformed records and out-of-bounds values are rejected or safely resolved (0.54075ms)
+✔ data formatting distinguishes zero, absence, nonnumeric and loading (0.910375ms)
+✔ date formatting handles zones, calendar dates, ranges and invalid values (1.816208ms)
+✔ redaction never exposes a full short value and invalid locale/zone recover (0.221416ms)
+✔ component code exports keep comments and use the selected Foundation metrics (1.042ms)
+✔ all live pages load the resolver before boot and bindings last (9.526708ms)
+✔ CSS dependencies resolve and responsive thresholds never contain custom properties (7.35725ms)
+✔ shared border styling cannot revive inner borders or override form variants (2.547667ms)
+✔ head boot, same-page changes, reload defaults and cross-tab clearing use one resolver (5.897333ms)
+✔ storage failure keeps saved data, applies a marked preview, and blocks failed resets (4.205542ms)
+✔ every component page with its own Corner radius preset list can reach the Expressive philosophy's real 16px value (4.207083ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 168.589292

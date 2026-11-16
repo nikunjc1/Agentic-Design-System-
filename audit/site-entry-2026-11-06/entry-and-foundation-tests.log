@@ -1,0 +1,38 @@
+✔ AI approval foregrounds maintain text contrast on all status button states (26.650125ms)
+✔ dimension, border and reference-asset records reject invalid saved settings (20.036ms)
+✔ every typography role resolves all chosen metrics in each theme (11.164625ms)
+✔ restoring the heading scale preserves other roles, fonts and theme colors (2.8495ms)
+✔ px/rem round trips preserve fractional and negative dimensions (1.847167ms)
+✔ button foreground meets 4.5:1 in all three states across palettes, except the documented factory-red exception (6.0385ms)
+✔ changing radius adjusts semantic aliases without renaming numeric primitives (1.073666ms)
+✔ spacing, sizing, borders, shadows, icons and grid resolve saved settings (0.413834ms)
+✔ focus preset cannot recolor or widen resting component boundaries (1.6545ms)
+✔ blue project accents do not tint structural boundaries, but the Borders page color now really drives them (3.375375ms)
+✔ legacy blue focus defaults migrate without changing info or custom state colors (1.395334ms)
+✔ default focus follows the brand and maintains a ring in both dimensional units (1.674792ms)
+✔ context defaults agree for single-platform and multiple-platform projects (0.094709ms)
+✔ Project Setup seeds Typography, saved choices win, and Radius stays a manual choice (0.895625ms)
+✔ malformed records and out-of-bounds values are rejected or safely resolved (0.50225ms)
+✔ data formatting distinguishes zero, absence, nonnumeric and loading (0.990708ms)
+✔ date formatting handles zones, calendar dates, ranges and invalid values (1.707083ms)
+✔ redaction never exposes a full short value and invalid locale/zone recover (0.202959ms)
+✔ component code exports keep comments and use the selected Foundation metrics (1.191292ms)
+✔ all live pages load the resolver before boot and bindings last (9.90375ms)
+✔ CSS dependencies resolve and responsive thresholds never contain custom properties (7.342875ms)
+✔ shared border styling cannot revive inner borders or override form variants (2.502417ms)
+✔ head boot, same-page changes, reload defaults and cross-tab clearing use one resolver (6.300583ms)
+✔ storage failure keeps saved data, applies a marked preview, and blocks failed resets (3.683667ms)
+✔ every component page with its own Corner radius preset list can reach the Expressive philosophy's real 16px value (3.72475ms)
+✔ fresh and returning deep links, including saved conversation URLs, always start at project choices (2.940209ms)
+✔ a single-use navigation handoff allows browsing, then is consumed (1.703ms)
+✔ file links still work when browser session storage is unavailable (0.86625ms)
+✔ manual reload returns to entry; explicit in-app reload preserves an editor (1.331542ms)
+✔ internal history navigation remains available and preview frames are never redirected (0.894208ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169.541834

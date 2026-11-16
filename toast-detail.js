@@ -14,12 +14,12 @@
   // close to a typical Alert icon set: both components legitimately share
   // the same 4 semantic icons (Info/Success/Warning/Error).
   var ICONS = {
-    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
-    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
-    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
   };
-  var CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  var CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
   var TYPES = [
     { key: "info", label: "Info" },
@@ -27,11 +27,22 @@
     { key: "warning", label: "Warning" },
     { key: "error", label: "Error" }
   ];
-  var STATES = [
-    { key: "default", label: "Default" },
-    { key: "dismissible", label: "Dismissible" },
-    { key: "with-action", label: "With action" },
-    { key: "with-progress", label: "With progress" }
+  // info/success are routine (role="status", polite) - warning/error are
+  // urgent enough to interrupt (role="alert", implicitly assertive/atomic).
+  var ROLE_BY_TYPE = { info: "status", success: "status", warning: "alert", error: "alert" };
+  // Dismissible, With action, With progress and Loading are independent
+  // boolean properties, not mutually-exclusive states - they combine freely
+  // (e.g. Dismissible + With action + With progress together). This list
+  // only curates a handful of representative combinations for the
+  // side-by-side Live Preview matrix, the same way Button's Compare-states
+  // rows are illustrative examples rather than an exhaustive cross-product.
+  var SCENARIOS = [
+    { key: "default", label: "Default", dismissible: false, withAction: false, withProgress: false, loading: false },
+    { key: "dismissible", label: "Dismissible", dismissible: true, withAction: false, withProgress: false, loading: false },
+    { key: "with-action", label: "With action", dismissible: false, withAction: true, withProgress: false, loading: false },
+    { key: "with-progress", label: "With progress", dismissible: false, withAction: false, withProgress: true, loading: false },
+    { key: "all-combined", label: "Dismissible + Action + Progress", dismissible: true, withAction: true, withProgress: true, loading: false },
+    { key: "loading", label: "Loading", dismissible: false, withAction: false, withProgress: false, loading: true }
   ];
 
   var FULL_SPEC = {
@@ -62,7 +73,7 @@
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var accent = { info: blue500, success: green500, warning: amber500, error: danger500 }[typeKey];
     return {
-      card: "background:" + getCssVar("--graphite-850", "#191C20") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";box-shadow:var(--shadow-xl);",
+      card: "background:" + getCssVar("--graphite-850", "#FBFBFA") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";box-shadow:var(--shadow-xl);",
       icon: "color:" + accent + ";",
       accent: accent
     };
@@ -73,10 +84,13 @@
   // and the Copy Prompt/Copy Code generators below.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -97,9 +111,32 @@
     });
     return closest !== null ? closest : fallback;
   }
-  var FALLBACK_DEFAULTS = { radius: liveRadiusDefault("8") };
-  var DEFAULT_TITLE = "Upload complete";
-  var DEFAULT_DESCRIPTION = "your-file.pdf was uploaded successfully.";
+  var DEFAULT_TITLE = "Update Complete";
+  var DEFAULT_DESCRIPTION = "Your-file.pdf was uploaded successfully.";
+  var DEFAULT_ACTION_LABEL = "View";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the title always traces back to a
+  // real Foundation value, exactly like every other Foundation-bound style
+  // in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
+  var FALLBACK_DEFAULTS = {
+    radius: liveRadiusDefault("8"),
+    title: DEFAULT_TITLE,
+    headingLevel: "h6",
+    description: DEFAULT_DESCRIPTION,
+    showTitle: true,
+    showDescription: true,
+    showIcon: true,
+    dismissible: false,
+    withAction: false,
+    actionLabel: DEFAULT_ACTION_LABEL,
+    withProgress: false,
+    loading: false
+  };
 
   function optionLabelFor(optionList, value){
     var match = optionList.filter(function(opt){ return opt.value === value; })[0];
@@ -111,7 +148,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -140,125 +177,147 @@
     return propLabel + ": " + chosen.join(", ") + " - the user has explicitly narrowed it to these, generate one variant per option.";
   }
 
-  function buildFullPrompt(selectionInfo){
+  function resolveInfo(selectionInfo){
     selectionInfo = selectionInfo || {};
-    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
-    var title = selectionInfo.title || DEFAULT_TITLE;
-    var description = selectionInfo.description || DEFAULT_DESCRIPTION;
-    var showIcon = selectionInfo.showIcon !== false;
+    function pick(key){ return (selectionInfo[key] !== undefined) ? selectionInfo[key] : FALLBACK_DEFAULTS[key]; }
+    return {
+      radius: selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS),
+      title: pick("title"),
+      description: pick("description"),
+      showTitle: pick("showTitle"),
+      showDescription: pick("showDescription"),
+      showIcon: pick("showIcon"),
+      dismissible: pick("dismissible"),
+      withAction: pick("withAction"),
+      actionLabel: pick("actionLabel"),
+      withProgress: pick("withProgress"),
+      loading: pick("loading")
+    };
+  }
+
+  function buildFullPrompt(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
 
     var lines = [];
     lines.push("Create a complete Toast (floating notification) component for the Agentic Design System.");
     lines.push("");
-    lines.push("Build it as ONE reusable component controlled by properties (type, state, radius) - a floating, elevated notification card (solid background, border, drop shadow, fixed ~340px max-width) that appears temporarily to confirm an action or report a status.");
+    lines.push("Build it as ONE reusable component controlled by properties (type, radius, dismissible, with action, with progress, loading) - a floating, elevated notification card (solid background, border, drop shadow, fixed ~340px max-width) that appears temporarily to confirm an action or report a status.");
     lines.push("");
-    lines.push("It differs from Alert by being a floating overlay element, not inline page content - in production it is typically rendered in a fixed screen corner (e.g. bottom-right), stacked above the page, rather than embedded in the content flow the way Alert is.");
+    lines.push("It differs from Alert by being a floating overlay element, not inline page content - rendered in a fixed screen corner (default: bottom-right on desktop, bottom-center on mobile), stacked above the page, rather than embedded in the content flow the way Alert is. Max 3 toasts visible at once by default, newest on top; anything beyond that queues.");
     lines.push("");
-    lines.push("Types (4, drive only the icon color - the card itself always stays a solid neutral elevated surface):");
+    lines.push("Types (4, drive only the icon/progress-fill color - the card itself always stays a solid neutral elevated surface):");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
-      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose + " Icon color: " + css.icon);
+      lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose + " Icon color: " + css.icon + " Role: role=\"" + ROLE_BY_TYPE[t.key] + "\" (" + (ROLE_BY_TYPE[t.key] === "alert" ? "assertive/atomic" : "polite") + "); don't re-announce the same toast twice.");
     });
     lines.push("Card (same for every type): " + liveCssFor("info").card);
+    lines.push("Recommended auto-dismiss duration (not a toggle on this static page): Info/Success 4s, Warning 6s, Error persistent while action is required. Pause the countdown on hover or keyboard focus and resume when it ends. Never let auto-dismiss remove a toast before its content can reasonably be read.");
     lines.push("");
-    lines.push("States (4, structural, apply to the whole card):");
-    lines.push("- Default: title and description only, no extra controls.");
-    lines.push("- Dismissible: adds a trailing close (x) icon button in the card's top-right corner.");
-    lines.push("- With action: adds an inline text-style action button (e.g. \"View\") below the description.");
-    lines.push("- With progress: adds a thin colored progress/timer bar along the card's bottom edge, using the type's accent color at roughly 60% width to suggest a countdown in progress.");
+    lines.push("Configuration properties (independent booleans - combine freely, e.g. Dismissible + With action + With progress together, not mutually exclusive named states):");
+    lines.push("- Show title (boolean, default checked).");
+    lines.push("- Show description (boolean, default checked).");
+    lines.push("- Show icon (boolean, default checked) - the semantic type icon, vertically aligned with the title.");
+    lines.push("- Dismissible (boolean, default unchecked) - adds a trailing close (x) icon button in the card's top-right corner; accessible name \"Dismiss, {type} toast\"; keyboard-operable.");
+    lines.push("- With action (boolean, default unchecked) - adds an inline text-style action button below the description, labeled by the Action label property (default \"" + FALLBACK_DEFAULTS.actionLabel + "\"); show loading/disabled feedback on it while an async action runs, and guard against duplicate activation.");
+    lines.push("- With progress (boolean, default unchecked) - adds a thin colored bar along the card's bottom edge. Important distinction: this represents remaining auto-dismiss time, NOT the progress of an actual operation like a file upload - never present a countdown as if it were real task progress, and never present real task progress as a countdown.");
+    lines.push("- Loading (boolean, default unchecked) - swaps the status icon for a spinner, for a toast reporting an in-progress operation (e.g. \"Uploading...\"); typically paired with updating the same toast to Success/Error once the operation resolves, rather than spawning a second toast.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applied to the whole card, with matching inset on the bottom edge so the With-progress bar never pokes out past rounded corners.");
     lines.push("");
-    lines.push("Component properties: Title (text, default \"" + DEFAULT_TITLE + "\"); Description (text, default \"" + DEFAULT_DESCRIPTION + "\"); Show icon (boolean toggle, default " + (showIcon ? "on" : "off") + " - shows the semantic type icon beside the title/description).");
-    lines.push("Current values - Title: \"" + title + "\", Description: \"" + description + "\", Show icon: " + (showIcon ? "yes" : "no") + ".");
+    lines.push("Component properties: Corner radius; Title (text, default \"" + FALLBACK_DEFAULTS.title + "\"); Description (text, default \"" + FALLBACK_DEFAULTS.description + "\"); Show title; Show description; Show icon; Dismissible; With action; Action label (text, default \"" + FALLBACK_DEFAULTS.actionLabel + "\", only rendered while With action is on); With progress; Loading.");
+    lines.push("Current values - Title: \"" + info.title + "\" (" + (info.showTitle ? "shown" : "hidden") + "), Description: \"" + info.description + "\" (" + (info.showDescription ? "shown" : "hidden") + "), Show icon: " + (info.showIcon ? "yes" : "no") + ", Action label when With action is on: \"" + info.actionLabel + "\".");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function buildFullCode(selectionInfo){
-    selectionInfo = selectionInfo || {};
-    var radiusInfo = selectionInfo.radius || selectionMode(null, RADIUS_OPTIONS);
-    var title = selectionInfo.title || DEFAULT_TITLE;
-    var description = selectionInfo.description || DEFAULT_DESCRIPTION;
-    var showIcon = selectionInfo.showIcon !== false;
-
+  function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Toast (floating notification) component */");
     lines.push(".toast-demo-card{ box-sizing:border-box; position:relative; display:flex; align-items:flex-start; gap:var(--space-12); padding:var(--space-14) var(--space-16); width:var(--dimension-340); background:var(--graphite-850); border:1px solid var(--line-strong); box-shadow:var(--shadow-xl); overflow:hidden; }");
     lines.push(".toast-demo-icon{ flex:none; width:var(--dimension-20); height:var(--dimension-20); margin-top:var(--space-1); }");
+    lines.push(".toast-demo-spinner{ flex:none; box-sizing:border-box; width:var(--dimension-20); height:var(--dimension-20); margin-top:var(--space-1); border-radius:var(--radius-full); border:2px solid color-mix(in srgb, currentColor 30%, transparent); border-top-color:currentColor; animation:spin-demo-rotate 0.8s linear infinite; }");
     lines.push(".toast-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-4); padding-inline-end:var(--space-16); text-align: start; }");
-    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.toast-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.toast-demo-description{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-mid); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".toast-demo-close{ position:absolute; top:10px; right:10px; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:var(--text-dim); cursor:pointer; padding:0; }");
-    lines.push('.toast-demo-action{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:var(--space-2); }');
+    lines.push('.toast-demo-action{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; align-self:flex-start; margin-top:var(--space-2); }');
     lines.push(".toast-demo-progress{ position:absolute; left:0; right:0; bottom:0; height:var(--dimension-3); background:var(--graphite-700); }");
     lines.push(".toast-demo-progress-fill{ height:100%; background:currentColor; }");
+    return lines.join("\n");
+  }
+
+  function buildFullCode(selectionInfo){
+    var info = resolveInfo(selectionInfo);
+    var radiusInfo = info.radius;
+
+    var lines = [];
+    lines.push(cssBlock());
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applied to the whole card */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applied to the whole card */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applied to the whole card */");
     radiiToEmit.forEach(function(radius){
       lines.push(".toast-demo-card--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
     });
     lines.push("");
-    lines.push("/* Types (4) - color the icon (and, in With-progress, the fill) only - the card stays neutral */");
+    lines.push("/* Types (4) - color the icon/spinner (and, in With-progress, the fill) only - the card stays neutral */");
     TYPES.forEach(function(t){
       var css = liveCssFor(t.key);
-      lines.push(".toast-demo-card--" + t.key + " .toast-demo-icon{ " + css.icon + " }");
+      lines.push(".toast-demo-card--" + t.key + " .toast-demo-icon, .toast-demo-card--" + t.key + " .toast-demo-spinner{ " + css.icon + " }");
       lines.push(".toast-demo-card--" + t.key + " .toast-demo-progress-fill{ " + css.icon + " }");
     });
     lines.push("");
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
-    lines.push("<!-- Example usage - one per type, Default state" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
+    lines.push("<!-- Example usage - one per type, current configuration" + (radiusInfo.mode === "specific" ? ", at the explicitly chosen radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push('<div class="toast-demo-card toast-demo-card--' + t.key + '" style="border-radius:' + radiusCssFor(exampleRadius) + '">');
-      if (showIcon) lines.push("  " + ICONS[t.key].replace('<svg ', '<svg class="toast-demo-icon" '));
-      lines.push('  <div class="toast-demo-body">');
-      lines.push('    <p class="toast-demo-title">' + escapeHtml(title) + "</p>");
-      lines.push('    <p class="toast-demo-description">' + escapeHtml(description) + "</p>");
-      lines.push("  </div>");
-      lines.push("</div>");
+      lines.push(buildToastField(t.key, { radius: exampleRadius, title: info.title, description: info.description, showTitle: info.showTitle, showDescription: info.showDescription, showIcon: info.showIcon, dismissible: info.dismissible, withAction: info.withAction, actionLabel: info.actionLabel, withProgress: info.withProgress, loading: info.loading }));
     });
+    lines.push("");
+    lines.push("<!-- Example usage - Dismissible + With action + With progress combined (Info type), proving they combine rather than being mutually exclusive -->");
+    lines.push(buildToastField("info", { radius: exampleRadius, title: info.title, description: info.description, showTitle: info.showTitle, showDescription: info.showDescription, showIcon: info.showIcon, dismissible: true, withAction: true, actionLabel: info.actionLabel, withProgress: true, loading: false }));
+    lines.push("");
+    lines.push("<!-- Example usage - Loading (Info type) -->");
+    lines.push(buildToastField("info", { radius: exampleRadius, title: info.title, description: info.description, showTitle: info.showTitle, showDescription: info.showDescription, showIcon: info.showIcon, dismissible: false, withAction: false, actionLabel: info.actionLabel, withProgress: false, loading: true }));
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
   // Builds the prompt/code for exactly ONE Corner radius value, fully
   // resolved (never "ask the question") - used by the Copy prompt/Copy
   // code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(radius, title, description, showIcon){
-    return buildFullPrompt({
-      radius: { mode: "specific", values: [radius] },
-      title: title,
-      description: description,
-      showIcon: showIcon
-    });
+  function buildComboPrompt(radius, opts){
+    return buildFullPrompt(Object.assign({}, opts, { radius: { mode: "specific", values: [radius] } }));
   }
 
-  function buildComboCode(radius, title, description, showIcon){
-    return buildFullCode({
-      radius: { mode: "specific", values: [radius] },
-      title: title,
-      description: description,
-      showIcon: showIcon
-    });
+  function buildComboCode(radius, opts){
+    return buildFullCode(Object.assign({}, opts, { radius: { mode: "specific", values: [radius] } }));
   }
 
-  // Renders one .toast-demo-card for a given type/state/radius combination.
-  function buildToastField(typeKey, stateKey, radius, title, description, showIcon){
-    var radiusCss = radiusCssFor(radius);
-    var iconHtml = showIcon ? ICONS[typeKey].replace('<svg ', '<svg class="toast-demo-icon" ') : "";
-    // Foundation audit UX10 - one cell of a side-by-side state comparison,
-    // not a real toast; tabindex="-1" keeps these buttons out of the Tab
-    // sequence without removing them from the accessibility tree.
-    var closeHtml = stateKey === "dismissible" ? '<button type="button" class="toast-demo-close" tabindex="-1" aria-label="Dismiss, ' + typeKey + ' toast">' + CLOSE_ICON + "</button>" : "";
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="toast-demo-action" tabindex="-1">View</button>' : "";
-    var progressHtml = stateKey === "with-progress" ? '<div class="toast-demo-progress"><div class="toast-demo-progress-fill" style="width:60%;"></div></div>' : "";
-    var bodyHtml = '<div class="toast-demo-body">' +
-      '<p class="toast-demo-title">' + escapeHtml(title) + "</p>" +
-      '<p class="toast-demo-description">' + escapeHtml(description) + "</p>" +
-      actionHtml +
-      "</div>";
-    return '<div class="toast-demo-card toast-demo-card--' + typeKey + '" style="border-radius:' + radiusCss + '">' +
+  // Renders one .toast-demo-card. Dismissible/With action/With progress/
+  // Loading are independent booleans on opts, combined freely (not mutually
+  // exclusive named states) - see the "Important" note in buildFullPrompt.
+  // Foundation audit UX10 - illustrative=true (the side-by-side comparison
+  // matrix) keeps Dismiss/action out of the Tab sequence without removing
+  // them (or their accessible name) from the accessibility tree; the
+  // exported Copy code example (illustrative=false/omitted) stays real,
+  // operable markup.
+  function buildToastField(typeKey, opts){
+    opts = opts || {};
+    var tabindexAttr = opts.illustrative ? ' tabindex="-1"' : "";
+    var radiusCss = radiusCssFor(opts.radius);
+    var showIcon = opts.showIcon !== false;
+    var iconHtml = !showIcon ? "" : opts.loading
+      ? '<span class="toast-demo-spinner" data-contract-part="spinner" data-contract-name="Spinner" data-contract-kind="container" aria-hidden="true"></span>'
+      : ICONS[typeKey].replace('<svg ', '<svg class="toast-demo-icon" data-contract-part="icon" ');
+    var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === opts.headingLevel; }) ? opts.headingLevel : FALLBACK_DEFAULTS.headingLevel;
+    var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
+    var titleHtml = (opts.showTitle === false) ? "" : "<" + headingTag + ' class="toast-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(opts.title) + "</" + headingTag + ">";
+    var descriptionHtml = (opts.showDescription === false) ? "" : '<p class="toast-demo-description" data-contract-part="description">' + escapeHtml(opts.description) + "</p>";
+    var actionHtml = opts.withAction ? '<button type="button" class="toast-demo-action" data-contract-part="action" data-contract-name="Action"' + tabindexAttr + ">" + escapeHtml(opts.actionLabel || FALLBACK_DEFAULTS.actionLabel) + "</button>" : "";
+    var closeHtml = opts.dismissible ? '<button type="button" class="toast-demo-close" data-contract-part="close" data-contract-name="Close"' + tabindexAttr + ' aria-label="Dismiss, ' + typeKey + ' toast">' + CLOSE_ICON + "</button>" : "";
+    var progressHtml = opts.withProgress ? '<div class="toast-demo-progress" data-contract-part="progress" data-contract-name="Progress"><div class="toast-demo-progress-fill" data-contract-kind="container" data-contract-name="Fill" style="width:60%;"></div></div>' : "";
+    var bodyHtml = '<div class="toast-demo-body" data-contract-part="body">' + titleHtml + descriptionHtml + actionHtml + "</div>";
+    return '<div class="toast-demo-card toast-demo-card--' + typeKey + '" role="' + ROLE_BY_TYPE[typeKey] + '" style="border-radius:' + radiusCss + '">' +
       iconHtml + bodyHtml + closeHtml + progressHtml +
       "</div>";
   }
@@ -291,12 +350,12 @@
       card.setAttribute("tabindex", "0");
       var href = "toast-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -377,8 +436,12 @@
 
     var radiusMount = document.querySelector('[data-role="toast-radius-mount"]');
     var titleInput = document.querySelector('[data-role="toast-title"]');
+    var headingLevelInput = document.querySelector('[data-role="toast-heading-level"]');
     var descriptionInput = document.querySelector('[data-role="toast-description"]');
+    var showTitleInput = document.querySelector('[data-role="toast-show-title"]');
+    var showDescriptionInput = document.querySelector('[data-role="toast-show-description"]');
     var showIconInput = document.querySelector('[data-role="toast-show-icon"]');
+    var actionLabelInput = document.querySelector('[data-role="toast-action-label"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
@@ -395,12 +458,20 @@
       return optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(radius, title, description, showIcon){
-      var rows = STATES.map(function(state){
+    // Dismissible/With action/With progress/Loading aren't separate
+    // checkboxes here - they're the Live Preview matrix's row scenarios
+    // (see SCENARIOS), already selectable live via the Workbench's own
+    // generic State dropdown (it lists each matrix row by name), the same
+    // way Button's Hover/Pressed/Focus/Loading rows are picked rather than
+    // toggled. A redundant checkbox here wouldn't drive that selection and
+    // would just sit inert.
+    function buildMatrixSection(radius, base){
+      var rows = SCENARIOS.map(function(scenario){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildToastField(t.key, state.key, radius, title, description, showIcon) + "</td>";
+          var opts = Object.assign({}, base, { radius: radius, dismissible: scenario.dismissible, withAction: scenario.withAction, withProgress: scenario.withProgress, loading: scenario.loading, illustrative: true });
+          return '<td class="button-matrix-cell">' + buildToastField(t.key, opts) + "</td>";
         }).join("");
-        return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
+        return "<tr><th class=\"button-matrix-rowhead\">" + scenario.label + "</th>" + cells + "</tr>";
       }).join("");
       var headCells = TYPES.map(function(t){ return '<th class="button-matrix-colhead">' + t.label + "</th>"; }).join("");
       return '<div class="button-matrix-combo">' +
@@ -409,32 +480,36 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
-    function currentSelectionInfo(){
+    function currentBaseInfo(){
       return {
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
-        title: titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE,
-        description: descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION,
-        showIcon: showIconInput ? showIconInput.checked : true
+        title: titleInput ? (titleInput.value.trim() || FALLBACK_DEFAULTS.title) : FALLBACK_DEFAULTS.title,
+        headingLevel: headingLevelInput ? headingLevelInput.value : FALLBACK_DEFAULTS.headingLevel,
+        description: descriptionInput ? (descriptionInput.value.trim() || FALLBACK_DEFAULTS.description) : FALLBACK_DEFAULTS.description,
+        showTitle: showTitleInput ? showTitleInput.checked : FALLBACK_DEFAULTS.showTitle,
+        showDescription: showDescriptionInput ? showDescriptionInput.checked : FALLBACK_DEFAULTS.showDescription,
+        showIcon: showIconInput ? showIconInput.checked : FALLBACK_DEFAULTS.showIcon,
+        actionLabel: actionLabelInput ? (actionLabelInput.value.trim() || FALLBACK_DEFAULTS.actionLabel) : FALLBACK_DEFAULTS.actionLabel
       };
     }
 
-    function render(){
-      var title = titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE;
-      var description = descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION;
-      var showIcon = showIconInput ? showIconInput.checked : true;
+    function currentSelectionInfo(){
+      return Object.assign({ radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]) }, currentBaseInfo());
+    }
 
+    function render(){
+      var base = currentBaseInfo();
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
 
       var html = "";
       var combos = [];
       radii.forEach(function(radius){
-        html += buildMatrixSection(radius, title, description, showIcon);
-        combos.push({ radius: radius, label: comboLabel(radius), title: title, description: description, showIcon: showIcon });
+        html += buildMatrixSection(radius, base);
+        combos.push({ radius: radius, label: comboLabel(radius) });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, c.title, c.description, c.showIcon); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, c.title, c.description, c.showIcon); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.radius, base); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.radius, base); });
     }
 
     var propertyMultiSelects = {};
@@ -452,11 +527,23 @@
     if (titleInput){
       titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
+    if (headingLevelInput){
+      headingLevelInput.addEventListener("change", render);
+    }
     if (descriptionInput){
       descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
+    if (showTitleInput){
+      showTitleInput.addEventListener("change", render);
+    }
+    if (showDescriptionInput){
+      showDescriptionInput.addEventListener("change", render);
+    }
     if (showIconInput){
       showIconInput.addEventListener("change", render);
+    }
+    if (actionLabelInput){
+      actionLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     }
 
     render();

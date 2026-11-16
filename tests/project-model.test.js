@@ -39,6 +39,25 @@ test('a profile saved by a newer app version is rejected, not silently misread',
   s.setItem(M.KEY, JSON.stringify({...profile, version:999, updatedAt:new Date().toISOString()}));
   assert.throws(()=>M.read(s), /newer version/);
 });
+test('a stale project edit cannot replace another tab’s saved profile',()=>{
+  const s=store();M.save(s,profile);const original=s.getItem(M.KEY);
+  M.save(s,{...profile,project:'Another tab'});
+  assert.throws(()=>M.save(s,{...profile,project:'Stale edit'},{expectedRaw:original}),/another tab/);
+  assert.equal(M.read(s).project,'Another tab');
+  const current=s.getItem(M.KEY);M.save(s,{...profile,project:'Reviewed edit'},{expectedRaw:current});assert.equal(M.read(s).project,'Reviewed edit');
+});
+test('Foundation progress distinguishes missing, partial, saved and unreadable records without writing',()=>{
+  const s=store();assert.equal(M.foundationReadiness(s).length,8);assert.ok(M.foundationReadiness(s).every(row=>row.state==='default'));
+  s.setItem('ads:colors',JSON.stringify({light:{primary:{hex:'#123456'}}}));assert.equal(M.foundationReadiness(s)[0].state,'partial');
+  for(const key of ['bg-colors','status-colors','neutral-colors'])s.setItem('ads:'+key,'{}');assert.equal(M.foundationReadiness(s)[0].state,'saved');
+  s.setItem('ads:icons','{broken');assert.equal(M.foundationReadiness(s).find(row=>row.id==='icons').state,'recovery');assert.equal(s.getItem('ads:icons'),'{broken');
+  const blocked={getItem(){throw Error('denied');}};assert.ok(M.foundationReadiness(blocked).every(row=>row.state==='recovery'));
+});
+test('drafts retain a bounded step while older drafts remain readable',()=>{
+  const s=store();s.setItem(M.DRAFT,JSON.stringify({...profile,step:2}));assert.equal(M.read(s,M.DRAFT).step,2);
+  s.setItem(M.DRAFT,JSON.stringify(profile));assert.equal(M.read(s,M.DRAFT).project,profile.project);
+  s.setItem(M.DRAFT,JSON.stringify({...profile,step:9}));assert.throws(()=>M.read(s,M.DRAFT),/invalid step/);
+});
 test('Markdown contains saved tokens, selected platforms and source guides; identity is opt-in', () => {
   const tokens = {colors:{light:{primary:{hex:'#123456'}}}};
   const docs = [{file:'input-text-field.html',title:'Input',status:'Available',markdown:'Use a visible label.'}];
@@ -68,4 +87,53 @@ test('Markdown omits embedded binary assets while preserving dependency referenc
   assert.ok(!md.includes('PRIVATE_BINARY'));assert.ok(!md.includes('PRIVATE_ICON'));
   assert.ok(md.includes('Brand font'));assert.ok(md.includes('sample-icon.svg'));
   assert.ok(md.includes('[Binary asset omitted; obtain Foundation JSON]'));
+});
+
+const libraryStore=()=>{const map=new Map();return {getItem:key=>map.get(key)??null,setItem:(key,value)=>map.set(key,value),removeItem:key=>map.delete(key)};};
+test('new projects preserve previous Foundation records and can be reopened by stable id',()=>{
+ const s=libraryStore(),first=M.save(s,profile);s.setItem('ads:radius','{"philosophy":"sharp"}');s.setItem('ads:theme','dark');
+ const second=M.save(s,{...profile,project:'Another project',name:'Another designer'},{newProject:true});
+ assert.notEqual(first.id,second.id);assert.equal(s.getItem('ads:radius'),null);assert.equal(s.getItem('ads:theme'),'dark');
+ assert.equal(M.listProjects(s).length,2);
+ s.setItem('ads:radius','{"philosophy":"round"}');M.openProject(s,first.id);
+ assert.equal(M.read(s).project,profile.project);assert.equal(s.getItem('ads:radius'),'{"philosophy":"sharp"}');
+ M.openProject(s,second.id);assert.equal(s.getItem('ads:radius'),'{"philosophy":"round"}');
+ const renamed=M.save(s,{...profile,project:'Renamed project'});assert.equal(renamed.id,second.id);assert.equal(M.listProjects(s).length,2);
+});
+test('failed archive or active profile writes roll back every changed record',()=>{
+ const s=libraryStore();M.save(s,profile);s.setItem('ads:radius','saved radius');const before=M.listProjects(s),raw=s.getItem(M.KEY),history=s.getItem(M.HISTORY);
+ const set=s.setItem;let failed=false;s.setItem=(key,value)=>{if(key===M.KEY&&!failed){failed=true;throw Error('quota');}set(key,value);};
+ assert.throws(()=>M.save(s,{...profile,project:'Unsaved project'},{newProject:true}),/unchanged/);
+ assert.equal(s.getItem(M.KEY),raw);assert.equal(s.getItem(M.HISTORY),history);assert.equal(s.getItem('ads:radius'),'saved radius');assert.deepEqual(M.listProjects(s),before);
+});
+test('unreadable history and unsaved drafts are preserved instead of overwritten',()=>{
+ const s=libraryStore();M.save(s,profile);const raw=s.getItem(M.KEY);s.setItem(M.HISTORY,'{broken');
+ assert.throws(()=>M.save(s,{...profile,project:'New project'},{newProject:true}),/history/);assert.equal(s.getItem(M.KEY),raw);assert.equal(s.getItem(M.HISTORY),'{broken');
+ s.removeItem(M.HISTORY);s.setItem(M.DRAFT,'unsaved');assert.throws(()=>M.openProject(s,M.read(s).id),/draft/);assert.equal(s.getItem(M.DRAFT),'unsaved');
+});
+test('deleteProject archives instead of removing outright, and hides it from listProjects',()=>{
+ const s=libraryStore();const first=M.save(s,profile,{newProject:true}),second=M.save(s,{...profile,project:'Another project'},{newProject:true});
+ assert.equal(M.listProjects(s).length,2);
+ M.deleteProject(s,first.id);
+ const visible=M.listProjects(s);assert.equal(visible.length,1);assert.equal(visible[0].id,second.id);
+ // Still physically present in HISTORY, just archived - not gone yet.
+ const raw=JSON.parse(s.getItem(M.HISTORY));assert.ok(raw.projects.find(row=>row.id===first.id)?.archivedAt);
+ // Deleting the currently-open project clears the active profile too.
+ assert.equal(M.read(s)?.id,second.id);
+ M.deleteProject(s,second.id);assert.equal(M.read(s),null);assert.equal(M.listProjects(s).length,0);
+});
+test('deleteProject is idempotent and rejects an unknown id',()=>{
+ const s=libraryStore();const row=M.save(s,profile,{newProject:true});
+ assert.throws(()=>M.deleteProject(s,'not-a-real-id'),/no longer available/);
+ M.deleteProject(s,row.id);assert.doesNotThrow(()=>M.deleteProject(s,row.id));
+ assert.equal(M.listProjects(s).length,0);
+});
+test('an archived project is permanently purged once ARCHIVE_RETENTION_DAYS elapses',()=>{
+ const s=libraryStore();const row=M.save(s,profile,{newProject:true});M.deleteProject(s,row.id);
+ const history=JSON.parse(s.getItem(M.HISTORY));
+ const stale=new Date(Date.now()-(M.ARCHIVE_RETENTION_DAYS*24*60*60*1000+60000)).toISOString();
+ history.projects[0].archivedAt=stale;s.setItem(M.HISTORY,JSON.stringify(history));
+ assert.equal(M.listProjects(s).length,0);
+ // listProjects() purges expired archives on read, not just hides them.
+ assert.equal(JSON.parse(s.getItem(M.HISTORY)).projects.length,0);
 });

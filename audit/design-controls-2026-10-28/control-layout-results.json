@@ -1,0 +1,15 @@
+{
+  "mode": "controls-only",
+  "pages": [],
+  "tasks": [
+    "Global px/rem round trip preserves geometry, selection, token references and saved edits; exports use the global unit",
+    "Changed dropdown labels, navigation and cross-tab Foundation unit updates stay synchronized",
+    "Atomic swatches synchronize text, preserve translucent alpha, replace transparent colors, update the real component and survive save/reload/export",
+    "Native radius follows Foundation live and after save/reload; explicit choices persist and can return to Foundation",
+    "Control-height presets follow Foundation sizing and retain inheritance after save/reload",
+    "Dropdowns reposition during resize; color swatches align with text inputs at 1440, 390 and 320px",
+    "Foundation picker fits desktop, mobile and short viewports in all five formats with Escape focus return"
+  ],
+  "errors": [],
+  "status": "pass"
+}

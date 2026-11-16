@@ -1,0 +1,135 @@
+{
+  "file": "tour-default.html",
+  "name": "Tour",
+  "category": "Components · Feedback · Tour",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Top",
+      "options": [
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "Left",
+          "label": "Left"
+        },
+        {
+          "value": "Right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "First step",
+      "options": [
+        {
+          "value": "First step",
+          "label": "First step"
+        },
+        {
+          "value": "Middle step",
+          "label": "Middle step"
+        },
+        {
+          "value": "Last step",
+          "label": "Last step"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "tour-target-label",
+      "id": null,
+      "label": "Target label",
+      "type": "text",
+      "value": "New feature",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Target label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "tour-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Try the new dashboard",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "tour-description",
+      "id": null,
+      "label": "Description",
+      "type": "text",
+      "value": "Get a quick overview of your team's activity in one place.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Description",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Target label, title and description are properties of the same component, not separate tours built by hand - change them below to check every placement and step-position state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Tour guides a new user through a sequence of features one at a time - a small card anchored next to a highlighted UI element, with Back/Next navigation and a step counter, used to walk someone through unfamiliar functionality rather than leaving them to discover it alone. When to Use First-time onboarding through key features - a guided walkthrough for new users. A feature-announcement walkthrough - introducing something new to existing users. A multi-step setup guide or contextual help sequence - anchored to the actual UI elements involved. When Not to Use A single, standalone hint about one control - use Tooltip instead of a full multi-step tour. Reference material a user might want to revisit anytime - use static Documentation or a help panel rather than a one-time guided sequence. Frequent or repeated interruptions for returning users - a Tour should typically run once (or be easily dismissed permanently), not repeatedly block the same user. Best Practices Keep the sequence short - a handful of steps at most, focused on genuinely non-obvious functionality. Always let the user skip or exit the tour at any step, not just at the end. Anchor each step precisely to the real UI element it describes, so the highlighted target and the explanation clearly match. Do and Don't Do Step 2 of 3Filters live hereNarrow long lists without leaving the page. A short sequence with the position shown, so the user knows how much is left before they commit. Don't Step 9 of 14This is the Save buttonClick Save to save. Fourteen steps explaining self-evident controls gets dismissed, taking the genuinely useful steps with it. Accessibility Each step's card is exposed as role=\"dialog\" (like Modal, but non-blocking of the rest of the page: aria-modal=\"false\") with an accessible name and description via aria-labelledby/aria-describedby. Focus moves into each step's card as it appears - the same per-step focus management Modal uses on open - so keyboard and screen-reader users follow the same sequence as everyone else, then moves on again as the step advances. Each step is reachable and dismissible by keyboard (Back/Next/Escape), not only by mouse click, and a Skip/Exit control is always keyboard-reachable, not just a small close icon meant for a mouse. The step count and current position (\"Step 2 of 4\") are exposed as text content read with the step, not conveyed only by a visual progress dot - and no separate aria-live region is used, since each step's arrival is already announced by focus moving to its dialog. Related Components Tooltip, Popover, Steps. { \"component\": \"Tour\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Tour guides a new user through a sequence of features one at a time - a small card anchored next to a highlighted UI element, with Back/Next navigation and a step counter, used to walk someone through unfamiliar functionality rather than leaving them to discover it alone.\", \"whenToUse\": [ \"First-time onboarding through key features - a guided walkthrough for new users.\", \"A feature-announcement walkthrough - introducing something new to existing users.\", \"A multi-step setup guide or contextual help sequence - anchored to the actual UI elements involved.\" ], \"whenNotToUse\": [ \"A single, standalone hint about one control - use Tooltip instead of a full multi-step tour.\", \"Reference material a user might want to revisit anytime - use static Documentation or a help panel rather than a one-time guided sequence.\", \"Frequent or repeated interruptions for returning users - a Tour should typically run once (or be easily dismissed permanently), not repeatedly block the same user.\" ], \"bestPractices\": [ \"Keep the sequence short - a handful of steps at most, focused on genuinely non-obvious functionality.\", \"Always let the user skip or exit the tour at any step, not just at the end.\", \"Anchor each step precisely to the real UI element it describes, so the highlighted target and the explanation clearly match.\" ], \"doAndDont\": { \"do\": \"A short sequence with the position shown, so the user knows how much is left before they commit.\", \"dont\": \"Fourteen steps explaining self-evident controls gets dismissed, taking the genuinely useful steps with it.\" }, \"accessibility\": [ \"Each step's card is exposed as role=\\\"dialog\\\" (like Modal, but non-blocking of the rest of the page: aria-modal=\\\"false\\\") with an accessible name and description via aria-labelledby/aria-describedby.\", \"Focus moves into each step's card as it appears - the same per-step focus management Modal uses on open - so keyboard and screen-reader users follow the same sequence as everyone else, then moves on again as the step advances.\", \"Each step is reachable and dismissible by keyboard (Back/Next/Escape), not only by mouse click, and a Skip/Exit control is always keyboard-reachable, not just a small close icon meant for a mouse.\", \"The step count and current position (\\\"Step 2 of 4\\\") are exposed as text content read with the step, not conveyed only by a visual progress dot - and no separate aria-live region is used, since each step's arrival is already announced by focus moving to its dialog.\" ], \"relatedComponents\": [ \"Tooltip\", \"Popover\", \"Steps\" ] }",
+  "tests": []
+}

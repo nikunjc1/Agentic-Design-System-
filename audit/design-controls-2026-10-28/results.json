@@ -1,0 +1,5605 @@
+{
+  "pages": [
+    {
+      "file": "add-on-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 6
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "affix-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 6
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "alert-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 9
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "anchor-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "autocomplete-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "avatar-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "badge-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-destructive.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-ghost.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-link.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-neutral.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-primary-icon.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-primary.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-secondary.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "button-tertiary.html",
+      "dropdownChecks": 6,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "calendar-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 53
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "card-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "cascader-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "checkbox-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "collapse-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 11
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "color-picker-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "date-picker-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "date-range-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 13
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "description-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 14
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "divider-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "drawer-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "dropdown-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "empty-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "float-button-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "group-button-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "image-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 6
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "input-text-field.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "list-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 13
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "mention-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "menu-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "modal-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "notification-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 12
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "number-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 11
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "pagination-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 12
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "password-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 8
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 9
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "popover-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 5
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "progress-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "radio-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "rating-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 18
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "result-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 9
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "search-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "select-dropdown.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "skeleton-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "slider-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 6
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "spin-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "splitter-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "statistic-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "steps-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 14
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "switch-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "table-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 6
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 39
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 23
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tabs-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tag-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "text-area-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "time-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 8
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "timeline-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 21
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "toast-default.html",
+      "dropdownChecks": 2,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 8
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tooltip-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tour-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 9
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "transfer-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 42
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 10
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tree-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 29
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 3
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 11
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "tree-select-default.html",
+      "dropdownChecks": 4,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 7
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    },
+    {
+      "file": "upload-default.html",
+      "dropdownChecks": 0,
+      "foundation": [
+        {
+          "key": "colors",
+          "changedTokens": 10,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "bg-colors",
+          "changedTokens": 22,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "status-colors",
+          "changedTokens": 26,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "neutral-colors",
+          "changedTokens": 2,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "typography",
+          "changedTokens": 7,
+          "changedRenderedParts": 8
+        },
+        {
+          "key": "spacing",
+          "changedTokens": 127,
+          "changedRenderedParts": 2
+        },
+        {
+          "key": "radius",
+          "changedTokens": 2,
+          "changedRenderedParts": 1
+        },
+        {
+          "key": "border",
+          "changedTokens": 3,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "border-states",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "shadow",
+          "changedTokens": 6,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "icons",
+          "changedTokens": 4,
+          "changedRenderedParts": 4
+        },
+        {
+          "key": "grid-layout",
+          "changedTokens": 1,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "sizing",
+          "changedTokens": 5,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "data-format",
+          "changedTokens": 0,
+          "changedRenderedParts": 0
+        },
+        {
+          "key": "units",
+          "changedTokens": 415,
+          "changedRenderedParts": 0
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    "Global px/rem round trip preserves geometry, selection, token references and saved edits; exports use the global unit",
+    "Changed dropdown labels, navigation and cross-tab Foundation unit updates stay synchronized",
+    "Atomic swatches synchronize text, preserve translucent alpha, replace transparent colors, update the real component and survive save/reload/export",
+    "Native radius follows Foundation live and after save/reload; explicit choices persist and can return to Foundation",
+    "Control-height presets follow Foundation sizing and retain inheritance after save/reload",
+    "All detail pages inherit every Foundation category; snapshot tokens match live tokens and token-backed overrides remain connected",
+    "Dropdowns reposition during resize; color swatches align with text inputs at 1440, 390 and 320px",
+    "Foundation picker fits desktop, mobile and short viewports in all five formats with Escape focus return"
+  ],
+  "errors": [],
+  "status": "pass"
+}

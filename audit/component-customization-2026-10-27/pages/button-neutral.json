@@ -1,0 +1,344 @@
+{
+  "file": "button-neutral.html",
+  "name": "Neutral Button",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right"
+        },
+        {
+          "value": "icon-both",
+          "label": "Icons on both sides"
+        },
+        {
+          "value": "icon-only",
+          "label": "Icon only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "content-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radius-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-neutral.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Neutral",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Neutral",
+          "label": "Neutral"
+        },
+        {
+          "value": "Link",
+          "label": "Link"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "button-label",
+      "id": null,
+      "label": "Button label",
+      "type": "text",
+      "value": "Filter",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "accessible-label",
+      "id": null,
+      "label": "Accessible label (required for icon-only)",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Accessible label (required for icon-only)?",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Neutral Button gives a utility action clear, bordered affordance without borrowing the brand's red accent - used for actions that need to look clickable but shouldn't carry any semantic weight (success, danger, or primary emphasis). When to Use Utility and configuration actions - Filter, Sort, Options, Settings. Toolbars where several buttons sit side by side and none should dominate - a filter bar above a table. Anywhere a bordered, clearly-clickable control is needed but the action carries no urgency or risk - toggling a view mode. When Not to Use The main call to action - use Primary - Neutral is intentionally low on visual priority. Destructive or risky actions - use Destructive so the red accent communicates danger, which Neutral deliberately avoids. Actions meant to visually pair with a Primary button as its direct alternate - use Secondary, which is designed for that exact pairing. Best Practices Use it for genuinely neutral, non-branded utility actions - filtering, sorting, view toggles - not as a generic substitute for Secondary. Keep its border weight and color consistent with other Neutral buttons so \"gray bordered button\" reliably means \"utility action\" across the product. Pair with a small icon (filter, sort arrows) when the action benefits from an at-a-glance cue. Do and Don't Do FilterSort Toolbar actions of equal, unremarkable weight, where nothing should be pulling focus from the content below. Don't Submit application The one action that ends the flow, styled with no more weight than a toolbar icon, is easy to miss entirely. Accessibility Border and label meet WCAG 2.2 AA contrast in both themes despite the deliberately muted palette. Native <button> semantics, full keyboard support, visible focus outline. Disabled state uses the native disabled attribute so assistive tech announces it as unavailable, not just visually dimmed. Related Components Secondary Button, Tertiary Button, Group Button (for switching between a small set of neutral options). { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Neutral\", \"category\": \"Actions\", \"summary\": \"Neutral Button gives a utility action clear, bordered affordance without borrowing the brand's red accent - used for actions that need to look clickable but shouldn't carry any semantic weight (success, danger, or primary emphasis).\", \"whenToUse\": [ \"Utility and configuration actions - Filter, Sort, Options, Settings.\", \"Toolbars where several buttons sit side by side and none should dominate - a filter bar above a table.\", \"Anywhere a bordered, clearly-clickable control is needed but the action carries no urgency or risk - toggling a view mode.\" ], \"whenNotToUse\": [ \"The main call to action - use Primary - Neutral is intentionally low on visual priority.\", \"Destructive or risky actions - use Destructive so the red accent communicates danger, which Neutral deliberately avoids.\", \"Actions meant to visually pair with a Primary button as its direct alternate - use Secondary, which is designed for that exact pairing.\" ], \"bestPractices\": [ \"Use it for genuinely neutral, non-branded utility actions - filtering, sorting, view toggles - not as a generic substitute for Secondary.\", \"Keep its border weight and color consistent with other Neutral buttons so \\\"gray bordered button\\\" reliably means \\\"utility action\\\" across the product.\", \"Pair with a small icon (filter, sort arrows) when the action benefits from an at-a-glance cue.\" ], \"doAndDont\": { \"do\": \"Toolbar actions of equal, unremarkable weight, where nothing should be pulling focus from the content below.\", \"dont\": \"The one action that ends the flow, styled with no more weight than a toolbar icon, is easy to miss entirely.\" }, \"accessibility\": [ \"Border and label meet WCAG 2.2 AA contrast in both themes despite the deliberately muted palette.\", \"Native <button> semantics, full keyboard support, visible focus outline.\", \"Disabled state uses the native disabled attribute so assistive tech announces it as unavailable, not just visually dimmed.\" ], \"relatedComponents\": [ \"Secondary Button\", \"Tertiary Button\", \"Group Button\" ] }",
+  "tests": []
+}

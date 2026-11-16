@@ -1,0 +1,6769 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "add-on-default.html",
+      "name": "Add-on",
+      "family": "add-on.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · ADD-ON",
+      "inventory": [
+        {
+          "role": "addon-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "addon-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "addon-label",
+          "type": "text",
+          "value": "Website",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-placeholder",
+          "type": "text",
+          "value": "yourcompany",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-prefix",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show prefix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-prefix-text",
+          "type": "text",
+          "value": "https://",
+          "options": [],
+          "label": "Prefix text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-suffix",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show suffix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-suffix-text",
+          "type": "text",
+          "value": ".com",
+          "options": [],
+          "label": "Suffix text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-suffix-dropdown",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Suffix dropdown",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-supporting-text",
+          "type": "text",
+          "value": "We'll use this to generate your public profile link.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "addon-error-text",
+          "type": "text",
+          "value": "Enter a valid website address.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "affix-default.html",
+      "name": "Affix",
+      "family": "affix.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · AFFIX",
+      "inventory": [
+        {
+          "role": "affix-label",
+          "type": "text",
+          "value": "Filter toolbar",
+          "options": [],
+          "label": "Content label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "affix-offset",
+          "type": "number",
+          "value": "8",
+          "options": [],
+          "label": "Offset (px)",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": true
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "alert-default.html",
+      "name": "Alert",
+      "family": "alert.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · ALERT",
+      "inventory": [
+        {
+          "role": "alert-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "alert-title",
+          "type": "text",
+          "value": "Update available",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-description",
+          "type": "text",
+          "value": "A new version is ready to install.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-action-label",
+          "type": "text",
+          "value": "Update now",
+          "options": [],
+          "label": "Action label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-show-title",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-show-description",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "alert-show-icon",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "anchor-default.html",
+      "name": "Anchor",
+      "family": "anchor.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · ANCHOR",
+      "inventory": [
+        {
+          "role": "anchor-size-mount",
+          "type": "multi",
+          "value": [
+            "14"
+          ],
+          "options": [
+            "12",
+            "14",
+            "16",
+            "18"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "anchor-label",
+          "type": "text",
+          "value": "Learn more",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "anchor-icon-position",
+          "type": "select",
+          "value": "trailing",
+          "options": [
+            "trailing",
+            "leading"
+          ],
+          "label": "Icon position",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "autocomplete-default.html",
+      "name": "Autocomplete",
+      "family": "autocomplete.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · AUTOCOMPLETE",
+      "inventory": [
+        {
+          "role": "autocomplete-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "autocomplete-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "autocomplete-label",
+          "type": "text",
+          "value": "City",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-placeholder",
+          "type": "text",
+          "value": "Search a city...",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-supporting-text",
+          "type": "text",
+          "value": "Start typing to see matching cities.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "autocomplete-error-text",
+          "type": "text",
+          "value": "Enter a valid city name.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "avatar-default.html",
+      "name": "Avatar",
+      "family": "avatar.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · AVATAR",
+      "inventory": [
+        {
+          "role": "avatar-size-select",
+          "type": "select",
+          "value": "32",
+          "options": [
+            "24",
+            "32",
+            "40",
+            "48"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-shape-select",
+          "type": "select",
+          "value": "circle",
+          "options": [
+            "circle",
+            "square"
+          ],
+          "label": "Shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-initials",
+          "type": "text",
+          "value": "JD",
+          "options": [],
+          "label": "Initials",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "avatar-group-view-select",
+          "type": "select",
+          "value": "avatars",
+          "options": [
+            "avatars",
+            "names"
+          ],
+          "label": "Show as",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "badge-default.html",
+      "name": "Badge",
+      "family": "badge.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · BADGE",
+      "inventory": [
+        {
+          "role": "badge-count",
+          "type": "number",
+          "value": "5",
+          "options": [],
+          "label": "Count",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "badge-max",
+          "type": "number",
+          "value": "99",
+          "options": [],
+          "label": "Max count",
+          "min": "1",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "badge-label",
+          "type": "text",
+          "value": "Active",
+          "options": [],
+          "label": "Status label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "badge-size-mount",
+          "type": "multi",
+          "value": [
+            "default"
+          ],
+          "options": [
+            "default",
+            "small"
+          ],
+          "label": "Size",
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "breadcrumb-default.html",
+      "name": "Breadcrumb",
+      "family": "breadcrumb.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · BREADCRUMB",
+      "inventory": [
+        {
+          "role": "breadcrumb-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "breadcrumb-label",
+          "type": "text",
+          "value": "Home, Products, Shoes",
+          "options": [],
+          "label": "Labels",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-destructive.html",
+      "name": "Destructive Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-ghost.html",
+      "name": "Ghost Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-link.html",
+      "name": "Link Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-neutral.html",
+      "name": "Neutral Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-primary-icon.html",
+      "name": "Primary Button 36px - Dual Icon",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "dualicon-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "dualicon-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "dualicon-content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "icon-both",
+            "icon-left",
+            "icon-right",
+            "text"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "dualicon-label",
+          "type": "text",
+          "value": "Save",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "splitcta-leading-icon",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "CTA leading icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-primary.html",
+      "name": "Primary Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-secondary.html",
+      "name": "Secondary Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "button-tertiary.html",
+      "name": "Tertiary Button",
+      "family": "components.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · BUTTON",
+      "inventory": [
+        {
+          "role": "size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "content-mount",
+          "type": "multi",
+          "value": [
+            "text"
+          ],
+          "options": [
+            "text",
+            "icon-left",
+            "icon-right",
+            "icon-both",
+            "icon-only"
+          ],
+          "label": "Content",
+          "unit": false
+        },
+        {
+          "role": "radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "button-label",
+          "type": "text",
+          "value": "Button",
+          "options": [],
+          "label": "Button label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "accessible-label",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Accessible label (required for icon-only)?",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "calendar-default.html",
+      "name": "Calendar",
+      "family": "calendar.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · CALENDAR",
+      "inventory": [
+        {
+          "role": "calendar-month-label",
+          "type": "text",
+          "value": "September 2026",
+          "options": [],
+          "label": "Month label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "calendar-first-day-select",
+          "type": "select",
+          "value": "sunday",
+          "options": [
+            "sunday",
+            "monday"
+          ],
+          "label": "First day of week",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "card-default.html",
+      "name": "Card",
+      "family": "card.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · CARD",
+      "inventory": [
+        {
+          "role": "card-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "card-size-mount",
+          "type": "multi",
+          "value": [
+            "default"
+          ],
+          "options": [
+            "default",
+            "small"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "card-title",
+          "type": "text",
+          "value": "Team standup",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "card-body",
+          "type": "text",
+          "value": "Daily sync at 9:30 AM in the main conference room.",
+          "options": [],
+          "label": "Body",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "card-show-shadow",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show shadow",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "cascader-default.html",
+      "name": "Cascader",
+      "family": "cascader.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · CASCADER",
+      "inventory": [
+        {
+          "role": "cascader-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "cascader-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "cascader-label",
+          "type": "text",
+          "value": "Location",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-placeholder",
+          "type": "text",
+          "value": "Select location",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-supporting-text",
+          "type": "text",
+          "value": "Choose the most specific location that applies.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "cascader-error-text",
+          "type": "text",
+          "value": "Select a location to continue.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "checkbox-default.html",
+      "name": "Checkbox",
+      "family": "checkbox.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · CHECKBOX",
+      "inventory": [
+        {
+          "role": "checkbox-size-mount",
+          "type": "multi",
+          "value": [
+            "20"
+          ],
+          "options": [
+            "16",
+            "20",
+            "24"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "checkbox-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "checkbox-label",
+          "type": "text",
+          "value": "I agree to the terms",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-label-placement",
+          "type": "select",
+          "value": "right",
+          "options": [
+            "right",
+            "left"
+          ],
+          "label": "Label placement",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-supporting-text",
+          "type": "text",
+          "value": "You can change this later in settings.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-show-error",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Error",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "checkbox-error-text",
+          "type": "text",
+          "value": "You must accept the terms to continue.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "collapse-default.html",
+      "name": "Collapse",
+      "family": "collapse.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · COLLAPSE",
+      "inventory": [
+        {
+          "role": "collapse-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "collapse-size-mount",
+          "type": "multi",
+          "value": [
+            "medium"
+          ],
+          "options": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "collapse-header",
+          "type": "text",
+          "value": "What's included in the free plan?",
+          "options": [],
+          "label": "Header text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "collapse-body",
+          "type": "text",
+          "value": "The free plan includes up to 3 projects, 1GB of storage, and community support.",
+          "options": [],
+          "label": "Body text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "collapse-show-icon",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "color-picker-default.html",
+      "name": "Color Picker",
+      "family": "color-picker.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · COLOR PICKER",
+      "inventory": [
+        {
+          "role": "colorpicker-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "colorpicker-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "colorpicker-label",
+          "type": "text",
+          "value": "Brand color",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-hex",
+          "type": "text",
+          "value": "#FF031A",
+          "options": [],
+          "label": "Color value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-value-format",
+          "type": "select",
+          "value": "hex",
+          "options": [
+            "hex",
+            "rgb",
+            "token"
+          ],
+          "label": "Value format",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-token-name",
+          "type": "text",
+          "value": "color.brand.primary",
+          "options": [],
+          "label": "Token name",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-swatch-shape",
+          "type": "select",
+          "value": "square",
+          "options": [
+            "square",
+            "round"
+          ],
+          "label": "Swatch shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-supporting-text",
+          "type": "text",
+          "value": "Choose a color from the palette or enter a hex value.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "colorpicker-error-text",
+          "type": "text",
+          "value": "Enter a valid hex color, like #FF6B00.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "date-picker-default.html",
+      "name": "Date Picker",
+      "family": "date-picker.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · DATE PICKER",
+      "inventory": [
+        {
+          "role": "datepicker-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "datepicker-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "datepicker-label",
+          "type": "text",
+          "value": "Date of birth",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-placeholder",
+          "type": "text",
+          "value": "MM/DD/YYYY",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-format",
+          "type": "select",
+          "value": "MM/DD/YYYY",
+          "options": [
+            "MM/DD/YYYY",
+            "DD/MM/YYYY",
+            "YYYY-MM-DD",
+            "DD MMM YYYY",
+            "MMM DD, YYYY"
+          ],
+          "label": "Date format",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-supporting-text",
+          "type": "text",
+          "value": "We use this to confirm your age.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "datepicker-error-text",
+          "type": "text",
+          "value": "Enter a valid date.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "date-range-default.html",
+      "name": "Date Range",
+      "family": "date-range.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · DATE RANGE",
+      "inventory": [
+        {
+          "role": "daterange-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "daterange-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "daterange-label",
+          "type": "text",
+          "value": "Trip dates",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-start-placeholder",
+          "type": "text",
+          "value": "Start date",
+          "options": [],
+          "label": "Start placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-end-placeholder",
+          "type": "text",
+          "value": "End date",
+          "options": [],
+          "label": "End placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-supporting-text",
+          "type": "text",
+          "value": "Choose your travel start and end dates.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "daterange-error-text",
+          "type": "text",
+          "value": "End date must be after the start date.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "description-default.html",
+      "name": "Description",
+      "family": "description.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · DESCRIPTION",
+      "inventory": [
+        {
+          "role": "description-columns-select",
+          "type": "select",
+          "value": "2",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "label": "Columns",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "description-title",
+          "type": "text",
+          "value": "Account details",
+          "options": [],
+          "label": "Section title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "description-size-mount",
+          "type": "multi",
+          "value": [
+            "large"
+          ],
+          "options": [
+            "small",
+            "middle",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "divider-default.html",
+      "name": "Divider",
+      "family": "divider.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · DIVIDER",
+      "inventory": [
+        {
+          "role": "divider-text",
+          "type": "text",
+          "value": "OR",
+          "options": [],
+          "label": "Text label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "divider-align-select",
+          "type": "select",
+          "value": "center",
+          "options": [
+            "left",
+            "center",
+            "right"
+          ],
+          "label": "Text alignment",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "divider-size-mount",
+          "type": "multi",
+          "value": [
+            "medium"
+          ],
+          "options": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "drawer-default.html",
+      "name": "Drawer",
+      "family": "drawer.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · DRAWER",
+      "inventory": [
+        {
+          "role": "drawer-size-select",
+          "type": "select",
+          "value": "medium",
+          "options": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "drawer-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "drawer-title",
+          "type": "text",
+          "value": "Edit profile",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "drawer-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "drawer-body",
+          "type": "text",
+          "value": "Update your name, photo, and contact details.",
+          "options": [],
+          "label": "Body",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "drawer-show-close",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show close button",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "dropdown-default.html",
+      "name": "Dropdown",
+      "family": "dropdown.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · DROPDOWN",
+      "inventory": [
+        {
+          "role": "dropdown-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "dropdown-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "dropdown-label",
+          "type": "text",
+          "value": "Options",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "empty-default.html",
+      "name": "Empty",
+      "family": "empty.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · EMPTY",
+      "inventory": [
+        {
+          "role": "empty-title",
+          "type": "text",
+          "value": "No projects yet",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "empty-description",
+          "type": "text",
+          "value": "Create your first project to get started.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "empty-action-label",
+          "type": "text",
+          "value": "Create project",
+          "options": [],
+          "label": "Action label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "float-button-default.html",
+      "name": "Float Button",
+      "family": "float-button.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · FLOAT BUTTON",
+      "inventory": [
+        {
+          "role": "floatbutton-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "36",
+            "40",
+            "44",
+            "56",
+            "68"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "floatbutton-elevation-select",
+          "type": "select",
+          "value": "medium",
+          "options": [
+            "none",
+            "subtle",
+            "medium",
+            "high"
+          ],
+          "label": "Elevation",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-supporting-text",
+          "type": "text",
+          "value": "Back to top",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-show-tooltip",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Tooltip",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-tooltip-text",
+          "type": "text",
+          "value": "Back to top",
+          "options": [],
+          "label": "Tooltip text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-tooltip-placement",
+          "type": "select",
+          "value": "top",
+          "options": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "label": "Tooltip placement",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-show-badge",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Badge",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-badge-type",
+          "type": "select",
+          "value": "dot",
+          "options": [
+            "dot",
+            "count"
+          ],
+          "label": "Badge type",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-badge-count",
+          "type": "number",
+          "value": "5",
+          "options": [],
+          "label": "Badge count",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "floatbutton-badge-max",
+          "type": "number",
+          "value": "99",
+          "options": [],
+          "label": "Badge max count",
+          "min": "1",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "group-button-default.html",
+      "name": "Group Button",
+      "family": "group-button.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · GROUP BUTTON",
+      "inventory": [
+        {
+          "role": "group-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "group-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "group-count-select",
+          "type": "select",
+          "value": "3",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "label": "Number of buttons",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-content-select",
+          "type": "select",
+          "value": "text",
+          "options": [
+            "text",
+            "icon",
+            "icon-text"
+          ],
+          "label": "Content",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-icon-select",
+          "type": "select",
+          "value": "plus",
+          "options": [
+            "plus",
+            "arrow",
+            "gear",
+            "star",
+            "check"
+          ],
+          "label": "Icon",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-icon-position-select",
+          "type": "select",
+          "value": "before",
+          "options": [
+            "before",
+            "after"
+          ],
+          "label": "Icon position",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-0",
+          "type": "text",
+          "value": "Option A",
+          "options": [],
+          "label": "Button 1 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-1",
+          "type": "text",
+          "value": "Option B",
+          "options": [],
+          "label": "Button 2 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-2",
+          "type": "text",
+          "value": "Option C",
+          "options": [],
+          "label": "Button 3 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-show-label",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Field label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-field-label",
+          "type": "text",
+          "value": "View",
+          "options": [],
+          "label": "Field label text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-supporting-text",
+          "type": "text",
+          "value": "Choose how to display your results.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "image-default.html",
+      "name": "Image",
+      "family": "image.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · IMAGE",
+      "inventory": [
+        {
+          "role": "image-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "image-aspect-select",
+          "type": "select",
+          "value": "square",
+          "options": [
+            "square",
+            "landscape",
+            "portrait"
+          ],
+          "label": "Aspect ratio",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "image-caption",
+          "type": "text",
+          "value": "Product photo",
+          "options": [],
+          "label": "Caption text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "input-text-field.html",
+      "name": "Input Text Field",
+      "family": "input.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · INPUT",
+      "inventory": [
+        {
+          "role": "input-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "input-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "input-label",
+          "type": "text",
+          "value": "Email address",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-placeholder",
+          "type": "text",
+          "value": "you@example.com",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-icon-placement-mount",
+          "type": "multi",
+          "value": [
+            "none"
+          ],
+          "options": [
+            "none",
+            "leading",
+            "trailing",
+            "both"
+          ],
+          "label": "Icon placement",
+          "unit": false
+        },
+        {
+          "role": "input-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-type-select",
+          "type": "select",
+          "value": "text",
+          "options": [
+            "text",
+            "email",
+            "password",
+            "search",
+            "tel",
+            "url",
+            "number"
+          ],
+          "label": "Input type",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-max-length",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-supporting-text",
+          "type": "text",
+          "value": "We'll only use this to send you a receipt.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "input-error-text",
+          "type": "text",
+          "value": "Enter a valid email address.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "list-default.html",
+      "name": "List",
+      "family": "list.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · LIST",
+      "inventory": [
+        {
+          "role": "list-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "list-size-mount",
+          "type": "multi",
+          "value": [
+            "default"
+          ],
+          "options": [
+            "small",
+            "default",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "list-show-dividers",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show dividers",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "mention-default.html",
+      "name": "Mention",
+      "family": "mention.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · MENTION",
+      "inventory": [
+        {
+          "role": "mention-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "mention-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "mention-label",
+          "type": "text",
+          "value": "Comment",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-placeholder",
+          "type": "text",
+          "value": "Type @ to mention someone",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-supporting-text",
+          "type": "text",
+          "value": "Type @ to tag a team member in this comment.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "mention-error-text",
+          "type": "text",
+          "value": "Mentioning a team member is required here.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "menu-default.html",
+      "name": "Menu",
+      "family": "menu.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · MENU",
+      "inventory": [
+        {
+          "role": "menu-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "menu-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "menu-label",
+          "type": "text",
+          "value": "Edit, Duplicate, Archive, Delete",
+          "options": [],
+          "label": "Labels",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "modal-default.html",
+      "name": "Modal",
+      "family": "modal.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · MODAL",
+      "inventory": [
+        {
+          "role": "modal-size-select",
+          "type": "select",
+          "value": "medium",
+          "options": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "modal-title",
+          "type": "text",
+          "value": "Delete this file?",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-body",
+          "type": "text",
+          "value": "This action cannot be undone.",
+          "options": [],
+          "label": "Body",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-confirm-label",
+          "type": "text",
+          "value": "Confirm",
+          "options": [],
+          "label": "Confirm label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-cancel-label",
+          "type": "text",
+          "value": "Cancel",
+          "options": [],
+          "label": "Cancel label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-show-close",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show close button",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "modal-show-icon",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "notification-default.html",
+      "name": "Notification",
+      "family": "notification.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · NOTIFICATION",
+      "inventory": [
+        {
+          "role": "notification-title",
+          "type": "text",
+          "value": "File uploaded",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "notification-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "notification-description",
+          "type": "text",
+          "value": "team-report.pdf is ready to share.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "notification-placement-select",
+          "type": "select",
+          "value": "topRight",
+          "options": [
+            "topRight",
+            "topLeft",
+            "bottomRight",
+            "bottomLeft"
+          ],
+          "label": "Placement",
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "number-default.html",
+      "name": "Number",
+      "family": "number.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · NUMBER",
+      "inventory": [
+        {
+          "role": "number-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "number-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "number-label",
+          "type": "text",
+          "value": "Quantity",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-placeholder",
+          "type": "text",
+          "value": "0",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-show-stepper",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show stepper",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-min",
+          "type": "number",
+          "value": "0",
+          "options": [],
+          "label": "Minimum value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-max",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-step",
+          "type": "number",
+          "value": "1",
+          "options": [],
+          "label": "Step value",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-supporting-text",
+          "type": "text",
+          "value": "Enter the number of units you need.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "number-error-text",
+          "type": "text",
+          "value": "Enter a number of 0 or more.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "pagination-default.html",
+      "name": "Pagination",
+      "family": "pagination.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · PAGINATION",
+      "inventory": [
+        {
+          "role": "pagination-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "pagination-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "password-default.html",
+      "name": "Password",
+      "family": "password.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · PASSWORD",
+      "inventory": [
+        {
+          "role": "password-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "password-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "password-label",
+          "type": "text",
+          "value": "Password",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-placeholder",
+          "type": "text",
+          "value": "Enter your password",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-show-reveal",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show reveal toggle",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-min-length",
+          "type": "number",
+          "value": "8",
+          "options": [],
+          "label": "Minimum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-max-length",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-supporting-text",
+          "type": "text",
+          "value": "Use 8 or more characters with a mix of letters and numbers.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "password-error-text",
+          "type": "text",
+          "value": "Password must be at least 8 characters.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "pop-confirm-default.html",
+      "name": "Pop Confirm",
+      "family": "pop-confirm.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · POP CONFIRM",
+      "inventory": [
+        {
+          "role": "popconfirm-question",
+          "type": "text",
+          "value": "Delete this item?",
+          "options": [],
+          "label": "Question text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "popconfirm-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "popconfirm-confirm-label",
+          "type": "text",
+          "value": "Yes",
+          "options": [],
+          "label": "Confirm label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "popconfirm-cancel-label",
+          "type": "text",
+          "value": "No",
+          "options": [],
+          "label": "Cancel label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "popover-default.html",
+      "name": "Popover",
+      "family": "popover.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · POPOVER",
+      "inventory": [
+        {
+          "role": "popover-trigger-label",
+          "type": "text",
+          "value": "Details",
+          "options": [],
+          "label": "Trigger label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "popover-title",
+          "type": "text",
+          "value": "Storage usage",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "popover-body",
+          "type": "text",
+          "value": "8.2 GB of 15 GB used.",
+          "options": [],
+          "label": "Body",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "progress-default.html",
+      "name": "Progress",
+      "family": "progress.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · PROGRESS",
+      "inventory": [
+        {
+          "role": "progress-percent-input",
+          "type": "number",
+          "value": "65",
+          "options": [],
+          "label": "Percent",
+          "min": "0",
+          "max": "100",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "progress-show-label",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "radio-default.html",
+      "name": "Radio",
+      "family": "radio.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · RADIO",
+      "inventory": [
+        {
+          "role": "radio-size-mount",
+          "type": "multi",
+          "value": [
+            "20"
+          ],
+          "options": [
+            "16",
+            "20",
+            "24"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "radio-label",
+          "type": "text",
+          "value": "Option A",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-label-placement",
+          "type": "select",
+          "value": "right",
+          "options": [
+            "right",
+            "left"
+          ],
+          "label": "Label placement",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-supporting-text",
+          "type": "text",
+          "value": "You can change this later in settings.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-show-error",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Error",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "radio-error-text",
+          "type": "text",
+          "value": "Select an option to continue.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "rating-default.html",
+      "name": "Rating",
+      "family": "rating.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · RATING",
+      "inventory": [
+        {
+          "role": "rating-size-mount",
+          "type": "multi",
+          "value": [
+            "20"
+          ],
+          "options": [
+            "16",
+            "20",
+            "24",
+            "32"
+          ],
+          "label": "Icon size",
+          "unit": false
+        },
+        {
+          "role": "rating-label",
+          "type": "text",
+          "value": "Rate this product",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-scale-select",
+          "type": "select",
+          "value": "5",
+          "options": [
+            "3",
+            "5",
+            "10"
+          ],
+          "label": "Scale",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-count-select",
+          "type": "select",
+          "value": "3",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "label": "Selected",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-label",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-value",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show numeric value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-feedback",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show descriptive feedback",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-feedback-words",
+          "type": "text",
+          "value": "Poor, Fair, Good, Very Good, Excellent",
+          "options": [],
+          "label": "Feedback words",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "rating-supporting-text",
+          "type": "text",
+          "value": "Tap an icon to rate.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "result-default.html",
+      "name": "Result",
+      "family": "result.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · RESULT",
+      "inventory": [
+        {
+          "role": "result-title",
+          "type": "text",
+          "value": "Payment successful",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "result-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "result-description",
+          "type": "text",
+          "value": "Your receipt has been emailed to you.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "search-default.html",
+      "name": "Search",
+      "family": "search.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · SEARCH",
+      "inventory": [
+        {
+          "role": "search-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "search-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "search-placeholder",
+          "type": "text",
+          "value": "Search...",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "search-leading-icon",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Leading icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "search-clear-button",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Clear button",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "search-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "search-supporting-text",
+          "type": "text",
+          "value": "Search by name, ID, or keyword.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "search-error-text",
+          "type": "text",
+          "value": "No results found for \"xyz123notfound\".",
+          "options": [],
+          "label": "No results message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "select-dropdown.html",
+      "name": "Select",
+      "family": "select.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · SELECT",
+      "inventory": [
+        {
+          "role": "select-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "select-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "select-label",
+          "type": "text",
+          "value": "Country",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-placeholder",
+          "type": "text",
+          "value": "Select a country",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-options",
+          "type": "textarea",
+          "value": "Canada\nFrance\nJapan\nKenya",
+          "options": [],
+          "label": "Options",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-default-value",
+          "type": "select",
+          "value": "Canada",
+          "options": [
+            "Canada",
+            "France",
+            "Japan",
+            "Kenya"
+          ],
+          "label": "Default selected value",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-supporting-text",
+          "type": "text",
+          "value": "You can change this later in settings.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "select-error-text",
+          "type": "text",
+          "value": "Please select a country.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "skeleton-default.html",
+      "name": "Skeleton",
+      "family": "skeleton.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · SKELETON",
+      "inventory": [
+        {
+          "role": "skeleton-rows-input",
+          "type": "number",
+          "value": "3",
+          "options": [],
+          "label": "Rows",
+          "min": "1",
+          "max": "5",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "slider-default.html",
+      "name": "Slider",
+      "family": "slider.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · SLIDER",
+      "inventory": [
+        {
+          "role": "slider-size-mount",
+          "type": "multi",
+          "value": [
+            "6"
+          ],
+          "options": [
+            "4",
+            "6",
+            "8",
+            "10"
+          ],
+          "label": "Track thickness",
+          "unit": false
+        },
+        {
+          "role": "slider-label",
+          "type": "text",
+          "value": "Volume",
+          "options": [],
+          "label": "Label text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-value",
+          "type": "number",
+          "value": "60",
+          "options": [],
+          "label": "Value",
+          "min": "0",
+          "max": "100",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-min",
+          "type": "number",
+          "value": "0",
+          "options": [],
+          "label": "Minimum",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-max",
+          "type": "number",
+          "value": "100",
+          "options": [],
+          "label": "Maximum",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-step",
+          "type": "number",
+          "value": "1",
+          "options": [],
+          "label": "Step",
+          "min": "1",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-show-label",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-show-value",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-prefix",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Value prefix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-suffix",
+          "type": "text",
+          "value": "%",
+          "options": [],
+          "label": "Value suffix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-thumb-shape",
+          "type": "select",
+          "value": "circle",
+          "options": [
+            "circle",
+            "square"
+          ],
+          "label": "Thumb shape",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-show-ticks",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Tick marks",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "slider-supporting-text",
+          "type": "text",
+          "value": "Drag the thumb or use arrow keys to adjust.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "spin-default.html",
+      "name": "Spin",
+      "family": "spin.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · SPIN",
+      "inventory": [
+        {
+          "role": "spin-label-input",
+          "type": "text",
+          "value": "Loading...",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "splitter-default.html",
+      "name": "Splitter",
+      "family": "splitter.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · SPLITTER",
+      "inventory": [
+        {
+          "role": "splitter-panel1-label",
+          "type": "text",
+          "value": "Sidebar",
+          "options": [],
+          "label": "First panel label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "splitter-panel2-label",
+          "type": "text",
+          "value": "Content",
+          "options": [],
+          "label": "Second panel label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "splitter-ratio",
+          "type": "number",
+          "value": "35",
+          "options": [],
+          "label": "Split ratio (%)",
+          "min": "10",
+          "max": "90",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "statistic-default.html",
+      "name": "Statistic",
+      "family": "statistic.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · STATISTIC",
+      "inventory": [
+        {
+          "role": "statistic-title",
+          "type": "text",
+          "value": "Active Users",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "statistic-value",
+          "type": "text",
+          "value": "112,893",
+          "options": [],
+          "label": "Value",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "statistic-prefix",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Prefix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "statistic-suffix",
+          "type": "text",
+          "value": "",
+          "options": [],
+          "label": "Suffix",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "steps-default.html",
+      "name": "Steps",
+      "family": "steps.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · STEPS",
+      "inventory": [
+        {
+          "role": "steps-orientation-mount",
+          "type": "multi",
+          "value": [
+            "horizontal"
+          ],
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "label": "Orientation",
+          "unit": false
+        },
+        {
+          "role": "steps-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "32",
+            "40"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "steps-count-input",
+          "type": "number",
+          "value": "3",
+          "options": [],
+          "label": "Step count",
+          "min": "2",
+          "max": "12",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "steps-label",
+          "type": "text",
+          "value": "Details, Shipping, Payment",
+          "options": [],
+          "label": "Labels",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "switch-default.html",
+      "name": "Switch",
+      "family": "switch.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · SWITCH",
+      "inventory": [
+        {
+          "role": "switch-size-mount",
+          "type": "multi",
+          "value": [
+            "24"
+          ],
+          "options": [
+            "20",
+            "24",
+            "32"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "switch-label",
+          "type": "text",
+          "value": "Enable notifications",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-label-placement",
+          "type": "select",
+          "value": "right",
+          "options": [
+            "right",
+            "left"
+          ],
+          "label": "Label placement",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-show-icons",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "State icons",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-supporting-text",
+          "type": "text",
+          "value": "Changes apply immediately.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-show-error",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Error",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "switch-error-text",
+          "type": "text",
+          "value": "Couldn't save this change. Try again.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "table-default.html",
+      "name": "Table",
+      "family": "table.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TABLE",
+      "inventory": [
+        {
+          "role": "table-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "table-size-mount",
+          "type": "multi",
+          "value": [
+            "large"
+          ],
+          "options": [
+            "small",
+            "middle",
+            "large"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "table-show-header",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show header",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tabs-default.html",
+      "name": "Tabs",
+      "family": "tabs.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · NAVIGATION · TABS",
+      "inventory": [
+        {
+          "role": "tabs-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "tabs-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "tabs-label",
+          "type": "text",
+          "value": "Overview, Activity, Settings",
+          "options": [],
+          "label": "Labels",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tabs-equal-width",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Equal-width tabs",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tabs-badge",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Badge",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tag-default.html",
+      "name": "Tag",
+      "family": "tag.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TAG",
+      "inventory": [
+        {
+          "role": "tag-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "tag-label",
+          "type": "text",
+          "value": "In progress",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "text-area-default.html",
+      "name": "Text Area",
+      "family": "text-area.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · TEXT AREA",
+      "inventory": [
+        {
+          "role": "textarea-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "textarea-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "textarea-label",
+          "type": "text",
+          "value": "Description",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-placeholder",
+          "type": "text",
+          "value": "Tell us more...",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-rows-select",
+          "type": "select",
+          "value": "4",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "label": "Rows",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-resize-select",
+          "type": "select",
+          "value": "none",
+          "options": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "label": "Resizing",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-max-length",
+          "type": "number",
+          "value": "",
+          "options": [],
+          "label": "Maximum length",
+          "min": "0",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-show-counter",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Character counter",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-supporting-text",
+          "type": "text",
+          "value": "Share as much detail as you'd like.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "textarea-error-text",
+          "type": "text",
+          "value": "This field is required.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "time-default.html",
+      "name": "Time",
+      "family": "time.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · TIME",
+      "inventory": [
+        {
+          "role": "time-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "time-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "time-label",
+          "type": "text",
+          "value": "Meeting time",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-placeholder",
+          "type": "text",
+          "value": "Select a time",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-allow-clear",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-format-select",
+          "type": "select",
+          "value": "12h",
+          "options": [
+            "12h",
+            "24h"
+          ],
+          "label": "Time format",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-supporting-text",
+          "type": "text",
+          "value": "Choose a time during business hours.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "time-error-text",
+          "type": "text",
+          "value": "Enter a valid time.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "timeline-default.html",
+      "name": "Timeline",
+      "family": "timeline.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TIMELINE",
+      "inventory": [
+        {
+          "role": "timeline-show-icons",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Show icons",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "toast-default.html",
+      "name": "Toast",
+      "family": "toast.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · TOAST",
+      "inventory": [
+        {
+          "role": "toast-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "toast-title",
+          "type": "text",
+          "value": "Update Complete",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-description",
+          "type": "text",
+          "value": "Your-file.pdf was uploaded successfully.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-action-label",
+          "type": "text",
+          "value": "View",
+          "options": [],
+          "label": "Action label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-show-title",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-show-description",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "toast-show-icon",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show icon",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tooltip-default.html",
+      "name": "Tooltip",
+      "family": "tooltip.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · TOOLTIP",
+      "inventory": [
+        {
+          "role": "tooltip-size-select",
+          "type": "select",
+          "value": "default",
+          "options": [
+            "small",
+            "default",
+            "large"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tooltip-text",
+          "type": "text",
+          "value": "Add to favorites",
+          "options": [],
+          "label": "Text content",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tooltip-show-arrow",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show arrow",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tour-default.html",
+      "name": "Tour",
+      "family": "tour.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FEEDBACK · TOUR",
+      "inventory": [
+        {
+          "role": "tour-target-label",
+          "type": "text",
+          "value": "New feature",
+          "options": [],
+          "label": "Target label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tour-title",
+          "type": "text",
+          "value": "Try the new dashboard",
+          "options": [],
+          "label": "Title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tour-heading-level",
+          "type": "select",
+          "value": "h6",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "label": "Heading level",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tour-description",
+          "type": "text",
+          "value": "Get a quick overview of your team's activity in one place.",
+          "options": [],
+          "label": "Description",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "transfer-default.html",
+      "name": "Transfer",
+      "family": "transfer.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · TRANSFER",
+      "inventory": [
+        {
+          "role": "transfer-size-select",
+          "type": "select",
+          "value": "default",
+          "options": [
+            "small",
+            "default",
+            "large"
+          ],
+          "label": "Size",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "transfer-left-title",
+          "type": "text",
+          "value": "Source",
+          "options": [],
+          "label": "Left title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "transfer-right-title",
+          "type": "text",
+          "value": "Target",
+          "options": [],
+          "label": "Right title",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tree-default.html",
+      "name": "Tree",
+      "family": "tree.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · DATA DISPLAY · TREE",
+      "inventory": [
+        {
+          "role": "tree-root-label",
+          "type": "text",
+          "value": "Documents",
+          "options": [],
+          "label": "Root label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "tree-show-icons",
+          "type": "checkbox",
+          "value": true,
+          "options": [],
+          "label": "Show icons",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "tree-select-default.html",
+      "name": "Tree Select",
+      "family": "tree-select.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · TREE SELECT",
+      "inventory": [
+        {
+          "role": "treeselect-size-mount",
+          "type": "multi",
+          "value": [
+            "40"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "treeselect-radius-mount",
+          "type": "multi",
+          "value": [
+            "8"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "treeselect-label",
+          "type": "text",
+          "value": "Assignee team",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-placeholder",
+          "type": "text",
+          "value": "Select a team",
+          "options": [],
+          "label": "Placeholder",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-allow-clear",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Allow clear",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-required",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Required",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-supporting-text",
+          "type": "text",
+          "value": "Choose the most specific team that applies.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "treeselect-error-text",
+          "type": "text",
+          "value": "Select a team to continue.",
+          "options": [],
+          "label": "Error message",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    },
+    {
+      "file": "upload-default.html",
+      "name": "Upload",
+      "family": "upload.html",
+      "controls": [],
+      "variants": [],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · FORMS · UPLOAD",
+      "inventory": [
+        {
+          "role": "upload-label",
+          "type": "text",
+          "value": "Upload files",
+          "options": [],
+          "label": "Label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "upload-helper",
+          "type": "text",
+          "value": "PNG, JPG or PDF up to 10MB",
+          "options": [],
+          "label": "Helper text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "untracked": [],
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

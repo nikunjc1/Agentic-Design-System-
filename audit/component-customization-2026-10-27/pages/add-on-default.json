@@ -1,0 +1,322 @@
+{
+  "file": "add-on-default.html",
+  "name": "Add-on",
+  "category": "Components · Forms · Add-on",
+  "controls": [
+    {
+      "index": 0,
+      "role": "addon-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "addon-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "addon-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "addon-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "addon-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Website",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "addon-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "yourcompany",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "addon-show-prefix",
+      "id": null,
+      "label": "Show prefix",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "segment on the left",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "addon-prefix-text",
+      "id": null,
+      "label": "Prefix text",
+      "type": "text",
+      "value": "https://",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Prefix text",
+      "trigger": null
+    },
+    {
+      "index": 8,
+      "role": "addon-show-suffix",
+      "id": null,
+      "label": "Show suffix",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "segment on the right",
+      "trigger": null
+    },
+    {
+      "index": 9,
+      "role": "addon-suffix-text",
+      "id": null,
+      "label": "Suffix text",
+      "type": "text",
+      "value": ".com",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Suffix text",
+      "trigger": null
+    },
+    {
+      "index": 10,
+      "role": "addon-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label, placeholder, prefix and suffix are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Add-on is a single-line text field with a fixed, non-editable prefix and/or suffix segment attached directly to it - used when the value alone would be ambiguous or would force the user to retype a constant part of it every time. When to Use A value with a fixed protocol or domain prefix - https:// before a URL. A currency symbol on a price - $ before a numeric amount. A username handle with a fixed platform prefix - @ before a handle, or a fixed email domain suffix. When Not to Use A value with no natural constant part - use a plain Input - adding an empty or irrelevant add-on segment is just visual noise. A prefix/suffix that the user should be able to edit or choose - use a Select alongside the field, or a Group Button, instead of a fixed, non-editable add-on. Multiple independent constant parts on both sides that combine in complex ways - consider breaking the field into clearly labeled separate inputs instead. Best Practices Keep the add-on segment visually distinct but clearly non-editable (different background, no cursor) so users don't try to click into it. Use the add-on only for a genuinely constant part of the value - never for something that varies per use case. Make sure the combined value (prefix + typed value + suffix) is what actually gets submitted, not just displayed. Do and Don't Do Price£per month The add-ons carry the unit, so the input holds only the number the user actually has to type. Don't PriceSet the amount An add-on used as a label steals the width the value needs and leaves the field itself unlabelled. Add-ons are for units and fixed fragments, not instructions. Accessibility The prefix/suffix text is exposed to assistive technology alongside the field's label, so its meaning isn't lost for screen-reader users. The editable portion remains a real, independently focusable input - the add-on segments are not part of the tab order since they aren't interactive. Sufficient contrast between the add-on segment and the editable field, so the boundary between fixed and editable text is visually clear. Related Components Input, Select, Number. { \"component\": \"Add-on\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Add-on is a single-line text field with a fixed, non-editable prefix and/or suffix segment attached directly to it - used when the value alone would be ambiguous or would force the user to retype a constant part of it every time.\", \"whenToUse\": [ \"A value with a fixed protocol or domain prefix - https:// before a URL.\", \"A currency symbol on a price - $ before a numeric amount.\", \"A username handle with a fixed platform prefix - @ before a handle, or a fixed email domain suffix.\" ], \"whenNotToUse\": [ \"A value with no natural constant part - use a plain Input - adding an empty or irrelevant add-on segment is just visual noise.\", \"A prefix/suffix that the user should be able to edit or choose - use a Select alongside the field, or a Group Button, instead of a fixed, non-editable add-on.\", \"Multiple independent constant parts on both sides that combine in complex ways - consider breaking the field into clearly labeled separate inputs instead.\" ], \"bestPractices\": [ \"Keep the add-on segment visually distinct but clearly non-editable (different background, no cursor) so users don't try to click into it.\", \"Use the add-on only for a genuinely constant part of the value - never for something that varies per use case.\", \"Make sure the combined value (prefix + typed value + suffix) is what actually gets submitted, not just displayed.\" ], \"doAndDont\": { \"do\": \"The add-ons carry the unit, so the input holds only the number the user actually has to type.\", \"dont\": \"An add-on used as a label steals the width the value needs and leaves the field itself unlabelled. Add-ons are for units and fixed fragments, not instructions.\" }, \"accessibility\": [ \"The prefix/suffix text is exposed to assistive technology alongside the field's label, so its meaning isn't lost for screen-reader users.\", \"The editable portion remains a real, independently focusable input - the add-on segments are not part of the tab order since they aren't interactive.\", \"Sufficient contrast between the add-on segment and the editable field, so the boundary between fixed and editable text is visually clear.\" ], \"relatedComponents\": [ \"Input\", \"Select\", \"Number\" ] }",
+  "tests": []
+}

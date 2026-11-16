@@ -1,0 +1,15 @@
+{
+  "componentId": "input-text-field",
+  "nodeId": "55:9549",
+  "previewNodeId": "55:9550",
+  "revision": 0,
+  "variantCount": 24,
+  "propertySummary": {
+    "TEXT": 5,
+    "BOOLEAN": 5,
+    "INSTANCE_SWAP": 2,
+    "SLOT": 1,
+    "VARIANT": 4
+  },
+  "warnings": []
+}

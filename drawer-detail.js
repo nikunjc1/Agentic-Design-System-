@@ -48,9 +48,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -75,6 +79,16 @@
   var FALLBACK_DEFAULTS = { size: "medium", radius: liveRadiusDefault("8") };
   var DEFAULT_TITLE = "Edit profile";
   var DEFAULT_BODY = "Update your name, photo, and contact details.";
+  var DEFAULT_HEADING_LEVEL = "h6";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the title always traces back to a
+  // real Foundation value, exactly like every other Foundation-bound style
+  // in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
 
   function optionLabelFor(optionList, value){
     var match = optionList.filter(function(opt){ return opt.value === value; })[0];
@@ -86,7 +100,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // All 4 corners round, regardless of placement - a prior version only
@@ -165,18 +179,18 @@
     var body = selectionInfo.body || DEFAULT_BODY;
     var showClose = selectionInfo.showClose !== undefined ? selectionInfo.showClose : true;
 
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
     var line = getCssVar("--line", "rgba(255,255,255,0.08)");
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var textMid = getCssVar("--text-mid", "#A7ABB2");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var textMid = getCssVar("--text-mid", "#4B5563");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red600 = getCssVar("--red-600", "#D80016");
+    var red600 = getCssVar("--red-600", "#D10215");
 
     var lines = [];
     lines.push("/* Agentic Design System - Drawer component */");
-    lines.push(".drawer-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; padding:0; background:rgba(0,0,0,0.55); z-index:1000; }");
+    lines.push(".drawer-scrim{ box-sizing:border-box; position:fixed; inset:0; display:flex; padding:0; background:var(--overlay-scrim); z-index:1000; }");
     lines.push(".drawer-scrim--vertical{ flex-direction:column; }");
     lines.push('.drawer-panel{ box-sizing:border-box; height:100%; background:' + graphite900 + "; border:1px solid " + lineStrong + '; box-shadow:0 24px 48px rgba(0,0,0,0.5); display:flex; flex-direction:column; overflow:hidden; }');
     lines.push(".drawer-panel--right{ margin-inline-start:auto; }");
@@ -206,7 +220,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - all 4 corners, not chosen yet, default is 8px */"
+      ? "/* Corner radius (8 options) - all 4 corners, not chosen yet, default is 8px */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - all 4 corners */");
     radiiToEmit.forEach(function(radius){
       var radiusCss = radiusCssFor(radius);
@@ -214,13 +228,13 @@
     });
     lines.push("");
     lines.push(".drawer-header{ display:flex; align-items:center; justify-content:space-between; gap:var(--space-12); padding:var(--space-16) var(--space-20); border-bottom:1px solid " + line + "; }");
-    lines.push('.drawer-title{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin:0; }");
+    lines.push('.drawer-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:' + textHi + "; margin:0; }");
     lines.push(".drawer-close{ flex:none; width:var(--dimension-20); height:var(--dimension-20); background:none; border:none; color:" + textDim + "; cursor:pointer; padding:0; }");
-    lines.push('.drawer-body{ padding:var(--space-16) var(--space-20); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); color:' + textMid + "; flex:1; overflow:auto; }");
+    lines.push('.drawer-body{ padding:var(--space-16) var(--space-20); font-family:var(--font-body); font-size:var(--type-body-size); color:' + textMid + "; flex:1; overflow:auto; }");
     lines.push(".drawer-footer{ display:flex; justify-content:flex-end; gap:var(--space-8); padding:var(--space-12) var(--space-20); border-top:1px solid " + line + "; }");
-    lines.push('.drawer-btn{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; padding:var(--space-8) var(--space-16); border-radius:4px; cursor:pointer; border:1.5px solid transparent; }');
+    lines.push('.drawer-btn{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); padding:var(--space-8) var(--space-16); border-radius:var(--radius-sm); cursor:pointer; border:var(--border-width-1) var(--border-style) transparent; }');
     lines.push(".drawer-btn--cancel{ background:transparent; border-color:" + lineStrong + "; color:" + textHi + "; }");
-    lines.push(".drawer-btn--primary{ color:#FFFFFF; background:" + red500 + "; }");
+    lines.push(".drawer-btn--primary{ color:var(--on-brand-text); background:" + red500 + "; }");
     lines.push(".drawer-btn--primary:hover{ background:" + red600 + "; }");
     lines.push("");
 
@@ -296,12 +310,12 @@
       card.setAttribute("tabindex", "0");
       var href = "drawer-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -383,18 +397,21 @@
     var sizeSelect = document.querySelector('[data-role="drawer-size-select"]');
     var radiusMount = document.querySelector('[data-role="drawer-radius-mount"]');
     var titleInput = document.querySelector('[data-role="drawer-title"]');
+    var headingLevelInput = document.querySelector('[data-role="drawer-heading-level"]');
     var bodyInput = document.querySelector('[data-role="drawer-body"]');
     var showCloseInput = document.querySelector('[data-role="drawer-show-close"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildDrawerField(typeKey, stateKey, sizeKey, radius, title, body, showClose){
+    function buildDrawerField(typeKey, stateKey, sizeKey, radius, title, body, showClose, headingLevel){
       var radiusCss = radiusCssFor(radius);
       var hideClose = !showClose || stateKey === "no-close";
-      var closeHtml = hideClose ? "" : '<button type="button" class="modal-demo-close" aria-label="Close" tabindex="-1">&times;</button>';
-      var headerHtml = '<div class="modal-demo-header"><span class="modal-demo-title">' + escapeHtml(title) + "</span>" + closeHtml + "</div>";
+      var closeHtml = hideClose ? "" : '<button type="button" class="modal-demo-close" data-contract-part="close" aria-label="Close" tabindex="-1">&times;</button>';
+      var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
+      var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
+      var headerHtml = '<div class="modal-demo-header" data-contract-part="header"><' + headingTag + ' class="modal-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" + closeHtml + "</div>";
 
-      var bodyHtml = '<div class="modal-demo-body"><p style="margin:0;">' + escapeHtml(body) + "</p></div>";
+      var bodyHtml = '<div class="modal-demo-body"><p style="margin:0;" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
 
       var footerHtml = "";
       if (stateKey !== "no-footer"){
@@ -422,10 +439,10 @@
       return ordered.length ? ordered : [fallback];
     }
 
-    function buildMatrixSection(sizeKey, radius, title, body, showClose){
+    function buildMatrixSection(sizeKey, radius, title, body, showClose, headingLevel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildDrawerField(t.key, state.key, sizeKey, radius, title, body, showClose) + "</td>";
+          return '<td class="button-matrix-cell">' + buildDrawerField(t.key, state.key, sizeKey, radius, title, body, showClose, headingLevel) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -441,6 +458,7 @@
         radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
         sizeKey: sizeSelect ? sizeSelect.value : FALLBACK_DEFAULTS.size,
         title: titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE,
+        headingLevel: headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL,
         body: bodyInput ? (bodyInput.value.trim() || DEFAULT_BODY) : DEFAULT_BODY,
         showClose: showCloseInput ? showCloseInput.checked : true
       };
@@ -449,6 +467,7 @@
     function render(){
       var sizeKey = sizeSelect ? sizeSelect.value : FALLBACK_DEFAULTS.size;
       var title = titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE;
+      var headingLevel = headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL;
       var body = bodyInput ? (bodyInput.value.trim() || DEFAULT_BODY) : DEFAULT_BODY;
       var showClose = showCloseInput ? showCloseInput.checked : true;
 
@@ -457,7 +476,7 @@
       var html = "";
       var combos = [];
       radii.forEach(function(radius){
-        html += buildMatrixSection(sizeKey, radius, title, body, showClose);
+        html += buildMatrixSection(sizeKey, radius, title, body, showClose, headingLevel);
         combos.push({ radius: radius, sizeKey: sizeKey, label: optionLabelFor(RADIUS_OPTIONS, radius), title: title, body: body, showClose: showClose });
       });
       matrixContainer.innerHTML = html;
@@ -483,6 +502,9 @@
     }
     if (titleInput){
       titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    }
+    if (headingLevelInput){
+      headingLevelInput.addEventListener("change", render);
     }
     if (bodyInput){
       bodyInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });

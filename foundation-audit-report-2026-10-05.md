@@ -1,4 +1,4 @@
-# Damco Agentic Design System Foundation Audit
+# Agentic Design System Foundation Audit
 
 Audit date: 5 October 2026, Asia/Kolkata. Audience: designers, developers, product teams, design-system maintainers and AI-agent implementers.
 
@@ -6,7 +6,7 @@ The local Foundation documentation is substantial but does not yet provide an au
 
 ## Scope and evidence limits
 
-Reviewed local project: /Users/user/Documents/Damco Agentic Design System. Git HEAD: 1be05bfa5da1433e09901a715fe9704b41c7719a. Working tree was clean before this report. The separate Version 2 directory was not treated as authority. No supplied source URL establishes that this copy equals a deployed or Figma version.
+Reviewed local project: /Users/user/Documents/Agentic Design System. Git HEAD: 1be05bfa5da1433e09901a715fe9704b41c7719a. Working tree was clean before this report. The separate Version 2 directory was not treated as authority. No supplied source URL establishes that this copy equals a deployed or Figma version.
 
 The in-app browser connection exposed no available browser or tabs. This is therefore an intensive source and documentation audit with static navigation checks and executable project-model probes. Live-browser, Figma, visual and screen-reader verification remain outstanding. The New Project tab was not opened live; current flows below are reconstructed from HTML/JavaScript. Dedicated User Flow and Task Flow specifications were not present in the reviewed pages.
 
@@ -88,7 +88,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Generate catalog and docs together; fail release on stale/missing sections and include dynamic guidance explicitly.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Version/hash metadata, completeness manifest, page/rule parity checks.
-- **Evidence:** [docs-catalog.json:413](</Users/user/Documents/Damco Agentic Design System/docs-catalog.json:413>)
+- **Evidence:** [docs-catalog.json:413](</Users/user/Documents/Agentic Design System/docs-catalog.json:413>)
 
 #### X02 P1
 
@@ -100,7 +100,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Resolve defaults plus context plus overrides into a complete snapshot with provenance and mode values.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Default-resolution algorithm, effective token schema, fresh/customized export fixtures.
-- **Evidence:** [experience.js:230](</Users/user/Documents/Damco Agentic Design System/experience.js:230>)
+- **Evidence:** [experience.js:230](</Users/user/Documents/Agentic Design System/experience.js:230>)
 
 #### X03 P1
 
@@ -112,7 +112,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Regenerate and validate during release; compare all intended public names and effective values.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Public-token inventory, source hash, freshness/completeness check.
-- **Evidence:** [design-tokens.json:228](</Users/user/Documents/Damco Agentic Design System/design-tokens.json:228>)
+- **Evidence:** [design-tokens.json:228](</Users/user/Documents/Agentic Design System/design-tokens.json:228>)
 
 #### X04 P1
 
@@ -124,7 +124,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Pin published DTCG version, use typed objects and alias references, document mode extensions, validate a real importer.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Format schema/version, importer fixture, alias/mode translation.
-- **Evidence:** [tools/generate_tokens.py:120](</Users/user/Documents/Damco Agentic Design System/tools/generate_tokens.py:120>)
+- **Evidence:** [tools/generate_tokens.py:120](</Users/user/Documents/Agentic Design System/tools/generate_tokens.py:120>)
 
 #### X05 P1
 
@@ -136,7 +136,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Adopt one draft/validate/commit/apply/export model or clearly separate auto-save from Apply.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Editor state diagram, feedback vocabulary, rollback/reset rules.
-- **Evidence:** [foundations.js:54](</Users/user/Documents/Damco Agentic Design System/foundations.js:54>)
+- **Evidence:** [foundations.js:54](</Users/user/Documents/Agentic Design System/foundations.js:54>)
 
 #### X06 P1
 
@@ -148,7 +148,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Centralize storage validation/migration; preserve last valid state and expose recoverable errors and temporary validated export.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Quota/unavailable/corrupt/future-data states, migration/recovery matrix.
-- **Evidence:** [grid-layout.js:112](</Users/user/Documents/Damco Agentic Design System/grid-layout.js:112>)
+- **Evidence:** [grid-layout.js:112](</Users/user/Documents/Agentic Design System/grid-layout.js:112>)
 
 #### X07 P1
 
@@ -160,7 +160,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use radio groups or labelled toggle groups with synchronized aria-pressed; announce recommendations and outcomes.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Selection semantics, group labels, assistive-technology tests.
-- **Evidence:** [spacing.js:67](</Users/user/Documents/Damco Agentic Design System/spacing.js:67>)
+- **Evidence:** [spacing.js:67](</Users/user/Documents/Agentic Design System/spacing.js:67>)
 
 #### X08 P2
 
@@ -172,7 +172,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define versioned schemas with types/units, precedence, examples and normative rules; generate both views from them.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Schema reference, null/error policy, allowed combinations.
-- **Evidence:** [experience.js:421](</Users/user/Documents/Damco Agentic Design System/experience.js:421>)
+- **Evidence:** [experience.js:421](</Users/user/Documents/Agentic Design System/experience.js:421>)
 
 #### X09 P2
 
@@ -184,7 +184,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use canonical product/platform/density context, inherited choices, explicit overrides and explained fallbacks.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Mapping table, Other fallback, context-change/override policy.
-- **Evidence:** [grid-layout.js:140](</Users/user/Documents/Damco Agentic Design System/grid-layout.js:140>)
+- **Evidence:** [grid-layout.js:140](</Users/user/Documents/Agentic Design System/grid-layout.js:140>)
 
 #### X10 P2
 
@@ -196,7 +196,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Assign token owners, compatibility/deprecation rules and section-specific acceptance checks linked to environment evidence.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Ownership, release checklist, verification matrix, migration examples.
-- **Evidence:** [accessibility.html:247](</Users/user/Documents/Damco Agentic Design System/accessibility.html:247>)
+- **Evidence:** [accessibility.html:247](</Users/user/Documents/Agentic Design System/accessibility.html:247>)
 
 ## New Project
 
@@ -235,7 +235,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Rename to Project setup until isolation exists, or use project IDs and scoped Foundation stores; expose replacement consequences.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Project lifecycle, create/edit/switch/duplicate flows, token ownership.
-- **Evidence:** [new-project.html:183](</Users/user/Documents/Damco Agentic Design System/new-project.html:183>)
+- **Evidence:** [new-project.html:183](</Users/user/Documents/Agentic Design System/new-project.html:183>)
 
 #### NP02 P1
 
@@ -247,7 +247,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Track recommendation provenance, review affected choices after context edits, and resolve per-platform defaults.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Inheritance precedence, impact review, reapply recommendations, platform variants.
-- **Evidence:** [grid-layout.js:160](</Users/user/Documents/Damco Agentic Design System/grid-layout.js:160>)
+- **Evidence:** [grid-layout.js:160](</Users/user/Documents/Agentic Design System/grid-layout.js:160>)
 
 #### NP03 P1
 
@@ -259,7 +259,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Show draft/profile provenance; offer resume/discard; validate/migrate both and retain saved baseline.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Draft lifecycle, partial/corrupt/legacy cases, cancel-edit behavior.
-- **Evidence:** [experience.js:133](</Users/user/Documents/Damco Agentic Design System/experience.js:133>)
+- **Evidence:** [experience.js:133](</Users/user/Documents/Agentic Design System/experience.js:133>)
 
 #### NP04 P2
 
@@ -271,7 +271,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Validate types/bounds/supported versions in the model; define trimming and Unicode length policy.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Field schema, Other boundaries/types, future-version/import behavior.
-- **Evidence:** [project-model.js:42](</Users/user/Documents/Damco Agentic Design System/project-model.js:42>)
+- **Evidence:** [project-model.js:42](</Users/user/Documents/Agentic Design System/project-model.js:42>)
 
 #### NP05 P1
 
@@ -283,7 +283,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Associate group error with focused controls, add a summary, mark requirements consistently and separate save feedback from validation.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Screen-reader error journey, corrected-field timing, group semantics.
-- **Evidence:** [experience.js:174](</Users/user/Documents/Damco Agentic Design System/experience.js:174>)
+- **Evidence:** [experience.js:174](</Users/user/Documents/Agentic Design System/experience.js:174>)
 
 #### NP06 P2
 
@@ -295,7 +295,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Provide role-specific tasks plus a shared readiness checklist with alternate routes.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Designer/developer/PM/QA examples, expected outputs, completion criteria.
-- **Evidence:** [experience.js:207](</Users/user/Documents/Damco Agentic Design System/experience.js:207>)
+- **Evidence:** [experience.js:207](</Users/user/Documents/Agentic Design System/experience.js:207>)
 
 #### NP07 P2
 
@@ -307,7 +307,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use explicit wizard states; route final all-field errors to steps; retire step listeners or hash state on completion.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** History/deep-link policy, completion/reload scenarios, final validation.
-- **Evidence:** [experience.js:191](</Users/user/Documents/Damco Agentic Design System/experience.js:191>)
+- **Evidence:** [experience.js:191](</Users/user/Documents/Agentic Design System/experience.js:191>)
 
 #### NP08 P2
 
@@ -319,7 +319,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Map setup to semantic tokens; verify expansion/keyboard viewport, tablet/window sizing and reflow.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Responsive form fixtures, long-content examples, token mapping.
-- **Evidence:** [experience.css:22](</Users/user/Documents/Damco Agentic Design System/experience.css:22>)
+- **Evidence:** [experience.css:22](</Users/user/Documents/Agentic Design System/experience.css:22>)
 
 #### NP09 P1
 
@@ -331,7 +331,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export resolved context/defaults/overrides, validation findings, assets and open decisions; keep identity opt-in.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Fresh/customized handoff examples, readiness and dependency manifest.
-- **Evidence:** [project-model.js:78](</Users/user/Documents/Damco Agentic Design System/project-model.js:78>)
+- **Evidence:** [project-model.js:78](</Users/user/Documents/Agentic Design System/project-model.js:78>)
 
 #### NP10 P2
 
@@ -343,7 +343,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Make identity optional unless needed; explain requirements and add category/browse/Other decision examples.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Data-purpose copy, product decision guide, anonymous/return journey.
-- **Evidence:** [new-project.html:170](</Users/user/Documents/Damco Agentic Design System/new-project.html:170>)
+- **Evidence:** [new-project.html:170](</Users/user/Documents/Agentic Design System/new-project.html:170>)
 
 ## Colors
 
@@ -382,7 +382,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Choose explicit auto/custom/built-in policy per family or unify it; export effective values and update copy.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Mode precedence matrix, disabled/auto/custom examples, Brand policy.
-- **Evidence:** [foundations.html:609](</Users/user/Documents/Damco Agentic Design System/foundations.html:609>)
+- **Evidence:** [foundations.html:609](</Users/user/Documents/Agentic Design System/foundations.html:609>)
 
 #### C02 P1
 
@@ -394,7 +394,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Persist explicit shared preference or truly independent choices; keep section resets local, provide separate all-colors reset/undo.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Reset scope, transaction, reload/partial-save examples.
-- **Evidence:** [foundations.js:924](</Users/user/Documents/Damco Agentic Design System/foundations.js:924>)
+- **Evidence:** [foundations.js:924](</Users/user/Documents/Agentic Design System/foundations.js:924>)
 
 #### C03 P1
 
@@ -406,7 +406,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Separate drafts/last-valid state; validate complete input; commit/apply coherently with errors.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Accepted formats, partial/invalid/blur states, apply timing.
-- **Evidence:** [foundations.js:547](</Users/user/Documents/Damco Agentic Design System/foundations.js:547>)
+- **Evidence:** [foundations.js:547](</Users/user/Documents/Agentic Design System/foundations.js:547>)
 
 #### C04 P1
 
@@ -418,7 +418,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use actual effective role-specific pair matrix and compositing; state badge scope explicitly.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Pair catalog, role thresholds, opacity, accepted/rejected examples.
-- **Evidence:** [foundations.js:972](</Users/user/Documents/Damco Agentic Design System/foundations.js:972>)
+- **Evidence:** [foundations.js:972](</Users/user/Documents/Agentic Design System/foundations.js:972>)
 
 #### C05 P1
 
@@ -430,7 +430,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Validate default/hover/pressed pairs; add explicit or approved contrast-safe foreground and brand acceptance criteria.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** On-brand policy, state pairs, semantic foregrounds.
-- **Evidence:** [theme.css:68](</Users/user/Documents/Damco Agentic Design System/theme.css:68>)
+- **Evidence:** [theme.css:68](</Users/user/Documents/Agentic Design System/theme.css:68>)
 
 #### C06 P2
 
@@ -442,7 +442,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Document formulas/version and role mappings; validate surface distinction and allow deliberate overrides.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Scale recipe, allowed roles, difficult brands, hierarchy warnings.
-- **Evidence:** [foundations.js:145](</Users/user/Documents/Damco Agentic Design System/foundations.js:145>)
+- **Evidence:** [foundations.js:145](</Users/user/Documents/Agentic Design System/foundations.js:145>)
 
 #### C07 P1
 
@@ -454,7 +454,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Migrate/retire legacy records; define semantic text and per-level precedence; export effective text.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Migration/reset, text ownership/alias map.
-- **Evidence:** [shell.js:96](</Users/user/Documents/Damco Agentic Design System/shell.js:96>)
+- **Evidence:** [shell.js:96](</Users/user/Documents/Agentic Design System/shell.js:96>)
 
 #### C08 P2
 
@@ -466,7 +466,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Add semantic brand/action/text/surface aliases and compatibility mapping; show them in all views.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Primitive/semantic mapping, allowed consumers, deprecation.
-- **Evidence:** [shell.js:37](</Users/user/Documents/Damco Agentic Design System/shell.js:37>)
+- **Evidence:** [shell.js:37](</Users/user/Documents/Agentic Design System/shell.js:37>)
 
 #### C09 P2
 
@@ -478,7 +478,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define status anatomy, severity and component mapping; keep data colors distinct from status semantics.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Alert/form/table/chart examples, triplets, exclusions.
-- **Evidence:** [foundations.html:362](</Users/user/Documents/Damco Agentic Design System/foundations.html:362>)
+- **Evidence:** [foundations.html:362](</Users/user/Documents/Agentic Design System/foundations.html:362>)
 
 #### C10 P1
 
@@ -490,7 +490,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use labelled ranges/numeric alternatives, announce values, visibly explain preview-only alpha, verify focus return/clipping.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Picker semantics, mobile/focus checks, alpha policy.
-- **Evidence:** [foundations.js:1172](</Users/user/Documents/Damco Agentic Design System/foundations.js:1172>)
+- **Evidence:** [foundations.js:1172](</Users/user/Documents/Agentic Design System/foundations.js:1172>)
 
 ## Grid & Layout
 
@@ -529,7 +529,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Add validated columns/gutter/margin/container/per-breakpoint controls, or label recommendation-only; require Custom definition.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Numeric constraints, Custom schema, effective grid export.
-- **Evidence:** [grid-layout.html:246](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:246>)
+- **Evidence:** [grid-layout.html:246](</Users/user/Documents/Agentic Design System/grid-layout.html:246>)
 
 #### G02 P1
 
@@ -541,7 +541,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Adopt justified shared scale, migrate consumers, document content-driven exceptions and test boundaries.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Canonical values, exception/migration policy, boundary fixtures.
-- **Evidence:** [grid-layout.html:219](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:219>)
+- **Evidence:** [grid-layout.html:219](</Users/user/Documents/Agentic Design System/grid-layout.html:219>)
 
 #### G03 P1
 
@@ -553,7 +553,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Resolve product plus platform/container/density; emit per-platform profiles and conflicts transparently.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Mixed-platform/tablet/window examples, native mapping.
-- **Evidence:** [grid-layout.js:152](</Users/user/Documents/Damco Agentic Design System/grid-layout.js:152>)
+- **Evidence:** [grid-layout.js:152](</Users/user/Documents/Agentic Design System/grid-layout.js:152>)
 
 #### G04 P1
 
@@ -565,7 +565,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define independent axes, container/span tokens and optional baseline overlay; add executable examples.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Grid API, nested/subgrid, baseline and container tables.
-- **Evidence:** [grid-layout.html:322](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:322>)
+- **Evidence:** [grid-layout.html:322](</Users/user/Documents/Agentic Design System/grid-layout.html:322>)
 
 #### G05 P1
 
@@ -577,7 +577,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Prefer reflow where appropriate; define justified regions with names/keyboard/affordances/retained actions.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Overflow tree, form/table/editor examples, reveal policy.
-- **Evidence:** [grid-layout.html:451](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:451>)
+- **Evidence:** [grid-layout.html:451](</Users/user/Documents/Agentic Design System/grid-layout.html:451>)
 
 #### G06 P1
 
@@ -589,7 +589,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Specify each pattern across widths/states, including reading/focus restoration.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Master-detail mobile flow, split collapse, pane matrix.
-- **Evidence:** [grid-layout.html:445](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:445>)
+- **Evidence:** [grid-layout.html:445](</Users/user/Documents/Agentic Design System/grid-layout.html:445>)
 
 #### G07 P2
 
@@ -601,7 +601,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define pane bounds/collapse/resizing, sticky containment and overlay rules; link Splitter/Affix/Table.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Keyboard resize, layout constraints, nesting examples.
-- **Evidence:** [grid-layout.html:427](</Users/user/Documents/Damco Agentic Design System/grid-layout.html:427>)
+- **Evidence:** [grid-layout.html:427](</Users/user/Documents/Agentic Design System/grid-layout.html:427>)
 
 #### G08 P1
 
@@ -613,7 +613,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export effective geometry, semantic tokens, patterns, boundaries and validation with normative guidance.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete layout export, rule completeness check.
-- **Evidence:** [grid-layout.js:28](</Users/user/Documents/Damco Agentic Design System/grid-layout.js:28>)
+- **Evidence:** [grid-layout.js:28](</Users/user/Documents/Agentic Design System/grid-layout.js:28>)
 
 ## Typography
 
@@ -652,7 +652,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Package durable authorized font reference/faces/install rules or visibly label preview-only.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Asset manifest, licensing/self-hosting, reload/packaging rules.
-- **Evidence:** [typography.js:163](</Users/user/Documents/Damco Agentic Design System/typography.js:163>)
+- **Evidence:** [typography.js:163](</Users/user/Documents/Agentic Design System/typography.js:163>)
 
 #### T02 P1
 
@@ -664,7 +664,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Commit/render on successful load; expose loading/retry/cancel/read/load errors, preserve prior valid font.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Upload state machine, async completion/failure tests.
-- **Evidence:** [typography.js:164](</Users/user/Documents/Damco Agentic Design System/typography.js:164>)
+- **Evidence:** [typography.js:164](</Users/user/Documents/Agentic Design System/typography.js:164>)
 
 #### T03 P1
 
@@ -676,7 +676,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Resolve semantic tokens and bindings or explicitly state export-only settings; show effective previews.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Level-token-component map, CSS/native resolver, scope copy.
-- **Evidence:** [shell.js:165](</Users/user/Documents/Damco Agentic Design System/shell.js:165>)
+- **Evidence:** [shell.js:165](</Users/user/Documents/Agentic Design System/shell.js:165>)
 
 #### T04 P1
 
@@ -688,7 +688,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Separate text roles and state color modifiers; define Body/Paragraph and visual versus HTML headings.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Role taxonomy, state modifier/precedence, semantic heading example.
-- **Evidence:** [typography.html:1070](</Users/user/Documents/Damco Agentic Design System/typography.html:1070>)
+- **Evidence:** [typography.html:1070](</Users/user/Documents/Agentic Design System/typography.html:1070>)
 
 #### T05 P1
 
@@ -700,7 +700,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Validate on blur/commit, preserve draft, recommend role bounds/exceptions and actual pair checks.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Invalid/empty/partial states, readability constraints, errors.
-- **Evidence:** [typography.js:274](</Users/user/Documents/Damco Agentic Design System/typography.js:274>)
+- **Evidence:** [typography.js:274](</Users/user/Documents/Agentic Design System/typography.js:274>)
 
 #### T06 P1
 
@@ -712,7 +712,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define explicit responsive role tokens or approved fluid ranges plus platform/minimum rules.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Per-role boundary table, custom scale, platform mapping.
-- **Evidence:** [typography.html:285](</Users/user/Documents/Damco Agentic Design System/typography.html:285>)
+- **Evidence:** [typography.html:285](</Users/user/Documents/Agentic Design System/typography.html:285>)
 
 #### T07 P1
 
@@ -724,7 +724,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Verify actual text/surface roles; correct defaults or restrict uses; test expansion/scripts/text spacing.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Label/table examples, multilingual glyph metrics, spacing fixture.
-- **Evidence:** [typography.html:1721](</Users/user/Documents/Damco Agentic Design System/typography.html:1721>)
+- **Evidence:** [typography.html:1721](</Users/user/Documents/Agentic Design System/typography.html:1721>)
 
 #### T08 P2
 
@@ -736,7 +736,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define valid faces, fallback/loading/hosting/axes; validate type/size and show unavailable-face states.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Loading/failure examples, weight coverage, hosting/fallback rules.
-- **Evidence:** [typography.js:115](</Users/user/Documents/Damco Agentic Design System/typography.js:115>)
+- **Evidence:** [typography.js:115](</Users/user/Documents/Agentic Design System/typography.js:115>)
 
 #### T09 P1
 
@@ -748,7 +748,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export semantic roles, rules, responsive variants, units and font dependencies.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete standalone type contract, role/asset parity tests.
-- **Evidence:** [typography.js:386](</Users/user/Documents/Damco Agentic Design System/typography.js:386>)
+- **Evidence:** [typography.js:386](</Users/user/Documents/Agentic Design System/typography.js:386>)
 
 #### T10 P2
 
@@ -760,7 +760,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Persist real value changes only; mark modified presets Custom; review/undo multi-level changes.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Preset/custom states, diff/overwrite policy.
-- **Evidence:** [typography.js:459](</Users/user/Documents/Damco Agentic Design System/typography.js:459>)
+- **Evidence:** [typography.js:459](</Users/user/Documents/Agentic Design System/typography.js:459>)
 
 ## Spacing
 
@@ -799,7 +799,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define primitive scale plus semantic role mapping per system; resolve/export, or mark advisory.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Per-system values/resolver, scope/native units.
-- **Evidence:** [spacing.js:107](</Users/user/Documents/Damco Agentic Design System/spacing.js:107>)
+- **Evidence:** [spacing.js:107](</Users/user/Documents/Agentic Design System/spacing.js:107>)
 
 #### S02 P1
 
@@ -811,7 +811,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define primitive availability, role recommendations and exceptions with precedence.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Allowed-value contract, zero/auto/fluid examples, lint policy.
-- **Evidence:** [spacing.html:344](</Users/user/Documents/Damco Agentic Design System/spacing.html:344>)
+- **Evidence:** [spacing.html:344](</Users/user/Documents/Agentic Design System/spacing.html:344>)
 
 #### S03 P1
 
@@ -823,7 +823,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define role/density/platform resolver and correct Cross-Platform choice; display effective results.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Adaptive algorithm, combined-unit fixture, token matrix.
-- **Evidence:** [spacing.html:291](</Users/user/Documents/Damco Agentic Design System/spacing.html:291>)
+- **Evidence:** [spacing.html:291](</Users/user/Documents/Agentic Design System/spacing.html:291>)
 
 #### S04 P2
 
@@ -835,7 +835,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Canonical taxonomy, explained fallback, supported Consumer/AI defaults.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Fallback notice, names, override examples.
-- **Evidence:** [spacing.js:136](</Users/user/Documents/Damco Agentic Design System/spacing.js:136>)
+- **Evidence:** [spacing.js:136](</Users/user/Documents/Agentic Design System/spacing.js:136>)
 
 #### S05 P2
 
@@ -847,7 +847,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define semantic relationship tokens and complete composition/state examples.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Forms/tables/cards/actions, error/long content, overlay distinction.
-- **Evidence:** [spacing.html:354](</Users/user/Documents/Damco Agentic Design System/spacing.html:354>)
+- **Evidence:** [spacing.html:354](</Users/user/Documents/Agentic Design System/spacing.html:354>)
 
 #### S06 P1
 
@@ -859,7 +859,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define independent interactive bounds/readability and compact/comfortable role maps.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Density-hit-area diagram, compact touch fixtures.
-- **Evidence:** [spacing.html:258](</Users/user/Documents/Damco Agentic Design System/spacing.html:258>)
+- **Evidence:** [spacing.html:258](</Users/user/Documents/Agentic Design System/spacing.html:258>)
 
 #### S07 P2
 
@@ -871,7 +871,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Audit literals; use semantic tokens; document approved fluid structural/logical/native rules.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Responsive/RTL/native examples, fluid exception, literal checks.
-- **Evidence:** [experience.css:22](</Users/user/Documents/Damco Agentic Design System/experience.css:22>)
+- **Evidence:** [experience.css:22](</Users/user/Documents/Agentic Design System/experience.css:22>)
 
 #### S08 P1
 
@@ -883,7 +883,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export typed scale, semantic relations, density/platform variants and precedence/rules.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete handoff, units, role/component map.
-- **Evidence:** [spacing.js:21](</Users/user/Documents/Damco Agentic Design System/spacing.js:21>)
+- **Evidence:** [spacing.js:21](</Users/user/Documents/Agentic Design System/spacing.js:21>)
 
 ## Radius
 
@@ -922,7 +922,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Generate active component defaults from philosophy; distinguish base versus effective mapping.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Per-philosophy role matrix, precedence, comparison.
-- **Evidence:** [shell.js:135](</Users/user/Documents/Damco Agentic Design System/shell.js:135>)
+- **Evidence:** [shell.js:135](</Users/user/Documents/Agentic Design System/shell.js:135>)
 
 #### R02 P1
 
@@ -934,7 +934,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Keep primitives immutable; remap semantic control/card/overlay aliases from one source; audit consumers.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Naming/migration, public/consumer inventory, resolver.
-- **Evidence:** [shell.js:142](</Users/user/Documents/Damco Agentic Design System/shell.js:142>)
+- **Evidence:** [shell.js:142](</Users/user/Documents/Agentic Design System/shell.js:142>)
 
 #### R03 P2
 
@@ -946,7 +946,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define core versus full scale and exact allowed/default role intersections.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Terminology, per-role permissions, rationale/examples.
-- **Evidence:** [radius.html:255](</Users/user/Documents/Damco Agentic Design System/radius.html:255>)
+- **Evidence:** [radius.html:255](</Users/user/Documents/Agentic Design System/radius.html:255>)
 
 #### R04 P2
 
@@ -958,7 +958,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Scope formula to contour surfaces, account for borders/insets, illustrate independent controls.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Nested geometry, flush/asymmetric/zero-gap examples.
-- **Evidence:** [radius.html:469](</Users/user/Documents/Damco Agentic Design System/radius.html:469>)
+- **Evidence:** [radius.html:469](</Users/user/Documents/Agentic Design System/radius.html:469>)
 
 #### R05 P2
 
@@ -970,7 +970,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define floating/attached/full-screen/pill/circle semantic variants with per-edge rules.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Mobile sheet/drawer diagrams, circle constraints.
-- **Evidence:** [radius.html:379](</Users/user/Documents/Damco Agentic Design System/radius.html:379>)
+- **Evidence:** [radius.html:379](</Users/user/Documents/Agentic Design System/radius.html:379>)
 
 #### R06 P2
 
@@ -982,7 +982,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Keep ordinary state geometry stable; define outlines/overflow/hit areas and intentional transitions.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** State matrix, clipped-focus counterexample.
-- **Evidence:** [radius.html:367](</Users/user/Documents/Damco Agentic Design System/radius.html:367>)
+- **Evidence:** [radius.html:367](</Users/user/Documents/Agentic Design System/radius.html:367>)
 
 #### R07 P1
 
@@ -994,7 +994,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export effective semantic map, primitives and attached/nested rules with provenance.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete snapshot, role/rule parity.
-- **Evidence:** [radius.js:22](</Users/user/Documents/Damco Agentic Design System/radius.js:22>)
+- **Evidence:** [radius.js:22](</Users/user/Documents/Agentic Design System/radius.js:22>)
 
 #### R08 P2
 
@@ -1006,7 +1006,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Separate project recommendation from global default or choose durable reset policy; show inheritance.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Reset/reload fixtures, provenance.
-- **Evidence:** [radius.js:161](</Users/user/Documents/Damco Agentic Design System/radius.js:161>)
+- **Evidence:** [radius.js:161](</Users/user/Documents/Agentic Design System/radius.js:161>)
 
 ## Borders
 
@@ -1045,7 +1045,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Implement validated state properties or label them fixed and narrow claim.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Editable/fixed schema, validation/export.
-- **Evidence:** [borders.html:419](</Users/user/Documents/Damco Agentic Design System/borders.html:419>)
+- **Evidence:** [borders.html:419](</Users/user/Documents/Agentic Design System/borders.html:419>)
 
 #### B02 P1
 
@@ -1057,7 +1057,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Reserve maximum transparent border or use outline/inset; show no-shift implementations.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Box-model/state geometry diagram and example.
-- **Evidence:** [borders.html:520](</Users/user/Documents/Damco Agentic Design System/borders.html:520>)
+- **Evidence:** [borders.html:520](</Users/user/Documents/Agentic Design System/borders.html:520>)
 
 #### B03 P1
 
@@ -1069,7 +1069,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define orthogonal layers/precedence and keep focus/messages visible; separate read-only.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Combination/selector matrix, loading/required examples.
-- **Evidence:** [borders.html:412](</Users/user/Documents/Damco Agentic Design System/borders.html:412>)
+- **Evidence:** [borders.html:412](</Users/user/Documents/Agentic Design System/borders.html:412>)
 
 #### B04 P1
 
@@ -1081,7 +1081,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Validate composited adjacent pairs/focus; document forced colors and unobscured focus.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Contrast checker/examples, high-contrast verification.
-- **Evidence:** [borders.html:237](</Users/user/Documents/Damco Agentic Design System/borders.html:237>)
+- **Evidence:** [borders.html:237](</Users/user/Documents/Agentic Design System/borders.html:237>)
 
 #### B05 P2
 
@@ -1093,7 +1093,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Mark Custom/Based on; export one effective composite and define Default inheritance.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Preset provenance, base derivation, export example.
-- **Evidence:** [borders.js:154](</Users/user/Documents/Damco Agentic Design System/borders.js:154>)
+- **Evidence:** [borders.js:154](</Users/user/Documents/Agentic Design System/borders.js:154>)
 
 #### B06 P2
 
@@ -1105,7 +1105,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Audit widths; preserve justified semantic optical exceptions and migrate drift.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Width inventory, rationale, native hairline policy.
-- **Evidence:** [theme.css:21](</Users/user/Documents/Damco Agentic Design System/theme.css:21>)
+- **Evidence:** [theme.css:21](</Users/user/Documents/Agentic Design System/theme.css:21>)
 
 #### B07 P1
 
@@ -1117,7 +1117,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Default to semantic aliases; allow explicit detached override; resolve by theme.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Alias/override UI/schema, dependency tests.
-- **Evidence:** [borders.js:455](</Users/user/Documents/Damco Agentic Design System/borders.js:455>)
+- **Evidence:** [borders.js:455](</Users/user/Documents/Agentic Design System/borders.js:455>)
 
 #### B08 P2
 
@@ -1129,7 +1129,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Offer/document inline/block sides and physical exceptions; map native/print; explain dividers.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** RTL/native/forced-color examples.
-- **Evidence:** [borders.js:90](</Users/user/Documents/Damco Agentic Design System/borders.js:90>)
+- **Evidence:** [borders.js:90](</Users/user/Documents/Agentic Design System/borders.js:90>)
 
 #### B09 P1
 
@@ -1141,7 +1141,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export typed aliased composites plus precedence/geometry/accessibility rules.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete handoff, CSS/native examples, rule parity.
-- **Evidence:** [borders.js:154](</Users/user/Documents/Damco Agentic Design System/borders.js:154>)
+- **Evidence:** [borders.js:154](</Users/user/Documents/Agentic Design System/borders.js:154>)
 
 ## Shadows
 
@@ -1180,7 +1180,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Resolve per-philosophy layers/minimum separation or mark guidance-only; correct context copy.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Effective map, allowable/fallback levels, product rules.
-- **Evidence:** [shadows.js:33](</Users/user/Documents/Damco Agentic Design System/shadows.js:33>)
+- **Evidence:** [shadows.js:33](</Users/user/Documents/Agentic Design System/shadows.js:33>)
 
 #### H02 P1
 
@@ -1192,7 +1192,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Expose typed primitive/semantic recipes, layering/inset policy and philosophy mappings.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Recipe table, design/native examples.
-- **Evidence:** [shadows.html:240](</Users/user/Documents/Damco Agentic Design System/shadows.html:240>)
+- **Evidence:** [shadows.html:240](</Users/user/Documents/Agentic Design System/shadows.html:240>)
 
 #### H03 P1
 
@@ -1204,7 +1204,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define theme-aware surface/border/backdrop alternatives and validate actual adjacency.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Light/dark/custom/forced-color/print comparisons.
-- **Evidence:** [theme.css:158](</Users/user/Documents/Damco Agentic Design System/theme.css:158>)
+- **Evidence:** [theme.css:158](</Users/user/Documents/Agentic Design System/theme.css:158>)
 
 #### H04 P1
 
@@ -1216,7 +1216,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define layer scale/overlay manager, nested/portal/clipping rules and responsive behavior.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Layer map, nested overlays, clipping/focus examples.
-- **Evidence:** [shadows.html:281](</Users/user/Documents/Damco Agentic Design System/shadows.html:281>)
+- **Evidence:** [shadows.html:281](</Users/user/Documents/Agentic Design System/shadows.html:281>)
 
 #### H05 P2
 
@@ -1228,7 +1228,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define static bordered/elevated/interactive variants and synchronized state defaults.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Card variant/state table, keyboard/touch equivalence.
-- **Evidence:** [shadows.html:317](</Users/user/Documents/Damco Agentic Design System/shadows.html:317>)
+- **Evidence:** [shadows.html:317](</Users/user/Documents/Agentic Design System/shadows.html:317>)
 
 #### H06 P2
 
@@ -1240,7 +1240,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Show focus/selected/pressed with second signals, restrained transitions and touch equivalents.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** State/reduced-motion/touch/performance examples.
-- **Evidence:** [shadows.html:168](</Users/user/Documents/Damco Agentic Design System/shadows.html:168>)
+- **Evidence:** [shadows.html:168](</Users/user/Documents/Agentic Design System/shadows.html:168>)
 
 #### H07 P1
 
@@ -1252,7 +1252,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use complete shared export with effective recipes/modes/semantic/layer guidance.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Standalone snapshot, local/global parity.
-- **Evidence:** [shadows.html:372](</Users/user/Documents/Damco Agentic Design System/shadows.html:372>)
+- **Evidence:** [shadows.html:372](</Users/user/Documents/Agentic Design System/shadows.html:372>)
 
 ## Icons
 
@@ -1291,7 +1291,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Persist/package authorized manifest/files; expose durability; remove/replace/clear with scoped reset.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Asset lifecycle, packaging, file actions, reload/reset.
-- **Evidence:** [icons.js:149](</Users/user/Documents/Damco Agentic Design System/icons.js:149>)
+- **Evidence:** [icons.js:149](</Users/user/Documents/Agentic Design System/icons.js:149>)
 
 #### I02 P1
 
@@ -1303,7 +1303,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Real labelled Choose files button/input; optional drag/drop; announce outcomes/focus restoration.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Keyboard/upload/status examples.
-- **Evidence:** [icons.html:374](</Users/user/Documents/Damco Agentic Design System/icons.html:374>)
+- **Evidence:** [icons.html:374](</Users/user/Documents/Agentic Design System/icons.html:374>)
 
 #### I03 P1
 
@@ -1315,7 +1315,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Validate files/decode, report per-file failures, deduplicate and normalize approved SVG before inline reuse.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Bounds/errors/retries, SVG viewBox/currentColor/packaging policy.
-- **Evidence:** [icons.js:238](</Users/user/Documents/Damco Agentic Design System/icons.js:238>)
+- **Evidence:** [icons.js:238](</Users/user/Documents/Agentic Design System/icons.js:238>)
 
 #### I04 P2
 
@@ -1327,7 +1327,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Separate UI/illustration profiles; disable irrelevant controls and validate compatible libraries.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Usage/compatibility matrix, disabled states.
-- **Evidence:** [icons.html:172](</Users/user/Documents/Damco Agentic Design System/icons.html:172>)
+- **Evidence:** [icons.html:172](</Users/user/Documents/Agentic Design System/icons.html:172>)
 
 #### I05 P1
 
@@ -1339,7 +1339,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Approved named set/source and normalized geometry; resolver/import guidance; label references versus integrations.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Catalog/action map, code/asset API, component examples.
-- **Evidence:** [icons.js:115](</Users/user/Documents/Damco Agentic Design System/icons.js:115>)
+- **Evidence:** [icons.js:115](</Users/user/Documents/Agentic Design System/icons.js:115>)
 
 #### I06 P1
 
@@ -1351,7 +1351,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Document hidden decoration, named functional controls, textual status/loading and native equivalents.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Accessible button/decorative/status examples.
-- **Evidence:** [icons.html:309](</Users/user/Documents/Damco Agentic Design System/icons.html:309>)
+- **Evidence:** [icons.html:309](</Users/user/Documents/Agentic Design System/icons.html:309>)
 
 #### I07 P1
 
@@ -1363,7 +1363,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Separate glyph/grid/hit tokens; actual-size optical/stroke normalization.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Hit-area diagram, 16px samples, alignment policy.
-- **Evidence:** [icons.html:270](</Users/user/Documents/Damco Agentic Design System/icons.html:270>)
+- **Evidence:** [icons.html:270](</Users/user/Documents/Agentic Design System/icons.html:270>)
 
 #### I08 P2
 
@@ -1375,7 +1375,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Publish symbol-specific direction/motion rules, distinguish trends/navigation/physical symbols.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** RTL inventory, invariant examples, reduced-motion/loading policy.
-- **Evidence:** [icons.html:350](</Users/user/Documents/Damco Agentic Design System/icons.html:350>)
+- **Evidence:** [icons.html:350](</Users/user/Documents/Agentic Design System/icons.html:350>)
 
 #### I09 P2
 
@@ -1387,7 +1387,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Provide geometric/currentColor/name/semantic constraints, human review and approved source manifest.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Generation instructions, accepted/rejected SVGs, provenance/licensing.
-- **Evidence:** [icons.html:168](</Users/user/Documents/Damco Agentic Design System/icons.html:168>)
+- **Evidence:** [icons.html:168](</Users/user/Documents/Agentic Design System/icons.html:168>)
 
 #### I10 P1
 
@@ -1399,7 +1399,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Export asset package/references plus normative state/semantics/direction/generation rules.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Complete handoff, asset availability and rule parity.
-- **Evidence:** [icons.js:72](</Users/user/Documents/Damco Agentic Design System/icons.js:72>)
+- **Evidence:** [icons.js:72](</Users/user/Documents/Agentic Design System/icons.js:72>)
 
 ## AI & Agents
 
@@ -1438,7 +1438,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Use verified real example or explicitly fictional simulation; link exact evidence and affected diff.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Naming source, citation validity, unsupported-evidence state.
-- **Evidence:** [ai-foundation.html:240](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:240>)
+- **Evidence:** [ai-foundation.html:240](</Users/user/Documents/Agentic Design System/ai-foundation.html:240>)
 
 #### A02 P1
 
@@ -1450,7 +1450,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Label simulation; separate decision/execution; neutral decline; define operation and undo scope.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Live/demo labels, outcome taxonomy, undo duration/scope.
-- **Evidence:** [ai-foundation.js:24](</Users/user/Documents/Damco Agentic Design System/ai-foundation.js:24>)
+- **Evidence:** [ai-foundation.js:24](</Users/user/Documents/Agentic Design System/ai-foundation.js:24>)
 
 #### A03 P1
 
@@ -1462,7 +1462,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define lifecycle/transitions/actions/progress/retry/cancel/compensation, distinguish local/external effects.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** State diagram, retry matrix, partial/stale examples.
-- **Evidence:** [ai-foundation.html:216](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:216>)
+- **Evidence:** [ai-foundation.html:216](</Users/user/Documents/Agentic Design System/ai-foundation.html:216>)
 
 #### A04 P1
 
@@ -1474,7 +1474,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define domain evidence/tiering and unknown; avoid fabricated certainty; separate outcome semantics.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Confidence definitions, calibrated/evidence example, insufficient evidence.
-- **Evidence:** [ai-foundation.html:180](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:180>)
+- **Evidence:** [ai-foundation.html:180](</Users/user/Documents/Agentic Design System/ai-foundation.html:180>)
 
 #### A05 P1
 
@@ -1486,7 +1486,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Real controlled stream example, preserve partial output, coarse announcements, intentional scroll/retry.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Stream state matrix, long/narrow/cancel/error examples.
-- **Evidence:** [ai-foundation.html:209](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:209>)
+- **Evidence:** [ai-foundation.html:209](</Users/user/Documents/Agentic Design System/ai-foundation.html:209>)
 
 #### A06 P1
 
@@ -1498,7 +1498,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define effect previews/capability-based autonomy and scope; reuse valid authorization, renew only for changed/defined scope.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Approval policy, diff/effect summary, expiry/capabilities.
-- **Evidence:** [ai-foundation.html:223](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:223>)
+- **Evidence:** [ai-foundation.html:223](</Users/user/Documents/Agentic Design System/ai-foundation.html:223>)
 
 #### A07 P1
 
@@ -1510,7 +1510,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Announce outcome and restore focus; keyboard-operable undo with defined timing/persistence; neutral decline.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Screen-reader/focus journey, undo recovery.
-- **Evidence:** [ai-foundation.js:15](</Users/user/Documents/Damco Agentic Design System/ai-foundation.js:15>)
+- **Evidence:** [ai-foundation.js:15](</Users/user/Documents/Agentic Design System/ai-foundation.js:15>)
 
 #### A08 P1
 
@@ -1522,7 +1522,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Publish trusted-source precedence, capabilities, scope, output/provenance schemas and validation requirements; treat evidence as data.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Agent consumer spec/examples, conflicts/missing info, verification.
-- **Evidence:** [ai-foundation.html:249](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:249>)
+- **Evidence:** [ai-foundation.html:249](</Users/user/Documents/Agentic Design System/ai-foundation.html:249>)
 
 #### A09 P1
 
@@ -1534,7 +1534,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Include AI rules/contracts/tokens in manifest/export and make intentional omission visible.
 - **Priority:** P1
 - **Missing documentation, rule, example or interaction:** Section selection, schema, token/catalog parity fixture.
-- **Evidence:** [experience.js:220](</Users/user/Documents/Damco Agentic Design System/experience.js:220>)
+- **Evidence:** [experience.js:220](</Users/user/Documents/Agentic Design System/experience.js:220>)
 
 #### A10 P2
 
@@ -1546,7 +1546,7 @@ User Flow describes the person's decisions and journey; Task Flow describes acti
 - **Recommended improvement:** Define provenance/version/tool/human-review/edit/redaction fields and progressive disclosure; require supportable evidence.
 - **Priority:** P2
 - **Missing documentation, rule, example or interaction:** Mixed-authorship/audit examples, redaction, retention/citation rules.
-- **Evidence:** [ai-foundation.html:176](</Users/user/Documents/Damco Agentic Design System/ai-foundation.html:176>)
+- **Evidence:** [ai-foundation.html:176](</Users/user/Documents/Agentic Design System/ai-foundation.html:176>)
 
 
 ## Proposed complete workflow

@@ -1,0 +1,114 @@
+{
+  "file": "upload-default.html",
+  "name": "Upload",
+  "category": "Components · Forms · Upload",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Dropzone",
+      "options": [
+        {
+          "value": "Dropzone",
+          "label": "Dropzone"
+        },
+        {
+          "value": "Button",
+          "label": "Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Empty",
+      "options": [
+        {
+          "value": "Empty",
+          "label": "Empty"
+        },
+        {
+          "value": "With files",
+          "label": "With files"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "upload-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Upload files",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "upload-helper",
+      "id": null,
+      "label": "Helper text",
+      "type": "text",
+      "value": "PNG, JPG or PDF up to 10MB",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Helper text",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Label and helper text are properties of the same component, not separate fields - change them below to check this control's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Upload adds one or more files to a form - either a large drag-and-drop dropzone or a compact trigger button - paired with a file list that reports each file's name, size, and upload status, so the user always knows what was added and whether it succeeded. When to Use Attaching documents to a record - a support ticket, an application form. Uploading a profile photo or design asset - a single-file, often image-specific upload. Bulk file import - a CSV import, a batch of resumes/CVs. When Not to Use Collecting a URL to an already-hosted file rather than the file itself - use Input or Add-on instead. A field that doesn't actually involve a file - obviously use a different form field type - Upload exists specifically for file transfer. A single, tiny, purely decorative image with no need for status feedback - a simpler custom control may be lighter weight than the full Upload component. Best Practices Always show per-file progress and a clear success/error state, not just a single overall spinner. State accepted file types and size limits up front, before the user picks a file, not only after a rejected upload. Let the user remove a file from the list before final submission, in case they attached the wrong one. Do and Don't Do Drop files or browsePDF or PNG, up to 10 MB eachcontract.pdf2.4 MB Accepted formats and the size ceiling are stated before the user picks a file, and each upload reports its own outcome. Don't Drop files or browsecontract.tiffUpload failed Withholding the rules until after the upload wastes the user's time and bandwidth, and \"Upload failed\" still does not tell them what to change. Accessibility The dropzone is also operable via a real file-picker trigger, since drag-and-drop alone isn't reachable by keyboard. Upload progress and completion/error status are announced via an aria-live region, not just shown visually. Each file row's remove control is independently labeled with that file's name (\"Remove report.pdf\"), not a generic \"Remove\" repeated for every row. Related Components Input, Progress, Result. { \"component\": \"Upload\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Upload adds one or more files to a form - either a large drag-and-drop dropzone or a compact trigger button - paired with a file list that reports each file's name, size, and upload status, so the user always knows what was added and whether it succeeded.\", \"whenToUse\": [ \"Attaching documents to a record - a support ticket, an application form.\", \"Uploading a profile photo or design asset - a single-file, often image-specific upload.\", \"Bulk file import - a CSV import, a batch of resumes/CVs.\" ], \"whenNotToUse\": [ \"Collecting a URL to an already-hosted file rather than the file itself - use Input or Add-on instead.\", \"A field that doesn't actually involve a file - obviously use a different form field type - Upload exists specifically for file transfer.\", \"A single, tiny, purely decorative image with no need for status feedback - a simpler custom control may be lighter weight than the full Upload component.\" ], \"bestPractices\": [ \"Always show per-file progress and a clear success/error state, not just a single overall spinner.\", \"State accepted file types and size limits up front, before the user picks a file, not only after a rejected upload.\", \"Let the user remove a file from the list before final submission, in case they attached the wrong one.\" ], \"doAndDont\": { \"do\": \"Accepted formats and the size ceiling are stated before the user picks a file, and each upload reports its own outcome.\", \"dont\": \"Withholding the rules until after the upload wastes the user's time and bandwidth, and \\\"Upload failed\\\" still does not tell them what to change.\" }, \"accessibility\": [ \"The dropzone is also operable via a real file-picker trigger, since drag-and-drop alone isn't reachable by keyboard.\", \"Upload progress and completion/error status are announced via an aria-live region, not just shown visually.\", \"Each file row's remove control is independently labeled with that file's name (\\\"Remove report.pdf\\\"), not a generic \\\"Remove\\\" repeated for every row.\" ], \"relatedComponents\": [ \"Input\", \"Progress\", \"Result\" ] }",
+  "tests": []
+}

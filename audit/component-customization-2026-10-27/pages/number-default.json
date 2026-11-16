@@ -1,0 +1,271 @@
+{
+  "file": "number-default.html",
+  "name": "Number",
+  "category": "Components · Forms · Number",
+  "controls": [
+    {
+      "index": 0,
+      "role": "number-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "number-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "number-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "number-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "number-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Quantity",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "number-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "0",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "number-show-stepper",
+      "id": null,
+      "label": "Show stepper",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "up/down buttons on the right",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "number-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× button once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label, placeholder and the stepper are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Number is a text field restricted to numeric input, optionally paired with stepper buttons to increment or decrement the value by a fixed amount - used anywhere the value is fundamentally a quantity rather than arbitrary text. When to Use A quantity someone adjusts up or down - cart quantity, guest count. Any purely numeric value - age, price, a rating count. A bounded value with a sensible min/max and step - where steppers make small adjustments faster than typing. When Not to Use A number that's really an identifier, not a quantity - a phone number, a ZIP/postal code, a credit card number - use Input, since these are never incremented/decremented and often contain formatting characters. A value that should be picked from a fixed list - use Select. A range of two numbers - consider Slider for a bounded range with no need for exact keyboard entry. Best Practices Set sensible min/max/step values that match the real-world constraint (e.g. quantity can't go below 1). Keep the stepper buttons a secondary input method - typing a value directly should always work too. Show units alongside the field (e.g. \"kg\", \"$\") rather than expecting the number alone to communicate meaning. Do and Don't Do Quantity+-1 to 20 per order. Steppers for a small count the user nudges, with the permitted range stated up front. Don't Salary+- Steppers on a value in the tens of thousands are useless - nobody clicks up from zero. Drop them when the step is not a unit the user thinks in. Accessibility Uses the native numeric input semantics so mobile keyboards default to a numeric layout automatically. Stepper buttons are separately focusable and labeled (\"Increase quantity\" / \"Decrease quantity\"), not just plus/minus icons. Min/max boundaries are announced or otherwise communicated, not just silently enforced. Related Components Input, Slider, Rating. { \"component\": \"Number\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Number is a text field restricted to numeric input, optionally paired with stepper buttons to increment or decrement the value by a fixed amount - used anywhere the value is fundamentally a quantity rather than arbitrary text.\", \"whenToUse\": [ \"A quantity someone adjusts up or down - cart quantity, guest count.\", \"Any purely numeric value - age, price, a rating count.\", \"A bounded value with a sensible min/max and step - where steppers make small adjustments faster than typing.\" ], \"whenNotToUse\": [ \"A number that's really an identifier, not a quantity - a phone number, a ZIP/postal code, a credit card number - use Input, since these are never incremented/decremented and often contain formatting characters.\", \"A value that should be picked from a fixed list - use Select.\", \"A range of two numbers - consider Slider for a bounded range with no need for exact keyboard entry.\" ], \"bestPractices\": [ \"Set sensible min/max/step values that match the real-world constraint (e.g. quantity can't go below 1).\", \"Keep the stepper buttons a secondary input method - typing a value directly should always work too.\", \"Show units alongside the field (e.g. \\\"kg\\\", \\\"$\\\") rather than expecting the number alone to communicate meaning.\" ], \"doAndDont\": { \"do\": \"Steppers for a small count the user nudges, with the permitted range stated up front.\", \"dont\": \"Steppers on a value in the tens of thousands are useless - nobody clicks up from zero. Drop them when the step is not a unit the user thinks in.\" }, \"accessibility\": [ \"Uses the native numeric input semantics so mobile keyboards default to a numeric layout automatically.\", \"Stepper buttons are separately focusable and labeled (\\\"Increase quantity\\\" / \\\"Decrease quantity\\\"), not just plus/minus icons.\", \"Min/max boundaries are announced or otherwise communicated, not just silently enforced.\" ], \"relatedComponents\": [ \"Input\", \"Slider\", \"Rating\" ] }",
+  "tests": []
+}

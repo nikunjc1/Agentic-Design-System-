@@ -1,0 +1,24 @@
+✔ requires project, product type, role and a valid delivery platform (0.839583ms)
+✔ new saves require name, email and designation; older saved profiles remain readable (0.236125ms)
+✔ profile survives reload and malformed storage is not overwritten (1.375042ms)
+✔ a profile saved under the old product-type list still reads back, remapped (0.066958ms)
+✔ Other descriptions are bounded and type-checked like the other free-text fields (0.073667ms)
+✔ a profile saved by a newer app version is rejected, not silently misread (0.131333ms)
+✔ a stale project edit cannot replace another tab’s saved profile (0.154334ms)
+✔ Foundation progress distinguishes missing, partial, saved and unreadable records without writing (0.776416ms)
+✔ drafts retain a bounded step while older drafts remain readable (0.095083ms)
+✔ Markdown contains saved tokens, selected platforms and source guides; identity is opt-in (7.901541ms)
+✔ Markdown states provenance - which keys are a real save versus a documented default (2.50475ms)
+✔ metadata quotes punctuation and newlines, and project filenames have safe fallbacks (0.528583ms)
+✔ Markdown omits embedded binary assets while preserving dependency references (0.65125ms)
+✔ new projects preserve previous Foundation records and can be reopened by stable id (0.366291ms)
+✔ failed archive or active profile writes roll back every changed record (0.171541ms)
+✔ unreadable history and unsaved drafts are preserved instead of overwritten (0.079083ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48.289709

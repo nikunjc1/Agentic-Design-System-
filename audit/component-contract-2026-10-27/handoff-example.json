@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "example-action",
+  "revision": 0,
+  "name": "Example action",
+  "authority": "contract",
+  "properties": [
+    {
+      "id": "label",
+      "name": "Label",
+      "type": "text",
+      "default": "Continue"
+    },
+    {
+      "id": "showLabel",
+      "name": "Show label",
+      "type": "boolean",
+      "default": true
+    }
+  ],
+  "selection": {
+    "label": "Continue",
+    "showLabel": true
+  },
+  "anatomy": {
+    "id": "root",
+    "name": "Action",
+    "kind": "container",
+    "tag": "button",
+    "attributes": {
+      "type": "button",
+      "aria-label": "Continue"
+    },
+    "styles": {
+      "display": "inline-flex",
+      "gap": "var(--space-example)",
+      "padding": "12px"
+    },
+    "children": [
+      {
+        "id": "label",
+        "name": "Label",
+        "kind": "text",
+        "tag": "span",
+        "bind": "label",
+        "styles": {},
+        "visibleWhen": [
+          {
+            "property": "showLabel",
+            "equals": true
+          }
+        ]
+      }
+    ]
+  },
+  "variants": [],
+  "tokens": {
+    "--space-example": "8px"
+  },
+  "behaviors": [
+    {
+      "target": "root",
+      "event": "click",
+      "property": "showLabel",
+      "value": "$toggle"
+    }
+  ],
+  "accessibility": [
+    "Keep an accessible name when the visible label is hidden."
+  ],
+  "adapters": {
+    "figma": {
+      "variableMap": {}
+    }
+  }
+}

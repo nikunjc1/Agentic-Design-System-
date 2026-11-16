@@ -1,0 +1,9 @@
+{
+  "folder": "/Users/user/Documents/Contract Bridge v6",
+  "archive": "/Users/user/Documents/Damco-Contract-Bridge-v6.zip",
+  "sha256": {
+    "manifest.json": "344bb1aaf9d9c457732daca9f4274642873875215f86377b02ea45ec827681f6",
+    "code.js": "18baae616fc8373a377b27ce85c071d42a409f19210b1f48bd3c939b90c2ecfb",
+    "ui.html": "84fdd98a4a17ad3d2a7c63c8f3c191270445f21f0fb93d3255ccb1aca7b02ab5"
+  }
+}

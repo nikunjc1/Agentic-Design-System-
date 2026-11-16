@@ -1,0 +1,344 @@
+{
+  "file": "button-tertiary.html",
+  "name": "Tertiary Button",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right"
+        },
+        {
+          "value": "icon-both",
+          "label": "Icons on both sides"
+        },
+        {
+          "value": "icon-only",
+          "label": "Icon only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "content-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radius-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-tertiary.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Tertiary",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Neutral",
+          "label": "Neutral"
+        },
+        {
+          "value": "Link",
+          "label": "Link"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "button-label",
+      "id": null,
+      "label": "Button label",
+      "type": "text",
+      "value": "Learn More",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "accessible-label",
+      "id": null,
+      "label": "Accessible label (required for icon-only)",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Accessible label (required for icon-only)?",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Tertiary Button is the lowest-emphasis boxed action in the system - text-only styling with no fill and no border at rest, used for actions that should be available but never compete visually with Primary or Secondary. When to Use Low-priority actions alongside higher-emphasis buttons - Learn More, Skip, View More. Secondary navigation inside a flow - Advanced Settings, a link to an optional step. Repeated actions in a dense layout - where even Secondary's border would add too much visual noise. When Not to Use The main or supporting action of a screen - use Primary or Secondary so the hierarchy stays legible. Irreversible actions - always use Destructive, regardless of how minor the action seems. Anywhere the action needs strong discoverability - a Tertiary button can be easy to miss; use Secondary if visibility matters. Best Practices Reserve it for genuinely optional or low-stakes actions, not as a default fallback for anything without a clear priority. Still give it a real hit target and visible focus ring even though it has no border at rest. Avoid using more than one or two Tertiary buttons in the same row - it starts to read as a wall of plain text otherwise. Do and Don't Do EditView history The lowest-emphasis option in a row that already has a stronger action above it, so the hierarchy reads top to bottom. Don't Confirm purchase A Tertiary standing alone as the only way to complete a purchase is nearly invisible. The most important action on the screen needs more than a Tertiary's weight. Accessibility Still a native <button> element with the same keyboard behavior as every other button type. Focus and hover states add a visible background or underline change, since the rest state alone has very little contrast to lean on. Label text still meets WCAG 2.2 AA contrast against the surrounding panel. Related Components Secondary Button (medium emphasis), Ghost Button (icon/dense-layout actions), Anchor (plain inline text links), Link Button. { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Tertiary\", \"category\": \"Actions\", \"summary\": \"Tertiary Button is the lowest-emphasis boxed action in the system - text-only styling with no fill and no border at rest, used for actions that should be available but never compete visually with Primary or Secondary.\", \"whenToUse\": [ \"Low-priority actions alongside higher-emphasis buttons - Learn More, Skip, View More.\", \"Secondary navigation inside a flow - Advanced Settings, a link to an optional step.\", \"Repeated actions in a dense layout - where even Secondary's border would add too much visual noise.\" ], \"whenNotToUse\": [ \"The main or supporting action of a screen - use Primary or Secondary so the hierarchy stays legible.\", \"Irreversible actions - always use Destructive, regardless of how minor the action seems.\", \"Anywhere the action needs strong discoverability - a Tertiary button can be easy to miss; use Secondary if visibility matters.\" ], \"bestPractices\": [ \"Reserve it for genuinely optional or low-stakes actions, not as a default fallback for anything without a clear priority.\", \"Still give it a real hit target and visible focus ring even though it has no border at rest.\", \"Avoid using more than one or two Tertiary buttons in the same row - it starts to read as a wall of plain text otherwise.\" ], \"doAndDont\": { \"do\": \"The lowest-emphasis option in a row that already has a stronger action above it, so the hierarchy reads top to bottom.\", \"dont\": \"A Tertiary standing alone as the only way to complete a purchase is nearly invisible. The most important action on the screen needs more than a Tertiary's weight.\" }, \"accessibility\": [ \"Still a native <button> element with the same keyboard behavior as every other button type.\", \"Focus and hover states add a visible background or underline change, since the rest state alone has very little contrast to lean on.\", \"Label text still meets WCAG 2.2 AA contrast against the surrounding panel.\" ], \"relatedComponents\": [ \"Secondary Button\", \"Ghost Button\", \"Anchor\", \"Link Button\" ] }",
+  "tests": []
+}

@@ -1,0 +1,14 @@
+PASS: New project opens the chatbot with a docked composer; Existing project still opens searchable History
+PASS: Platforms has an explicit Continue button; empty selections are blocked, selection survives reload, and both one and multiple platforms advance to the next question
+PASS: Enter sends a reply, typing feedback prevents duplicate sends, quick replies advance the chat, the composer stays docked, and pins and unfinished drafts remain editable
+PASS: Validation blocks invalid replies; all answers are summarized and editable before any project or Foundation is saved
+PASS: A failed Foundation save rolls back project and Foundation records, retains the conversation and offers Retry
+PASS: Centered progress reports six real stages; Retry saves one project with all 8 Foundations and the selected brand, spacing, corners and icons
+PASS: The generated setup reaches the design-system workspace and its identity-free Markdown handoff
+PASS: Editing a saved conversation updates its settings without duplicating the project
+PASS: A second conversation archives the previous project; searchable History reopens it with its original Foundation settings
+PASS: Conversation and review fit desktop, tablet and mobile at four widths in both themes
+PASS: A cross-tab project change blocks stale replies and confirmation
+PASS: Automatic draft restoration preserves stale answers and still blocks conflicting saves
+PASS: Unreadable drafts keep explicit recovery and are never overwritten by automatic restoration
+PASS: Future saved profiles remain preserved with explicit backup and recovery

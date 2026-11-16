@@ -11,56 +11,32 @@
     { key: "range-preview", label: "Range preview" }
   ];
 
-  // Hard-coded example month - September 2026. September 1, 2026 falls on
-  // a Tuesday (verified), and "today" is fixed at the 16th (a Wednesday),
-  // matching this system's convention of static, non-computed demo content
-  // rather than a real date-math widget. Two separate 42-cell grids cover
-  // both week-start options rather than reflowing one grid at render time,
-  // since the boundary (which days are "outside the month") genuinely
-  // shifts by one full day between the two layouts.
-  var GRID_SUNDAY_START = [
-    { day: 30, outside: true }, { day: 31, outside: true }, { day: 1 }, { day: 2 }, { day: 3 }, { day: 4 }, { day: 5 },
-    { day: 6 }, { day: 7 }, { day: 8 }, { day: 9 }, { day: 10 }, { day: 11 }, { day: 12 },
-    { day: 13 }, { day: 14 }, { day: 15 }, { day: 16 }, { day: 17 }, { day: 18 }, { day: 19 },
-    { day: 20 }, { day: 21 }, { day: 22 }, { day: 23 }, { day: 24 }, { day: 25 }, { day: 26 },
-    { day: 27 }, { day: 28 }, { day: 29 }, { day: 30 }, { day: 1, outside: true }, { day: 2, outside: true }, { day: 3, outside: true },
-    { day: 4, outside: true }, { day: 5, outside: true }, { day: 6, outside: true }, { day: 7, outside: true }, { day: 8, outside: true }, { day: 9, outside: true }, { day: 10, outside: true }
-  ];
-  var GRID_MONDAY_START = [
-    { day: 31, outside: true }, { day: 1 }, { day: 2 }, { day: 3 }, { day: 4 }, { day: 5 }, { day: 6 },
-    { day: 7 }, { day: 8 }, { day: 9 }, { day: 10 }, { day: 11 }, { day: 12 }, { day: 13 },
-    { day: 14 }, { day: 15 }, { day: 16 }, { day: 17 }, { day: 18 }, { day: 19 }, { day: 20 },
-    { day: 21 }, { day: 22 }, { day: 23 }, { day: 24 }, { day: 25 }, { day: 26 }, { day: 27 },
-    { day: 28 }, { day: 29 }, { day: 30 }, { day: 1, outside: true }, { day: 2, outside: true }, { day: 3, outside: true }, { day: 4, outside: true },
-    { day: 5, outside: true }, { day: 6, outside: true }, { day: 7, outside: true }, { day: 8, outside: true }, { day: 9, outside: true }, { day: 10, outside: true }, { day: 11, outside: true }
-  ];
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var WEEKDAYS_SUNDAY = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   var WEEKDAYS_MONDAY = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-  var WEEKDAY_FULL_SUNDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var WEEKDAY_FULL_MONDAY = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  var dateFormatter = new Intl.DateTimeFormat("en-US", { weekday:"long", month:"long", day:"numeric", year:"numeric", timeZone:"UTC" });
+  function parseMonth(value){
+    var match = /^(\w+)\s+(\d{4})$/.exec(String(value).trim());
+    if (!match) return null;
+    var month = MONTHS.findIndex(function(name){ return name.toLowerCase() === match[1].toLowerCase(); });
+    var year = Number(match[2]);
+    if (month < 0 || year < 1000) return null;
+    return { month:month, year:year, label:MONTHS[month] + " " + year };
+  }
+  function buildGrid(month, isMonday){
+    var first = new Date(Date.UTC(month.year, month.month, 1));
+    var offset = (first.getUTCDay() - (isMonday ? 1 : 0) + 7) % 7;
+    return Array.from({length:42}, function(_, index){
+      var date = new Date(Date.UTC(month.year, month.month, 1 - offset + index));
+      return { day:date.getUTCDate(), outside:date.getUTCMonth() !== month.month, label:dateFormatter.format(date) };
+    });
+  }
 
   var TODAY_DAY = 16;
   var EVENT_DAYS = [5, 20];
   var RANGE_DAYS = { start: 10, middle: 11, end: 12 };
 
-  // The guide claims each cell "announces its full date, not just the day
-  // number" - it didn't; cells were bare <div>s with only the bare day
-  // number as content, not focusable and with no full-date text anywhere.
-  // September 2026 is this system's fixed example month (see the grids
-  // above); a leading run of "outside" cells belongs to August, a
-  // trailing run to October - which one is which by index, not by the
-  // day value, since both runs reuse low numbers.
-  function fullDateLabel(grid, index, isMonday){
-    var cell = grid[index];
-    var firstIn = -1, lastIn = -1;
-    for (var i = 0; i < grid.length; i++){
-      if (!grid[i].outside){ if (firstIn === -1) firstIn = i; lastIn = i; }
-    }
-    var month = index < firstIn ? "August" : (index > lastIn ? "October" : "September");
-    var weekdayNames = isMonday ? WEEKDAY_FULL_MONDAY : WEEKDAY_FULL_SUNDAY;
-    var weekday = weekdayNames[index % 7];
-    return weekday + ", " + month + " " + cell.day + ", 2026";
-  }
+  function fullDateLabel(grid, index){ return grid[index].label; }
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -99,34 +75,34 @@
 
   function buildFullCode(monthLabel, isMonday){
     monthLabel = monthLabel || "September 2026";
-    var grid = isMonday ? GRID_MONDAY_START : GRID_SUNDAY_START;
+    var grid = buildGrid(parseMonth(monthLabel) || parseMonth("September 2026"), isMonday);
     var weekdays = isMonday ? WEEKDAYS_MONDAY : WEEKDAYS_SUNDAY;
-    var textHi = getCssVar("--text-hi", "#F3F2EF");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textHi = getCssVar("--text-hi", "#111827");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var red500 = getCssVar("--red-500", "#FF031A");
     var buttonPrimaryText = getCssVar("--button-primary-text", "#15171A");
-    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.1)");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var redTint = getCssVar("--red-tint", "rgba(255,3,26,0.08)");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var blue500 = getCssVar("--blue-500", "#4F8FE6");
 
     var lines = [];
     lines.push("/* Agentic Design System - Calendar component */");
     lines.push(".calendar-demo-grid{ box-sizing:border-box; background:" + graphite900 + "; border:1px solid " + lineStrong + "; border-radius:var(--radius-md); padding:var(--space-10); width:fit-content; margin-inline:auto; }");
-    lines.push('.calendar-demo-header{ text-align:center; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textHi + "; margin-bottom:var(--space-8); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push('.calendar-demo-header{ text-align:center; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:' + textHi + "; margin-bottom:var(--space-8); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".calendar-demo-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-2); margin-bottom:var(--space-4); }");
-    lines.push('.calendar-demo-weekday{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:600; color:' + textDim + "; text-align:center; text-transform:uppercase; }");
+    lines.push('.calendar-demo-weekday{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:' + textDim + "; text-align:center; text-transform:uppercase; }");
     lines.push(".calendar-demo-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-2); }");
-    lines.push('.calendar-demo-day{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; position:relative; padding:0; margin:0; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; line-height:normal; color:' + textHi + "; background:none; border:none; border-radius:6px; cursor:pointer; }");
+    lines.push('.calendar-demo-day{ box-sizing:border-box; display:flex; align-items:center; justify-content:center; position:relative; padding:0; margin:0; font-family:var(--font-body); line-height:normal; color:' + textHi + "; background:none; border:none; border-radius:var(--radius-6); cursor:pointer; }");
     lines.push(".calendar-demo-day:hover:not(.is-outside-month){ background:" + graphite800 + "; }");
     lines.push(".calendar-demo-day:focus-visible{ outline:2px solid " + getCssVar("--color-focus-ring", red400) + "; outline-offset:1px; }");
     lines.push(".calendar-demo-grid--full .calendar-demo-day{ width:var(--dimension-36); height:var(--dimension-36); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-grid--compact .calendar-demo-day{ width:var(--dimension-26); height:var(--dimension-26); font-size:var(--type-body-size); }");
     lines.push(".calendar-demo-day.is-outside-month{ color:" + textDim + "; opacity:0.4; }");
     lines.push(".calendar-demo-day.is-today{ background:" + red500 + "; color:" + buttonPrimaryText + "; font-weight:700; }");
-    lines.push('.calendar-demo-day.has-event::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius:9999px; background:' + blue500 + "; }");
+    lines.push('.calendar-demo-day.has-event::after{ content:""; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:var(--dimension-4); height:var(--dimension-4); border-radius:var(--radius-full); background:' + blue500 + "; }");
     lines.push(".calendar-demo-day.is-range-start, .calendar-demo-day.is-range-middle, .calendar-demo-day.is-range-end{ background:" + redTint + "; color:" + red400 + "; }");
     lines.push(".calendar-demo-day.is-range-start{ border-top-left-radius:6px; border-bottom-left-radius:6px; }");
     lines.push(".calendar-demo-day.is-range-end{ border-top-right-radius:6px; border-bottom-right-radius:6px; }");
@@ -189,12 +165,12 @@
       card.setAttribute("tabindex", "0");
       var href = "calendar-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -210,6 +186,15 @@
     if (!matrixContainer) return;
 
     var monthLabelInput = document.querySelector('[data-role="calendar-month-label"]');
+    var monthError = document.createElement("p");
+    monthError.id = "calendar-month-error";
+    monthError.className = "wb-error";
+    monthError.setAttribute("aria-live", "polite");
+    if (monthLabelInput){
+      monthLabelInput.setAttribute("aria-describedby", monthError.id);
+      monthLabelInput.placeholder = "e.g. February 2028";
+      monthLabelInput.after(monthError);
+    }
     var firstDaySelect = document.querySelector('[data-role="calendar-first-day-select"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
@@ -224,7 +209,7 @@
         return '<button type="button" class="' + buildDayClasses(cell, stateKey) + '" tabindex="-1" aria-label="' + fullDateLabel(grid, i, isMonday) + '">' + cell.day + "</button>";
       }).join("");
       return '<div class="calendar-demo-grid calendar-demo-grid--' + typeKey + '">' +
-        '<div class="calendar-demo-header">' + escapeHtml(monthLabel) + "</div>" +
+        '<div class="calendar-demo-header" data-contract-part="monthLabel">' + escapeHtml(monthLabel) + "</div>" +
         '<div class="calendar-demo-weekdays">' + weekdaysHtml + "</div>" +
         '<div class="calendar-demo-days">' + daysHtml + "</div>" +
       "</div>";
@@ -245,8 +230,16 @@
 
     function render(){
       var monthLabel = (monthLabelInput && monthLabelInput.value.trim()) || "September 2026";
+      var month = parseMonth(monthLabel);
+      if (monthLabelInput){
+        monthLabelInput.setCustomValidity(month ? "" : "Enter a full month name and a four-digit year, e.g. February 2028.");
+        monthLabelInput.setAttribute("aria-invalid", String(!month));
+        monthError.textContent = monthLabelInput.validationMessage;
+      }
+      if (!month) return;
+      monthLabel = month.label;
       var isMonday = firstDaySelect && firstDaySelect.value === "monday";
-      var grid = isMonday ? GRID_MONDAY_START : GRID_SUNDAY_START;
+      var grid = buildGrid(parseMonth(monthLabel) || parseMonth("September 2026"), isMonday);
       var weekdays = isMonday ? WEEKDAYS_MONDAY : WEEKDAYS_SUNDAY;
 
       matrixContainer.innerHTML = buildMatrixSection(monthLabel, grid, weekdays, isMonday);

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-23T09:59:10.424640+00:00",
-  "sourceHash": "dbd8adf18b480217a53e20f4ade414e24670659ee8c7f07929dbc439efcfa6bb",
+  "generatedAt": "2026-11-13T08:36:24.782843+00:00",
+  "sourceHash": "b4625a3dd6d6357eb18bb20613e29b360fcaa8acaa8ef1b6682035595bc72b03",
   "generatorHash": "7b51acfc1cfa9d71169197f2b15f9e1b6b74e9df6e3f3bbda5bc8ad091e863e3",
-  "tokenCount": 624,
-  "resolvedPropertyCount": 645,
+  "tokenCount": 626,
+  "resolvedPropertyCount": 647,
   "sourceHashes": {
-    "theme.css": "dbd8adf18b480217a53e20f4ade414e24670659ee8c7f07929dbc439efcfa6bb",
-    "foundation-model.js": "be55e8af4240be209b3ea8899ee960767535736e4860629b10dbac9e3d033317",
-    "foundation-contract.json": "f4e97510f26e5650a960e6b248b3b31123597b4cbc9e8dcd4c70cb91dbc50a88"
+    "theme.css": "b4625a3dd6d6357eb18bb20613e29b360fcaa8acaa8ef1b6682035595bc72b03",
+    "foundation-model.js": "27a47e77b28b8bacedcbfcddbeb203467ba8c8e4111e21757d6ae9a49a6a899f",
+    "foundation-contract.json": "5047f6e95fcabeb2554c9d36ccc4b3ccfc7826a8b802545b5003ea8c682cd3ff"
   }
 }

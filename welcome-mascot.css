@@ -1,0 +1,25 @@
+/* Agentic companion: whole-body rigid motion preserves the supplied anatomy. */
+.welcome-mascot{position:relative;inline-size:240px;block-size:260px;margin:0 auto var(--space-16);isolation:isolate;}
+.mascot-halo{position:absolute;inset:15% 5% 8%;border-radius:50%;background:radial-gradient(ellipse,#b8a6ff26,transparent 70%);pointer-events:none;}
+.mascot-ground{position:absolute;inset-inline-start:29%;inset-block-end:2%;inline-size:43%;block-size:3%;border-radius:50%;background:#44326d26;filter:blur(3px);}
+.mascot-turn,.mascot-sway{position:absolute;inset:0;transform-origin:50% 96%;}
+.mascot-turn{transform:rotate(var(--mascot-tilt,0deg));transition:transform .5s ease-out;}
+.mascot-sway{animation:mascot-sway 6s ease-in-out infinite;}
+.mascot-art{display:block;inline-size:100%;block-size:100%;object-fit:contain;user-select:none;pointer-events:none;}
+.mascot-hologram{position:absolute;inset-inline-start:83%;inset-block-start:28%;display:grid;place-items:center;inline-size:11%;aspect-ratio:1;border:1px solid #9ab5e8;border-radius:26%;color:#59cfff;background:linear-gradient(135deg,#a5e9ff33,#b68aef44);box-shadow:0 0 12px #7acfff26;animation:mascot-hologram 4s ease-in-out infinite;}
+.mascot-hologram svg{inline-size:72%;block-size:72%;}
+.mascot-particle{position:absolute;inset-inline-start:96%;inset-block-start:27%;inline-size:4%;aspect-ratio:1;border-radius:30%;border:1px solid #aaa1da;background:#c4b5fd44;animation:mascot-hologram 4s -1.5s ease-in-out infinite;}
+.mascot-toggle{position:absolute;inset-inline-end:0;inset-block-end:5px;display:grid;place-items:center;inline-size:32px;block-size:32px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--graphite-900);color:var(--text-mid);cursor:pointer;opacity:.75;transition:opacity .2s;}
+.mascot-toggle:hover,.mascot-toggle:focus-visible{opacity:1;}.mascot-toggle:focus-visible{outline:2px solid var(--red-500);outline-offset:3px;}.mascot-toggle svg{inline-size:12px;block-size:12px;}
+.mascot-toggle[hidden],.mascot-toggle [hidden]{display:none!important;}
+.mascot-greeting{position:absolute;z-index:1;inset-block-start:-18px;inset-inline-start:50%;transform:translate(-50%,6px);padding:var(--space-6) var(--space-10);border:1px solid var(--line);border-radius:var(--radius-full);background:var(--graphite-900);color:var(--text-mid);font-size:var(--type-caption-size);line-height:var(--type-caption-line-height);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
+.welcome-mascot:is(:hover,:focus-within) .mascot-greeting{opacity:1;transform:translate(-50%,0);}
+.welcome-mascot[data-paused=true] :is(.mascot-sway,.mascot-hologram,.mascot-particle){animation-play-state:paused;}
+.welcome-mascot[data-paused=true] .mascot-turn{transform:none;transition:none;}
+[data-theme=dark] .mascot-halo{background:radial-gradient(ellipse,#9a7bef22,transparent 70%);}
+[data-theme=dark] .mascot-ground{background:#0005;}
+@keyframes mascot-sway{0%,100%{transform:rotate(-.65deg)}50%{transform:rotate(.65deg)}}
+@keyframes mascot-hologram{0%,100%{transform:translateY(0);opacity:.75}50%{transform:translateY(-5px);opacity:1}}
+@media(max-width:640px){.welcome-mascot{inline-size:196px;block-size:214px;margin-bottom:var(--space-12);}}
+@media(max-height:740px){.welcome-mascot{inline-size:156px;block-size:170px;}.project-choice{padding-block:var(--space-24);}}
+@media(prefers-reduced-motion:reduce){.welcome-mascot *{animation:none!important;transition:none!important;}.mascot-turn{transform:none!important;}.mascot-toggle{display:none;}}

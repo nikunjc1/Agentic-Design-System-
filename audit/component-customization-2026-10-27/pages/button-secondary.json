@@ -1,0 +1,344 @@
+{
+  "file": "button-secondary.html",
+  "name": "Secondary Button",
+  "category": "Components · Actions · Button",
+  "controls": [
+    {
+      "index": 0,
+      "role": "size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "content-mount",
+      "id": null,
+      "label": "Content",
+      "type": "multiselect",
+      "value": [
+        "text"
+      ],
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "icon-left",
+          "label": "Icon left"
+        },
+        {
+          "value": "icon-right",
+          "label": "Icon right"
+        },
+        {
+          "value": "icon-both",
+          "label": "Icons on both sides"
+        },
+        {
+          "value": "icon-only",
+          "label": "Icon only"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "content-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": "radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "radius-dropdown-label ms-trigger-7"
+      }
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "Button style",
+      "type": "select",
+      "value": "button-secondary.html",
+      "options": [
+        {
+          "value": "button-destructive.html",
+          "label": "Destructive Button"
+        },
+        {
+          "value": "button-ghost.html",
+          "label": "Ghost Button"
+        },
+        {
+          "value": "button-link.html",
+          "label": "Link Button"
+        },
+        {
+          "value": "button-neutral.html",
+          "label": "Neutral Button"
+        },
+        {
+          "value": "button-primary.html",
+          "label": "Primary Button"
+        },
+        {
+          "value": "button-secondary.html",
+          "label": "Secondary Button"
+        },
+        {
+          "value": "button-tertiary.html",
+          "label": "Tertiary Button"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button style",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Secondary",
+      "options": [
+        {
+          "value": "Primary",
+          "label": "Primary"
+        },
+        {
+          "value": "Secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "Tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "Ghost",
+          "label": "Ghost"
+        },
+        {
+          "value": "Neutral",
+          "label": "Neutral"
+        },
+        {
+          "value": "Link",
+          "label": "Link"
+        },
+        {
+          "value": "Approve",
+          "label": "Approve"
+        },
+        {
+          "value": "Delete",
+          "label": "Delete"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Pressed",
+          "label": "Pressed"
+        },
+        {
+          "value": "Focus",
+          "label": "Focus"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "button-label",
+      "id": null,
+      "label": "Button label",
+      "type": "text",
+      "value": "Cancel",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Button label",
+      "trigger": null
+    },
+    {
+      "index": 7,
+      "role": "accessible-label",
+      "id": null,
+      "label": "Accessible label (required for icon-only)",
+      "type": "text",
+      "value": "",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": true,
+      "visible": false,
+      "accessibleName": "Accessible label (required for icon-only)?",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Set the button’s size, content, corners and label.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "Text only",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Secondary Button is the supporting-action counterpart to Primary - an outlined, unfilled button used for the alternate or less urgent action in the same view, most often placed directly beside a Primary Button. When to Use The alternate action next to a Primary Button - Cancel beside Save, Back beside Continue. Actions that matter but aren't the main goal of the screen - Preview, Edit, Export, View Details. Anywhere a bordered, medium-emphasis button reads better than a full fill - toolbars, card footers, dialog footers. When Not to Use The single most important action on the screen - use Primary instead, so there is still exactly one highest-emphasis control. Irreversible actions - use Destructive so danger is communicated by color as well as position. Dense, repeated row actions - use Ghost or Tertiary, since Secondary's border still carries meaningful visual weight at scale. Best Practices Pair it with a Primary Button rather than using it alone as a screen's only action. Keep its border and label weight consistent everywhere it's the \"other\" choice, so users learn what a bordered button means across the product. Avoid placing two Secondary buttons side by side for genuinely different actions - if neither is more important, consider Tertiary or Ghost instead. Do and Don't Do PublishSave draft Secondary sits beside one Primary, offering a real alternative without competing for the first glance. Don't Delete account A Secondary carrying a destructive, high-stakes action undersells its own consequence. Give it Destructive's weight instead. Accessibility Same native <button> semantics as Primary - keyboard reachable, Enter/Space activates it. Border and text color meet WCAG 2.2 AA contrast against the panel background in both themes. Focus ring is a visible 2px outline, independent of hover styling. Related Components Primary Button (the paired main action), Tertiary Button and Ghost Button (lower emphasis), Destructive Button (irreversible actions), Group Button. { \"component\": \"Button\", \"status\": \"Stable\", \"type\": \"Secondary\", \"category\": \"Actions\", \"summary\": \"Secondary Button is the supporting-action counterpart to Primary - an outlined, unfilled button used for the alternate or less urgent action in the same view, most often placed directly beside a Primary Button.\", \"whenToUse\": [ \"The alternate action next to a Primary Button - Cancel beside Save, Back beside Continue.\", \"Actions that matter but aren't the main goal of the screen - Preview, Edit, Export, View Details.\", \"Anywhere a bordered, medium-emphasis button reads better than a full fill - toolbars, card footers, dialog footers.\" ], \"whenNotToUse\": [ \"The single most important action on the screen - use Primary instead, so there is still exactly one highest-emphasis control.\", \"Irreversible actions - use Destructive so danger is communicated by color as well as position.\", \"Dense, repeated row actions - use Ghost or Tertiary, since Secondary's border still carries meaningful visual weight at scale.\" ], \"bestPractices\": [ \"Pair it with a Primary Button rather than using it alone as a screen's only action.\", \"Keep its border and label weight consistent everywhere it's the \\\"other\\\" choice, so users learn what a bordered button means across the product.\", \"Avoid placing two Secondary buttons side by side for genuinely different actions - if neither is more important, consider Tertiary or Ghost instead.\" ], \"doAndDont\": { \"do\": \"Secondary sits beside one Primary, offering a real alternative without competing for the first glance.\", \"dont\": \"A Secondary carrying a destructive, high-stakes action undersells its own consequence. Give it Destructive's weight instead.\" }, \"accessibility\": [ \"Same native <button> semantics as Primary - keyboard reachable, Enter/Space activates it.\", \"Border and text color meet WCAG 2.2 AA contrast against the panel background in both themes.\", \"Focus ring is a visible 2px outline, independent of hover styling.\" ], \"relatedComponents\": [ \"Primary Button\", \"Tertiary Button\", \"Ghost Button\", \"Destructive Button\", \"Group Button\" ] }",
+  "tests": []
+}

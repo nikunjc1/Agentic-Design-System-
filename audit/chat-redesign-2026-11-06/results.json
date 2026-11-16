@@ -1,0 +1,332 @@
+{
+  "status": "pass",
+  "checks": [
+    "Native color picker and typed hex stay synchronized.",
+    "Stage indicator and live brief track all 11 answers through review.",
+    "32 theme/viewport/question combinations keep the question and composer reachable; mobile brief closes with Escape and returns focus.",
+    "Narrow viewport with enlarged text and RTL has no horizontal overflow."
+  ],
+  "views": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "height": 900,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 900,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 900,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 900,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "height": 900,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "height": 640,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "height": 640,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "height": 640,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "height": 640,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "height": 900,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": true
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 900,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 900,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 900,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "height": 900,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "height": 640,
+      "key": "project",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "height": 640,
+      "key": "platforms",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "height": 640,
+      "key": "spacingSystem",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "height": 640,
+      "key": "cornerStyle",
+      "overflow": false,
+      "questionVisible": true,
+      "composerFits": true,
+      "briefOpen": false
+    }
+  ],
+  "errors": []
+}

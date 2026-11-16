@@ -397,8 +397,11 @@
           { label: "Hover", hex: "#" + light400 },
           { label: "Active", hex: "#" + dark600 }
         ];
-        onBrandEl.innerHTML = '<span class="contrast-intro">On-brand text resolves separately for each state:</span>' + states.map(function(s){
-          var resolved = window.ADSFoundationModel.foreground(s.hex);
+        // Report exactly what the real primary button renders (the model's own resolver), not an
+        // independent WCAG pick: Default and Hover share one value, Active resolves from the darker shade.
+        var onBrand = window.ADSFoundationModel.onBrandText("#" + hex);
+        onBrandEl.innerHTML = '<span class="contrast-intro">On-brand text as the primary button resolves it (Default and Hover share one value):</span>' + states.map(function(s){
+          var resolved = onBrand[s.label.toLowerCase()];
           var r = contrastRatio(resolved, s.hex);
           var pass = r >= 4.5;
           return '<span class="contrast-row"><span class="contrast-ratio">' + s.label + " " + r.toFixed(2) + ':1 · text ' + resolved + '</span><span class="contrast-tags"><span class="contrast-tag ' + (pass ? "is-pass" : "is-fail") + '">AA ' + (pass ? "&#10003;" : "&#10007;") + '</span></span></span>';
@@ -1318,6 +1321,7 @@
 
       var popover = document.createElement("div");
       popover.className = "color-popover";
+      popover.id = "ads-color-picker";
       popover.setAttribute("role", "dialog");
       popover.setAttribute("aria-label", "Color picker");
       popover.hidden = true;
@@ -1522,29 +1526,39 @@
 
       function positionPopover(trigger){
         var rect = trigger.getBoundingClientRect();
+        var viewport = window.visualViewport;
+        var minLeft = (viewport ? viewport.offsetLeft : 0) + 12;
+        var minTop = (viewport ? viewport.offsetTop : 0) + 12;
+        var maxRight = minLeft + (viewport ? viewport.width : window.innerWidth) - 24;
+        var maxBottom = minTop + (viewport ? viewport.height : window.innerHeight) - 24;
+        popover.style.maxWidth = Math.max(0,maxRight-minLeft) + "px";
+        popover.style.maxHeight = Math.max(0,maxBottom-minTop) + "px";
+        popover.style.overflowY = "auto";
         var popRect = popover.getBoundingClientRect();
         var top = rect.bottom + 8;
-        var left = rect.left;
-        if (left + popRect.width > window.innerWidth - 12) left = window.innerWidth - popRect.width - 12;
-        if (top + popRect.height > window.innerHeight - 12) top = rect.top - popRect.height - 8;
-        popover.style.left = Math.max(12, left) + "px";
-        popover.style.top = Math.max(12, top) + "px";
+        if (top + popRect.height > maxBottom) top = rect.top - popRect.height - 8;
+        var left = getComputedStyle(trigger).direction === "rtl" ? rect.right-popRect.width : rect.left;
+        popover.style.left = Math.max(minLeft, Math.min(left,maxRight-popRect.width)) + "px";
+        popover.style.top = Math.max(minTop, Math.min(top,maxBottom-popRect.height)) + "px";
       }
 
       function openPopover(input, trigger){
         var field = trigger.closest(".color-field");
         var hex = normalizeHex(input.value.replace("#", "")) || "FFFFFF";
+        if (active) active.trigger.setAttribute("aria-expanded", "false");
         active = { picker: input, trigger: trigger, field: field, hsb: hexToHsb(hex), alpha: 100 };
+        trigger.setAttribute("aria-expanded", "true");
         formatSelect.value = lastFormat;
         renderValueInputs();
         popover.hidden = false;
         positionPopover(trigger);
         updateVisuals();
-        svEl.focus();
+        svEl.focus({ preventScroll: true });
       }
       function closePopover(){
         if (popover.hidden) return;
         popover.hidden = true;
+        if (active) active.trigger.setAttribute("aria-expanded", "false");
         active = null;
       }
 
@@ -1610,6 +1624,7 @@
       formatSelect.addEventListener("change", function(){
         lastFormat = formatSelect.value;
         renderValueInputs();
+        if (active) positionPopover(active.trigger);
       });
       valuesEl.addEventListener("change", function(evt){
         if (evt.target.tagName === "INPUT") applyValueInputs();
@@ -1636,7 +1651,10 @@
         var trigger = document.createElement("button");
         trigger.type = "button";
         trigger.className = "color-swatch-trigger";
-        trigger.setAttribute("aria-label", "Choose color");
+        trigger.setAttribute("aria-label", input.getAttribute("aria-label") || "Choose color");
+        trigger.setAttribute("aria-haspopup", "dialog");
+        trigger.setAttribute("aria-controls", popover.id);
+        trigger.setAttribute("aria-expanded", "false");
         trigger.style.background = input.value;
         input.setAttribute("aria-hidden", "true");
         input.tabIndex = -1;
@@ -1704,6 +1722,10 @@
       window.addEventListener("resize", function(){
         if (active) positionPopover(active.trigger);
       });
+      if (window.visualViewport){
+        window.visualViewport.addEventListener("resize", function(){ if (active) positionPopover(active.trigger); });
+        window.visualViewport.addEventListener("scroll", function(){ if (active) positionPopover(active.trigger); });
+      }
     }
     initCustomColorPickers(contrastHelpers.contrastForField, contrastHelpers.badgeHtml);
   });

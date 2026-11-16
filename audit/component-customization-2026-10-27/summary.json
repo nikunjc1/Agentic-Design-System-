@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-27",
+  "scope": "Native component detail customization and its handoff; not a full accessibility certification or participant usability study.",
+  "pages": 69,
+  "pagesWithSomeCustomization": 69,
+  "existingProperties": 262,
+  "mainPropertiesPanelFields": 261,
+  "additionalSectionFields": 1,
+  "representativeChanges": 626,
+  "proposedAtomicDetailCapabilities": 369,
+  "logicalFamilyRecommendations": 334,
+  "sharedWorkflowRecommendations": 12,
+  "confirmedTextExportOmissions": 48,
+  "pagesWithConfirmedTextExportOmission": 25,
+  "unchangedLegacyCodeCases": 92,
+  "pagesWithSomeUnchangedLegacyCode": 31,
+  "previewDOMChangedCases": 622,
+  "promptChangedCases": 626,
+  "reloadProbes": 66,
+  "nativeReloadRetained": 0,
+  "viewports": 207,
+  "viewportOverflowFindings": 0,
+  "keyboard": {
+    "pass": 50,
+    "not-applicable": 19
+  },
+  "runtimeErrors": [],
+  "implementationStatus": "Audit and implementation backlog only. New controls and export repairs are not implemented in this audit."
+}

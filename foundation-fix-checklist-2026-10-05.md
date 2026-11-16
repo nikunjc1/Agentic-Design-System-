@@ -1,10 +1,10 @@
-# Damco Foundation Fix Checklist
+# Foundation Fix Checklist
 
 Shareable developer task list from the 5 October 2026 source audit. **P1: before production. P2: next delivery.** Browser behavior still needs verification; this is based on the local project, not a live deployed review.
 
 **8 October update:** source/documentation fixes are saved and every original ID has been reconciled in [the current finding table](foundation-finding-status-2026-10-08.md). See [completed implementation pointers](foundation-pending-task-completion-2026-10-08.md). The original release checkboxes remain open until rendered, keyboard and narrow-screen acceptance passes. Each task now has a separate implementation status; unchecked release boxes do not mean its source fix is absent.
 
-References use paths relative to the Damco Agentic Design System project. Finding IDs link these short tasks to the detailed audit. Group priority follows its highest-priority finding.
+References use paths relative to the Agentic Design System project. Finding IDs link these short tasks to the detailed audit. Group priority follows its highest-priority finding.
 
 ## Shared system
 

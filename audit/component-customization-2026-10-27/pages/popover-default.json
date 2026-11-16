@@ -1,0 +1,135 @@
+{
+  "file": "popover-default.html",
+  "name": "Popover",
+  "category": "Components · Data Display · Popover",
+  "controls": [
+    {
+      "index": 0,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Top",
+      "options": [
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "Left",
+          "label": "Left"
+        },
+        {
+          "value": "Right",
+          "label": "Right"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Simple",
+      "options": [
+        {
+          "value": "Simple",
+          "label": "Simple"
+        },
+        {
+          "value": "With body",
+          "label": "With body"
+        },
+        {
+          "value": "With close",
+          "label": "With close"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": "popover-trigger-label",
+      "id": null,
+      "label": "Trigger label",
+      "type": "text",
+      "value": "Details",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Trigger label",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "popover-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Storage usage",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "popover-body",
+      "id": null,
+      "label": "Body",
+      "type": "text",
+      "value": "8.2 GB of 15 GB used.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Body",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Trigger label, title and body text are properties of the same component, not separate popovers built by hand - change them below to check every placement and content state in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [],
+  "guide": "Component Guide Human View Machine View Overview Popover shows contextual details, a quick action, or a small settings panel next to a trigger element, opened by a click rather than a hover - richer and more persistent than Tooltip, since it stays open until the user dismisses it or clicks elsewhere. When to Use Contextual details revealed on click - more information than a hover-only Tooltip can comfortably hold. An inline help panel or a quick-actions menu - a small floating panel anchored to its trigger. A filter/settings mini-panel or a user-info preview - richer content that benefits from staying open while the user reads or interacts with it. When Not to Use A short, single-line hint - use Tooltip - Popover is heavier than a brief label needs. A yes/no confirmation with Confirm/Cancel actions - use Pop Confirm, which is purpose-built for that exact pattern. Content that should fully block the rest of the page - use Modal or Drawer instead of a lightweight anchored panel. Best Practices Keep the content focused and scoped to what the trigger is about - a Popover shouldn't turn into a secondary page. Close it on outside click and Escape, consistent with other floating-panel components. Anchor it reliably to its trigger even as the page scrolls or resizes, so it never floats disconnected from context. Do and Don't Do Storage almost full92% used. Free up space or upgrade your plan.ⓘ A short title plus one or two lines of real detail - richer than a Tooltip, but still small enough to read at a glance. Don't Account settingsFull profile editing, notification preferences, connected apps, billing history and two-factor setup all live here - update anything and it saves immediately across every device you are signed into.ⓘ A popover this dense is really a page pretending to float. Once it needs paragraphs, send the user to a real settings screen instead. Accessibility The trigger exposes aria-expanded and aria-haspopup, reflecting the popover's open state. Focus moves into the popover when it opens and returns to the trigger when it closes. Interactive content inside it (buttons, links) remains fully keyboard-reachable in a sensible tab order. Related Components Tooltip, Pop Confirm, Dropdown. { \"component\": \"Popover\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Popover shows contextual details, a quick action, or a small settings panel next to a trigger element, opened by a click rather than a hover - richer and more persistent than Tooltip, since it stays open until the user dismisses it or clicks elsewhere.\", \"whenToUse\": [ \"Contextual details revealed on click - more information than a hover-only Tooltip can comfortably hold.\", \"An inline help panel or a quick-actions menu - a small floating panel anchored to its trigger.\", \"A filter/settings mini-panel or a user-info preview - richer content that benefits from staying open while the user reads or interacts with it.\" ], \"whenNotToUse\": [ \"A short, single-line hint - use Tooltip - Popover is heavier than a brief label needs.\", \"A yes/no confirmation with Confirm/Cancel actions - use Pop Confirm, which is purpose-built for that exact pattern.\", \"Content that should fully block the rest of the page - use Modal or Drawer instead of a lightweight anchored panel.\" ], \"bestPractices\": [ \"Keep the content focused and scoped to what the trigger is about - a Popover shouldn't turn into a secondary page.\", \"Close it on outside click and Escape, consistent with other floating-panel components.\", \"Anchor it reliably to its trigger even as the page scrolls or resizes, so it never floats disconnected from context.\" ], \"doAndDont\": { \"do\": \"A short title plus one or two lines of real detail - richer than a Tooltip, but still small enough to read at a glance.\", \"dont\": \"A popover this dense is really a page pretending to float. Once it needs paragraphs, send the user to a real settings screen instead.\" }, \"accessibility\": [ \"The trigger exposes aria-expanded and aria-haspopup, reflecting the popover's open state.\", \"Focus moves into the popover when it opens and returns to the trigger when it closes.\", \"Interactive content inside it (buttons, links) remains fully keyboard-reachable in a sensible tab order.\" ], \"relatedComponents\": [ \"Tooltip\", \"Pop Confirm\", \"Dropdown\" ] }",
+  "tests": []
+}

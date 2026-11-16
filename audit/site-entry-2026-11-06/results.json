@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "checks": [
+    "http: direct opening of an interior page starts at project choices",
+    "http: returning users see choices first; saved profile and draft remain unchanged",
+    "http: reopening a saved conversation URL in another tab still shows choices",
+    "http: Existing project navigates normally; browser refresh returns to the first page",
+    "http: New project restores unfinished work directly without a Resume/Discard screen",
+    "http: ordinary in-app navigation reaches workspace pages without a redirect loop",
+    "http: Foundation Cancel reloads its editor without restarting onboarding",
+    "http: component preview frames keep their requested page",
+    "http: server root and return from another site both show project choices",
+    "file: direct opening of an interior page starts at project choices",
+    "file: returning users see choices first; saved profile and draft remain unchanged",
+    "file: reopening a saved conversation URL in another tab still shows choices",
+    "file: Existing project navigates normally; browser refresh returns to the first page",
+    "file: New project restores unfinished work directly without a Resume/Discard screen",
+    "file: ordinary in-app navigation reaches workspace pages without a redirect loop",
+    "file: Foundation Cancel reloads its editor without restarting onboarding",
+    "file: component preview frames keep their requested page"
+  ],
+  "errors": []
+}

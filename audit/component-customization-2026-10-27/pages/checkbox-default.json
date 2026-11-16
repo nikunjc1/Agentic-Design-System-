@@ -1,0 +1,192 @@
+{
+  "file": "checkbox-default.html",
+  "name": "Checkbox",
+  "category": "Components · Forms · Checkbox",
+  "controls": [
+    {
+      "index": 0,
+      "role": "checkbox-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "20"
+      ],
+      "options": [
+        {
+          "value": "16",
+          "label": "16px - S"
+        },
+        {
+          "value": "20",
+          "label": "20px - M"
+        },
+        {
+          "value": "24",
+          "label": "24px - L"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "checkbox-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "checkbox-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "6"
+      ],
+      "options": [
+        {
+          "value": "2",
+          "label": "2px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Balanced"
+        },
+        {
+          "value": "6",
+          "label": "6px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "checkbox-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Standard",
+      "options": [
+        {
+          "value": "Standard",
+          "label": "Standard"
+        },
+        {
+          "value": "Card",
+          "label": "Card"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Unchecked",
+      "options": [
+        {
+          "value": "Unchecked",
+          "label": "Unchecked"
+        },
+        {
+          "value": "Checked",
+          "label": "Checked"
+        },
+        {
+          "value": "Indeterminate",
+          "label": "Indeterminate"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "checkbox-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "I agree to the terms",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius and label are properties of the same component, not separate checkboxes - change them below to check this control's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "20px - M",
+      "type": "button"
+    },
+    {
+      "label": "6px - Soft",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Checkbox is a tri-state control (unchecked, checked, indeterminate) for choices where more than one option can be active at once, or for a single explicit agreement toggle - unlike Radio, which enforces exactly one choice from a set. When to Use An explicit agreement toggle - accepting terms and conditions. Selecting multiple items from a list - picking several rows in a table, several tags in a filter. A settings page's list of independent toggles - each one on or off without affecting the others. When Not to Use Exactly one choice from a small, fully visible set - use Radio so only one option can ever be selected. An immediate, standalone on/off setting outside a form - use Switch - it applies instantly with no submit step. A value chosen from a very large list - use a multi-select Select variant or Transfer instead of dozens of checkboxes. Best Practices Always show a visible label next to the box - never the checkbox alone with no text. Use the indeterminate state for a \"select all\" checkbox that reflects a partial child selection. Group related checkboxes visually, with a shared heading or fieldset, so the set of options reads as one question. Do and Don't Do Email me about order updates A label that states what checking it actually does, so the choice is clear without reading anything else. Don't Do not opt out of non-essential email A double negative makes the user solve a logic puzzle to work out what checking the box means. Accessibility Uses real native checkbox semantics - checked and indeterminate are reflected in the accessibility tree, not just visually. The label is clickable and programmatically linked to its input. Indeterminate is set via the DOM property (not CSS alone) so assistive technology announces the partial-selection state correctly. Related Components Radio, Switch, Transfer (bulk multi-select across two panels), Group Button. { \"component\": \"Checkbox\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Checkbox is a tri-state control (unchecked, checked, indeterminate) for choices where more than one option can be active at once, or for a single explicit agreement toggle - unlike Radio, which enforces exactly one choice from a set.\", \"whenToUse\": [ \"An explicit agreement toggle - accepting terms and conditions.\", \"Selecting multiple items from a list - picking several rows in a table, several tags in a filter.\", \"A settings page's list of independent toggles - each one on or off without affecting the others.\" ], \"whenNotToUse\": [ \"Exactly one choice from a small, fully visible set - use Radio so only one option can ever be selected.\", \"An immediate, standalone on/off setting outside a form - use Switch - it applies instantly with no submit step.\", \"A value chosen from a very large list - use a multi-select Select variant or Transfer instead of dozens of checkboxes.\" ], \"bestPractices\": [ \"Always show a visible label next to the box - never the checkbox alone with no text.\", \"Use the indeterminate state for a \\\"select all\\\" checkbox that reflects a partial child selection.\", \"Group related checkboxes visually, with a shared heading or fieldset, so the set of options reads as one question.\" ], \"doAndDont\": { \"do\": \"A label that states what checking it actually does, so the choice is clear without reading anything else.\", \"dont\": \"A double negative makes the user solve a logic puzzle to work out what checking the box means.\" }, \"accessibility\": [ \"Uses real native checkbox semantics - checked and indeterminate are reflected in the accessibility tree, not just visually.\", \"The label is clickable and programmatically linked to its input.\", \"Indeterminate is set via the DOM property (not CSS alone) so assistive technology announces the partial-selection state correctly.\" ], \"relatedComponents\": [ \"Radio\", \"Switch\", \"Transfer\", \"Group Button\" ] }",
+  "tests": []
+}

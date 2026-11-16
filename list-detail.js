@@ -9,7 +9,8 @@
     { key: "default", label: "Default" },
     { key: "with-avatars", label: "With avatars" },
     { key: "with-actions", label: "With avatars + action" },
-    { key: "loading", label: "Loading" }
+    { key: "loading", label: "Loading" },
+    { key: "empty", label: "Empty" }
   ];
 
   var FULL_SPEC = {
@@ -21,7 +22,8 @@
     "default": "Plain rows - a title and description only, no avatar or trailing content.",
     "with-avatars": "The same rows, each now showing a small leading initials-avatar circle.",
     "with-actions": "The same rows with avatars, plus a small trailing text-style action link (e.g. \"View\") on the right of each row.",
-    "loading": "The same row count and shape, but every value replaced with a Skeleton placeholder - so the layout doesn't jump once the real rows arrive."
+    "loading": "The same row count and shape, but every value replaced with a Skeleton placeholder - so the layout doesn't jump once the real rows arrive.",
+    "empty": "No rows at all - a single centered, dimmed \"No items to show.\" message replaces the row stack."
   };
 
   function getCssVar(name, fallback){
@@ -35,9 +37,13 @@
   // type only - the Default type never carries a radius.
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -89,7 +95,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   function selectionMode(multiSelect, optionList, defaultValues){
@@ -141,7 +147,7 @@
       lines.push("- " + t.label + ": " + FULL_SPEC[t.key].purpose);
     });
     lines.push("");
-    lines.push("Content states (4, apply to every row in the list at once):");
+    lines.push("Content states (5, apply to every row in the list at once):");
     STATES.forEach(function(s){
       lines.push("- " + s.label + ": " + STATE_SPEC[s.key]);
     });
@@ -166,9 +172,12 @@
     lines.push(".list-demo-panel--bordered .list-demo-row--divided{ border-bottom-color:var(--line-strong); }");
     lines.push("/* Leading avatar reuses the Avatar component's own .avatar-demo-circle/.avatar-demo-circle--initials/.avatar-demo-circle--h32 classes directly - no separate box or font-size rules. */");
     lines.push(".list-demo-body{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:var(--space-2); text-align: start; }");
-    lines.push('.list-demo-title{ margin:0; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.list-demo-title{ margin:0; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.list-demo-description{ margin:0; font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
-    lines.push(".list-demo-action{ flex:none; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; }");
+    lines.push(".list-demo-action{ flex:none; font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; }");
+    lines.push("");
+    lines.push("/* Empty - the row stack is replaced entirely by a single centered, dimmed message */");
+    lines.push(".list-demo-empty{ flex:1 1 auto; display:flex; align-items:center; justify-content:center; text-align:center; padding:var(--space-16); color:var(--text-dim); font-family:var(--font-body); font-size:var(--type-caption-size); }");
     lines.push("");
     lines.push("/* Size (3) - row padding scales with size; avatar diameter reuses Avatar's own h24/h32/h40 classes (picked per size in markup, not redefined here) */");
     lines.push(".list-demo-panel--sz-small .list-demo-row{ padding:var(--space-6) var(--space-10); gap:var(--space-8); }");
@@ -209,6 +218,18 @@
       }).join("");
       return '<div class="list-demo-panel list-demo-panel--' + typeKey + sizeCls + '"' + styleAttr + ' aria-busy="true" aria-live="polite">' + loadingRowsHtml + "</div>";
     }
+    // Empty replaces the row stack entirely with a single centered, dimmed
+    // message - structurally nothing like a normal row (no title/
+    // description/avatar), so, same as Transfer's own source/target status
+    // slot, it has no id in whatever state the base Figma capture happens
+    // to use. data-contract-part="list-empty" gives it a stable identity
+    // regardless of which state built it, harvested separately in
+    // captureListProperties() below (component-workbench.js).
+    if (stateKey === "empty"){
+      return '<div class="list-demo-panel list-demo-panel--' + typeKey + sizeCls + '"' + styleAttr + ">" +
+        '<div class="list-demo-empty" data-contract-part="list-empty">No items to show.</div>' +
+        "</div>";
+    }
     var rowsHtml = ROWS_DATA.map(function(person, i){
       var isLast = i === ROWS_DATA.length - 1;
       var dividedCls = (showDividers && !isLast) ? " list-demo-row--divided" : "";
@@ -240,10 +261,11 @@
       lines.push(buildListField(t.key, exampleRadius, info.showDividers, "with-actions", exampleSize));
     });
     lines.push("");
-    lines.push("<!-- Example usage - the other 3 content states (Default type) -->");
+    lines.push("<!-- Example usage - the other 4 content states (Default type) -->");
     lines.push(buildListField("default", exampleRadius, info.showDividers, "default", exampleSize));
     lines.push(buildListField("default", exampleRadius, info.showDividers, "with-avatars", exampleSize));
     lines.push(buildListField("default", exampleRadius, info.showDividers, "loading", exampleSize));
+    lines.push(buildListField("default", exampleRadius, info.showDividers, "empty", exampleSize));
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
 
@@ -294,12 +316,12 @@
       card.setAttribute("tabindex", "0");
       var href = "list-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

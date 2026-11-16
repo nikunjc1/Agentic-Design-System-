@@ -1,0 +1,177 @@
+{
+  "file": "badge-default.html",
+  "name": "Badge",
+  "category": "Components · Data Display · Badge",
+  "controls": [
+    {
+      "index": 0,
+      "role": "badge-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "default"
+      ],
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "badge-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Count",
+      "options": [
+        {
+          "value": "Count",
+          "label": "Count"
+        },
+        {
+          "value": "Dot",
+          "label": "Dot"
+        },
+        {
+          "value": "Status",
+          "label": "Status"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "Success",
+          "label": "Success"
+        },
+        {
+          "value": "Processing",
+          "label": "Processing"
+        },
+        {
+          "value": "Warning",
+          "label": "Warning"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "badge-count",
+      "id": null,
+      "label": "Count",
+      "type": "number",
+      "value": "5",
+      "options": [],
+      "min": "0",
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Count",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "badge-max",
+      "id": null,
+      "label": "Max count",
+      "type": "number",
+      "value": "99",
+      "options": [],
+      "min": "1",
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Max count",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "badge-label",
+      "id": null,
+      "label": "Status label",
+      "type": "text",
+      "value": "Active",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Status label",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Badge has no hover/focus/disabled states - it is not interactive. Count and Max count below only visibly apply to the Count type; Status label only applies to the Status type. Change them below to check every type and color in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "Default",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Badge draws attention to a count, a new item, or a status without interrupting the flow - a small dot, number, or short status label typically overlaid on or placed beside another element, like a notification bell or an avatar. When to Use An unread notification count - a number badge on a bell or inbox icon. A new-feature indicator dot - flagging something recently added. An account status label or a cart item count - a compact signal attached to another element. When Not to Use Standalone status text with no attached element - use Tag instead - Badge is meant to overlay or sit beside something else, not stand alone. A count so large or so central to the task that it deserves its own visible number in the main content - don't shrink primary information into a small corner badge. A persistent label describing a whole row or card's category - use Tag, which is built for that role. Best Practices Cap large counts with a \"99+\" style ceiling rather than letting the badge grow to fit an arbitrarily large number. Reserve badge colors consistently (e.g. red for alerts, neutral for plain counts) across the product. Remove or hide the badge entirely at zero/none, rather than showing an empty \"0\". Do and Don't Do ✉3 A real count on the object it belongs to, so the number means exactly one thing: unread items in that inbox. Don't Everything is fine, no action needed right now A sentence-length label defeats what a badge is for - a glance, not a read. Keep the label to a word or two, or drop it for the dot alone. Accessibility The count or status is exposed to assistive technology as text, not conveyed by a colored dot alone. When overlaid on an icon button, the badge's information is included in that button's accessible name (\"Notifications, 3 unread\"). Sufficient contrast between the badge and whatever it's layered on top of. Related Components Tag, Avatar, Notification. { \"component\": \"Badge\", \"status\": \"Stable\", \"category\": \"Data Display\", \"summary\": \"Badge draws attention to a count, a new item, or a status without interrupting the flow - a small dot, number, or short status label typically overlaid on or placed beside another element, like a notification bell or an avatar.\", \"whenToUse\": [ \"An unread notification count - a number badge on a bell or inbox icon.\", \"A new-feature indicator dot - flagging something recently added.\", \"An account status label or a cart item count - a compact signal attached to another element.\" ], \"whenNotToUse\": [ \"Standalone status text with no attached element - use Tag instead - Badge is meant to overlay or sit beside something else, not stand alone.\", \"A count so large or so central to the task that it deserves its own visible number in the main content - don't shrink primary information into a small corner badge.\", \"A persistent label describing a whole row or card's category - use Tag, which is built for that role.\" ], \"bestPractices\": [ \"Cap large counts with a \\\"99+\\\" style ceiling rather than letting the badge grow to fit an arbitrarily large number.\", \"Reserve badge colors consistently (e.g. red for alerts, neutral for plain counts) across the product.\", \"Remove or hide the badge entirely at zero/none, rather than showing an empty \\\"0\\\".\" ], \"doAndDont\": { \"do\": \"A real count on the object it belongs to, so the number means exactly one thing: unread items in that inbox.\", \"dont\": \"A sentence-length label defeats what a badge is for - a glance, not a read. Keep the label to a word or two, or drop it for the dot alone.\" }, \"accessibility\": [ \"The count or status is exposed to assistive technology as text, not conveyed by a colored dot alone.\", \"When overlaid on an icon button, the badge's information is included in that button's accessible name (\\\"Notifications, 3 unread\\\").\", \"Sufficient contrast between the badge and whatever it's layered on top of.\" ], \"relatedComponents\": [ \"Tag\", \"Avatar\", \"Notification\" ] }",
+  "tests": []
+}

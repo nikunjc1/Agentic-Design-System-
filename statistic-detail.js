@@ -23,8 +23,8 @@
   var DEFAULT_PREFIX = "";
   var DEFAULT_SUFFIX = "";
 
-  var TREND_UP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
-  var TREND_DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
+  var TREND_UP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
+  var TREND_DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -42,7 +42,7 @@
   // (and, for Trend, flip the arrow direction) - Default stays neutral.
   function buildStatisticField(typeKey, stateKey, title, value, prefix, suffix){
     var isLoading = stateKey === "loading";
-    var titleHtml = '<p class="statistic-demo-title">' + escapeHtml(title) + "</p>";
+    var titleHtml = '<p class="statistic-demo-title" data-contract-part="title">' + escapeHtml(title) + "</p>";
 
     if (isLoading){
       return '<div class="statistic-demo-field">' + titleHtml +
@@ -52,8 +52,8 @@
 
     var colorClass = (stateKey === "positive" || stateKey === "negative") ? " statistic-demo-value--" + stateKey : "";
     var monoClass = typeKey === "countdown" ? " statistic-demo-value--mono" : "";
-    var prefixHtml = prefix ? '<span class="statistic-demo-affix">' + escapeHtml(prefix) + "</span>" : "";
-    var suffixHtml = suffix ? '<span class="statistic-demo-affix">' + escapeHtml(suffix) + "</span>" : "";
+    var prefixHtml = prefix ? '<span class="statistic-demo-affix" data-contract-part="prefix">' + escapeHtml(prefix) + "</span>" : "";
+    var suffixHtml = suffix ? '<span class="statistic-demo-affix" data-contract-part="suffix">' + escapeHtml(suffix) + "</span>" : "";
 
     var trendHtml = "";
     if (typeKey === "trend"){
@@ -67,7 +67,7 @@
     // to an anonymous flex item, so a long value would clip mid-glyph with no
     // truncation indicator.
     var valueHtml = '<p class="statistic-demo-value' + colorClass + monoClass + '">' +
-      prefixHtml + '<span class="statistic-demo-value-text">' + escapeHtml(value) + "</span>" + suffixHtml + "</p>";
+      prefixHtml + '<span class="statistic-demo-value-text" data-contract-part="value">' + escapeHtml(value) + "</span>" + suffixHtml + "</p>";
 
     // Trend renders as its own line below the value (a sibling in the
     // field, not packed into the same line as the number) rather than
@@ -120,11 +120,11 @@
     lines.push(".statistic-demo-value--mono{ font-family:var(--font-mono); }");
     lines.push(".statistic-demo-value--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-value--negative{ color:var(--danger-500); }");
-    lines.push(".statistic-demo-affix{ font-size:var(--type-body-size); font-weight:600; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".statistic-demo-affix{ font-size:var(--type-body-size); font-weight:var(--type-selected-weight); max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("/* Its own line below the value (a sibling in .statistic-demo-field, not");
     lines.push("   packed into the same line as the number) - field's own gap:6px is the");
     lines.push("   single source of the value-to-trend spacing; no margin needed here. */");
-    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--type-body-size); font-weight:600; color:var(--text-dim); }");
+    lines.push(".statistic-demo-trend{ display:inline-flex; align-items:center; gap:var(--space-2); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-dim); }");
     lines.push(".statistic-demo-trend svg{ width:var(--dimension-14); height:var(--dimension-14); }");
     lines.push(".statistic-demo-trend--positive{ color:var(--green-500); }");
     lines.push(".statistic-demo-trend--negative{ color:var(--danger-500); }");
@@ -166,12 +166,12 @@
       card.setAttribute("tabindex", "0");
       var href = "statistic-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

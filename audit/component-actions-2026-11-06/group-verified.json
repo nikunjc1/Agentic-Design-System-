@@ -1,0 +1,907 @@
+{
+  "method": "Isolated Chrome; actual clicks, fills, native selection and download events. Clipboard is intercepted to inspect the exact copied output. Every enum option is exercised separately, not every Cartesian combination.",
+  "pages": [
+    {
+      "file": "group-button-default.html",
+      "name": "Group Button",
+      "family": "group-button.html",
+      "controls": [
+        {
+          "role": "group-segment-label-0",
+          "label": "Button 1 label",
+          "cases": [
+            {
+              "value": "Audit Button 1 label",
+              "native": "Audit Button 1 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-1",
+          "label": "Button 2 label",
+          "cases": [
+            {
+              "value": "Audit Button 2 label",
+              "native": "Audit Button 2 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-2",
+          "label": "Button 3 label",
+          "cases": [
+            {
+              "value": "Audit Button 3 label",
+              "native": "Audit Button 3 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-size-mount",
+          "label": "Size",
+          "cases": [
+            {
+              "value": [
+                "24"
+              ],
+              "native": [
+                "24"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "28"
+              ],
+              "native": [
+                "28"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "32"
+              ],
+              "native": [
+                "32"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "36"
+              ],
+              "native": [
+                "36"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "40"
+              ],
+              "native": [
+                "40"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "44"
+              ],
+              "native": [
+                "44"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "48"
+              ],
+              "native": [
+                "48"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "56"
+              ],
+              "native": [
+                "56"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-radius-mount",
+          "label": "Corner radius",
+          "cases": [
+            {
+              "value": [
+                "0"
+              ],
+              "native": [
+                "0"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "2"
+              ],
+              "native": [
+                "2"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "4"
+              ],
+              "native": [
+                "4"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "6"
+              ],
+              "native": [
+                "6"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "8"
+              ],
+              "native": [
+                "8"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "12"
+              ],
+              "native": [
+                "12"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "16"
+              ],
+              "native": [
+                "16"
+              ],
+              "previewChanged": true
+            },
+            {
+              "value": [
+                "9999"
+              ],
+              "native": [
+                "9999"
+              ],
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-count-select",
+          "label": "Number of buttons",
+          "cases": [
+            {
+              "value": "2",
+              "native": "2",
+              "previewChanged": true
+            },
+            {
+              "value": "3",
+              "native": "3",
+              "previewChanged": true
+            },
+            {
+              "value": "4",
+              "native": "4",
+              "previewChanged": true
+            },
+            {
+              "value": "5",
+              "native": "5",
+              "previewChanged": true
+            },
+            {
+              "value": "6",
+              "native": "6",
+              "previewChanged": true
+            },
+            {
+              "value": "7",
+              "native": "7",
+              "previewChanged": true
+            },
+            {
+              "value": "8",
+              "native": "8",
+              "previewChanged": true
+            },
+            {
+              "value": "9",
+              "native": "9",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-content-select",
+          "label": "Content",
+          "cases": [
+            {
+              "value": "text",
+              "native": "text",
+              "previewChanged": false
+            },
+            {
+              "value": "icon",
+              "native": "icon",
+              "previewChanged": true
+            },
+            {
+              "value": "icon-text",
+              "native": "icon-text",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-icon-select",
+          "label": "Icon",
+          "cases": [
+            {
+              "value": "plus",
+              "native": "plus",
+              "previewChanged": false
+            },
+            {
+              "value": "arrow",
+              "native": "arrow",
+              "previewChanged": true
+            },
+            {
+              "value": "gear",
+              "native": "gear",
+              "previewChanged": true
+            },
+            {
+              "value": "star",
+              "native": "star",
+              "previewChanged": true
+            },
+            {
+              "value": "check",
+              "native": "check",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-icon-position-select",
+          "label": "Icon position",
+          "cases": [
+            {
+              "value": "before",
+              "native": "before",
+              "previewChanged": false
+            },
+            {
+              "value": "after",
+              "native": "after",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-show-label",
+          "label": "Field label",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-show-supporting",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": true,
+              "native": true,
+              "previewChanged": true
+            },
+            {
+              "value": false,
+              "native": false,
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-3",
+          "label": "Button 4 label",
+          "cases": [
+            {
+              "value": "Audit Button 4 label",
+              "native": "Audit Button 4 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-4",
+          "label": "Button 5 label",
+          "cases": [
+            {
+              "value": "Audit Button 5 label",
+              "native": "Audit Button 5 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-5",
+          "label": "Button 6 label",
+          "cases": [
+            {
+              "value": "Audit Button 6 label",
+              "native": "Audit Button 6 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-6",
+          "label": "Button 7 label",
+          "cases": [
+            {
+              "value": "Audit Button 7 label",
+              "native": "Audit Button 7 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-7",
+          "label": "Button 8 label",
+          "cases": [
+            {
+              "value": "Audit Button 8 label",
+              "native": "Audit Button 8 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-segment-label-8",
+          "label": "Button 9 label",
+          "cases": [
+            {
+              "value": "Audit Button 9 label",
+              "native": "Audit Button 9 label",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-field-label",
+          "label": "Field label text",
+          "cases": [
+            {
+              "value": "Audit Field label text",
+              "native": "Audit Field label text",
+              "previewChanged": true
+            }
+          ]
+        },
+        {
+          "role": "group-supporting-text",
+          "label": "Supporting text",
+          "cases": [
+            {
+              "value": "Audit Supporting text",
+              "native": "Audit Supporting text",
+              "previewChanged": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "type": "Outlined",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Pressed",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Selected",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Outlined",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Outlined",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Rest",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Rest",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Hover",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Hover",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Pressed",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Pressed",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Selected",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Selected",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Focused",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Focused",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        },
+        {
+          "type": "Filled",
+          "state": "Disabled",
+          "selection": {
+            "appearance": "Filled",
+            "state": "Disabled",
+            "configuration": "40px - M / 8px - Balanced",
+            "mode": "showcase"
+          },
+          "visible": true
+        }
+      ],
+      "failures": [],
+      "review": [],
+      "category": "COMPONENTS · ACTIONS · GROUP BUTTON",
+      "inventory": [
+        {
+          "role": "group-size-mount",
+          "type": "multi",
+          "value": [
+            "56"
+          ],
+          "options": [
+            "24",
+            "28",
+            "32",
+            "36",
+            "40",
+            "44",
+            "48",
+            "56"
+          ],
+          "label": "Size",
+          "unit": false
+        },
+        {
+          "role": "group-radius-mount",
+          "type": "multi",
+          "value": [
+            "9999"
+          ],
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6",
+            "8",
+            "12",
+            "16",
+            "9999"
+          ],
+          "label": "Corner radius",
+          "unit": false
+        },
+        {
+          "role": "group-count-select",
+          "type": "select",
+          "value": "9",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "label": "Number of buttons",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-content-select",
+          "type": "select",
+          "value": "icon-text",
+          "options": [
+            "text",
+            "icon",
+            "icon-text"
+          ],
+          "label": "Content",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-icon-select",
+          "type": "select",
+          "value": "check",
+          "options": [
+            "plus",
+            "arrow",
+            "gear",
+            "star",
+            "check"
+          ],
+          "label": "Icon",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-icon-position-select",
+          "type": "select",
+          "value": "after",
+          "options": [
+            "before",
+            "after"
+          ],
+          "label": "Icon position",
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-0",
+          "type": "text",
+          "value": "Audit Button 1 label",
+          "options": [],
+          "label": "Button 1 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-1",
+          "type": "text",
+          "value": "Audit Button 2 label",
+          "options": [],
+          "label": "Button 2 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-2",
+          "type": "text",
+          "value": "Option C",
+          "options": [],
+          "label": "Button 3 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-3",
+          "type": "text",
+          "value": "Audit Button 4 label",
+          "options": [],
+          "label": "Button 4 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-4",
+          "type": "text",
+          "value": "Audit Button 5 label",
+          "options": [],
+          "label": "Button 5 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-5",
+          "type": "text",
+          "value": "Audit Button 6 label",
+          "options": [],
+          "label": "Button 6 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-6",
+          "type": "text",
+          "value": "Audit Button 7 label",
+          "options": [],
+          "label": "Button 7 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-7",
+          "type": "text",
+          "value": "Audit Button 8 label",
+          "options": [],
+          "label": "Button 8 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-segment-label-8",
+          "type": "text",
+          "value": "Audit Button 9 label",
+          "options": [],
+          "label": "Button 9 label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-show-label",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Field label",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-field-label",
+          "type": "text",
+          "value": "View",
+          "options": [],
+          "label": "Field label text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-show-supporting",
+          "type": "checkbox",
+          "value": false,
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        },
+        {
+          "role": "group-supporting-text",
+          "type": "text",
+          "value": "Choose how to display your results.",
+          "options": [],
+          "label": "Supporting text",
+          "min": "",
+          "max": "",
+          "step": "",
+          "maxLength": -1,
+          "disabled": false,
+          "unit": false
+        }
+      ],
+      "unexercised": [],
+      "persistence": "pass",
+      "sameHTML": true,
+      "parity": {
+        "expected": {
+          "text": "Audit Field label textAudit Button 1 labelAudit Button 2 labelOption CAudit Button 4 labelAudit Button 5 labelAudit Button 6 labelAudit Button 7 labelAudit Button 8 labelAudit Button 9 labelAudit Supporting text",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        },
+        "actual": {
+          "text": "Audit Field label textAudit Button 1 labelAudit Button 2 labelOption CAudit Button 4 labelAudit Button 5 labelAudit Button 6 labelAudit Button 7 labelAudit Button 8 labelAudit Button 9 labelAudit Supporting text",
+          "style": {
+            "color": "rgb(75, 85, 99)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderTopColor": "rgb(75, 85, 99)",
+            "borderTopWidth": "0px",
+            "borderTopLeftRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "paddingTop": "0px",
+            "paddingRight": "0px",
+            "gap": "8px"
+          }
+        }
+      },
+      "exports": {
+        "prompt": true,
+        "previewCode": true,
+        "json": true,
+        "html": true,
+        "properties": 17,
+        "variants": 767
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "overflow": true
+        },
+        {
+          "width": 390,
+          "overflow": true
+        },
+        {
+          "width": 320,
+          "overflow": true
+        }
+      ],
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

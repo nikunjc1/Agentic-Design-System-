@@ -1,0 +1,215 @@
+{
+  "file": "drawer-default.html",
+  "name": "Drawer",
+  "category": "Components · Feedback · Drawer",
+  "controls": [
+    {
+      "index": 0,
+      "role": "drawer-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "drawer-radius-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Right",
+      "options": [
+        {
+          "value": "Right",
+          "label": "Right"
+        },
+        {
+          "value": "Left",
+          "label": "Left"
+        },
+        {
+          "value": "Top",
+          "label": "Top"
+        },
+        {
+          "value": "Bottom",
+          "label": "Bottom"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Default",
+      "options": [
+        {
+          "value": "Default",
+          "label": "Default"
+        },
+        {
+          "value": "No footer",
+          "label": "No footer"
+        },
+        {
+          "value": "No close",
+          "label": "No close"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": "drawer-size-select",
+      "id": null,
+      "label": "Size",
+      "type": "select",
+      "value": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Size Small Medium Large",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "drawer-title",
+      "id": null,
+      "label": "Title",
+      "type": "text",
+      "value": "Edit profile",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Title",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "drawer-body",
+      "id": null,
+      "label": "Body",
+      "type": "text",
+      "value": "Update your name, photo, and contact details.",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Body",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "drawer-show-close",
+      "id": null,
+      "label": "Show close button",
+      "type": "checkbox",
+      "value": true,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "shown in the title bar",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, title, body text and the close button are properties of the same component, not separate panels glued together - change them below to check this drawer's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Drawer is a panel that slides in from a screen edge above a dimmed backdrop, for tasks that need more room than a Modal but shouldn't fully interrupt the page layout behind it - the page stays visible and contextually present at the edge, unlike Modal's fully centered takeover. When to Use An edit-in-place panel - editing a record's details without leaving the list behind it. A filter or settings side panel - adjusting options while keeping the underlying content in view. A detail preview or a multi-step form that needs more room than a dialog - still tied to the specific context it opened from. When Not to Use A short, focused decision or confirmation - use Modal - Drawer's larger size is unnecessary weight for a quick yes/no. Content meant to persist as part of the page's normal layout - use a permanent panel or sidebar rather than a Drawer that must be explicitly opened and closed. A brief, non-blocking status update - use Toast or Notification instead of a full sliding panel. Best Practices Keep the underlying page visible and dimmed, not hidden, so context isn't lost while the Drawer is open. Choose a consistent edge (commonly the right) for a given type of task across the product. Warn before closing a Drawer with unsaved changes, the same way you would for a Modal. Do and Don't Do FiltersStatus, owner and date range - applied to the list still visible behind. A side task with enough substance to fill the panel, kept beside the list it acts on rather than covering it. Don't Discard draft?CancelDiscard A one-line confirmation leaves most of the panel empty and still blocks the page to slide in. Use Modal or Pop Confirm when there is only a question to ask. Accessibility Traps keyboard focus within the panel while open, and restores it to the triggering element on close, matching Modal's behavior. Exposed as role=\"dialog\" with aria-modal=\"true\" and an accessible name (its title via aria-labelledby), announced as it opens - like Modal, this is focus management and an interrupting dialog, not a passive aria-live announcement. Escape and a visible close control are both always available, regardless of what task is in progress inside it. Related Components Modal, Popover, Steps. { \"component\": \"Drawer\", \"status\": \"Stable\", \"category\": \"Feedback\", \"summary\": \"Drawer is a panel that slides in from a screen edge above a dimmed backdrop, for tasks that need more room than a Modal but shouldn't fully interrupt the page layout behind it - the page stays visible and contextually present at the edge, unlike Modal's fully centered takeover.\", \"whenToUse\": [ \"An edit-in-place panel - editing a record's details without leaving the list behind it.\", \"A filter or settings side panel - adjusting options while keeping the underlying content in view.\", \"A detail preview or a multi-step form that needs more room than a dialog - still tied to the specific context it opened from.\" ], \"whenNotToUse\": [ \"A short, focused decision or confirmation - use Modal - Drawer's larger size is unnecessary weight for a quick yes/no.\", \"Content meant to persist as part of the page's normal layout - use a permanent panel or sidebar rather than a Drawer that must be explicitly opened and closed.\", \"A brief, non-blocking status update - use Toast or Notification instead of a full sliding panel.\" ], \"bestPractices\": [ \"Keep the underlying page visible and dimmed, not hidden, so context isn't lost while the Drawer is open.\", \"Choose a consistent edge (commonly the right) for a given type of task across the product.\", \"Warn before closing a Drawer with unsaved changes, the same way you would for a Modal.\" ], \"doAndDont\": { \"do\": \"A side task with enough substance to fill the panel, kept beside the list it acts on rather than covering it.\", \"dont\": \"A one-line confirmation leaves most of the panel empty and still blocks the page to slide in. Use Modal or Pop Confirm when there is only a question to ask.\" }, \"accessibility\": [ \"Traps keyboard focus within the panel while open, and restores it to the triggering element on close, matching Modal's behavior.\", \"Exposed as role=\\\"dialog\\\" with aria-modal=\\\"true\\\" and an accessible name (its title via aria-labelledby), announced as it opens - like Modal, this is focus management and an interrupting dialog, not a passive aria-live announcement.\", \"Escape and a visible close control are both always available, regardless of what task is in progress inside it.\" ], \"relatedComponents\": [ \"Modal\", \"Popover\", \"Steps\" ] }",
+  "tests": []
+}

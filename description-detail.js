@@ -130,7 +130,7 @@
     var items = stateKey === "long-value" ? LONG_VALUE_ITEMS : COMPACT_ITEMS;
     var edges = computeGridEdges(items, columns);
     var titleHtml = stateKey === "with-title"
-      ? '<p class="description-demo-title">' + escapeHtml((title || DEFAULT_TITLE).trim() || DEFAULT_TITLE) + "</p>"
+      ? '<p class="description-demo-title" data-contract-part="title">' + escapeHtml((title || DEFAULT_TITLE).trim() || DEFAULT_TITLE) + "</p>"
       : "";
     var itemsHtml = items.map(function(item, i){
       var spanAttr = item.span ? ' style="grid-column: 1 / -1;"' : "";
@@ -178,7 +178,7 @@
     var lines = [];
     lines.push("/* Agentic Design System - Description component */");
     lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-280); text-align: start; }");
-    lines.push(".description-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".description-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".description-demo-grid{ display:grid; gap:var(--space-12); }");
     lines.push(".description-demo-panel--bordered .description-demo-grid{ gap:0; border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }");
     lines.push(".description-demo-item{ display:flex; flex-direction:column; gap:var(--space-4); }");
@@ -234,12 +234,12 @@
       card.setAttribute("tabindex", "0");
       var href = "description-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

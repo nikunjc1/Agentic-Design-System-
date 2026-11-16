@@ -35,15 +35,16 @@
     { key: "current", cls: "is-current", label: "Current" },
     { key: "completed", cls: "is-completed", label: "Completed" },
     { key: "error", cls: "is-error", label: "Error" },
-    { key: "disabled", cls: "is-disabled", label: "Disabled" }
+    { key: "disabled", cls: "is-disabled", label: "Disabled" },
+    { key: "loading", cls: "is-loading", label: "Loading" }
   ];
 
   var FULL_SPEC = {
     numbered: { purpose: "Each step is a circle containing its number, or a checkmark icon once that step is completed - the clearest option when steps benefit from an at-a-glance count." }
   };
 
-  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-  var X_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
+  var X_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18M6 6l12 12"/></svg>';
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -53,8 +54,8 @@
   function liveStepsColors(){
     return {
       lineStrong: getCssVar("--line-strong", "rgba(255,255,255,0.16)"),
-      textHi: getCssVar("--text-hi", "#F3F2EF"),
-      textDim: getCssVar("--text-dim", "#64686F"),
+      textHi: getCssVar("--text-hi", "#111827"),
+      textDim: getCssVar("--text-dim", "#69707D"),
       red500: getCssVar("--red-500", "#FF031A"),
       danger500: getCssVar("--danger-500", "#FF031A")
     };
@@ -165,7 +166,8 @@
   function circleContent(statusKey, number){
     if (statusKey === "completed") return CHECK_SVG;
     if (statusKey === "error") return X_SVG;
-    return String(number);
+    if (statusKey === "loading") return '<span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>';
+    return '<span class="steps-demo-circle-number">' + String(number) + "</span>";
   }
 
   function buildStepsRow(typeKey, midStatusKey, size, labels, orientation){
@@ -175,20 +177,20 @@
       var statusKey = statusAt(i, midIndex, midStatusKey);
       var circleHtml = '<span class="steps-demo-circle">' + circleContent(statusKey, i + 1) + "</span>";
       var labelHtml = '<span class="steps-demo-label">' + escapeHtml(label) + "</span>";
-      // Centers the connector under the circle column - a horizontal
-      // margin-top offset for a horizontal row's vertically-centered
-      // connector, or a vertical margin-inline-start offset for a
-      // vertical row's horizontally-centered one. Same half-circle math
-      // either way, just rotated onto the other axis with orientation.
-      var offset = Math.round(Number(size) / 2) - 1;
-      var connectorAttr = isVertical ? ' style="margin-inline-start:' + offset + 'px"' : ' style="margin-top:' + offset + 'px"';
-      var stepHtml = '<div class="steps-demo-step steps-demo-step--h' + size + " is-" + statusKey + '">' + circleHtml + labelHtml + "</div>";
-      if (i < labels.length - 1){
-        var nextStatusKey = statusAt(i + 1, midIndex, midStatusKey);
-        var connStatus = connectorStatus(statusKey, nextStatusKey);
-        stepHtml += '<span class="steps-demo-connector is-' + connStatus + '"' + connectorAttr + "></span>";
-      }
-      return stepHtml;
+      var statusPrev = i > 0 ? statusAt(i - 1, midIndex, midStatusKey) : null;
+      var statusNext = i < labels.length - 1 ? statusAt(i + 1, midIndex, midStatusKey) : null;
+      // Both orientations share ONE structure - step > track[before, circle, after] + label - and differ only in CSS direction.
+      // (Vertical used to be step + separate connector siblings, a different layer tree; Figma's per-variant overrides are matched
+      // by layer position, so Horizontal<->Vertical and any Step count then pushed styles onto the wrong layers and overlapped them.)
+      // Each step owns the line segments on both sides of its own circle, so a line always starts at the circle edge; the first and
+      // last step get an invisible spacer on the open side, which keeps every circle centred on its label.
+      var segment = function(connStatus){
+        return '<span class="steps-demo-connector is-' + connStatus + '" data-contract-kind="container" data-contract-name="connector"></span>';
+      };
+      var spacer = '<span class="steps-demo-connector steps-demo-connector--spacer" data-contract-kind="container" data-contract-name="connector spacer"></span>';
+      var before = statusPrev ? segment(connectorStatus(statusPrev, statusKey)) : spacer;
+      var after = statusNext ? segment(connectorStatus(statusKey, statusNext)) : spacer;
+      return '<div class="steps-demo-step steps-demo-step--h' + size + " is-" + statusKey + '"><div class="steps-demo-track">' + before + circleHtml + after + "</div>" + labelHtml + "</div>";
     }).join("");
     var rowClass = "steps-demo-row steps-demo-row--" + typeKey + (isVertical ? " steps-demo-row--vertical" : "");
     return '<div class="' + rowClass + '">' + parts + "</div>";
@@ -208,12 +210,13 @@
     lines.push("");
     lines.push("Type: Numbered - " + FULL_SPEC.numbered.purpose);
     lines.push("");
-    lines.push("States (5, apply per step):");
+    lines.push("States (6, apply per step):");
     lines.push("- Upcoming: empty ring (1.5px " + c.lineStrong + " border, transparent fill), step number in " + c.textDim + ", connector lines on both sides in " + c.lineStrong + ".");
     lines.push("- Current: solid " + c.red500 + " background, step number in white (never a checkmark - that's Completed only), label text in " + c.textHi + " and bold.");
     lines.push("- Completed: solid " + c.red500 + " background with a checkmark icon in white in place of the number, connector line after it in " + c.lineStrong + " (the next step is upcoming) but the connector before it in " + c.red500 + " (the previous step is completed too).");
     lines.push("- Error: solid " + c.danger500 + " background with an X mark in white, label text in " + c.danger500 + ".");
     lines.push("- Disabled: empty ring at 40% opacity, label text at 40% opacity - static/illustrative, not interactive.");
+    lines.push("- Loading: empty ring with a spinner in place of the number, for a step whose content or validation is still being processed.");
     lines.push("- A connector is only filled (brand red) when both steps it joins are completed; otherwise it stays the neutral line color.");
     lines.push("");
     lines.push(propertyPromptLine("Orientation", orientationInfo, ORIENTATION_OPTIONS) + " Horizontal runs left-to-right with the circle above its label and a horizontal connector between circles; Vertical stacks top-to-bottom with the circle beside its label and a vertical connector below each circle, centered under the circle column either way.");
@@ -235,7 +238,7 @@
     lines.push("/* Agentic Design System - Steps (progress indicator) component */");
     lines.push(".steps-demo-row{ display:flex; align-items:flex-start; }");
     lines.push(".steps-demo-step{ display:flex; flex-direction:column; align-items:center; gap:var(--space-8); box-sizing:border-box; }");
-    lines.push('.steps-demo-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); white-space:nowrap; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.steps-demo-label{ font-family:var(--font-body); font-size:var(--type-body-size); white-space:nowrap; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".steps-demo-connector{ flex:1 1 auto; min-width:var(--dimension-16); height:1.5px; background:" + c.lineStrong + "; }");
     lines.push(".steps-demo-connector.is-completed{ background:" + c.red500 + "; }");
     lines.push("");
@@ -258,19 +261,20 @@
     });
     lines.push("");
     lines.push("/* Type: Numbered */");
-    lines.push(".steps-demo-circle{ display:inline-flex; align-items:center; justify-content:center; border-radius:9999px; box-sizing:border-box; font-weight:700; }");
+    lines.push(".steps-demo-circle{ display:inline-flex; align-items:center; justify-content:center; border-radius:var(--radius-full); box-sizing:border-box; font-weight:700; }");
     lines.push("");
     lines.push("/* States (5, apply per step) */");
-    lines.push(".steps-demo-step.is-upcoming .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
+    lines.push(".steps-demo-step.is-upcoming .steps-demo-circle{ background:transparent; border:var(--border-width-1) var(--border-style) " + c.lineStrong + "; color:" + c.textDim + "; }");
     lines.push(".steps-demo-step.is-upcoming .steps-demo-label{ color:" + c.textDim + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".steps-demo-step.is-current .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
+    lines.push(".steps-demo-step.is-current .steps-demo-circle{ background:" + c.red500 + "; border:var(--border-width-1) var(--border-style) " + c.red500 + "; color:var(--on-brand-text); }");
     lines.push(".steps-demo-step.is-current .steps-demo-label{ color:" + c.textHi + "; font-weight:700; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".steps-demo-step.is-completed .steps-demo-circle{ background:" + c.red500 + "; border:1.5px solid " + c.red500 + "; color:#FFFFFF; }");
+    lines.push(".steps-demo-step.is-completed .steps-demo-circle{ background:" + c.red500 + "; border:var(--border-width-1) var(--border-style) " + c.red500 + "; color:var(--on-brand-text); }");
     lines.push(".steps-demo-step.is-completed .steps-demo-label{ color:" + c.textHi + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
-    lines.push(".steps-demo-step.is-error .steps-demo-circle{ background:" + c.danger500 + "; border:1.5px solid " + c.danger500 + "; color:#FFFFFF; }");
+    lines.push(".steps-demo-step.is-error .steps-demo-circle{ background:" + c.danger500 + "; border:var(--border-width-1) var(--border-style) " + c.danger500 + "; color:var(--status-danger-text); }");
     lines.push(".steps-demo-step.is-error .steps-demo-label{ color:" + c.danger500 + "; max-width:var(--dimension-220); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".steps-demo-step.is-disabled{ opacity:0.4; }");
-    lines.push(".steps-demo-step.is-disabled .steps-demo-circle{ background:transparent; border:1.5px solid " + c.lineStrong + "; color:" + c.textDim + "; }");
+    lines.push(".steps-demo-step.is-disabled .steps-demo-circle{ background:transparent; border:var(--border-width-1) var(--border-style) " + c.lineStrong + "; color:" + c.textDim + "; }");
+    lines.push(".steps-demo-step.is-loading .steps-demo-circle{ background:transparent; border:var(--border-width-1) var(--border-style) " + c.lineStrong + "; }");
     lines.push("");
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleOrientation = orientationInfo.mode === "all" ? FALLBACK_DEFAULTS.orientation : orientationInfo.values[0];
@@ -348,12 +352,12 @@
       var href = "steps-" + card.dataset.system + ".html";
       if (card.dataset.orientation === "vertical") href += "?orientation=vertical";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

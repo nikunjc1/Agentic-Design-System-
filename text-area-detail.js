@@ -1,6 +1,7 @@
 (() => {
   "use strict";
   var textareaFieldCounter = 0;
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -21,6 +22,7 @@
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
     { key: "error", cls: " is-error", label: "Error" },
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
     { key: "disabled", cls: " is-disabled", label: "Disabled" }
   ];
 
@@ -46,17 +48,17 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
@@ -64,14 +66,14 @@
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-bottom-color:" + danger500 + ";"
@@ -111,9 +113,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -147,7 +153,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Same "ask the question vs. state the explicit choice" rule as the
@@ -190,7 +196,7 @@
     lines.push("");
     lines.push("Build it as ONE reusable component controlled by properties (type, size, radius, state) - not as separate one-off fields for each variant.");
     lines.push("");
-    lines.push("It is a multi-line free-form text field for longer content like comments, descriptions, or messages - it grows taller through a Rows property, not by manual dragging (resize: none, matching this system's other fields, which don't offer manual resize).");
+    lines.push("It is a multi-line free-form text field for longer content like comments, descriptions, or messages - it grows taller through a Rows property by default (resize: none, matching this system's other fields), with an optional Resizing property (Vertical/Horizontal/Both) for the cases that need manual dragging too.");
     lines.push("");
     lines.push("Types (3):");
     TYPES.forEach(function(t){
@@ -202,26 +208,36 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (7, apply to every type): Rest, Hover, Focused, Filled, Error, Read-Only, Disabled.");
     lines.push("- Filled: same appearance as Rest, showing entered multi-line text instead of the placeholder.");
+    lines.push("- Read-Only: shows its current value but can't be edited; still focusable/selectable, unlike Disabled.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally - Size controls the field's padding/font-size only, never its visible height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Rows (2-8, default 4, controls the field's visible height - the number of text lines tall it renders).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Rows (2-8, default 4, controls the field's visible height - the number of text lines tall it renders), Resizing (none/vertical/horizontal/both - currently " + (opts.resize || "none") + "), Allow clear (boolean - once the field has a value, shows an × button that clears it), Maximum length + Character counter (optional live count shown below the field, e.g. \"120 / 500\"), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
+    if (opts.maxLength) lines.push("Current maximum length: " + opts.maxLength + " characters" + (opts.showCounter ? ", counter shown." : "."));
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, rows){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, rows, opts){
+    opts = opts || {};
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
+    var requiredHtml = opts.required ? '<span class="textarea-demo-required" aria-hidden="true"> *</span>' : "";
+    var maxLengthAttr = opts.maxLength ? ' maxlength="' + opts.maxLength + '"' : "";
+    var requiredAttr = opts.required ? " required" : "";
+    var resizeStyle = opts.resize && opts.resize !== "none" ? ' style="resize:' + opts.resize + ';"' : "";
     var lines = [];
     lines.push('<div class="textarea-field">');
-    lines.push('  <label class="textarea-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="textarea-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="textarea-control textarea-control--' + typeKey + " " + sizeClass + radiusClass + '">');
-    lines.push('    <textarea rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"></textarea>');
+    lines.push('    <textarea rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + maxLengthAttr + requiredAttr + resizeStyle + "></textarea>");
     lines.push("  </div>");
+    if (opts.showCounter && opts.maxLength) lines.push('  <p class="textarea-note textarea-demo-counter">0 / ' + opts.maxLength + "</p>");
+    if (opts.supportingText) lines.push('  <p class="textarea-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -234,10 +250,11 @@
     var lines = [];
     lines.push("/* Agentic Design System - Text Area component (all types, states, sizes) */");
     lines.push(".textarea-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.textarea-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".textarea-control{ box-sizing:border-box; display:flex; align-items:flex-start; border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.textarea-control textarea{ flex:1 1 auto; min-width:0; width:100%; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0; line-height:1.5; resize:none; }');
-    lines.push('.textarea-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.textarea-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".textarea-control{ box-sizing:border-box; display:flex; align-items:flex-start; border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.textarea-control textarea{ flex:1 1 auto; min-width:0; width:100%; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0; line-height:1.5; resize:none; }');
+    lines.push('.textarea-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
+    lines.push(".textarea-demo-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -250,7 +267,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to Outlined/Filled only, Underlined stays square */");
     radiiToEmit.forEach(function(radius){
       lines.push(".textarea-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -266,17 +283,21 @@
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
     lines.push("");
+    lines.push("/* Read-Only - visually unchanged from Rest, cursor signals it isn't editable; unlike Disabled, still focusable/selectable */");
+    lines.push(".textarea-control textarea:read-only{ cursor:default; }");
+    lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".textarea-control:has(textarea:disabled){ opacity:0.5; }");
     lines.push(".textarea-control textarea:disabled{ cursor:not-allowed; }");
     lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "textarea-control--h" + exampleSize;
     var radiusClassAttr = "textarea-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Description", "Tell us more...", "4"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Description", "Tell us more...", "4", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -284,17 +305,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -326,12 +349,12 @@
       card.setAttribute("tabindex", "0");
       var href = "text-area-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -415,30 +438,67 @@
     var labelInput = document.querySelector('[data-role="textarea-label"]');
     var placeholderInput = document.querySelector('[data-role="textarea-placeholder"]');
     var rowsSelect = document.querySelector('[data-role="textarea-rows-select"]');
+    var resizeSelect = document.querySelector('[data-role="textarea-resize-select"]');
+    var allowClearInput = document.querySelector('[data-role="textarea-allow-clear"]');
+    var maxLengthInput = document.querySelector('[data-role="textarea-max-length"]');
+    var showCounterInput = document.querySelector('[data-role="textarea-show-counter"]');
+    var requiredInput = document.querySelector('[data-role="textarea-required"]');
+    var showSupportingInput = document.querySelector('[data-role="textarea-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="textarea-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="textarea-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="textarea-error-text"]');
     var sizeMount = document.querySelector('[data-role="textarea-size-mount"]');
     var radiusMount = document.querySelector('[data-role="textarea-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildTextAreaField(typeKey, stateKey, stateCls, size, radius, label, placeholder, rows){
+    function currentOpts(){
+      var maxLength = maxLengthInput && maxLengthInput.value ? parseInt(maxLengthInput.value, 10) : null;
+      return {
+        resize: resizeSelect ? resizeSelect.value : "none",
+        allowClear: !!(allowClearInput && allowClearInput.checked),
+        maxLength: maxLength,
+        showCounter: !!(showCounterInput && showCounterInput.checked && maxLength),
+        required: !!(requiredInput && requiredInput.checked),
+        supportingText: (showSupportingInput && showSupportingInput.checked) ? (supportingTextInput.value.trim() || "Share as much detail as you'd like.") : "",
+        errorText: errorTextInput ? (errorTextInput.value.trim() || "This field is required.") : "This field is required."
+      };
+    }
+
+    function buildTextAreaField(typeKey, stateKey, stateCls, size, radius, label, placeholder, rows, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
+      var isReadOnly = stateKey === "readonly";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
+      var hasValue = isFilled || isError || isReadOnly;
       var controlClasses = "textarea-demo-control textarea-demo-control--" + typeKey + " textarea-demo-control--h" + size + stateCls;
       var disabledAttr = isDisabled ? " disabled" : "";
-      var content = isFilled ? "This feature has been incredibly helpful for our team's daily workflow." : (isError ? "ok" : "");
+      var readonlyAttr = isReadOnly ? " readonly" : "";
+      var requiredAttr = opts.required ? " required" : "";
+      var maxLengthAttr = opts.maxLength ? ' maxlength="' + opts.maxLength + '"' : "";
+      var resizeAttr = opts.resize && opts.resize !== "none" ? ' style="resize:' + opts.resize + ';"' : "";
+      var content = isFilled || isReadOnly ? "This feature has been incredibly helpful for our team's daily workflow." : (isError ? "ok" : "");
+      var clearHtml = (opts.allowClear && hasValue && !isDisabled && !isReadOnly)
+        ? '<button type="button" class="textarea-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
+        : "";
       // tabindex="-1" + a real for/id label association: this matrix is a
       // static side-by-side comparison of every state (same convention as
       // Modal/Rating/Input's own matrices), not an operable field, but
       // still exposed to a screen reader's virtual cursor regardless of
       // tab order.
       var fieldId = "textarea-demo-field-" + (++textareaFieldCounter);
-      var textareaHtml = '<textarea id="' + fieldId + '" class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + ' tabindex="-1">' + content + "</textarea>";
+      var textareaHtml = '<textarea id="' + fieldId + '" class="textarea-demo-input" rows="' + rows + '" placeholder="' + escapeHtml(placeholder) + '"' + disabledAttr + readonlyAttr + requiredAttr + maxLengthAttr + resizeAttr + ' tabindex="-1">' + content + "</textarea>";
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
-      var noteHtml = isError ? '<p class="textarea-demo-note is-error">Please provide at least 10 characters.</p>' : "";
+      var requiredHtml = opts.required ? '<span class="textarea-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var counterHtml = opts.showCounter ? '<p class="textarea-demo-note textarea-demo-counter">' + content.length + " / " + opts.maxLength + "</p>" : "";
+      var noteHtml = isError
+        ? '<p class="textarea-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "This field is required.") + "</p>"
+        : (opts.supportingText ? '<p class="textarea-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>" : "");
       return '<div class="textarea-demo-field">' +
-        '<label class="textarea-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + textareaHtml + "</div>" +
+        '<label class="textarea-demo-label" for="' + fieldId + '" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
+        '<div class="' + controlClasses + '"' + radiusStyle + ">" + textareaHtml + clearHtml + "</div>" +
+        counterHtml +
         noteHtml +
         "</div>";
     }
@@ -456,10 +516,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, rows){
+    function buildMatrixSection(size, radius, label, placeholder, rows, opts){
       var rowsHtml = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTextAreaField(t.key, state.key, state.cls, size, radius, label, placeholder, rows) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTextAreaField(t.key, state.key, state.cls, size, radius, label, placeholder, rows, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -473,7 +533,8 @@
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -481,6 +542,7 @@
       var label = labelInput.value.trim() || defaultLabel;
       var placeholder = placeholderInput.value.trim() || defaultPlaceholder;
       var rows = rowsSelect ? (rowsSelect.value || "4") : "4";
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -489,14 +551,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, rows);
+          html += buildMatrixSection(size, radius, label, placeholder, rows, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -524,6 +586,19 @@
     labelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     placeholderInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (rowsSelect) rowsSelect.addEventListener("change", render);
+    if (resizeSelect) resizeSelect.addEventListener("change", render);
+    if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (maxLengthInput) maxLengthInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (showCounterInput) showCounterInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });

@@ -24,10 +24,20 @@
   var DEFAULT_QUESTION = "Delete this item?";
   var DEFAULT_CONFIRM_LABEL = "Yes";
   var DEFAULT_CANCEL_LABEL = "No";
+  var DEFAULT_HEADING_LEVEL = "h6";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the question text always traces back
+  // to a real Foundation value, exactly like every other Foundation-bound
+  // style in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
 
   // Same warning-triangle glyph as Alert's "warning" semantic type, reused
   // here so every "needs attention" icon in this system reads the same way.
-  var WARNING_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 L21 19 L3 19 Z"></path><line x1="12" y1="10" x2="12" y2="14"></line><line x1="12" y1="16.5" x2="12" y2="16.51"></line></svg>';
+  var WARNING_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4 L21 19 L3 19 Z"></path><line x1="12" y1="10" x2="12" y2="14"></line><line x1="12" y1="16.5" x2="12" y2="16.51"></line></svg>';
 
   function escapeHtml(str){
     return String(str)
@@ -37,15 +47,28 @@
       .replace(/"/g, "&quot;");
   }
 
-  function bubbleContentFor(stateKey, question, confirmLabel, cancelLabel){
+  function bubbleContentFor(stateKey, question, confirmLabel, cancelLabel, headingLevel){
     var iconHtml = stateKey === "with-icon"
       ? '<span class="popconfirm-demo-icon" aria-hidden="true">' + WARNING_ICON_SVG + "</span>"
       : "";
-    var questionHtml = '<p class="popconfirm-demo-question">' + iconHtml + "<span>" + escapeHtml(question) + "</span></p>";
+    var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
+    // color is pinned to the inverted-overlay foreground on purpose - the
+    // site-wide heading-role autofill (foundation-runtime.js bindExamples())
+    // otherwise replaces an unset color with the role's normal-surface
+    // color, which is unreadable against this bubble's near-black (light
+    // theme) / near-white (dark theme) inverted background.
+    var headingStyle = "margin:0;color:var(--overlay-invert-text);font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
+    // The icon sits as a SIBLING of the heading tag (not nested inside it) -
+    // keeping data-contract-part="question" on a leaf element (just text, no
+    // child elements) so it always classifies as kind:'text' during capture,
+    // the same way Alert/Toast/Modal/etc's title nodes do; nesting the icon
+    // inside would turn it into a container when "with icon" is active,
+    // losing the Figma text/typography binding for that one state.
+    var questionHtml = '<div class="popconfirm-demo-question">' + iconHtml + "<" + headingTag + ' data-contract-part="question" style="' + headingStyle + '">' + escapeHtml(question) + "</" + headingTag + "></div>";
     var confirmClass = "popconfirm-demo-btn popconfirm-demo-btn--confirm" + (stateKey === "destructive" ? " is-destructive" : "");
     var actionsHtml = '<div class="popconfirm-demo-actions">' +
-      '<button type="button" class="popconfirm-demo-btn popconfirm-demo-btn--cancel" tabindex="-1" aria-hidden="true">' + escapeHtml(cancelLabel) + "</button>" +
-      '<button type="button" class="' + confirmClass + '" tabindex="-1" aria-hidden="true">' + escapeHtml(confirmLabel) + "</button>" +
+      '<button type="button" class="popconfirm-demo-btn popconfirm-demo-btn--cancel" data-contract-part="cancel" tabindex="-1" aria-hidden="true">' + escapeHtml(cancelLabel) + "</button>" +
+      '<button type="button" class="' + confirmClass + '" data-contract-part="confirm" tabindex="-1" aria-hidden="true">' + escapeHtml(confirmLabel) + "</button>" +
       "</div>";
     return questionHtml + actionsHtml;
   }
@@ -61,8 +84,8 @@
   // has hit before with small floating panels: an in-flow bubble+arrow
   // naturally pushes its own matrix cell/row taller instead of overlapping
   // whatever sits next to it.
-  function buildPopConfirmField(typeKey, stateKey, question, confirmLabel, cancelLabel){
-    var bubbleHtml = '<div class="popconfirm-demo-bubble">' + bubbleContentFor(stateKey, question, confirmLabel, cancelLabel) + "</div>";
+  function buildPopConfirmField(typeKey, stateKey, question, confirmLabel, cancelLabel, headingLevel){
+    var bubbleHtml = '<div class="popconfirm-demo-bubble">' + bubbleContentFor(stateKey, question, confirmLabel, cancelLabel, headingLevel) + "</div>";
     var arrowHtml = '<div class="popconfirm-demo-arrow" aria-hidden="true"></div>';
     var triggerHtml = '<button type="button" class="popconfirm-demo-trigger" tabindex="-1" aria-hidden="true">Delete</button>';
     return '<div class="popconfirm-demo-wrap popconfirm-demo-wrap--' + typeKey + '">' + bubbleHtml + arrowHtml + triggerHtml + "</div>";
@@ -82,7 +105,7 @@
     lines.push("");
     lines.push("States (3): Default (a neutral confirm button, e.g. \"" + question + "\" with \"" + cancelLabel + "\"/\"" + confirmLabel + "\" buttons); Destructive (same layout, but the confirm button is styled in the danger/red color, for an irreversible or delete-type action); With icon (same as Default, but adds a small warning-triangle icon inline before the question text).");
     lines.push("");
-    lines.push("Visual treatment: reads as a proper elevated panel, matching this system's other floating-panel language (Menu, Autocomplete, Popover), but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"var(--shadow-xl)\" alone gives it separation from the page), border-radius var(--radius-md). The trigger sits on the ordinary page background outside the bubble, so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border 1.5px solid var(--line-strong), color var(--text-hi), padding 6px 14px, border-radius var(--radius-sm). The arrow is a small rotated square (transform:rotate(45deg)) matching the bubble's own inverted background color. The Confirm/Cancel buttons sit in a right-aligned row below the question - Cancel is a transparent/bordered button using the bubble's own inverted text color (var(--text-hi) would go near-invisible against it), Confirm is a solid neutral button by default or a solid red button in the Destructive state, both with their own fully opaque background so they stay legible regardless of the bubble's inversion.");
+    lines.push("Visual treatment: reads as a proper elevated panel, matching this system's other floating-panel language (Menu, Autocomplete, Popover), but inverted against the page like a real overlay should be - near-black background in light theme, near-white in dark theme (background var(--overlay-invert-bg), NOT the normal-surface var(--graphite-900), since that's user-customizable via Foundations and would silently break the inversion), no border (box-shadow \"var(--shadow-xl)\" alone gives it separation from the page), border-radius var(--radius-md). The trigger sits on the ordinary page background outside the bubble, so it keeps this system's normal, non-inverted styling - background var(--graphite-800), border var(--border-width-1) var(--border-style) var(--line-strong), color var(--text-hi), padding 6px 14px, border-radius var(--radius-sm). The arrow is a small rotated square (transform:rotate(45deg)) matching the bubble's own inverted background color. The Confirm/Cancel buttons sit in a right-aligned row below the question - Cancel is a transparent/bordered button using the bubble's own inverted text color (var(--text-hi) would go near-invisible against it), Confirm is a solid neutral button by default or a solid red button in the Destructive state, both with their own fully opaque background so they stay legible regardless of the bubble's inversion.");
     lines.push("");
     lines.push("Component properties: Question (string, the short question shown in the bubble) - currently \"" + question + "\". Confirm label (string, the text on the confirm button) - currently \"" + confirmLabel + "\". Cancel label (string, the text on the cancel button) - currently \"" + cancelLabel + "\".");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
@@ -103,7 +126,7 @@
     lines.push(".popconfirm-demo-wrap--left{ flex-direction:row; }");
     lines.push(".popconfirm-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".popconfirm-demo-trigger{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:1.5px solid var(--line-strong); color:var(--text-hi); cursor:pointer; }");
+    lines.push(".popconfirm-demo-trigger{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); padding:var(--space-6) var(--space-14); border-radius:var(--radius-sm); background:var(--graphite-800); border:var(--border-width-1) var(--border-style) var(--line-strong); color:var(--text-hi); cursor:pointer; }");
     lines.push(".popconfirm-demo-trigger:hover{ background:var(--graphite-700); }");
     lines.push("");
     lines.push("/* Inverted against the page on purpose - near-black in light theme,");
@@ -123,17 +146,17 @@
     lines.push("   (both variants) keep their own fully opaque background, so they stay");
     lines.push("   self-contained regardless of what the bubble inverts to. */");
     lines.push(".popconfirm-demo-bubble{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:var(--shadow-xl); padding:var(--space-12) var(--space-14); border-radius:var(--radius-md); width:var(--dimension-220); text-align: start; }");
-    lines.push(".popconfirm-demo-question{ display:flex; align-items:flex-start; gap:var(--space-6); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
+    lines.push(".popconfirm-demo-question{ display:flex; align-items:flex-start; gap:var(--space-6); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
     lines.push(".popconfirm-demo-icon{ flex:none; width:var(--dimension-14); height:var(--dimension-14); color:var(--amber-500); }");
     lines.push(".popconfirm-demo-actions{ display:flex; justify-content:flex-end; gap:var(--space-8); margin-top:var(--space-12); }");
-    lines.push(".popconfirm-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".popconfirm-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:var(--border-width-1) var(--border-style) transparent; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".popconfirm-demo-btn--cancel{ background:transparent; border-color:color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color:var(--overlay-invert-text); }");
     lines.push(".popconfirm-demo-btn--confirm{ background:var(--graphite-700); color:var(--text-hi); }");
     lines.push("/* var(--danger-500), not var(--red-500) - Destructive uses the fixed");
     lines.push("   danger token, same convention as Modal's own Destructive type and");
     lines.push("   Button's destructive variant, so it stays red regardless of the");
     lines.push("   brand-customizable primary accent set on Foundations. */");
-    lines.push(".popconfirm-demo-btn--confirm.is-destructive{ background:var(--danger-500); color:#FFFFFF; }");
+    lines.push(".popconfirm-demo-btn--confirm.is-destructive{ background:var(--danger-500); color:var(--status-danger-text); }");
     lines.push("");
     lines.push("/* Arrow - a rotated square, so only half of it should ever show; the");
     lines.push("   other half tucks behind the bubble's own opaque background, leaving a");
@@ -189,12 +212,12 @@
       card.setAttribute("tabindex", "0");
       var href = "pop-confirm-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -277,15 +300,16 @@
     if (!matrixContainer) return;
 
     var questionInput = document.querySelector('[data-role="popconfirm-question"]');
+    var headingLevelInput = document.querySelector('[data-role="popconfirm-heading-level"]');
     var confirmLabelInput = document.querySelector('[data-role="popconfirm-confirm-label"]');
     var cancelLabelInput = document.querySelector('[data-role="popconfirm-cancel-label"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildMatrixSection(question, confirmLabel, cancelLabel){
+    function buildMatrixSection(question, confirmLabel, cancelLabel, headingLevel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildPopConfirmField(t.key, state.key, question, confirmLabel, cancelLabel) + "</td>";
+          return '<td class="button-matrix-cell">' + buildPopConfirmField(t.key, state.key, question, confirmLabel, cancelLabel, headingLevel) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -297,6 +321,7 @@
     function currentValues(){
       return {
         question: (questionInput ? questionInput.value.trim() : "") || DEFAULT_QUESTION,
+        headingLevel: headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL,
         confirmLabel: (confirmLabelInput ? confirmLabelInput.value.trim() : "") || DEFAULT_CONFIRM_LABEL,
         cancelLabel: (cancelLabelInput ? cancelLabelInput.value.trim() : "") || DEFAULT_CANCEL_LABEL
       };
@@ -304,7 +329,7 @@
 
     function render(){
       var values = currentValues();
-      matrixContainer.innerHTML = buildMatrixSection(values.question, values.confirmLabel, values.cancelLabel);
+      matrixContainer.innerHTML = buildMatrixSection(values.question, values.confirmLabel, values.cancelLabel, values.headingLevel);
 
       // No multiselect property exists here, so there is only ever one
       // matrix / one prompt / one code sample in play - both copy controls
@@ -314,6 +339,7 @@
     }
 
     if (questionInput) questionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (headingLevelInput) headingLevelInput.addEventListener("change", render);
     if (confirmLabelInput) confirmLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (cancelLabelInput) cancelLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 

@@ -27,6 +27,16 @@
   var DEFAULT_TARGET_LABEL = "New feature";
   var DEFAULT_TITLE = "Try the new dashboard";
   var DEFAULT_DESCRIPTION = "Get a quick overview of your team's activity in one place.";
+  var DEFAULT_HEADING_LEVEL = "h6";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the title always traces back to a
+  // real Foundation value, exactly like every other Foundation-bound style
+  // in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
 
   function escapeHtml(str){
     return String(str)
@@ -41,9 +51,9 @@
   }
 
   function actionsFor(stateKey){
-    var backBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--ghost" tabindex="-1" aria-hidden="true">Back</button>';
-    var nextBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--primary" tabindex="-1" aria-hidden="true">Next</button>';
-    var finishBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--primary" tabindex="-1" aria-hidden="true">Finish</button>';
+    var backBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--ghost" data-contract-part="back" data-contract-name="Back" tabindex="-1" aria-hidden="true">Back</button>';
+    var nextBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--primary" data-contract-part="next" data-contract-name="Next" tabindex="-1" aria-hidden="true">Next</button>';
+    var finishBtn = '<button type="button" class="tour-demo-btn tour-demo-btn--primary" data-contract-part="finish" data-contract-name="Finish" tabindex="-1" aria-hidden="true">Finish</button>';
     if (stateKey === "middle-step") return backBtn + nextBtn;
     if (stateKey === "last-step") return backBtn + finishBtn;
     return nextBtn;
@@ -61,15 +71,22 @@
   // / .autocomplete-demo-field:has() in shell.css): an in-flow card+arrow
   // naturally pushes its own matrix cell/row taller instead of overlapping
   // whatever sits next to it.
-  function buildTourField(typeKey, stateKey, targetLabel, title, description){
+  function buildTourField(typeKey, stateKey, targetLabel, title, description, headingLevel){
     var stepNumber = stepNumberFor(stateKey);
-    var counterHtml = '<div class="tour-demo-step-counter">' + stepNumber + " of " + STEP_TOTAL + "</div>";
-    var titleHtml = '<p class="tour-demo-title">' + escapeHtml(title) + "</p>";
-    var descriptionHtml = '<p class="tour-demo-description">' + escapeHtml(description) + "</p>";
-    var actionsHtml = '<div class="tour-demo-actions">' + actionsFor(stateKey) + "</div>";
-    var cardHtml = '<div class="tour-demo-card">' + counterHtml + titleHtml + descriptionHtml + actionsHtml + "</div>";
-    var arrowHtml = '<div class="tour-demo-arrow" aria-hidden="true"></div>';
-    var targetHtml = '<span class="tour-demo-target" tabindex="-1" aria-hidden="true">' + escapeHtml(targetLabel) + "</span>";
+    var counterHtml = '<div class="tour-demo-step-counter" data-contract-part="counter" data-contract-name="Step counter">' + stepNumber + " of " + STEP_TOTAL + "</div>";
+    var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
+    // color is pinned to the inverted-overlay foreground on purpose - the
+    // site-wide heading-role autofill (foundation-runtime.js bindExamples())
+    // otherwise replaces an unset color with the role's normal-surface
+    // color, which is unreadable against this card's near-black (light
+    // theme) / near-white (dark theme) inverted background.
+    var headingStyle = "color:var(--overlay-invert-text);font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
+    var titleHtml = "<" + headingTag + ' class="tour-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">";
+    var descriptionHtml = '<p class="tour-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>";
+    var actionsHtml = '<div class="tour-demo-actions" data-contract-part="actions" data-contract-name="Actions">' + actionsFor(stateKey) + "</div>";
+    var cardHtml = '<div class="tour-demo-card" data-contract-part="card" data-contract-name="Card">' + counterHtml + titleHtml + descriptionHtml + actionsHtml + "</div>";
+    var arrowHtml = '<div class="tour-demo-arrow" data-contract-part="arrow" data-contract-name="Arrow" aria-hidden="true"></div>';
+    var targetHtml = '<span class="tour-demo-target" data-contract-part="target" data-contract-name="Target" data-contract-kind="container" tabindex="-1" aria-hidden="true"><span data-contract-part="targettext" data-contract-name="Target label">' + escapeHtml(targetLabel) + "</span></span>";
     return '<div class="tour-demo-wrap tour-demo-wrap--' + typeKey + '">' + cardHtml + arrowHtml + targetHtml + "</div>";
   }
 
@@ -93,10 +110,11 @@
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function buildFullCode(targetLabel, title, description){
+  function buildFullCode(targetLabel, title, description, headingLevel){
     targetLabel = (targetLabel || DEFAULT_TARGET_LABEL).trim() || DEFAULT_TARGET_LABEL;
     title = (title || DEFAULT_TITLE).trim() || DEFAULT_TITLE;
     description = (description || DEFAULT_DESCRIPTION).trim() || DEFAULT_DESCRIPTION;
+    headingLevel = headingLevel || DEFAULT_HEADING_LEVEL;
 
     var lines = [];
     lines.push("/* Agentic Design System - Tour component */");
@@ -108,7 +126,7 @@
     lines.push(".tour-demo-wrap--left{ flex-direction:row; }");
     lines.push(".tour-demo-wrap--right{ flex-direction:row-reverse; }");
     lines.push("");
-    lines.push(".tour-demo-target{ display:inline-flex; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); background:var(--graphite-800); border:2px solid var(--red-500); box-shadow:0 0 0 3px var(--red-tint); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tour-demo-target{ display:inline-flex; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); background:var(--graphite-800); border:2px solid var(--red-500); box-shadow:0 0 0 3px var(--red-tint); color:var(--text-hi); font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Same inverted-overlay treatment as Tooltip's bubble - near-black card");
     lines.push("   in light theme, near-white in dark theme, via var(--overlay-invert-bg)/");
@@ -122,10 +140,10 @@
     lines.push("   surface and goes nearly invisible against an inverted one. */");
     lines.push(".tour-demo-card{ position:relative; z-index:2; box-sizing:border-box; background:var(--overlay-invert-bg); box-shadow:var(--shadow-xl); padding:var(--space-12) var(--space-14); border-radius:var(--radius-md); width:var(--dimension-220); text-align: start; }");
     lines.push(".tour-demo-step-counter{ font-family:var(--font-mono); font-size:var(--type-body-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-bottom:var(--space-6); }");
-    lines.push(".tour-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".tour-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--overlay-invert-text); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".tour-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:color-mix(in srgb, var(--overlay-invert-text) 65%, var(--overlay-invert-bg) 35%); margin-top:var(--space-4); margin-bottom:0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }");
     lines.push(".tour-demo-actions{ display:flex; justify-content:flex-end; gap:var(--space-8); margin-top:var(--space-12); }");
-    lines.push(".tour-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:1.5px solid transparent; }");
+    lines.push(".tour-demo-btn{ font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); padding:var(--space-6) var(--space-12); border-radius:var(--radius-sm); cursor:pointer; border:var(--border-width-1) var(--border-style) transparent; }");
     lines.push(".tour-demo-btn--ghost{ background:transparent; border-color:color-mix(in srgb, var(--overlay-invert-text) 30%, transparent); color:var(--overlay-invert-text); }");
     lines.push(".tour-demo-btn--primary{ background:var(--red-500); color:var(--button-primary-text); }");
     lines.push("");
@@ -145,7 +163,7 @@
     lines.push("");
     lines.push("<!-- Example usage - one per placement, Middle step state (Back + Next) -->");
     TYPES.forEach(function(t){
-      lines.push(buildTourField(t.key, "middle-step", targetLabel, title, description));
+      lines.push(buildTourField(t.key, "middle-step", targetLabel, title, description, headingLevel));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -178,12 +196,12 @@
       card.setAttribute("tabindex", "0");
       var href = "tour-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -266,14 +284,15 @@
 
     var targetLabelInput = document.querySelector('[data-role="tour-target-label"]');
     var titleInput = document.querySelector('[data-role="tour-title"]');
+    var headingLevelInput = document.querySelector('[data-role="tour-heading-level"]');
     var descriptionInput = document.querySelector('[data-role="tour-description"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildMatrixSection(targetLabel, title, description){
+    function buildMatrixSection(targetLabel, title, description, headingLevel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildTourField(t.key, state.key, targetLabel, title, description) + "</td>";
+          return '<td class="button-matrix-cell">' + buildTourField(t.key, state.key, targetLabel, title, description, headingLevel) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -286,23 +305,25 @@
       return {
         targetLabel: (targetLabelInput ? targetLabelInput.value.trim() : "") || DEFAULT_TARGET_LABEL,
         title: (titleInput ? titleInput.value.trim() : "") || DEFAULT_TITLE,
+        headingLevel: headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL,
         description: (descriptionInput ? descriptionInput.value.trim() : "") || DEFAULT_DESCRIPTION
       };
     }
 
     function render(){
       var values = currentValues();
-      matrixContainer.innerHTML = buildMatrixSection(values.targetLabel, values.title, values.description);
+      matrixContainer.innerHTML = buildMatrixSection(values.targetLabel, values.title, values.description, values.headingLevel);
 
       // No multiselect property exists here, so there is only ever one
       // matrix / one prompt / one code sample in play - both copy controls
       // always get an empty combos array (plain-button branch).
       buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(values.targetLabel, values.title, values.description); }, [], function(){ return ""; });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(values.targetLabel, values.title, values.description); }, [], function(){ return ""; });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(values.targetLabel, values.title, values.description, values.headingLevel); }, [], function(){ return ""; });
     }
 
     if (targetLabelInput) targetLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (titleInput) titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (headingLevelInput) headingLevelInput.addEventListener("change", render);
     if (descriptionInput) descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();

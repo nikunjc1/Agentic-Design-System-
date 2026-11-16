@@ -75,6 +75,11 @@
     panel.className = "multiselect-panel";
     panel.id = panelId;
     panel.hidden = true;
+    // Keep options inside their owning control for native events and saving,
+    // while the browser's top layer escapes scrolling inspector clipping.
+    if (typeof panel.showPopover === "function") panel.setAttribute("popover", "manual");
+    panel.setAttribute("role", "group");
+    panel.setAttribute("aria-label", ariaLabel);
 
     var fieldset = document.createElement("fieldset");
     fieldset.className = "multiselect-fieldset";
@@ -194,17 +199,29 @@
     }
 
     function positionPanel(){
-      panel.classList.remove("multiselect-panel--right");
-      var rootRect = root.getBoundingClientRect();
-      var panelRect = panel.getBoundingClientRect();
-      var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-      if (rootRect.left + panelRect.width > viewportWidth - 8){
-        panel.classList.add("multiselect-panel--right");
-      }
+      if (!isOpen) return;
+      if (!trigger.isConnected) return closePanel();
+      var anchor = trigger.getBoundingClientRect(), viewport = window.visualViewport;
+      var leftEdge = (viewport ? viewport.offsetLeft : 0) + 8;
+      var topEdge = (viewport ? viewport.offsetTop : 0) + 8;
+      var rightEdge = leftEdge + (viewport ? viewport.width : window.innerWidth) - 16;
+      var bottomEdge = topEdge + (viewport ? viewport.height : window.innerHeight) - 16;
+      var width = Math.min(Math.max(anchor.width,220),rightEdge-leftEdge);
+      panel.style.width = width + "px";
+      panel.style.maxHeight = Math.max(0,bottomEdge-topEdge) + "px";
+      var below = bottomEdge-anchor.bottom-6, above = anchor.top-topEdge-6;
+      var desired = panel.scrollHeight + 2;
+      var useAbove = below < Math.min(desired,180) && above > below;
+      panel.style.maxHeight = Math.max(0,Math.min(bottomEdge-topEdge,useAbove?above:below)) + "px";
+      var height = panel.getBoundingClientRect().height;
+      var gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--space-6')) || 6;
+      var left = getComputedStyle(trigger).direction === "rtl" ? anchor.right-width : anchor.left;
+      panel.style.left = Math.max(leftEdge,Math.min(left,rightEdge-width)) + "px";
+      panel.style.top = Math.max(topEdge,Math.min(useAbove?anchor.top-height-gap:anchor.bottom+gap,bottomEdge-height)) + "px";
     }
 
     function closeOthers(){
-      openInstances.forEach(function(inst){
+      openInstances.slice().forEach(function(inst){
         if (inst !== api) inst.close();
       });
     }
@@ -214,21 +231,33 @@
       closeOthers();
       isOpen = true;
       panel.hidden = false;
+      if (panel.hasAttribute("popover")) panel.showPopover();
       root.classList.add("is-open");
       trigger.setAttribute("aria-expanded", "true");
       positionPanel();
       document.addEventListener("click", onDocClick, false);
+      document.addEventListener("focusin", onDocClick, false);
+      window.addEventListener("resize", positionPanel);
+      document.addEventListener("scroll", positionPanel, true);
+      window.visualViewport?.addEventListener("resize", positionPanel);
+      window.visualViewport?.addEventListener("scroll", positionPanel);
       openInstances.push(api);
-      allInput.focus();
+      allInput.focus({preventScroll:true});
     }
 
     function closePanel(){
       if (!isOpen) return;
       isOpen = false;
+      if (panel.hasAttribute("popover") && panel.matches(":popover-open")) panel.hidePopover();
       panel.hidden = true;
       root.classList.remove("is-open");
       trigger.setAttribute("aria-expanded", "false");
       document.removeEventListener("click", onDocClick, false);
+      document.removeEventListener("focusin", onDocClick, false);
+      window.removeEventListener("resize", positionPanel);
+      document.removeEventListener("scroll", positionPanel, true);
+      window.visualViewport?.removeEventListener("resize", positionPanel);
+      window.visualViewport?.removeEventListener("scroll", positionPanel);
       var idx = openInstances.indexOf(api);
       if (idx !== -1) openInstances.splice(idx, 1);
     }

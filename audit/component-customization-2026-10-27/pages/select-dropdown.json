@@ -1,0 +1,266 @@
+{
+  "file": "select-dropdown.html",
+  "name": "Select",
+  "category": "Components · Forms · Select",
+  "controls": [
+    {
+      "index": 0,
+      "role": "select-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "select-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "select-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "select-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Borderless",
+          "label": "Borderless"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Open",
+          "label": "Open"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        },
+        {
+          "value": "Loading",
+          "label": "Loading"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "select-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Country",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "select-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Select a country",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "select-allow-clear",
+      "id": null,
+      "label": "Allow clear",
+      "type": "checkbox",
+      "value": false,
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "× replaces chevron once filled",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label and placeholder are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Select is a trigger field that opens a panel of predefined options, letting the user pick exactly one value from a known, fixed set - visually similar to Input but read-only and paired with a chevron, distinct from Dropdown (which triggers actions, not a form value) and Cascader (multi-level drill-down). When to Use A value from a known, fixed set - country, state/province, category. Sort order or similar single-choice configuration - Newest first, Price low to high. A language or locale picker - any small-to-medium closed option list. When Not to Use Free-form text with no fixed set of valid values - use Input. Hierarchical or nested data - use Cascader (linked columns) or Tree Select (an expandable tree). Selecting more than one value at a time - use a multi-select variant, Checkbox group, or Transfer. A very large option list better filtered by typing - use Autocomplete instead of scrolling a long panel. Best Practices Order options logically - alphabetical, by frequency of use, or with a sensible default first. Show an explicit placeholder like \"Select an option\" rather than silently pre-selecting an arbitrary value. Truncate long option labels gracefully in the closed trigger rather than letting them overflow the field. Do and Don't Do CountrySelect a country An explicit placeholder makes it obvious nothing has been chosen yet, so an untouched field cannot be mistaken for a decision. Don't CountryAfghanistan Pre-selecting the alphabetically-first option silently submits an answer nobody gave. Accessibility The trigger uses role=\"combobox\" with aria-haspopup/aria-expanded, and the Open state shows a real role=\"listbox\" panel with role=\"option\" items and aria-selected on the current value - the roles a screen reader needs to announce this as a real picker, not a styled div. Keyboard focus stays on the trigger when closed and moves into the option list when open. A visible label is associated with the control, and the currently selected value is announced. Related Components Input, Cascader, Tree Select, Autocomplete, Dropdown. { \"component\": \"Select\", \"status\": \"Stable\", \"type\": \"Dropdown\", \"category\": \"Forms\", \"summary\": \"Select is a trigger field that opens a panel of predefined options, letting the user pick exactly one value from a known, fixed set - visually similar to Input but read-only and paired with a chevron, distinct from Dropdown (which triggers actions, not a form value) and Cascader (multi-level drill-down).\", \"whenToUse\": [ \"A value from a known, fixed set - country, state/province, category.\", \"Sort order or similar single-choice configuration - Newest first, Price low to high.\", \"A language or locale picker - any small-to-medium closed option list.\" ], \"whenNotToUse\": [ \"Free-form text with no fixed set of valid values - use Input.\", \"Hierarchical or nested data - use Cascader (linked columns) or Tree Select (an expandable tree).\", \"Selecting more than one value at a time - use a multi-select variant, Checkbox group, or Transfer.\", \"A very large option list better filtered by typing - use Autocomplete instead of scrolling a long panel.\" ], \"bestPractices\": [ \"Order options logically - alphabetical, by frequency of use, or with a sensible default first.\", \"Show an explicit placeholder like \\\"Select an option\\\" rather than silently pre-selecting an arbitrary value.\", \"Truncate long option labels gracefully in the closed trigger rather than letting them overflow the field.\" ], \"doAndDont\": { \"do\": \"An explicit placeholder makes it obvious nothing has been chosen yet, so an untouched field cannot be mistaken for a decision.\", \"dont\": \"Pre-selecting the alphabetically-first option silently submits an answer nobody gave.\" }, \"accessibility\": [ \"The trigger uses role=\\\"combobox\\\" with aria-haspopup/aria-expanded, and the Open state shows a real role=\\\"listbox\\\" panel with role=\\\"option\\\" items and aria-selected on the current value - the roles a screen reader needs to announce this as a real picker, not a styled div.\", \"Keyboard focus stays on the trigger when closed and moves into the option list when open.\", \"A visible label is associated with the control, and the currently selected value is announced.\" ], \"relatedComponents\": [ \"Input\", \"Cascader\", \"Tree Select\", \"Autocomplete\", \"Dropdown\" ] }",
+  "tests": []
+}

@@ -14,12 +14,12 @@
   // set so all three components read as the same semantic language
   // (Info/Success/Warning/Error).
   var ICONS = {
-    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
-    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
-    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>'
   };
-  var CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  var CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
   var TYPES = [
     { key: "info", label: "Info" },
@@ -60,7 +60,7 @@
     var danger500 = getCssVar("--danger-500", "#FF031A");
     var accent = { info: blue500, success: green500, warning: amber500, error: danger500 }[typeKey];
     return {
-      card: "background:" + getCssVar("--graphite-900", "#14171B") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-inline-start:3px solid " + accent + ";box-shadow:var(--shadow-xl);",
+      card: "background:" + getCssVar("--graphite-900", "#FFFFFF") + ";border:1px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + ";border-inline-start:3px solid " + accent + ";box-shadow:var(--shadow-xl);",
       icon: "color:" + accent + ";",
       accent: accent
     };
@@ -68,6 +68,16 @@
 
   var DEFAULT_TITLE = "File uploaded";
   var DEFAULT_DESCRIPTION = "team-report.pdf is ready to share.";
+  var DEFAULT_HEADING_LEVEL = "h6";
+  // Heading level is one of the Typography Foundation's own predefined
+  // roles (h1-h6, each with its own --type-hN-size/weight/line-height/family
+  // token) - not a free-form choice, so the title always traces back to a
+  // real Foundation value, exactly like every other Foundation-bound style
+  // in this system.
+  var HEADING_LEVEL_OPTIONS = [
+    { value: "h1", label: "H1" }, { value: "h2", label: "H2" }, { value: "h3", label: "H3" },
+    { value: "h4", label: "H4" }, { value: "h5", label: "H5" }, { value: "h6", label: "H6" }
+  ];
 
   function buildFullPrompt(selectionInfo){
     selectionInfo = selectionInfo || {};
@@ -108,10 +118,10 @@
     lines.push(".notification-demo-card{ box-sizing:border-box; display:flex; gap:var(--space-10); width:var(--dimension-260); padding:var(--space-12) var(--space-14); background:var(--graphite-900); border:1px solid var(--line-strong); border-radius:var(--radius-md); box-shadow:var(--shadow-xl); position:relative; }");
     lines.push(".notification-demo-icon{ flex:none; width:var(--dimension-18); height:var(--dimension-18); margin-top:var(--space-1); }");
     lines.push(".notification-demo-body{ flex:1 1 auto; min-width:0; text-align: start; }");
-    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.notification-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); margin:0; max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push('.notification-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-mid); margin-top:var(--space-2); margin-bottom:0; line-height:1.5; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push(".notification-demo-close{ flex:none; width:var(--dimension-16); height:var(--dimension-16); background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:var(--type-body-size); line-height:1; padding:0; }");
-    lines.push('.notification-demo-action{ margin-top:var(--space-8); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:600; color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align: start; }');
+    lines.push('.notification-demo-action{ margin-top:var(--space-8); font-family:var(--font-body); font-size:var(--type-caption-size); font-weight:var(--type-selected-weight); color:var(--red-400); background:none; border:none; cursor:pointer; padding:0; text-align: start; }');
     lines.push(".notification-demo-stack{ position:relative; width:var(--dimension-268); padding-bottom:var(--space-8); }");
     lines.push(".notification-demo-stack .notification-demo-card{ width:var(--dimension-260); }");
     lines.push(".notification-demo-stack .notification-demo-card:not(.is-behind){ position:relative; z-index:1; }");
@@ -152,8 +162,10 @@
 
   // Renders one notification card (or, for the Stacked state, two layered
   // cards) for a given type/state combination.
-  function buildNotificationField(typeKey, stateKey, title, description){
+  function buildNotificationField(typeKey, stateKey, title, description, headingLevel){
     var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="notification-demo-icon" ');
+    var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
+    var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
     // Foundation audit UX10 - both of this component's callers (the state
     // comparison matrix and the placement mock-viewport) are illustrations,
     // not a real notification; tabindex="-1" keeps these buttons out of the
@@ -165,8 +177,8 @@
       return '<div class="notification-demo-card notification-demo-card--' + typeKey + (extraClass ? " " + extraClass : "") + '">' +
         iconHtml +
         '<div class="notification-demo-body">' +
-          '<p class="notification-demo-title">' + escapeHtml(title) + "</p>" +
-          '<p class="notification-demo-description">' + escapeHtml(description) + "</p>" +
+          "<" + headingTag + ' class="notification-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" +
+          '<p class="notification-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>" +
           actionHtml +
         "</div>" +
         closeHtml +
@@ -207,12 +219,12 @@
       card.setAttribute("tabindex", "0");
       var href = "notification-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -293,6 +305,7 @@
     if (!matrixContainer) return;
 
     var titleInput = document.querySelector('[data-role="notification-title"]');
+    var headingLevelInput = document.querySelector('[data-role="notification-heading-level"]');
     var descriptionInput = document.querySelector('[data-role="notification-description"]');
     var placementSelect = document.querySelector('[data-role="notification-placement-select"]');
     var placementContainer = document.querySelector('[data-role="notification-placement-container"]');
@@ -309,18 +322,18 @@
       bottomRight: "bottom:10px; right:10px;",
       bottomLeft: "bottom:10px; left:10px;"
     };
-    function buildPlacementDemo(placement, title, description){
+    function buildPlacementDemo(placement, title, description, headingLevel){
       var posStyle = PLACEMENT_STYLES[placement] || PLACEMENT_STYLES.topRight;
-      var card = buildNotificationField("info", "default", title, description);
+      var card = buildNotificationField("info", "default", title, description, headingLevel);
       return '<div class="notification-demo-viewport">' +
         '<div class="notification-demo-viewport-card" style="' + posStyle + '">' + card + "</div>" +
         "</div>";
     }
 
-    function buildMatrix(title, description){
+    function buildMatrix(title, description, headingLevel){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildNotificationField(t.key, state.key, title, description) + "</td>";
+          return '<td class="button-matrix-cell">' + buildNotificationField(t.key, state.key, title, description, headingLevel) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -332,17 +345,19 @@
     function currentSelectionInfo(){
       return {
         title: titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE,
+        headingLevel: headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL,
         description: descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION
       };
     }
 
     function render(){
       var title = titleInput ? (titleInput.value.trim() || DEFAULT_TITLE) : DEFAULT_TITLE;
+      var headingLevel = headingLevelInput ? headingLevelInput.value : DEFAULT_HEADING_LEVEL;
       var description = descriptionInput ? (descriptionInput.value.trim() || DEFAULT_DESCRIPTION) : DEFAULT_DESCRIPTION;
       var placement = placementSelect ? placementSelect.value : "topRight";
 
-      matrixContainer.innerHTML = buildMatrix(title, description);
-      if (placementContainer) placementContainer.innerHTML = buildPlacementDemo(placement, title, description);
+      matrixContainer.innerHTML = buildMatrix(title, description, headingLevel);
+      if (placementContainer) placementContainer.innerHTML = buildPlacementDemo(placement, title, description, headingLevel);
 
       var combos = [{ label: "Notification", title: title, description: description }];
 
@@ -352,6 +367,9 @@
 
     if (titleInput){
       titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    }
+    if (headingLevelInput){
+      headingLevelInput.addEventListener("change", render);
     }
     if (descriptionInput){
       descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });

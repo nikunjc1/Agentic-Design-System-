@@ -1,0 +1,279 @@
+{
+  "file": "text-area-default.html",
+  "name": "Text Area",
+  "category": "Components · Forms · Text Area",
+  "controls": [
+    {
+      "index": 0,
+      "role": "textarea-size-mount",
+      "id": null,
+      "label": "Size",
+      "type": "multiselect",
+      "value": [
+        "40"
+      ],
+      "options": [
+        {
+          "value": "24",
+          "label": "24px - XXS"
+        },
+        {
+          "value": "28",
+          "label": "28px - XS"
+        },
+        {
+          "value": "32",
+          "label": "32px - S"
+        },
+        {
+          "value": "36",
+          "label": "36px - SM"
+        },
+        {
+          "value": "40",
+          "label": "40px - M"
+        },
+        {
+          "value": "44",
+          "label": "44px - L"
+        },
+        {
+          "value": "48",
+          "label": "48px - XL"
+        },
+        {
+          "value": "56",
+          "label": "56px - XXL"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "textarea-size-dropdown-label ms-trigger-1"
+      }
+    },
+    {
+      "index": 1,
+      "role": "textarea-radius-mount",
+      "id": null,
+      "label": "Corner radius",
+      "type": "multiselect",
+      "value": [
+        "8"
+      ],
+      "options": [
+        {
+          "value": "0",
+          "label": "0px - Sharp"
+        },
+        {
+          "value": "4",
+          "label": "4px - Compact"
+        },
+        {
+          "value": "8",
+          "label": "8px - Balanced"
+        },
+        {
+          "value": "12",
+          "label": "12px - Soft"
+        },
+        {
+          "value": "9999",
+          "label": "Full - Pill"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "",
+      "trigger": {
+        "tag": "BUTTON",
+        "role": null,
+        "expanded": "false",
+        "label": "textarea-radius-dropdown-label ms-trigger-4"
+      }
+    },
+    {
+      "index": 2,
+      "role": null,
+      "id": null,
+      "label": "Appearance",
+      "type": "select",
+      "value": "Outlined",
+      "options": [
+        {
+          "value": "Outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Underlined",
+          "label": "Underlined"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Appearance",
+      "trigger": null
+    },
+    {
+      "index": 3,
+      "role": null,
+      "id": null,
+      "label": "State",
+      "type": "select",
+      "value": "Rest",
+      "options": [
+        {
+          "value": "Rest",
+          "label": "Rest"
+        },
+        {
+          "value": "Hover",
+          "label": "Hover"
+        },
+        {
+          "value": "Focused",
+          "label": "Focused"
+        },
+        {
+          "value": "Filled",
+          "label": "Filled"
+        },
+        {
+          "value": "Error",
+          "label": "Error"
+        },
+        {
+          "value": "Disabled",
+          "label": "Disabled"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "State",
+      "trigger": null
+    },
+    {
+      "index": 4,
+      "role": "textarea-label",
+      "id": null,
+      "label": "Label",
+      "type": "text",
+      "value": "Description",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Label",
+      "trigger": null
+    },
+    {
+      "index": 5,
+      "role": "textarea-placeholder",
+      "id": null,
+      "label": "Placeholder",
+      "type": "text",
+      "value": "Tell us more...",
+      "options": [],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Placeholder",
+      "trigger": null
+    },
+    {
+      "index": 6,
+      "role": "textarea-rows-select",
+      "id": null,
+      "label": "Rows",
+      "type": "select",
+      "value": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        }
+      ],
+      "min": null,
+      "max": null,
+      "step": null,
+      "disabled": false,
+      "conditional": false,
+      "visible": true,
+      "accessibleName": "Rows 2 3 4 5 6 8",
+      "trigger": null
+    }
+  ],
+  "propertyCopy": "Size, corner radius, label, placeholder and rows are properties of the same component, not separate fields - change them below to check this field's style and states in the Live Preview.",
+  "preview": {
+    "present": false,
+    "cells": 0,
+    "types": [],
+    "states": [],
+    "copy": "",
+    "text": ""
+  },
+  "editorAvailable": false,
+  "actions": [
+    {
+      "label": "40px - M",
+      "type": "button"
+    },
+    {
+      "label": "8px - Balanced",
+      "type": "button"
+    }
+  ],
+  "guide": "Component Guide Human View Machine View Overview Text Area is the multi-line counterpart to Input - a resizable or fixed-height box for collecting free-form text that spans more than one line, like a comment, a bio, or a longer message body. When to Use Any multi-line free-form text - comments, feedback, a bio, a message. A description field - where the length genuinely varies and a single line would be too cramped. Content the user is composing rather than briefly answering - a longer note or explanation. When Not to Use A single short line of text - use Input - a Text Area for a name or email adds unnecessary height and visual weight. A value with an expected fixed format - email, phone, URL - use Input or Add-on so the format can be validated inline. Text that needs an embedded suggestion or mention picker - use Mention or Autocomplete instead. Best Practices Give it a sensible default height for the expected content length, rather than always starting cramped or oversized. Show a character counter when there's a maximum length, so users aren't surprised by truncation on submit. Allow vertical resizing when the content length is unpredictable, so users can expand it themselves. Do and Don't Do Release notesFixed the export timeout on large workspaces.Markdown supported. Sized for the length of answer actually expected, so the user can see what they have written without scrolling a two-line box. Don't PostcodeSW1A 1AA A multi-line box for a one-line answer invites line breaks into a value that cannot contain them. Use Input for anything that fits on one line. Accessibility The label is programmatically associated with the textarea, just like Input. A character limit and remaining-count are announced to assistive technology as the user types, not only shown visually. Focus state uses a visible outline distinct from the field's default border. Related Components Input, Mention, Password. { \"component\": \"Text Area\", \"status\": \"Stable\", \"category\": \"Forms\", \"summary\": \"Text Area is the multi-line counterpart to Input - a resizable or fixed-height box for collecting free-form text that spans more than one line, like a comment, a bio, or a longer message body.\", \"whenToUse\": [ \"Any multi-line free-form text - comments, feedback, a bio, a message.\", \"A description field - where the length genuinely varies and a single line would be too cramped.\", \"Content the user is composing rather than briefly answering - a longer note or explanation.\" ], \"whenNotToUse\": [ \"A single short line of text - use Input - a Text Area for a name or email adds unnecessary height and visual weight.\", \"A value with an expected fixed format - email, phone, URL - use Input or Add-on so the format can be validated inline.\", \"Text that needs an embedded suggestion or mention picker - use Mention or Autocomplete instead.\" ], \"bestPractices\": [ \"Give it a sensible default height for the expected content length, rather than always starting cramped or oversized.\", \"Show a character counter when there's a maximum length, so users aren't surprised by truncation on submit.\", \"Allow vertical resizing when the content length is unpredictable, so users can expand it themselves.\" ], \"doAndDont\": { \"do\": \"Sized for the length of answer actually expected, so the user can see what they have written without scrolling a two-line box.\", \"dont\": \"A multi-line box for a one-line answer invites line breaks into a value that cannot contain them. Use Input for anything that fits on one line.\" }, \"accessibility\": [ \"The label is programmatically associated with the textarea, just like Input.\", \"A character limit and remaining-count are announced to assistive technology as the user types, not only shown visually.\", \"Focus state uses a visible outline distinct from the field's default border.\" ], \"relatedComponents\": [ \"Input\", \"Mention\", \"Password\" ] }",
+  "tests": []
+}

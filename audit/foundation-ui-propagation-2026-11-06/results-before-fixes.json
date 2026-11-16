@@ -1,0 +1,2831 @@
+{
+  "method": "Real Chrome controls → Save foundation → open component tab → reload both pages → rendered styles and saved tokens",
+  "groups": [
+    {
+      "name": "Colors",
+      "file": "foundations.html",
+      "component": "button-primary.html",
+      "steps": [
+        {
+          "label": "Light brand hex",
+          "failures": [],
+          "saved": {
+            "colors": "{\"light\":{\"primary\":{\"hex\":\"#176941\"}},\"dark\":{\"primary\":{\"hex\":\"#32B374\"},\"auto\":true,\"editEnabled\":false},\"schemaVersion\":1}",
+            "bg-colors": "{\"light\":{\"primary\":\"F6F6F4\",\"secondary\":\"FFFFFF\",\"tertiary\":\"FBFBFA\"},\"schemaVersion\":1}",
+            "status-colors": "{\"light\":{\"success\":\"2FBF6E\",\"warning\":\"E6A53A\",\"danger\":\"FF031A\",\"info\":\"4F8FE6\"},\"schemaVersion\":1}",
+            "neutral-colors": "{\"light\":{\"c800\":\"F1F1EE\",\"c700\":\"E3E3DF\",\"c600\":\"C7C7C1\",\"c500\":\"8F918C\",\"border\":\"85888D\"},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Surface, status and neutral colors",
+          "failures": [],
+          "saved": {
+            "colors": "{\"light\":{\"primary\":{\"hex\":\"#176941\"}},\"dark\":{\"primary\":{\"hex\":\"#32B374\"},\"auto\":true,\"editEnabled\":false},\"schemaVersion\":1}",
+            "bg-colors": "{\"light\":{\"primary\":\"F6F6F4\",\"secondary\":\"E7F0EB\",\"tertiary\":\"FBFBFA\"},\"schemaVersion\":1}",
+            "status-colors": "{\"light\":{\"success\":\"2FBF6E\",\"warning\":\"E6A53A\",\"danger\":\"9A2245\",\"info\":\"4F8FE6\"},\"schemaVersion\":1}",
+            "neutral-colors": "{\"light\":{\"c800\":\"F1F1EE\",\"c700\":\"E3E3DF\",\"c600\":\"C7C7C1\",\"c500\":\"8F918C\",\"border\":\"617269\"},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Custom dark brand",
+          "failures": [
+            "Dark button brand: expected \"rgb(132, 207, 167)\", got \"rgb(23, 105, 65)\"",
+            "After component reload: Dark button brand: expected \"rgb(132, 207, 167)\", got \"rgb(23, 105, 65)\""
+          ],
+          "saved": {
+            "colors": "{\"light\":{\"primary\":{\"hex\":\"#176941\"}},\"dark\":{\"primary\":{\"hex\":\"#84CFA7\"},\"auto\":false,\"editEnabled\":true},\"schemaVersion\":1}",
+            "bg-colors": "{\"light\":{\"primary\":\"F6F6F4\",\"secondary\":\"E7F0EB\",\"tertiary\":\"FBFBFA\"},\"schemaVersion\":1}",
+            "status-colors": "{\"light\":{\"success\":\"2FBF6E\",\"warning\":\"E6A53A\",\"danger\":\"9A2245\",\"info\":\"4F8FE6\"},\"schemaVersion\":1}",
+            "neutral-colors": "{\"light\":{\"c800\":\"F1F1EE\",\"c700\":\"E3E3DF\",\"c600\":\"C7C7C1\",\"c500\":\"8F918C\",\"border\":\"617269\"},\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        }
+      ],
+      "controls": [
+        {
+          "role": "brand-dark-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "brand-light-picker",
+          "type": "color",
+          "value": "#ff031a"
+        },
+        {
+          "role": "brand-light-hex",
+          "type": "text",
+          "value": "FF031A"
+        },
+        {
+          "role": "brand-dark-picker",
+          "type": "color",
+          "value": "#f9717d"
+        },
+        {
+          "role": "brand-dark-hex",
+          "type": "text",
+          "value": "F9717D"
+        },
+        {
+          "role": "bg-dark-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "bg-light-primary-picker",
+          "type": "color",
+          "value": "#f6f6f4"
+        },
+        {
+          "role": "bg-light-primary-hex",
+          "type": "text",
+          "value": "F6F6F4"
+        },
+        {
+          "role": "bg-light-secondary-picker",
+          "type": "color",
+          "value": "#ffffff"
+        },
+        {
+          "role": "bg-light-secondary-hex",
+          "type": "text",
+          "value": "FFFFFF"
+        },
+        {
+          "role": "bg-light-tertiary-picker",
+          "type": "color",
+          "value": "#fbfbfa"
+        },
+        {
+          "role": "bg-light-tertiary-hex",
+          "type": "text",
+          "value": "FBFBFA"
+        },
+        {
+          "role": "bg-dark-primary-picker",
+          "type": "color",
+          "value": "#0d0f11"
+        },
+        {
+          "role": "bg-dark-primary-hex",
+          "type": "text",
+          "value": "0D0F11"
+        },
+        {
+          "role": "bg-dark-secondary-picker",
+          "type": "color",
+          "value": "#15171a"
+        },
+        {
+          "role": "bg-dark-secondary-hex",
+          "type": "text",
+          "value": "15171A"
+        },
+        {
+          "role": "bg-dark-tertiary-picker",
+          "type": "color",
+          "value": "#191c20"
+        },
+        {
+          "role": "bg-dark-tertiary-hex",
+          "type": "text",
+          "value": "191C20"
+        },
+        {
+          "role": "status-dark-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "status-light-success-picker",
+          "type": "color",
+          "value": "#2fbf6e"
+        },
+        {
+          "role": "status-light-success-hex",
+          "type": "text",
+          "value": "2FBF6E"
+        },
+        {
+          "role": "status-light-warning-picker",
+          "type": "color",
+          "value": "#e6a53a"
+        },
+        {
+          "role": "status-light-warning-hex",
+          "type": "text",
+          "value": "E6A53A"
+        },
+        {
+          "role": "status-light-danger-picker",
+          "type": "color",
+          "value": "#ff031a"
+        },
+        {
+          "role": "status-light-danger-hex",
+          "type": "text",
+          "value": "FF031A"
+        },
+        {
+          "role": "status-light-info-picker",
+          "type": "color",
+          "value": "#4f8fe6"
+        },
+        {
+          "role": "status-light-info-hex",
+          "type": "text",
+          "value": "4F8FE6"
+        },
+        {
+          "role": "status-dark-success-picker",
+          "type": "color",
+          "value": "#38b36e"
+        },
+        {
+          "role": "status-dark-success-hex",
+          "type": "text",
+          "value": "38B36E"
+        },
+        {
+          "role": "status-dark-warning-picker",
+          "type": "color",
+          "value": "#d49226"
+        },
+        {
+          "role": "status-dark-warning-hex",
+          "type": "text",
+          "value": "D49226"
+        },
+        {
+          "role": "status-dark-danger-picker",
+          "type": "color",
+          "value": "#f9717d"
+        },
+        {
+          "role": "status-dark-danger-hex",
+          "type": "text",
+          "value": "F9717D"
+        },
+        {
+          "role": "status-dark-info-picker",
+          "type": "color",
+          "value": "#6e9fe2"
+        },
+        {
+          "role": "status-dark-info-hex",
+          "type": "text",
+          "value": "6E9FE2"
+        },
+        {
+          "role": "neutral-dark-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "neutral-light-c800-picker",
+          "type": "color",
+          "value": "#f1f1ee"
+        },
+        {
+          "role": "neutral-light-c800-hex",
+          "type": "text",
+          "value": "F1F1EE"
+        },
+        {
+          "role": "neutral-light-c700-picker",
+          "type": "color",
+          "value": "#e3e3df"
+        },
+        {
+          "role": "neutral-light-c700-hex",
+          "type": "text",
+          "value": "E3E3DF"
+        },
+        {
+          "role": "neutral-light-c600-picker",
+          "type": "color",
+          "value": "#c7c7c1"
+        },
+        {
+          "role": "neutral-light-c600-hex",
+          "type": "text",
+          "value": "C7C7C1"
+        },
+        {
+          "role": "neutral-light-c500-picker",
+          "type": "color",
+          "value": "#8f918c"
+        },
+        {
+          "role": "neutral-light-c500-hex",
+          "type": "text",
+          "value": "8F918C"
+        },
+        {
+          "role": "neutral-light-border-picker",
+          "type": "color",
+          "value": "#85888d"
+        },
+        {
+          "role": "neutral-light-border-hex",
+          "type": "text",
+          "value": "85888D"
+        },
+        {
+          "role": "neutral-dark-c800-picker",
+          "type": "color",
+          "value": "#1c1f23"
+        },
+        {
+          "role": "neutral-dark-c800-hex",
+          "type": "text",
+          "value": "1C1F23"
+        },
+        {
+          "role": "neutral-dark-c700-picker",
+          "type": "color",
+          "value": "#262a2f"
+        },
+        {
+          "role": "neutral-dark-c700-hex",
+          "type": "text",
+          "value": "262A2F"
+        },
+        {
+          "role": "neutral-dark-c600-picker",
+          "type": "color",
+          "value": "#383d44"
+        },
+        {
+          "role": "neutral-dark-c600-hex",
+          "type": "text",
+          "value": "383D44"
+        },
+        {
+          "role": "neutral-dark-c500-picker",
+          "type": "color",
+          "value": "#565c64"
+        },
+        {
+          "role": "neutral-dark-c500-hex",
+          "type": "text",
+          "value": "565C64"
+        },
+        {
+          "role": "neutral-dark-border-picker",
+          "type": "color",
+          "value": "#72767e"
+        },
+        {
+          "role": "neutral-dark-border-hex",
+          "type": "text",
+          "value": "72767E"
+        }
+      ]
+    },
+    {
+      "name": "Grid & Layout",
+      "file": "grid-layout.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "custom with 6 columns and 36px gutter",
+          "failures": [],
+          "saved": {
+            "grid-layout": "{\"product\":null,\"system\":\"custom\",\"columns\":6,\"gutter\":36,\"baseline\":false,\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "rows with 6 columns and 36px gutter",
+          "failures": [],
+          "saved": {
+            "grid-layout": "{\"product\":null,\"system\":\"rows\",\"columns\":6,\"gutter\":36,\"baseline\":false,\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "columns-rows with 6 columns and 36px gutter",
+          "failures": [],
+          "saved": {
+            "grid-layout": "{\"product\":null,\"system\":\"columns-rows\",\"columns\":6,\"gutter\":36,\"baseline\":false,\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "columns with 6 columns and 36px gutter",
+          "failures": [],
+          "saved": {
+            "grid-layout": "{\"product\":null,\"system\":\"columns\",\"columns\":6,\"gutter\":36,\"baseline\":false,\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Baseline toggle",
+          "failures": [],
+          "saved": {
+            "grid-layout": "{\"product\":null,\"system\":\"columns\",\"columns\":6,\"gutter\":36,\"baseline\":true,\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": [
+        {
+          "role": "control size in selected units",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "control size",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "target size in selected units",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "target size",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "icon size in selected units",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "icon size",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "content size in selected units",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "content size",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "sidebar size in selected units",
+          "type": "number",
+          "value": "264"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "sidebar size",
+          "type": "number",
+          "value": "264"
+        },
+        {
+          "role": "baseline-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "grid-columns-input",
+          "type": "number",
+          "value": ""
+        },
+        {
+          "role": "grid-gutter-input in selected units",
+          "type": "number",
+          "value": ""
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "grid-gutter-input",
+          "type": "number",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "name": "Typography",
+      "file": "typography.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "Body size, weight, line height and italic",
+          "failures": [],
+          "saved": {
+            "typography": "{\"headingScaleVersion\":2,\"primaryFont\":{\"family\":\"Inter\",\"source\":\"sans-serif\",\"linkHref\":\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\",\"dataUrl\":null},\"secondaryFont\":{\"family\":\"Inter\",\"source\":\"sans-serif\",\"linkHref\":\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\",\"dataUrl\":null},\"platform\":null,\"levels\":{\"h1\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"heading-lg\",\"lineHeightPct\":\"125\",\"weight\":\"700\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h2\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"heading-md\",\"lineHeightPct\":\"129\",\"weight\":\"700\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h3\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"display-xs\",\"lineHeightPct\":\"133\",\"weight\":\"600\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h4\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-xl\",\"lineHeightPct\":\"140\",\"weight\":\"600\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h5\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-lg\",\"lineHeightPct\":\"144\",\"weight\":\"500\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h6\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-md\",\"lineHeightPct\":\"150\",\"weight\":\"500\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"body\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-lg\",\"lineHeightPct\":\"180\",\"weight\":\"600\",\"italic\":true,\"color\":\"#4b5563\",\"darkColor\":\"#9ca6b4\",\"darkColorAuto\":true},\"paragraph\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-md\",\"lineHeightPct\":\"150\",\"weight\":\"400\",\"italic\":false,\"color\":\"#4b5563\",\"darkColor\":\"#9ca6b4\",\"darkColorAuto\":true},\"caption\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-2xs\",\"lineHeightPct\":\"150\",\"weight\":\"400\",\"italic\":false,\"color\":\"#69707d\",\"darkColor\":\"#7f8694\",\"darkColorAuto\":true},\"active\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#e20317\",\"darkColor\":\"#f74858\",\"darkColorAuto\":true},\"selected\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"600\",\"italic\":false,\"color\":\"#e20317\",\"darkColor\":\"#f74858\",\"darkColorAuto\":true},\"disabled\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"400\",\"italic\":false,\"color\":\"#9ca3af\",\"darkColor\":\"#505763\",\"darkColorAuto\":true},\"error\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#d23441\",\"darkColor\":\"#fa818b\",\"darkColorAuto\":true},\"warning\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#926924\",\"darkColor\":\"#e6bc77\",\"darkColorAuto\":true},\"success\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#20814a\",\"darkColor\":\"#5ecd8f\",\"darkColorAuto\":true},\"info\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#3e70b5\",\"darkColor\":\"#8ab2e8\",\"darkColorAuto\":true}},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Body text color",
+          "failures": [],
+          "saved": {
+            "typography": "{\"headingScaleVersion\":2,\"primaryFont\":{\"family\":\"Inter\",\"source\":\"sans-serif\",\"linkHref\":\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\",\"dataUrl\":null},\"secondaryFont\":{\"family\":\"Inter\",\"source\":\"sans-serif\",\"linkHref\":\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\",\"dataUrl\":null},\"platform\":null,\"levels\":{\"h1\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"heading-lg\",\"lineHeightPct\":\"125\",\"weight\":\"700\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h2\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"heading-md\",\"lineHeightPct\":\"129\",\"weight\":\"700\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h3\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"display-xs\",\"lineHeightPct\":\"133\",\"weight\":\"600\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h4\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-xl\",\"lineHeightPct\":\"140\",\"weight\":\"600\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h5\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-lg\",\"lineHeightPct\":\"144\",\"weight\":\"500\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"h6\":{\"letterSpacing\":0,\"family\":\"primary\",\"size\":\"text-md\",\"lineHeightPct\":\"150\",\"weight\":\"500\",\"italic\":false,\"color\":\"#111827\",\"darkColor\":\"#d8dfee\",\"darkColorAuto\":true},\"body\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-lg\",\"lineHeightPct\":\"180\",\"weight\":\"600\",\"italic\":true,\"color\":\"#235a42\",\"darkColor\":\"#3c7f61\",\"darkColorAuto\":true},\"paragraph\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-md\",\"lineHeightPct\":\"150\",\"weight\":\"400\",\"italic\":false,\"color\":\"#4b5563\",\"darkColor\":\"#9ca6b4\",\"darkColorAuto\":true},\"caption\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-2xs\",\"lineHeightPct\":\"150\",\"weight\":\"400\",\"italic\":false,\"color\":\"#69707d\",\"darkColor\":\"#7f8694\",\"darkColorAuto\":true},\"active\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#e20317\",\"darkColor\":\"#f74858\",\"darkColorAuto\":true},\"selected\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"600\",\"italic\":false,\"color\":\"#e20317\",\"darkColor\":\"#f74858\",\"darkColorAuto\":true},\"disabled\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"400\",\"italic\":false,\"color\":\"#9ca3af\",\"darkColor\":\"#505763\",\"darkColorAuto\":true},\"error\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#d23441\",\"darkColor\":\"#fa818b\",\"darkColorAuto\":true},\"warning\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#926924\",\"darkColor\":\"#e6bc77\",\"darkColorAuto\":true},\"success\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#20814a\",\"darkColor\":\"#5ecd8f\",\"darkColorAuto\":true},\"info\":{\"letterSpacing\":0,\"family\":\"secondary\",\"size\":\"text-sm\",\"lineHeightPct\":\"143\",\"weight\":\"500\",\"italic\":false,\"color\":\"#3e70b5\",\"darkColor\":\"#8ab2e8\",\"darkColorAuto\":true}},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": [
+        {
+          "role": "upload-name",
+          "type": "text",
+          "value": ""
+        },
+        {
+          "role": "upload-input",
+          "type": "file",
+          "value": ""
+        },
+        {
+          "role": "upload-name",
+          "type": "text",
+          "value": ""
+        },
+        {
+          "role": "upload-input",
+          "type": "file",
+          "value": ""
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "heading-lg",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "125"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "700",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "heading-md",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "129"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "700",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "display-xs",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "133"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "600",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-xl",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "140"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "600",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-lg",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "144"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "primary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-md",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "150"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#111827"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "111827"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#d8dfee"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "D8DFEE"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-md",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "150"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "400",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#4b5563"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "4B5563"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#9ca6b4"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "9CA6B4"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-md",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "150"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "400",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#4b5563"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "4B5563"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#9ca6b4"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "9CA6B4"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-2xs",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "150"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "400",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#69707d"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "69707D"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#7f8694"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "7F8694"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#e20317"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "E20317"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#f74858"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "F74858"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "600",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#e20317"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "E20317"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#f74858"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "F74858"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "400",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#9ca3af"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "9CA3AF"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#505763"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "505763"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#d23441"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "D23441"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#fa818b"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "FA818B"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#926924"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "926924"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#e6bc77"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "E6BC77"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#20814a"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "20814A"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#5ecd8f"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "5ECD8F"
+        },
+        {
+          "role": "family",
+          "type": "select-one",
+          "value": "secondary",
+          "options": [
+            "primary",
+            "secondary"
+          ]
+        },
+        {
+          "role": "size",
+          "type": "select-one",
+          "value": "text-sm",
+          "options": [
+            "text-2xs",
+            "text-xs",
+            "text-sm",
+            "text-md",
+            "text-lg",
+            "text-xl",
+            "display-xs",
+            "heading-md",
+            "display-sm",
+            "heading-lg",
+            "display-md",
+            "display-lg",
+            "display-xl",
+            "display-2xl"
+          ]
+        },
+        {
+          "role": "line-height-pct",
+          "type": "text",
+          "value": "143"
+        },
+        {
+          "role": "weight",
+          "type": "select-one",
+          "value": "500",
+          "options": [
+            "400",
+            "500",
+            "600",
+            "700",
+            "800"
+          ]
+        },
+        {
+          "role": "italic",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "Letter spacing in selected units",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "letter-spacing",
+          "type": "number",
+          "value": "0"
+        },
+        {
+          "role": "color-picker",
+          "type": "color",
+          "value": "#3e70b5"
+        },
+        {
+          "role": "color-hex",
+          "type": "text",
+          "value": "3E70B5"
+        },
+        {
+          "role": "color-picker-dark",
+          "type": "color",
+          "value": "#8ab2e8"
+        },
+        {
+          "role": "color-hex-dark",
+          "type": "text",
+          "value": "8AB2E8"
+        }
+      ]
+    },
+    {
+      "name": "Spacing",
+      "file": "spacing.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "2px spacing",
+          "failures": [
+            "Input horizontal padding: expected \"12px\", got \"16px\"",
+            "After component reload: Input horizontal padding: expected \"12px\", got \"16px\""
+          ],
+          "saved": {
+            "spacing": "{\"product\":null,\"system\":\"2px\",\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "fail"
+        },
+        {
+          "label": "8px spacing",
+          "failures": [],
+          "saved": {
+            "spacing": "{\"product\":null,\"system\":\"8px\",\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "adaptive spacing",
+          "failures": [
+            "Input horizontal padding: expected \"12px\", got \"16px\"",
+            "After component reload: Input horizontal padding: expected \"12px\", got \"16px\""
+          ],
+          "saved": {
+            "spacing": "{\"product\":null,\"system\":\"adaptive\",\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "fail"
+        },
+        {
+          "label": "4px spacing",
+          "failures": [
+            "Input horizontal padding: expected \"12px\", got \"16px\"",
+            "After component reload: Input horizontal padding: expected \"12px\", got \"16px\""
+          ],
+          "saved": {
+            "spacing": "{\"product\":null,\"system\":\"4px\",\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "fail"
+        },
+        {
+          "label": "Shared control size 48px",
+          "failures": [],
+          "saved": {
+            "spacing": "{\"product\":null,\"system\":\"4px\",\"recommendedAtSave\":null,\"schemaVersion\":1}",
+            "sizing": "{\"control\":48,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": [
+        {
+          "role": "control size in selected units",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "control size",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "target size in selected units",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "target size",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "icon size in selected units",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "icon size",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "content size in selected units",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "content size",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "sidebar size in selected units",
+          "type": "number",
+          "value": "264"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "sidebar size",
+          "type": "number",
+          "value": "264"
+        }
+      ]
+    },
+    {
+      "name": "Radius",
+      "file": "radius.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "sharp radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"sharp\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "compact radius",
+          "failures": [
+            "Input inherited corner radius: expected \"6px\", got \"4px\"",
+            "After component reload: Input inherited corner radius: expected \"6px\", got \"4px\""
+          ],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"compact\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        },
+        {
+          "label": "soft radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"soft\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "expressive radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"expressive\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "balanced radius",
+          "failures": [],
+          "saved": {
+            "radius": "{\"product\":null,\"philosophy\":\"balanced\",\"recommendedAtSave\":null,\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": []
+    },
+    {
+      "name": "Borders",
+      "file": "borders.html",
+      "component": "input-text-field.html",
+      "steps": [
+        {
+          "label": "Width, style, opacity and color",
+          "failures": [
+            "Input border: expected \"[\\\"3px\\\",\\\"dashed\\\",\\\"rgba(114, 80, 160, 0.7)\\\"]\", got \"[\\\"3px\\\",\\\"dashed\\\",\\\"rgba(114, 80, 160, 0.694)\\\"]\"",
+            "After component reload: Input border: expected \"[\\\"3px\\\",\\\"dashed\\\",\\\"rgba(114, 80, 160, 0.7)\\\"]\", got \"[\\\"3px\\\",\\\"dashed\\\",\\\"rgba(114, 80, 160, 0.694)\\\"]\"",
+            "Saved Foundation tokens reach the component\n+ actual - expected\n... Skipped lines\n\n  {\n    '--agent-approve-bg-active': '#b4e8cb',\n    '--agent-approve-bg-default': '#d5f2e2',\n    '--agent-approve-bg-hover': '#c5edd6',\n    '--agent-approve-text-active': '#1b6f40',\n...\n    '--border-sides': 'all',\n+   '--border-state-active': '#d80016',\n+   '--border-state-default': '#9a9a95',\n+   '--border-state-disabled': '#9a9a95',\n+   '--border-state-error': '#ff3f4f',\n    '--border-state-focus': 'var(--red-500)',\n+   '--border-state-hover': '#9a9a95',\n+   '--border-state-info': '#4f8fe6',\n+   '--border-state-selected': '#ff031a',\n+   '--border-state-success': '#2fbf6e',\n+   '--border-state-warning': '#e6a53a',\n    '--border-style': 'dashed',\n    '--border-width-0': '0px',\n    '--border-width-1': '3px',\n    '--border-width-1-5': '1.5px',\n    '--border-width-2': '2px',\n"
+          ],
+          "saved": {
+            "border": "{\"system\":\"standard\",\"width\":\"3\",\"color\":\"7250A0\",\"darkColor\":\"9172BB\",\"darkColorAuto\":true,\"darkColorEditEnabled\":false,\"opacity\":\"70\",\"style\":\"dashed\",\"sides\":\"all\",\"schemaVersion\":1}",
+            "border-states": "{\"default\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"hover\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"focus\":{\"light\":\"FF031A\",\"dark\":\"FF4253\",\"darkAuto\":true},\"active\":{\"light\":\"D80016\",\"dark\":\"D80016\",\"darkAuto\":true},\"selected\":{\"light\":\"FF031A\",\"dark\":\"F74858\",\"darkAuto\":true},\"disabled\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"error\":{\"light\":\"FF3F4F\",\"dark\":\"FA818B\",\"darkAuto\":true},\"warning\":{\"light\":\"E6A53A\",\"dark\":\"E6BC77\",\"darkAuto\":true},\"success\":{\"light\":\"2FBF6E\",\"dark\":\"5ECD8F\",\"darkAuto\":true},\"info\":{\"light\":\"4F8FE6\",\"dark\":\"8AB2E8\",\"darkAuto\":true},\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        },
+        {
+          "label": "bottom border sides",
+          "failures": [],
+          "saved": {
+            "border": "{\"system\":\"standard\",\"width\":\"3\",\"color\":\"7250A0\",\"darkColor\":\"9172BB\",\"darkColorAuto\":true,\"darkColorEditEnabled\":false,\"opacity\":\"70\",\"style\":\"dashed\",\"sides\":\"bottom\",\"schemaVersion\":1}",
+            "border-states": "{\"default\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"hover\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"focus\":{\"light\":\"FF031A\",\"dark\":\"FF4253\",\"darkAuto\":true},\"active\":{\"light\":\"D80016\",\"dark\":\"D80016\",\"darkAuto\":true},\"selected\":{\"light\":\"FF031A\",\"dark\":\"F74858\",\"darkAuto\":true},\"disabled\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"error\":{\"light\":\"FF3F4F\",\"dark\":\"FA818B\",\"darkAuto\":true},\"warning\":{\"light\":\"E6A53A\",\"dark\":\"E6BC77\",\"darkAuto\":true},\"success\":{\"light\":\"2FBF6E\",\"dark\":\"5ECD8F\",\"darkAuto\":true},\"info\":{\"light\":\"4F8FE6\",\"dark\":\"8AB2E8\",\"darkAuto\":true},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "start border sides",
+          "failures": [],
+          "saved": {
+            "border": "{\"system\":\"standard\",\"width\":\"3\",\"color\":\"7250A0\",\"darkColor\":\"9172BB\",\"darkColorAuto\":true,\"darkColorEditEnabled\":false,\"opacity\":\"70\",\"style\":\"dashed\",\"sides\":\"start\",\"schemaVersion\":1}",
+            "border-states": "{\"default\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"hover\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"focus\":{\"light\":\"FF031A\",\"dark\":\"FF4253\",\"darkAuto\":true},\"active\":{\"light\":\"D80016\",\"dark\":\"D80016\",\"darkAuto\":true},\"selected\":{\"light\":\"FF031A\",\"dark\":\"F74858\",\"darkAuto\":true},\"disabled\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"error\":{\"light\":\"FF3F4F\",\"dark\":\"FA818B\",\"darkAuto\":true},\"warning\":{\"light\":\"E6A53A\",\"dark\":\"E6BC77\",\"darkAuto\":true},\"success\":{\"light\":\"2FBF6E\",\"dark\":\"5ECD8F\",\"darkAuto\":true},\"info\":{\"light\":\"4F8FE6\",\"dark\":\"8AB2E8\",\"darkAuto\":true},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "all border sides",
+          "failures": [],
+          "saved": {
+            "border": "{\"system\":\"standard\",\"width\":\"3\",\"color\":\"7250A0\",\"darkColor\":\"9172BB\",\"darkColorAuto\":true,\"darkColorEditEnabled\":false,\"opacity\":\"70\",\"style\":\"dashed\",\"sides\":\"all\",\"schemaVersion\":1}",
+            "border-states": "{\"default\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"hover\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"focus\":{\"light\":\"FF031A\",\"dark\":\"FF4253\",\"darkAuto\":true},\"active\":{\"light\":\"D80016\",\"dark\":\"D80016\",\"darkAuto\":true},\"selected\":{\"light\":\"FF031A\",\"dark\":\"F74858\",\"darkAuto\":true},\"disabled\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"error\":{\"light\":\"FF3F4F\",\"dark\":\"FA818B\",\"darkAuto\":true},\"warning\":{\"light\":\"E6A53A\",\"dark\":\"E6BC77\",\"darkAuto\":true},\"success\":{\"light\":\"2FBF6E\",\"dark\":\"5ECD8F\",\"darkAuto\":true},\"info\":{\"light\":\"4F8FE6\",\"dark\":\"8AB2E8\",\"darkAuto\":true},\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Error state color",
+          "failures": [
+            "Input error border: expected \"rgb(138, 36, 82)\", got \"rgb(255, 3, 26)\"",
+            "After component reload: Input error border: expected \"rgb(138, 36, 82)\", got \"rgb(255, 3, 26)\""
+          ],
+          "saved": {
+            "border": "{\"system\":\"standard\",\"width\":\"3\",\"color\":\"7250A0\",\"darkColor\":\"9172BB\",\"darkColorAuto\":true,\"darkColorEditEnabled\":false,\"opacity\":\"70\",\"style\":\"dashed\",\"sides\":\"all\",\"schemaVersion\":1}",
+            "border-states": "{\"default\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"hover\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"focus\":{\"light\":\"FF031A\",\"dark\":\"FF4253\",\"darkAuto\":true},\"active\":{\"light\":\"D80016\",\"dark\":\"D80016\",\"darkAuto\":true},\"selected\":{\"light\":\"FF031A\",\"dark\":\"F74858\",\"darkAuto\":true},\"disabled\":{\"light\":\"9A9A95\",\"dark\":\"6A6A65\",\"darkAuto\":true},\"error\":{\"light\":\"8A2452\",\"dark\":\"B13A70\",\"darkAuto\":true},\"warning\":{\"light\":\"E6A53A\",\"dark\":\"E6BC77\",\"darkAuto\":true},\"success\":{\"light\":\"2FBF6E\",\"dark\":\"5ECD8F\",\"darkAuto\":true},\"info\":{\"light\":\"4F8FE6\",\"dark\":\"8AB2E8\",\"darkAuto\":true},\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        }
+      ],
+      "controls": [
+        {
+          "role": "border-width",
+          "type": "select-one",
+          "value": "1",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "role": "border-opacity",
+          "type": "text",
+          "value": "85"
+        },
+        {
+          "role": "border-style",
+          "type": "select-one",
+          "value": "solid",
+          "options": [
+            "solid",
+            "dashed",
+            "dotted",
+            "double",
+            "none"
+          ]
+        },
+        {
+          "role": "border-sides",
+          "type": "select-one",
+          "value": "all",
+          "options": [
+            "all",
+            "top",
+            "bottom",
+            "horizontal",
+            "start",
+            "end",
+            "left",
+            "right",
+            "vertical"
+          ]
+        },
+        {
+          "role": "border-dark-enable",
+          "type": "checkbox",
+          "value": "on"
+        },
+        {
+          "role": "border-color-picker",
+          "type": "color",
+          "value": "#9a9a95"
+        },
+        {
+          "role": "border-color-hex",
+          "type": "text",
+          "value": "9A9A95"
+        },
+        {
+          "role": "border-color-picker-dark",
+          "type": "color",
+          "value": "#6a6a65"
+        },
+        {
+          "role": "border-color-hex-dark",
+          "type": "text",
+          "value": "6A6A65"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#9a9a95"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "9A9A95"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#6a6a65"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "6A6A65"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#9a9a95"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "9A9A95"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#6a6a65"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "6A6A65"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#ff031a"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "FF031A"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#ff4253"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "FF4253"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#d80016"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "D80016"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#d80016"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "D80016"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#ff031a"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "FF031A"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#f74858"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "F74858"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#9a9a95"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "9A9A95"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#6a6a65"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "6A6A65"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#ff3f4f"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "FF3F4F"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#fa818b"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "FA818B"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#e6a53a"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "E6A53A"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#e6bc77"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "E6BC77"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#2fbf6e"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "2FBF6E"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#5ecd8f"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "5ECD8F"
+        },
+        {
+          "role": "state-swatch",
+          "type": "color",
+          "value": "#4f8fe6"
+        },
+        {
+          "role": "state-hex",
+          "type": "text",
+          "value": "4F8FE6"
+        },
+        {
+          "role": "state-swatch-dark",
+          "type": "color",
+          "value": "#8ab2e8"
+        },
+        {
+          "role": "state-hex-dark",
+          "type": "text",
+          "value": "8AB2E8"
+        }
+      ]
+    },
+    {
+      "name": "Shadows",
+      "file": "shadows.html",
+      "component": "modal-default.html",
+      "steps": [
+        {
+          "label": "flat shadow",
+          "failures": [],
+          "saved": {
+            "shadow": "{\"philosophy\":\"flat\",\"schemaVersion\":1}"
+          },
+          "status": "pass"
+        },
+        {
+          "label": "subtle shadow",
+          "failures": [
+            "Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 8px 16px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 6px 12px 0px\"",
+            "After component reload: Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 8px 16px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 6px 12px 0px\""
+          ],
+          "saved": {
+            "shadow": "{\"philosophy\":\"subtle\",\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        },
+        {
+          "label": "soft shadow",
+          "failures": [
+            "Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 22.4px 44.8px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 16.8px 33.6px 0px\"",
+            "After component reload: Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 22.4px 44.8px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 16.8px 33.6px 0px\""
+          ],
+          "saved": {
+            "shadow": "{\"philosophy\":\"soft\",\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        },
+        {
+          "label": "expressive shadow",
+          "failures": [
+            "Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 32px 64px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 24px 48px 0px\"",
+            "After component reload: Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 32px 64px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 24px 48px 0px\""
+          ],
+          "saved": {
+            "shadow": "{\"philosophy\":\"expressive\",\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        },
+        {
+          "label": "balanced shadow",
+          "failures": [
+            "Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 16px 32px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 12px 24px 0px\"",
+            "After component reload: Modal elevation: expected \"rgba(0, 0, 0, 0.16) 0px 16px 32px 0px\", got \"rgba(0, 0, 0, 0.14) 0px 12px 24px 0px\""
+          ],
+          "saved": {
+            "shadow": "{\"philosophy\":\"balanced\",\"schemaVersion\":1}"
+          },
+          "status": "fail"
+        }
+      ],
+      "controls": []
+    },
+    {
+      "name": "Icons",
+      "file": "icons.html",
+      "component": "select-dropdown.html",
+      "steps": [
+        {
+          "label": "Line glyph size, stroke and sharp corners",
+          "failures": [],
+          "saved": {
+            "icons": "{\"system\":\"line\",\"size\":\"32\",\"stroke\":\"2.2\",\"corner\":\"sharp\",\"library\":null,\"uploads\":[],\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        },
+        {
+          "label": "Dashed icon style",
+          "failures": [
+            "Select dashed icon: expected \"3px, 2.6px\", got \"none\"",
+            "After component reload: Select dashed icon: expected \"3px, 2.6px\", got \"none\""
+          ],
+          "saved": {
+            "icons": "{\"system\":\"dashed\",\"size\":\"32\",\"stroke\":\"2.2\",\"corner\":\"sharp\",\"library\":null,\"uploads\":[],\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "fail"
+        },
+        {
+          "label": "Rounded line icons",
+          "failures": [],
+          "saved": {
+            "icons": "{\"system\":\"line\",\"size\":\"20\",\"stroke\":\"1.5\",\"corner\":\"round\",\"library\":null,\"uploads\":[],\"schemaVersion\":1}",
+            "sizing": null
+          },
+          "status": "pass"
+        }
+      ],
+      "controls": [
+        {
+          "role": "control size in selected units",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "control size",
+          "type": "number",
+          "value": "40"
+        },
+        {
+          "role": "target size in selected units",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "target size",
+          "type": "number",
+          "value": "44"
+        },
+        {
+          "role": "icon size in selected units",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "icon size",
+          "type": "number",
+          "value": "24"
+        },
+        {
+          "role": "content size in selected units",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "content size",
+          "type": "number",
+          "value": "1200"
+        },
+        {
+          "role": "sidebar size in selected units",
+          "type": "number",
+          "value": "264"
+        },
+        {
+          "role": "Dimension unit",
+          "type": "select-one",
+          "value": "px",
+          "options": [
+            "px",
+            "rem"
+          ]
+        },
+        {
+          "role": "sidebar size",
+          "type": "number",
+          "value": "264"
+        },
+        {
+          "role": "icon-size",
+          "type": "select-one",
+          "value": "24",
+          "options": [
+            "16",
+            "20",
+            "24",
+            "32"
+          ]
+        },
+        {
+          "role": "icon-stroke",
+          "type": "select-one",
+          "value": "1.8",
+          "options": [
+            "1.25",
+            "1.5",
+            "1.8",
+            "2.2"
+          ]
+        },
+        {
+          "role": "icon-corner",
+          "type": "select-one",
+          "value": "round",
+          "options": [
+            "round",
+            "sharp"
+          ]
+        },
+        {
+          "role": "icon-upload-input",
+          "type": "file",
+          "value": ""
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Lucide"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Feather Icons"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Heroicons"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Tabler Icons"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Phosphor Icons"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Remix Icon"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Iconoir"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Material Symbols"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Font Awesome Free"
+        },
+        {
+          "role": "library-radio",
+          "type": "radio",
+          "value": "Bootstrap Icons"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "status": "fail"
+}

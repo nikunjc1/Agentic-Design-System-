@@ -1,0 +1,58 @@
+/* Scoped guide and export layouts, using the shared Foundation roles. */
+.principles-page [id],.markdown-export-page [id]{scroll-margin-block-start:var(--space-24)}
+.principles-page .concept-card-title{margin-top:0}
+.principles-page .concept-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--dimension-240)),1fr))}
+.principles-page .md-export-panel .btn{min-height:var(--size-target)}
+.principles-page .guide-dodont-demo{min-width:0;overflow-x:auto}
+.principles-page .guide-dodont-demo>*{max-width:100%;min-width:0}
+.principles-page .guide-dodont-label{font-family:var(--type-caption-family);font-size:var(--type-caption-size);line-height:var(--type-caption-line-height)}
+.guide-markdown-preview{margin-top:var(--space-16)}
+.guide-markdown-preview summary{cursor:pointer;min-height:var(--size-target);align-content:center}
+.guide-markdown-preview pre{max-height:var(--dimension-360);overflow:auto}
+.markdown-export-page .export-project-context{margin:var(--space-16) 0 var(--space-24);color:var(--text-mid);line-height:var(--type-body-line-height)}
+.export-project-context a{text-decoration:underline;text-underline-offset:3px}
+.export-workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-24);align-items:start}
+.export-workspace .setup-panel{padding:var(--space-24)}
+.export-settings>select,.export-settings input[type=search]{box-sizing:border-box;width:100%;min-height:var(--size-target);margin:var(--space-8) 0;padding:var(--space-8) var(--space-12);border:var(--border-width-1) solid var(--line-strong);border-radius:var(--radius-md);background:var(--graphite-950);color:var(--text-hi);font:inherit}
+.export-settings>.setup-help{margin-block:var(--space-8) var(--space-16)}
+.export-foundations{border-block:var(--border-width-1) solid var(--line);margin-block:var(--space-20)}
+.export-foundations>summary{padding-block:var(--space-12);cursor:pointer;min-height:var(--size-target);box-sizing:border-box}
+.export-foundations>summary span{display:block;margin-inline-start:var(--space-16);font-size:var(--type-caption-size);color:var(--text-mid)}
+.export-foundations .setup-platforms{margin-block:var(--space-12) var(--space-20)}
+.export-foundations .setup-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.export-foundations .setup-option{padding:var(--space-8);min-height:var(--size-target);box-sizing:border-box;overflow-wrap:anywhere}
+.export-settings input[type=checkbox]{flex:none;margin:0}
+.export-components{border:0;padding:0;min-width:0;margin:var(--space-20) 0}
+.export-components legend{font-weight:600;margin-bottom:var(--space-12)}
+.export-selection-actions{display:flex;gap:var(--space-8);flex-wrap:wrap;margin-block:var(--space-8) var(--space-12)}
+.markdown-export-page .btn{min-height:var(--size-target);white-space:normal}
+.export-selection-actions .btn{font-size:var(--type-caption-size);padding-inline:var(--space-12)}
+.export-category-details>.setup-option{padding:var(--space-8) 0;min-height:var(--size-target);box-sizing:border-box}
+.export-category-details .export-component-option{min-height:var(--size-target);box-sizing:border-box}
+.export-category-summary{min-height:var(--size-target);box-sizing:border-box}
+.export-category-count{font-size:var(--type-caption-size)}
+.export-identity{padding-inline:0;margin-top:var(--space-20);min-height:var(--size-target);box-sizing:border-box}
+.export-primary-actions{margin-top:var(--space-20)}
+.export-settings .setup-status{margin-bottom:0;overflow-wrap:anywhere}
+.export-settings .setup-status[data-state=error]{color:var(--danger-700,var(--danger-500))}
+.export-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-12);margin-bottom:var(--space-12)}
+.export-preview-heading h2{margin:0}
+.export-preview-panel .export-preview{box-sizing:border-box;min-height:var(--dimension-320);height:55vh;max-height:75vh;margin-bottom:0;font-family:var(--font-mono);font-size:var(--type-caption-size);line-height:1.6}
+.markdown-export-page #ai-handoff{margin-top:var(--space-24)}
+.markdown-export-page #ai-handoff ol{padding-inline-start:var(--space-24);line-height:var(--type-body-line-height)}
+.markdown-export-page #ai-handoff li+li,.markdown-export-page #ai-handoff p+p{margin-top:var(--space-12)}
+.markdown-export-page #ai-handoff a{text-decoration:underline;text-underline-offset:3px}
+.markdown-export-page [hidden]{display:none!important}
+@media(max-width:1000px){.export-workspace{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.export-workspace .setup-panel{padding:var(--space-16)}.export-foundations .setup-options{grid-template-columns:minmax(0,1fr)}.export-preview-heading{flex-wrap:wrap}.export-primary-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.principles-page .guide-dodont-demo{padding:var(--space-12)!important}}
+
+/* Format controls share the same project context and component selection. */
+.export-format-tabs{display:flex;gap:var(--space-8);border-bottom:var(--border-width-1) solid var(--line);padding-bottom:var(--space-12);margin-bottom:var(--space-24)}
+.export-format-tabs [aria-selected=true]{background:var(--red-500);color:var(--on-brand-text)}
+.export-format-tabs .btn{min-width:var(--dimension-120)}
+.export-settings .markdown-only>select{box-sizing:border-box;width:100%;min-height:var(--size-target);margin:var(--space-8) 0;padding:var(--space-8) var(--space-12);border:var(--border-width-1) solid var(--line-strong);border-radius:var(--radius-md);background:var(--graphite-950);color:var(--text-hi);font:inherit}
+.export-instructions{padding-inline-start:var(--space-24)}
+.export-instructions li{margin-bottom:var(--space-16)}
+.export-instructions code{overflow-wrap:anywhere}
+.markdown-export-page .figma-only{min-width:0;overflow-wrap:anywhere}
+.markdown-export-page .figma-only p{margin-block:var(--space-16);line-height:var(--type-body-line-height)}

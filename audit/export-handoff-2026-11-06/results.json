@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "One navigation entry and shared manifest cover all 69 guides, including the separate icon button.",
+    "Selections, search and Markdown scope survive format switches; tabs support keyboard navigation.",
+    "Actual bridge reports disconnected plugin and prevents capture until connected.",
+    "Mocked plugin response verifies exact selection dispatch, warnings and partial-failure reporting.",
+    "In-progress exports survive tab switches, prevent duplicate starts and report successful completion (mocked plugin).",
+    "Failed exports recover and empty selections are blocked.",
+    "Old Figma, selected-guide and AI handoff URLs reach the correct content.",
+    "Both formats fit desktop, tablet and 390/320px mobile layouts in light and dark themes.",
+    "file:// blocks Figma with a working bridge URL while Markdown still downloads."
+  ],
+  "errors": [],
+  "status": "pass"
+}

@@ -149,12 +149,12 @@
         const names=[...new Set(source.match(/--[a-zA-Z0-9-]+(?=\s*:)/g))];
         if(!names.length)throw new Error('No tokens found.');
         const style=getComputedStyle(document.documentElement);
-        css='/* Damco design token preview. Snapshot of the current theme. */\n:root {\n'+names.map(name=>`  ${name}: ${style.getPropertyValue(name).trim()};`).join('\n')+'\n}\n';
+        css='/* design token preview. Snapshot of the current theme. */\n:root {\n'+names.map(name=>`  ${name}: ${style.getPropertyValue(name).trim()};`).join('\n')+'\n}\n';
       } catch {cssError='Could not load the design tokens. Check the local server connection, then retry.';}
     }
     return types.map(type=>{
       if(type==='css')return M.resource(p,type,css||'',cssError||'');
-      if(type==='npm')return M.resource(p,type,JSON.stringify({name:`damco-project-${p.id.toLowerCase().replace(/[^a-z0-9-]/g,'-')}`,version:'0.0.0-preview',private:true,description:'Local manifest preview. This package has not been published to an NPM registry.',files:['tokens.css'],style:'tokens.css'},null,2),failNpm?'NPM preview generation failed in the selected prototype scenario. Retry generation.':'');
+      if(type==='npm')return M.resource(p,type,JSON.stringify({name:`design-system-${p.id.toLowerCase().replace(/[^a-z0-9-]/g,'-')}`,version:'0.0.0-preview',private:true,description:'Local manifest preview. This package has not been published to an NPM registry.',files:['tokens.css'],style:'tokens.css'},null,2),failNpm?'NPM preview generation failed in the selected prototype scenario. Retry generation.':'');
       return M.resource(p,type,JSON.stringify({name:p.project,kind:'Figma library handoff preview',published:false,nextSteps:['Create or open a Figma library file.','Import the project tokens as Figma variables.','Review components and publish the library in Figma.'],note:'This prototype does not create or publish a Figma file.'},null,2));
     });
   }
@@ -252,7 +252,7 @@
     else if(action==='close')close();
     else if(action==='discard')close(true);
     else if(action==='keep-editing'){$('discardPrompt').hidden=true;dialog.querySelector('input,select')?.focus();}
-    else if(action==='reload')location.reload();
+    else if(action==='reload')(window.ADSNavigation ? window.ADSNavigation.reload() : location.reload());
     else if(action==='select-project'){activeId=d.project;location.hash=`project=${encodeURIComponent(activeId)}`;render();focusSection('projectHeading');}
     else if(action==='generate')await regenerate(d.project,d.type,target);
     else if(action==='copy-resource'){const {p,r}=findResource(d);await copy(shareLink(p,r.id),target);}

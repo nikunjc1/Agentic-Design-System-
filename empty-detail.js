@@ -19,7 +19,7 @@
     "simple": { purpose: "A smaller, bare minimal icon with no circular background - a quieter treatment for a secondary or inline empty state, like an empty panel inside a larger page." }
   };
 
-  var ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  var ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M3 9.5 L7 4 H17 L21 9.5" />' +
     '<path d="M3 9.5 V18.5 A1 1 0 0 0 4 19.5 H20 A1 1 0 0 0 21 18.5 V9.5" />' +
     '<path d="M3 9.5 H9 A1 1 0 0 1 10 10.2 L10.3 11 A1 1 0 0 0 11.3 11.7 H12.7 A1 1 0 0 0 13.7 11 L14 10.2 A1 1 0 0 1 15 9.5 H21" />' +
@@ -53,12 +53,12 @@
     var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var safeTitle = escapeHtml(title);
     var iconHtml = '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--' + typeKey + '">' + ICON_SVG + "</div>";
-    var titleHtml = '<p class="empty-demo-title">' + safeTitle + "</p>";
+    var titleHtml = '<p class="empty-demo-title" data-contract-part="title">' + safeTitle + "</p>";
     var descriptionHtml = (stateKey !== "title-only")
-      ? '<p class="empty-demo-description">' + escapeHtml(description) + "</p>"
+      ? '<p class="empty-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>"
       : "";
     var actionHtml = (stateKey === "with-action")
-      ? '<button type="button" class="modal-demo-btn modal-demo-btn--primary"' + tabindexAttr + ">" + escapeHtml(actionLabel) + "</button>"
+      ? '<button type="button" class="modal-demo-btn modal-demo-btn--primary" data-contract-part="action"' + tabindexAttr + ">" + escapeHtml(actionLabel) + "</button>"
       : "";
     return '<div class="empty-demo-panel">' + iconHtml + titleHtml + descriptionHtml + actionHtml + "</div>";
   }
@@ -100,11 +100,11 @@
     lines.push("/* Agentic Design System - Empty component */");
     lines.push(".empty-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-10); padding:var(--space-24); width:var(--dimension-220); }");
     lines.push(".empty-demo-icon-wrap{ display:flex; align-items:center; justify-content:center; color:var(--text-dim); }");
-    lines.push(".empty-demo-icon-wrap--default{ width:var(--dimension-56); height:var(--dimension-56); border-radius:9999px; background:var(--graphite-800); }");
+    lines.push(".empty-demo-icon-wrap--default{ width:var(--dimension-56); height:var(--dimension-56); border-radius:var(--radius-full); background:var(--graphite-800); }");
     lines.push(".empty-demo-icon-wrap--default svg{ width:var(--dimension-28); height:var(--dimension-28); }");
     lines.push(".empty-demo-icon-wrap--simple{ width:var(--dimension-40); height:var(--dimension-40); }");
     lines.push(".empty-demo-icon-wrap--simple svg{ width:var(--dimension-36); height:var(--dimension-36); }");
-    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:600; color:var(--text-hi); margin:0; }');
+    lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); margin:0; }');
     lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("/* Action button reuses Modal's own .modal-demo-btn/.modal-demo-btn--primary classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent, and this panel isn't inside one. */");
     lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); margin-top:var(--space-4); }");
@@ -156,12 +156,12 @@
       card.setAttribute("tabindex", "0");
       var href = "empty-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });

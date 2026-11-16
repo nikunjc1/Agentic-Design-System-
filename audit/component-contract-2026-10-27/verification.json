@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-27",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "contract-editor",
+      "status": "pass",
+      "exitCode": 0,
+      "durationSeconds": 20
+    },
+    {
+      "name": "release",
+      "status": "pass",
+      "exitCode": 0,
+      "durationSeconds": 3
+    },
+    {
+      "name": "setup",
+      "status": "pass",
+      "exitCode": 0,
+      "durationSeconds": 14
+    },
+    {
+      "name": "prompts",
+      "status": "pass",
+      "exitCode": 0,
+      "durationSeconds": 45
+    },
+    {
+      "name": "site-health",
+      "status": "pass",
+      "exitCode": 0,
+      "durationSeconds": 27
+    }
+  ]
+}

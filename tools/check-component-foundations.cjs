@@ -1,0 +1,29 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const {createBridge}=require('./component-bridge.cjs'),{visit}=require('./visit-project.cjs'),M=require('../foundation-model.js');
+const {chromium}=require(process.env.ADS_PLAYWRIGHT_PACKAGE||'playwright-core');
+const root=path.resolve(__dirname,'..'),out=process.env.ADS_AUDIT_OUT||path.join(root,'audit/component-foundations-2026-11-06');fs.mkdirSync(out,{recursive:true});
+const sandbox={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'component-workbench-catalog.js'),'utf8'),sandbox);
+const pages=sandbox.window.ADSWorkbenchCatalog.pages;
+const fixtures={
+ Colors:{colors:{light:{primary:{hex:'#176941'}},dark:{primary:{hex:'#176941'}}},'bg-colors':{light:{primary:'#EAF3ED',secondary:'#DDEBE2',tertiary:'#CADDD1'},dark:{primary:'#13271B',secondary:'#1E3426',tertiary:'#294532'}},'neutral-colors':{light:{c800:'#CCD8D1',c700:'#AFBCB4',c600:'#65796C',c500:'#4A6253',border:'#617269'},dark:{c800:'#31483A',c700:'#45624F',c600:'#A2C1AD',c500:'#B0CAB9',border:'#789D84'}},'status-colors':{light:{success:'#226A42',warning:'#8A5000',danger:'#9A2245',info:'#275D9B'},dark:{success:'#7BDDA0',warning:'#EDC86D',danger:'#FF8AAB',info:'#8ABFFF'}}},
+ 'Grid & Layout':{'grid-layout':{system:'columns',columns:6,gutter:36},sizing:{content:960,sidebar:280}},
+ Typography:{typography:{headingScaleVersion:2,primaryFont:{family:'Georgia'},secondaryFont:{family:'Georgia'},levels:Object.fromEntries(Object.entries(M.typeDefaults).map(([key,value])=>[key,{...value,size:'text-lg',weight:600,lineHeightPct:180,letterSpacing:1}]))}},
+ Spacing:{spacing:{system:'8px'}},Radius:{radius:{philosophy:'expressive'}},
+ Borders:{border:{system:'custom',width:3,style:'dashed',color:'#7250A0',darkColor:'#B29CD8',opacity:100,sides:'all'}},
+ Shadows:{shadow:{philosophy:'expressive'}},Icons:{icons:{system:'dashed',size:28,stroke:3,corner:'sharp'}}
+};
+const props={Colors:['color','backgroundColor','borderTopColor','fill','stroke'], 'Grid & Layout':['gridTemplateColumns','gridTemplateRows','columnGap','rowGap'],Typography:['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing'],Spacing:['paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','gap','rowGap','columnGap'],Radius:['borderTopLeftRadius','borderTopRightRadius','borderBottomLeftRadius','borderBottomRightRadius'],Borders:['borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth','borderTopStyle','borderTopColor'],Shadows:['boxShadow'],Icons:['width','height','strokeWidth','strokeLinecap','strokeLinejoin','strokeDasharray']};
+for(const records of Object.values(fixtures))for(const [key,value]of Object.entries(records))if(!M.validRecord(key,value))throw Error('Invalid fixture '+key);
+const report={pages:[],errors:[],fixtures,method:'Real Chrome; every rendered state/appearance cell; each saved Foundation changed independently against default settings. Zero differences require applicability review, not an automatic pass.'};
+(async()=>{let browser,server;try{
+ server=createBridge();await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
+ browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});const context=await browser.newContext({viewport:{width:1440,height:1000}});await context.route(/^https?:\/\/(?!127\.0\.0\.1)/,r=>r.abort());const page=await context.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>report.errors.push({page:page.url(),error:e.message}));
+ async function change(records){await page.evaluate(records=>{for(const key of ADSFoundationModel.recordKeys)localStorage.removeItem('ads:'+key);for(const [key,value]of Object.entries(records))localStorage.setItem('ads:'+key,JSON.stringify(value));ADSFoundation.apply();ADS_flushRenders?.();},records);await page.waitForTimeout(65);}
+ async function snapshot(){return page.evaluate(props=>{const roots=[...document.querySelectorAll('.wb-stage .button-matrix tbody td')].map(n=>n.firstElementChild).filter(Boolean);if(!roots.length)return null;const nodes=roots.flatMap(root=>[root,...root.querySelectorAll('*')]);return nodes.map((n,index)=>{const c=getComputedStyle(n),style={};for(const p of new Set(Object.values(props).flat()))style[p]=c[p];return {index,tag:n.localName,class:n.getAttribute('class'),svg:!!n.closest('svg'),text:n.children.length?'':n.textContent.slice(0,35),style};});},props);}
+ for(const info of pages){if(process.env.ADS_PAGES&&!process.env.ADS_PAGES.split(',').includes(info.file))continue;
+  await visit(page,origin+'/'+info.file);await page.waitForFunction(()=>ADSWorkbench?.active&&ADSWorkbench.selectedElement());await change({});const base=await snapshot();const row={file:info.file,nodes:base?.length,groups:{}};
+  for(const [group,records]of Object.entries(fixtures)){await change(records);const current=await snapshot(),diff=[];for(const n of current||[]){const old=base?.[n.index];if(!old)continue;if(group==='Icons'&&!n.svg)continue;for(const p of props[group])if(n.style[p]!==old.style[p])diff.push({class:n.class,property:p,before:old.style[p],after:n.style[p]});}row.groups[group]={changes:diff.length,examples:diff.slice(0,5)};}
+  row.iconNodes=base?.filter(n=>n.svg).length;report.pages.push(row);fs.writeFileSync(path.join(out,process.argv.includes('--after')?'after.json':'before.json'),JSON.stringify(report,null,2));
+  console.log(info.file+' '+Object.entries(row.groups).map(([k,v])=>k+':'+v.changes).join(' '));
+ }
+ }catch(e){report.error=e.stack;process.exitCode=1;console.error(e);}finally{fs.writeFileSync(path.join(out,process.argv.includes('--after')?'after.json':'before.json'),JSON.stringify(report,null,2));await browser?.close();if(server)await new Promise(r=>server.close(r));}})();

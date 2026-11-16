@@ -1,6 +1,6 @@
 # Overview and onboarding review
 
-Scope: Damco Agentic Design System, 15 September 2026. Local prototype authorized by the user. Baseline: existing Overview source, shared shell/tokens, navigation destinations and rendered desktop screen (`overview-before.png`).
+Scope: Agentic Design System, 15 September 2026. Local prototype authorized by the user. Baseline: existing Overview source, shared shell/tokens, navigation destinations and rendered desktop screen (`overview-before.png`).
 
 ## Audit before implementation
 
@@ -49,7 +49,7 @@ This repository has no API, authentication, email delivery, registry publishing 
 
 ## Implemented files
 
-- `overview.html`: preserves Damco shell/navigation and replaces the copy gate with the project workspace entry point.
+- `overview.html`: preserves shared shell/navigation and replaces the copy gate with the project workspace entry point.
 - `overview.css`: scoped, reusable workspace, resource, feedback and dialog styles using the shared tokens.
 - `overview-model.js`: validated local persistence, legacy migration, project/resource/invitation records and public snapshot boundaries.
 - `overview.js`: project journey, conditional form, generation, sharing, filters, invitations, loading/retry/expiry states and keyboard interactions.

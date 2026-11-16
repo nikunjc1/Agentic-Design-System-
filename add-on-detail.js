@@ -10,7 +10,7 @@
       .replace(/"/g, "&quot;");
   }
 
-  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
+  var ICON_CLEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>';
 
   var TYPES = [
     { key: "outlined", label: "Outlined" },
@@ -23,8 +23,11 @@
     { key: "focus", cls: " is-focus", label: "Focused" },
     { key: "filled", cls: " is-filled", label: "Filled" },
     { key: "error", cls: " is-error", label: "Error" },
-    { key: "disabled", cls: " is-disabled", label: "Disabled" }
+    { key: "readonly", cls: " is-readonly", label: "Read-Only" },
+    { key: "disabled", cls: " is-disabled", label: "Disabled" },
+    { key: "loading", cls: " is-loading", label: "Loading" }
   ];
+  var SUFFIX_DROPDOWN_OPTIONS = [".com", ".org", ".net"];
 
   // Purpose text per type, used by Copy Prompt - the actual colors come
   // from liveCssFor() below (live CSS custom property reads), never
@@ -48,17 +51,17 @@
       pressed: "background:var(--button-primary-bg-active);color:var(--button-primary-text-active);"
     };
     var lineStrong = getCssVar("--line-strong", "rgba(255,255,255,0.16)");
-    var textDim = getCssVar("--text-dim", "#64686F");
+    var textDim = getCssVar("--text-dim", "#69707D");
     var red500 = getCssVar("--red-500", "#FF031A");
-    var red400 = getCssVar("--red-400", "#FF3F4F");
+    var red400 = getCssVar("--red-400", "#FF4253");
     var danger500 = getCssVar("--danger-500", "#FF031A");
-    var graphite900 = getCssVar("--graphite-900", "#15171A");
-    var graphite800 = getCssVar("--graphite-800", "#1C1F23");
+    var graphite900 = getCssVar("--graphite-900", "#FFFFFF");
+    var graphite800 = getCssVar("--graphite-800", "#F1F1EE");
     var graphite700 = getCssVar("--graphite-700", "#262A2F");
 
     if (typeKey === "outlined"){
       return {
-        rest: "background:" + graphite900 + ";border:1.5px solid " + lineStrong + ";",
+        rest: "background:" + graphite900 + ";border:var(--border-width-1) var(--border-style) " + lineStrong + ";",
         hover: "border-color:" + textDim + ";",
         focus: "border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
@@ -66,14 +69,14 @@
     }
     if (typeKey === "filled"){
       return {
-        rest: "background:" + graphite800 + ";border:1.5px solid transparent;",
+        rest: "background:" + graphite800 + ";border:var(--border-width-1) var(--border-style) transparent;",
         hover: "background:" + graphite700 + ";",
         focus: "background:" + graphite900 + ";border-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
         error: "border-color:" + danger500 + ";"
       };
     }
     return {
-      rest: "border-bottom:1.5px solid " + lineStrong + ";",
+      rest: "border-bottom:var(--border-width-1) var(--border-style) " + lineStrong + ";",
       hover: "border-bottom-color:" + textDim + ";",
       focus: "border-bottom-color:" + red500 + ";outline:2px solid " + getCssVar("--color-focus-ring", red400) + ";outline-offset:2px;",
       error: "border-bottom-color:" + danger500 + ";"
@@ -111,9 +114,13 @@
   ];
   var RADIUS_OPTIONS = [
     { value: "0", label: "0px - Sharp" },
+    { value: "2", label: "2px - Subtle" },
     { value: "4", label: "4px - Compact" },
+    { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
+    { value: "16", label: "16px - Expressive" },
+    { value: "24", label: "24px - Large" },
     { value: "9999", label: "Full - Pill" }
   ];
 
@@ -147,7 +154,7 @@
   }
 
   function radiusCssFor(value){
-    return window.ADSFoundationModel.dimension(Number(value), window.ADSFoundation.get().unit);
+    return window.ADSFoundationModel.radiusCss(Number(value), window.ADSFoundation.get().unit);
   }
 
   // Segments sit inset from the control's own outer radius by the
@@ -211,28 +218,38 @@
       lines.push("  Error: " + css.error + " Paired with an inline error message below the field in " + getCssVar("--danger-500", "#FF031A") + ".");
     });
     lines.push("");
-    lines.push("States (6, apply to every type): Rest, Hover, Focused, Filled, Error, Disabled.");
+    lines.push("States (8, apply to every type): Rest, Hover, Focused, Filled, Error, Read-Only, Disabled, Loading.");
     lines.push("- Filled: same appearance as Rest, showing an entered value instead of the placeholder.");
+    lines.push("- Read-Only: shows its current value but can't be edited; still focusable, unlike Disabled - the segments keep their normal appearance.");
+    lines.push("- Loading: for an asynchronous check (e.g. availability), shown independently of the segments.");
     lines.push("- Disabled: 50% opacity, not-allowed cursor, no hover/focus feedback.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Padding and font-size scale proportionally with height.");
     lines.push("");
     lines.push(propertyPromptLine("Corner radius", radiusInfo, RADIUS_OPTIONS) + " Applies to Outlined and Filled - Underlined stays square, matching its minimal style. Segments nest inside the control's own radius on their outer corner only.");
     lines.push("");
-    lines.push("Component properties: Label (editable text above the field), Placeholder (editable text shown when empty), Show prefix (boolean, optional text segment attached to the left edge of the field with its own editable prefix text - e.g. a protocol or currency symbol), Show suffix (boolean, optional text segment attached to the right edge of the field with its own editable suffix text - e.g. a domain or unit).");
+    var opts = selectionInfo.opts || {};
+    lines.push("Component properties: Label (editable text above the field, with an optional required indicator), Placeholder (editable text shown when empty), Show prefix (boolean, optional text segment attached to the left edge of the field with its own editable prefix text - e.g. a protocol or currency symbol), Show suffix (boolean, optional text segment attached to the right edge of the field with its own editable suffix text - e.g. a domain or unit), Suffix dropdown (boolean - makes the suffix an interactive dropdown, e.g. " + SUFFIX_DROPDOWN_OPTIONS.join("/") + ", managed as a separate value from the editable input text, instead of static text), Supporting text (optional helper text below the field, replaced by the Error message whenever State is Error).");
     return window.ADSFoundation.preparePageMarkdown(lines.join("\n"));
   }
 
-  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, prefixText, suffixText){
+  function exampleMarkupFor(typeKey, sizeClass, radiusClassAttr, label, placeholder, prefixText, suffixText, opts){
+    opts = opts || {};
     var radiusClass = typeKey === "underlined" ? "" : " " + radiusClassAttr;
+    var requiredHtml = opts.required ? '<span class="addon-demo-required" aria-hidden="true"> *</span>' : "";
+    var requiredAttr = opts.required ? " required" : "";
+    var suffixHtml = opts.suffixDropdown
+      ? '<select class="addon-segment addon-segment--suffix">' + SUFFIX_DROPDOWN_OPTIONS.map(function(o){ return '<option' + (o === suffixText ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select>"
+      : '<span class="addon-segment addon-segment--suffix">' + escapeHtml(suffixText) + "</span>";
     var lines = [];
     lines.push('<div class="addon-field">');
-    lines.push('  <label class="addon-field-label">' + escapeHtml(label) + "</label>");
+    lines.push('  <label class="addon-field-label">' + escapeHtml(label) + requiredHtml + "</label>");
     lines.push('  <div class="addon-control addon-control--' + typeKey + " " + sizeClass + radiusClass + '">');
     lines.push('    <span class="addon-segment addon-segment--prefix">' + escapeHtml(prefixText) + "</span>");
-    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '" />');
-    lines.push('    <span class="addon-segment addon-segment--suffix">' + escapeHtml(suffixText) + "</span>");
+    lines.push('    <input type="text" placeholder="' + escapeHtml(placeholder) + '"' + requiredAttr + " />");
+    lines.push("    " + suffixHtml);
     lines.push("  </div>");
+    if (opts.supportingText) lines.push('  <p class="addon-note">' + escapeHtml(opts.supportingText) + "</p>");
     lines.push("</div>");
     return lines.join("\n");
   }
@@ -245,13 +262,13 @@
     var lines = [];
     lines.push("/* Agentic Design System - Add-on component (all types, states, sizes) */");
     lines.push(".addon-field{ display:flex; flex-direction:column; gap:var(--space-6); }");
-    lines.push('.addon-field-label{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-body-size); font-weight:500; }');
-    lines.push(".addon-control{ box-sizing:border-box; display:flex; align-items:center; width:100%; border-radius:8px; transition:background-color .15s ease, border-color .15s ease; }");
-    lines.push('.addon-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:"Inter",ui-sans-serif,system-ui,sans-serif; padding:0 var(--space-12); }');
+    lines.push('.addon-field-label{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-active-weight); }');
+    lines.push(".addon-control{ box-sizing:border-box; display:flex; align-items:center; width:100%; border-radius:var(--radius-md); transition:background-color .15s ease, border-color .15s ease; }");
+    lines.push('.addon-control input{ flex:1 1 auto; min-width:0; border:none; background:transparent; outline:none; font-family:var(--font-body); padding:0 var(--space-12); }');
     lines.push(".addon-segment{ flex:none; white-space:nowrap; background:var(--graphite-800); color:var(--text-dim); }");
     lines.push(".addon-segment--prefix{ border-inline-end:1px solid var(--line-strong); }");
     lines.push(".addon-segment--suffix{ border-inline-start:1px solid var(--line-strong); }");
-    lines.push('.addon-note{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:var(--type-caption-size); }');
+    lines.push('.addon-note{ font-family:var(--font-body); font-size:var(--type-caption-size); }');
     lines.push("");
     var sizesToEmit = sizeInfo.mode === "all" ? SIZE_OPTIONS.map(function(o){ return o.value; }) : sizeInfo.values;
     lines.push(sizeInfo.mode === "all"
@@ -265,7 +282,7 @@
     lines.push("");
     var radiiToEmit = radiusInfo.mode === "all" ? RADIUS_OPTIONS.map(function(o){ return o.value; }) : radiusInfo.values;
     lines.push(radiusInfo.mode === "all"
-      ? "/* Corner radius (5 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
+      ? "/* Corner radius (8 options) - not chosen yet, default is 8px - applies to Outlined/Filled only, Underlined stays square */"
       : "/* Corner radius - explicitly chosen: " + radiusInfo.values.map(function(v){ return optionLabelFor(RADIUS_OPTIONS, v); }).join(", ") + " - applies to Outlined/Filled only, Underlined stays square */");
     radiiToEmit.forEach(function(radius){
       lines.push(".addon-control--radius-" + radiusClassSuffix(radius) + "{ border-radius:" + radiusCssFor(radius) + "; }");
@@ -283,17 +300,28 @@
       lines.push(cls + ".is-error{ " + css.error + " }");
     });
     lines.push("");
+    lines.push("/* Read-Only - keeps its current value and normal segment styling, but can't be edited; still focusable, unlike Disabled */");
+    lines.push(".addon-control input:read-only{ cursor:default; }");
+    lines.push("");
+    lines.push("/* Loading - an async check in progress (e.g. availability), independent of the segments */");
+    lines.push(".addon-control.is-loading .addon-spinner{ width:16px; height:16px; margin-inline-end:" + "var(--space-8)" + "; border-radius:var(--radius-full); border:2px solid " + getCssVar("--line-strong", "rgba(255,255,255,0.16)") + "; border-top-color:" + getCssVar("--red-500", "#FF031A") + "; animation:spin-demo-rotate .6s linear infinite; }");
+    lines.push("");
     lines.push("/* Disabled - shared by every type */");
     lines.push(".addon-control:has(input:disabled){ opacity:0.5; }");
     lines.push(".addon-control input:disabled{ cursor:not-allowed; }");
     lines.push("");
+    lines.push("/* Required indicator + supporting/error text */");
+    lines.push(".addon-demo-required{ color:" + getCssVar("--danger-500", "#FF031A") + "; }");
+    lines.push(".addon-note.is-error{ color:" + getCssVar("--danger-700", "#EB0318") + "; }");
+    lines.push("");
+    var opts = selectionInfo.opts || {};
     var exampleSize = sizeInfo.mode === "all" ? FALLBACK_DEFAULTS.size : sizeInfo.values[0];
     var exampleRadius = radiusInfo.mode === "all" ? FALLBACK_DEFAULTS.radius : radiusInfo.values[0];
     var sizeClass = "addon-control--h" + exampleSize;
     var radiusClassAttr = "addon-control--radius-" + radiusClassSuffix(exampleRadius);
     lines.push("<!-- Example usage - one per type" + (sizeInfo.mode === "specific" || radiusInfo.mode === "specific" ? ", at the explicitly chosen size/radius" : "") + " -->");
     TYPES.forEach(function(t){
-      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Website", "yourcompany", "https://", ".com"));
+      lines.push(exampleMarkupFor(t.key, sizeClass, radiusClassAttr, "Website", "yourcompany", "https://", ".com", opts));
     });
     return window.ADSFoundation.prepareCode(lines.join("\n"));
   }
@@ -301,17 +329,19 @@
   // Builds the prompt/code for exactly ONE Size x Corner radius
   // combination, fully resolved (never "ask the question") - used by the
   // Copy prompt/Copy code dropdown's per-combination "Copy" buttons.
-  function buildComboPrompt(size, radius){
+  function buildComboPrompt(size, radius, opts){
     return buildFullPrompt({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
-  function buildComboCode(size, radius){
+  function buildComboCode(size, radius, opts){
     return buildFullCode({
       size: { mode: "specific", values: [size] },
-      radius: { mode: "specific", values: [radius] }
+      radius: { mode: "specific", values: [radius] },
+      opts: opts
     });
   }
 
@@ -343,12 +373,12 @@
       card.setAttribute("tabindex", "0");
       var href = "add-on-" + card.dataset.system + ".html";
       card.addEventListener("click", function(e){
-        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.location.href = href; });
+        if (e.target.closest("button, input, select, textarea, a, [role=combobox]")) return; window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href); });
       card.addEventListener("keydown", function(e){
         if (e.target !== card) return;
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          window.location.href = href;
+          window.ADSNavigation ? window.ADSNavigation.go(href) : (location.href = href);
         }
       });
     });
@@ -438,39 +468,64 @@
     var allowClearInput = document.querySelector('[data-role="addon-allow-clear"]');
     var suffixTextInput = document.querySelector('[data-role="addon-suffix-text"]');
     var suffixFieldWrap = document.querySelector('[data-role="addon-suffix-field"]');
+    var suffixDropdownInput = document.querySelector('[data-role="addon-suffix-dropdown"]');
+    var requiredInput = document.querySelector('[data-role="addon-required"]');
+    var showSupportingInput = document.querySelector('[data-role="addon-show-supporting"]');
+    var supportingTextInput = document.querySelector('[data-role="addon-supporting-text"]');
+    var supportingTextFieldWrap = document.querySelector('[data-role="addon-supporting-text-field"]');
+    var errorTextInput = document.querySelector('[data-role="addon-error-text"]');
     var sizeMount = document.querySelector('[data-role="addon-size-mount"]');
     var radiusMount = document.querySelector('[data-role="addon-radius-mount"]');
     var copyPromptContainer = document.querySelector('[data-role="copy-prompt-action"]');
     var copyCodeContainer = document.querySelector('[data-role="copy-code-action"]');
 
-    function buildAddonField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear){
+    function buildAddonField(typeKey, stateKey, stateCls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear, opts){
+      opts = opts || {};
       var isDisabled = stateKey === "disabled";
       var isFilled = stateKey === "filled";
       var isError = stateKey === "error";
-      var hasValue = isFilled || isError;
+      var isReadonly = stateKey === "readonly";
+      var isLoading = stateKey === "loading";
+      var hasValue = isFilled || isError || isReadonly;
       var controlClasses = "addon-demo-control addon-demo-control--" + typeKey + " addon-demo-control--h" + size + stateCls;
       var radiusStyle = typeKey === "underlined" ? "" : ' style="border-radius:' + radiusCssFor(radius) + '"';
       var innerRadius = typeKey === "underlined" ? "0" : innerRadiusCss(radius);
-      var prefixHtml = showPrefix ? '<span class="addon-demo-segment addon-demo-segment--prefix" style="border-radius:' + innerRadius + " 0 0 " + innerRadius + '">' + escapeHtml(prefixText) + "</span>" : "";
-      var suffixHtml = showSuffix ? '<span class="addon-demo-segment addon-demo-segment--suffix" style="border-radius:0 ' + innerRadius + " " + innerRadius + ' 0">' + escapeHtml(suffixText) + "</span>" : "";
+      var prefixHtml = showPrefix ? '<span class="addon-demo-segment addon-demo-segment--prefix" data-contract-part="prefix" style="border-radius:' + innerRadius + " 0 0 " + innerRadius + '">' + escapeHtml(prefixText) + "</span>" : "";
+      var suffixHtml = "";
+      if (showSuffix){
+        if (opts.suffixDropdown){
+          suffixHtml = '<span class="addon-demo-segment addon-demo-segment--suffix addon-demo-segment--dropdown" data-contract-part="suffix" style="border-radius:0 ' + innerRadius + " " + innerRadius + ' 0">' + escapeHtml(suffixText) +
+            ' <svg class="addon-demo-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>';
+        } else {
+          suffixHtml = '<span class="addon-demo-segment addon-demo-segment--suffix" data-contract-part="suffix" style="border-radius:0 ' + innerRadius + " " + innerRadius + ' 0">' + escapeHtml(suffixText) + "</span>";
+        }
+      }
       // Sits inside the input area, immediately before the Suffix addon (if
       // any) - a fixed addon segment is a permanent part of the field's
       // structure, so allowClear can never take it over the way it takes
       // over a plain trailing icon slot elsewhere in this Input family.
-      var clearHtml = (allowClear && hasValue && !isDisabled)
+      var clearHtml = (allowClear && hasValue && !isDisabled && !isReadonly && !isLoading)
         ? '<button type="button" class="addon-demo-clear" aria-label="Clear" tabindex="-1">' + ICON_CLEAR + "</button>"
         : "";
-      var valueAttr = isFilled ? ' value="yourcompany"' : (isError ? ' value="a"' : "");
+      var loadingHtml = isLoading ? '<span class="select-demo-spinner" data-contract-kind="container" aria-hidden="true"></span>' : "";
+      var valueAttr = (isFilled || isReadonly) ? ' value="yourcompany"' : (isError ? ' value="a"' : "");
       var disabledAttr = isDisabled ? " disabled" : "";
+      var readonlyAttr = isReadonly ? " readonly" : "";
       // tabindex="-1" + a real for/id label association: static state-
       // comparison matrix, not an operable field, but still exposed to a
       // screen reader's virtual cursor regardless of tab order.
       var fieldId = "addon-demo-field-" + (++addonFieldCounter);
-      var inputHtml = '<input type="text" id="' + fieldId + '" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + ' tabindex="-1" />';
-      var noteHtml = isError ? '<p class="addon-demo-note is-error">Enter at least 3 characters.</p>' : "";
+      var inputHtml = '<input type="text" id="' + fieldId + '" class="addon-demo-input" placeholder="' + escapeHtml(placeholder) + '"' + valueAttr + disabledAttr + readonlyAttr + ' tabindex="-1" />';
+      var requiredHtml = opts.required ? '<span class="addon-demo-required" data-contract-part="required" aria-hidden="true"> *</span>' : "";
+      var noteHtml = "";
+      if (isError){
+        noteHtml = '<p class="addon-demo-note is-error" data-contract-part="error">' + escapeHtml(opts.errorText || "Enter at least 3 characters.") + "</p>";
+      } else if (opts.supportingText){
+        noteHtml = '<p class="addon-demo-note" data-contract-part="supporting">' + escapeHtml(opts.supportingText) + "</p>";
+      }
       return '<div class="addon-demo-field">' +
-        '<label class="addon-demo-label" for="' + fieldId + '">' + escapeHtml(label) + "</label>" +
-        '<div class="' + controlClasses + '"' + radiusStyle + ">" + prefixHtml + inputHtml + clearHtml + suffixHtml + "</div>" +
+        '<label class="addon-demo-label" for="' + fieldId + '" data-contract-part="label">' + escapeHtml(label) + requiredHtml + "</label>" +
+        '<div class="' + controlClasses + (isLoading ? " is-loading" : "") + (isReadonly ? " is-readonly" : "") + '"' + radiusStyle + ">" + prefixHtml + inputHtml + clearHtml + loadingHtml + suffixHtml + "</div>" +
         noteHtml +
         "</div>";
     }
@@ -488,10 +543,10 @@
       return optionLabelFor(SIZE_OPTIONS, size) + " / " + optionLabelFor(RADIUS_OPTIONS, radius);
     }
 
-    function buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear){
+    function buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear, opts){
       var rows = STATES.map(function(state){
         var cells = TYPES.map(function(t){
-          return '<td class="button-matrix-cell">' + buildAddonField(t.key, state.key, state.cls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear) + "</td>";
+          return '<td class="button-matrix-cell">' + buildAddonField(t.key, state.key, state.cls, size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear, opts) + "</td>";
         }).join("");
         return "<tr><th class=\"button-matrix-rowhead\">" + state.label + "</th>" + cells + "</tr>";
       }).join("");
@@ -502,10 +557,20 @@
         "<tbody>" + rows + "</tbody></table></div>";
     }
 
+    function currentOpts(){
+      return {
+        required: requiredInput ? requiredInput.checked : false,
+        suffixDropdown: suffixDropdownInput ? suffixDropdownInput.checked : false,
+        supportingText: (showSupportingInput && showSupportingInput.checked && supportingTextInput) ? supportingTextInput.value.trim() : "",
+        errorText: (errorTextInput && errorTextInput.value.trim()) || "Enter a valid website address."
+      };
+    }
+
     function currentSelectionInfo(){
       return {
         size: selectionMode(propertyMultiSelects.size, SIZE_OPTIONS, [FALLBACK_DEFAULTS.size]),
-        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius])
+        radius: selectionMode(propertyMultiSelects.radius, RADIUS_OPTIONS, [FALLBACK_DEFAULTS.radius]),
+        opts: currentOpts()
       };
     }
 
@@ -517,6 +582,7 @@
       var showSuffix = showSuffixInput ? showSuffixInput.checked : false;
       var suffixText = (suffixTextInput && suffixTextInput.value.trim()) || ".com";
       var allowClear = allowClearInput ? allowClearInput.checked : false;
+      var opts = currentOpts();
 
       var sizes = selectedOrDefault(propertyMultiSelects.size, SIZE_OPTIONS, FALLBACK_DEFAULTS.size);
       var radii = selectedOrDefault(propertyMultiSelects.radius, RADIUS_OPTIONS, FALLBACK_DEFAULTS.radius);
@@ -525,14 +591,14 @@
       var combos = [];
       sizes.forEach(function(size){
         radii.forEach(function(radius){
-          html += buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear);
+          html += buildMatrixSection(size, radius, label, placeholder, showPrefix, prefixText, showSuffix, suffixText, allowClear, opts);
           combos.push({ size: size, radius: radius, label: comboLabel(size, radius) });
         });
       });
       matrixContainer.innerHTML = html;
 
-      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius); });
-      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius); });
+      buildCopyControl(copyPromptContainer, "Copy prompt", function(){ return buildFullPrompt(currentSelectionInfo()); }, combos, function(c){ return buildComboPrompt(c.size, c.radius, opts); });
+      buildCopyControl(copyCodeContainer, "Copy code", function(){ return buildFullCode(currentSelectionInfo()); }, combos, function(c){ return buildComboCode(c.size, c.radius, opts); });
     }
 
     var propertyMultiSelects = {};
@@ -576,6 +642,16 @@
     }
     if (suffixTextInput) suffixTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (allowClearInput) allowClearInput.addEventListener("change", render);
+    if (suffixDropdownInput) suffixDropdownInput.addEventListener("change", render);
+    if (requiredInput) requiredInput.addEventListener("change", render);
+    if (showSupportingInput && supportingTextFieldWrap){
+      showSupportingInput.addEventListener("change", function(){
+        supportingTextFieldWrap.hidden = !showSupportingInput.checked;
+        render();
+      });
+    }
+    if (supportingTextInput) supportingTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    if (errorTextInput) errorTextInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 
     render();
   });
