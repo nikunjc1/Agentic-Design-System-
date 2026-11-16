@@ -163,22 +163,27 @@
   // Renders one notification card (or, for the Stacked state, two layered
   // cards) for a given type/state combination.
   function buildNotificationField(typeKey, stateKey, title, description, headingLevel){
-    var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="notification-demo-icon" ');
     var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
     var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
     // Foundation audit UX10 - both of this component's callers (the state
     // comparison matrix and the placement mock-viewport) are illustrations,
     // not a real notification; tabindex="-1" keeps these buttons out of the
     // Tab sequence without removing them from the accessibility tree.
-    var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action" tabindex="-1">Undo</button>' : "";
-    var closeHtml = '<button type="button" class="notification-demo-close" tabindex="-1" aria-label="Dismiss notification">' + CLOSE_ICON + "</button>";
-
-    function cardHtml(extraClass){
-      return '<div class="notification-demo-card notification-demo-card--' + typeKey + (extraClass ? " " + extraClass : "") + '">' +
+    //
+    // Every state renders the SAME outer structure - a "stack" wrapper around the card - so the Figma export can express Stacked (a second,
+    // offset card behind the first) and With action as ordinary parts shown per State. The card BEHIND carries no part names of its own (its
+    // inner layers would clash with the front card's title/description/icon ids); it only needs its look.
+    function cardHtml(extraClass, behind){
+      var part = function(id, name){ return behind ? "" : ' data-contract-part="' + id + '" data-contract-name="' + name + '"'; };
+      var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="notification-demo-icon"' + part("icon", "Icon") + ' ');
+      var actionHtml = stateKey === "with-action" ? '<button type="button" class="notification-demo-action"' + part("action", "Action") + ' tabindex="-1">Undo</button>' : "";
+      var closeHtml = '<button type="button" class="notification-demo-close"' + part("close", "Close") + ' tabindex="-1" aria-label="Dismiss notification">' + CLOSE_ICON + "</button>";
+      var cardPart = behind ? ' data-contract-part="behind" data-contract-name="Card behind"' : ' data-contract-part="card" data-contract-name="Card"';
+      return '<div class="notification-demo-card notification-demo-card--' + typeKey + (extraClass ? " " + extraClass : "") + '"' + cardPart + '>' +
         iconHtml +
-        '<div class="notification-demo-body">' +
-          "<" + headingTag + ' class="notification-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" +
-          '<p class="notification-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>" +
+        '<div class="notification-demo-body"' + part("body", "Body") + '>' +
+          "<" + headingTag + ' class="notification-demo-title"' + part("title", "Title") + ' style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" +
+          '<p class="notification-demo-description"' + part("description", "Description") + '>' + escapeHtml(description) + "</p>" +
           actionHtml +
         "</div>" +
         closeHtml +
@@ -186,9 +191,9 @@
     }
 
     if (stateKey === "stacked"){
-      return '<div class="notification-demo-stack">' + cardHtml() + cardHtml("is-behind") + "</div>";
+      return '<div class="notification-demo-stack" data-contract-part="stack" data-contract-name="Notification">' + cardHtml() + cardHtml("is-behind", true) + "</div>";
     }
-    return cardHtml();
+    return '<div class="notification-demo-single" data-contract-part="stack" data-contract-name="Notification">' + cardHtml() + "</div>";
   }
 
   document.addEventListener("DOMContentLoaded", function(){

@@ -83,15 +83,15 @@
   function buildDividerField(typeKey, stateKey, text, align, sizeKey){
     var sizeCls = (sizeKey && sizeKey !== "medium") ? " divider-demo-sz-" + sizeKey : "";
     if (typeKey === "horizontal-plain"){
-      return '<div class="divider-demo-line divider-demo-line--' + stateKey + sizeCls + '"></div>';
+      return '<div class="divider-demo-line divider-demo-line--' + stateKey + sizeCls + '" data-contract-part="line" data-contract-name="Divider"></div>';
     }
     // horizontal-text
     var label = escapeHtml((text || DEFAULT_TEXT).trim() || DEFAULT_TEXT);
     var alignKey = align || DEFAULT_ALIGN;
-    return '<div class="divider-demo-line-text divider-demo-line-text--' + alignKey + sizeCls + '">' +
-      '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '"></span>' +
+    return '<div class="divider-demo-line-text divider-demo-line-text--' + alignKey + sizeCls + '" data-contract-part="line" data-contract-name="Divider">' +
+      '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '" data-contract-part="segA" data-contract-name="Line before" data-contract-kind="container"></span>' +
       '<span class="divider-demo-label" data-contract-part="label">' + label + "</span>" +
-      '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '"></span>' +
+      '<span class="divider-demo-line-segment divider-demo-line--' + stateKey + '" data-contract-part="segB" data-contract-name="Line after" data-contract-kind="container"></span>' +
       "</div>";
   }
 

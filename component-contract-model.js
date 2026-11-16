@@ -47,7 +47,7 @@
         for(const token of String(value).matchAll(/var\(\s*(--[\w-]+)/g))if(!(token[1] in (c.tokens||{})))fail('Unresolved token '+token[1]+' on '+n.id);
       }
       for(const [key,value]of Object.entries(n.attributes||{})){
-        if(!/^(?:aria-[\w-]+|id|for|name|readonly|required|maxlength|minlength|role|title|type|value|placeholder|disabled|checked|tabindex|href|src|alt|viewBox|d|cx|cy|r|x|y|x1|x2|y1|y2|width|height|rx|ry|points|fill|stroke|stroke-width|stroke-linecap|stroke-linejoin|xmlns|max|min|step|rows|colspan|rowspan)$/.test(key)||typeof value!=='string'||((key==='href'||key==='src')&&!/^(?:https?:|#|data:image\/(?:png|jpeg|webp|gif);base64,|[a-zA-Z0-9_.-]+(?:\/|$))/.test(value)))fail('Unsupported attribute '+key+' on '+n.id);
+        if(!/^(?:aria-[\w-]+|id|for|name|readonly|required|maxlength|minlength|role|title|type|value|placeholder|disabled|checked|tabindex|href|src|alt|viewBox|d|cx|cy|r|x|y|x1|x2|y1|y2|width|height|rx|ry|points|fill|stroke|stroke-width|stroke-linecap|stroke-linejoin|stroke-dasharray|xmlns|max|min|step|rows|colspan|rowspan)$/.test(key)||typeof value!=='string'||((key==='href'||key==='src')&&!/^(?:https?:|#|data:image\/(?:png|jpeg|webp|gif);base64,|[a-zA-Z0-9_.-]+(?:\/|$))/.test(value)))fail('Unsupported attribute '+key+' on '+n.id);
       }
       if(n.children&&!Array.isArray(n.children))fail('Children must be a list on '+n.id);else for(const child of n.children||[])walk(child,depth+1);
     }

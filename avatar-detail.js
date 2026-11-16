@@ -27,7 +27,7 @@
     image: { purpose: "A circle filled with a gradient standing in for an illustrated photo placeholder - real image URLs are never fetched, so this represents where a person's photo would render." }
   };
 
-  var PERSON_ICON_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 12.5c2.9 0 5.25-2.35 5.25-5.25S14.9 2 12 2 6.75 4.35 6.75 7.25 9.1 12.5 12 12.5Zm0 2.25c-3.86 0-8.25 1.94-8.25 5.25V22h16.5v-2c0-3.31-4.39-5.25-8.25-5.25Z"/></svg>';
+  var PERSON_ICON_SVG = '<svg data-contract-part="icon" data-contract-name="Person icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 12.5c2.9 0 5.25-2.35 5.25-5.25S14.9 2 12 2 6.75 4.35 6.75 7.25 9.1 12.5 12 12.5Zm0 2.25c-3.86 0-8.25 1.94-8.25 5.25V22h16.5v-2c0-3.31-4.39-5.25-8.25-5.25Z"/></svg>';
 
   function getCssVar(name, fallback){
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -153,7 +153,9 @@
     var sizeInfo = SIZE_MAP[sizeKey] || SIZE_MAP[FALLBACK_DEFAULTS.size];
     var dotInfo = STATUS_DOT_MAP[sizeKey] || STATUS_DOT_MAP[FALLBACK_DEFAULTS.size];
     var circleCls = "avatar-demo-circle avatar-demo-circle--" + typeKey + " avatar-demo-circle--" + shapeKey + " avatar-demo-circle--h" + sizeKey;
-    var circleStyle = "width:" + sizeInfo.box + "px;height:" + sizeInfo.box + "px;font-size:" + sizeInfo.font + "px;";
+    // No inline font-size: foundation-runtime.js's typography sync read an inline font-size as "body text" and rewrote it to the body role for every
+    // Size, so the initials stayed 16px at 24px and at 48px. The size-specific type comes from the .avatar-demo-circle--h<size> classes instead.
+    var circleStyle = "width:" + sizeInfo.box + "px;height:" + sizeInfo.box + "px;";
     // Initials/Image circles are always white-on-brand-red, regardless of
     // theme - an inline font-size alone makes foundation-runtime.js's
     // typography sync (bindExamples) treat this as body text and overwrite
@@ -167,11 +169,14 @@
       inner = '<span data-contract-part="initials">' + escapeHtml(initials || FALLBACK_DEFAULTS.initials) + "</span>";
     } else if (typeKey === "icon"){
       inner = PERSON_ICON_SVG;
+    } else if (typeKey === "image" && window.ADS_AVATAR_PHOTO){
+      // The Image appearance shows a real profile photo (embedded as a data URI so the Figma export carries the picture itself).
+      inner = '<img class="avatar-demo-photo" data-contract-part="photo" data-contract-name="Photo" data-contract-kind="container" src="' + window.ADS_AVATAR_PHOTO + '" alt="">';
     }
     var dotHtml = "";
     if (stateKey !== "default"){
       var dotStyle = "width:" + dotInfo.size + "px;height:" + dotInfo.size + "px;border-width:" + dotInfo.border + "px;";
-      dotHtml = '<span class="avatar-demo-status avatar-demo-status--' + stateKey + '" style="' + dotStyle + '"></span>';
+      dotHtml = '<span class="avatar-demo-status avatar-demo-status--' + stateKey + '" data-contract-part="status" data-contract-name="Status dot" data-contract-kind="container" style="' + dotStyle + '"></span>';
     }
     return '<div class="avatar-demo-wrap" data-size="' + sizeKey + '">' +
       '<div class="' + circleCls + '" style="' + circleStyle + '">' + inner + "</div>" +

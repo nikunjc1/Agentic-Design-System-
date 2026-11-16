@@ -54,8 +54,7 @@
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
     { value: "16", label: "16px - Expressive" },
-    { value: "24", label: "24px - Large" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "24", label: "24px - Large" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -411,13 +410,13 @@
       var headingStyle = "font-family:var(--type-" + headingTag + "-family);font-size:var(--type-" + headingTag + "-size);font-weight:var(--type-" + headingTag + "-weight);line-height:var(--type-" + headingTag + "-line-height);letter-spacing:var(--type-" + headingTag + "-tracking);";
       var headerHtml = '<div class="modal-demo-header" data-contract-part="header"><' + headingTag + ' class="modal-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" + closeHtml + "</div>";
 
-      var bodyHtml = '<div class="modal-demo-body"><p style="margin:0;" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
+      var bodyHtml = '<div class="modal-demo-body" data-contract-part="bodywrap" data-contract-name="Body"><p style="margin:0;" data-contract-part="body">' + escapeHtml(body) + "</p></div>";
 
       var footerHtml = "";
       if (stateKey !== "no-footer"){
-        footerHtml = '<div class="modal-demo-footer">' +
-          '<button type="button" class="modal-demo-btn modal-demo-btn--cancel" tabindex="-1">Cancel</button>' +
-          '<button type="button" class="modal-demo-btn modal-demo-btn--primary" tabindex="-1">Save</button>' +
+        footerHtml = '<div class="modal-demo-footer" data-contract-part="footer" data-contract-name="Footer">' +
+          '<button type="button" class="modal-demo-btn modal-demo-btn--cancel" data-contract-part="cancel" data-contract-name="Cancel" tabindex="-1">Cancel</button>' +
+          '<button type="button" class="modal-demo-btn modal-demo-btn--primary" data-contract-part="save" data-contract-name="Save" tabindex="-1">Save</button>' +
           "</div>";
       }
 
@@ -425,7 +424,7 @@
       var panelStyle = radiusStyleFor(radiusCss);
       var isHorizontal = HORIZONTAL_TYPES[typeKey];
       var scrimClass = "drawer-demo-scrim" + (isHorizontal ? "" : " drawer-demo-scrim--vertical");
-      return '<div class="' + scrimClass + '"><div class="' + panelClass + '" style="' + panelStyle + '">' +
+      return '<div class="' + scrimClass + '"><div class="' + panelClass + '" data-contract-part="panel" data-contract-name="Panel" style="' + panelStyle + '">' +
         headerHtml + bodyHtml + footerHtml +
         "</div></div>";
     }

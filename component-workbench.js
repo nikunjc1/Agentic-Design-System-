@@ -870,6 +870,8 @@
     // rather than assuming a fixed position - button-detail.js's "SIZE /
     // CONTENT / RADIUS" and group-button-detail.js's "SIZE / RADIUS" (and
     // table-detail.js's reversed "RADIUS / SIZE") all resolve correctly.
+    // Lets a bespoke capture read every variant's full snapshot while the shared sweep has all of them on the page.
+    let crossedHook=null;
     function captureCrossedProperties(){
       const M=window.ADSComponentContract;
       const baseAnatomy=snapshot(selected.root,'root',0);
@@ -975,6 +977,7 @@
             for(const child of n.children||[])walk(child);
           })(variantAnatomy);
           const when={state:entry.state};if(sizeLabel)when.size=sizeLabel;if(radiusLabel)when.radius=radiusLabel;if(crossType)when.appearance=entry.type;
+           if(crossedHook)crossedHook(entry,variantAnatomy,when);
           const variantName=[crossType?entry.type:null,sizeLabel,radiusLabel,entry.state].filter(Boolean).join(' / ');
           if(Object.keys(overrides).length)variants.push({id:'cv-'+M.id(variantName),name:variantName,when,overrides});
         }
@@ -3700,7 +3703,7 @@
           if(arrowStyles)arrow.styles={...arrow.styles,...arrowStyles};
           baseAnatomy.children=baseAnatomy.children.filter(n=>n!==arrow);
           card.children=[arrow,...(card.children||[]).filter(n=>n!==arrow)];
-          card.styles={...card.styles,overflow:'visible',overflowX:'visible',overflowY:'visible'};
+          card.styles={...card.styles,overflow:'visible',overflowX:'visible',overflowY:'visible',alignSelf:'flex-start'};
         }
         // Everything hugs its content; the card keeps its 220px width and its parts fill it. Page-measured heights/widths would freeze them.
         const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
@@ -3819,6 +3822,43 @@
         selection.showClose=originalShowClose;
       }
 
+      // Panel placement. The page pushes the panel to an edge with auto margins (margin-inline-start:auto for Right, ...), which Figma can't
+      // reproduce - every placement came out at the same edge. The scrim aligns its content to the edge instead (justify-content), and the
+      // panel stretches across the other axis (full height for Right/Left, full width for Top/Bottom). Panel width follows Size for Right/Left;
+      // heights hug content (the panel's header, body and footer stack and hug; only the scrim is a fixed viewport-sized preview).
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findN(k,id);if(r)return r;}return null;};
+        const alignFor=t=>/left|top/i.test(String(t||''))?'flex-start':'flex-end';
+        const dirFor=t=>/top|bottom/i.test(String(t||''))?'column':'row';
+        const baseType=selection.appearance||originalType;
+        baseAnatomy.styles={...baseAnatomy.styles,width:'400px',justifyContent:alignFor(baseType),flexDirection:dirFor(baseType)};
+        const panel=findN(baseAnatomy,'panel');if(panel){const st={...panel.styles,alignSelf:'stretch'};delete st.height;delete st.marginTop;delete st.marginBottom;delete st.marginLeft;delete st.marginRight;panel.styles=st;}
+        const bodyWrap=findN(baseAnatomy,'bodywrap'),footer=findN(baseAnatomy,'footer'),close=findN(baseAnatomy,'close');
+        const stateLabels=properties.find(p=>p.id==='state')?.options||[];
+        const noFooter=stateLabels.filter(l=>/no footer/i.test(l)),noClose=stateLabels.filter(l=>/no close/i.test(l));
+        const nots=list=>list.map(l=>({property:'state',equals:l,not:true}));
+        if(footer&&noFooter.length)footer.visibleWhen=[...(footer.visibleWhen||[]),...nots(noFooter)];
+        if(close&&noClose.length)close.visibleWhen=[...(close.visibleWhen||[]),...nots(noClose)];
+        const stripKeys=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        for(const id of ['header','bodywrap','footer','title','body','cancel','save'])stripKeys(findN(baseAnatomy,id),['width','height']);
+        for(const id of ['header','bodywrap','footer']){const n=findN(baseAnatomy,id);if(n)n.styles={...n.styles,alignSelf:'stretch'};}
+        {const n=findN(baseAnatomy,'body');if(n)n.styles={...n.styles,flexGrow:'1'};}
+        for(const v of variants){
+          const t=(v.when||{}).appearance!==undefined?v.when.appearance:baseType;
+          const root=v.overrides.root||(v.overrides.root={});root.styles={...(root.styles||{}),width:'400px',justifyContent:alignFor(t),flexDirection:dirFor(t)};
+          delete root.styles.height;
+          const pn=v.overrides.panel||(v.overrides.panel={});const ps={...(pn.styles||{}),alignSelf:'stretch'};
+          for(const k of ['height','marginTop','marginBottom','marginLeft','marginRight'])delete ps[k];
+          if(/top|bottom/i.test(String(t))){
+            ps.width='100%';
+            // Top/Bottom panels hug their height, so the body must hug too: a growing body inside a hugging panel stays at its default 32px and
+            // the text spills over the footer (it only grows in Right/Left, where the panel is full height).
+            const bw=v.overrides.bodywrap||(v.overrides.bodywrap={});bw.styles={...(bw.styles||{}),flexGrow:'0'};
+          }
+          pn.styles=ps;
+          for(const id of ['header','bodywrap','footer','title','body','cancel','save']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.width;delete st.height;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides[id];}}
+        }
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Notification: same no-native-control-to-drive manual sweep as
@@ -3895,6 +3935,37 @@
         selection.placement=placementSelect.value||placementOptions[0];
       }
 
+      // State-only parts: the Undo action (With action) and the card BEHIND the front one (Stacked) exist only in their own State rows, so they are
+      // harvested from there and grafted with a visibility rule. Everything hugs its content (the card keeps its 260px width); the page's
+      // measured heights and body width would freeze them. Spacing the page makes with margins is set explicitly (Figma ignores margins on text).
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findN(k,id);if(r)return r;}return null;};
+        const labels=properties.find(p=>p.id==='state')?.options||[];
+        const actionState=labels.find(l=>/action/i.test(l)),stackedState=labels.find(l=>/stack/i.test(l));
+        const partIn=(st,id)=>{const e=gatherEntries().find(x=>x.state===st&&x.type===originalType);return e?findN(snapshot(e.root,'root',0),id):null;};
+        const body=findN(baseAnatomy,'body'),card=findN(baseAnatomy,'card');
+        if(body&&actionState&&!findN(baseAnatomy,'action')){const n=partIn(actionState,'action');if(n){n.visibleWhen=[{property:'state',equals:actionState}];body.children.push(n);}}
+        // The card behind is drawn FIRST (later siblings paint on top); right/bottom read back as 0px from the page, which would pin it to the corner.
+        if(stackedState&&!findN(baseAnatomy,'behind')){const n=partIn(stackedState,'behind');if(n){n.visibleWhen=[{property:'state',equals:stackedState}];n.styles={...n.styles,right:'auto',bottom:'auto',width:'280px'};baseAnatomy.children.unshift(n);}}
+        // The wrapper hugs one card (280px), or the stack's 288px with 8px under it for the offset card.
+        const wrapStyles=st=>/stack/i.test(String(st||''))?{width:'288px',paddingBottom:'8px'}:{width:'280px',paddingBottom:'0px'};
+        baseAnatomy.styles={...baseAnatomy.styles,...wrapStyles(selection.state)};
+        for(const v of variants){const o=v.overrides.stack||(v.overrides.stack={});o.styles={...(o.styles||{}),...wrapStyles((v.when||{}).state)};}
+        const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        strip(baseAnatomy,['height']);strip(card,['height']);
+        // The card is 280px in every State; the page's demo cells squeezed it to different widths (about 185px in some), which left the body
+        // about 110px wide and wrapped the title and description onto 2 and 4 lines.
+        // alignSelf flex-start keeps the card a plain FIXED 280px child: left to the plugin it was turned into "fill the wrapper", and a wrapper that
+        // hugs its card has nothing to fill, so the card shrank to its content (about 167px) in every State but Stacked (whose wrapper is wider).
+        if(card)card.styles={...card.styles,width:'280px',alignSelf:'flex-start'};
+        for(const v of variants){const o=v.overrides.card||(v.overrides.card={});o.styles={...(o.styles||{}),width:'280px',alignSelf:'flex-start'};}
+        for(const id of ['body','title','description','action'])strip(findN(baseAnatomy,id),['width','height']);
+        for(const id of ['title','description']){const n=findN(baseAnatomy,id);if(n)n.styles={...n.styles,alignSelf:'stretch'};}
+        if(body)body.styles={...body.styles,gap:'2px',rowGap:'2px'};
+        {const a=findN(baseAnatomy,'action');if(a){const st={...a.styles,paddingTop:'6px',alignSelf:'flex-start'};delete st.marginTop;a.styles=st;}}
+        {const d=findN(baseAnatomy,'description');if(d){const st={...d.styles};delete st.marginTop;d.styles=st;}}
+        for(const v of variants)for(const id of ['stack','card','body','title','description','action']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.height;if(id!=='stack'&&id!=='card')delete st.width;delete st.marginTop;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides[id];}}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Pop Confirm: same no-native-control-to-drive manual sweep as
@@ -3913,6 +3984,18 @@
       const typeOptions=[...new Set(sweep.map(e=>e.type))];
       const stateOptions=[...new Set(sweep.map(e=>e.state))];
       const variants=[];
+      // Same arrow treatment as the Tooltip and Tour: an absolutely placed child of the card, anchored to the card edge facing the trigger.
+      function pcArrowStyles(wrapEl,placement){
+        const arrowEl=wrapEl&&wrapEl.querySelector&&wrapEl.querySelector('.popconfirm-demo-arrow'),cardEl=wrapEl&&wrapEl.querySelector&&wrapEl.querySelector('.popconfirm-demo-bubble');
+        if(!arrowEl||!cardEl)return null;
+        const cr=cardEl.getBoundingClientRect(),ar=arrowEl.getBoundingClientRect();
+        const m=/^matrix\(([^)]+)\)/.exec(getComputedStyle(arrowEl).transform);const deg=m?-Math.atan2(Number(m[1].split(',')[1]),Number(m[1].split(',')[0]))*180/Math.PI:0,rad=deg*Math.PI/180,cs=Math.cos(rad),sn=Math.sin(rad);
+        const w=parseFloat(getComputedStyle(arrowEl).width)||8,h=parseFloat(getComputedStyle(arrowEl).height)||8;
+        const cx=(ar.left-cr.left)+ar.width/2,cy=(ar.top-cr.top)+ar.height/2;
+        const t=String(placement||'').toLowerCase(),side=/left/.test(t)?'left':/right/.test(t)?'right':/bottom/.test(t)?'bottom':'top';
+        const hint={top:{justifySelf:'center',alignSelf:'flex-end'},bottom:{justifySelf:'center',alignSelf:'flex-start'},left:{justifySelf:'flex-end',alignSelf:'center'},right:{justifySelf:'flex-start',alignSelf:'center'}}[side];
+        return {position:'absolute',left:(cx-(cs*(w/2)+sn*(h/2)))+'px',top:(cy-(-sn*(w/2)+cs*(h/2)))+'px',marginTop:'0px',marginBottom:'0px',marginLeft:'0px',marginRight:'0px',right:'auto',bottom:'auto',...hint};
+      }
       for(const entry of sweep){
         if(entry.type===originalType&&entry.state===originalState)continue;
         const variantAnatomy=snapshot(entry.root,'root',0),overrides={};
@@ -3927,6 +4010,7 @@
           }
           for(const child of n.children||[])walk(child);
         })(variantAnatomy);
+        {const st=pcArrowStyles(entry.root,entry.type);if(st)overrides.arrow={...(overrides.arrow||{}),styles:{...((overrides.arrow||{}).styles||{}),...st}};}
         const when={state:entry.state,appearance:entry.type};
         const variantName=[entry.type,entry.state].filter(Boolean).join(' / ');
         if(Object.keys(overrides).length)variants.push({id:'cv-'+M.id(variantName),name:variantName,when,overrides});
@@ -3955,6 +4039,35 @@
       if(confirmNode){confirmNode.bind='confirmLabel';const def=confirmLabelInput?.value.trim()||confirmNode.text||'Yes';properties.push({id:'confirmLabel',name:'Confirm label',type:'text',default:def});selection.confirmLabel=def;}
       if(cancelNode){cancelNode.bind='cancelLabel';const def=cancelLabelInput?.value.trim()||cancelNode.text||'No';properties.push({id:'cancelLabel',name:'Cancel label',type:'text',default:def});selection.cancelLabel=def;}
 
+      // Parts, spacing and sizing for Figma. The warning icon exists only in the With icon State, so it is harvested from there and shown for that State;
+      // the arrow becomes an absolute child of the card; the card keeps its 220px width as a plain fixed child (left to the plugin it became "fill the
+      // wrapper", and a wrapper that hugs its card leaves nothing to fill); everything else hugs. The buttons hug their labels and no longer clip them
+      // (they were frozen at the page's measured 41px / 45px with overflow hidden, which cut "No" to "Nc").
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findN(k,id);if(r)return r;}return null;};
+        const labels=properties.find(p=>p.id==='state')?.options||[];
+        const iconState=labels.find(l=>/icon/i.test(l));
+        const row=findN(baseAnatomy,'questionrow');
+        if(row&&iconState&&!findN(baseAnatomy,'icon')){const e=gatherEntries().find(x=>x.state===iconState&&x.type===originalType);const ic=e&&findN(snapshot(e.root,'root',0),'icon');if(ic){ic.visibleWhen=[{property:'state',equals:iconState}];row.children.unshift(ic);}}
+        const card=findN(baseAnatomy,'card'),arrow=findN(baseAnatomy,'arrow');
+        const entry0=gatherEntries().find(e=>e.type===originalType&&e.state===originalState);
+        const arrowStyles=entry0&&pcArrowStyles(entry0.root,originalType);
+        if(card&&arrow){
+          if(arrowStyles)arrow.styles={...arrow.styles,...arrowStyles};
+          baseAnatomy.children=baseAnatomy.children.filter(n=>n!==arrow);
+          card.children=[arrow,...(card.children||[]).filter(n=>n!==arrow)];
+          card.styles={...card.styles,overflow:'visible',overflowX:'visible',overflowY:'visible',width:'220px',alignSelf:'flex-start'};
+        }
+        const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        strip(baseAnatomy,['width','height']);strip(card,['height']);
+        for(const id of ['questionrow','actions','question','cancel','confirm','trigger','icon'])strip(findN(baseAnatomy,id),['width','height']);
+        for(const id of ['questionrow','actions']){const n=findN(baseAnatomy,id);if(n)n.styles={...n.styles,alignSelf:'stretch'};}
+        for(const id of ['cancel','confirm']){const n=findN(baseAnatomy,id);if(n)n.styles={...n.styles,overflow:'visible',textOverflow:'clip',justifyContent:'center'};}
+        for(const v of variants){
+          for(const id of ['root','card','questionrow','actions','question','cancel','confirm','trigger','icon']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.height;if(id!=='card')delete st.width;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides[id];}}
+          const co=v.overrides.card||(v.overrides.card={});co.styles={...(co.styles||{}),width:'220px',alignSelf:'flex-start'};
+        }
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Progress: same no-native-control-to-drive manual sweep as Tooltip/
@@ -4027,6 +4140,48 @@
         selection.percent=def;selection.showLabel=originalShowLabel;
       }
 
+      // Circular. The page draws the ring with a conic-gradient background plus an inner disc, which a Figma frame can't reproduce, and the
+      // Circular row has a different structure from the Linear bar the export is based on, so its look never arrived (only the Linear bar did).
+      // Each State's ring is rebuilt as an SVG (a track circle, a progress arc, and the dashed outline in Error) from the colours and percentage
+      // read off the page, shown for Circular + that State; the Linear track and fill are hidden for Circular, and the label is centred over the ring.
+      {
+        const labels=typeOptions.filter(Boolean),circularLabel=typeOptions.find(l=>/circular/i.test(l));
+        const root=baseAnatomy;
+        const track=findPart(baseAnatomy,'root-0');
+        if(circularLabel){
+          if(track)track.visibleWhen=[...(track.visibleWhen||[]),{property:'appearance',equals:circularLabel,not:true}];
+          const rgbOf=t=>{const m=/rgba?\(([^)]+)\)/.exec(t||'');return m?'rgb('+m[1].split(/[,\s/]+/).filter(Boolean).slice(0,3).join(',')+')':'#888888';};
+          // The SVG is 82px (the 72px ring plus room for the 2px dashed outline 3px beyond it) and is placed 5px up-left of the 72px circle, so its own centre (41,41) lands on the circle's centre (36,36).
+          const R=32,C=36,view=82,off=-5;
+          const ringFor=entry=>{
+            const el=entry.root,cs=getComputedStyle(el);
+            const bg=/conic-gradient\(\s*(rgba?\([^)]+\))\s+([\d.]+)%\s*,\s*(rgba?\([^)]+\))/.exec(cs.backgroundImage||'');
+            const fill=bg?rgbOf(bg[1]):'#ff031a',pct=bg?Math.max(0,Math.min(100,parseFloat(bg[2]))):65,trackColor=bg?rgbOf(bg[3]):'#e3e3df';
+            const dashed=/dashed/.test(cs.outlineStyle||'')&&parseFloat(cs.outlineWidth)>0,outlineColor=rgbOf(cs.outlineColor);
+            const shape=(tag,attrs)=>({id:'',name:tag,kind:'container',tag,attributes:attrs,styles:{display:'inline'},children:[]});
+            const kids=[shape('circle',{cx:String(C-off),cy:String(C-off),r:String(R),fill:'none',stroke:trackColor,'stroke-width':'8'})];
+            if(pct>=100)kids.push(shape('circle',{cx:String(C-off),cy:String(C-off),r:String(R),fill:'none',stroke:fill,'stroke-width':'8'}));
+            else if(pct>0){const a=pct*3.6*Math.PI/180,x=C-off+R*Math.sin(a),y=C-off-R*Math.cos(a);kids.push(shape('path',{d:'M '+(C-off)+' '+(C-off-R)+' A '+R+' '+R+' 0 '+(pct>50?1:0)+' 1 '+x.toFixed(3)+' '+y.toFixed(3),fill:'none',stroke:fill,'stroke-width':'8'}));}
+            if(dashed)kids.push(shape('circle',{cx:String(C-off),cy:String(C-off),r:'39',fill:'none',stroke:outlineColor,'stroke-width':'2','stroke-dasharray':'4 3'}));
+            return kids;
+          };
+          for(const state of stateOptions){
+            const entry=gatherEntries().find(e=>e.type===circularLabel&&e.state===state);
+            if(!entry)continue;
+            const kids=ringFor(entry),idBase='ring-'+String(state).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+            kids.forEach((k,n)=>{k.id=idBase+'-'+n;});
+            root.children.unshift({id:idBase,name:'Ring',kind:'icon',tag:'svg',attributes:{viewBox:'0 0 '+view+' '+view,fill:'none',width:String(view),height:String(view)},
+              styles:{display:'block',position:'absolute',left:off+'px',top:off+'px',width:view+'px',height:view+'px',justifySelf:'center',alignSelf:'center'},
+              visibleWhen:[{property:'appearance',equals:circularLabel},{property:'state',equals:state}],children:kids});
+          }
+        }
+        // The Circular variants' own look comes from the ring now, not from the page's conic gradient or the hidden track.
+        for(const v of variants){const o=v.overrides.root;if(o&&o.styles&&(v.when||{}).appearance===circularLabel){const st={...o.styles};for(const k of ['backgroundImage','background','backgroundColor','outline','outlineStyle','outlineColor','outlineWidth','outlineOffset'])delete st[k];o.styles=st;}}
+        // Fixed size per Appearance: Linear is a 220px row; Circular a 72px square (the ring is drawn on top of it).
+        const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        strip(root,['height']);
+        for(const v of variants){const o=v.overrides.root;if(o&&o.styles&&(v.when||{}).appearance!==circularLabel){const st={...o.styles};delete st.height;o.styles=st;}}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Result: same no-native-control-to-drive manual sweep as Tour/
@@ -4085,6 +4240,37 @@
       }
       if(descriptionNode){descriptionNode.bind='description';const def=descriptionInput?.value.trim()||descriptionNode.text||'Your request has been processed.';properties.push({id:'description',name:'Description',type:'text',default:def});selection.description=def;}
 
+      // Parts and sizing for Figma. The "View details" button exists only in the With secondary State, so it is harvested from there and shown for it;
+      // the actions row hugs its buttons (the page-measured 61px froze it at the width of one button, so a second one overflowed and the pair sat
+      // off-centre) and is centred under the text; the panel keeps its 260px width, and the icon, title, description and buttons hug or fill it.
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findN(k,id);if(r)return r;}return null;};
+        const labels=properties.find(p=>p.id==='state')?.options||[];
+        const secState=labels.find(l=>/secondary/i.test(l));
+        const actions=findN(baseAnatomy,'actions');
+        if(actions&&secState&&!findN(baseAnatomy,'secondary')){const e=gatherEntries().find(x=>x.state===secState&&x.type===originalType);const n=e&&findN(snapshot(e.root,'root',0),'secondary');if(n){n.visibleWhen=[{property:'state',equals:secState}];actions.children.push(n);}}
+        const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        strip(baseAnatomy,['height']);
+        for(const id of ['actions','done','secondary','title','description'])strip(findN(baseAnatomy,id),['width','height']);
+        for(const id of ['title','description']){const n=findN(baseAnatomy,id);if(n)n.styles={...n.styles,alignSelf:'stretch'};}
+        {const a=findN(baseAnatomy,'actions');if(a)a.styles={...a.styles,alignSelf:'center'};}
+        for(const v of variants)for(const id of ['root','actions','done','secondary','title','description','iconwrap']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.height;if(id!=='root')delete st.width;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides[id];}}
+        // With secondary shows two buttons that must be the same width (the wider label, "View details", sets it): measured off the page, then fixed
+        // on both, with the label centred inside. Done on its own (Default, Compact) keeps hugging its label.
+        if(secState){
+          const e=gatherEntries().find(x=>x.state===secState&&x.type===originalType);
+          const btns=e?[...e.root.querySelectorAll('.result-demo-btn')]:[];
+          // +8px of slack: Figma's text can measure a little wider than the browser's, and a fixed-width button would otherwise wrap or clip its label.
+          const W=btns.length?Math.ceil(Math.max(...btns.map(b=>b.getBoundingClientRect().width)))+8:0;
+          if(W>0){
+            const center={display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',width:W+'px'};
+            const sec=findN(baseAnatomy,'secondary'),done=findN(baseAnatomy,'done');
+            if(sec)sec.styles={...sec.styles,...center};
+            if(done)done.styles={...done.styles,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'};
+            for(const v of variants)if((v.when||{}).state===secState){const o=v.overrides.done||(v.overrides.done={});o.styles={...(o.styles||{}),...center};}
+          }
+        }
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Divider: Appearance/State/Size already cross generically via
@@ -4101,7 +4287,8 @@
     // as Anchor's Icon position/Slider's Thumb shape): the divider keeps
     // whichever alignment was active at capture time.
     function captureDividerProperties(){
-      const built=captureCrossedProperties();
+      const dividerSnaps=[];crossedHook=(entry,anatomySnap,when)=>dividerSnaps.push({entry,anatomySnap,when});
+      let built;try{built=captureCrossedProperties();}finally{crossedHook=null;}
       const anatomy=built.anatomy;
       const properties=[...built.properties];const selection={...built.selection};
       const textInput=document.querySelector('[data-role="divider-text"]');
@@ -4124,10 +4311,65 @@
         selection.label=def;
       }
       if(alignSelect){
-        properties.push({id:'textAlign',name:'Text alignment',type:'text',default:alignSelect.value||'center'});
-        selection.textAlign=alignSelect.value||'center';
+        // A real axis (Left / Center / Right) rather than loose text: with Left or Right one of the two lines shrinks to a 16px stub.
+        const alignLabels=[...alignSelect.options].map(o=>o.textContent.trim()||o.value);
+        const alignDefaultLabel=(alignSelect.selectedOptions[0]?.textContent||alignSelect.value||'Center').trim();
+        properties.push({id:'textAlign',name:'Text alignment',type:'options',options:alignLabels,default:alignLabels.includes(alignDefaultLabel)?alignDefaultLabel:alignLabels[0]});
+        selection.textAlign=properties[properties.length-1].default;
       }
 
+      // Divider, layer by layer. The "with text" form is [line, label, line], and only its own rows have the two segments and the label, so each
+      // variant's segments and label type are copied from that variant's own snapshot (kept by the shared sweep as it ran). Chrome rounds a 1.5px border
+      // to 1px when read back (so Medium came out as thin as Small): weights are set from the CSS - plain line Small 1px, Medium 1.5px, Large 2px, with
+      // the line's height equal to its weight; segments 1.5px. The page centres the divider with auto margins, read back as a fixed offset that pushed it
+      // off its box, so margins are dropped. The text form hugs its height and the label hugs its text. Left / Right alignment make one line a 16px stub.
+      {
+        const variants=built.variants;
+        const lineKey=anatomy.id;
+        const weightFor=l=>/small/i.test(String(l||''))?1:/large/i.test(String(l||''))?2:1.5;
+        const px=n=>n+'px';
+        const typoKeys=['fontFamily','fontSize','fontWeight','fontStyle','lineHeight','letterSpacing'];
+        const dropMargins=st=>{const o={...st};for(const k of Object.keys(o))if(/^margin/.test(k))delete o[k];return o;};
+        const plainLabel=typeLabels.find(l=>!/with text/i.test(l))||typeLabels[0];
+        const sizeLabels=built.properties.find(p=>p.id==='size')?.options||[];
+        const snapFor=when=>dividerSnaps.find(x=>x.when.state===when.state&&x.when.appearance===when.appearance&&x.when.size===when.size);
+        // Segments: grafted from the first text row, then per-variant look.
+        const firstTextSnap=dividerSnaps.find(x=>x.when.appearance===textTypeLabel);
+        const segA=firstTextSnap&&findPart(firstTextSnap.anatomySnap,'segA'),segB=firstTextSnap&&findPart(firstTextSnap.anatomySnap,'segB');
+        if(segA&&segB&&textTypeLabel){
+          for(const n of [segA,segB]){n.visibleWhen=[{property:'appearance',equals:textTypeLabel}];n.styles={...n.styles,borderTopWidth:'1.5px',height:'1.5px'};}
+          const label=findPart(anatomy,'label');
+          anatomy.children=[segA,...(label?[label]:[]),segB];
+          for(const v of variants){
+            if((v.when||{}).appearance!==textTypeLabel)continue;
+            const sn=snapFor(v.when);if(!sn)continue;
+            for(const id of ['segA','segB']){const nd=findPart(sn.anatomySnap,id);if(nd)v.overrides[id]={styles:{...nd.styles,borderTopWidth:'1.5px',height:'1.5px'}};}
+            const lab=findPart(sn.anatomySnap,'label');
+            if(lab){const st={};for(const k of typoKeys)if(lab.styles[k]!==undefined)st[k]=lab.styles[k];v.overrides.label={...(v.overrides.label||{}),styles:{...((v.overrides.label||{}).styles||{}),...st}};}
+          }
+        }
+        // Plain line: weight per Size (set as size-keyed variants so every State picks it up, whether or not the sweep produced a variant for it).
+        const selSize=selection.size;
+        anatomy.styles={...dropMargins(anatomy.styles),borderTopWidth:px(weightFor(selSize)),height:px(weightFor(selSize))};
+        for(const l of sizeLabels)variants.push({id:'weight-'+String(l).toLowerCase().replace(/[^a-z0-9]+/g,'-'),name:'Line weight / '+l,when:{appearance:plainLabel,size:l},overrides:{[lineKey]:{styles:{borderTopWidth:px(weightFor(l)),height:px(weightFor(l))}}}});
+        // Margins and sizes on the text form's wrapper and label.
+        for(const v of variants){
+          const o=v.overrides[lineKey];if(o&&o.styles)o.styles=dropMargins(o.styles);
+          if((v.when||{}).appearance===textTypeLabel){const w=v.overrides[lineKey]||(v.overrides[lineKey]={});w.styles={...(w.styles||{}),height:'auto',borderTopWidth:'0px'};}
+          const lab=v.overrides.label;if(lab&&lab.styles){const st={...lab.styles};delete st.width;delete st.height;lab.styles=st;}
+        }
+        {const lab=findPart(anatomy,'label');if(lab){const st={...lab.styles};delete st.width;delete st.height;lab.styles=st;}}
+        // Alignment variants: one segment becomes a 16px stub, the other fills.
+        const alignProp=properties.find(p=>p.id==='textAlign');
+        if(alignProp&&textTypeLabel){
+          const stub={flexGrow:'0',flexShrink:'0',flexBasis:'16px',width:'16px'},fill={flexGrow:'1'},extra=[];
+          for(const l of sizeLabels)for(const lbl of alignProp.options){
+            const t=lbl.toLowerCase();if(t==='center')continue;const left=/left/.test(t);
+            extra.push({id:'align-'+String(l).toLowerCase()+'-'+t,name:'Alignment / '+l+' / '+lbl,when:{appearance:textTypeLabel,size:l,textAlign:lbl},overrides:{segA:{styles:left?stub:fill},segB:{styles:left?fill:stub}}});
+          }
+          variants.push(...extra);
+        }
+      }
       return {anatomy,properties,selection,variants:built.variants};
     }
     // Avatar: Size AND Shape are both plain <select>s (no multiselect to
@@ -4156,6 +4398,7 @@
       const shapeOptionEls=shapeSelect?[...shapeSelect.options]:[null];
       const base=new Map();(function walk(n){base.set(n.id,n);for(const child of n.children||[])walk(child);})(baseAnatomy);
       const variants=[];let typeOptions=[],stateOptions=[],sizeOptions=[],shapeOptions=[];
+      const avatarSnaps=[];
       applyingFoundation=true;
       try{
         for(const sizeOpt of sizeOptionEls){
@@ -4180,6 +4423,7 @@
                 for(const child of n.children||[])walk(child);
               })(variantAnatomy);
               const when={state:entry.state,appearance:entry.type};if(sizeLabel)when.size=sizeLabel;if(shapeLabel)when.shape=shapeLabel;
+              avatarSnaps.push({when:{...when},anatomy:variantAnatomy});
               const variantName=[entry.type,sizeLabel,shapeLabel,entry.state].filter(Boolean).join(' / ');
               if(Object.keys(overrides).length)variants.push({id:'cv-'+M.id(variantName),name:variantName,when,overrides});
             }
@@ -4210,6 +4454,56 @@
         selection.initials=def;
       }
 
+      // The person icon (Icon rows) and the profile photo (Image rows) exist only in their own rows (the base is Initials), so each is harvested from
+      // there and shown for its own Appearance; every Size/State gets the box measured off the page.
+      {
+        const labels=properties.find(p=>p.id==='appearance')?.options||[];
+        const findI=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findI(k,id);if(r)return r;}return null;};
+        const circle=findI(baseAnatomy,'root-0');
+        for(const [partId,re] of [['icon',/icon/i],['photo',/image/i]]){
+          const label=labels.find(l=>re.test(l));
+          const first=label&&avatarSnaps.find(x=>x.when.appearance===label);
+          const node=first&&findI(first.anatomy,partId);
+          if(!node||!circle||findI(baseAnatomy,partId))continue;
+          node.visibleWhen=[{property:'appearance',equals:label}];
+          circle.children.push(node);
+          for(const v of variants){
+            if((v.when||{}).appearance!==label)continue;
+            const sn=avatarSnaps.find(x=>x.when.appearance===v.when.appearance&&x.when.state===v.when.state&&x.when.size===v.when.size&&x.when.shape===v.when.shape);
+            const nd=sn&&findI(sn.anatomy,partId);
+            if(nd)v.overrides[partId]={styles:{...nd.styles}};
+          }
+        }
+        // The status dot (Online / Away / Offline) exists only in those State rows. It is harvested from the first of them and shown for every State
+        // except the default one; each variant takes its own colour, size and bottom-right position (measured off the page) from its own snapshot.
+        {
+          const stateLabels=properties.find(p=>p.id==='state')?.options||[];
+          const defaultState=stateLabels.find(l=>/default/i.test(l))||stateLabels[0];
+          const firstDot=avatarSnaps.find(x=>x.when.state!==defaultState&&findI(x.anatomy,'status'));
+          const dot=firstDot&&findI(firstDot.anatomy,'status');
+          if(dot&&!findI(baseAnatomy,'status')){
+            dot.visibleWhen=[{property:'state',equals:defaultState,not:true}];
+            dot.styles={...dot.styles,right:'auto',bottom:'auto'};
+            baseAnatomy.children.push(dot);
+            // Every State x Appearance x Size x Shape needs its own dot, including combinations that had no variant because nothing else on the avatar
+            // differs from the base (an Initials avatar that is Away), so variants are created where missing.
+            const sameWhen=(a,b)=>a.state===b.state&&a.appearance===b.appearance&&a.size===b.size&&a.shape===b.shape;
+            for(const sn of avatarSnaps){
+              if(sn.when.state===defaultState)continue;
+              const nd=findI(sn.anatomy,'status');if(!nd)continue;
+              let v=variants.find(x=>sameWhen(x.when||{},sn.when));
+              if(!v){v={id:'cv-dot-'+M.id([sn.when.appearance,sn.when.size,sn.when.shape,sn.when.state].filter(Boolean).join(' / ')),name:[sn.when.appearance,sn.when.size,sn.when.shape,sn.when.state].filter(Boolean).join(' / '),when:{...sn.when},overrides:{}};variants.push(v);}
+              v.overrides.status={styles:{...nd.styles,right:'auto',bottom:'auto'}};
+            }
+          }
+        }
+      }
+      // The initials hug their text (the page-measured width/height would freeze them at 2-letter "JD"), so editing the Initials property resizes them.
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[]){const r=findN(k,id);if(r)return r;}return null;};
+        const ini=findN(baseAnatomy,'initials');if(ini){const st={...ini.styles};delete st.width;delete st.height;ini.styles=st;}
+        for(const v of variants){const o=v.overrides.initials;if(o&&o.styles){const st={...o.styles};delete st.width;delete st.height;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides.initials;}}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Badge: Type (Count/Dot/Status) is genuinely structural, not a style-
@@ -4249,18 +4543,21 @@
       }
       const sizeLabels=optionLabelSet(sizeControl);
       const originalSizeLabel=sizeLabels.has(originalConfig)?originalConfig:null;
-      const variants=[];let sizeOptions=[];
+      const variants=[];let sizeOptions=[];const badgeSnaps=[];
       applyingFoundation=true;
       try{
         if(sizeControl){
           const all=sizeControl.querySelector('.multiselect-option-all input[type=checkbox]');
           if(all&&!all.checked){all.checked=true;all.dispatchEvent(new Event('change',{bubbles:true}));}
         }
-        const sweep=gatherEntries().filter(e=>e.type===originalType);
+        const sweep=gatherEntries();
         const base=new Map();(function walk(n){base.set(n.id,n);for(const child of n.children||[])walk(child);})(baseAnatomy);
         for(const entry of sweep){
           const sizeLabel=sizeControl?(sizeLabels.has(entry.config)?entry.config:null):null;
           if(sizeControl&&!sizeLabel)continue;
+          // Only the Count form is diffed against the base (Dot and Status are different layer trees); Dot rows are kept as snapshots for the
+          // grafted dot, and the Status row (a separate inline dot-and-label layout, no host icon) is not part of this export.
+          if(entry.type!==originalType){if(/dot/i.test(entry.type))badgeSnaps.push({when:{state:entry.state,size:sizeLabel},anatomy:snapshot(entry.root,'root',0)});continue;}
           if(sizeLabel)sizeOptions.push(sizeLabel);
           if(entry.config===originalConfig&&entry.state===originalState)continue;
           const variantAnatomy=snapshot(entry.root,'root',0),overrides={};
@@ -4286,16 +4583,53 @@
       const properties=[{id:'state',name:'State',type:'options',options:stateOptions.length?stateOptions:[originalState],default:originalState}];
       const selection={state:originalState};
       const allTypes=[...new Set(entries.filter(e=>e.config===originalConfig).map(e=>e.type))];
-      if(allTypes.length>1){properties.push({id:'appearance',name:'Appearance',type:'text',default:originalType});selection.appearance=originalType;}
+      const appearanceLabels=allTypes.filter(l=>!/status/i.test(l));
+      if(appearanceLabels.length>1){properties.push({id:'appearance',name:'Appearance',type:'options',options:appearanceLabels,default:originalType});selection.appearance=originalType;}
       if(sizeControl&&sizeOptions.length){properties.push({id:'size',name:'Size',type:'options',options:sizeOptions,default:originalSizeLabel&&sizeOptions.includes(originalSizeLabel)?originalSizeLabel:sizeOptions[0]});selection.size=properties[properties.length-1].default;}
 
       function findPart(n,partId){if(n.id===partId)return n;for(const c of n.children||[]){const r=findPart(c,partId);if(r)return r;}return null;}
-      const countNode=findPart(baseAnatomy,'count');
+      const countNode=findPart(baseAnatomy,'countLabel');
       const statusLabelNode=findPart(baseAnatomy,'statusLabel');
       if(countNode){countNode.bind='count';const def=countNode.text||countInput?.value.trim()||'5';properties.push({id:'count',name:'Count',type:'text',default:def});selection.count=def;}
       if(statusLabelNode){statusLabelNode.bind='statusLabel';const def=labelInput?.value.trim()||statusLabelNode.text||'Active';properties.push({id:'statusLabel',name:'Status label',type:'text',default:def});selection.statusLabel=def;}
       if(maxInput){properties.push({id:'max',name:'Max count',type:'text',default:maxInput.value.trim()||'99'});selection.max=maxInput.value.trim()||'99';}
 
+      // Badge, layer by layer. (1) The count pill is a container (pill background, padding and radius cannot live on a text layer) holding the number, and the
+      // number is the bound text; (2) its text uses the caption style at both Sizes (it was 16px in an 18px pill); (3) the Dot form (a plain circle in place
+      // of the pill) is harvested from its own rows and shown for Appearance = Dot with each State's colour and each Size's diameter; (4) the badge ring and
+      // pill hug their content, and the ring is anchored 6px above and beyond the host's top-right corner, as on the page.
+      {
+        const findN=(n,id)=>{if(n.id===id)return n;for(const k of n.children||[])if(true){const r=findN(k,id);if(r)return r;}return null;};
+        const labels=properties.find(p=>p.id==='appearance')?.options||[];
+        const countLabel=labels.find(l=>/count/i.test(l)),dotLabel=labels.find(l=>/dot/i.test(l));
+        const badge=findN(baseAnatomy,'badge'),pill=findN(baseAnatomy,'count');
+        if(pill&&countLabel)pill.visibleWhen=[{property:'appearance',equals:countLabel}];
+        const firstDot=dotLabel&&badgeSnaps.find(x=>findN(x.anatomy,'dot'));
+        const dot=firstDot&&findN(firstDot.anatomy,'dot');
+        if(badge&&dot&&!findN(baseAnatomy,'dot')){
+          dot.visibleWhen=[{property:'appearance',equals:dotLabel}];
+          badge.children.push(dot);
+          const sameWhen=(a,b)=>a.state===b.state&&(a.size||null)===(b.size||null);
+          for(const sn of badgeSnaps){
+            const nd=findN(sn.anatomy,'dot');if(!nd)continue;
+            const w={...sn.when,appearance:dotLabel};
+            variants.push({id:'cv-dot-'+M.id([w.size,w.state].filter(Boolean).join(' / ')),name:'Dot / '+[w.size,w.state].filter(Boolean).join(' / '),when:w,overrides:{dot:{styles:{...nd.styles}}}});
+          }
+        }
+        const strip=(n,keys)=>{if(!n)return;const st={...n.styles};for(const k of keys)delete st[k];n.styles=st;};
+        // ring: hug, no stray left/bottom (computed values); keep top/right (-6px) as the anchor.
+        for(const n of [badge]){if(n)n.styles={...n.styles,left:'auto',bottom:'auto'};}
+        // The ring is a 2px border around the pill/dot (box-sizing border-box): Figma strokes sit INSIDE the frame, so the 2px is also given as padding or
+        // the stroke would be painted over the pill. The pill keeps its 18px (Small: 16px) height - a fixed proportion - and only its width hugs the number.
+        // The ring is painted as the frame's own fill (its 2px padding is the visible ring) instead of an inside stroke: stroke and padding could drift
+        // apart in Figma and leave a gap between the ring and the pill. Pill and ring share the full radius, so it looks the same as the CSS border.
+        if(badge)badge.styles={...badge.styles,paddingTop:'2px',paddingRight:'2px',paddingBottom:'2px',paddingLeft:'2px',backgroundColor:badge.styles.borderTopColor||badge.styles.borderColor,borderTopWidth:'0px',borderRightWidth:'0px',borderBottomWidth:'0px',borderLeftWidth:'0px',borderTopStyle:'none',borderRightStyle:'none',borderBottomStyle:'none',borderLeftStyle:'none'};
+        strip(badge,['width','height']);strip(pill,['width']);
+        {const lab=findN(baseAnatomy,'countLabel');if(lab){const st={...lab.styles};delete st.width;delete st.height;lab.styles=st;}}
+        for(const v of variants){
+          for(const id of ['badge','count','countLabel']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.width;if(id!=='count')delete st.height;delete st.left;delete st.bottom;if(Object.keys(st).length)o.styles=st;else delete o.styles;if(!Object.keys(o).length)delete v.overrides[id];}}
+        }
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Card: Appearance/State/Size/Corner radius already cross generically

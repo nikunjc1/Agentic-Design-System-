@@ -109,11 +109,11 @@
         '<path d="M9.5 17a2.5 2.5 0 0 0 5 0h-5z" fill="currentColor" />' +
         "</svg>";
       var badgeInner = typeKey === "count"
-        ? '<span class="badge-demo-count" data-contract-part="count">' + escapeHtml(displayCount(count, max)) + "</span>"
-        : '<span class="badge-demo-dot"></span>';
+        ? '<span class="badge-demo-count" data-contract-part="count" data-contract-name="Count" data-contract-kind="container"><span data-contract-part="countLabel" data-contract-name="Count label">' + escapeHtml(displayCount(count, max)) + "</span></span>"
+        : '<span class="badge-demo-dot" data-contract-part="dot" data-contract-name="Dot" data-contract-kind="container"></span>';
       return '<div class="badge-demo-host-wrap">' +
-        '<div class="badge-demo-host">' + hostSvg + "</div>" +
-        '<span class="badge-demo-badge badge-demo-badge--' + stateKey + sizeCls + '">' + badgeInner + "</span>" +
+        '<div class="badge-demo-host" data-contract-part="host" data-contract-name="Host">' + hostSvg + "</div>" +
+        '<span class="badge-demo-badge badge-demo-badge--' + stateKey + sizeCls + '" data-contract-part="badge" data-contract-name="Badge">' + badgeInner + "</span>" +
         "</div>";
     }
     // status - standalone inline dot + text label, no host icon

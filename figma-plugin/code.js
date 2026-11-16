@@ -47,7 +47,7 @@
         for(const token of String(value).matchAll(/var\(\s*(--[\w-]+)/g))if(!(token[1] in (c.tokens||{})))fail('Unresolved token '+token[1]+' on '+n.id);
       }
       for(const [key,value]of Object.entries(n.attributes||{})){
-        if(!/^(?:aria-[\w-]+|id|for|name|readonly|required|maxlength|minlength|role|title|type|value|placeholder|disabled|checked|tabindex|href|src|alt|viewBox|d|cx|cy|r|x|y|x1|x2|y1|y2|width|height|rx|ry|points|fill|stroke|stroke-width|stroke-linecap|stroke-linejoin|xmlns|max|min|step|rows|colspan|rowspan)$/.test(key)||typeof value!=='string'||((key==='href'||key==='src')&&!/^(?:https?:|#|data:image\/(?:png|jpeg|webp|gif);base64,|[a-zA-Z0-9_.-]+(?:\/|$))/.test(value)))fail('Unsupported attribute '+key+' on '+n.id);
+        if(!/^(?:aria-[\w-]+|id|for|name|readonly|required|maxlength|minlength|role|title|type|value|placeholder|disabled|checked|tabindex|href|src|alt|viewBox|d|cx|cy|r|x|y|x1|x2|y1|y2|width|height|rx|ry|points|fill|stroke|stroke-width|stroke-linecap|stroke-linejoin|stroke-dasharray|xmlns|max|min|step|rows|colspan|rowspan)$/.test(key)||typeof value!=='string'||((key==='href'||key==='src')&&!/^(?:https?:|#|data:image\/(?:png|jpeg|webp|gif);base64,|[a-zA-Z0-9_.-]+(?:\/|$))/.test(value)))fail('Unsupported attribute '+key+' on '+n.id);
       }
       if(n.children&&!Array.isArray(n.children))fail('Children must be a list on '+n.id);else for(const child of n.children||[])walk(child,depth+1);
     }
@@ -630,6 +630,10 @@
      // Scaling every descendant with the frame it sits in is what actually
      // shrinks the path geometry to fit.
      (function scaleToFit(parent){for(const child of parent.children||[]){if('constraints'in child)child.constraints={horizontal:'SCALE',vertical:'SCALE'};scaleToFit(child);}})(node);
+    }else if(n.tag==='img'&&/^data:image\/(?:png|jpeg|webp|gif);base64,/.test(n.attributes?.src||'')&&typeof figma.createImage==='function'){
+     // A real picture (Avatar's Image appearance): an auto-layout-free frame whose fill is the embedded image, applied again at the end of styling
+     // (the generic background pass would otherwise replace it with an empty fill).
+     node=figma.createFrame();node.setPluginData('ads-image',n.attributes.src.slice(n.attributes.src.indexOf(',')+1));
     }else if(isText)node=figma.createText();
     else if(n.kind==='slot')node=figma.createFrame();
     else if(n.kind==='instance'){
@@ -804,6 +808,10 @@
     node.strokes=rgb?[{type:'SOLID',color:rgb,opacity:alpha(source,c.tokens)}]:[];node.strokeWeight=Math.max(...weights);node.strokeAlign='INSIDE';
     if('layoutMode'in node&&node.type!=='TEXT')for(const [index,side]of sides.entries())node['stroke'+side+'Weight']=weights[index];
     if(node.strokes.length)await bind(node,'strokes',source,'COLOR',true);
+    // border-style dashed / dotted had no mapping at all (every border drew solid, so the Divider's Dashed and Dotted States looked like Solid).
+    // Figma has one dash pattern for the whole stroke: dashes are about 3x the weight, dots about 1x with a matching gap.
+    {const styleName=visibleSide<0?'':String(s['border'+sides[visibleSide]+'Style']||s.borderStyle||''),w=Math.max(1,Math.max(...weights));
+     if(node.type!=='TEXT'&&node.strokes.length)node.dashPattern=styleName==='dashed'?[Math.max(4,w*3),Math.max(3,w*2)]:styleName==='dotted'?[w,Math.max(2,w*1.5)]:[];}
    }
    node.opacity=Math.max(0,Math.min(1,number(s.opacity,c.tokens,1)));
    // Every other numeric style field (fontSize, cornerRadius, itemSpacing,
@@ -867,6 +875,9 @@
     const growsMain=flow.some(k=>/^connector/.test(k.name||'')&&(number(k.styles?.flexGrow,c.tokens)||0)>0),
     hugMain=measurableMain&&!growsMain&&mainSize>0&&near(mainSize,contentMain),hugCross=measurableCross&&crossSize>0&&near(crossSize,contentCross);
     node.primaryAxisSizingMode=mainSize>0&&!hugMain?'FIXED':'AUTO';node.counterAxisSizingMode=crossSize>0&&!hugCross?'FIXED':'AUTO';
+   }else if('layoutMode'in node&&inlineTextRun){
+    // A run of text (Badge's pill around its number) keeps whichever axis the contract does not size hugging: resize() above flipped both to FIXED.
+    if(!width)node.primaryAxisSizingMode='AUTO';if(!height)node.counterAxisSizingMode='AUTO';
    }}
    // A scroll window (overflow + max-height, Modal's Scrollable body) hugs its content up to that height instead of being frozen at it.
    {const mhText=String(resolve(s.maxHeight,c.tokens)||'').trim();const mh=/^[\d.]+px$/.test(mhText)?parseFloat(mhText):0;
@@ -900,7 +911,7 @@
     node.layoutAlign=s.alignSelf==='stretch'||counterAxisFull?'STRETCH':'INHERIT';
     // Text that fills its container's width must wrap inside it: an auto-width text with Fill container stays one line and runs past the
     // container (over the buttons below it). Fill width + auto height is the wrapping mode.
-    if(node.type==='TEXT'&&node.layoutAlign==='STRETCH'&&node.textAutoResize==='WIDTH_AND_HEIGHT')node.textAutoResize='HEIGHT';
+    if(node.type==='TEXT'&&node.textAutoResize==='WIDTH_AND_HEIGHT'&&(node.layoutAlign==='STRETCH'&&parent.layoutMode==='VERTICAL'||number(s.flexGrow,c.tokens)>0&&parent.layoutMode==='HORIZONTAL'))node.textAutoResize='HEIGHT';
     // This block (and the whole reason it needs to run before the
     // children-processing loop below, not after, which is where it used to
     // sit) resolves THIS node's own size as a CHILD of its parent -
@@ -925,6 +936,18 @@
      if(parent.layoutMode==='VERTICAL'&&parent.width)node.resize(Math.max(1,parent.width-(parent.paddingLeft||0)-(parent.paddingRight||0)),node.height);
      else if(parent.layoutMode==='HORIZONTAL'&&parent.height)node.resize(node.width,Math.max(1,parent.height-(parent.paddingTop||0)-(parent.paddingBottom||0)));
      if(keepModes){node.primaryAxisSizingMode=keepModes[0];node.counterAxisSizingMode=keepModes[1];}
+    }
+    // Hug and Fill cannot both apply on one axis: a frame whose own sizing on the filled axis is still Hug (AUTO) stays hugging and ignores Fill
+    // container. That is the default for any auto-layout frame given no captured size, which left Drawer's header/body/footer at their text width.
+    // Switch that axis to FIXED so the fill (layoutAlign STRETCH / layoutGrow) actually takes effect.
+    if(node.layoutMode&&node.layoutMode!=='NONE'&&'primaryAxisSizingMode'in node&&parent.layoutMode&&parent.layoutMode!=='NONE'&&node.layoutPositioning!=='ABSOLUTE'){
+     const pH=parent.layoutMode==='HORIZONTAL',grow=node.layoutGrow===1,stretch=node.layoutAlign==='STRETCH';
+     // Only where the PARENT has a definite size on that axis: filling a hugging parent has nothing to fill, and fixing the child there would
+     // collapse the parent to the child's default size.
+     const parentFixedH=(pH?parent.primaryAxisSizingMode:parent.counterAxisSizingMode)==='FIXED',parentFixedV=(pH?parent.counterAxisSizingMode:parent.primaryAxisSizingMode)==='FIXED';
+     const fillH=(pH?grow:stretch)&&parentFixedH,fillV=(pH?stretch:grow)&&parentFixedV;
+     if(fillH){if(node.layoutMode==='HORIZONTAL')node.primaryAxisSizingMode='FIXED';else node.counterAxisSizingMode='FIXED';}
+     if(fillV){if(node.layoutMode==='VERTICAL')node.primaryAxisSizingMode='FIXED';else node.counterAxisSizingMode='FIXED';}
     }
     // A real <input>/<textarea single-line> NEVER visually wraps its value
     // or placeholder, no matter what its captured white-space/overflow
@@ -992,16 +1015,20 @@
      // The parent's real size is only known once it has been laid out around its content, so the final position is worked out after the masters are built (see the anchor pass).
      node.setPluginData('ads-anchor',JSON.stringify({h:s.justifySelf||'',v:s.alignSelf||''}));}
     else if(!n.ring&&n.tag!=='svg'&&node.type!=='TEXT'){
-     const edge=key=>{const t=String(resolve(s[key],c.tokens)||'').trim();return /^-?[\d.]+px$/.test(t)?parseFloat(t):null;};
+     // Includes calc() offsets such as calc(-1 * 6px) (Badge's top/right), which sit slightly outside the parent.
+     const edge=key=>{if(s[key]===undefined)return null;const t=String(resolve(s[key],c.tokens)||'').trim();if(t==='auto'||t==='')return null;const v=number(s[key],c.tokens,NaN);return Number.isFinite(v)?v:null;};
      const rightPx=edge('right'),bottomPx=edge('bottom'),leftPx=edge('left'),topPx=edge('top');
-     const nearEdge=v=>v!==null&&v>=0&&v<=16;
+     const nearEdge=v=>v!==null&&v>=-16&&v<=16;
      const full=leftPx!==null&&rightPx!==null&&Math.abs(leftPx)<1.5&&Math.abs(rightPx)<1.5;
-     const anchorRight=!full&&nearEdge(rightPx)&&leftPx!==null&&leftPx>rightPx,anchorBottom=nearEdge(bottomPx)&&topPx!==null&&topPx>bottomPx;
+     const anchorRight=!full&&nearEdge(rightPx)&&(leftPx===null||leftPx>rightPx),anchorBottom=nearEdge(bottomPx)&&(topPx===null||topPx>bottomPx);
      if(full||anchorRight||anchorBottom){
       node.constraints={horizontal:full?'STRETCH':anchorRight?'MAX':'MIN',vertical:anchorBottom?'MAX':'MIN'};
       if(full)node.resize(Math.max(1,parent.width),Math.max(1,node.height));
-      else if(anchorRight)node.x=Math.max(0,parent.width-node.width-rightPx);
-      if(anchorBottom)node.y=Math.max(0,parent.height-node.height-bottomPx);
+      else if(anchorRight)node.x=parent.width-node.width-rightPx;
+      if(anchorBottom)node.y=parent.height-node.height-bottomPx;
+      // The layer's own size is only final once its content has laid out (a Badge ring hugging its number), so the offset from the edge is re-applied in
+      // the anchor pass after the masters are built.
+      if(!full)node.setPluginData('ads-anchor',JSON.stringify({mode:'offset',right:anchorRight?rightPx:null,bottom:anchorBottom?bottomPx:null,left:leftPx===null?0:leftPx,top:topPx===null?0:topPx}));
      }
     }
    }
@@ -1051,6 +1078,7 @@
     if('children'in node){const active=new Set(children.map(child=>child.id));for(const child of node.children)if(child.getPluginData(PART)&&!active.has(child.getPluginData(PART))){const slot=child.type==='SLOT'&&child.componentPropertyReferences?.slotContentId;child.componentPropertyReferences=slot?{slotContentId:slot}:{};child.visible=false;child.setPluginData('ads-retired','true');(function retireDescendants(n){for(const grandchild of n.children||[]){grandchild.visible=false;grandchild.setPluginData('ads-retired','true');retireDescendants(grandchild);}})(child);}}}
    const matrix=/^matrix\(([^)]+)\)/.exec(resolve(s.transform,c.tokens));
    node.rotation=matrix?-Math.atan2(Number(matrix[1].split(',')[1]),Number(matrix[1].split(',')[0]))*180/Math.PI:0;
+   if(n.tag==='img'){const b64=node.getPluginData('ads-image');if(b64&&typeof figma.createImage==='function'&&figma.base64Decode){try{node.fills=[{type:'IMAGE',imageHash:figma.createImage(figma.base64Decode(b64)).hash,scaleMode:'FILL'}];node.clipsContent=true;}catch(error){warnings.add('Could not place an embedded image: '+error.message);}}}
    return node;
   }
   // Reading plugin data for every growing set child on every iteration made
@@ -1202,10 +1230,15 @@
    if(node.getPluginData&&node.getPluginData('ads-anchor')&&node.parent&&'width'in node.parent){
     try{
      const spec=JSON.parse(node.getPluginData('ads-anchor')),parent=node.parent,pw=parent.width,ph=parent.height,w=node.width,h=node.height,rad=(node.rotation||0)*Math.PI/180,cos=Math.cos(rad),sin=Math.sin(rad);
+     if(spec.mode==='offset'){
+      node.x=spec.right!==null?pw-w-spec.right:spec.left;node.y=spec.bottom!==null?ph-h-spec.bottom:spec.top;
+      node.constraints={horizontal:spec.right!==null?'MAX':'MIN',vertical:spec.bottom!==null?'MAX':'MIN'};
+     }else{
      const at=(v,size)=>v==='center'?size/2:(v==='flex-end'||v==='end')?size:0,anchorOf=v=>v==='center'?'CENTER':(v==='flex-end'||v==='end')?'MAX':'MIN';
      const cx=at(spec.h,pw),cy=at(spec.v,ph);
      node.x=cx-(cos*(w/2)+sin*(h/2));node.y=cy-(-sin*(w/2)+cos*(h/2));
      node.constraints={horizontal:anchorOf(spec.h),vertical:anchorOf(spec.v)};
+     }
     }catch(error){warnings.add('Could not anchor a layer: '+error.message);}
    }
    for(const child of node.children||[])anchorPass(child);
@@ -1575,7 +1608,7 @@
 ;
 /* The sandbox owns transport and scene work; the iframe displays status only. */
 figma.showUI(__html__,{width:400,height:260});
-const DAMCO_PLUGIN_BUILD='damco-native-bridge-2026-11-16-v70';
+const DAMCO_PLUGIN_BUILD='damco-native-bridge-2026-11-16-v77';
 let adapter;
 const bridge=createDamcoBridgeRuntime({build:DAMCO_PLUGIN_BUILD,fetch:typeof fetch==='function'?fetch:undefined,
  notify:message=>figma.ui.postMessage(message),

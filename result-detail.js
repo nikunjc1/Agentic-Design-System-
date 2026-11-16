@@ -163,9 +163,9 @@
   // icon, title, description and an actions row (one primary button for
   // Default/Compact, plus a secondary button for With secondary).
   function buildResultField(typeKey, stateKey, title, description, headingLevel){
-    var iconHtml = ICONS[typeKey].replace('<svg ', '<svg class="result-demo-icon" ');
+    var iconHtml = '<span class="result-demo-icon-wrap" data-contract-part="iconwrap" data-contract-name="Icon wrap">' + ICONS[typeKey].replace('<svg ', '<svg class="result-demo-icon" data-contract-part="icon" data-contract-name="Icon" ') + "</span>";
     var secondaryHtml = stateKey === "with-secondary"
-      ? '<button type="button" class="result-demo-btn result-demo-btn--secondary" tabindex="-1">View details</button>'
+      ? '<button type="button" class="result-demo-btn result-demo-btn--secondary" data-contract-part="secondary" data-contract-name="View details" tabindex="-1">View details</button>'
       : "";
     var extraClass = stateKey === "compact" ? " result-demo-panel--compact" : "";
     var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
@@ -175,8 +175,8 @@
       iconHtml +
       "<" + headingTag + ' class="result-demo-title" data-contract-part="title" style="' + headingStyle + '">' + escapeHtml(title) + "</" + headingTag + ">" +
       '<p class="result-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>" +
-      '<div class="result-demo-actions">' +
-        '<button type="button" class="result-demo-btn result-demo-btn--primary" tabindex="-1">Done</button>' +
+      '<div class="result-demo-actions" data-contract-part="actions" data-contract-name="Actions">' +
+        '<button type="button" class="result-demo-btn result-demo-btn--primary" data-contract-part="done" data-contract-name="Done" tabindex="-1">Done</button>' +
         secondaryHtml +
       "</div>" +
     "</div>";

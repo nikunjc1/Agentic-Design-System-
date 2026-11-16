@@ -49,7 +49,7 @@
 
   function bubbleContentFor(stateKey, question, confirmLabel, cancelLabel, headingLevel){
     var iconHtml = stateKey === "with-icon"
-      ? '<span class="popconfirm-demo-icon" aria-hidden="true">' + WARNING_ICON_SVG + "</span>"
+      ? '<span class="popconfirm-demo-icon" data-contract-part="icon" data-contract-name="Icon" aria-hidden="true">' + WARNING_ICON_SVG + "</span>"
       : "";
     var headingTag = HEADING_LEVEL_OPTIONS.some(function(o){ return o.value === headingLevel; }) ? headingLevel : DEFAULT_HEADING_LEVEL;
     // color is pinned to the inverted-overlay foreground on purpose - the
@@ -64,9 +64,9 @@
     // the same way Alert/Toast/Modal/etc's title nodes do; nesting the icon
     // inside would turn it into a container when "with icon" is active,
     // losing the Figma text/typography binding for that one state.
-    var questionHtml = '<div class="popconfirm-demo-question">' + iconHtml + "<" + headingTag + ' data-contract-part="question" style="' + headingStyle + '">' + escapeHtml(question) + "</" + headingTag + "></div>";
+    var questionHtml = '<div class="popconfirm-demo-question" data-contract-part="questionrow" data-contract-name="Question row">' + iconHtml + "<" + headingTag + ' data-contract-part="question" style="' + headingStyle + '">' + escapeHtml(question) + "</" + headingTag + "></div>";
     var confirmClass = "popconfirm-demo-btn popconfirm-demo-btn--confirm" + (stateKey === "destructive" ? " is-destructive" : "");
-    var actionsHtml = '<div class="popconfirm-demo-actions">' +
+    var actionsHtml = '<div class="popconfirm-demo-actions" data-contract-part="actions" data-contract-name="Actions">' +
       '<button type="button" class="popconfirm-demo-btn popconfirm-demo-btn--cancel" data-contract-part="cancel" tabindex="-1" aria-hidden="true">' + escapeHtml(cancelLabel) + "</button>" +
       '<button type="button" class="' + confirmClass + '" data-contract-part="confirm" tabindex="-1" aria-hidden="true">' + escapeHtml(confirmLabel) + "</button>" +
       "</div>";
@@ -85,9 +85,9 @@
   // naturally pushes its own matrix cell/row taller instead of overlapping
   // whatever sits next to it.
   function buildPopConfirmField(typeKey, stateKey, question, confirmLabel, cancelLabel, headingLevel){
-    var bubbleHtml = '<div class="popconfirm-demo-bubble">' + bubbleContentFor(stateKey, question, confirmLabel, cancelLabel, headingLevel) + "</div>";
-    var arrowHtml = '<div class="popconfirm-demo-arrow" aria-hidden="true"></div>';
-    var triggerHtml = '<button type="button" class="popconfirm-demo-trigger" tabindex="-1" aria-hidden="true">Delete</button>';
+    var bubbleHtml = '<div class="popconfirm-demo-bubble" data-contract-part="card" data-contract-name="Card">' + bubbleContentFor(stateKey, question, confirmLabel, cancelLabel, headingLevel) + "</div>";
+    var arrowHtml = '<div class="popconfirm-demo-arrow" data-contract-part="arrow" data-contract-name="Arrow" aria-hidden="true"></div>';
+    var triggerHtml = '<button type="button" class="popconfirm-demo-trigger" data-contract-part="trigger" data-contract-name="Trigger" tabindex="-1" aria-hidden="true">Delete</button>';
     return '<div class="popconfirm-demo-wrap popconfirm-demo-wrap--' + typeKey + '">' + bubbleHtml + arrowHtml + triggerHtml + "</div>";
   }
 
