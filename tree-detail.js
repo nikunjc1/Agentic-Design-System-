@@ -61,6 +61,10 @@
   }
 
   var CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>';
+  // Expanded rows draw a down-pointing chevron (own geometry) instead of rotating the right-pointing one: a rotation does not survive the Figma export.
+  var CHEVRON_DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
+  // Stable layer names: every node gets the index it has in a depth-first walk of TREE_DATA, so a row keeps its name in every State and Type.
+  var NODE_INDEX = (function(){ var map = {}, n = 0; (function walk(list){ list.forEach(function(node){ map[node.label] = n++; if (node.children) walk(node.children); }); })(TREE_DATA); return map; })();
   var FOLDER_CLOSED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>';
   var FOLDER_OPEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2H7a2 2 0 0 0-1.9 1.4L3 15V7z"/><path d="M3 15l1.7-5.7A2 2 0 0 1 6.6 8H21l-2 8a2 2 0 0 1-2 1.5H5a2 2 0 0 1-2-2z"/></svg>';
   var FILE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
@@ -99,49 +103,42 @@
     // listens for clicks - so the attribute is inert there.
     var nodeAttr = ' data-node="' + escapeHtml(node.label) + '"';
 
+    var nid = NODE_INDEX[node.label];
     var toggleHtml = hasChildren
-      ? '<span class="tree-demo-toggle' + (isExpanded ? " is-expanded" : "") + '"' + nodeAttr + ' data-act="toggle">' + CHEVRON_SVG + "</span>"
-      : '<span class="tree-demo-toggle-spacer"></span>';
+      ? '<span class="tree-demo-toggle' + (isExpanded ? " is-expanded" : "") + '"' + nodeAttr + ' data-act="toggle" data-contract-part="toggle-' + nid + '">' + (isExpanded ? CHEVRON_DOWN_SVG : CHEVRON_SVG) + "</span>"
+      : '<span class="tree-demo-toggle-spacer" data-contract-part="spacer-' + nid + '" data-contract-kind="container"></span>';
 
     var checkboxHtml = "";
     if (opts.checkable){
       var state = checkStateFor(node, opts.checkedLabels);
       var stateCls = state === "checked" ? " is-checked" : (state === "indeterminate" ? " is-indeterminate" : "");
       var mark = state === "checked" ? CHECK_SVG : (state === "indeterminate" ? DASH_SVG : "");
-      checkboxHtml = '<span class="tree-demo-checkbox' + stateCls + '"' + nodeAttr + ' data-act="check">' + mark + "</span>";
+      checkboxHtml = '<span class="tree-demo-checkbox' + stateCls + '"' + nodeAttr + ' data-act="check" data-contract-part="check-' + nid + '" data-contract-kind="container">' + mark + "</span>";
     }
 
     var iconHtml = "";
     if (opts.showIcons){
       var iconSvg = hasChildren ? (isExpanded ? FOLDER_OPEN_SVG : FOLDER_CLOSED_SVG) : FILE_SVG;
-      iconHtml = '<span class="tree-demo-icon">' + iconSvg + "</span>";
+      iconHtml = '<span class="tree-demo-icon" data-contract-part="icon-' + nid + '">' + iconSvg + "</span>";
     }
 
     var rowCls = "tree-demo-row" + (!opts.checkable && isChecked ? " is-selected" : "");
     // Node labels are fixed reference content (see TREE_DATA above), but
     // escapeHtml is applied anyway as defense-in-depth in case this
     // function is ever reused with dynamic node data.
-    var labelHtml;
-    if (opts.showMeta && node.meta){
-      // Metatext (SLDS-accurate) - a second, smaller, muted line under the
-      // label, not a separate row - both are wrapped together so the row
-      // stays one flex item and the toggle/icon can top-align against the
-      // now-taller two-line block, matching Lightning Design System's own
-      // .slds-tree__item .slds-button{ align-self:flex-start } treatment.
-      labelHtml = '<span class="tree-demo-label-group"><span class="tree-demo-label">' + escapeHtml(node.label) + '</span><span class="tree-demo-meta">' + escapeHtml(node.meta) + "</span></span>";
-    } else {
-      labelHtml = '<span class="tree-demo-label">' + escapeHtml(node.label) + "</span>";
-    }
-    var rowHtml = '<div class="' + rowCls + '">' + toggleHtml + checkboxHtml + iconHtml + labelHtml + "</div>";
+    // The label always sits in a label group (a column), with the metatext line added only for the Metatext type, so the layers are the same in every Type.
+    var labelHtml = '<span class="tree-demo-label-group" data-contract-part="labelgroup-' + nid + '"><span class="tree-demo-label" data-contract-part="label-' + nid + '">' + escapeHtml(node.label) + "</span>" +
+      ((opts.showMeta && node.meta) ? '<span class="tree-demo-meta" data-contract-part="meta-' + nid + '">' + escapeHtml(node.meta) + "</span>" : "") + "</span>";
+    var rowHtml = '<div class="' + rowCls + '" data-contract-part="row-' + nid + '">' + toggleHtml + checkboxHtml + iconHtml + labelHtml + "</div>";
 
     var childrenHtml = "";
     if (hasChildren && isExpanded){
-      childrenHtml = '<div class="tree-demo-children">' +
+      childrenHtml = '<div class="tree-demo-children" data-contract-part="children-' + nid + '">' +
         node.children.map(function(child){ return buildTreeNode(child, opts); }).join("") +
         "</div>";
     }
 
-    return '<div class="tree-demo-node">' + rowHtml + childrenHtml + "</div>";
+    return '<div class="tree-demo-node" data-contract-part="node-' + nid + '">' + rowHtml + childrenHtml + "</div>";
   }
 
   // liveState is supplied only by the interactive sandbox, which drives its
@@ -225,9 +222,9 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Tree component */");
-    lines.push(".tree-demo-wrap{ width:var(--dimension-220); font-family:var(--font-body); font-size:var(--type-body-size); }");
+    lines.push(".tree-demo-wrap{ width:var(--dimension-200); font-family:var(--font-body); font-size:var(--type-body-size); }");
     lines.push(".tree-demo-wrap.is-disabled{ opacity:0.4; pointer-events:none; }");
-    lines.push('.tree-demo-root{ margin:0 0 var(--space-6); font-family:var(--font-mono); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
+    lines.push('.tree-demo-root{ margin:0 0 var(--space-6); font-family:var(--font-mono); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); letter-spacing:0.06em; color:var(--text-dim); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }');
     lines.push(".tree-demo-row{ display:flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-6); border-radius:var(--radius-sm); color:var(--text-hi); cursor:pointer; }");
     lines.push(".tree-demo-row:hover{ background:var(--graphite-800); }");
     lines.push(".tree-demo-row.is-selected{ background:var(--red-tint); color:var(--red-400); }");

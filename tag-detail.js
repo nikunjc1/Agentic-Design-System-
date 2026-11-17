@@ -203,7 +203,7 @@
     var labelText = escapeHtml(label);
     var labelHtml = '<span data-contract-part="label">' + labelText + "</span>";
     var removeHtml = (stateKey === "removable")
-      ? '<button type="button" class="tag-demo-remove"' + tabindexAttr + ' aria-label="Remove ' + labelText + '">' + REMOVE_ICON + "</button>"
+      ? '<button type="button" class="tag-demo-remove" data-contract-part="remove" data-contract-kind="container"' + tabindexAttr + ' aria-label="Remove ' + labelText + '">' + REMOVE_ICON.replace("<svg ", '<svg data-contract-part="remove-icon" ') + "</button>"
       : "";
     return '<span class="tag-demo-chip tag-demo-chip--' + typeKey + selectedCls + '" style="border-radius:' + radiusCss + ';">' + labelHtml + removeHtml + "</span>";
   }

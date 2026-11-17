@@ -1,7 +1,7 @@
 ---
 project: "design system"
 version: "3.5.0-local-draft"
-generated: "2026-11-06T10:15:36.752Z"
+generated: "2026-11-16T13:46:59.875Z"
 scope: "project-context"
 ---
 
@@ -72,6 +72,7 @@ scope: "project-context"
       "--opacity-40": "0.4",
       "--opacity-50": "0.5",
       "--color-focus-ring": "var(--border-state-focus)",
+      "--border-state-focus": "var(--red-500)",
       "--color-on-brand": "var(--on-brand-text)",
       "--on-brand-text": "#FFFFFF",
       "--red-500": "#FF031A",
@@ -107,6 +108,14 @@ scope: "project-context"
       "--font-body": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
       "--font-mono": "\"JetBrains Mono\", ui-monospace, \"SFMono-Regular\", monospace",
       "--numeric-tabular": "tabular-nums",
+      "--icon-size": "24px",
+      "--icon-scale": "1",
+      "--icon-stroke": "1.8",
+      "--icon-cap": "round",
+      "--icon-join": "round",
+      "--border-style": "solid",
+      "--border-sides": "all",
+      "--focus-ring-width": "2px",
       "--radius-none": "0px",
       "--radius-2": "2px",
       "--radius-sm": "4px",
@@ -116,6 +125,12 @@ scope: "project-context"
       "--radius-16": "16px",
       "--radius-24": "24px",
       "--radius-full": "9999px",
+      "--radius-4": "4px",
+      "--radius-8": "8px",
+      "--radius-20": "20px",
+      "--radius-32": "32px",
+      "--radius-40": "40px",
+      "--radius-lg": "16px",
       "--space-4": "4px",
       "--space-8": "8px",
       "--space-12": "12px",
@@ -140,6 +155,14 @@ scope: "project-context"
       "--shadow-lg": "0 8px 16px rgba(0,0,0,0.12)",
       "--shadow-xl": "0 12px 24px rgba(0,0,0,0.14)",
       "--shadow-2xl": "0 16px 32px rgba(0,0,0,0.16)",
+      "--size-control": "40px",
+      "--size-target": "44px",
+      "--size-icon": "24px",
+      "--size-content": "1200px",
+      "--size-sidebar": "264px",
+      "--size-topbar": "64px",
+      "--grid-columns": "12",
+      "--grid-gutter": "24px",
       "--overlay-scrim": "rgba(0,0,0,0.55)",
       "--duration-fast": "0.12s",
       "--duration-base": "0.15s",
@@ -175,7 +198,7 @@ scope: "project-context"
       "--status-danger-text": "#000000",
       "--status-info-text": "#000000",
       "--link-text": "#e60317",
-      "--color-ai-accent": "#8b5cf6",
+      "--color-ai-accent": "#7c3aed",
       "--color-ai-accent-strong": "#7c3aed",
       "--color-ai-accent-tint": "rgba(139,92,246,0.12)",
       "--color-ai-confidence-high": "var(--green-700)",
@@ -670,31 +693,10 @@ scope: "project-context"
       "--dimension-680": "680px",
       "--dimension-800": "800px",
       "--dimension-820": "820px",
-      "--dimension-1352": "1352px",
-      "--radius-4": "4px",
-      "--radius-8": "8px",
-      "--radius-20": "20px",
-      "--radius-32": "32px",
-      "--radius-40": "40px",
-      "--radius-lg": "16px",
-      "--border-style": "solid",
-      "--border-sides": "all",
-      "--border-state-focus": "var(--red-500)",
-      "--focus-ring-width": "2px",
-      "--size-control": "40px",
-      "--size-target": "44px",
-      "--size-icon": "24px",
-      "--size-content": "1200px",
-      "--size-sidebar": "264px",
-      "--icon-size": "24px",
-      "--icon-stroke": "1.8",
-      "--icon-cap": "round",
-      "--icon-join": "round",
-      "--grid-columns": "12",
-      "--grid-gutter": "24px"
+      "--dimension-1352": "1352px"
     },
     "dataFormat": {
-      "locale": "en-GB",
+      "locale": "en-US",
       "grouping": true,
       "separator": "locale",
       "unit": "kg",
@@ -704,14 +706,14 @@ scope: "project-context"
       "decimals": 2,
       "large": "compact",
       "tableAlign": "end",
-      "date": "iso",
+      "date": "locale",
       "hourCycle": "h23",
       "seconds": false,
       "combined": "space",
       "relative": true,
       "zone": "UTC",
       "showZone": true,
-      "range": " – ",
+      "range": "to",
       "noValue": "–",
       "loading": "skeleton",
       "redaction": "partial",
@@ -753,6 +755,7 @@ scope: "project-context"
         "--opacity-40": "0.4",
         "--opacity-50": "0.5",
         "--color-focus-ring": "var(--border-state-focus)",
+        "--border-state-focus": "var(--red-500)",
         "--color-on-brand": "var(--on-brand-text)",
         "--on-brand-text": "#FFFFFF",
         "--red-500": "#FF031A",
@@ -788,6 +791,14 @@ scope: "project-context"
         "--font-body": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
         "--font-mono": "\"JetBrains Mono\", ui-monospace, \"SFMono-Regular\", monospace",
         "--numeric-tabular": "tabular-nums",
+        "--icon-size": "24px",
+        "--icon-scale": "1",
+        "--icon-stroke": "1.8",
+        "--icon-cap": "round",
+        "--icon-join": "round",
+        "--border-style": "solid",
+        "--border-sides": "all",
+        "--focus-ring-width": "2px",
         "--radius-none": "0px",
         "--radius-2": "2px",
         "--radius-sm": "4px",
@@ -797,6 +808,12 @@ scope: "project-context"
         "--radius-16": "16px",
         "--radius-24": "24px",
         "--radius-full": "9999px",
+        "--radius-4": "4px",
+        "--radius-8": "8px",
+        "--radius-20": "20px",
+        "--radius-32": "32px",
+        "--radius-40": "40px",
+        "--radius-lg": "16px",
         "--space-4": "4px",
         "--space-8": "8px",
         "--space-12": "12px",
@@ -821,6 +838,14 @@ scope: "project-context"
         "--shadow-lg": "0 8px 16px rgba(0,0,0,0.12)",
         "--shadow-xl": "0 12px 24px rgba(0,0,0,0.14)",
         "--shadow-2xl": "0 16px 32px rgba(0,0,0,0.16)",
+        "--size-control": "40px",
+        "--size-target": "44px",
+        "--size-icon": "24px",
+        "--size-content": "1200px",
+        "--size-sidebar": "264px",
+        "--size-topbar": "64px",
+        "--grid-columns": "12",
+        "--grid-gutter": "24px",
         "--overlay-scrim": "rgba(0,0,0,0.55)",
         "--duration-fast": "0.12s",
         "--duration-base": "0.15s",
@@ -856,7 +881,7 @@ scope: "project-context"
         "--status-danger-text": "#000000",
         "--status-info-text": "#000000",
         "--link-text": "#e60317",
-        "--color-ai-accent": "#8b5cf6",
+        "--color-ai-accent": "#7c3aed",
         "--color-ai-accent-strong": "#7c3aed",
         "--color-ai-accent-tint": "rgba(139,92,246,0.12)",
         "--color-ai-confidence-high": "var(--green-700)",
@@ -1351,31 +1376,10 @@ scope: "project-context"
         "--dimension-680": "680px",
         "--dimension-800": "800px",
         "--dimension-820": "820px",
-        "--dimension-1352": "1352px",
-        "--radius-4": "4px",
-        "--radius-8": "8px",
-        "--radius-20": "20px",
-        "--radius-32": "32px",
-        "--radius-40": "40px",
-        "--radius-lg": "16px",
-        "--border-style": "solid",
-        "--border-sides": "all",
-        "--border-state-focus": "var(--red-500)",
-        "--focus-ring-width": "2px",
-        "--size-control": "40px",
-        "--size-target": "44px",
-        "--size-icon": "24px",
-        "--size-content": "1200px",
-        "--size-sidebar": "264px",
-        "--icon-size": "24px",
-        "--icon-stroke": "1.8",
-        "--icon-cap": "round",
-        "--icon-join": "round",
-        "--grid-columns": "12",
-        "--grid-gutter": "24px"
+        "--dimension-1352": "1352px"
       },
       "dataFormat": {
-        "locale": "en-GB",
+        "locale": "en-US",
         "grouping": true,
         "separator": "locale",
         "unit": "kg",
@@ -1385,14 +1389,14 @@ scope: "project-context"
         "decimals": 2,
         "large": "compact",
         "tableAlign": "end",
-        "date": "iso",
+        "date": "locale",
         "hourCycle": "h23",
         "seconds": false,
         "combined": "space",
         "relative": true,
         "zone": "UTC",
         "showZone": true,
-        "range": " – ",
+        "range": "to",
         "noValue": "–",
         "loading": "skeleton",
         "redaction": "partial",
@@ -1433,6 +1437,7 @@ scope: "project-context"
         "--opacity-40": "0.4",
         "--opacity-50": "0.5",
         "--color-focus-ring": "var(--border-state-focus)",
+        "--border-state-focus": "var(--red-400)",
         "--color-on-brand": "var(--on-brand-text)",
         "--on-brand-text": "#FFFFFF",
         "--red-500": "#FF031A",
@@ -1468,6 +1473,14 @@ scope: "project-context"
         "--font-body": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
         "--font-mono": "\"JetBrains Mono\", ui-monospace, \"SFMono-Regular\", monospace",
         "--numeric-tabular": "tabular-nums",
+        "--icon-size": "24px",
+        "--icon-scale": "1",
+        "--icon-stroke": "1.8",
+        "--icon-cap": "round",
+        "--icon-join": "round",
+        "--border-style": "solid",
+        "--border-sides": "all",
+        "--focus-ring-width": "2px",
         "--radius-none": "0px",
         "--radius-2": "2px",
         "--radius-sm": "4px",
@@ -1477,6 +1490,12 @@ scope: "project-context"
         "--radius-16": "16px",
         "--radius-24": "24px",
         "--radius-full": "9999px",
+        "--radius-4": "4px",
+        "--radius-8": "8px",
+        "--radius-20": "20px",
+        "--radius-32": "32px",
+        "--radius-40": "40px",
+        "--radius-lg": "16px",
         "--space-4": "4px",
         "--space-8": "8px",
         "--space-12": "12px",
@@ -1495,12 +1514,20 @@ scope: "project-context"
         "--space-112": "112px",
         "--space-128": "128px",
         "--shadow-none": "none",
-        "--shadow-xs": "0 1px 2px rgba(0,0,0,0.06)",
-        "--shadow-sm": "0 1px 4px rgba(0,0,0,0.08)",
-        "--shadow-md": "0 4px 8px rgba(0,0,0,0.1)",
-        "--shadow-lg": "0 8px 16px rgba(0,0,0,0.12)",
-        "--shadow-xl": "0 12px 24px rgba(0,0,0,0.14)",
-        "--shadow-2xl": "0 16px 32px rgba(0,0,0,0.16)",
+        "--shadow-xs": "0 1px 2px rgba(0,0,0,0.15)",
+        "--shadow-sm": "0 1px 4px rgba(0,0,0,0.2)",
+        "--shadow-md": "0 4px 8px rgba(0,0,0,0.25)",
+        "--shadow-lg": "0 8px 16px rgba(0,0,0,0.3)",
+        "--shadow-xl": "0 12px 24px rgba(0,0,0,0.35)",
+        "--shadow-2xl": "0 16px 32px rgba(0,0,0,0.4)",
+        "--size-control": "40px",
+        "--size-target": "44px",
+        "--size-icon": "24px",
+        "--size-content": "1200px",
+        "--size-sidebar": "264px",
+        "--size-topbar": "64px",
+        "--grid-columns": "12",
+        "--grid-gutter": "24px",
         "--overlay-scrim": "rgba(0,0,0,0.55)",
         "--duration-fast": "0.12s",
         "--duration-base": "0.15s",
@@ -1536,7 +1563,7 @@ scope: "project-context"
         "--status-danger-text": "#000000",
         "--status-info-text": "#000000",
         "--link-text": "#ff263a",
-        "--color-ai-accent": "#8b5cf6",
+        "--color-ai-accent": "#a78bfa",
         "--color-ai-accent-strong": "#a78bfa",
         "--color-ai-accent-tint": "rgba(139,92,246,0.12)",
         "--color-ai-confidence-high": "var(--green-700)",
@@ -2031,31 +2058,10 @@ scope: "project-context"
         "--dimension-680": "680px",
         "--dimension-800": "800px",
         "--dimension-820": "820px",
-        "--dimension-1352": "1352px",
-        "--radius-4": "4px",
-        "--radius-8": "8px",
-        "--radius-20": "20px",
-        "--radius-32": "32px",
-        "--radius-40": "40px",
-        "--radius-lg": "16px",
-        "--border-style": "solid",
-        "--border-sides": "all",
-        "--border-state-focus": "var(--red-400)",
-        "--focus-ring-width": "2px",
-        "--size-control": "40px",
-        "--size-target": "44px",
-        "--size-icon": "24px",
-        "--size-content": "1200px",
-        "--size-sidebar": "264px",
-        "--icon-size": "24px",
-        "--icon-stroke": "1.8",
-        "--icon-cap": "round",
-        "--icon-join": "round",
-        "--grid-columns": "12",
-        "--grid-gutter": "24px"
+        "--dimension-1352": "1352px"
       },
       "dataFormat": {
-        "locale": "en-GB",
+        "locale": "en-US",
         "grouping": true,
         "separator": "locale",
         "unit": "kg",
@@ -2065,14 +2071,14 @@ scope: "project-context"
         "decimals": 2,
         "large": "compact",
         "tableAlign": "end",
-        "date": "iso",
+        "date": "locale",
         "hourCycle": "h23",
         "seconds": false,
         "combined": "space",
         "relative": true,
         "zone": "UTC",
         "showZone": true,
-        "range": " – ",
+        "range": "to",
         "noValue": "–",
         "loading": "skeleton",
         "redaction": "partial",
@@ -2225,7 +2231,7 @@ Saved validated choices override project recommendations, which override system 
 - Geometry: Columns are integers 1–24; gutters are integers 0–64px. Rows, Columns+Rows and Custom obey the same validation. Baseline is independent. Custom requires explicit geometry; saved geometry is the buildable result, not a preset name.
 - Platform profiles: The workspace applies one global profile. One selected platform supplies its recommendation; multiple platforms use the product recommendation. Exports also include a light/dark recommendation snapshot for each selected platform, with saved overrides retained. Consumers choose the matching platform profile explicitly; these exports do not automatically implement native layouts or viewport switching. Unsupported context falls back to system defaults and requires review.
 - Container and spans: Use a centered container capped by --size-content (default 1200px), min-width:0, equal logical gutters and border-box sizing. Main gutters are 40px desktop, 24px compact and 16px below 640px. A span k in N columns is (available width minus (N-1) gutters)/N multiplied by k plus (k-1) gutters. Nested grids use their parent content box, never the full viewport.
-- Breakpoints and density: 640px governs compact reflow and 900px shell navigation. The default 1200px content cap is not a viewport breakpoint. Listing grids retain 1440/1100/700px for their 4→3→2→1 preview sequence; those compatibility thresholds preserve wider 180–220px specimens and their action rows. Container thresholds 560/800px govern reference rows; Typography uses 960/640/420px for 3/2/1 control columns. The Border editor's 1000px two-column exception accommodates its six property fields. These content exceptions require boundary/zoom evidence before changes. Density never reduces accessible targets.
+- Breakpoints and density: 640px governs compact reflow and 900px shell navigation. The default 1200px content cap is not a viewport breakpoint. Listing grids retain 1440/1100/700px for their 4→3→2→1 preview sequence; those compatibility thresholds preserve wider 180–220px specimens and their action rows. The component workbench also switches at 1600/1150px (inspector width) and 700px (stack), the export guide at 1000/560px and onboarding at 1100px and above. Container thresholds 560/800px govern reference rows; Typography uses 960/640/420px for 3/2/1 control columns. The Border editor's 1000px two-column exception accommodates its six property fields. These content exceptions require boundary/zoom evidence before changes. Density never reduces accessible targets.
 - Pattern inventory: Single column stacks all content. Split view becomes a labelled drill-down with Back and focus return. Master-detail uses list then detail with loading/empty/error states. Dashboard preserves reading order while stacking cards. Sidebar moves to the navigation drawer. Three-column layouts collapse secondary then tertiary panes. Masonry preserves DOM reading order. Full-screen workspaces keep primary actions reachable and independently name justified scroll regions.
 - Resize and panes: Splitter panes have explicit min/max bounds, keyboard resizing, Home/End, and persistent user preference scoped to the layout. Collapse never hides the focused action. On wide-to-narrow transitions preserve selection and return focus on Back. Affix content stays below the measured banner and yields when its height exceeds half the viewport.
 - Overflow and handoff: Reflow first. Confine unavoidable tables/code to named keyboard-operable scroll regions. Avoid page-wide horizontal scroll. Show truncation recovery. Export container, columns, gutter, spans, baseline, thresholds, pattern states and resize/overflow rules.
@@ -2252,7 +2258,7 @@ Saved validated choices override project recommendations, which override system 
 
 ### Spacing
 
-- Scale algorithm: 2px, 4px and 8px systems round requested steps to their selected quantum. Adaptive uses 2px at requested steps up to 6px, 4px above 6px and below 32px, and 8px from 32px. Positive steps smaller than their quantum keep their original value. --space-n is a compatibility request slot; its resolved value is authoritative. This differs from immutable numeric radius primitives.
+- Scale algorithm: 2px, 4px and 8px systems round requested steps to their selected quantum, so a token name such as --space-6 or --space-10 is a nominal request, not a promise of that pixel value (on the default 4px system --space-6 is 8px and --space-10 is 12px). Adaptive uses 2px at requested steps up to 6px, 4px above 6px and below 32px, and 8px from 32px. Positive steps smaller than their quantum keep their original value. --space-n is a compatibility request slot; its resolved value is authoritative. This differs from immutable numeric radius primitives.
 - Allowed values: Use resolved space tokens for component gaps and padding. Zero is permitted for attached surfaces. auto is permitted for centering/available-space distribution. Percent/viewport units belong to explicitly documented container sizing. Negative margins require a named overlap exception and must not clip focus or targets.
 - Composition examples: Use 8px label-to-field, 4px field-to-error, 16px field-to-field, 8px checkbox/radio glyph-to-label, 8px related toolbar actions, 24px panel content and 32px between major groups as semantic requests resolved by the active scale. Wrapped labels align with the first line; error text occupies its own row without moving unrelated controls.
 - Density and targets: Comfortable/compact density affects visual spacing, never the minimum 44px product target. Glyph size, field height and hit area are separate. Reserve room for multilingual labels and validation. A 24px icon is not a 24px touch target.
@@ -2281,7 +2287,7 @@ Saved validated choices override project recommendations, which override system 
 
 ### Shadows
 
-- Philosophy algorithm: Flat removes all shadows. Subtle/Balanced/Soft/Expressive multiply y-offset and blur by 0.5/1/1.4/2 while retaining recipe opacity. xs through 2xl use y/blur/alpha: 1/2/.06,1/4/.08,4/8/.10,8/16/.12,12/24/.14,16/32/.16. Export resolved offsets, blur, spread, color and inset rather than just philosophy names.
+- Philosophy algorithm: Flat removes all shadows. Subtle/Balanced/Soft/Expressive multiply y-offset and blur by 0.5/1/1.4/2 while retaining recipe opacity (in the dark theme the recipe alpha is multiplied by 2.5, capped at .6, because black shadows at the light-theme alpha disappear on near-black surfaces). xs through 2xl use y/blur/alpha: 1/2/.06,1/4/.08,4/8/.10,8/16/.12,12/24/.14,16/32/.16. Export resolved offsets, blur, spread, color and inset rather than just philosophy names.
 - Card variants: Static bordered cards use no shadow. Explicitly elevated static cards use SM with no hover change. Interactive cards use SM at rest, MD on hover and XS when pressed. Focus uses an outline. Flat philosophy removes these shadows while borders/surfaces retain separation.
 - Modes and alternatives: Dark surfaces and custom palettes must be checked for actual layer separation. Use surface and boundary tokens when shadow is invisible. Forced colors and print preserve boundaries and remove decorative shadow. Do not make a shadow the only sign of a control or modal.
 - Layers: Use the shared layer map: content 0, sticky 20, popover 40, scrim 60, dialog 70, toast 80, tooltip 90. Portal overlays out of clipped containers, assign focus ownership, close the top layer with Escape, restore trigger focus and test nested owners/collisions. Elevation magnitude is not z-index.
@@ -2480,6 +2486,7 @@ Use rem for scalable typography and spacing; retain px for hairline borders and 
 | `--size-icon` | `24px` | `1.5rem` |
 | `--size-sidebar` | `264px` | `16.5rem` |
 | `--size-target` | `44px` | `2.75rem` |
+| `--size-topbar` | `64px` | `4rem` |
 | `--space-1` | `1px` | `0.0625rem` |
 | `--space-10` | `12px` | `0.75rem` |
 | `--space-100` | `100px` | `6.25rem` |
@@ -2902,13 +2909,17 @@ Use rem for scalable typography and spacing; retain px for hairline borders and 
 | `640px` | `40rem` |
 | `670px` | `41.875rem` |
 | `680px` | `42.5rem` |
+| `700px` | `43.75rem` |
 | `800px` | `50rem` |
 | `820px` | `51.25rem` |
 | `900px` | `56.25rem` |
 | `1000px` | `62.5rem` |
+| `1100px` | `68.75rem` |
+| `1150px` | `71.875rem` |
 | `1200px` | `75rem` |
 | `1352px` | `84.5rem` |
 | `1440px` | `90rem` |
+| `1600px` | `100rem` |
 | `9999px` | `624.9375rem` |
 
 <!-- /ads:dimension-reference -->

@@ -38,7 +38,7 @@
       html += '<p class="popover-demo-body" data-contract-part="body">' + escapeHtml(body) + "</p>";
     }
     if (stateKey === "with-close"){
-      html += '<button type="button" class="popover-demo-close" tabindex="-1" aria-hidden="true">&times;</button>';
+      html += '<button type="button" class="popover-demo-close" data-contract-part="close" data-contract-kind="container" tabindex="-1" aria-hidden="true">&times;</button>';
     }
     return html;
   }
@@ -56,8 +56,8 @@
   // naturally pushes its own matrix cell/row taller instead of overlapping
   // whatever sits next to it.
   function buildPopoverField(typeKey, stateKey, triggerLabel, title, body){
-    var bubbleHtml = '<div class="popover-demo-bubble">' + bubbleContentFor(stateKey, title, body) + "</div>";
-    var arrowHtml = '<div class="popover-demo-arrow" aria-hidden="true"></div>';
+    var bubbleHtml = '<div class="popover-demo-bubble" data-contract-part="bubble">' + bubbleContentFor(stateKey, title, body) + "</div>";
+    var arrowHtml = '<div class="popover-demo-arrow" data-contract-part="arrow" data-contract-kind="container" aria-hidden="true"></div>';
     var triggerHtml = '<button type="button" class="popover-demo-trigger" data-contract-part="trigger" tabindex="-1" aria-hidden="true">' + escapeHtml(triggerLabel) + "</button>";
     return '<div class="popover-demo-wrap popover-demo-wrap--' + typeKey + '">' + bubbleHtml + arrowHtml + triggerHtml + "</div>";
   }

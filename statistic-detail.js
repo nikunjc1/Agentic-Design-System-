@@ -46,7 +46,7 @@
 
     if (isLoading){
       return '<div class="statistic-demo-field">' + titleHtml +
-        '<div class="statistic-demo-skeleton" aria-hidden="true"></div>' +
+        '<div class="statistic-demo-skeleton" data-contract-part="skeleton" data-contract-kind="container" aria-hidden="true"></div>' +
         "</div>";
     }
 
@@ -59,14 +59,14 @@
     if (typeKey === "trend"){
       var isDown = stateKey === "negative";
       var trendCls = "statistic-demo-trend" + (stateKey === "positive" ? " statistic-demo-trend--positive" : (stateKey === "negative" ? " statistic-demo-trend--negative" : ""));
-      trendHtml = '<span class="' + trendCls + '">' + (isDown ? TREND_DOWN_SVG : TREND_UP_SVG) + "12.5%</span>";
+      trendHtml = '<span class="' + trendCls + '" data-contract-part="trend">' + (isDown ? TREND_DOWN_SVG : TREND_UP_SVG).replace("<svg ", '<svg data-contract-part="trend-icon" ') + "12.5%</span>";
     }
 
     // The value text is wrapped rather than dropped in as a bare text node:
     // .statistic-demo-value is a flex container, and an ellipsis cannot apply
     // to an anonymous flex item, so a long value would clip mid-glyph with no
     // truncation indicator.
-    var valueHtml = '<p class="statistic-demo-value' + colorClass + monoClass + '">' +
+    var valueHtml = '<p class="statistic-demo-value' + colorClass + monoClass + '" data-contract-part="valueRow">' +
       prefixHtml + '<span class="statistic-demo-value-text" data-contract-part="value">' + escapeHtml(value) + "</span>" + suffixHtml + "</p>";
 
     // Trend renders as its own line below the value (a sibling in the

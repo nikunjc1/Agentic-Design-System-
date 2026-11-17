@@ -94,7 +94,12 @@
   async function captureFromFile(file){
     const url=new URL(file,location.href);if(url.origin!==location.origin)throw new Error('Cannot capture a page outside this origin.');
     const frame=document.createElement('iframe');frame.style.cssText='position:fixed;left:-10000px;top:0;width:1440px;height:1000px;border:0';frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;document.body.append(frame);
-    try{return await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Component guide did not load.')),20000);frame.onload=()=>{clearTimeout(timer);try{resolve(frame.contentWindow.ADSContracts.capture());}catch(error){reject(error);}};frame.src=url.href;});}
+    try{return await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Component guide did not load.')),20000);frame.onload=async()=>{
+        // The workbench that models a component's properties, variants and states switches on a moment AFTER the page's load event. Capturing at
+        // load returned the generic library snapshot (no variants, wrong property model) for almost every component, so wait for the workbench
+        // (up to 10s) and only fall back to the generic snapshot if this page genuinely has none.
+        try{const w=frame.contentWindow,until=Date.now()+10000;while(!(w.ADSWorkbench&&w.ADSWorkbench.active)&&Date.now()<until)await new Promise(r=>setTimeout(r,25));
+          clearTimeout(timer);resolve(w.ADSContracts.capture());}catch(error){clearTimeout(timer);reject(error);}};frame.src=url.href;});}
     finally{frame.remove();}
   }
   // A click that fails before draw() ever runs (capture threw, a sibling

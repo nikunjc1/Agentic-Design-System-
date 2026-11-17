@@ -4874,11 +4874,20 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .collapse-demo-group .collapse-demo-icon.collapse-demo-header-text--h6{ font-size:var(--type-h6-size);line-height:var(--type-h6-line-height); }
 
 /* ---------- Description demo (description-default.html) ---------- */
-.description-demo-panel{ display: flex; flex-direction: column; gap:var(--space-10); width:var(--dimension-280); text-align: start; }
+.description-demo-panel{ display: flex; flex-direction: column; gap:var(--space-10); width:var(--dimension-300); text-align: start; }
 .description-demo-title{    color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.description-demo-grid{ display: grid; gap:var(--space-12); }
-.description-demo-panel--bordered .description-demo-grid{ gap:0; border: var(--border-width-1) var(--border-style) var(--line); border-radius: var(--radius-sm); overflow: hidden; }
-.description-demo-item{ display: flex; flex-direction: column; gap:var(--space-4); }
+.description-demo-panel .description-demo-title--h1{ font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);font-style:var(--type-h1-style);line-height:var(--type-h1-line-height);letter-spacing:var(--type-h1-tracking); }
+.description-demo-panel .description-demo-title--h2{ font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking); }
+.description-demo-panel .description-demo-title--h3{ font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking); }
+.description-demo-panel .description-demo-title--h4{ font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking); }
+.description-demo-panel .description-demo-title--h5{ font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking); }
+.description-demo-panel .description-demo-title--h6{ font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking); }
+.description-demo-grid{ display: flex; flex-wrap: wrap; --desc-gap: var(--space-12); --desc-cols: 2; gap:var(--desc-gap); }
+.description-demo-panel--bordered .description-demo-grid{ --desc-gap: 0px; gap:0; border: var(--border-width-1) var(--border-style) var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+.description-demo-item{ box-sizing: border-box; display: flex; flex-direction: column; gap:var(--space-4); flex: 0 0 calc((100% - (var(--desc-cols) - 1) * var(--desc-gap)) / var(--desc-cols)); min-width: 0; }
+.description-demo-item.is-span{ flex-basis: 100%; }
+/* Text fills its cell/panel width and wraps (instead of one long line running past the cell and over its neighbours in Figma). */
+.description-demo-title, .description-demo-label, .description-demo-value, .description-demo-grid{ align-self: stretch; }
 /* Cells against the grid's own right/bottom edge skip their own divider
    border there - the grid's outer border (below) already draws that
    edge, so keeping both stacked two lines thick instead of a clean 1px.
@@ -4887,22 +4896,22 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 .description-demo-panel--bordered .description-demo-item{ padding:var(--space-8) var(--space-10); border-inline-end: var(--border-width-1) var(--border-style) var(--line); border-bottom: var(--border-width-1) var(--border-style) var(--line); gap:var(--space-2); }
 .description-demo-panel--bordered .description-demo-item.is-last-col{ border-inline-end: none; }
 .description-demo-panel--bordered .description-demo-item.is-last-row{ border-bottom: none; }
-.description-demo-label{   color:var(--type-body-color); text-transform: uppercase;  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.description-demo-value{   color:var(--type-body-color); word-break: break-word; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.description-demo-label{   color:var(--text-dim); text-transform: none; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.description-demo-value{   color:var(--type-body-color); word-break: break-word; font-family:var(--type-body-family);font-size:var(--type-h5-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 /* Size (3) - Large is the default; Middle/Small tighten item padding and
    both label/value font one step - column count and grid gap stay
    whatever Columns is set to, independent of size. */
 .description-demo-panel--sz-middle .description-demo-item{ gap:var(--space-2); }
 .description-demo-panel--sz-middle.description-demo-panel--bordered .description-demo-item{ padding:var(--space-6) var(--space-8); }
-.description-demo-panel--sz-middle .description-demo-label{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.description-demo-panel--sz-middle .description-demo-value{  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
+.description-demo-panel--sz-middle .description-demo-label{  font-family:var(--type-body-family);font-size:var(--type-selected-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.description-demo-panel--sz-middle .description-demo-value{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .description-demo-panel--sz-small .description-demo-item{ gap:var(--space-1); }
 .description-demo-panel--sz-small.description-demo-panel--bordered .description-demo-item{ padding:var(--space-4) var(--space-6); }
-.description-demo-panel--sz-small .description-demo-label{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.description-demo-panel--sz-small .description-demo-value{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.description-demo-panel--sz-small .description-demo-label{  font-family:var(--type-body-family);font-size:var(--dimension-12);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.description-demo-panel--sz-small .description-demo-value{  font-family:var(--type-body-family);font-size:var(--type-selected-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 
 /* ---------- Empty demo (empty-default.html) ---------- */
-.empty-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap:var(--space-10); padding:var(--space-24); width:var(--dimension-220); }
+.empty-demo-panel{ box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap:var(--space-8); padding:var(--space-24); width:var(--dimension-220); }
 .empty-demo-icon-wrap{ display: flex; align-items: center; justify-content: center; color: var(--text-dim); }
 .empty-demo-icon-wrap--default{ width:var(--dimension-56); height:var(--dimension-56); border-radius: var(--radius-full); background: var(--graphite-800); }
 .empty-demo-icon-wrap--default svg{ width:var(--dimension-28); height:var(--dimension-28); }
@@ -4916,8 +4925,14 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    centered (align-items:center on the panel) - only the vertical gaps
    were wrong. */
 .empty-demo-title{    color:var(--type-body-color); margin:0; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.empty-demo-panel .empty-demo-title--h1{ font-family:var(--type-h1-family);font-size:var(--type-h1-size);font-weight:var(--type-h1-weight);font-style:var(--type-h1-style);line-height:var(--type-h1-line-height);letter-spacing:var(--type-h1-tracking); }
+.empty-demo-panel .empty-demo-title--h2{ font-family:var(--type-h2-family);font-size:var(--type-h2-size);font-weight:var(--type-h2-weight);font-style:var(--type-h2-style);line-height:var(--type-h2-line-height);letter-spacing:var(--type-h2-tracking); }
+.empty-demo-panel .empty-demo-title--h3{ font-family:var(--type-h3-family);font-size:var(--type-h3-size);font-weight:var(--type-h3-weight);font-style:var(--type-h3-style);line-height:var(--type-h3-line-height);letter-spacing:var(--type-h3-tracking); }
+.empty-demo-panel .empty-demo-title--h4{ font-family:var(--type-h4-family);font-size:var(--type-h4-size);font-weight:var(--type-h4-weight);font-style:var(--type-h4-style);line-height:var(--type-h4-line-height);letter-spacing:var(--type-h4-tracking); }
+.empty-demo-panel .empty-demo-title--h5{ font-family:var(--type-h5-family);font-size:var(--type-h5-size);font-weight:var(--type-h5-weight);font-style:var(--type-h5-style);line-height:var(--type-h5-line-height);letter-spacing:var(--type-h5-tracking); }
+.empty-demo-panel .empty-demo-title--h6{ font-family:var(--type-h6-family);font-size:var(--type-h6-size);font-weight:var(--type-h6-weight);font-style:var(--type-h6-style);line-height:var(--type-h6-line-height);letter-spacing:var(--type-h6-tracking); }
 .empty-demo-description{   color:var(--type-caption-color);  margin:0; font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.empty-demo-panel .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); margin-top:var(--space-4); }
+.empty-demo-panel .modal-demo-btn--primary{ background: var(--red-500); color: var(--button-primary-text); margin-top:0; }
 
 /* ---------- Image demo (image-default.html) ---------- */
 .image-demo-wrap{ display: inline-flex; flex-direction: column; gap:var(--space-8); }
@@ -4950,11 +4965,11 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    rather than a List-specific one); title/description drop or gain one
    type-scale step, same restraint as every other sized component here. */
 .list-demo-panel--sz-small .list-demo-row{ padding:var(--space-6) var(--space-10); gap:var(--space-8); }
-.list-demo-panel--sz-small .list-demo-title{  font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
-.list-demo-panel--sz-small .list-demo-description{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.list-demo-panel--sz-small .list-demo-title{font-family:var(--type-body-family);font-size:var(--type-selected-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.list-demo-panel--sz-small .list-demo-description{font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .list-demo-panel--sz-large .list-demo-row{ padding:var(--space-14) var(--space-16); gap:var(--space-12); }
-.list-demo-panel--sz-large .list-demo-title{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.list-demo-panel--sz-large .list-demo-description{  font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.list-demo-panel--sz-large .list-demo-title{font-family:var(--type-body-family);font-size:var(--type-h5-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.list-demo-panel--sz-large .list-demo-description{font-family:var(--type-caption-family);font-size:var(--type-caption-size);font-weight:var(--type-caption-weight);font-style:var(--type-caption-style);line-height:var(--type-caption-line-height);letter-spacing:var(--type-caption-tracking);}
 .list-demo-row--divided{ border-bottom: var(--border-width-1) var(--border-style) var(--line); }
 .list-demo-panel--bordered .list-demo-row--divided{ border-bottom-color: var(--border-state-default,var(--line-strong)); }
 .list-demo-body{ flex: 1 1 auto; min-width:0; display: flex; flex-direction: column; gap:var(--space-2); text-align: start; }
@@ -5049,20 +5064,20 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    Name/Role into wrapping the same way the checkbox column did before
    table-demo-table--has-checkbox existed (see the note on that rule
    below). */
-.table-demo-table{ border-collapse: collapse;   color:var(--type-body-color); width:var(--dimension-630); max-width:100%; font-variant-numeric: var(--numeric-tabular); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
-.table-demo-table th{ text-align: start; padding:var(--table-cell-padding-y-default) var(--space-10);   color: var(--table-header-text); text-transform: uppercase;  border-bottom:var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.table-demo-table{ border-collapse: collapse;   color:var(--type-body-color); width:var(--dimension-800); max-width:none; font-variant-numeric: var(--numeric-tabular); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.table-demo-table th{ text-align: start; white-space: nowrap; padding:var(--table-cell-padding-y-default) var(--space-10);   color: var(--table-header-text); text-transform: none;  border-bottom:var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 /* text-align:start was only ever set on th (above), never td - td's text
    was silently inheriting text-align:center from the outer Live Preview
    matrix cell (.button-matrix-cell's shared default), centering Name/
    Status/Role text while the header labels above them stayed correctly
    left-aligned. */
-.table-demo-table td{ padding:var(--table-cell-padding-y-default) var(--space-10); border-bottom: var(--border-width-1) var(--border-style) var(--table-border-color); text-align: start; }
+.table-demo-table td{ padding:var(--table-cell-padding-y-default) var(--space-10); border-bottom: var(--border-width-1) var(--border-style) var(--table-border-color); text-align: start; white-space: nowrap; vertical-align: middle; }
 .table-demo-table--bordered{ border: var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); overflow: hidden; }
 .table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end: var(--border-width-1) var(--border-style) var(--line); }
 .table-demo-table--bordered th:last-child, .table-demo-table--bordered td:last-child{ border-inline-end: none; }
 .table-demo-row--striped{ background: var(--graphite-850); }
 .table-demo-row--selected{ background: var(--red-tint); }
-.table-demo-status-cell{ display: flex; align-items: center; gap:var(--space-6); }
+.table-demo-status-cell{ display: flex; align-items: center; justify-content: flex-start; gap:var(--space-6); }
 .table-demo-checkbox-label{ display: flex; }
 .table-demo-checkbox-input{ position: absolute; width:var(--dimension-1); height:var(--dimension-1); padding:0; margin:calc(-1 * var(--space-1)); overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .table-demo-checkbox{ flex: none; width:var(--dimension-16); height:var(--dimension-16); border-radius:var(--radius-sm); border:var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); display: flex; align-items: center; justify-content: center; color: #FFFFFF; }
@@ -5076,7 +5091,7 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    from 140px down to 120px, both narrow enough to wrap onto a second
    line. Widening the table by the checkbox column's own measured need
    restores Name/Role to their original widths instead. */
-.table-demo-table--has-checkbox{ width:var(--dimension-670); }
+.table-demo-table--has-checkbox{ width:var(--dimension-800); }
 /* The listing page's own preview card (table.html, 3 plain columns) reuses
    this same class but sits in a ~330px-wide grid card, not the detail
    page's wide Live Preview matrix - the fixed 630px width above overflowed
@@ -5127,13 +5142,15 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
 /* ---------- Timeline (event history) ---------- */
 .timeline-demo-list{ display:flex; flex-direction:column; width:var(--dimension-240); }
 .timeline-demo-item{ display:flex; gap:var(--space-12); }
-.timeline-demo-marker{ flex:none; display:flex; flex-direction:column; align-items:center; width:var(--dimension-16); }
+.timeline-demo-marker{ align-self:stretch; flex:none; display:flex; flex-direction:column; align-items:center; width:var(--dimension-16); }
 .timeline-demo-dot{ width:var(--dimension-10); height:var(--dimension-10); border-radius:var(--radius-full); background:var(--graphite-600); border:var(--border-width-2) solid var(--graphite-900); flex:none; }
 .timeline-demo-dot.is-current{ background:var(--red-500); }
 .timeline-demo-dot.is-pending{ background:var(--graphite-700); }
 .timeline-demo-connector{ width:var(--dimension-2); flex:1 1 auto; min-height:var(--dimension-24); background:var(--line-strong); }
-.timeline-demo-connector.is-pending{ background:repeating-linear-gradient(to bottom, var(--line-strong) 0 3px, transparent 3px 6px); }
+.timeline-demo-connector.is-pending{ background:none; border-left:var(--border-width-2) dashed var(--line-strong); box-sizing:border-box; }
+.timeline-demo-list--horizontal .timeline-demo-connector.is-pending{ border-left:none; border-top:var(--border-width-2) dashed var(--line-strong); }
 .timeline-demo-content{ padding-bottom:var(--space-16); text-align: start; }
+.timeline-demo-title, .timeline-demo-time{ align-self:stretch; }
 /* .timeline-demo-title/-time are <p> tags with no margin reset. Title's
    own default top margin (~13px, font-size-relative) doesn't collapse out
    through .timeline-demo-content (a flex item, which establishes its own
@@ -5161,13 +5178,17 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    pushing every left-side item's dot and text out of alignment (most
    visible once a title wrapped to 2 lines, like "Payment confirmed").
    Pinning both cells to grid-row:1 explicitly removes the ambiguity. */
-.timeline-demo-list--alternate .timeline-demo-item{ display:grid; grid-template-columns:1fr 16px 1fr; column-gap:var(--space-12); align-items:start; }
-.timeline-demo-list--alternate .timeline-demo-marker{ grid-column:2; grid-row:1; }
-.timeline-demo-list--alternate .timeline-demo-content{ grid-column:3; grid-row:1; text-align: start; }
-.timeline-demo-list--alternate .timeline-demo-item--left .timeline-demo-content{ grid-column:1; text-align: end; }
+.timeline-demo-list--alternate .timeline-demo-item{ display:flex; gap:var(--space-12); align-items:flex-start; }
+.timeline-demo-list--alternate .timeline-demo-item--left{ flex-direction:row-reverse; }
+.timeline-demo-spacer{ display:none; }
+.timeline-demo-list--alternate .timeline-demo-spacer{ display:block; flex:1 1 0; min-width:0; }
+.timeline-demo-list--alternate .timeline-demo-content{ flex:1 1 0; min-width:0; text-align: start; }
+.timeline-demo-list--alternate .timeline-demo-item--left .timeline-demo-content{ text-align: end; }
+.timeline-demo-list--alternate .timeline-demo-title, .timeline-demo-list--alternate .timeline-demo-time{ align-self:stretch; }
 .timeline-demo-icon{ flex:none; }
 .timeline-demo-icon-bg{ fill:var(--graphite-600); }
 .timeline-demo-icon.is-current .timeline-demo-icon-bg{ fill:var(--red-500); }
+.timeline-demo-icon.is-current{ color:var(--button-primary-text); }
 
 /* Horizontal layout - items flow left to right in a row instead of top to
    bottom. Each dot sits centered in its own equal-width item slot (via
@@ -5186,11 +5207,14 @@ a.card-demo-panel:active, button.card-demo-panel:active, .card-demo-panel--inter
    of the intended 10px. Zeroed here since content's padding-top is
    already the real, intentional gap for this layout. */
 .timeline-demo-list--horizontal .timeline-demo-item{ flex:1 1 0; flex-direction:column; align-items:center; min-width:var(--dimension-72); gap:0; }
-.timeline-demo-list--horizontal .timeline-demo-marker{ position:relative; flex-direction:row; justify-content:center; width:100%; height:var(--dimension-16); }
-.timeline-demo-list--horizontal .timeline-demo-connector{ position:absolute; top:50%; left:50%; width:100%; height:var(--dimension-2); min-height:0; transform:translateY(-50%); }
+.timeline-demo-list--horizontal .timeline-demo-marker{ flex-direction:row; align-items:center; justify-content:center; width:100%; height:var(--dimension-16); }
+.timeline-demo-list--horizontal .timeline-demo-connector{ flex:1 1 0; width:auto; height:var(--dimension-2); min-height:0; }
+.timeline-demo-connector.is-clear{ background:none; }
+.timeline-demo-connector--prev{ display:none; }
+.timeline-demo-list--horizontal .timeline-demo-connector--prev{ display:block; }
 .timeline-demo-list--horizontal .timeline-demo-dot,
 .timeline-demo-list--horizontal .timeline-demo-icon{ position:relative; }
-.timeline-demo-list--horizontal .timeline-demo-content{ padding-bottom:0; padding-top:var(--space-10); text-align:center; }
+.timeline-demo-list--horizontal .timeline-demo-content{ padding-bottom:0; padding-top:var(--space-10); text-align:center; align-self:stretch; }
 
 /* ---------- Tour (step-by-step walkthrough overlay) ---------- */
 .tour-demo-wrap{ box-sizing: border-box; display: flex; align-items: center; gap:var(--space-8); }
@@ -7363,15 +7387,16 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .splitter-demo-divider.is-dragging .splitter-demo-handle{ background: #FFFFFF; }
 
 /* ---------- Tree demo (tree-default.html) ---------- */
-.tree-demo-wrap{ width:var(--dimension-220);   font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.tree-demo-wrap{ width:var(--dimension-200);   font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.tree-demo-wrap{ text-align: start; }
 .tree-demo-wrap.is-disabled{ opacity: var(--opacity-40); pointer-events: none; }
-.tree-demo-root{ margin:0 0 var(--space-6);     text-transform: uppercase; color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
+.tree-demo-root{ margin:0 0 var(--space-6);     text-transform: none; text-align: start; color:var(--type-body-color); font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 .tree-demo-row{ display: flex; align-items: center; gap:var(--space-4); padding:var(--space-4) var(--space-6); border-radius: var(--radius-sm); color: var(--text-hi); cursor: pointer; }
 .tree-demo-row:hover{ background: var(--graphite-800); }
 .tree-demo-row.is-selected{ background: var(--red-tint); color: var(--red-400); }
 .tree-demo-toggle{ width:var(--dimension-14); height:var(--dimension-14); flex: none; display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: transform var(--duration-base) var(--ease-standard); }
-.tree-demo-toggle.is-expanded{ transform: rotate(90deg); }
-.tree-demo-toggle-spacer{ width:var(--dimension-14); flex: none; }
+.tree-demo-toggle.is-expanded{ transform: none; } /* expanded rows use the down-pointing chevron glyph, not a rotation */
+.tree-demo-toggle-spacer{ width:var(--dimension-14); height:var(--dimension-14); flex: none; }
 .tree-demo-toggle svg, .tree-demo-checkbox svg, .tree-demo-icon svg{ width:calc(var(--dimension-14) * var(--icon-scale, 1)); height:calc(var(--dimension-14) * var(--icon-scale, 1)); }
 .tree-demo-checkbox{ width:var(--dimension-14); height:var(--dimension-14); flex: none; border-radius:var(--radius-sm); border:var(--border-width-1) var(--border-style) var(--border-state-default,var(--line-strong)); display: flex; align-items: center; justify-content: center; color: #FFFFFF; }
 .tree-demo-checkbox.is-checked{ background: var(--red-500); border-color: var(--border-state-selected,var(--red-500)); }
@@ -7392,7 +7417,7 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 .tree-demo-wrap--lines .tree-demo-toggle-spacer,
 .tree-demo-wrap--lines .tree-demo-checkbox,
 .tree-demo-wrap--lines .tree-demo-icon{ margin-top:var(--space-1); }
-.tree-demo-label-group{ display: flex; flex-direction: column; gap:var(--space-1); min-width:0; }
+.tree-demo-label-group{ display: flex; flex-direction: column; gap:var(--space-1); min-width:0; text-align: start; }
 .tree-demo-meta{  color:var(--type-body-color); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:var(--type-body-weight);font-style:var(--type-body-style);line-height:var(--type-body-line-height);letter-spacing:var(--type-body-tracking);}
 /* Loading/Empty - the whole node list is replaced by a centered spinner
    glyph or a dimmed message, never both at once with real nodes. */
@@ -8064,3 +8089,9 @@ font-family:var(--type-body-family);font-size:var(--type-body-size);font-weight:
 /* Demo fields have fixed widths sized for the preview column; on narrow viewports they must shrink to their
    container instead of being hard-clipped by it. */
 [class*="-demo-field"]{ max-inline-size:100%; }
+
+/* Every Table text is left-aligned except the Empty state's message, which is centred in the table both ways (the cell is as tall as three rows). */
+.table-demo-table .table-demo-empty-cell{ height: var(--dimension-200); vertical-align: middle; text-align: center; }
+.table-demo-table .empty-demo-panel{ align-items: center; justify-content: center; text-align: center; width: 100%; }
+
+.table-demo-table .empty-demo-icon-wrap--simple svg{ width:var(--dimension-28); height:var(--dimension-28); }

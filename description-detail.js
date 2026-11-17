@@ -126,21 +126,38 @@
     return placements.map(function(p){ return { isLastCol: p.isLastCol, isLastRow: p.row === lastRow }; });
   }
 
+  // The first three label/value pairs are editable (Label n / Placeholder text n); the fourth stays as authored for each State.
+  function editedItems(base){
+    return base.map(function(item, i){
+      if (i > 2) return item;
+      var labelInput = document.querySelector('[data-role="description-label-' + (i + 1) + '"]');
+      var valueInput = document.querySelector('[data-role="description-value-' + (i + 1) + '"]');
+      var copy = { label: labelInput && labelInput.value.trim() ? labelInput.value.trim() : item.label, value: valueInput && valueInput.value.trim() ? valueInput.value.trim() : item.value };
+      if (item.span) copy.span = true;
+      return copy;
+    });
+  }
+  // Heading style: which heading role (Heading 1 to Heading 6) the section title uses; Heading 6 is the default.
+  function headingClass(){
+    var select = document.querySelector('[data-role="description-heading"]');
+    var value = select ? select.value : "h6";
+    return " description-demo-title--" + (/^h[1-6]$/.test(value) ? value : "h6");
+  }
   function buildDescriptionField(typeKey, stateKey, columns, title, sizeKey){
-    var items = stateKey === "long-value" ? LONG_VALUE_ITEMS : COMPACT_ITEMS;
+    var items = editedItems(stateKey === "long-value" ? LONG_VALUE_ITEMS : COMPACT_ITEMS);
     var edges = computeGridEdges(items, columns);
     var titleHtml = stateKey === "with-title"
-      ? '<p class="description-demo-title" data-contract-part="title">' + escapeHtml((title || DEFAULT_TITLE).trim() || DEFAULT_TITLE) + "</p>"
+      ? '<p class="description-demo-title' + headingClass() + '" data-contract-part="title">' + escapeHtml((title || DEFAULT_TITLE).trim() || DEFAULT_TITLE) + "</p>"
       : "";
     var itemsHtml = items.map(function(item, i){
-      var spanAttr = item.span ? ' style="grid-column: 1 / -1;"' : "";
-      var edgeCls = (edges[i].isLastCol ? " is-last-col" : "") + (edges[i].isLastRow ? " is-last-row" : "");
-      return '<div class="description-demo-item' + edgeCls + '"' + spanAttr + ">" +
-        '<span class="description-demo-label">' + escapeHtml(item.label) + "</span>" +
-        '<span class="description-demo-value">' + escapeHtml(item.value) + "</span>" +
+      var spanAttr = "";
+      var edgeCls = (edges[i].isLastCol ? " is-last-col" : "") + (edges[i].isLastRow ? " is-last-row" : "") + (item.span ? " is-span" : "");
+      return '<div class="description-demo-item' + edgeCls + '" data-contract-part="item' + (i + 1) + '"' + spanAttr + ">" +
+        '<span class="description-demo-label"' + (i < 3 ? ' data-contract-part="label' + (i + 1) + '"' : "") + ">" + escapeHtml(item.label) + "</span>" +
+        '<span class="description-demo-value"' + (i < 3 ? ' data-contract-part="value' + (i + 1) + '"' : "") + ">" + escapeHtml(item.value) + "</span>" +
         "</div>";
     }).join("");
-    var gridHtml = '<div class="description-demo-grid" style="grid-template-columns:repeat(' + columns + ', 1fr);">' + itemsHtml + "</div>";
+    var gridHtml = '<div class="description-demo-grid" data-contract-part="grid" style="--desc-cols:' + columns + ';">' + itemsHtml + "</div>";
     var sizeCls = (sizeKey && sizeKey !== "large") ? " description-demo-panel--sz-" + sizeKey : "";
     return '<div class="description-demo-panel description-demo-panel--' + typeKey + sizeCls + '">' + titleHtml + gridHtml + "</div>";
   }
@@ -161,7 +178,7 @@
     lines.push("- Default: clean spacing between label/value pairs, no cell borders - a minimal look.");
     lines.push("- Bordered: each label/value pair sits in its own bordered cell, forming a compact table-like grid with 1px dividers between cells.");
     lines.push("");
-    lines.push("Each pair is a label (small, uppercase, dimmed) stacked above its value (regular weight, high-contrast). Long values wrap gracefully within their cell instead of overflowing or breaking the grid layout.");
+    lines.push("Each pair is a label (small, dimmed, shown exactly as typed - no forced capitals) stacked above its value (regular weight, high-contrast). Long values wrap gracefully within their cell instead of overflowing or breaking the grid layout.");
     lines.push("");
     lines.push(propertyPromptLine("Size", sizeInfo, SIZE_OPTIONS) + " Scales item padding and both label/value font one step - column count and grid gap are independent of size.");
     lines.push("");
@@ -177,7 +194,7 @@
 
     var lines = [];
     lines.push("/* Agentic Design System - Description component */");
-    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-280); text-align: start; }");
+    lines.push(".description-demo-panel{ display:flex; flex-direction:column; gap:var(--space-10); width:var(--dimension-300); text-align: start; }");
     lines.push(".description-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); max-width:var(--dimension-260); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".description-demo-grid{ display:grid; gap:var(--space-12); }");
     lines.push(".description-demo-panel--bordered .description-demo-grid{ gap:0; border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }");
@@ -186,18 +203,18 @@
     lines.push("/* Cells against the grid's own right/bottom edge skip their own divider border there, since the grid's outer border already draws that edge */");
     lines.push(".description-demo-panel--bordered .description-demo-item.is-last-col{ border-inline-end:none; }");
     lines.push(".description-demo-panel--bordered .description-demo-item.is-last-row{ border-bottom:none; }");
-    lines.push(".description-demo-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
+    lines.push(".description-demo-label{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-dim); text-transform:none; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push(".description-demo-value{ font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); word-break:break-word; max-width:var(--dimension-150); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }");
     lines.push("");
     lines.push("/* Size (3) - Large is the default; Middle/Small tighten item padding and both label/value font one step */");
     lines.push(".description-demo-panel--sz-middle .description-demo-item{ gap:var(--space-2); }");
     lines.push(".description-demo-panel--sz-middle.description-demo-panel--bordered .description-demo-item{ padding:var(--space-6) var(--space-8); }");
-    lines.push(".description-demo-panel--sz-middle .description-demo-label{ font-size:var(--type-body-size); }");
-    lines.push(".description-demo-panel--sz-middle .description-demo-value{ font-size:var(--type-caption-size); }");
+    lines.push(".description-demo-panel--sz-middle .description-demo-label{ font-size:var(--type-selected-size); }");
+    lines.push(".description-demo-panel--sz-middle .description-demo-value{ font-size:var(--type-body-size); }");
     lines.push(".description-demo-panel--sz-small .description-demo-item{ gap:var(--space-1); }");
     lines.push(".description-demo-panel--sz-small.description-demo-panel--bordered .description-demo-item{ padding:var(--space-4) var(--space-6); }");
-    lines.push(".description-demo-panel--sz-small .description-demo-label{ font-size:var(--type-body-size); }");
-    lines.push(".description-demo-panel--sz-small .description-demo-value{ font-size:var(--type-body-size); }");
+    lines.push(".description-demo-panel--sz-small .description-demo-label{ font-size:var(--dimension-12); }");
+    lines.push(".description-demo-panel--sz-small .description-demo-value{ font-size:var(--type-selected-size); }");
     lines.push("");
     lines.push("<!-- Example usage - one per form, at " + columns + " column" + (columns === "1" ? "" : "s") + (sizeInfo.mode === "specific" ? ", at the explicitly chosen size" : "") + ", with section title \"" + title + "\" -->");
     TYPES.forEach(function(t){
@@ -390,6 +407,14 @@
 
     if (columnsSelect) columnsSelect.addEventListener("change", render);
     if (titleInput) titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    var headingInput = document.querySelector('[data-role="description-heading"]');
+    if (headingInput) headingInput.addEventListener("change", render);
+    [1, 2, 3].forEach(function(n){
+      ["label", "value"].forEach(function(kind){
+        var input = document.querySelector('[data-role="description-' + kind + '-' + n + '"]');
+        if (input) input.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+      });
+    });
 
     render();
   });

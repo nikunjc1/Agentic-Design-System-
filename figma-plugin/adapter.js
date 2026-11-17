@@ -38,6 +38,10 @@
   const parts=[];let depth=0,cur='';for(const ch of m[1]){if(ch==='(')depth++;if(ch===')')depth--;if(ch===','&&depth===0){parts.push(cur);cur='';}else cur+=ch;}parts.push(cur);
   if(parts.length!==2)return null;
   const read=part=>{const pm=/^\s*([\s\S]*?)\s+([\d.]+)%\s*$/.exec(part);const c=color(pm?pm[1]:part,tokens);return c?{c,w:pm?parseFloat(pm[2]):null}:null;};
+  const isClear=part=>/^\s*transparent(\s+[\d.]+%)?\s*$/.test(part);
+  // color-mix(X p%, transparent): the colour stays X; only its alpha (p%) changes - alpha() below reads that.
+  if(isClear(parts[0])&&!isClear(parts[1])){const only=read(parts[1]);return only?only.c:null;}
+  if(isClear(parts[1])&&!isClear(parts[0])){const only=read(parts[0]);return only?only.c:null;}
   const a=read(parts[0]),b=read(parts[1]);if(!a||!b)return null;
   let wa=a.w,wb=b.w;if(wa===null&&wb===null){wa=50;wb=50;}else if(wa===null)wa=100-wb;else if(wb===null)wb=100-wa;
   const t=wa+wb||100;return {r:(a.c.r*wa+b.c.r*wb)/t,g:(a.c.g*wa+b.c.g*wb)/t,b:(a.c.b*wa+b.c.b*wb)/t};
@@ -45,7 +49,17 @@
  function color(value,tokens){let text=resolve(value,tokens),match;
   if(/^\s*color-mix\(/.test(text))return mixColor(text.trim(),tokens);
   if((match=/^color\(\s*srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/.exec(text)))return {r:parseFloat(match[1]),g:parseFloat(match[2]),b:parseFloat(match[3])};if(/^#[\da-f]{3,4}$/i.test(text))text='#'+[...text.slice(1)].map(char=>char+char).join('');if((match=/^#([\da-f]{6})([\da-f]{2})?$/i.exec(text)))return {r:parseInt(match[1].slice(0,2),16)/255,g:parseInt(match[1].slice(2,4),16)/255,b:parseInt(match[1].slice(4,6),16)/255};if((match=/^rgba?\(([^)]+)\)/.exec(text))){const values=match[1].split(/[,\s/]+/).filter(Boolean).map(Number);return {r:values[0]/255,g:values[1]/255,b:values[2]/255};}return null;}
- function alpha(value,tokens){const text=resolve(value,tokens),rgba=/^rgba\(([^)]+)\)/.exec(text);if(rgba)return Number(rgba[1].split(/[,\s/]+/).filter(Boolean)[3]??1);if(/^#[\da-f]{8}$/i.test(text))return parseInt(text.slice(-2),16)/255;if(/^#[\da-f]{4}$/i.test(text))return parseInt(text.slice(-1).repeat(2),16)/255;return 1;}
+ function mixAlpha(text,tokens){
+  const m=/^color-mix\(\s*in\s+srgb\s*,([\s\S]*)\)\s*$/.exec(text);if(!m)return 1;
+  const parts=[];let depth=0,cur='';for(const ch of m[1]){if(ch==='(')depth++;if(ch===')')depth--;if(ch===','&&depth===0){parts.push(cur);cur='';}else cur+=ch;}parts.push(cur);if(parts.length!==2)return 1;
+  const read=part=>{const pm=/^\s*([\s\S]*?)\s+([\d.]+)%\s*$/.exec(part);const raw=(pm?pm[1]:part).trim();return {clear:raw==='transparent',a:raw==='transparent'?0:alpha(raw,tokens),w:pm?parseFloat(pm[2]):null};};
+  const x=read(parts[0]),y=read(parts[1]);let wa=x.w,wb=y.w;if(wa===null&&wb===null){wa=50;wb=50;}else if(wa===null)wa=100-wb;else if(wb===null)wb=100-wa;
+  const t=wa+wb||100;return (x.a*wa+y.a*wb)/t;
+ }
+ function alpha(value,tokens){const text=resolve(value,tokens);
+  if(/^\s*color-mix\(/.test(text))return mixAlpha(text.trim(),tokens);
+  const srgb=/^color\(\s*srgb\s+[\d.]+\s+[\d.]+\s+[\d.]+\s*\/\s*([\d.]+)(%?)\s*\)/.exec(text);if(srgb)return Math.max(0,Math.min(1,parseFloat(srgb[1])/(srgb[2]?100:1)));
+  const rgba=/^rgba\(([^)]+)\)/.exec(text);if(rgba)return Number(rgba[1].split(/[,\s/]+/).filter(Boolean)[3]??1);if(/^#[\da-f]{8}$/i.test(text))return parseInt(text.slice(-2),16)/255;if(/^#[\da-f]{4}$/i.test(text))return parseInt(text.slice(-1).repeat(2),16)/255;return 1;}
  function variableName(token){return token.replace(/^--/,'').replace(/-/g,'/');}
  // Foundation categories, not one flat pile or a bare primitive/alias
  // split: every token sorts by name into one of this design system's own
@@ -345,7 +359,8 @@
   const label='Creating "'+c.name+'": ';
   onProgress(label+'Validating contract');
   M.assert(c);if(c.authority!=='contract')throw new Error('Contract must lead before pushing.');
-  if(c.source?.page==='input-text-field.html'&&c.variants.length>512)return pushInputFamilies(c);
+  // Only the combined contract is split by Appearance; each Appearance family (no appearance property left) can itself hold more than 512 variants and must push as one set.
+  if(c.source?.page==='input-text-field.html'&&c.variants.length>512&&c.properties.some(p=>p.id==='appearance'))return pushInputFamilies(c);
   if(c.source?.kind==='button-appearance-family'&&Array.isArray(c.families)&&c.families.length)return pushButtonFamily(c);
   let set=pageNodes(['COMPONENT_SET']).find(n=>n.getPluginData('ads-component')===c.id)||pageNodes(['COMPONENT']).find(n=>n.getPluginData('ads-component')===c.id);
   if(!set){const orphaned=pageNodes(['COMPONENT_SET']).filter(n=>n.name===c.name&&!n.getPluginData('ads-component')&&n.getPluginData('ads-property-map')&&n.children.some(child=>child.getPluginData(VARIANT)));if(orphaned.length===1){set=orphaned[0];set.setPluginData('ads-component',c.id);}}
@@ -660,8 +675,10 @@
     // child exists) - the placeholder's own constraints:{horizontal:
     // 'STRETCH'} below keeps it following this node's real width either
     // way, regardless of exactly when that resolves.
-    node.primaryAxisAlignItems=({center:'CENTER','space-between':'SPACE_BETWEEN','flex-end':'MAX'})[s.justifyContent]||'MIN';node.counterAxisAlignItems=({center:'CENTER','flex-end':'MAX'})[s.alignItems]||'MIN';
+    node.primaryAxisAlignItems=({center:'CENTER','space-between':'SPACE_BETWEEN','flex-end':'MAX'})[s.justifyContent]||'MIN';node.counterAxisAlignItems=({center:'CENTER','flex-end':'MAX',baseline:node.layoutMode==='HORIZONTAL'?'BASELINE':'MIN','first baseline':node.layoutMode==='HORIZONTAL'?'BASELINE':'MIN'})[s.alignItems]||'MIN';
     node.itemSpacing=number(s.gap,c.tokens);await bind(node,'itemSpacing',s.gap);
+    // flex-wrap: wrap (a Description's label/value grid) -> Figma wrap auto layout: items flow along the row and wrap, row gap becomes the cross-axis spacing.
+    if(node.layoutMode==='HORIZONTAL'&&s.flexWrap==='wrap'&&s['--ads-wrap']==='1'&&'layoutWrap'in node){node.layoutWrap='WRAP';node.counterAxisSpacing=number(s.rowGap&&s.rowGap!=='normal'?s.rowGap:s.gap,c.tokens);}
     for(const [field,key]of [['paddingTop','paddingTop'],['paddingRight','paddingRight'],['paddingBottom','paddingBottom'],['paddingLeft','paddingLeft']]){const extra={paddingTop:margin.t,paddingRight:margin.r,paddingBottom:margin.b,paddingLeft:margin.l}[field]||0;node[field]=number(s[key]||s.padding,c.tokens)+extra;if(!extra)await bind(node,field,s[key]||s.padding);}
     node.clipsContent=['hidden','clip'].includes(s.overflow);
    }
@@ -766,7 +783,12 @@
     // fill (Steps' connector lines collapsed to their minimum and every step packed together). Keep it FIXED at its captured size.
     const growsMain=flow.some(k=>/^connector/.test(k.name||'')&&(number(k.styles?.flexGrow,c.tokens)||0)>0),
     hugMain=measurableMain&&!growsMain&&mainSize>0&&near(mainSize,contentMain),hugCross=measurableCross&&crossSize>0&&near(crossSize,contentCross)&&!(!horizontal&&flow.some(k=>k.styles?.alignSelf==='stretch'&&k.kind!=='text'&&k.styles?.position!=='absolute'));
-    node.primaryAxisSizingMode=mainSize>0&&!hugMain?'FIXED':'AUTO';node.counterAxisSizingMode=crossSize>0&&!hugCross?'FIXED':'AUTO';
+    // An explicitly fixed-width component (Description's 300px panel): never infer Hug from its content width, which equals the panel width by design.
+    const fixedWidth=s['--ads-fixed-width']==='1',vertical=node.layoutMode==='VERTICAL';
+    node.primaryAxisSizingMode=mainSize>0&&!(hugMain&&!(fixedWidth&&!vertical))?'FIXED':'AUTO';node.counterAxisSizingMode=crossSize>0&&!(hugCross&&!(fixedWidth&&vertical))?'FIXED':'AUTO';
+    if(node.layoutWrap==='WRAP'){node.primaryAxisSizingMode='FIXED';node.counterAxisSizingMode='AUTO';}
+    // A cell inside a wrapping row keeps the column width it was given (hugging its text would break the columns).
+    if(parent.layoutWrap==='WRAP'&&width>0){if(node.layoutMode==='VERTICAL')node.counterAxisSizingMode='FIXED';else node.primaryAxisSizingMode='FIXED';}
    }else if('layoutMode'in node&&inlineTextRun){
     // A run of text (Badge's pill around its number) keeps whichever axis the contract does not size hugging: resize() above flipped both to FIXED.
     if(!width)node.primaryAxisSizingMode='AUTO';if(!height)node.counterAxisSizingMode='AUTO';
@@ -973,6 +995,14 @@
     if('children'in node){const active=new Set(children.map(child=>child.id));for(const child of node.children)if(child.getPluginData(PART)&&!active.has(child.getPluginData(PART))){const slot=child.type==='SLOT'&&child.componentPropertyReferences?.slotContentId;child.componentPropertyReferences=slot?{slotContentId:slot}:{};child.visible=false;child.setPluginData('ads-retired','true');(function retireDescendants(n){for(const grandchild of n.children||[]){grandchild.visible=false;grandchild.setPluginData('ads-retired','true');retireDescendants(grandchild);}})(child);}}}
    const matrix=/^matrix\(([^)]+)\)/.exec(resolve(s.transform,c.tokens));
    node.rotation=matrix?-Math.atan2(Number(matrix[1].split(',')[1]),Number(matrix[1].split(',')[0]))*180/Math.PI:0;
+   // An empty auto-layout frame that hugs keeps Figma's default 100px on that axis (a Tree leaf's empty toggle spacer made every leaf row 108px tall).
+   // CSS gives an empty element no size of its own, so every hugging axis of an empty frame collapses to 1px; explicitly sized axes are untouched.
+   if(node.type==='FRAME'&&node.layoutMode&&node.layoutMode!=='NONE'&&!(node.children||[]).length&&!n.inputPresentation&&n.kind!=='icon'){
+    // Only axes whose CSS size really is "auto" (a percentage width, like a progress fill, or an absolutely placed ring keeps whatever it was given).
+    const noSize=v=>!v||/^auto$/.test(String(resolve(v,c.tokens)||'').trim()),horizontal=node.layoutMode==='HORIZONTAL',skip=n.ring||s.position==='absolute';
+    const widthAuto=!skip&&noSize(s.width)&&(horizontal?node.primaryAxisSizingMode:node.counterAxisSizingMode)==='AUTO',heightAuto=!skip&&noSize(s.height)&&(horizontal?node.counterAxisSizingMode:node.primaryAxisSizingMode)==='AUTO';
+    if(widthAuto||heightAuto){const keepAlign=node.layoutAlign,keepGrow=node.layoutGrow;node.resize(widthAuto?1:node.width,heightAuto?1:node.height);if(keepAlign==='STRETCH')node.layoutAlign='STRETCH';if(keepGrow===1)node.layoutGrow=1;}
+   }
    if(n.tag==='img'){const b64=node.getPluginData('ads-image');if(b64&&typeof figma.createImage==='function'&&figma.base64Decode){try{node.fills=[{type:'IMAGE',imageHash:figma.createImage(figma.base64Decode(b64)).hash,scaleMode:'FILL'}];node.clipsContent=true;}catch(error){warnings.add('Could not place an embedded image: '+error.message);}}}
    return node;
   }
@@ -1041,11 +1071,16 @@
    }
    return max;
   }
-  let x=0,y=0,rowHeight=0;const columns=masters.length>24?12:masters.length;
-  for(const [index,master]of masters.entries()){
-   if(index&&index%columns===0){x=0;y+=rowHeight+32;rowHeight=0;}
-   master.x=x;master.y=y;x+=master.width+32;rowHeight=Math.max(rowHeight,master.height,extraVisualHeight(master,0));
-  }
+  // Masters are laid out left to right and wrap by width (a row of wide masters used to run far off canvas), and the pass is repeated until every
+  // master's size has settled: a hugging master can still change size after the first read, which left neighbours overlapping.
+  const placeMasters=()=>{
+   const columns=masters.length>24?12:masters.length,maxRowWidth=4800;let x=0,y=0,rowHeight=0,count=0;
+   for(const master of masters){
+    if(count&&(count%columns===0||x+master.width>maxRowWidth)){x=0;y+=rowHeight+32;rowHeight=0;count=0;}
+    master.x=x;master.y=y;x+=master.width+32;count++;rowHeight=Math.max(rowHeight,master.height,extraVisualHeight(master,0));
+   }
+  };
+  {let signature='';for(let pass=0;pass<4;pass++){placeMasters();const next=masters.map(m=>Math.round(m.width)+'x'+Math.round(m.height)).join(',');if(next===signature)break;signature=next;}}
   if(masters.length&&set.resize)set.resize(Math.max(...masters.map(master=>master.x+master.width))+16,Math.max(...masters.map(master=>master.y+Math.max(master.height,extraVisualHeight(master,0))))+16);
   // Documentation frame - a titled, backgrounded card grouping every
   // variant together (component name + a short description above a light

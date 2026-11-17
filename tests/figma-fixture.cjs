@@ -1,7 +1,7 @@
 function fixture(){
  let sequence=0;const registry=new Map(),variables=[],collections=[];
  class Node{
-  constructor(type){this.type=type;this.id='node-'+(++sequence);this.children=[];this.data={};this.name='';this.visible=true;this.width=100;this.height=32;this.opacity=1;this.fills=[];this.strokes=[];this.cornerRadius=0;this.boundVariables={};this.layoutMode='NONE';this.componentPropertyDefinitions={};this.reactions=[];registry.set(this.id,this);}
+  constructor(type){this.type=type;this.id='node-'+(++sequence);this.children=[];this.data={};this.name='';this.visible=true;this.width=100;this.height=32;this.opacity=1;this.fills=[];this.strokes=[];this.cornerRadius=0;this.boundVariables={};this.layoutMode='NONE';this.layoutWrap='NO_WRAP';this.counterAxisSpacing=0;this.componentPropertyDefinitions={};this.reactions=[];registry.set(this.id,this);}
   setPluginData(k,v){this.data[k]=v;}getPluginData(k){return this.data[k]||'';}
   async setReactionsAsync(reactions){this.reactions=reactions;}
   appendChild(n){const old=n.parent;if(old)old.children=old.children.filter(child=>child!==n);this.children.push(n);n.parent=this;if(old&&old!==this&&old.type==='COMPONENT_SET'&&!old.children.length)old.remove();}

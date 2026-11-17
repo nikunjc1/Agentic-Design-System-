@@ -43,8 +43,7 @@
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
     { value: "16", label: "16px - Expressive" },
-    { value: "24", label: "24px - Large" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "24", label: "24px - Large" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -210,10 +209,10 @@
         var isLast = i === ROWS_DATA.length - 1;
         var dividedCls = (showDividers && !isLast) ? " list-demo-row--divided" : "";
         return '<div class="list-demo-row' + dividedCls + '" aria-hidden="true">' +
-          '<span class="skeleton-demo-avatar is-animated" style="width:' + avatarH + 'px;height:' + avatarH + 'px;border-radius:50%;"></span>' +
-          '<div class="list-demo-body">' +
-          '<span class="skeleton-demo-line is-animated" style="width:45%;height:var(--dimension-12);"></span>' +
-          '<span class="skeleton-demo-line is-animated" style="width:70%;margin-top:var(--space-6);"></span>' +
+          '<span class="skeleton-demo-avatar is-animated" data-contract-part="sk-avatar-' + i + '" data-contract-kind="container" style="width:' + avatarH + 'px;height:' + avatarH + 'px;border-radius:50%;"></span>' +
+          '<div class="list-demo-body" data-contract-part="sk-body-' + i + '">' +
+          '<span class="skeleton-demo-line is-animated" data-contract-part="sk-line1-' + i + '" data-contract-kind="container" style="width:45%;height:var(--dimension-12);"></span>' +
+          '<span class="skeleton-demo-line is-animated" data-contract-part="sk-line2-' + i + '" data-contract-kind="container" style="width:70%;margin-top:var(--space-6);"></span>' +
           "</div></div>";
       }).join("");
       return '<div class="list-demo-panel list-demo-panel--' + typeKey + sizeCls + '"' + styleAttr + ' aria-busy="true" aria-live="polite">' + loadingRowsHtml + "</div>";
@@ -234,13 +233,13 @@
       var isLast = i === ROWS_DATA.length - 1;
       var dividedCls = (showDividers && !isLast) ? " list-demo-row--divided" : "";
       var avatarHtml = (stateKey !== "default")
-        ? '<div class="list-demo-avatar avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--h' + avatarH + '">' + person.initials + "</div>"
+        ? '<div class="list-demo-avatar avatar-demo-circle avatar-demo-circle--initials avatar-demo-circle--h' + avatarH + '" data-contract-part="avatar-' + i + '">' + person.initials + "</div>"
         : "";
       var actionHtml = (stateKey === "with-actions")
-        ? '<button type="button" class="list-demo-action"' + tabindexAttr + ">View</button>"
+        ? '<button type="button" class="list-demo-action" data-contract-part="action-' + i + '"' + tabindexAttr + ">View</button>"
         : "";
       return '<div class="list-demo-row' + dividedCls + '">' + avatarHtml +
-        '<div class="list-demo-body"><p class="list-demo-title">' + person.name + '</p><p class="list-demo-description">' + person.role + "</p></div>" +
+        '<div class="list-demo-body" data-contract-part="body-' + i + '"><p class="list-demo-title" data-contract-part="title-' + i + '">' + person.name + '</p><p class="list-demo-description" data-contract-part="description-' + i + '">' + person.role + "</p></div>" +
         actionHtml + "</div>";
     }).join("");
     return '<div class="list-demo-panel list-demo-panel--' + typeKey + sizeCls + '"' + styleAttr + ">" + rowsHtml + "</div>";

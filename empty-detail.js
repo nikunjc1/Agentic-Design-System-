@@ -49,11 +49,17 @@
   // comparison matrix) keeps the action button out of the Tab sequence
   // without removing it from the accessibility tree; the exported Copy code
   // example (illustrative=false/omitted) stays real, operable markup.
+  // Heading style: which heading role (Heading 1 to Heading 6) the title uses; Heading 6 is the default.
+  function headingClass(){
+    var select = document.querySelector('[data-role="empty-heading"]');
+    var value = select ? select.value : "h6";
+    return " empty-demo-title--" + (/^h[1-6]$/.test(value) ? value : "h6");
+  }
   function buildEmptyField(typeKey, stateKey, title, description, actionLabel, illustrative){
     var tabindexAttr = illustrative ? ' tabindex="-1"' : "";
     var safeTitle = escapeHtml(title);
     var iconHtml = '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--' + typeKey + '">' + ICON_SVG + "</div>";
-    var titleHtml = '<p class="empty-demo-title" data-contract-part="title">' + safeTitle + "</p>";
+    var titleHtml = '<p class="empty-demo-title' + headingClass() + '" data-contract-part="title">' + safeTitle + "</p>";
     var descriptionHtml = (stateKey !== "title-only")
       ? '<p class="empty-demo-description" data-contract-part="description">' + escapeHtml(description) + "</p>"
       : "";
@@ -98,7 +104,7 @@
   function cssBlock(){
     var lines = [];
     lines.push("/* Agentic Design System - Empty component */");
-    lines.push(".empty-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-10); padding:var(--space-24); width:var(--dimension-220); }");
+    lines.push(".empty-demo-panel{ box-sizing:border-box; display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--space-8); padding:var(--space-24); width:var(--dimension-220); }");
     lines.push(".empty-demo-icon-wrap{ display:flex; align-items:center; justify-content:center; color:var(--text-dim); }");
     lines.push(".empty-demo-icon-wrap--default{ width:var(--dimension-56); height:var(--dimension-56); border-radius:var(--radius-full); background:var(--graphite-800); }");
     lines.push(".empty-demo-icon-wrap--default svg{ width:var(--dimension-28); height:var(--dimension-28); }");
@@ -107,7 +113,7 @@
     lines.push('.empty-demo-title{ font-family:var(--font-body); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-hi); margin:0; }');
     lines.push('.empty-demo-description{ font-family:var(--font-body); font-size:var(--type-caption-size); color:var(--text-dim); line-height:1.5; margin:0; max-width:var(--dimension-260); overflow-wrap:anywhere; }');
     lines.push("/* Action button reuses Modal's own .modal-demo-btn/.modal-demo-btn--primary classes directly - only the primary button's color needs its own rule here, since it normally comes from Modal's type-scoped .modal-demo-dialog--default/destructive parent, and this panel isn't inside one. */");
-    lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); margin-top:var(--space-4); }");
+    lines.push(".empty-demo-panel .modal-demo-btn--primary{ background:var(--red-500); }");
     return lines.join("\n");
   }
 
@@ -283,6 +289,8 @@
     }
 
     if (titleInput) titleInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
+    var headingInput = document.querySelector('[data-role="empty-heading"]');
+    if (headingInput) headingInput.addEventListener("change", render);
     if (descriptionInput) descriptionInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
     if (actionLabelInput) actionLabelInput.addEventListener("input", function(){ window.ADS_scheduleRender(render); });
 

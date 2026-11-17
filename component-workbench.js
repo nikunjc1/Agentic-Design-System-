@@ -590,6 +590,10 @@
         const built=captureStatisticProperties();
         c.anatomy=built.anatomy;c.properties=built.properties;c.selection=built.selection;c.variants=built.variants;
         notes='State and Appearance are captured as crossed properties ('+built.properties.filter(p=>p.type==='options').map(p=>p.name).join(', ')+') - every combination draws as its own Figma variant. Title is a bound Text property; Value is bound and visible on every State but "Loading" (which swaps the whole title+value area for a skeleton bar). Prefix/Suffix are bound Text properties, harvested by briefly filling them in during export if they were empty (their presence is driven by their own text, not a boolean or a State). Trend arrow/percentage stay illustrative reference content, not configurable properties. Native property IDs retain canonical values; anatomy styles and tokens use context.unit.';
+      }else if(file==='timeline-default.html'){
+        const built=captureTimelineProperties();
+        c.anatomy=built.anatomy;c.properties=built.properties;c.selection=built.selection;c.variants=built.variants;
+        notes='State, Appearance (layout) and State icons are captured as crossed properties ('+built.properties.filter(p=>p.type==='options').map(p=>p.name).join(', ')+') - every combination is its own master, with the Pending item, connectors, icons, Loading and Empty parts grafted and shown only where they exist.';
       }else if(file==='table-default.html'){
         const built=captureTableProperties();
         c.anatomy=built.anatomy;c.properties=built.properties;c.selection=built.selection;c.variants=built.variants;
@@ -639,7 +643,11 @@
         const fieldNote=fieldProps.length?' '+fieldProps.map(p=>p.name).join(', ')+' '+(fieldProps.length>1?'are':'is')+' bound Text/Boolean '+(fieldProps.length>1?'properties':'property')+'.':'';
         notes='Rendered snapshot of the selected type/configuration, with State'+(crossedAxes.length?' and '+crossedAxes.map(p=>p.name).join(' and '):'')+' captured as crossed properties - every combination draws as its own Figma variant. The start and end date segments each truncate within their own fair share of the row (a small flex-grow wrapper frame each) instead of one hugging all the space and starving the other.'+fieldNote+' Native property IDs retain canonical values; anatomy styles and tokens use context.unit. Interaction rules and unseen configurations require authored behavior bindings.';
       }else{
-        const built=captureFormFieldProperties();
+        // Tag: the remove (x) button exists only in the Removable State, and the chip must hug its label (see postProcessTag below).
+        const tagSnaps=[];const prevTagHook=crossedHook;
+        if(file==='tag-default.html')crossedHook=(entry,anat,when)=>{tagSnaps.push({when:{...when},state:entry.state,anat});if(prevTagHook)prevTagHook(entry,anat,when);};
+        let built;try{built=captureFormFieldProperties();}finally{crossedHook=prevTagHook;}
+        if(file==='tag-default.html')postProcessTag(built,tagSnaps);
         c.anatomy=built.anatomy;c.properties=built.properties;c.selection=built.selection;c.variants=built.variants;
         const crossedAxes=built.properties.filter(p=>p.type==='options'&&p.id!=='state');
         const fieldProps=built.properties.filter(p=>['label','required','showIcons','supportingText','showSupporting','errorText','showError'].includes(p.id));
@@ -4881,6 +4889,26 @@
         selection.title=def;
       }
 
+      // Items 1-3: Label n / Placeholder text n are text properties bound to the item's label and value layers.
+      for(let i=1;i<=3;i++){
+        for(const kind of ['label','value']){
+          const node=findPart(baseAnatomy,kind+i),input=document.querySelector('[data-role="description-'+kind+'-'+i+'"]');
+          if(!node)continue;
+          node.bind=kind+i;const def=input?.value.trim()||node.text||'';
+          properties.push({id:kind+i,name:(kind==='label'?'Label ':'Placeholder text ')+i,type:'text',default:def});selection[kind+i]=def;
+        }
+      }
+      // The label/value grid wraps (Figma wrap auto layout); opt-in marker read by the plugin so other wrapping rows (Breadcrumb) keep hugging.
+      (function mark(n){if(n.id==='grid')n.styles={...n.styles,'--ads-wrap':'1'};(n.children||[]).forEach(mark);})(baseAnatomy);
+      baseAnatomy.styles={...baseAnatomy.styles,width:'300px','--ads-fixed-width':'1'};
+      // Every panel, grid and cell hugs its content vertically: captured pixel heights came from the browser's text metrics, so a fixed height made
+      // cells overlap or clip once Figma's text measured differently. Widths (the column widths) stay fixed.
+      {
+        (function strip(n){if(n.kind!=='text'&&n.styles){const st={...n.styles};st.height='auto';delete st.maxHeight;n.styles=st;}(n.children||[]).forEach(strip);})(baseAnatomy);
+        for(const v of variants)for(const o of Object.values(v.overrides||{}))if(o.styles&&'height'in o.styles){const st={...o.styles};delete st.height;o.styles=st;}
+      }
+      // Heading style (Heading 1 to 6) is a page-side choice captured into the section title's own styles (not a Figma variant axis).
+
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Empty: same no-native-control-to-drive manual sweep as Tooltip/Tour -
@@ -4937,7 +4965,7 @@
       if(!descriptionNode&&descStateLabel){
         const entry=gatherEntries().find(e=>e.type===originalType&&e.state===descStateLabel);
         descriptionNode=entry&&findPart(snapshot(entry.root,'root',0),'description');
-        if(descriptionNode)baseAnatomy.children.splice(1,0,descriptionNode);
+        if(descriptionNode){const at=baseAnatomy.children.findIndex(c=>c.id==='title');baseAnatomy.children.splice(at>=0?at+1:baseAnatomy.children.length,0,descriptionNode);}
       }
       if(descriptionNode){
         descriptionNode.bind='description';
@@ -4962,6 +4990,14 @@
         selection.actionLabel=def;
       }
 
+      // The action button hugs its label (a captured pixel width clipped the label) and its text sits centred; the panel hugs its content too.
+      {
+        const unsize=(n,ids)=>{if(ids.includes(n.id)&&n.styles){const st={...n.styles};delete st.width;st.height='auto';st.display='flex';st.justifyContent='center';st.alignItems='center';st.textAlign='center';n.styles=st;}(n.children||[]).forEach(c=>unsize(c,ids));};
+        unsize(baseAnatomy,['action']);
+        for(const v of variants){const o=v.overrides&&v.overrides.action;if(o&&o.styles){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}}
+        const root=baseAnatomy;root.styles={...root.styles,height:'auto'};
+        for(const v of variants){const o=v.overrides&&v.overrides[root.id];if(o&&o.styles){const st={...o.styles};delete st.height;o.styles=st;}}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Image combines a manual single-select drive (Aspect ratio is a plain
@@ -5061,8 +5097,136 @@
     // border style across every row, not one node's visibility - same
     // orphan-editable-property treatment as Card's Show shadow/Tabs'
     // Equal-width.
+    function postProcessTag(built,snaps){
+      const M=window.ADSComponentContract;
+      const findPart=(n,id)=>{if(n.id===id)return n;for(const c of n.children||[]){const r=findPart(c,id);if(r)return r;}return null;};
+      const stateLabels=built.properties.find(p=>p.id==='state')?.options||[];
+      const removable=stateLabels.find(l=>/removable/i.test(l));
+      const anatomy=built.anatomy;
+      if(removable&&!findPart(anatomy,'remove')){
+        const cands=snaps.filter(s=>s.state===removable&&findPart(s.anat,'remove'));
+        if(cands.length){
+          const tmplSnap=cands.find(s=>/default/i.test(s.when.appearance||''))||cands[0];
+          const tmpl=JSON.parse(JSON.stringify(findPart(tmplSnap.anat,'remove')));tmpl.visibleWhen=[{property:'state',equals:removable}];
+          anatomy.children=[...(anatomy.children||[]),tmpl];
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(tmpl);
+          for(const s of cands){
+            const node=findPart(s.anat,'remove');const patchSet={};
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-tag-'+M.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+      }
+      // The chip hugs its label (and the remove button): a captured pixel size would clip the label or leave extra space.
+      const hug=n=>{if(n&&n.styles&&n.tag!=='svg'&&n.id!=='remove'&&n.id!=='remove-icon'&&!/^remove-icon/.test(n.id)){const st={...n.styles};delete st.width;delete st.height;n.styles=st;}(n.children||[]).forEach(hug);};hug(anatomy);
+      for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(id!=='remove'&&!/^remove-icon/.test(id)&&o.styles&&('width' in o.styles||'height' in o.styles)){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}
+    }
+    function captureTimelineProperties(){
+      const M=window.ADSComponentContract;
+      const tlSnaps=[];const prevHook=crossedHook;
+      crossedHook=(entry,anat,when)=>{tlSnaps.push({when:{...when},state:entry.state,type:entry.type,anat});if(prevHook)prevHook(entry,anat,when);};
+      let built;try{built=captureFormFieldProperties();}finally{crossedHook=prevHook;}
+      const anatomy=built.anatomy,properties=[...built.properties],selection={...built.selection};
+      const findPart=(n,id)=>{if(n.id===id)return n;for(const c of n.children||[]){const r=findPart(c,id);if(r)return r;}return null;};
+      const stateOpt=properties.find(p=>p.id==='state')?.options||[],appOpt=properties.find(p=>p.id==='appearance')?.options||[];
+      const S=re=>stateOpt.find(l=>re.test(l)),A=re=>appOpt.find(l=>re.test(l));
+      const pendingL=S(/pending/i),loadingL=S(/loading/i),emptyL=S(/empty/i),altL=A(/alternate/i),horizL=A(/horizontal/i);
+      // Timeline has no size/radius control, so the crossed sweep never reports its cells: snapshot every State x Appearance cell directly.
+      tlSnaps.length=0;
+      for(const e of gatherEntries())tlSnaps.push({when:{state:e.state,appearance:e.type},state:e.state,type:e.type,anat:snapshot(e.root,'root',0)});
+      const eq=(p,l)=>({property:p,equals:l}),not=(p,l)=>({property:p,equals:l,not:true});
+      const grafts=[];
+      const graft=(id,parentId,at,vis,pred)=>{
+        const parent=findPart(anatomy,parentId);if(!parent||findPart(anatomy,id))return;
+        const snaps=tlSnaps.filter(s=>pred(s)&&findPart(s.anat,id));if(!snaps.length)return;
+        const t=snaps.find(s=>/default/i.test(s.type)&&/default|with/i.test(s.state))||snaps[0];
+        const tmpl=JSON.parse(JSON.stringify(findPart(t.anat,id)));tmpl.visibleWhen=vis;
+        parent.children=at==='start'?[tmpl,...(parent.children||[])]:[...(parent.children||[]),tmpl];grafts.push({id,tmpl,snaps});
+      };
+      if(pendingL)graft('item-3','root','end',[eq('state',pendingL)],s=>s.state===pendingL);
+      for(let i=0;i<4;i++){
+        if(altL)graft('spacer-'+i,'item-'+i,'start',[eq('appearance',altL)],s=>s.type===altL);
+        if(horizL){
+          graft('prev-'+i,'marker-'+i,'start',[eq('appearance',horizL)],s=>s.type===horizL);
+          graft('endcap-'+i,'marker-'+i,'end',[eq('appearance',horizL),...(i===2&&pendingL?[not('state',pendingL)]:[])],s=>s.type===horizL&&(i!==2||s.state!==pendingL));
+        }
+      }
+      if(pendingL)graft('connector-2','marker-2','end',[eq('state',pendingL)],s=>s.state===pendingL);
+      // Loading / Empty replace the events; the items hide for them and the message parts are shown only there.
+      for(const [label,id] of [[loadingL,'timeline-events-loading'],[emptyL,'timeline-events-empty']])if(label)graft(id,'root','end',[eq('state',label)],s=>s.state===label);
+      for(let i=0;i<3;i++){const item=findPart(anatomy,'item-'+i);if(item){const rules=[loadingL,emptyL].filter(Boolean).map(l=>not('state',l));item.visibleWhen=[...(item.visibleWhen||[]),...rules];}}
+      // State icons: the dot is swapped for a check icon when "State icons" is on. Harvest the icons by switching it on for a moment.
+      const showInput=document.querySelector('[data-role="timeline-show-icons"]');
+      if(showInput&&!findPart(anatomy,'icon-0')){
+        const was=showInput.checked;let iconSnaps=[];
+        applyingFoundation=true;
+        try{
+          if(!was){showInput.checked=true;showInput.dispatchEvent(new Event('change',{bubbles:true}));window.ADS_flushRenders?.();}
+          for(const st of stateOpt.filter(l=>l!==loadingL&&l!==emptyL)){const e=gatherEntries().find(x=>x.state===st&&x.type===(appOpt.find(l=>/default/i.test(l))||selected.type));if(e)iconSnaps.push({state:st,anat:snapshot(e.root,'root',0)});}
+          if(!was){showInput.checked=false;showInput.dispatchEvent(new Event('change',{bubbles:true}));}
+        }finally{applyingFoundation=false;refresh();}
+        for(let i=0;i<4;i++){
+          const base=iconSnaps.find(s=>findPart(s.anat,'icon-'+i));if(!base)continue;
+          const parent=findPart(anatomy,'marker-'+i);if(!parent)continue;
+          const tmpl=JSON.parse(JSON.stringify(findPart(base.anat,'icon-'+i)));tmpl.visibleWhen=[eq('marker','Icon')];
+          const dot=findPart(anatomy,'dot-'+i);if(dot&&i<3)dot.visibleWhen=[eq('marker','Dot')];
+          const dotIdx=dot?parent.children.indexOf(dot):-1;
+          parent.children=dotIdx>=0?[...parent.children.slice(0,dotIdx+1),tmpl,...parent.children.slice(dotIdx+1)]:[tmpl,...parent.children];
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(tmpl);
+          for(const s of iconSnaps){const node=findPart(s.anat,'icon-'+i);if(!node)continue;const patchSet={};
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const attributes={};for(const [k,v] of Object.entries(n.attributes||{}))if(b.attributes[k]!==v)attributes[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(Object.keys(attributes).length)patch.attributes=attributes;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const when={state:s.state};const key=JSON.stringify(when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-tl-'+M.id('icons-'+s.state),name:'State icons / '+s.state,when,overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+      }
+      // "State icons" swaps the dot for an icon. Figma can only show/hide a layer from a boolean (it cannot hide the dot when the icon is on), so it
+      // becomes a two-value Marker property (Dot / Icon): each master shows exactly one of them.
+      {
+        const bi=properties.findIndex(p=>p.id==='showIcons');
+        if(bi>=0&&findPart(anatomy,'icon-0')){const was=Boolean(selection.showIcons);properties.splice(bi,1,{id:'marker',name:'Marker',type:'options',options:['Dot','Icon'],default:was?'Icon':'Dot'});delete selection.showIcons;selection.marker=was?'Icon':'Dot';}
+      }
+      for(const g of grafts){
+        const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+        for(const s of g.snaps){
+          const node=findPart(s.anat,g.id);const patchSet={};
+          (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+          if(!Object.keys(patchSet).length)continue;
+          const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+          if(!v){v={id:'cv-tl-'+M.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+          v.overrides={...v.overrides,...patchSet};
+        }
+      }
+      // Everything hugs its content vertically; only the marks (dot, icon, connector, spacer) keep their own sizes.
+      {
+        const keep=id=>/^(dot|icon|connector|prev|endcap|spacer)-/.test(id)||id==='timeline-events-loading';
+        (function strip(n){if(n.kind!=='text'&&n.styles&&!keep(n.id)&&n.tag!=='svg'&&!/^icon-/.test(n.id)){const st={...n.styles};st.height='auto';delete st.maxHeight;n.styles=st;}(n.children||[]).forEach(strip);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(!keep(id)&&!/^icon-/.test(id)&&o.styles&&'height' in o.styles){const st={...o.styles};delete st.height;o.styles=st;}
+        anatomy.styles={...anatomy.styles,'--ads-fixed-width':'1'};
+        // A vertical connector fills the marker column (its captured height was whatever the item measured in the browser); only Horizontal has a fixed 2px line.
+        const horizLabel=horizL;
+        (function conn(n){if(/^connector-\d$/.test(n.id)&&n.styles){n.styles={...n.styles,height:'24px'};}(n.children||[]).forEach(conn);})(anatomy);
+        // The marker column is only as tall as its dot and stretches to the item's height, so the connector under the dot runs all the way down to the next
+        // dot (a hugging marker stayed short and left the line floating). Horizontal markers are a fixed 16px row so every dot sits on one baseline.
+        (function mk(n){if(/^marker-\d$/.test(n.id)&&n.styles)n.styles={...n.styles,height:'10px'};(n.children||[]).forEach(mk);})(anatomy);
+        for(const v of built.variants){if(v.when.appearance!==horizLabel)continue;for(let i=0;i<4;i++){const o=v.overrides['marker-'+i]||(v.overrides['marker-'+i]={});o.styles={...(o.styles||{}),height:'16px'};}}
+        // The text block is always a vertical stack (a lone title, like the Pending placeholder's, would otherwise be read as a one-line run).
+        (function col(n){if(/^content-\d$/.test(n.id)&&n.styles)n.styles={...n.styles,display:'flex',flexDirection:'column'};(n.children||[]).forEach(col);})(anatomy);
+        for(const v of built.variants){if(v.when.appearance===horizLabel)continue;for(const [id,o] of Object.entries(v.overrides||{}))if(/^connector-\d$/.test(id)&&o.styles&&'height' in o.styles){const st={...o.styles};delete st.height;o.styles=st;}}
+      }
+      return {anatomy,properties,selection,variants:built.variants};
+    }
     function captureListProperties(){
-      const built=captureFormFieldProperties();
+      // Avatar / View action / skeleton placeholders only exist in some States, and positional ids shifted between States (the text column was
+      // root-0-0 in Default but root-0-1 with an avatar). Rows now carry stable parts; each State-only part is collected here and grafted below.
+      const listSnaps=[];const prevListHook=crossedHook;
+      crossedHook=(entry,anat,when)=>{listSnaps.push({when:{...when},state:entry.state,anat});if(prevListHook)prevListHook(entry,anat,when);};
+      let built;try{built=captureFormFieldProperties();}finally{crossedHook=prevListHook;}
       const properties=[...built.properties];const selection={...built.selection};
       const showDividersInput=document.querySelector('[data-role="list-show-dividers"]');
       if(showDividersInput){
@@ -5086,6 +5250,49 @@
       // captureTransferProperties()'s STATUS_STATES.
       function findPart(n,partId){if(n.id===partId)return n;for(const c of n.children||[]){const r=findPart(c,partId);if(r)return r;}return null;}
       const stateLabels=properties.find(p=>p.id==='state')?.options||[];
+      {
+        const M2=window.ADSComponentContract;
+        const sLabel=re=>stateLabels.find(l=>re.test(l));
+        const defaultLabel=sLabel(/^default$/i),loadingLabel=sLabel(/^loading$/i),emptyLabel2=sLabel(/^empty$/i),avatarsLabel=sLabel(/^with avatars$/i),actionLabel=sLabel(/action/i);
+        const not=l=>({property:'state',equals:l,not:true}),eq=l=>({property:'state',equals:l});
+        const specs=[];
+        for(let r=0;r<3;r++){
+          const rowId='root-'+r;
+          specs.push({id:'avatar-'+r,parent:rowId,at:'start',snapState:avatarsLabel,vis:[defaultLabel,loadingLabel,emptyLabel2].filter(Boolean).map(not)});
+          specs.push({id:'action-'+r,parent:rowId,at:'end',snapState:actionLabel,vis:actionLabel?[eq(actionLabel)]:[]});
+          specs.push({id:'sk-body-'+r,parent:rowId,at:'start',snapState:loadingLabel,vis:loadingLabel?[eq(loadingLabel)]:[]});
+          specs.push({id:'sk-avatar-'+r,parent:rowId,at:'start',snapState:loadingLabel,vis:loadingLabel?[eq(loadingLabel)]:[]});
+        }
+        const px2=v=>{const m=/^(-?\d*\.?\d+)px$/.exec(String(v||'').trim());return m?parseFloat(m[1]):0;};
+        const grafted=[];
+        for(const sp of specs){
+          if(!sp.snapState||findPart(anatomy,sp.id))continue;
+          const snaps=listSnaps.filter(s=>(sp.id.startsWith('avatar-')?/avatars/i.test(s.state):s.state===sp.snapState)&&findPart(s.anat,sp.id));
+          if(!snaps.length)continue;
+          const tmplSnap=snaps.find(s=>s.state===sp.snapState&&/default/i.test(s.when.size||'')&&/default/i.test(s.when.appearance||''))||snaps.find(s=>s.state===sp.snapState)||snaps[0];
+          const tmpl=JSON.parse(JSON.stringify(findPart(tmplSnap.anat,sp.id)));
+          tmpl.visibleWhen=sp.vis;
+          const resolvePct=(root)=>{const bodyW=px2(findPart(root,sp.id.replace('sk-avatar','sk-body'))?.styles?.width);(function w(n){const m=/^(\d+(?:\.\d+)?)%$/.exec(String(n.styles?.width||''));if(m&&bodyW)n.styles={...n.styles,width:Math.round(bodyW*parseFloat(m[1])/100*100)/100+'px'};(n.children||[]).forEach(w);})(root);};
+          if(sp.id.startsWith('sk-body'))resolvePct(tmpl);
+          const parent=findPart(anatomy,sp.parent);if(!parent)continue;
+          parent.children=sp.at==='start'?[tmpl,...(parent.children||[])]:[...(parent.children||[]),tmpl];
+          grafted.push({sp,tmpl,snaps});
+        }
+        // The normal row content is replaced by skeleton placeholders while Loading.
+        if(loadingLabel)for(let r=0;r<3;r++){const body=findPart(anatomy,'body-'+r);if(body)body.visibleWhen=[...(body.visibleWhen||[]),not(loadingLabel)];}
+        for(const g of grafted){
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+          for(const s of g.snaps){
+            const node=findPart(s.anat,g.sp.id);const patchSet={};
+            if(g.sp.id.startsWith('sk-body')){const bw=px2(node.styles&&node.styles.width);(function w(n){const m=/^(\d+(?:\.\d+)?)%$/.exec(String(n.styles?.width||''));if(m&&bw)n.styles={...n.styles,width:Math.round(bw*parseFloat(m[1])/100*100)/100+'px'};(n.children||[]).forEach(w);})(node);}
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-list-'+M2.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+      }
       const emptyLabel=stateLabels.find(l=>/^empty$/i.test(l));
       if(emptyLabel){
         const originalType=selected.type,originalConfig=selected.config;
@@ -5096,6 +5303,14 @@
           for(const row of normalRows)row.visibleWhen=[...(row.visibleWhen||[]),{property:'state',equals:emptyLabel,not:true}];
           anatomy.children=[...normalRows,{...emptyNode,visibleWhen:[{property:'state',equals:emptyLabel}],styles:{...emptyNode.styles,width:'100%',flexGrow:'1'}}];
         }
+      }
+      // Rows, text columns and the list frame hug their height; only the avatar circle and skeleton bars keep their fixed sizes.
+      {
+        anatomy.styles={...anatomy.styles,width:'260px','--ads-fixed-width':'1'};
+        for(const v of built.variants){const o=v.overrides&&v.overrides[anatomy.id];if(o&&o.styles&&'width' in o.styles){const st={...o.styles};delete st.width;o.styles=st;}}
+        const fixedH=id=>/^(avatar|sk-avatar|sk-line1|sk-line2)-/.test(id);
+        (function strip(n){if(n.kind!=='text'&&n.styles&&!fixedH(n.id)&&n.tag!=='svg'){const st={...n.styles};st.height='auto';delete st.maxHeight;n.styles=st;}(n.children||[]).forEach(strip);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(!fixedH(id)&&o.styles&&'height' in o.styles){const st={...o.styles};delete st.height;o.styles=st;}
       }
       return {anatomy,properties,selection,variants:built.variants};
     }
@@ -5111,6 +5326,20 @@
       const triggerLabelInput=document.querySelector('[data-role="popover-trigger-label"]');
       const titleInput=document.querySelector('[data-role="popover-title"]');
       const bodyInput=document.querySelector('[data-role="popover-body"]');
+      // Same arrow treatment as Tooltip/Tour: the page's flow layout (negative margins, rotated 45deg) can't be reproduced in Figma, so the arrow
+      // becomes an absolutely placed child of the BUBBLE, anchored to the bubble edge that faces the trigger.
+      function popArrowStyles(wrapEl,placement){
+        const arrowEl=wrapEl&&wrapEl.querySelector&&wrapEl.querySelector('.popover-demo-arrow'),bubbleEl=wrapEl&&wrapEl.querySelector&&wrapEl.querySelector('.popover-demo-bubble');
+        if(!arrowEl||!bubbleEl)return null;
+        const br=bubbleEl.getBoundingClientRect(),ar=arrowEl.getBoundingClientRect();
+        const m=/^matrix\(([^)]+)\)/.exec(getComputedStyle(arrowEl).transform);const deg=m?-Math.atan2(Number(m[1].split(',')[1]),Number(m[1].split(',')[0]))*180/Math.PI:0,rad=deg*Math.PI/180,cs=Math.cos(rad),sn=Math.sin(rad);
+        const w=parseFloat(getComputedStyle(arrowEl).width)||8,h=parseFloat(getComputedStyle(arrowEl).height)||8;
+        const cx=(ar.left-br.left)+ar.width/2,cy=(ar.top-br.top)+ar.height/2;
+        const t=String(placement||'').toLowerCase();
+        const side=/left/.test(t)?'left':/right/.test(t)?'right':/bottom/.test(t)?'bottom':'top';
+        const hint={top:{justifySelf:'center',alignSelf:'flex-end'},bottom:{justifySelf:'center',alignSelf:'flex-start'},left:{justifySelf:'flex-end',alignSelf:'center'},right:{justifySelf:'flex-start',alignSelf:'center'}}[side];
+        return {position:'absolute',left:(cx-(cs*(w/2)+sn*(h/2)))+'px',top:(cy-(-sn*(w/2)+cs*(h/2)))+'px',marginTop:'0px',marginBottom:'0px',marginLeft:'0px',marginRight:'0px',right:'auto',bottom:'auto',...hint,transform:getComputedStyle(arrowEl).transform};
+      }
       const baseAnatomy=snapshot(selected.root,'root',0);
       const originalType=selected.type,originalState=selected.state;
       const base=new Map();(function walk(n){base.set(n.id,n);for(const child of n.children||[])walk(child);})(baseAnatomy);
@@ -5132,6 +5361,7 @@
           }
           for(const child of n.children||[])walk(child);
         })(variantAnatomy);
+        {const st=popArrowStyles(entry.root,entry.type);if(st)overrides.arrow={...(overrides.arrow||{}),styles:{...((overrides.arrow||{}).styles||{}),...st}};}
         const when={state:entry.state,appearance:entry.type};
         const variantName=[entry.type,entry.state].filter(Boolean).join(' / ');
         if(Object.keys(overrides).length)variants.push({id:'cv-'+M.id(variantName),name:variantName,when,overrides});
@@ -5169,6 +5399,33 @@
         selection.body=def;
       }
 
+      // Bubble: arrow first (painted under the text), close button grafted for With close, everything hugs; the trigger label is centred.
+      {
+        const bubble=findPart(baseAnatomy,'bubble'),arrow=findPart(baseAnatomy,'arrow'),trigger=findPart(baseAnatomy,'trigger');
+        const closeLabel=stateOptions.find(l=>/close/i.test(l));const closeLabelAll=closeLabel;
+        if(bubble){
+          if(arrow){baseAnatomy.children=baseAnatomy.children.filter(n=>n!==arrow);const ent=gatherEntries().find(e=>e.type===originalType&&e.state===originalState);const st=ent&&popArrowStyles(ent.root,originalType);if(st)arrow.styles={...arrow.styles,...st};bubble.children=[arrow,...(bubble.children||[]).filter(n=>n!==arrow)];}
+          if(closeLabel&&!findPart(baseAnatomy,'close')){const ent=gatherEntries().find(e=>e.type===originalType&&e.state===closeLabel);const closeNode=ent&&findPart(snapshot(ent.root,'root',0),'close');if(closeNode){closeNode.visibleWhen=[{property:'state',equals:closeLabel}];bubble.children.push(closeNode);}}
+          bubble.styles={...bubble.styles,overflow:'visible',overflowX:'visible',overflowY:'visible'};
+        }
+        const hugBoth=n=>{if(!n)return;const st={...n.styles};delete st.width;delete st.height;n.styles=st;};
+        const noHeight=n=>{if(!n)return;const st={...n.styles};delete st.height;n.styles=st;};
+        hugBoth(baseAnatomy);hugBoth(trigger);
+        // The bubble hugs its title when that is all there is; with a body it keeps the width the text wraps at (max 220px), so the body wraps
+        // below the heading instead of running past the bubble.
+        hugBoth(bubble);
+        for(const id of ['title','body'])hugBoth(findPart(baseAnatomy,id));
+        for(const v of variants){
+          for(const id of ['root','trigger','title','body']){const o=v.overrides[id];if(o&&o.styles){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}}
+          const ob=v.overrides.bubble;if(ob&&ob.styles){const st={...ob.styles};delete st.height;if(/simple/i.test(v.when.state||''))delete st.width;ob.styles=st;}
+          const or=v.overrides.root;if(or&&or.styles){const st={...or.styles};delete st.width;delete st.height;or.styles=st;}
+        }
+        if(trigger)trigger.styles={...trigger.styles,display:'flex',justifyContent:'center',alignItems:'center',textAlign:'center'};
+        // Heading and supporting text fill the bubble's inner width and wrap there (Figma text hugs one line otherwise and runs past the bubble).
+        for(const id of ['title','body']){const n=findPart(baseAnatomy,id);if(n)n.styles={...n.styles,alignSelf:'stretch'};}
+        // With a close button the text keeps clear of it (the page does this with title max-width: calc(100% - 20px)).
+        if(closeLabelAll){for(const v of variants)if(v.when.state===closeLabelAll){const o=v.overrides.bubble||(v.overrides.bubble={});o.styles={...(o.styles||{}),paddingRight:'32px'};}}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Splitter: same no-native-control-to-drive manual sweep as Tooltip/
@@ -5268,10 +5525,11 @@
       const sweep=gatherEntries();
       const typeOptions=[...new Set(sweep.map(e=>e.type))];
       const stateOptions=[...new Set(sweep.map(e=>e.state))];
-      const variants=[];
+      const variants=[];const statSnaps=[];
       for(const entry of sweep){
         if(entry.type===originalType&&entry.state===originalState)continue;
         const variantAnatomy=snapshot(entry.root,'root',0),overrides={};
+        statSnaps.push({entry,anat:variantAnatomy});
         (function walk(n){
           const baseNode=base.get(n.id)?.kind===n.kind?base.get(n.id):null;
           if(baseNode){
@@ -5331,7 +5589,10 @@
       if(prefixNode){
         prefixNode.bind='prefix';
         if(!findPart(baseAnatomy,'prefix')){const vNode=findPart(baseAnatomy,'value');if(vNode){const host=baseAnatomy.children?.find(c=>findPart(c,'value'));if(host)host.children=[prefixNode,...(host.children||[])];}}
-        const def=prefixInput?.value.trim()||prefixNode.text||'';
+        // The page shows no prefix until one is typed; the sample "$" used only to harvest the layer must not appear by default in Figma.
+        const def=prefixInput?.value.trim()||prefixNode.text||'$',shown=Boolean(prefixInput?.value.trim());
+        prefixNode.visibleWhen=[{property:'showPrefix',equals:true}];
+        properties.push({id:'showPrefix',name:'Show prefix',type:'boolean',default:shown});selection.showPrefix=shown;
         properties.push({id:'prefix',name:'Prefix',type:'text',default:def});
         selection.prefix=def;
       }
@@ -5339,11 +5600,45 @@
       if(suffixNode){
         suffixNode.bind='suffix';
         if(!findPart(baseAnatomy,'suffix')){const host=baseAnatomy.children?.find(c=>findPart(c,'value'));if(host)host.children=[...(host.children||[]),suffixNode];}
-        const def=suffixInput?.value.trim()||suffixNode.text||'';
+        const def=suffixInput?.value.trim()||suffixNode.text||'%',shown=Boolean(suffixInput?.value.trim());
+        suffixNode.visibleWhen=[{property:'showSuffix',equals:true}];
+        properties.push({id:'showSuffix',name:'Show suffix',type:'boolean',default:shown});selection.showSuffix=shown;
         properties.push({id:'suffix',name:'Suffix',type:'text',default:def});
         selection.suffix=def;
       }
 
+      // The Loading skeleton and the Trend line exist only in some States/Appearances, and the value row used to share a positional id with the skeleton.
+      // Both are grafted from their own cells (visible only there), the value row is hidden while Loading, and everything hugs its content.
+      {
+        const trendLabel=typeOptions.find(l=>/trend/i.test(l));
+        const baselineSnap=statSnaps.concat([{entry:{type:originalType,state:originalState},anat:baseAnatomy}]);
+        const grafts=[];
+        const addGraft=(id,snapFilter,vis)=>{
+          if(findPart(baseAnatomy,id))return;
+          const snaps=statSnaps.filter(s=>snapFilter(s.entry)&&findPart(s.anat,id));if(!snaps.length)return;
+          const tmplSnap=snaps.find(s=>/default/i.test(s.entry.state)||/default/i.test(s.entry.type))||snaps[0];
+          const tmpl=JSON.parse(JSON.stringify(findPart(tmplSnap.anat,id)));tmpl.visibleWhen=vis;if(id==='skeleton'){tmpl.text='';tmpl.children=[];}baseAnatomy.children=[...(baseAnatomy.children||[]),tmpl];grafts.push({id,tmpl,snaps});
+        };
+        if(loadingLabel)addGraft('skeleton',e=>e.state===loadingLabel,[{property:'state',equals:loadingLabel}]);
+        if(trendLabel)addGraft('trend',e=>e.type===trendLabel&&e.state!==loadingLabel,[{property:'appearance',equals:trendLabel},...(loadingLabel?[{property:'state',equals:loadingLabel,not:true}]:[])]);
+        const vrow=findPart(baseAnatomy,'valueRow');if(vrow&&loadingLabel)vrow.visibleWhen=[...(vrow.visibleWhen||[]),{property:'state',equals:loadingLabel,not:true}];
+        const valueN=findPart(baseAnatomy,'value');if(valueN&&valueN.visibleWhen&&vrow)valueN.visibleWhen=undefined;
+        for(const g of grafts){
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+          for(const s of g.snaps){
+            const node=findPart(s.anat,g.id);const patchSet={};if(g.id==='skeleton'){node.text='';node.children=[];}
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const attributes={};for(const [k,v] of Object.entries(n.attributes||{}))if(b.attributes[k]!==v)attributes[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(Object.keys(attributes).length)patch.attributes=attributes;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const when={state:s.entry.state,appearance:s.entry.type};const key=JSON.stringify(when);
+            let v=variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-stat-'+M.id(s.entry.type+'-'+s.entry.state),name:[s.entry.type,s.entry.state].join(' / '),when,overrides:{}};variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+        // Sizes: the field, value row and trend hug; the skeleton keeps its fixed bar size.
+        const unsize=n=>{if(n.kind!=='text'&&n.styles&&n.id!=='skeleton'&&n.tag!=='svg'&&n.id!=='trend-icon'){const st={...n.styles};delete st.width;st.height='auto';delete st.maxWidth;n.styles=st;}(n.children||[]).forEach(unsize);};unsize(baseAnatomy);
+        for(const v of variants)for(const [id,o] of Object.entries(v.overrides||{}))if(id!=='skeleton'&&id!=='trend-icon'&&o.styles){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}
+      }
       return {anatomy:baseAnatomy,properties,selection,variants};
     }
     // Table: Appearance/State/Size/Corner radius already cross generically
@@ -5352,7 +5647,9 @@
     // Slider harvests Tick marks/Modal harvests its icon: briefly shown
     // during export even if currently off.
     function captureTableProperties(){
-      const built=captureCrossedProperties();
+      const tableSnaps=[];const prevTableHook=crossedHook;
+      crossedHook=(entry,anat,when)=>{tableSnaps.push({when:{...when},state:entry.state,anat});if(prevTableHook)prevTableHook(entry,anat,when);};
+      let built;try{built=captureCrossedProperties();}finally{crossedHook=prevTableHook;}
       const anatomy=built.anatomy;
       const properties=[...built.properties];const selection={...built.selection};
       const showHeaderInput=document.querySelector('[data-role="table-show-header"]');
@@ -5408,14 +5705,89 @@
         break;
       }
       if(checkboxHeaderPart&&checkboxStateLabel){
-        const headerRow=findPart(anatomy,'header-0');
+        const headerRow=findPart(anatomy,'header-row');
         if(headerRow&&!findPart(headerRow,'checkbox-header'))headerRow.children.unshift({...checkboxHeaderPart,visibleWhen:[{property:'state',equals:checkboxStateLabel}]});
         for(let i=0;i<checkboxRowParts.length;i++){
-          const tr=findPart(anatomy,'root-1-'+i);
+          const tr=findPart(anatomy,'row-'+i);
           if(tr&&!findPart(tr,'checkbox-cell-'+i))tr.children.unshift({...checkboxRowParts[i],visibleWhen:[{property:'state',equals:checkboxStateLabel}]});
         }
       }
 
+
+      // Loading shows a skeleton bar in every cell and Empty replaces the rows with one message row; neither exists in the base (Default) capture, and
+      // before the cells had positional ids that shifted between States. Cells now have stable parts; the State-only pieces are grafted here.
+      {
+        const M3=window.ADSComponentContract;
+        const sLabel=re=>stateLabels.find(l=>re.test(l));
+        const loadingL=sLabel(/^loading$/i),emptyL=sLabel(/^empty$/i);
+        const cols=['name','status','role','email','mobile'];
+        const px=v=>{const m=/^(-?\d*\.?\d+)px$/.exec(String(v||'').trim());return m?parseFloat(m[1]):0;};
+        const grafts=[];
+        // The skeleton bar is 70% of its cell's content width; Figma needs the pixel value.
+        const skWidth=(root,id)=>{const cellN=findPart(root,id.replace(/^sk-/,'cell-'));const cs=cellN&&cellN.styles||{};const pad=(px(cs.paddingLeft)||0)+(px(cs.paddingRight)||0);return Math.max(8,Math.round(0.7*(px(cs.width)-pad)*100)/100)+'px';};
+        const add=(parentId,id,pred,vis,at)=>{
+          const parent=findPart(anatomy,parentId);if(!parent||findPart(anatomy,id))return;
+          const snaps=tableSnaps.filter(s=>pred(s.state)&&findPart(s.anat,id));if(!snaps.length)return;
+          const tmplSnap=snaps.find(s=>/default/i.test(s.when.appearance||'')&&/large|default/i.test(s.when.size||'')&&s.state===snaps[0].state)||snaps[0];
+          const tmpl=JSON.parse(JSON.stringify(findPart(tmplSnap.anat,id)));tmpl.visibleWhen=vis;
+          if(id.startsWith('sk-'))tmpl.styles={...tmpl.styles,width:skWidth(tmplSnap.anat,id)};
+          parent.children=at==='start'?[tmpl,...(parent.children||[])]:[...(parent.children||[]),tmpl];grafts.push({id,tmpl,snaps});
+        };
+        if(loadingL)for(let r=0;r<3;r++)for(const c of cols){
+          add('cell-'+r+'-'+c,'sk-'+r+'-'+c,st=>st===loadingL,[{property:'state',equals:loadingL}],'end');
+          const v=findPart(anatomy,'v-'+r+'-'+c);if(v)v.visibleWhen=[...(v.visibleWhen||[]),{property:'state',equals:loadingL,not:true}];
+        }
+        if(emptyL){
+          add('body','empty-row',st=>st===emptyL,[{property:'state',equals:emptyL}],'end');
+          for(let r=0;r<3;r++){const row=findPart(anatomy,'row-'+r);if(row)row.visibleWhen=[...(row.visibleWhen||[]),{property:'state',equals:emptyL,not:true}];}
+        }
+        for(const g of grafts){
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+          for(const s of g.snaps){
+            const node=findPart(s.anat,g.id);const patchSet={};if(g.id.startsWith('sk-'))node.styles={...node.styles,width:skWidth(s.anat,g.id)};
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-table-'+M3.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+      }
+      // Table rows are laid out as real rows (cells side by side); every cell left-aligns its content and centres it vertically, hugging the row height. A browser table (table-row /
+      // table-cell) has no Figma equivalent, so it used to come out as a column of stacked cells with fixed captured heights.
+      {
+        const sized=new Set();
+        (function walk(n){
+          const d=n.styles&&n.styles.display;
+          if(d==='table-row'){n.styles={...n.styles,display:'flex',flexDirection:'row',alignItems:'stretch'};sized.add(n.id);}
+          else if(d==='table-cell'&&n.id==='empty-cell'){n.styles={...n.styles,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',alignSelf:'stretch',textAlign:'center'};}
+          else if(d==='table-cell'){n.styles={...n.styles,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'flex-start',alignSelf:'stretch',textAlign:'left'};sized.add(n.id);}
+          else if(d==='table-header-group'||d==='table-row-group'){n.styles={...n.styles,display:'flex',flexDirection:'column',alignSelf:'stretch'};sized.add(n.id);}
+          if(sized.has(n.id)){const st={...n.styles};st.height='auto';n.styles=st;}
+          (n.children||[]).forEach(walk);
+        })(anatomy);
+        // The table is as wide as its columns need (nowrap cells can widen it past the old 630px), so the frame hugs instead of keeping a stale fixed width.
+        // Every Table master is exactly 800px wide (fixed, so the canvas layout never depends on a hugging measurement); height still hugs.
+        anatomy.styles={...anatomy.styles,width:'800px',height:'auto','--ads-fixed-width':'1'};
+        // The last column (and the Empty message cell) fills whatever remains of the 800px row, so measured pixel widths that differ by a few px
+        // between States never leave a gap or push the row past 800.
+        const fillCell=id=>/^(th-mobile|cell-\d-mobile|empty-cell)$/.test(id);
+        (function fillLast(n){if(fillCell(n.id)&&n.styles){const st={...n.styles};delete st.width;st.flexGrow='1';n.styles=st;}(n.children||[]).forEach(fillLast);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(fillCell(id)&&o.styles){const st={...o.styles};delete st.width;o.styles=st;}
+        // The Empty state's "Add item" button hugs its label (a captured pixel width left the label off-centre and clipped) with the label centred.
+        (function hugAction(n){if(n.id==='empty-action'&&n.styles){const st={...n.styles};delete st.width;st.height='auto';st.display='flex';st.flexDirection='row';st.justifyContent='center';st.alignItems='center';st.textAlign='center';n.styles=st;}(n.children||[]).forEach(hugAction);})(anatomy);
+        for(const v of built.variants){const o=v.overrides&&v.overrides['empty-action'];if(o&&o.styles){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}}
+        (function hugValues(n){if(/^v-\d-[a-z]+$/.test(n.id)&&n.styles){const st={...n.styles};delete st.width;st.height='auto';n.styles=st;}(n.children||[]).forEach(hugValues);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(/^v-\d-[a-z]+$/.test(id)&&o.styles){const st={...o.styles};delete st.width;delete st.height;o.styles=st;}
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{})){
+          if(!o.styles)continue;const st={...o.styles};
+          if(id===anatomy.id){delete st.width;delete st.height;}
+          if(sized.has(id)){delete st.height;delete st.display;delete st.flexDirection;}
+          if('display' in st&&/^table-/.test(st.display))delete st.display;
+          if('textAlign' in st)delete st.textAlign;
+          o.styles=st;
+        }
+      }
       return {anatomy,properties,selection,variants:built.variants};
     }
     // Calendar: same no-native-control-to-drive manual sweep as Tooltip/
@@ -5530,6 +5902,52 @@
           harvested.push({...found,visibleWhen:[{property:'state',equals:label}],styles:{...found.styles,width:'100%'}});
         }
         nodesWrapNode.children=[...normalRows,...harvested];
+      }
+
+      // Rows, checkboxes, metatext and the expanded branch only exist in some States/Types, and rows used to be named by position (shifting with every State).
+      // Every row now has a stable name; what the base (Default) capture lacks is grafted here from the cell that has it, shown only there.
+      {
+        const M4=window.ADSComponentContract;
+        const stOpt=properties.find(p=>p.id==='state')?.options||[],apOpt=properties.find(p=>p.id==='appearance')?.options||[];
+        const S=re=>stOpt.find(l=>re.test(l)),A=re=>apOpt.find(l=>re.test(l));
+        const defL=S(/^default$/i),expL=S(/expanded/i),selL=S(/selected/i),disL=S(/disabled/i),loadL=S(/loading/i),empL=S(/empty/i),chkL=A(/checkable/i),metaL=A(/metatext|lines/i);
+        const nodeSnaps=[];for(const e of gatherEntries())nodeSnaps.push({when:{state:e.state,appearance:e.type},state:e.state,type:e.type,anat:snapshot(e.root,'root',0)});
+        const eq=(p,l)=>({property:p,equals:l}),not=(p,l)=>({property:p,equals:l,not:true});
+        const grafts=[];
+        const graft=(id,parentId,at,vis,pred)=>{
+          const parent=findPart(anatomy,parentId);if(!parent||findPart(anatomy,id))return;
+          const snaps=nodeSnaps.filter(s=>pred(s)&&findPart(s.anat,id));if(!snaps.length)return;
+          const t=snaps.find(s=>(!defL||s.state===(expL||defL))&&(!apOpt.length||/default/i.test(s.type)))||snaps[0];
+          const tmpl=JSON.parse(JSON.stringify(findPart(t.anat,id)));tmpl.visibleWhen=vis;
+          const kids=parent.children||[];
+          parent.children=at==='start'?[tmpl,...kids]:at==='afterFirst'?[kids[0],tmpl,...kids.slice(1)].filter(Boolean):[...kids,tmpl];
+          grafts.push({id,tmpl,snaps});
+        };
+        const branchStates=[defL,disL,loadL,empL].filter(Boolean).map(l=>not('state',l));
+        graft('children-0','node-0','end',branchStates,s=>s.state===expL||s.state===selL);
+        for(let n=0;n<8;n++){
+          if(chkL)graft('check-'+n,'row-'+n,'afterFirst',[eq('appearance',chkL)],s=>s.type===chkL);
+          if(metaL)graft('meta-'+n,'labelgroup-'+n,'end',[eq('appearance',metaL)],s=>s.type===metaL);
+        }
+        if(chkL&&selL)for(let n=0;n<3;n++)graft('check-'+n+'-0','check-'+n,'end',[eq('state',selL)],s=>s.type===chkL&&s.state===selL);
+        for(const g of grafts){
+          const tmap=new Map();(function w(n){tmap.set(n.id,n);(n.children||[]).forEach(w);})(g.tmpl);
+          for(const s of g.snaps){
+            const node=findPart(s.anat,g.id);const patchSet={};
+            (function walk(n){const b=tmap.get(n.id);if(b&&b.kind===n.kind){const styles={};for(const [k,v] of Object.entries(n.styles||{}))if(b.styles[k]!==v)styles[k]=v;const attributes={};for(const [k,v] of Object.entries(n.attributes||{}))if(b.attributes[k]!==v)attributes[k]=v;const patch={};if(Object.keys(styles).length)patch.styles=styles;if(Object.keys(attributes).length)patch.attributes=attributes;if(n.text!==b.text)patch.text=n.text;if(Object.keys(patch).length)patchSet[n.id]=patch;}(n.children||[]).forEach(walk);})(node);
+            if(!Object.keys(patchSet).length)continue;
+            const key=JSON.stringify(s.when);let v=built.variants.find(x=>JSON.stringify(x.when)===key);
+            if(!v){v={id:'cv-tree-'+M4.id(Object.values(s.when).join('-')),name:Object.values(s.when).join(' / '),when:{...s.when},overrides:{}};built.variants.push(v);}
+            v.overrides={...v.overrides,...patchSet};
+          }
+        }
+        // Every row, branch and label group hugs its content vertically; only the small marks keep their own sizes, and the tree is a fixed 200px wide.
+        const keepH=id=>/^(toggle|spacer|icon|check)-/.test(id)||id==='tree-items-loading';
+        (function strip(n){if(n.kind!=='text'&&n.styles&&!keepH(n.id)&&n.tag!=='svg'&&!/^(toggle|icon|check)-/.test(n.id)){const st={...n.styles};st.height='auto';delete st.maxHeight;n.styles=st;}(n.children||[]).forEach(strip);})(anatomy);
+        for(const v of built.variants)for(const [id,o] of Object.entries(v.overrides||{}))if(!keepH(id)&&!/^(toggle|icon|check)-/.test(id)&&o.styles&&'height' in o.styles){const st={...o.styles};delete st.height;o.styles=st;}
+        anatomy.styles={...anatomy.styles,width:'200px','--ads-fixed-width':'1'};
+        // The label group fills the row so a long label wraps/clips inside it; rows are stacked full width.
+        (function lg(n){if(/^labelgroup-\d$/.test(n.id)&&n.styles)n.styles={...n.styles,display:'flex',flexDirection:'column',flexGrow:'1'};if(/^(row|node)-\d$/.test(n.id)&&n.styles)n.styles={...n.styles,alignSelf:'stretch'};(n.children||[]).forEach(lg);})(anatomy);
       }
       return {anatomy,properties,selection,variants:built.variants};
     }
@@ -5840,6 +6258,12 @@
       for(const property of properties){const inline=element.style.getPropertyValue(property),refs=[...inline.matchAll(/var\(\s*(--[\w-]+)/g)],known=refs.every(match=>match[1] in window.ADSFoundation.get().tokens),computedValue=computed.getPropertyValue(property),value=inline&&known?inline:(property!=='font-style'&&authoredBindings?.read(element,property))||matchToken(computedValue,property)||computedValue;if(value&&!/[<>{};]|url\s*\(/i.test(value))n.styles[toCamel(property)]=convertLengths(value);}
       for(const attribute of element.getAttributeNames())if(/^(aria-[\w-]+|id|for|name|readonly|required|maxlength|minlength|role|title|type|value|placeholder|disabled|checked|href|src|alt|viewBox|d|cx|cy|r|x|y|x1|x2|y1|y2|width|height|rx|ry|points|fill|stroke|stroke-width|stroke-linecap|stroke-linejoin|xmlns|max|min|step|rows|colspan|rowspan)$/.test(attribute)){
         const value=element.getAttribute(attribute);if(['href','src'].includes(attribute)&&!/^(?:https?:|#|data:image\/(?:png|jpeg|webp|gif);base64,|[a-zA-Z0-9_.-]+(?:\/|$))/.test(value))continue;n.attributes[attribute]=value;
+      }
+      // A childless <span>/<i> with no text that is painted (a background or a border: Table's status dot, Timeline's marker and connector, Splitter's grip,
+      // an unchecked checkbox box) is a shape, not a text label. Classified as text it had no way to carry its fill or border and vanished in Figma.
+      if(!element.dataset.contractKind&&n.kind==='text'&&!element.children.length&&!(element.textContent||'').trim()&&tag!=='svg'){
+        const bgc=computed.backgroundColor,painted=(bgc&&!/^rgba\(0, 0, 0, 0\)$|^transparent$/.test(bgc))||['Top','Right','Bottom','Left'].some(side=>parseFloat(computed['border'+side+'Width'])>0&&computed['border'+side+'Style']!=='none');
+        if(painted)n.kind='container';
       }
       if('value'in element&&['input','textarea','select'].includes(tag))n.attributes.value=element.value;
       if(tag==='input'){const placeholder=getComputedStyle(element,'::placeholder');n.styles['--ads-placeholder-color']=matchToken(placeholder.color,'color')||placeholder.color;n.styles['--ads-placeholder-opacity']=placeholder.opacity;}

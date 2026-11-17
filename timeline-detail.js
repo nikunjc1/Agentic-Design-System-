@@ -97,6 +97,7 @@
     }
     var isAlternate = typeKey === "alternate";
 
+    var isHorizontal = typeKey === "horizontal";
     var itemsHtml = items.map(function(item, i){
       var isLast = i === items.length - 1;
       var isCurrent = stateKey === "with-events" && i === 1 && !item.pending;
@@ -104,29 +105,37 @@
 
       var markerHtml;
       if (item.pending){
-        markerHtml = '<span class="timeline-demo-dot is-pending"></span>';
+        markerHtml = '<span class="timeline-demo-dot is-pending" data-contract-part="dot-' + i + '" data-contract-kind="container"></span>';
       } else if (showIcons){
-        markerHtml = iconMarkerHtml(isCurrent);
+        markerHtml = iconMarkerHtml(isCurrent).replace("<svg ", '<svg data-contract-part="icon-' + i + '" ');
       } else {
-        markerHtml = '<span class="timeline-demo-dot' + (isCurrent ? " is-current" : "") + '"></span>';
+        markerHtml = '<span class="timeline-demo-dot' + (isCurrent ? " is-current" : "") + '" data-contract-part="dot-' + i + '" data-contract-kind="container"></span>';
       }
 
+      // Vertical and Alternate lists draw a connector under every dot except the last. Horizontal draws a line segment on BOTH sides of every dot (the
+      // first one's left and the last one's right are transparent) so each dot stays centred and neighbouring segments meet into one line.
       var connectorHtml = "";
-      if (!isLast){
-        connectorHtml = '<span class="timeline-demo-connector' + (nextIsPending ? " is-pending" : "") + '"></span>';
+      var connectorPart = ' data-contract-part="connector-' + i + '" data-contract-kind="container"';
+      if (isHorizontal){
+        connectorHtml = '<span class="timeline-demo-connector' + (nextIsPending ? " is-pending" : "") + (isLast ? " is-clear" : "") + '"' + (isLast ? ' data-contract-part="endcap-' + i + '" data-contract-kind="container"' : connectorPart) + "></span>";
+      } else if (!isLast){
+        connectorHtml = '<span class="timeline-demo-connector' + (nextIsPending ? " is-pending" : "") + '"' + connectorPart + "></span>";
       }
+      var prevHtml = isHorizontal ? '<span class="timeline-demo-connector timeline-demo-connector--prev' + (i === 0 ? " is-clear" : "") + '" data-contract-part="prev-' + i + '" data-contract-kind="container"></span>' : "";
 
-      var titleHtml = '<p class="timeline-demo-title' + (isCurrent ? " is-current" : "") + '">' + escapeHtml(item.title) + "</p>";
-      var timeHtml = item.time ? '<p class="timeline-demo-time">' + escapeHtml(item.time) + "</p>" : "";
+      var titleHtml = '<p class="timeline-demo-title' + (isCurrent ? " is-current" : "") + '" data-contract-part="title-' + i + '">' + escapeHtml(item.title) + "</p>";
+      var timeHtml = item.time ? '<p class="timeline-demo-time" data-contract-part="time-' + i + '">' + escapeHtml(item.time) + "</p>" : "";
 
       var sideCls = "";
       if (isAlternate){
         sideCls = i % 2 === 0 ? " timeline-demo-item--right" : " timeline-demo-item--left";
       }
+      // Alternate: [spacer][marker][content] for right-hand items and, mirrored by row-reverse, [content][marker][spacer] for left-hand ones.
+      var spacerHtml = isAlternate ? '<div class="timeline-demo-spacer" data-contract-part="spacer-' + i + '" data-contract-kind="container"></div>' : "";
 
-      return '<div class="timeline-demo-item' + sideCls + '">' +
-        '<div class="timeline-demo-marker">' + markerHtml + connectorHtml + "</div>" +
-        '<div class="timeline-demo-content">' + titleHtml + timeHtml + "</div>" +
+      return '<div class="timeline-demo-item' + sideCls + '" data-contract-part="item-' + i + '">' + spacerHtml +
+        '<div class="timeline-demo-marker" data-contract-part="marker-' + i + '">' + prevHtml + markerHtml + connectorHtml + "</div>" +
+        '<div class="timeline-demo-content" data-contract-part="content-' + i + '">' + titleHtml + timeHtml + "</div>" +
         "</div>";
     }).join("");
 

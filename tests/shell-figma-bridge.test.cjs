@@ -241,3 +241,13 @@ test('a second click cannot enqueue another draw while the first is in flight',a
  const first=sandbox.ADSFigmaBridge.draw({id:'c1',revision:0},button);assert.equal(button.disabled,true);assert.equal(await sandbox.ADSFigmaBridge.draw({id:'c1',revision:0},button),false);assert.equal(calls,1);
  finish({ok:true,json:async()=>({componentId:'c1',nodeId:'1:1',revision:0})});assert.equal(await first,true);assert.equal(button.disabled,false);
 });
+test('catalog capture waits for the workbench instead of capturing the generic snapshot at iframe load',()=>{
+ // Capturing at the iframe load event returned the generic library snapshot (no variants) for nearly every component.
+ const source=require('node:fs').readFileSync(require('node:path').join(__dirname,'../shell.js'),'utf8');
+ assert.match(source,/ADSWorkbench&&w\.ADSWorkbench\.active/);
+ assert.match(source,/captureFromFile/);
+});
+test('Input Text Field appearance families push as single sets instead of re-splitting',()=>{
+ const source=require('node:fs').readFileSync(require('node:path').join(__dirname,'../figma-plugin/adapter.js'),'utf8');
+ assert.match(source,/c\.variants\.length>512&&c\.properties\.some\(p=>p\.id==='appearance'\)/);
+});

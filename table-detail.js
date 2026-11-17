@@ -2,6 +2,8 @@
   "use strict";
 
   var CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg>';
+  // The Empty component's own tray icon, shown above the message in the Table's Empty state.
+  var EMPTY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 L7 4 H17 L21 9.5" /><path d="M3 9.5 V18.5 A1 1 0 0 0 4 19.5 H20 A1 1 0 0 0 21 18.5 V9.5" /><path d="M3 9.5 H9 A1 1 0 0 1 10 10.2 L10.3 11 A1 1 0 0 0 11.3 11.7 H12.7 A1 1 0 0 0 13.7 11 L14 10.2 A1 1 0 0 1 15 9.5 H21" /></svg>';
   var DASH_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>';
 
   var TYPES = [
@@ -91,9 +93,7 @@
     { value: "6", label: "6px - Compact foundation" },
     { value: "8", label: "8px - Balanced" },
     { value: "12", label: "12px - Soft" },
-    { value: "16", label: "16px - Expressive" },
-    { value: "24", label: "24px - Large" },
-    { value: "9999", label: "Full - Pill" }
+    { value: "16", label: "16px - Expressive" }
   ];
 
   // Corner radius default now tracks the sitewide Radius foundation's
@@ -226,8 +226,8 @@
     lines.push("   (\"jordan.lee@company.com\" alone needs ~165px) or they'd squeeze");
     lines.push("   Name/Role into wrapping onto a second line, same as the checkbox");
     lines.push("   column did before table-demo-table--has-checkbox existed. */");
-    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); width:var(--dimension-630); }");
-    lines.push(".table-demo-table th{ text-align: start; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em; border-bottom:var(--border-width-1) var(--border-style) var(--line-strong); }");
+    lines.push(".table-demo-table{ border-collapse:collapse; font-family:var(--font-body); font-size:var(--type-body-size); color:var(--text-hi); width:var(--dimension-800); }");
+    lines.push(".table-demo-table th{ text-align: start; padding:var(--space-8) var(--space-10); font-size:var(--type-body-size); font-weight:var(--type-selected-weight); color:var(--text-dim); text-transform:none; border-bottom:var(--border-width-1) var(--border-style) var(--line-strong); }");
     lines.push(".table-demo-table td{ padding:var(--space-8) var(--space-10); border-bottom:1px solid var(--line); text-align: start; }");
     lines.push(".table-demo-table--bordered{ border:1px solid var(--line-strong); overflow:hidden; }");
     lines.push(".table-demo-table--bordered th, .table-demo-table--bordered td{ border-inline-end:1px solid var(--line); }");
@@ -255,7 +255,7 @@
     lines.push("/* Selection adds a leading checkbox column - width grows by that");
     lines.push("   column's own need (~40px) so Name/Role keep their normal widths");
     lines.push("   instead of being squeezed into wrapping onto a second line. */");
-    lines.push(".table-demo-table--has-checkbox{ width:var(--dimension-670); }");
+    lines.push(".table-demo-table--has-checkbox{ width:var(--dimension-800); }");
     lines.push("");
     lines.push("/* Size (3) - Large is the default (the base th/td padding above); Middle and Small only tighten padding, font-size stays fixed at every size. */");
     lines.push(".table-demo-table--sz-middle th, .table-demo-table--sz-middle td{ padding:var(--space-6) var(--space-8); }");
@@ -314,18 +314,18 @@
       // this page's own purpose text describing a working select-all/
       // indeterminate header checkbox) - added here, indeterminate since
       // exactly one of the three demo rows is checked.
-      var checkboxTh = isSelected ? '<th data-contract-part="checkbox-header"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select all rows" tabindex="-1" /><span class="table-demo-checkbox is-indeterminate">' + DASH_ICON_SVG + "</span></label></th>" : "";
+      var checkboxTh = isSelected ? '<th data-contract-part="checkbox-header"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select all rows" tabindex="-1" /><span class="table-demo-checkbox is-indeterminate" data-contract-kind="container">' + DASH_ICON_SVG + "</span></label></th>" : "";
       // scope="col" so a screen reader announces the column a cell belongs
       // to when navigating row by row, not just when reading the header row.
-      theadHtml = '<thead data-contract-part="header"><tr>' + checkboxTh + '<th scope="col">Name</th><th scope="col">Status</th><th scope="col">Role</th><th scope="col">Email</th><th scope="col">Mobile</th></tr></thead>';
+      theadHtml = '<thead data-contract-part="header"><tr data-contract-part="header-row">' + checkboxTh + '<th scope="col" data-contract-part="th-name">Name</th><th scope="col" data-contract-part="th-status">Status</th><th scope="col" data-contract-part="th-role">Role</th><th scope="col" data-contract-part="th-email">Email</th><th scope="col" data-contract-part="th-mobile">Mobile</th></tr></thead>';
     }
 
     if (isLoading){
-      var loadingRowsHtml = ROWS_DATA.map(function(){
-        var cell = '<td><span class="skeleton-demo-line is-animated" style="width:70%;"></span></td>';
-        return '<tr class="table-demo-row" aria-hidden="true">' + (isSelected ? "<td></td>" : "") + cell + cell + cell + cell + cell + "</tr>";
+      var loadingRowsHtml = ROWS_DATA.map(function(_, i){
+        var cell = function(col){ return '<td data-contract-part="cell-' + i + '-' + col + '"><span class="skeleton-demo-line is-animated" data-contract-part="sk-' + i + '-' + col + '" data-contract-kind="container" style="width:70%;"></span></td>'; };
+        return '<tr class="table-demo-row" data-contract-part="row-' + i + '" aria-hidden="true">' + (isSelected ? '<td data-contract-part="checkbox-cell-' + i + '"></td>' : "") + cell("name") + cell("status") + cell("role") + cell("email") + cell("mobile") + "</tr>";
       }).join("");
-      return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ' aria-busy="true" aria-live="polite">' + theadHtml + "<tbody>" + loadingRowsHtml + "</tbody></table>";
+      return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ' aria-busy="true" aria-live="polite">' + theadHtml + '<tbody data-contract-part="body">' + loadingRowsHtml + "</tbody></table>";
     }
 
     if (stateKey === "empty"){
@@ -333,13 +333,14 @@
       // one spanning cell, rather than inventing a second "no results"
       // visual language - a zero-row table and an empty list should look
       // like the same idea.
-      var emptyHtml = '<tr class="table-demo-row"><td colspan="5">' +
-        '<div class="empty-demo-panel" style="padding:var(--space-20);">' +
-        '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" style="width:var(--dimension-32);height:var(--dimension-32);"></div>' +
-        '<p class="empty-demo-title" style="font-size:var(--type-body-size);">No results</p>' +
-        '<p class="empty-demo-description" style="font-size:var(--type-caption-size);">Try a different search or filter.</p>' +
+      var emptyHtml = '<tr class="table-demo-row" data-contract-part="empty-row"><td colspan="5" class="table-demo-empty-cell" data-contract-part="empty-cell">' +
+        '<div class="empty-demo-panel" data-contract-part="empty-panel" style="padding:var(--space-20);">' +
+        '<div class="empty-demo-icon-wrap empty-demo-icon-wrap--simple" data-contract-part="empty-icon" style="width:var(--dimension-32);height:var(--dimension-32);">' + EMPTY_ICON_SVG + '</div>' +
+        '<p class="empty-demo-title" data-contract-part="empty-title" style="font-size:var(--type-body-size);">No results</p>' +
+        '<p class="empty-demo-description" data-contract-part="empty-description" style="font-size:var(--type-caption-size);">Try a different search or filter.</p>' +
+        '<button type="button" class="modal-demo-btn modal-demo-btn--primary" data-contract-part="empty-action" tabindex="-1">Add item</button>' +
         "</div></td></tr>";
-      return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + "<tbody>" + emptyHtml + "</tbody></table>";
+      return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + '<tbody data-contract-part="body">' + emptyHtml + "</tbody></table>";
     }
 
     var rowsHtml = ROWS_DATA.map(function(person, i){
@@ -352,19 +353,21 @@
       // operable table - without it, a keyboard user hits a real checkbox
       // and real mailto:/tel: links on every one of these repeated rows.
       var isRowChecked = i === 0;
-      var checkboxTd = isSelected ? '<td data-contract-part="checkbox-cell-' + i + '"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select ' + person.name + '" tabindex="-1"' + (isRowChecked ? " checked" : "") + ' /><span class="table-demo-checkbox' + (isRowChecked ? " is-checked" : "") + '">' + (isRowChecked ? CHECK_ICON_SVG : "") + "</span></label></td>" : "";
+      var checkboxTd = isSelected ? '<td data-contract-part="checkbox-cell-' + i + '"><label class="table-demo-checkbox-label"><input type="checkbox" class="table-demo-checkbox-input" aria-label="Select ' + person.name + '" tabindex="-1"' + (isRowChecked ? " checked" : "") + ' /><span class="table-demo-checkbox' + (isRowChecked ? " is-checked" : "") + '" data-contract-kind="container">' + (isRowChecked ? CHECK_ICON_SVG : "") + "</span></label></td>" : "";
       var statusDotClass = "badge-demo-status-dot--" + person.statusColor;
-      var statusHtml = '<td><span class="table-demo-status-cell"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
+      var statusHtml = '<td data-contract-part="cell-' + i + '-status"><span class="table-demo-status-cell" data-contract-part="v-' + i + '-status"><span class="' + statusDotClass + '"></span>' + person.status + "</span></td>";
       // Email/Mobile render as real links (mailto:/tel:) styled in this
       // system's actual defined link color - var(--red-400), the same
       // token the Link-type Button and Toast's own inline action use.
       // There is no blue "link" token anywhere in this system.
-      var emailHtml = '<td><a class="table-demo-link-cell" href="mailto:' + person.email + '" tabindex="-1">' + person.email + "</a></td>";
-      var mobileHtml = '<td><a class="table-demo-link-cell" href="tel:' + person.mobile.replace(/[^+\d]/g, "") + '" tabindex="-1">' + person.mobile + "</a></td>";
-      return '<tr class="' + classes.join(" ") + '">' + checkboxTd + "<td>" + person.name + "</td>" + statusHtml + "<td>" + person.role + "</td>" + emailHtml + mobileHtml + "</tr>";
+      var emailHtml = '<td data-contract-part="cell-' + i + '-email"><a class="table-demo-link-cell" data-contract-part="v-' + i + '-email" href="mailto:' + person.email + '" tabindex="-1">' + person.email + "</a></td>";
+      var mobileHtml = '<td data-contract-part="cell-' + i + '-mobile"><a class="table-demo-link-cell" data-contract-part="v-' + i + '-mobile" href="tel:' + person.mobile.replace(/[^+\d]/g, "") + '" tabindex="-1">' + person.mobile + "</a></td>";
+      var nameHtml = '<td data-contract-part="cell-' + i + '-name"><span data-contract-part="v-' + i + '-name">' + person.name + "</span></td>";
+      var roleHtml = '<td data-contract-part="cell-' + i + '-role"><span data-contract-part="v-' + i + '-role">' + person.role + "</span></td>";
+      return '<tr class="' + classes.join(" ") + '" data-contract-part="row-' + i + '">' + checkboxTd + nameHtml + statusHtml + roleHtml + emailHtml + mobileHtml + "</tr>";
     }).join("");
 
-    return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + "<tbody>" + rowsHtml + "</tbody></table>";
+    return '<table class="' + tableCls + '"' + styleAttr + ariaLabelAttr + ">" + theadHtml + '<tbody data-contract-part="body">' + rowsHtml + "</tbody></table>";
   }
 
   function buildFullCode(selectionInfo){
